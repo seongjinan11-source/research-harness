@@ -1,0 +1,99 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: NodePFN
+title: "Learning Posterior Predictive Distributions for Node Classification from Synthetic Graph Priors"
+authors: "Jeongwhan Choi, Jongwoo Kim, Woosung Kang, Noseong Park (KAIST)"
+venue: "ICLR 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2604.19028
+  code: https://github.com/jeongwhanchoi/NodePFN
+  openreview: https://openreview.net/forum?id=FmxRzlu0rT
+
+citation:
+  type: inproceedings
+  title: "Learning Posterior Predictive Distributions for Node Classification from Synthetic Graph Priors"
+  authors: ["Jeongwhan Choi", "Jongwoo Kim", "Woosung Kang", "Noseong Park"]
+  year: 2026
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2604.19028"
+  url: https://openreview.net/forum?id=FmxRzlu0rT
+  verified_from:
+    - https://mlanthology.org/iclr/2026/choi2026iclr-learning/
+    - https://arxiv.org/abs/2604.19028
+
+areas: [graph-fm, pfn]
+problem: "새 그래프마다 GNN을 따로 학습하지 않고, 합성 그래프로 한 번 사전학습한 모델 하나로 임의의 그래프에서 node classification을 in-context로 풀고자 한다."
+core_idea: "TabPFN v1식 random-MLP SCM으로 node feature와 label을 만들고, 그 label을 community로 삼아 homophily를 조절하는 cSBM 그래프와 구조 정보가 없는 Erdős–Rényi 그래프를 반씩 섞어 1,024-node 합성 그래프 약 25만 개를 만든다. 모델은 12층 Transformer다. 각 층에서 context node끼리 self-attention하고 query node는 context에만 cross-attention하는 branch와, 전체 그래프 위의 GCN branch를 따로 계산한 뒤 입력과 함께 residual로 더하고 LayerNorm한다. context node는 feature embedding에 label embedding을 더해 넣고 query node는 feature만 넣으며, 출력은 query별 최대 20-class softmax다. feature 차원이 다른 실제 그래프는 zero-padding하거나 truncated SVD로 줄이고, 추론 때는 feature 순서와 scaling을 바꾼 32개 변형을 앙상블한다."
+key_assumptions:
+  - "그래프 구조는 label을 통해서만 feature와 연결된다고 본다. 합성 prior에서 구조가 SCM label로 정한 community 위에서 생성되기 때문이다."
+  - "구조와 label의 관계는 homophily 스칼라 하나와 local GCN smoothing으로 충분히 표현된다고 가정한다."
+  - "feature를 고정 차원으로 압축(padding 또는 tSVD)해도 class 정보가 크게 손실되지 않고, class 수는 20개 이하라고 가정한다."
+  - "context 노드는 그래프에서 무작위로 뽑힌다고 가정한다. 사전학습의 context/query 분할이 stratification 없는 random partition이다."
+strengths:
+  - text: "모델 하나로 가중치 업데이트 없이 23개 benchmark를 평가했고, 평균 accuracy와 평균 순위 모두 그래프마다 학습한 GCN·GAT와 GraphAny보다 좋았다. graph PFN이 node classification에서 작동함을 보인 초기 결과다."
+    tags: [zero-shot-gap]
+  - text: "cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다."
+    tags: [graph-structure-use, prior-mismatch]
+  - text: "attention branch와 GCN branch를 층마다 병렬로 두는 단순한 dual-branch 구조로 그래프 구조를 PFN에 넣었다. MPNN branch를 빼면 Cora와 Wisconsin에서 accuracy가 크게 떨어져, 구조 branch의 기여가 ablation으로 확인된다."
+    tags: [graph-structure-use]
+  - text: "약 29M parameter 모델을 단일 GPU에서 약 6 GPU-hour로 사전학습할 만큼 가볍고, 추론은 forward pass 한 번이다."
+    tags: [inference-cost]
+  - text: "tabular FM을 가져오지 않고 처음부터 학습했기 때문에 최대 20-class를 기본 지원한다. GraphPFN 저자들은 대부분의 tabular FM이 10-class까지만 지원한다는 점과 대비해 이 점을 언급했다."
+    tags: [label-space]
+  - text: "합성 그래프 수를 늘릴수록 성능이 오르는 prior-scale 분석과, ER·cSBM·BA 구성을 바꾼 prior ablation을 함께 제시해 어떤 prior 성분이 도움이 되는지 일부 보여준다."
+    tags: [pretraining-data, prior-mismatch]
+limitations:
+  - text: "최대 class 수와 최대 feature 차원을 사전학습 때 고정해야 한다. 저자들은 20-class까지만 시험했다고 밝힌다."
+    tags: [label-space, feature-heterogeneity]
+    source: self
+  - text: "attention 비용이 quadratic이라 큰 그래프에 적용하기 어렵다고 저자들이 인정하고, efficient attention을 future work로 남겼다."
+    tags: [context-scale, graph-scale]
+    source: self
+  - text: "text-attributed graph의 semantic 정보는 활용하지 않는다. 저자들은 구조 학습과 텍스트 semantic 처리를 결합하는 방향을 future work로 제시한다."
+    tags: [task-coverage]
+    source: self
+  - text: "공식 코드는 training sample을 1,024개 이하로 쓰라고 권장하는데, 표준 split의 benchmark들은 모두 이를 넘는다. 이 조건에서 돌린 NodePFN은 모든 데이터셋에서 GraphPFN에 크게 졌고, GCN·GraphSAGE·GAT·GT보다도 평균 순위가 낮았다. 공식 구현에 fine-tuning 경로가 없어 ICL로만 평가할 수 있었다는 점도 함께 지적됐다."
+    tags: [context-scale, zero-shot-gap, adaptation]
+    source: cited
+    by: "GraphPFN: A Prior-Data Fitted Graph Foundation Model (2026)"
+    by_id: GraphPFN
+    by_link: https://arxiv.org/abs/2509.21489
+  - text: "NodePFN이 약한 이유로 세 가지를 가설로 든다. 첫째, sample 하나를 token 하나로 보는 TabPFN v1 시절 구조를 쓴다. 둘째, 강한 tabular FM에서 초기화하지 않고 처음부터 학습한다. 셋째, GraphPFN보다 prior가 단순하다. 이 이유로 자신들의 공정 비교 평가에서는 NodePFN을 아예 제외했다. 검증된 원인이 아니라 저자들의 추정이라는 점은 감안해야 한다."
+    tags: [prior-mismatch, pretraining-data]
+    source: cited
+    by: "A Fair Evaluation of Graph Foundation Models for Node Property Prediction (2026)"
+    by_link: https://arxiv.org/abs/2606.24509
+  - text: "node마다 representation 하나만 유지하고 feature 차원 상한이 고정돼 있다고 지적한다. 지원 class 수를 넘는 데이터셋 열에서는 NodePFN 결과를 아예 보고할 수 없었다."
+    tags: [feature-heterogeneity, label-space]
+    source: cited
+    by: "To Learn is to Wander: Learning Across Graphs and Tasks with Random Walks (2026)"
+    by_link: https://arxiv.org/abs/2610.06694
+  - text: "labeled node 사이의 dense self-attention 때문에 큰 그래프에서 추론 비용이 크다고 지적한다. 성능-비용 비교에서 NodePFN은 더 싸면서 더 정확한 방법에 dominate되어 Pareto frontier에 들지 못했고, 잘 튜닝된 supervised 방법보다 성능이 낮았다."
+    tags: [inference-cost, context-scale, zero-shot-gap]
+    source: cited
+    by: "NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)"
+    by_link: https://arxiv.org/abs/2609.39673
+  - text: "원 논문의 평가는 5만 node 미만 그래프에 한정되고 GNN baseline도 두 개뿐이라, GFM의 실제 경쟁력을 판단하기에 부족했다고 지적한다."
+    tags: [eval-protocol, graph-scale]
+    source: cited
+    by: "NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)"
+    by_link: https://arxiv.org/abs/2609.39673
+  - text: "[analyst] context 라벨 분포가 한 번도 통제되지 않는다. 사전학습의 context/query 분할은 stratification 없는 random partition이고, SCM이 만드는 class 비율도 따로 다루지 않는다. 반면 실제 평가는 class당 20개를 고정한 class-balanced context만 쓴다. 따라서 context가 불균형할 때 NodePFN이 어떻게 동작하는지는 검증되지 않았다."
+    tags: [label-imbalance, eval-protocol]
+    source: analyst
+  - text: "[analyst] 사전학습 그래프는 모두 1,024 node인데 평가는 Questions처럼 수만 node 그래프에서 이뤄진다. 이 크기·degree 외삽이 GCN branch에 어떤 영향을 주는지 분석이 없고, 큰 그래프를 한 번에 넣는지 나눠 넣는지도 논문에 적혀 있지 않다."
+    tags: [graph-scale, prior-mismatch]
+    source: analyst
+builds_on: [TabPFN, PFN, cSBM, GCN]
+compared_against: [GCN, GAT, MLP, GraphAny, SGC, HGC, LabelPropagation, TabPFN, H2GCN, GPRGNN, FAGCN, Node2Vec, LINE]
+open_questions:
+  - "context가 수천 개 이상으로 커질 때도 graph PFN의 ICL 이점이 유지되는가? efficient attention과 context 선택 중 어느 쪽이 맞는 해법인지 아직 답이 없다."
+  - "label-conditioned SBM과 ER 외에 degree 이질성, 계층적 community, label을 거치지 않는 feature-structure 결합 같은 prior 성분 중 무엇이 실제 그래프로 전이되는가? BA만 쓴 ablation은 데이터셋마다 결과가 들쭉날쭉했다."
+  - "padding과 tSVD 없이 feature 차원과 class 수 상한을 없앨 수 있는가? GraphPFN식 per-feature token이 유일한 답인지는 열려 있다."
+  - "context 라벨 분포가 사전학습 sampling과 다를 때, 예를 들어 불균형 context에서 graph PFN의 posterior가 얼마나 틀어지는가?"
+hooks:
+  - "(불균형 context) NodePFN은 사전학습에서 random partition, 즉 instance-balanced sampling으로 context를 뽑지만 평가는 class당 20개라는 class-balanced protocol을 쓴다. 따라서 기존 graph PFN이 사전학습과 평가에서 서로 다른 sampling을 암묵적으로 쓴다는 점을 motivation으로 명시할 수 있다. label skew를 prior 성분으로 넣는 접근은 이 축을 처음으로 명시적인 prior 변수로 만드는 작업으로 위치를 잡으면 된다. 공개 코드가 있으므로 vanilla NodePFN이 불균형 context에서 얼마나 무너지는지 보여주는 직접 baseline으로 쓸 수 있다. 다만 GraphPFN이 NodePFN을 크게 앞선다는 후속 결과가 있으므로, 같은 결론이 GraphPFN backbone에서도 재현되는지가 리뷰어 방어의 핵심이 된다."
+  - "(이질 feature 공간, per-graph codebook) NodePFN은 padding과 tSVD에 기대고, 데이터셋마다 SVD 성분 수(15~35개)를 따로 고르며, feature 순서·scaling 32개 앙상블로 순서 민감도를 덮는다. GraphPFN 저자들도 NodePFN을 돌릴 때 SVD 성분 수와 smoothing 단계를 validation으로 튜닝해야 했다. per-graph codebook 입력 인터페이스가 이 데이터셋별 튜닝과 앙상블을 없앤다는 점을 보여주면, graph-specific training이 없다는 PFN의 약속을 실제로 지키는 차별점이 된다. 비교표는 tSVD(NodePFN), per-feature token(GraphPFN), codebook 세 인터페이스를 같은 backbone에서 놓는 형태가 가장 직접적이다."
+  - "(그래프 구조를 넣은 MVTS PFN) 변수를 node로 보면, 층마다 입력·attention 출력·GCN 출력을 더하고 LayerNorm하는 NodePFN의 residual fusion이 TimePFN 계열에 관측 그래프를 넣는 가장 단순한 출발점이다. 특히 prior를 ER 50%와 cSBM 50%로 섞는 설계는 주어진 그래프가 쓸모없을 수도 있는 경우를 prior에 넣는 장치다. 시계열 쪽에서도 관측 그래프가 무의미한 경우를 prior에 섞어 두면, 모델이 쓸모없는 그래프를 무시하도록 학습되는지를 MPNN branch ablation과 함께 검증할 수 있다."
+notes: "NodePFN이라는 이름의 논문은 Choi et al.의 ICLR 2026 논문 하나만 확인됐다. 합성 graph prior로 사전학습한 node classification용 PFN이므로 이 논문으로 확정했다. 같은 그룹의 TabPFN-GN(그래프를 tabular로 바꿔 TabPFN에 넣는 논문)과는 다른 논문이다. OpenReview forum과 API가 이 세션에서 차단돼 reviewer weakness는 확인하지 못했고, review 항목은 비워 두었다. NodePFN을 인용하는 것으로 보이는 후보 두 편은 arXiv rate limit 때문에 본문을 읽지 못해 제외했다. 하나는 Learning a Prior-Data Fitted Network for Graph Foundation Models via Structural Causal Model Priors(arXiv 2610.38335)이고, 다른 하나는 Message Passing Does More with Less for In-Context Learning on Graphs(arXiv 2609.37057)다. 원 논문에는 homophily 정의가 본문(h = p_in/(p_in+p_out))과 부록(p_out = p_in(1-h))에서 서로 맞지 않는 불일치가 있다. 그래서 prior가 실제로 덮는 homophily 범위는 명목상의 U(0.1, 0.9)와 다를 수 있다. 헤드라인 평균 71.27%는 23개 데이터셋 평균이 아니라 homophilous 그룹과 heterophilous 그룹 평균을 다시 평균한 값이다."
+added: 2026-10-30
