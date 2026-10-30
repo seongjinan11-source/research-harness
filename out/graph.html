@@ -12,11 +12,12 @@
 </style></head><body>
 <div id="side">
  <h1>연구정리 하네스</h1>
- <div class="src">생성 2026-10-30 17:36</div>
+ <div class="src">생성 2026-10-30 17:41</div>
  <input id="q" type="text" placeholder="논문·태그 검색 후 Enter">
  <div class="ctl">
   <label><input type="checkbox" id="e_strength" checked> 강점 (논문 → 태그)</label>
   <label><input type="checkbox" id="e_limitation" checked> 한계 (논문 → 태그)</label>
+  <label><input type="checkbox" id="e_crit" checked> 비판 (후속 논문 → 원 논문)</label>
   <label><input type="checkbox" id="e_builds" checked> builds_on</label>
   <label><input type="checkbox" id="e_ext"> 외부 모델 노드</label>
   <label><input type="checkbox" id="e_weak" checked> 조사자 판단 한계 포함</label>
@@ -24,6 +25,7 @@
  <div class="lg" style="margin-top:6px">
   <span><i class="sw" style="background:#2e7d32"></i>강점</span>
   <span><i class="sw" style="background:#c62828"></i>한계(외부 지적=굵게)</span>
+  <span><i class="sw" style="background:#E67E22"></i>비판</span>
   <span><i class="sw" style="background:#4C78A8"></i>builds_on</span>
  </div>
  <div id="areas" class="lg" style="margin-top:4px"></div>
@@ -78,6 +80,7 @@ function styleEdge(e){
     s.color={color:"#c62828",opacity:.75}; s.width= strong?3:1.2; s.dashes = e.source==="analyst";
     s.title = (e.by? "["+e.by+"] ":"") + e.text; }
   else if(e.type==="idea"){ s.color={color:"#d4a400"}; s.dashes=true; }
+  else if(e.type==="critiques"){ s.color={color:"#E67E22"}; s.arrows="to"; s.width=2.2; s.title="비판: "+e.text; }
   else { s.color={color:"#4C78A8"}; s.arrows="to"; s.width=1.5; }
   return s;
 }
@@ -88,13 +91,14 @@ const edgeView = new vis.DataView(edges, {filter: e => {
   if(e.type==="strength") return ck("e_strength");
   if(e.type==="limitation") return ck("e_limitation") && (e.source!=="analyst" || ck("e_weak"));
   if(e.type==="builds_on") return ck("e_builds");
+  if(e.type==="critiques") return ck("e_crit");
   if(e.type==="builds_on_ext") return ck("e_builds") && ck("e_ext");
   return true; }});
 function ck(id){ return document.getElementById(id).checked; }
 const net = new vis.Network(document.getElementById("net"), {nodes:nodeView, edges:edgeView}, {
   physics:{solver:"forceAtlas2Based", forceAtlas2Based:{gravitationalConstant:-60, springLength:120}, stabilization:{iterations:300}},
   interaction:{hover:true, tooltipDelay:120}, nodes:{margin:8}, edges:{smooth:{type:"continuous"}}});
-["e_strength","e_limitation","e_builds","e_ext","e_weak"].forEach(id => document.getElementById(id).onchange = () => {nodeView.refresh(); edgeView.refresh();});
+["e_strength","e_limitation","e_crit","e_builds","e_ext","e_weak"].forEach(id => document.getElementById(id).onchange = () => {nodeView.refresh(); edgeView.refresh();});
 
 function paperHTML(d){
   const L = d.links||{};
@@ -103,6 +107,8 @@ function paperHTML(d){
    <h3>문제</h3><div>${esc(d.problem)}</div><h3>핵심 아이디어</h3><div>${esc(d.core_idea)}</div>
    <h3>강점</h3><ul>${d.strengths.map(s=>`<li>${esc(s.text)} ${tg(s.tags)}</li>`).join("")}</ul>
    <h3>한계</h3><ul>${d.limitations.map(s=>`<li>${esc(s.text)} ${tg(s.tags)}<br><span class="src">${esc(s.source)}${s.by?" — "+(s.by_link?`<a href="${esc(s.by_link)}" target="_blank">${esc(s.by)}</a>`:esc(s.by)):""}</span></li>`).join("")}</ul>
+   ${(()=>{const cb=DATA.edges.filter(e=>e.type==="critiques"&&e.to==="p:"+d.id).map(e=>e.from.slice(2)); const ct=DATA.edges.filter(e=>e.type==="critiques"&&e.from==="p:"+d.id).map(e=>e.to.slice(2));
+      return (cb.length?`<h3>이 논문을 비판한 후속 논문</h3><div>${[...new Set(cb)].map(esc).join(", ")}</div>`:"")+(ct.length?`<h3>이 논문이 비판한 논문</h3><div>${[...new Set(ct)].map(esc).join(", ")}</div>`:"");})()}
    ${d.open_questions.length?`<h3>열린 질문</h3><ul>${d.open_questions.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
    ${d.hooks.length?`<h3>내 연구 접점</h3><ul>${d.hooks.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}`;
 }

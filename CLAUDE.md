@@ -8,7 +8,7 @@
 - `taxonomy.yaml` — 강점과 한계에 공통으로 붙이는 태그. 같은 태그가 A의 한계이자 B의 강점이면 접목 후보가 된다.
 - `ideas/<이름>.yaml` — `check --save`로 저장한 아이디어.
 - `out/` — 빌드 결과물 (엑셀, 그래프, 후보). 직접 고치지 않는다.
-- `src/harness.py` — build / validate / tags / check.
+- `src/harness.py` — build / validate / tags / link / check.
 
 ## "논문 추가해줘" 요청을 받으면
 1. 논문 정체를 확정한다: 정확한 제목, 저자, venue, arXiv/OpenReview 링크, 코드 링크.
@@ -20,7 +20,17 @@
    - `analyst`: 조사자 판단. 최대 2개.
 4. 태그는 `taxonomy.yaml`에 있는 것만 쓴다. 맞는 게 없으면 taxonomy에 먼저 추가하고 쓴다.
 5. builds_on, compared_against, open_questions, hooks(사용자 연구와의 접점)를 채운다.
-6. `python src/harness.py validate` → 경고 0개 확인 → `python src/harness.py build`.
+6. `citation` 블록을 채운다. 아래 "인용 규칙"을 반드시 지킨다.
+7. 한계를 지적한 후속 논문(`cited`)이 이 하네스에 이미 있으면 `by_id`에 그 id를 적는다. 없으면 그 후속 논문도 새 항목으로 추가할지 사용자에게 묻는다.
+8. `python src/harness.py link` (by 제목이 하네스 논문과 일치하면 by_id 자동 기입) → `python src/harness.py validate` → 경고 0개 확인 → `python src/harness.py build`.
+
+## 인용 규칙 (할루시네이션 금지)
+- `citation`의 모든 값은 `verified_from`에 적은 페이지에서 **직접 읽은 것**만 쓴다. 기억이나 추정으로 채우지 않는다.
+- 저자는 전원, 원문 순서, 페이지에 표기된 철자 그대로. "et al."로 줄이지 않는다.
+- 학회 게재는 proceedings·OpenReview·학회 사이트에서 확인됐을 때만 `inproceedings`로 쓴다. 확인 못 하면 `misc` + `arxiv`로 둔다.
+- pages, volume, publisher처럼 확인 못 한 필드는 줄을 지운다. 빈칸이 틀린 값보다 낫다.
+- BibTeX는 직접 쓰지 않는다. build가 `citation` 블록에서 `out/refs.bib`를 생성한다.
+- `cited` 한계의 `by`(제목·연도)도 같은 기준이다. 지적한 문장을 실제로 본 논문만 넣는다.
 
 ## 아이디어 점검 요청을 받으면
 1. 아이디어를 taxonomy 태그 2~4개와 키워드로 바꾼다.

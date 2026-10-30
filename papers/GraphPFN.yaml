@@ -8,6 +8,20 @@ links:
   paper: https://arxiv.org/abs/2509.21489
   code: https://github.com/yandex-research/graphpfn
   openreview: https://openreview.net/forum?id=340Ep8sfJ3
+citation:
+  type: inproceedings
+  title: "GraphPFN: A Prior-Data Fitted Graph Foundation Model"
+  authors: ["Dmitry Eremeev", "Oleg Platonov", "Gleb Bazhenov", "Artem Babenko", "Liudmila Prokhorenkova"]
+  year: 2026
+  booktitle: "Proceedings of the 43rd International Conference on Machine Learning"
+  publisher: "PMLR"
+  volume: 306
+  pages: "28149--28165"
+  arxiv: "2509.21489"
+  url: https://proceedings.mlr.press/v306/eremeev26a.html
+  verified_from:
+    - https://proceedings.mlr.press/v306/eremeev26a.html
+    - https://www.arxiv.org/abs/2509.21489
 areas: [graph-fm, pfn, tabular-fm]
 problem: "G2T-FM·TAG처럼 hand-crafted graph feature를 붙여 tabular foundation model에 넘기는 방식에서 벗어나, 그래프 위에서 직접 사전학습된 PFN으로 node classification·regression을 in-context learning과 finetuning 모두에서 풀고자 한다."
 core_idea: "Backbone은 TabPFNv2 계열의 tabular PFN인 LimiX이며, 각 노드(sample)의 각 feature가 하나의 token이 되는 2축 token grid 구조를 그대로 쓴다. 저자들은 매 LimiX block 끝에 adjacency를 mask로 쓰는 multi-head attention adapter를 붙인다. 이 adapter는 sample 축을 따라 1-hop 이웃끼리만 정보를 교환하는 message passing 역할을 하고, feature token마다 독립적으로 같은 graph mask를 적용한다. Synthetic prior는 두 단계로 만든다. 구조는 여러 개의 SBM을 겹친 multi-level SBM에 preferential attachment로 저차수 주변부 노드를 덧붙여 생성한다. Attribute와 target은 TabICL식 MLP SCM에서 일부 neuron을 GNN aggregation neuron으로 바꾸고 degree·PageRank를 입력에 섞은 graph-aware SCM으로 생성한다. 사전학습은 LimiX checkpoint에서 출발해 backbone을 얼리고 adapter만 약 160만 개 synthetic graph로 학습하며, PFN supervised loss에 masked graph modeling(edge 복원) loss를 더한다. 추론은 가중치를 고정한 ICL(10회 ensemble, 8개 random feature 추가)과 전체 모델 finetuning 두 모드를 모두 지원한다."

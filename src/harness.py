@@ -16,6 +16,7 @@ import html
 import json
 import re
 import sys
+import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
@@ -70,6 +71,92 @@ def claims_of(p):
     return rows
 
 
+# ---------------------------------------------------------------- citations
+CITE_TYPES = {"inproceedings", "article", "misc"}
+_STOP = {"a", "an", "the", "of", "for", "and", "on", "in", "to", "via", "with", "from", "towards", "toward", "is", "are", "when"}
+
+
+def norm_title(t):
+    return re.sub(r"[^a-z0-9]+", " ", str(t).lower()).strip()
+
+
+def bib_keys(papers):
+    keys, used = {}, defaultdict(int)
+    for p in papers:
+        c = p.get("citation") or {}
+        authors = as_list(c.get("authors"))
+        last = authors[0].split()[-1] if authors else p["id"]
+        last = re.sub(r"[^A-Za-z]", "", unicodedata.normalize("NFKD", last)).lower() or re.sub(r"\W", "", p["id"]).lower()
+        words = [w for w in re.findall(r"[A-Za-z0-9]+", str(c.get("title", p.get("title", "")))) if w.lower() not in _STOP]
+        key = f"{last}{c.get('year', p.get('year', ''))}{(words[0] if words else 'paper').lower()}"
+        used[key] += 1
+        keys[p["id"]] = key if used[key] == 1 else f"{key}{chr(ord('a') + used[key] - 1)}"
+    return keys
+
+
+def _tex(v):
+    return str(v).replace("&", r"\&").replace("%", r"\%").replace("#", r"\#").replace("_", r"\_")
+
+
+def bibtex(p, key):
+    c = p.get("citation") or {}
+    if not c:
+        return ""
+    typ = c.get("type", "misc")
+    f = [("title", "{" + _tex(c.get("title", "")) + "}"), ("author", " and ".join(as_list(c.get("authors"))))]
+    if typ == "inproceedings" and c.get("booktitle"):
+        f.append(("booktitle", _tex(c["booktitle"])))
+    if typ == "article" and c.get("journal"):
+        f.append(("journal", _tex(c["journal"])))
+    for k in ("volume", "pages", "publisher"):
+        if c.get(k):
+            f.append((k, _tex(c[k])))
+    f.append(("year", c.get("year", "")))
+    if c.get("arxiv"):
+        if typ == "misc":
+            f.append(("howpublished", f"arXiv preprint arXiv:{c['arxiv']}"))
+        f += [("eprint", c["arxiv"]), ("archivePrefix", "arXiv")]
+    if c.get("url"):
+        f.append(("url", c["url"]))
+    body = ",\n".join(f"  {k} = {{{v}}}" for k, v in f if str(v) != "")
+    return f"@{typ}{{{key},\n{body}\n}}"
+
+
+def title_index(papers):
+    idx = {}
+    for p in papers:
+        for t in (p.get("title"), (p.get("citation") or {}).get("title")):
+            if t:
+                idx[norm_title(t)] = p["id"]
+    return idx
+
+
+def resolve_by_id(lim, tidx):
+    """by_id가 없으면 by 제목으로 하네스 안의 논문을 찾는다."""
+    if lim.get("by_id"):
+        return lim["by_id"]
+    by = norm_title(re.sub(r"\([^)]*\)\s*$", "", str(lim.get("by", ""))))
+    if not by:
+        return None
+    for t, pid in tidx.items():
+        if by == t or (len(t) > 25 and (by.startswith(t) or t.startswith(by))):
+            return pid
+    return None
+
+
+def critique_links(papers):
+    """(비판한 논문 id, 비판받은 논문 id, 한계) 목록."""
+    tidx, ids, out = title_index(papers), {p["id"] for p in papers}, []
+    for p in papers:
+        for lim in as_list(p.get("limitations")):
+            if lim.get("source") != "cited":
+                continue
+            bid = resolve_by_id(lim, tidx)
+            if bid in ids and bid != p["id"]:
+                out.append((bid, p["id"], lim))
+    return out
+
+
 # ---------------------------------------------------------------- validate
 def validate(papers, ideas, areas, tags):
     warns, ids = [], set()
@@ -100,6 +187,36 @@ def validate(papers, ideas, areas, tags):
                     warns.append(f"{pid}: limitation source '{c['source']}' 잘못됨")
                 if c["source"] in ("cited", "review") and not c["by_link"]:
                     warns.append(f"{pid}: {c['source']} 한계에 by_link 없음")
+    tidx = title_index(papers)
+    for p in papers:
+        pid, c = p.get("id"), p.get("citation")
+        if not pid:
+            continue
+        if not c:
+            warns.append(f"{pid}: citation 블록 없음")
+        else:
+            if c.get("type") not in CITE_TYPES:
+                warns.append(f"{pid}: citation.type '{c.get('type')}' 잘못됨")
+            for k in ("title", "authors", "year", "verified_from"):
+                if not c.get(k):
+                    warns.append(f"{pid}: citation.{k} 비어 있음")
+            if any("et al" in str(a).lower() for a in as_list(c.get("authors"))):
+                warns.append(f"{pid}: citation.authors에 et al. — 저자 전원을 적을 것")
+            if c.get("type") == "inproceedings" and not c.get("booktitle"):
+                warns.append(f"{pid}: inproceedings인데 booktitle 없음")
+            if c.get("type") == "article" and not c.get("journal"):
+                warns.append(f"{pid}: article인데 journal 없음")
+            if c.get("type") == "misc" and not (c.get("arxiv") or c.get("url")):
+                warns.append(f"{pid}: misc인데 arxiv/url 없음")
+            if c.get("title") and norm_title(c["title"]) != norm_title(p.get("title", "")):
+                warns.append(f"{pid}: title과 citation.title이 다름")
+        for lim in as_list(p.get("limitations")):
+            if lim.get("by_id") and lim["by_id"] not in ids:
+                warns.append(f"{pid}: by_id '{lim['by_id']}'가 하네스에 없음")
+            if lim.get("source") == "cited" and not lim.get("by_id"):
+                guess = resolve_by_id(lim, tidx)
+                if guess:
+                    warns.append(f"{pid}: by '{str(lim.get('by'))[:40]}…' → by_id: {guess} 로 연결 가능 (link 명령으로 자동 기입)")
     for i in ideas:
         for t in as_list(i.get("tags")):
             if t not in tags:
@@ -237,6 +354,12 @@ def check_idea(papers, tags_q, keywords, text=""):
 
 # ---------------------------------------------------------------- excel
 def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path):
+    keys = bib_keys(papers)
+    crit = critique_links(papers)
+    critiqued_by, critiques = defaultdict(list), defaultdict(list)
+    for a_, b_, _ in crit:
+        critiqued_by[b_].append(a_)
+        critiques[a_].append(b_)
     from openpyxl import Workbook
     from openpyxl.styles import Alignment, Font, PatternFill
     from openpyxl.utils import get_column_letter
@@ -288,6 +411,7 @@ def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path):
         ["Candidates", "A의 한계 하나와 B의 강점이 같은 태그로 걸린 건. 'A의 약점을 B의 장치로 메운다'는 접목 후보예요. 점수 = 한계 출처 신뢰도 × 태그 희소성 (+분야 교차 0.3). 후보 제안용이고, 실제로 메워지는지는 직접 판단."],
         ["Gaps", "태그별로 '한계로 지적한 논문'과 '해결했다는 논문'을 모은 표. '빈칸'은 아무도 해결 못 한 축이라 아이디어 후보지예요."],
         ["Ideas", "check --save 로 저장한 아이디어 기록."],
+        ["Citations", "논문별 인용 정보와 BibTeX. 모든 필드는 '확인한 페이지'에서 직접 읽은 값이에요. 전체 BibTeX는 out/refs.bib."],
         ["Tags", "태그 정의. 새 태그는 taxonomy.yaml에 먼저 추가."],
         ["", ""],
         ["편집 원칙", "이 엑셀은 빌드 결과물이에요. 내용 수정은 papers/*.yaml에서 하고 build를 다시 돌리세요."],
@@ -296,7 +420,7 @@ def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path):
     for row in ws.iter_rows(min_row=2, max_col=1):
         row[0].font = Font(bold=True)
 
-    rows, link_cols = [], [16, 17]
+    rows, link_cols = [], [18, 19]
     for p in papers:
         lims = as_list(p.get("limitations"))
         ext = sum(1 for x in lims if x.get("source") in ("cited", "review"))
@@ -304,22 +428,30 @@ def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path):
             p["id"], p.get("title", ""), p.get("authors", ""), p.get("venue", ""), p.get("year", ""),
             c(p.get("areas")), p.get("problem", ""), p.get("core_idea", ""), j(p.get("key_assumptions")),
             len(as_list(p.get("strengths"))), f"{len(lims)} ({ext})", c(p.get("builds_on")),
-            j(p.get("open_questions")), j(p.get("hooks")), p.get("notes", ""),
-            (p.get("links") or {}).get("paper", ""), (p.get("links") or {}).get("code", ""), str(p.get("added", "")),
+            c(sorted(set(critiqued_by[p["id"]]))), c(sorted(set(critiques[p["id"]]))),
+            j(p.get("open_questions")), j(p.get("hooks")),
+            keys.get(p["id"], ""),
+            (p.get("links") or {}).get("paper", ""), (p.get("links") or {}).get("code", ""),
+            p.get("notes", ""), str(p.get("added", "")),
         ])
     sheet("Papers",
           ["id", "title", "authors", "venue", "year", "areas", "문제", "핵심 아이디어", "가정",
-           "강점 수", "한계 수 (외부 지적)", "builds_on", "열린 질문", "내 연구 접점", "notes", "paper", "code", "added"],
-          [14, 40, 18, 14, 7, 14, 40, 60, 40, 8, 12, 18, 45, 45, 30, 30, 30, 11], rows, links=link_cols)
+           "강점 수", "한계 수 (외부 지적)", "builds_on", "비판한 후속 논문", "이 논문이 비판한 논문",
+           "열린 질문", "내 연구 접점", "인용 키", "paper", "code", "notes", "added"],
+          [14, 40, 18, 14, 7, 14, 40, 60, 40, 8, 12, 18, 22, 22, 45, 45, 22, 30, 30, 30, 11], rows, links=link_cols)
 
     rows, fills = [], []
+    tidx = title_index(papers)
     for p in papers:
         for cl in claims_of(p):
+            by_id = ""
+            if cl["kind"] == "limitation" and cl["source"] == "cited":
+                by_id = resolve_by_id(cl, tidx) or ""
             rows.append([cl["paper"], "강점" if cl["kind"] == "strength" else "한계",
-                         SOURCE_KO.get(cl["source"], ""), c(cl["tags"]), cl["text"], cl["by"], cl["by_link"]])
+                         SOURCE_KO.get(cl["source"], ""), c(cl["tags"]), cl["text"], cl["by"], by_id, cl["by_link"]])
             fills.append(FILL[cl["kind"]])
-    sheet("Claims", ["paper", "구분", "출처", "tags", "내용", "지적한 논문", "링크"],
-          [14, 7, 14, 26, 90, 40, 36], rows, fills=fills, links=[7])
+    sheet("Claims", ["paper", "구분", "출처", "tags", "내용", "지적한 논문", "지적한 논문 id", "링크"],
+          [14, 7, 14, 26, 90, 40, 16, 36], rows, fills=fills, links=[8])
 
     rows = []
     for i, cd in enumerate(cands, 1):
@@ -337,6 +469,16 @@ def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path):
     rows = [[i.get("id", ""), str(i.get("date", "")), i.get("text", ""), c(i.get("tags")), c(i.get("keywords"))]
             for i in ideas]
     sheet("Ideas", ["id", "date", "아이디어", "tags", "keywords"], [18, 11, 90, 30, 30], rows)
+
+    rows = []
+    for p in papers:
+        ct = p.get("citation") or {}
+        venue = ct.get("booktitle") or ct.get("journal") or (f"arXiv:{ct['arxiv']}" if ct.get("arxiv") else "")
+        rows.append([p["id"], keys.get(p["id"], ""), ct.get("type", ""), ct.get("title", ""),
+                     "; ".join(as_list(ct.get("authors"))), venue, ct.get("year", ""), ct.get("url", ""),
+                     "\n".join(as_list(ct.get("verified_from"))), bibtex(p, keys.get(p["id"], ""))])
+    sheet("Citations", ["id", "인용 키", "type", "title", "authors", "venue", "year", "url", "확인한 페이지", "BibTeX"],
+          [14, 24, 12, 45, 50, 40, 7, 34, 40, 70], rows, links=[8])
 
     rows = [[k, "tag", v] for k, v in tags.items()] + [[k, "area", v] for k, v in areas.items()]
     sheet("Tags", ["이름", "종류", "설명"], [24, 8, 90], rows)
@@ -392,6 +534,9 @@ def graph_data(papers, ideas, areas, tags):
                                   "source": c["source"], "source_ko": SOURCE_KO.get(c["source"], c["source"]),
                                   "text": c["text"], "by": c["by"]})
 
+    for a_, b_, lim in critique_links(papers):
+        edges.append({"from": f"p:{a_}", "to": f"p:{b_}", "type": "critiques", "text": lim.get("text", "")})
+
     for i in ideas:
         nodes.append({"id": f"i:{i['id']}", "label": i["id"], "group": "idea", "shape": "star", "size": 14,
                       "color": "#EECA3B", "detail": {"kind": "idea", **{k: i.get(k) for k in ("id", "text", "tags")}}})
@@ -425,6 +570,7 @@ GRAPH_HTML = r"""<!DOCTYPE html>
  <div class="ctl">
   <label><input type="checkbox" id="e_strength" checked> 강점 (논문 → 태그)</label>
   <label><input type="checkbox" id="e_limitation" checked> 한계 (논문 → 태그)</label>
+  <label><input type="checkbox" id="e_crit" checked> 비판 (후속 논문 → 원 논문)</label>
   <label><input type="checkbox" id="e_builds" checked> builds_on</label>
   <label><input type="checkbox" id="e_ext"> 외부 모델 노드</label>
   <label><input type="checkbox" id="e_weak" checked> 조사자 판단 한계 포함</label>
@@ -432,6 +578,7 @@ GRAPH_HTML = r"""<!DOCTYPE html>
  <div class="lg" style="margin-top:6px">
   <span><i class="sw" style="background:#2e7d32"></i>강점</span>
   <span><i class="sw" style="background:#c62828"></i>한계(외부 지적=굵게)</span>
+  <span><i class="sw" style="background:#E67E22"></i>비판</span>
   <span><i class="sw" style="background:#4C78A8"></i>builds_on</span>
  </div>
  <div id="areas" class="lg" style="margin-top:4px"></div>
@@ -452,6 +599,7 @@ function styleEdge(e){
     s.color={color:"#c62828",opacity:.75}; s.width= strong?3:1.2; s.dashes = e.source==="analyst";
     s.title = (e.by? "["+e.by+"] ":"") + e.text; }
   else if(e.type==="idea"){ s.color={color:"#d4a400"}; s.dashes=true; }
+  else if(e.type==="critiques"){ s.color={color:"#E67E22"}; s.arrows="to"; s.width=2.2; s.title="비판: "+e.text; }
   else { s.color={color:"#4C78A8"}; s.arrows="to"; s.width=1.5; }
   return s;
 }
@@ -462,13 +610,14 @@ const edgeView = new vis.DataView(edges, {filter: e => {
   if(e.type==="strength") return ck("e_strength");
   if(e.type==="limitation") return ck("e_limitation") && (e.source!=="analyst" || ck("e_weak"));
   if(e.type==="builds_on") return ck("e_builds");
+  if(e.type==="critiques") return ck("e_crit");
   if(e.type==="builds_on_ext") return ck("e_builds") && ck("e_ext");
   return true; }});
 function ck(id){ return document.getElementById(id).checked; }
 const net = new vis.Network(document.getElementById("net"), {nodes:nodeView, edges:edgeView}, {
   physics:{solver:"forceAtlas2Based", forceAtlas2Based:{gravitationalConstant:-60, springLength:120}, stabilization:{iterations:300}},
   interaction:{hover:true, tooltipDelay:120}, nodes:{margin:8}, edges:{smooth:{type:"continuous"}}});
-["e_strength","e_limitation","e_builds","e_ext","e_weak"].forEach(id => document.getElementById(id).onchange = () => {nodeView.refresh(); edgeView.refresh();});
+["e_strength","e_limitation","e_crit","e_builds","e_ext","e_weak"].forEach(id => document.getElementById(id).onchange = () => {nodeView.refresh(); edgeView.refresh();});
 
 function paperHTML(d){
   const L = d.links||{};
@@ -477,6 +626,8 @@ function paperHTML(d){
    <h3>문제</h3><div>${esc(d.problem)}</div><h3>핵심 아이디어</h3><div>${esc(d.core_idea)}</div>
    <h3>강점</h3><ul>${d.strengths.map(s=>`<li>${esc(s.text)} ${tg(s.tags)}</li>`).join("")}</ul>
    <h3>한계</h3><ul>${d.limitations.map(s=>`<li>${esc(s.text)} ${tg(s.tags)}<br><span class="src">${esc(s.source)}${s.by?" — "+(s.by_link?`<a href="${esc(s.by_link)}" target="_blank">${esc(s.by)}</a>`:esc(s.by)):""}</span></li>`).join("")}</ul>
+   ${(()=>{const cb=DATA.edges.filter(e=>e.type==="critiques"&&e.to==="p:"+d.id).map(e=>e.from.slice(2)); const ct=DATA.edges.filter(e=>e.type==="critiques"&&e.from==="p:"+d.id).map(e=>e.to.slice(2));
+      return (cb.length?`<h3>이 논문을 비판한 후속 논문</h3><div>${[...new Set(cb)].map(esc).join(", ")}</div>`:"")+(ct.length?`<h3>이 논문이 비판한 논문</h3><div>${[...new Set(ct)].map(esc).join(", ")}</div>`:"");})()}
    ${d.open_questions.length?`<h3>열린 질문</h3><ul>${d.open_questions.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
    ${d.hooks.length?`<h3>내 연구 접점</h3><ul>${d.hooks.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}`;
 }
@@ -542,6 +693,7 @@ def main(argv=None):
     sub.add_parser("build")
     sub.add_parser("validate")
     sub.add_parser("tags")
+    sub.add_parser("link", help="cited 한계의 by 제목이 하네스 논문과 일치하면 by_id를 YAML에 기입")
     ck = sub.add_parser("check")
     ck.add_argument("--tags", default="")
     ck.add_argument("--keywords", default="")
@@ -556,6 +708,28 @@ def main(argv=None):
     if a.cmd == "validate":
         print("\n".join(warns) or "문제 없음")
         return 1 if warns else 0
+
+    if a.cmd == "link":
+        tidx, n = title_index(papers), 0
+        for p in papers:
+            path = PAPERS_DIR / p["_file"]
+            lines = path.read_text(encoding="utf-8").split("\n")
+            out, i = [], 0
+            lims = [l for l in as_list(p.get("limitations")) if l.get("source") == "cited" and not l.get("by_id")]
+            want = {str(l.get("by")): resolve_by_id(l, tidx) for l in lims}
+            for ln in lines:
+                out.append(ln)
+                m = re.match(r"^(\s+)by:\s*(.+)$", ln)
+                if m:
+                    val = m.group(2).strip().strip('"').strip("'")
+                    pid = want.get(val)
+                    if pid and pid != p["id"]:
+                        out.append(f"{m.group(1)}by_id: {pid}")
+                        n += 1
+            if out != lines:
+                path.write_text("\n".join(out), encoding="utf-8")
+        print(f"by_id {n}개 기입")
+        return 0
 
     if a.cmd == "tags":
         for r in tag_table(papers, tags):
@@ -590,8 +764,10 @@ def main(argv=None):
     write_excel(papers, ideas, areas, tags, cands, tagrows, OUT_DIR / "research_harness.xlsx")
     write_graph(graph_data(papers, ideas, areas, tags), OUT_DIR / "graph.html")
     write_candidates_md(cands, tagrows, OUT_DIR / "candidates.md")
+    keys = bib_keys(papers)
+    (OUT_DIR / "refs.bib").write_text("\n\n".join(b for b in (bibtex(p, keys[p["id"]]) for p in papers) if b) + "\n", encoding="utf-8")
     print(f"논문 {len(papers)}편, 아이디어 {len(ideas)}개, 접목 후보 {len(cands)}건")
-    print("→ out/research_harness.xlsx, out/graph.html, out/candidates.md")
+    print("→ out/research_harness.xlsx, out/graph.html, out/candidates.md, out/refs.bib")
     return 0
 
 

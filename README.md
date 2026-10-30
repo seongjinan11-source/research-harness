@@ -13,6 +13,7 @@ pip install -r requirements.txt
 python src/harness.py build      # out/ 에 엑셀, 그래프, 접목 후보 생성
 python src/harness.py validate   # 태그·필드 검사
 python src/harness.py tags       # 태그별로 누가 한계이고 누가 해결했는지
+python src/harness.py link       # 후속 논문 제목이 하네스 항목과 일치하면 by_id 자동 연결
 
 # 아이디어 점검: 차별점 정리 대상, 동기로 쓸 한계, 키워드 매치
 python src/harness.py check \
@@ -23,9 +24,10 @@ python src/harness.py check \
 ```
 
 ## 결과물 (`out/`)
-- `research_harness.xlsx` — Papers / Claims / Candidates / Gaps / Ideas / Tags 시트
-- `graph.html` — 브라우저로 여는 인터랙티브 그래프. 논문(박스)과 태그(타원)가 강점(초록)·한계(빨강) 선으로 연결됨. 오프라인 동작.
+- `research_harness.xlsx` — Papers / Claims / Candidates / Gaps / Ideas / Citations / Tags 시트
+- `graph.html` — 브라우저로 여는 인터랙티브 그래프. 논문(박스)과 태그(타원)가 강점(초록)·한계(빨강) 선으로 연결되고, 후속 논문 → 원 논문 비판은 주황 화살표. 오프라인 동작.
 - `candidates.md` — 접목 후보 순위와 빈칸(아무도 해결 못 한 축)
+- `refs.bib` — 전체 BibTeX. `citation` 블록(확인한 페이지에서 읽은 값)에서 자동 생성
 
 ## 논문 추가
 `papers/_TEMPLATE.yaml`을 복사해서 `papers/<id>.yaml`로 채운다.

@@ -1,5 +1,5 @@
 # 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
-id: ShortName                    # 짧은 키. builds_on 등에서 이 키로 참조
+id: ShortName                    # 짧은 키. builds_on, by_id 등에서 이 키로 참조
 title: "Full Paper Title"
 authors: "First Author et al."
 venue: "ICML 2024"               # 미게재면 "arXiv 2025"
@@ -7,6 +7,23 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/xxxx.xxxxx
   code: https://github.com/...   # 없으면 줄 삭제
+
+# --- 인용 정보: 모든 필드는 verified_from 페이지에서 직접 읽은 값만. 모르면 그 줄을 지운다. ---
+citation:
+  type: inproceedings            # inproceedings(학회) | article(저널) | misc(arXiv 등 미게재)
+  title: "Full Paper Title"      # 원문 그대로 (대소문자 포함)
+  authors: ["First Author", "Second Author"]   # 전원, 원문 순서, 페이지 표기 그대로
+  year: 2024
+  booktitle: "Proceedings of the 41st International Conference on Machine Learning"  # inproceedings
+  journal: "Transactions on Machine Learning Research"                              # article
+  publisher: "PMLR"              # 확인된 경우만
+  volume: 235                    # 확인된 경우만
+  pages: "1--20"                 # 확인된 경우만
+  arxiv: "xxxx.xxxxx"            # 있으면
+  url: https://...               # 정식판 URL (없으면 arXiv)
+  verified_from:                 # 위 값을 읽은 페이지들
+    - https://arxiv.org/abs/xxxx.xxxxx
+
 areas: [tsfm]                    # taxonomy.yaml의 areas
 problem: "무엇을 풀려는가 (한 문장)"
 core_idea: "메커니즘 요약 (2~4문장)"
@@ -23,6 +40,7 @@ limitations:
     tags: [eval-protocol]
     source: cited
     by: "Citing Paper Title (2025)"
+    by_id: CitingPaperId         # 지적한 논문이 이 하네스에 있으면 그 id (그래프에 critiques 화살표가 생김)
     by_link: https://arxiv.org/abs/...
 builds_on: [TabPFN]              # 이 하네스의 다른 id 또는 외부 모델 이름
 compared_against: [Chronos]
@@ -30,4 +48,5 @@ open_questions:
   - "이 논문이 남긴 열린 질문"
 hooks:                           # 사용자 연구와의 접점 (선택)
   - "..."
+notes: ""
 added: 2026-10-30

@@ -7,6 +7,20 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2402.03885
   code: https://github.com/moment-timeseries-foundation-model/moment
+citation:
+  type: inproceedings
+  title: "MOMENT: A Family of Open Time-series Foundation Models"
+  authors: ["Mononito Goswami", "Konrad Szafer", "Arjun Choudhry", "Yifu Cai", "Shuo Li", "Artur Dubrawski"]
+  year: 2024
+  booktitle: "Proceedings of the 41st International Conference on Machine Learning"
+  publisher: "PMLR"
+  volume: 235
+  pages: "16115--16152"
+  arxiv: "2402.03885"
+  url: https://proceedings.mlr.press/v235/goswami24a.html
+  verified_from:
+    - https://proceedings.mlr.press/v235/goswami24a.html
+    - https://www.arxiv.org/abs/2402.03885
 areas: [tsfm]
 problem: "도메인, sampling rate, 길이, 스케일이 제각각인 공개 시계열만으로 사전학습해서, 적은 supervision으로 forecasting·classification·anomaly detection·imputation에 두루 쓸 수 있는 범용 모델을 만드는 것이 목표다."
 core_idea: "먼저 Informer 장기 예측 데이터, Monash, UCR/UEA, TSB-UAD를 모아 Time-series Pile이라는 공개 사전학습 데이터를 만든다. 모델은 T5 구조의 transformer encoder이고, 각 채널을 독립된 단변량 시계열로 본다. 길이 512 입력을 RevIN으로 정규화한 뒤 길이 8짜리 patch 64개로 나누고, 그중 30%를 학습 가능한 [MASK] embedding으로 가린 다음 MSE로 복원하도록 학습한다. downstream에서는 같은 reconstruction head로 imputation과 anomaly detection(복원 오차)을 zero-shot으로 수행하고, classification은 고정된 embedding 위에 SVM을 올리며, forecasting은 head를 forecasting head로 바꿔 linear probing이나 fine-tuning을 한다. 크기는 small, base, large 세 가지이며 각각 약 40M, 125M, 385M 파라미터다."
