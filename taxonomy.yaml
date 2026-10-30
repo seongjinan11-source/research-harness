@@ -1,0 +1,44 @@
+# 강점(strengths)과 한계(limitations)에 공통으로 붙이는 태그.
+# 같은 태그가 A의 한계이면서 B의 강점이면 "A + B" 접목 후보가 된다.
+# 새 태그가 필요하면 여기에 먼저 추가하고 쓴다. (build 시 미등록 태그는 경고)
+
+areas:
+  graph-fm: 그래프 foundation model
+  pfn: Prior-data fitted network / in-context learning on synthetic priors
+  tabular-fm: 테이블 foundation model
+  tsfm: 시계열 foundation model
+  mvts: 다변량 시계열
+  bo: Bayesian optimization
+  eda: 반도체 / EDA
+  ml-foundations: ML 근본론 (scaling, ICL 이론, 일반화 등)
+
+tags:
+  # --- 데이터 / 사전학습 ---
+  prior-mismatch: synthetic prior와 실제 데이터 분포 사이의 간극
+  pretraining-data: 사전학습 데이터의 양·다양성·구성에 대한 의존
+  eval-protocol: 벤치마크 누수(사전학습 데이터와 평가셋 중복), 평가 protocol·baseline 공정성
+  # --- 규모 / 비용 ---
+  context-scale: context(학습 샘플 수, 노드 수, 시계열 길이)가 커질 때의 메모리·성능 한계
+  inference-cost: 추론·학습 비용, latency
+  # --- 입력 이질성 ---
+  feature-heterogeneity: 데이터셋마다 다른 feature 차원·의미를 하나의 모델로 다루는 문제
+  label-space: 지원 클래스 수·라벨 공간 제약
+  label-imbalance: context 라벨 분포 불균형
+  # --- 그래프 ---
+  graph-structure-use: 그래프 구조를 쓰는 방식 (heterophily, long-range, message passing 한계)
+  graph-scale: 대규모 그래프 처리
+  # --- 시계열 ---
+  channel-dependency: 변수 간 의존성 모델링 (channel-independent 가정 포함)
+  covariates: 외생 변수·covariate 활용
+  context-horizon: 입력 context 길이·예측 horizon 제약
+  nonstationarity: 분포 변화, regime shift, 오래된 history 처리
+  tokenization: patching·tokenization·입력 표현 설계
+  # --- 일반 ---
+  task-coverage: 지원 태스크 범위 (예측만, 분류만 등)
+  zero-shot-gap: zero-shot 성능, fine-tuning·probe 의존도
+  adaptation: fine-tuning·적응 방법과 비용
+  uncertainty: 확률적 예측, calibration
+  training-stability: 사전학습·fine-tuning의 안정성, seed 간 변동
+  robustness: irrelevant context·noise·adversarial 입력에 대한 민감도
+  interpretability: 해석 가능성
+  theory-gap: 왜 작동하는지에 대한 이론적 설명

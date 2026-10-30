@@ -1,0 +1,33 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: ShortName                    # 짧은 키. builds_on 등에서 이 키로 참조
+title: "Full Paper Title"
+authors: "First Author et al."
+venue: "ICML 2024"               # 미게재면 "arXiv 2025"
+year: 2024
+links:
+  paper: https://arxiv.org/abs/xxxx.xxxxx
+  code: https://github.com/...   # 없으면 줄 삭제
+areas: [tsfm]                    # taxonomy.yaml의 areas
+problem: "무엇을 풀려는가 (한 문장)"
+core_idea: "메커니즘 요약 (2~4문장)"
+key_assumptions:
+  - "방법이 성립하려면 필요한 가정"
+strengths:
+  - text: "강점 한 가지"
+    tags: [context-horizon]      # taxonomy.yaml의 tags
+limitations:
+  - text: "한계 한 가지"
+    tags: [channel-dependency]
+    source: self                 # self(저자 인정) | cited(후속 논문 지적) | review(OpenReview 리뷰) | analyst(조사자 판단)
+  - text: "후속 논문이 지적한 한계"
+    tags: [eval-protocol]
+    source: cited
+    by: "Citing Paper Title (2025)"
+    by_link: https://arxiv.org/abs/...
+builds_on: [TabPFN]              # 이 하네스의 다른 id 또는 외부 모델 이름
+compared_against: [Chronos]
+open_questions:
+  - "이 논문이 남긴 열린 질문"
+hooks:                           # 사용자 연구와의 접점 (선택)
+  - "..."
+added: 2026-10-30

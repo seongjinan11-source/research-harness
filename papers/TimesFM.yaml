@@ -1,0 +1,95 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: TimesFM
+title: "A decoder-only foundation model for time-series forecasting"
+authors: "Abhimanyu Das, Weihao Kong, Rajat Sen, Yichen Zhou (Google Research)"
+venue: "ICML 2024"
+year: 2024
+links:
+  paper: https://arxiv.org/abs/2310.10688
+  code: https://github.com/google-research/timesfm
+areas: [tsfm]
+problem: "한 번 사전학습한 모델이 처음 보는 데이터셋에서도 추가 학습 없이(zero-shot) dataset별 supervised 모델에 가까운 예측 정확도를 낼 수 있는가."
+core_idea: "시계열을 길이 32의 겹치지 않는 patch로 잘라 token으로 쓰고, GPT처럼 causal attention을 쓰는 decoder-only transformer(약 200M)가 지금까지의 patch로 다음 구간을 예측하도록 MSE로 학습한다. 출력 patch(128)를 입력 patch(32)보다 길게 잡아서 긴 horizon을 적은 autoregressive step으로 생성한다. 학습 때 첫 patch 앞부분을 무작위 길이로 masking해서 1부터 최대 길이(512)까지 모든 context 길이를 경험하게 만든다. 사전학습 데이터는 Google Trends와 Wikipedia pageview가 대부분을 차지하는 실제 시계열에 ARMA·seasonality·trend·step function을 섞은 synthetic 시계열을 절반 비율로 더한 것이다."
+key_assumptions:
+  - "도메인과 granularity가 달라도 trend, seasonality, 자기상관 같은 temporal pattern은 공유되므로, 각 series 자신의 과거만 보고도 외삽할 수 있다고 가정한다."
+  - "각 series를 독립된 univariate 입력으로 다뤄도 충분하다고 본다. 다른 변수나 covariate 정보는 모델에 들어가지 않는다."
+  - "웹 트래픽 위주의 실제 데이터와 단순한 synthetic 생성기를 섞은 corpus가 downstream 분포를 충분히 덮는다고 가정한다."
+  - "입력 context는 gap 없이 연속이고, context와 horizon이 같은 frequency여야 한다(공개 checkpoint 기준)."
+strengths:
+  - text: "출력 patch를 입력 patch보다 길게 잡은 설계 덕분에 긴 horizon을 적은 decoding step으로 예측한다. 512 step 예측 ablation에서 출력 patch 128이 32보다 오차가 작았는데, step 수가 16에서 4로 줄어 누적 오차가 줄어든 효과로 해석된다."
+    tags: [tokenization, context-horizon, inference-cost]
+  - text: "첫 patch를 무작위 길이로 masking하는 학습 트릭 하나로, patch 길이의 배수가 아닌 context까지 포함해 임의 길이 입력을 하나의 모델로 처리한다."
+    tags: [context-horizon, tokenization]
+  - text: "200M 규모의 비교적 작은 모델로 Monash, Darts, ETT에서 zero-shot 성능이 dataset별 supervised 모델과 비슷한 수준에 도달했다. GPT-3 기반 LLMTime보다 Monash에서 10% 이상 좋으면서 추론 비용은 훨씬 작다."
+    tags: [zero-shot-gap, inference-cost]
+  - text: "synthetic 데이터를 빼면 실제 데이터에 드문 granularity(quarterly, yearly, 10분 등)와 15분 ETT에서 성능이 떨어진다는 ablation을 보여, 실제 corpus의 빈 곳을 synthetic prior로 메우는 효과를 실증했다."
+    tags: [pretraining-data, prior-mismatch]
+  - text: "17M, 70M, 200M으로 키울수록 Monash 오차가 단조 감소해 시계열에서도 규모를 키우는 효과가 있음을 초기에 보였다."
+    tags: [pretraining-data]
+  - text: "입출력 residual block만 학습 데이터 10%로 fine-tuning해도 ETT에서 GPT4TS 등 기존 방법보다 평균적으로 좋아, 가벼운 적응 경로가 있다."
+    tags: [adaptation]
+limitations:
+  - text: "covariate를 쓰지 않는다. 저자들은 covariate가 붙은 대규모 corpus가 드물어서 사전학습에 넣지 않았다고 밝힌다. 대안으로 추론 시 잔차를 covariate에 회귀하거나 fine-tuning 때 residual block에 covariate를 넣는 방법을 제안만 하고 실험은 하지 않았다."
+    tags: [covariates]
+    source: self
+  - text: "입력을 univariate로 한정한다고 명시한다. 다변량 데이터셋은 series별로 따로 예측하고 metric만 평균 내므로, 변수 간 의존성은 전혀 모델링하지 않는다."
+    tags: [channel-dependency]
+    source: self
+  - text: "MSE로 학습한 point forecast가 기본이다. quantile head나 likelihood 출력으로 확률 예측을 붙이는 것은 쉽다고 하지만 이번 연구의 초점이 아니었다고 인정한다. 사용자가 예측을 조정할 수 있는 수단이 사실상 context 길이 하나뿐이라는 점도 저자들이 직접 언급한다."
+    tags: [uncertainty]
+    source: self
+  - text: "분포 밖 데이터에서 zero-shot이 왜 잘 되는지에 대한 이론적 이해는 향후 과제로 남겼다. 학습 비용 때문에 hyperparameter와 다른 architecture(all-MLP, Mamba 등) 탐색도 제한적이었다고 밝힌다."
+    tags: [theory-gap]
+    source: self
+  - text: "ARIMA나 ETS 같은 고전 모델보다 해석이 어렵다고 인정한다. SHAP이나 LOCO 같은 attribution으로 어떤 lag가 중요한지 보는 방향만 제시했다."
+    tags: [interpretability]
+    source: self
+  - text: "사전학습 데이터가 Google Trends와 Wiki pageview에 크게 의존해서 시계열이 나온 도메인의 다양성이 부족하다고 지적한다. 비교표에서도 TimesFM을 any-variate zero-shot과 probabilistic forecasting을 지원하지 않는 모델로 분류한다."
+    tags: [pretraining-data, channel-dependency, uncertainty]
+    source: cited
+    by: "Unified Training of Universal Time Series Forecasting Transformers (Moirai, 2024)"
+    by_link: https://arxiv.org/abs/2402.02592
+  - text: "GIFT-Eval에서 TimesFM은 medium·long horizon으로 갈수록 성능이 크게 떨어졌다. 저자들은 decoder-only 구조의 recursive multi-step 예측에서 오차가 누적되기 때문이라고 해석한다. 또한 TimesFM 사전학습 데이터가 GIFT-Eval test 데이터와 일부 겹친다고 표시했다."
+    tags: [context-horizon, eval-protocol]
+    source: cited
+    by: "GIFT-Eval: A Benchmark For General Time Series Forecasting Model Evaluation (2024)"
+    by_link: https://arxiv.org/abs/2410.10393
+  - text: "TimesFM이 frequency embedding으로 데이터를 frequency 단위로 구분하는 방식을 사람이 정한 heuristic이라고 비판한다. frequency가 실제 패턴을 잘 대변하지 못하고, non-stationary 시계열에는 frequency 단위 구분이 너무 거칠다는 것이 근거다. 평가에서도 TimesFM의 Monash와 Electricity 결과에 사전학습 데이터 중복 표시를 달았다."
+    tags: [tokenization, nonstationarity, eval-protocol]
+    source: cited
+    by: "Moirai-MoE: Empowering Time Series Foundation Models with Sparse Mixture of Experts (2025)"
+    by_link: https://arxiv.org/abs/2410.10469
+  - text: "TimesFM처럼 MSE나 quantile loss로 단봉(unimodal) 분포를 맞추는 모델은 도메인마다 크게 다른 예측 분포 앞에서 mode collapse와 지나치게 매끄러운 예측을 낳는다고 지적한다. 예측의 신뢰 수준을 알려주지 못해 의사결정용으로는 신뢰도가 떨어진다는 점도 함께 든다."
+    tags: [uncertainty]
+    source: cited
+    by: "Sundial: A Family of Highly Capable Time Series Foundation Models (2025)"
+    by_link: https://arxiv.org/abs/2502.00816
+  - text: "TimesFM을 univariate 전용 사전학습 모델로 분류하고, 다변량 의존성과 covariate를 무시하는 기존 TSFM의 대표 사례로 든다. 기능 비교표에서 TimesFM(2.5 기준)은 multivariate, past/known/categorical covariate, cross-learning을 모두 지원하지 않는다."
+    tags: [channel-dependency, covariates]
+    source: cited
+    by: "Chronos-2: From Univariate to Universal Forecasting (2025)"
+    by_link: https://arxiv.org/abs/2510.15821
+  - text: "기존 한 벤치마크가 TimesFM(및 UniTS, TTM)의 사전학습에 이미 쓰인 데이터셋 3개를 test로 써서, 해당 모델들이 누수 없는 최고 모델보다 MSE가 47~184% 낮게 나왔다고 추정한다. 누수 없는 데이터셋에서는 최고 TSFM의 우위가 0.3~14%에 그쳤다. Monash의 Australian Electricity Demand처럼 어떤 모델은 사전학습에, TimesFM은 zero-shot 평가에 쓰는 데이터셋은 모델 간 비교에 쓸 수 없다고도 지적한다."
+    tags: [eval-protocol]
+    source: cited
+    by: "Challenges and Requirements for Benchmarking Time Series Foundation Models (2025)"
+    by_link: https://arxiv.org/abs/2510.13654
+  - text: "[analyst] 실제 데이터의 time point 대부분이 Wiki pageview와 Google Trends라는 웹 관심도 시계열이다. 교통·전력 같은 물리 센서 시계열(Traffic, LibCity, Electricity)은 비중이 아주 작고 바로 그 데이터들이 흔한 벤치마크와 겹친다. 따라서 센서 네트워크 데이터에서의 zero-shot 성능이 일반화 능력인지 작은 중복 데이터의 기억인지 이 논문만으로는 구분하기 어렵다."
+    tags: [pretraining-data, eval-protocol]
+    source: analyst
+  - text: "[analyst] 긴 horizon에 대한 근거가 좁다. 주 zero-shot 비교는 ETT 4개 데이터셋의 horizon 96과 192뿐이고, 512 step 예측은 출력 patch 길이 ablation에서만 다룬다. 출력 patch를 길게 잡은 설계가 장기 예측의 누적 오차를 충분히 막는지는 이후 GIFT-Eval 결과를 보면 의문이 남는다."
+    tags: [context-horizon, eval-protocol]
+    source: analyst
+builds_on: [PatchTST, TiDE, decoder-only LLM (GPT)]
+compared_against: [LLMTime, PatchTST, N-BEATS, N-HiTS, DeepAR, FEDformer, Autoformer, Informer, GPT4TS, DLinear, TimesNet, ARIMA, ETS]
+open_questions:
+  - "분포 밖 데이터에서 zero-shot이 되는 이유는 무엇인가. Wiki·Trends 실제 데이터와 synthetic 데이터가 각각 어떤 능력에 기여하는지 분리해서 설명할 수 있는가."
+  - "zero-shot 일반성을 잃지 않으면서 covariate와 다변량 의존성을 사전학습 단계에서 넣을 수 있는가."
+  - "긴 출력 patch의 autoregressive rollout과 horizon 전체를 한 번에 내는 direct 방식 중 무엇이 장기 예측 누적 오차에 유리한가."
+  - "엄격하게 누수를 걸러낸 평가에서 보고된 zero-shot 우위가 얼마나 남는가."
+hooks:
+  - "(a) irrelevant context: TimesFM은 구조상 다른 stream을 아예 보지 못하므로 nuisance stream에 면역인 channel-independent 기준선이 된다. Chronos-2·Moirai에 nuisance stream을 넣었을 때 TimesFM 수준보다 나빠지는지를 보면 '추가 context의 해악'을 절대 기준으로 잴 수 있다. 저자들이 제안한 covariate 잔차 회귀(2.5의 XReg로 구현)도 irrelevant covariate에 과적합하는지 같은 audit에 세 번째 대상으로 넣을 만하다."
+  - "(a') obsolete history: 저자들 스스로 context 길이가 사용자가 쓸 수 있는 거의 유일한 조절 수단이라고 말하고, 무작위 masking으로 모든 context 길이를 학습했다. 따라서 regime shift 후 '수동으로 context를 잘라내는 것'을 기본 처방으로 두고, 모델이 스스로 shift 이전 history를 무시하도록 만드는 방법이 이 처방을 얼마나 이기는지로 문제를 세울 수 있다."
+  - "(b)(c) graph 시계열 PFN: TimesFM 사전학습에는 PeMS 기반 Traffic(hourly)과 LibCity의 15분 교통 시계열이 들어 있어서, PEMS·METR-LA류 벤치마크에서 TimesFM과 비교하려면 먼저 데이터 중복부터 확인해야 한다. 중복을 걸러낸 뒤에는 변수 간 정보를 전혀 쓰지 않는 TimesFM을 하한으로 두고, 관측 그래프나 cross-variable interface를 넣은 모델이 얼마나 더 좋은지로 구조 정보의 순수 기여를 분리할 수 있다."
+notes: "ICML 2024 정식판은 PMLR v235, pp.10148-10167(https://proceedings.mlr.press/v235/das24c.html)이다. OpenReview forum(https://openreview.net/forum?id=jn2iTJas6h)은 있지만 ICML은 리뷰를 공개하지 않고 접근도 차단되어 review 항목은 비웠다. 후속 버전으로 TimesFM 2.0(약 500M, context 2048)과 TimesFM 2.5(2025년 9월, 200M, context 최대 16k, 선택형 30M continuous quantile head, 2025년 10월 XReg covariate 지원 복구)가 있다. Chronos-2와 fev-bench의 비교는 주로 2.5 기준이며, fev-bench는 2.5에 대해 10% task에서 누수 표시를 했다. 공개된 1.0 checkpoint는 frequency indicator(0/1/2)를 입력으로 받는데, Moirai-MoE의 frequency embedding 비판은 이 부분을 겨냥한다."
+added: 2026-10-30

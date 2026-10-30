@@ -1,0 +1,91 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: MOMENT
+title: "MOMENT: A Family of Open Time-series Foundation Models"
+authors: "Mononito Goswami, Konrad Szafer, Arjun Choudhry, Yifu Cai, Shuo Li, Artur Dubrawski"
+venue: "ICML 2024"
+year: 2024
+links:
+  paper: https://arxiv.org/abs/2402.03885
+  code: https://github.com/moment-timeseries-foundation-model/moment
+areas: [tsfm]
+problem: "도메인, sampling rate, 길이, 스케일이 제각각인 공개 시계열만으로 사전학습해서, 적은 supervision으로 forecasting·classification·anomaly detection·imputation에 두루 쓸 수 있는 범용 모델을 만드는 것이 목표다."
+core_idea: "먼저 Informer 장기 예측 데이터, Monash, UCR/UEA, TSB-UAD를 모아 Time-series Pile이라는 공개 사전학습 데이터를 만든다. 모델은 T5 구조의 transformer encoder이고, 각 채널을 독립된 단변량 시계열로 본다. 길이 512 입력을 RevIN으로 정규화한 뒤 길이 8짜리 patch 64개로 나누고, 그중 30%를 학습 가능한 [MASK] embedding으로 가린 다음 MSE로 복원하도록 학습한다. downstream에서는 같은 reconstruction head로 imputation과 anomaly detection(복원 오차)을 zero-shot으로 수행하고, classification은 고정된 embedding 위에 SVM을 올리며, forecasting은 head를 forecasting head로 바꿔 linear probing이나 fine-tuning을 한다. 크기는 small, base, large 세 가지이며 각각 약 40M, 125M, 385M 파라미터다."
+key_assumptions:
+  - "다변량 시계열도 채널을 서로 독립적으로 처리하면 충분하다는 channel-independence 가정에 기대고 있다."
+  - "고정 길이 512 window 안에 대부분의 downstream 태스크에 필요한 정보가 들어 있다고 본다."
+  - "masked patch reconstruction으로 배운 표현이 forecasting, classification, anomaly detection, imputation 모두로 전이된다고 가정한다."
+  - "instance normalization 뒤에 남는 모양 정보가 핵심이고, 절대 level과 scale은 버려도 된다고 본다."
+  - "공개 데이터셋을 모은 Pile이 실제 응용 도메인을 대표할 만큼 다양하다고 가정한다."
+strengths:
+  - text: "모델 가중치, 사전학습 데이터(Time-series Pile), 코드를 모두 공개했다. 당시 TSFM 다수가 데이터나 가중치를 닫아 두었던 상황에서 재현과 후속 분석의 기반이 되었다."
+    tags: [pretraining-data]
+  - text: "하나의 사전학습 모델로 forecasting, classification, anomaly detection, imputation 네 가지 태스크를 다룬다. 같은 reconstruction head를 그대로 써서 imputation과 anomaly detection은 별도 학습 없이 수행할 수 있다."
+    tags: [task-coverage]
+  - text: "supervision을 거의 쓰지 않아도 성능이 강하다. 고정 embedding 위 SVM만으로 UCR classification에서 데이터셋별로 학습한 방법 대부분을 앞섰고, linear probing만으로 장기 예측에서 PatchTST 다음 수준에 도달했으며, anomaly detection과 imputation에서도 TimesNet·GPT4TS보다 나았다."
+    tags: [zero-shot-gap, adaptation]
+  - text: "patching, RevIN, 좌측 zero-padding, channel 단위 처리라는 단순한 조합으로 길이·스케일·채널 수가 다른 데이터셋을 한 모델에 넣는다. 데이터셋마다 구조를 바꿀 필요가 없다."
+    tags: [tokenization, feature-heterogeneity]
+  - text: "embedding이 trend, amplitude, frequency, phase 같은 해석 가능한 성질을 담는지 합성 데이터로 직접 확인했다. 이 분석은 이후 같은 그룹의 representation probing·steering 연구로 이어졌다."
+    tags: [interpretability]
+limitations:
+  - text: "입력마다 정규화를 하기 때문에 수직 이동(level shift)만 다른 두 시계열을 구분하지 못한다. 저자들이 직접 밝힌 한계다."
+    tags: [tokenization]
+    source: self
+  - text: "zero-shot 단기 예측이 가장 약한 태스크였다. M3·M4 부분집합에서 Theta, ETS 같은 통계 기법에 대체로 밀렸고 저자들도 개선 여지가 가장 크다고 인정했다. 향후 과제로 causal attention과 forecasting objective로 다시 사전학습하는 방향을 제시했다."
+    tags: [zero-shot-gap, task-coverage]
+    source: self
+  - text: "sampling frequency 같은 시간 해상도 정보를 모델에 명시적으로 넣지 않았다고 저자들이 밝혔다."
+    tags: [tokenization]
+    source: self
+  - text: "harm과 trustworthiness 평가가 부족하다고 인정했다. high-stakes 응용에 쓰기 전에는 in-domain 데이터로 fine-tuning하고 검증하라고 권고했다."
+    tags: [adaptation]
+    source: self
+  - text: "통합 forecasting 벤치마크에서 MOMENT를 channel independence를 가정하는 대표 모델로 분류했다. 변수 간 상관이 강한 데이터셋에서는 channel dependence를 다루는 foundation model보다 뒤처졌고, 특히 Traffic에서 고전했다고 지적했다. runtime과 정확도 양쪽에서 dataset-specific 모델에 밀린다는 평가도 함께 내렸다."
+    tags: [channel-dependency, inference-cost]
+    source: cited
+    by: "FoundTS: Comprehensive and Unified Benchmarking of Foundation Models for Time Series Forecasting (2024)"
+    by_link: https://arxiv.org/abs/2410.11802
+  - text: "MOMENT가 고정된 입력 context 길이에 묶여 있다는 점을 범용성의 제약으로 꼽았다. 여섯 개 벤치마크 평균의 zero-shot 장기 예측 비교에서 MOMENT는 MSE와 MAE가 가장 나쁜 baseline이었다."
+    tags: [context-horizon, zero-shot-gap]
+    source: cited
+    by: "Time-MoE: Billion-Scale Time Series Foundation Models with Mixture of Experts (ICLR 2025)"
+    by_link: https://arxiv.org/abs/2409.16040
+  - text: "MOMENT의 사전학습 데이터에 anomaly detection 데이터셋이 포함되어 있어 평가 데이터 오염 위험을 주요 우려로 제기했다. 단변량 벤치마크에서는 MOMENT가 foundation model 중 유일하게 상위권에 들었지만 Sub-PCA, KShapeAD, POLY 같은 단순 통계 기법보다는 아래였다. 다변량 벤치마크에서는 상위 12개 안에 들지 못했다."
+    tags: [eval-protocol, channel-dependency]
+    source: cited
+    by: "The Elephant in the Room: Towards A Reliable Time-Series Anomaly Detection Benchmark (NeurIPS 2024 Datasets and Benchmarks)"
+    by_link: https://proceedings.neurips.cc/paper_files/paper/2024/file/c3f3c690b7a99fba16d0efd35cb83b2c-Paper-Datasets_and_Benchmarks_Track.pdf
+  - text: "MOMENT를 포함한 다섯 TSFM 계열을 reconstruction·forecasting error 기반 anomaly detector로 평가했다. 모델 크기와 context 길이를 바꿔도 moving-window variance 같은 한 줄짜리 baseline과 유의미한 차이가 없었다. 이상 구간이 정상 구간보다 꼭 더 복원하기 어렵지 않기 때문에, 복원 오차로 이상을 잡는다는 전제 자체가 이 모델들에서 성립하지 않는다는 진단이다."
+    tags: [task-coverage, zero-shot-gap]
+    source: cited
+    by: "When Foundation Models are One-Liners: Limitations and Future Directions for Time Series Anomaly Detection (ICLR 2026)"
+    by_link: https://openreview.net/forum?id=H27kvyG4qf
+  - text: "MOMENT는 기본 설정에서 단변량 입력만 다루고 확률적 예측을 내지 못한다고 정리했다. 불확실성 추정이 필요한 응용에는 바로 쓰기 어렵다는 뜻이다."
+    tags: [uncertainty, channel-dependency]
+    source: cited
+    by: "Foundation Models for Time Series: A Survey (2025)"
+    by_link: https://arxiv.org/abs/2504.04011
+  - text: "MOMENT-Large의 layer 간 CKA 유사도를 보면 여러 layer가 거의 같은 표현을 내는 block 구조가 나타났다. 이 중복 block을 잘라내도 장기 예측 성능은 거의 유지되면서 메모리가 크게 줄었다. 385M 파라미터 중 상당 부분이 효율적으로 쓰이지 않는다는 뜻이다. MOMENT 저자 일부가 참여한 후속 분석이다."
+    tags: [inference-cost, interpretability]
+    source: cited
+    by: "Exploring Representations and Interventions in Time Series Foundation Models (ICML 2025)"
+    by_link: https://arxiv.org/abs/2409.12915
+  # review: ICML 2024 OpenReview forum(https://openreview.net/forum?id=FVvf69a5rx)은 존재하지만 리뷰 본문을 확인하지 못해 미기재.
+  - text: "[analyst] Time-series Pile에는 평가에 쓰인 ETT, Electricity, Traffic, Weather, UCR 데이터셋의 train split이 그대로 들어 있다. test split은 분리했으므로 엄밀한 누수는 아니다. 그래도 장기 예측, classification, imputation 결과는 같은 데이터셋의 다른 구간을 본 in-distribution 성능에 가깝고, 처음 보는 도메인으로의 일반화를 보여주지는 않는다."
+    tags: [eval-protocol, pretraining-data]
+    source: analyst
+  - text: "[analyst] 사전학습만으로 바로 쓸 수 있는 zero-shot forecasting 경로가 없다. 장기 예측은 horizon마다 forecasting head를 linear probing으로 학습해야 하고, 단기 예측의 zero-shot도 source 데이터셋에서 fine-tuning한 뒤 target으로 옮기는 transfer 설정이다. 그래서 Chronos나 TimesFM의 zero-shot forecasting과 같은 기준으로 비교하기 어렵다."
+    tags: [zero-shot-gap, adaptation]
+    source: analyst
+builds_on: [T5, PatchTST, RevIN]
+compared_against: [PatchTST, Time-LLM, GPT4TS, TimesNet, FEDformer, DLinear, N-BEATS, TS2Vec, Anomaly Transformer, DGHL, Theta, ETS, ARIMA]
+open_questions:
+  - "masked reconstruction으로 학습한 encoder가 causal·forecasting objective로 학습한 decoder 계열(TimesFM, Time-MoE 등)만큼 zero-shot 예측을 할 수 있는가. 저자들도 이 방향을 향후 과제로 남겼다."
+  - "channel-independent로 사전학습한 backbone에 cross-channel 모듈을 얹으면 Traffic처럼 상관이 강한 데이터에서 이득을 보면서 다른 데이터에서는 손해를 보지 않을 수 있는가."
+  - "Pile에 포함되지 않은 도메인에서 평가하면 MOMENT의 장점이 얼마나 남는가. 같은 데이터셋의 train split을 본 효과와 진짜 일반화를 어떻게 분리할 것인가."
+  - "복원 오차 기반 anomaly detection의 전제가 깨진다면, TSFM 표현을 이상탐지에 쓰는 올바른 기준은 무엇인가."
+hooks:
+  - "MOMENT는 채널을 batch 차원으로 펴서 처리하므로 다른 stream을 추가해도 대상 변수의 출력이 구조적으로 바뀌지 않는다. nuisance-context 연구에서 Chronos-2나 Moirai가 irrelevant stream 때문에 잃는 성능을 재는 channel-independent 기준선으로 쓰기 좋다. 관련 있는 stream이 있을 때 얻는 이득도 같은 기준선 대비로 재면, context를 쓰는 대가와 이득을 한 표에서 보여줄 수 있다."
+  - "FoundTS가 지적한 Traffic 약점은 변수 간 구조를 무시한 비용으로 읽을 수 있다. frozen MOMENT를 노드별 patch encoder로 쓰고 그 위에 관측 그래프 기반 message passing이나 변수쌍 interaction 모듈만 학습하면, backbone이 완전히 channel-independent이므로 성능 차이를 그래프·cross-variable 모듈의 효과로 깨끗하게 귀속시킬 수 있다. 단, Informer Traffic은 PEMS03/04/07/08과 같은 Caltrans PeMS 출처이고 그 train split이 Pile에 들어 있으므로 PEMS 평가에서는 도메인 중복을 명시해야 한다."
+  - "MOMENT는 bidirectional encoder라서 특정 구간의 patch만 가렸을 때 나머지 구간의 복원이 얼마나 바뀌는지 학습 없이 잴 수 있다. regime shift 이전 구간을 가려도 최근 구간의 복원이 거의 변하지 않는지를 보면, 모델이 obsolete history에 얼마나 기대는지 진단하는 간단한 probe가 된다."
+added: 2026-10-30
