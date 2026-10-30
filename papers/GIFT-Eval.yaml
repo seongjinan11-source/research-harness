@@ -1,0 +1,90 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: GIFT-Eval
+title: "GIFT-Eval: A Benchmark for General Time Series Forecasting Model Evaluation"
+authors: "Taha Aksu, Gerald Woo, Juncheng Liu, Xu Liu, Chenghao Liu, Silvio Savarese, Caiming Xiong, Doyen Sahoo"
+venue: "NeurIPS 2024 Workshop (Time Series in the Age of Large Models)"
+year: 2024
+links:
+  paper: https://arxiv.org/abs/2410.10393
+  code: https://github.com/SalesforceAIResearch/gift-eval
+
+citation:
+  type: inproceedings
+  title: "GIFT-Eval: A Benchmark for General Time Series Forecasting Model Evaluation"
+  authors: ["Taha Aksu", "Gerald Woo", "Juncheng Liu", "Xu Liu", "Chenghao Liu", "Silvio Savarese", "Caiming Xiong", "Doyen Sahoo"]
+  year: 2024
+  booktitle: "NeurIPS 2024 Workshop on Time Series in the Age of Large Models"
+  arxiv: "2410.10393"
+  url: https://neurips.cc/virtual/2024/103025
+  verified_from:
+    - https://arxiv.org/pdf/2410.10393
+    - https://arxiv.org/html/2410.10393v2
+    - https://neurips.cc/virtual/2024/103025
+
+areas: [benchmark, tsfm]
+problem: "TSFM이 zero-shot으로 다양한 데이터에 쓰인다고 주장하지만, 도메인·frequency·horizon·변수 수를 고루 덮으면서 사전학습 데이터 누수까지 통제한 평가 기준이 없었다. 이 논문은 그런 범용 forecasting 벤치마크를 만드는 것이 목표다."
+core_idea: "23개 데이터셋(univariate 15, multivariate 8)에서 약 14만 4천 개 series를 모아 test 벤치마크를 만들었다. 7개 도메인과 10개 frequency를 포함한다. horizon은 short를 기준으로 medium은 10배, long은 15배로 잡아서 데이터셋·frequency·horizon 조합 97개를 평가 단위로 쓴다. 각 데이터셋의 마지막 10%를 test로 두고, horizon 길이의 겹치지 않는 rolling window로 평가한다. point forecast는 MAPE, 확률 예측은 CRPS로 재고, 둘 다 Seasonal Naive로 정규화한다. 최종 순위는 97개 조합에서 CRPS로 매긴 순위의 평균이다. 이와 별도로 test와 겹치지 않는 사전학습 corpus(88개 데이터셋, 약 450만 series, 약 2,300억 data point)를 공개하고, 이 corpus로 Moirai를 다시 학습해 누수 없는 비교 기준을 만들었다. 통계 기법, deep learning, foundation model을 합쳐 17개 baseline을 평가했고, tsfeatures의 통계 feature 여섯 가지로 데이터셋 성격을 기술해 결과와 연결했다."
+key_assumptions:
+  - "도메인, frequency, horizon 길이, 변수 수라는 네 축으로 데이터를 나누면 모델이 어디서 강하고 약한지 드러난다고 본다."
+  - "데이터셋 끝부분 10%를 시간 순으로 떼어 test로 쓰면 미래 예측 성능을 대표한다고 가정한다."
+  - "Seasonal Naive 대비 상대 오차와 CRPS 기준 평균 순위로 집계하면 특정 데이터셋이 결과를 좌우하지 않는다고 본다."
+  - "test series 자체가 사전학습 corpus에 들어가지 않으면 누수가 통제된다고 본다. 같은 기간의 상관된 다른 series가 들어가는 경우는 따로 다루지 않는다."
+strengths:
+  - text: "7개 도메인, 10개 frequency, 세 가지 horizon 길이, univariate와 multivariate를 한 벤치마크에 담았다. 결과를 각 축별로 쪼개 보여주기 때문에 모델이 어떤 조건에서 무너지는지 읽을 수 있다. 실제로 foundation model은 daily 이상 저주파와 univariate에서 강했지만, minutely·hourly 고주파와 multivariate에서는 PatchTST, iTransformer, TFT 같은 dataset별 deep learning 모델에 밀렸다."
+    tags: [task-coverage, zero-shot-gap]
+  - text: "test와 겹치지 않는 대규모 사전학습 corpus를 test 벤치마크와 함께 공개했다. 이 corpus로 Moirai를 다시 학습해 누수가 없는 foundation model 비교점을 직접 만들었다. 의도적으로 test 데이터 일부를 넣은 Moirai ablation으로 누수가 성능을 부풀린다는 것도 보였는데, 후속 TSFM-BenchReqs가 이 결과를 긴 horizon과 큰 모델일수록 효과가 커진다는 근거로 인용했다."
+    tags: [eval-protocol, pretraining-data]
+  - text: "point 지표만 보지 않고 CRPS로 확률 예측을 평가했다. 모든 점수를 Seasonal Naive 대비 비율로 정규화하고, 97개 조합별 순위를 평균 내서 스케일이 큰 데이터셋 하나가 집계를 지배하지 않게 했다."
+    tags: [uncertainty, eval-protocol]
+  - text: "foundation model만 비교하지 않고 통계 기법 5종과 dataset별로 학습한 deep learning 모델 8종을 함께 넣었다. deep learning 모델에는 광범위한 hyperparameter search를 했기 때문에, foundation model의 우위가 약한 baseline 덕분이라는 반론을 줄였다."
+    tags: [eval-protocol]
+  - text: "horizon별 분석으로 구조적 약점을 드러냈다. autoregressive하게 여러 step을 생성하는 TimesFM과 Chronos는 medium·long horizon에서 성능이 떨어졌고, 저자들은 이를 누적 오차로 해석했다. 모델 크기를 키우면 좋아진다는 경향도 energy 도메인 등 일부에서만 나타나 일관되지 않았다."
+    tags: [context-horizon]
+limitations:
+  - text: "TimesFM, Chronos, Moirai의 공개 사전학습 데이터가 GIFT-Eval test와 부분적으로 겹친다고 저자들이 인정했다. 누수 영향은 부록에서 따로 분석했지만, 본문 결과표에는 누수 상태가 서로 다른 공개 모델들이 같은 기준으로 나란히 들어가 있다."
+    tags: [eval-protocol, pretraining-data]
+    source: self
+  - text: "데이터셋 성격 분석에 쓴 tsfeatures가 매우 긴 series에서는 yearly seasonal strength를 계산하지 못해, 저주파 데이터의 seasonality 기술이 빠져 있다고 저자들이 밝혔다."
+    tags: [eval-protocol]
+    source: self
+  - text: "GIFT-Eval을 series를 많이 모으고 각 series는 시간상 한 번만 나누는 방식의 대표 사례로 분류했다. 저자들은 시간과 series를 함께 교차검증하는 방식을 best practice로 보는데 GIFT-Eval은 여기에 해당하지 않는다. 또 GIFT-Eval의 leak-free corpus를 포함한 기존 누수 대책이 누수 경로를 체계적으로 분석하지 않은 사후 대응이라고 평가했다. 구체적 사례로 Solar를 들었다. GIFT-Eval은 Alabama 부분집합을 test로 쓰는데 Chronos 사전학습에는 미국 전체 주의 solar 데이터가 들어 있고, 변형된 Alabama 버전은 Monash를 거쳐 TinyTimeMixers와 Lag-Llama 사전학습에도 쓰였다. Sundial은 GIFT-Eval과의 중복을 제거했다고만 밝히고 목록은 공개하지 않았다."
+    tags: [eval-protocol, pretraining-data]
+    source: cited
+    by: "Rethinking Evaluation in the Era of Time Series Foundation Models: (Un)known Information Leakage Challenges (2025)"
+    by_id: TSFM-BenchReqs
+    by_link: https://arxiv.org/abs/2510.13654
+  - text: "GIFT-Eval처럼 도메인·frequency 같은 고정된 meta label로 데이터셋을 묶으면, 서로 다른 도메인의 변수들이 비슷한 시간 패턴을 보이는 경우가 많아서 왜 모델이 잘하는지 설명하지 못한다고 지적했다. frequency에 비례해 horizon을 정하는 GIFT-Eval 방식도 실제 예측 요구와 분리된 일률적 설정으로 보았다. 기존에 공개된 데이터셋을 다시 모은 구성이라 사전학습 corpus에 일부 흡수됐을 가능성이 크고, task 단위 집계는 집계 수준에 따라 순위가 크게 바뀐다는 점도 함께 들었다. GIFT-Eval 저자 중 한 명(Chenghao Liu)이 참여한 후속 연구다."
+    tags: [eval-protocol, context-horizon]
+    source: cited
+    by: "It's TIME: Towards the Next Generation of Time Series Forecasting Benchmarks (ICML 2026)"
+    by_link: https://proceedings.mlr.press/v306/qiao26g.html
+  - text: "trend, seasonality, forecastability를 각각 high/low로 나눈 8개 regime으로 보면 GIFT-Eval series의 50.7%가 셋 다 low인 한 칸에 몰려 있다고 지적했다. series의 절반은 길이가 200 미만이라 긴 context를 평가할 수 없다. 겹치지 않는 window를 최대 20개까지만 쓰기 때문에 long horizon에서는 series당 평가 window가 한두 개뿐이고, 그래서 headline 점수가 평가 시점 선택에 민감하다고 보았다."
+    tags: [eval-protocol, context-horizon]
+    source: cited
+    by: "QUITOBENCH: A High-Quality Open Time Series Forecasting Benchmark (2026)"
+    by_link: https://arxiv.org/abs/2603.26017
+  - text: "GIFT-Eval을 가장 포괄적인 기존 범용 forecasting 벤치마크로 인정하면서도, covariate가 있는 task가 하나도 없다는 점을 비교표로 보였다. frequency 분포에서도 1분·30분 단위 task가 없다. 기존 벤치마크 전반의 집계가 단일 숫자 요약에 그쳐 통계적 엄밀성이 부족하다는 비판도 했는데, 이것은 GIFT-Eval만 지목한 문장은 아니다."
+    tags: [covariates, eval-protocol]
+    source: cited
+    by: "fev-bench: A Realistic Benchmark for Time Series Forecasting (2025)"
+    by_link: https://arxiv.org/abs/2509.26468
+  # review: NeurIPS 2024 TSALM workshop OpenReview forum(https://openreview.net/forum?id=Z2cMOOANFX)은 존재하지만 브라우저 인증 화면에 막혀 리뷰 본문을 확인하지 못해 미기재.
+  - text: "[analyst] multivariate 평가가 매우 얇다. test series 144,246개 중 140,711개가 univariate이고, 2변량이 3,522개, 7변량이 10개, 21변량이 3개뿐이다. 변수 7개 이상인 series가 13개밖에 없어서 cross-channel 모델링 능력은 사실상 검증되지 않는다. univariate 모델에는 multivariate 데이터를 펼쳐서 넣으므로 multivariate 결과도 channel-independent 처리와의 비교에 가깝다."
+    tags: [channel-dependency, eval-protocol]
+    source: analyst
+  - text: "[analyst] 도메인별 우열 차이를 사전학습 데이터 구성 차이로 설명하지만, 같은 corpus로 학습한 비교는 Moirai 한 계열뿐이다. TimesFM, Chronos, VisionTS는 서로 다른 데이터로 학습한 공개 checkpoint를 그대로 썼기 때문에 아키텍처 효과와 데이터 효과를 분리할 수 없다."
+    tags: [pretraining-data, eval-protocol]
+    source: analyst
+builds_on: [Moirai, GluonTS, tsfeatures]
+compared_against: [TimesFM, Moirai, Chronos, VisionTS, PatchTST, iTransformer, TFT, TiDE, N-BEATS, DeepAR, DLinear, Crossformer, Naive, Seasonal Naive, AutoARIMA, AutoETS, AutoTheta]
+open_questions:
+  - "고주파 데이터와 medium·long horizon에서 foundation model이 dataset별 deep learning 모델에 지는 이유가 사전학습 데이터 분포 때문인가, autoregressive decoding 구조 때문인가."
+  - "모든 foundation model을 GIFT-Eval 사전학습 corpus 하나로 다시 학습하면 공개 checkpoint 기준 순위가 얼마나 유지되는가."
+  - "같은 기간의 상관된 series가 사전학습에 들어가는 indirect leakage까지 막으려면 GIFT-Eval의 test 구간을 어떻게 다시 잘라야 하는가."
+  - "covariate와 고차원 multivariate task를 추가하면 univariate 위주 평가에서 나온 결론이 바뀌는가."
+hooks:
+  - "nuisance-context 연구의 평가를 GIFT-Eval 위에 얹을 수 있다. GIFT-Eval 사전학습 split으로 학습한 Moirai를 쓰면 대상 series와 주입하는 irrelevant stream 모두 사전학습에서 보지 않았다고 말할 수 있다. 점수를 Seasonal Naive 대비 CRPS로 보고하면 공개 leaderboard와 같은 단위로 비교된다. GIFT-Eval의 multivariate 평가가 얇다는 점은 오히려 이 연구가 메우는 빈칸으로 쓸 수 있다. 다만 TSFM-BenchReqs의 지적대로, 주입하는 stream은 test 기간과 시간이 겹치지 않는 것을 골라야 '무관한 정보 무시'와 '같은 시기 정보 활용'이 섞이지 않는다."
+  - "Transport 도메인에서 foundation model이 PatchTST·TFT에 졌고, 저자들은 이 도메인의 높은 entropy와 낮은 trend를 원인으로 들었다. 관측 그래프를 넣는 다변량 시계열 PFN의 동기로 쓸 수 있는 결과다. Transport 데이터셋에 실제 센서 그래프가 붙어 있는지는 따로 확인해야 한다."
+  - "GIFT-Eval이 쓴 여섯 가지 통계 feature(trend, seasonality, entropy, Hurst, stability, lumpiness)와 QuitoBench의 regime 칸을 synthetic prior의 coverage 점검 축으로 쓸 수 있다. 시계열 PFN의 prior에서 뽑은 series와 GIFT-Eval series의 feature 분포를 비교하면 prior-mismatch가 어느 축에서 생기는지 학습 전에 볼 수 있다."
+notes: "NeurIPS 2024 가상 페이지는 첫 저자를 'Ibrahim Taha Aksu'로 표기하고, arXiv PDF와 HTML은 'Taha Aksu'로 표기한다. citation은 논문 PDF 표기를 따랐다. 논문 본문의 수치 일부가 서로 다르다(test 177M vs 표 합계 약 158M data point, 사전학습 230B vs 서론 240B). 부록(누수 분석 F.2, 사전학습 corpus 구성 E, 모델 설정 A)은 이번에 열람한 PDF·HTML 추출본에 포함되지 않아 직접 확인하지 못했다. Moirai 누수 ablation 내용은 TSFM-BenchReqs의 인용을 통해 확인했다."
+added: 2026-10-30

@@ -1,0 +1,90 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: FoundTS
+title: "TSFM-Bench: A Comprehensive and Unified Benchmark of Foundation Models for Time Series Forecasting"
+authors: "Zhe Li, Xiangfei Qiu, Peng Chen, Yihang Wang, Hanyin Cheng, Yang Shu, Jilin Hu, Chenjuan Guo, Aoying Zhou, Christian S. Jensen, Bin Yang"
+venue: "KDD 2025"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2410.11802
+  code: https://github.com/decisionintelligence/TSFM-Bench
+
+citation:
+  type: inproceedings
+  title: "TSFM-Bench: A Comprehensive and Unified Benchmark of Foundation Models for Time Series Forecasting"
+  authors: ["Zhe Li", "Xiangfei Qiu", "Peng Chen", "Yihang Wang", "Hanyin Cheng", "Yang Shu", "Jilin Hu", "Chenjuan Guo", "Aoying Zhou", "Christian S. Jensen", "Bin Yang"]
+  year: 2025
+  booktitle: "Proceedings of the 31st ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2"
+  publisher: "ACM"
+  pages: "5595--5606"
+  arxiv: "2410.11802"
+  url: https://doi.org/10.1145/3711896.3737442
+  verified_from:
+    - https://arxiv.org/abs/2410.11802v6
+    - https://arxiv.org/html/2410.11802v6
+    - https://vbn.aau.dk/ws/files/802150402/3711896.3737442.pdf
+    - https://pure.ecnu.edu.cn/en/publications/tsfm-bench-a-comprehensive-and-unified-benchmark-of-foundation-mo/
+
+areas: [benchmark, tsfm]
+problem: "TSFM 논문마다 데이터셋, split 비율, normalization, few-shot 샘플링, lookback 설정이 제각각이라 결과를 서로 비교할 수 없었다. 이 논문은 zero-shot, few-shot, full-shot을 하나의 표준 protocol로 평가하는 TSFM 전용 forecasting 벤치마크를 만드는 것이 목표다."
+core_idea: "TSFM 14개를 평가한다. LLM 기반이 6개(GPT4TS, CALF, S²IP-LLM, Time-LLM, LLMMixer, UniTime)이고, 시계열로 사전학습한 모델이 8개(Chronos, TimesFM, Timer, UniTS, Moirai, MOMENT, TTM, ROSE)다. 비교 기준으로 dataset별 학습 모델 7개(TimesNet, FEDformer, iTransformer, PatchTST, FITS, TimeMixer, DLinear)를 함께 돌린다. 데이터는 10개 도메인의 multivariate 데이터셋 21개이고, 각 데이터셋에 seasonality, trend, stationarity, transition, shifting, correlation, non-Gaussianity 일곱 가지 특성 점수를 매겼다. zero-shot은 test만 쓰고, few-shot은 학습 구간에서 window 단위로 5%를 균일하게 뽑아 쓰며, full-shot은 학습 구간 전체를 쓴다. split 비율(대부분 7:1:2, 일부 6:2:2), normalization, few-shot 샘플링 방식을 고정하고 test에서는 drop last를 하지 않아 모든 모델이 같은 test 길이로 평가된다. 장기 예측은 horizon 96~720에 lookback 96, 336, 512를, 단기 예측은 horizon 24~60에 lookback 36, 104를 돌리고 horizon마다 가장 좋은 lookback 결과를 보고한다. 지표는 MSE와 MAE다."
+key_assumptions:
+  - "split, normalization, 샘플링, test 길이를 통일하면 모델 간 차이가 protocol 차이가 아니라 모델 자체의 차이를 반영한다고 본다."
+  - "데이터셋 전체를 사전학습에서 제외했다는 각 모델의 문서를 믿고 zero-shot을 정의한다. 사전학습 corpus와 평가 데이터의 중복은 따로 감사하지 않는다."
+  - "일곱 가지 통계 특성으로 데이터셋을 기술하면 어떤 성질에서 어떤 모델이 강한지 연결할 수 있다고 본다."
+  - "학습 데이터의 5%와 validation 전체를 쓰는 설정이 few-shot 적응 능력을 대표한다고 가정한다."
+strengths:
+  - text: "zero-shot, few-shot, full-shot을 같은 protocol로 평가해서 적응 단계에 따라 순위가 어떻게 바뀌는지 볼 수 있다. 시계열로 사전학습한 TSFM의 zero-shot이 dataset별 모델의 few-shot·full-shot보다 나은 데이터셋이 많았다. 반대로 큰 사전학습 모델 상당수는 데이터를 더 주고 학습시키면 zero-shot보다 오히려 나빠졌다."
+    tags: [adaptation, zero-shot-gap]
+  - text: "논문마다 조용히 달라지던 protocol 요소를 명시적으로 고정했다. split 비율, normalization, test에서 drop last를 하지 않는 것, few-shot window 샘플링 방식이 그 대상이다. 샘플링 방식만 바꿔도 결과가 크게 달라진다는 것을 직접 보였다. 예를 들어 ETTm1에서 TTM의 MSE가 앞부분 샘플링이면 0.344, 균일 샘플링이면 0.303이었다."
+    tags: [eval-protocol]
+  - text: "LLM 기반 TSFM에서 사전학습된 LLM 가중치를 무작위 초기화로 바꾸는 ablation을 했다. 대부분의 LLM 기반 모델은 LLM 가중치를 쓸 때 오히려 나빠지거나 차이가 없었고, 시계열로 사전학습한 모델은 사전학습 효과가 뚜렷했다. 텍스트 사전학습 지식이 forecasting에 주는 이득이 제한적이라는 근거를 통제된 비교로 만들었다."
+    tags: [pretraining-data]
+  - text: "correlation을 포함한 데이터 특성 점수로 결과를 나눠 보았다. 변수 간 상관이 강한 데이터셋에서 channel-independent TSFM은 성능이 떨어졌지만, 변수를 함께 처리하는 Moirai는 안정적이었다. 특성마다 가장 강한 모델이 달라서 하나의 TSFM이 모든 조건을 지배하지 않는다는 점도 보였다."
+    tags: [channel-dependency]
+  - text: "정확도와 함께 학습·추론 효율을 비교했다. 0.8M 파라미터의 TTM이 훨씬 큰 모델 일부를 앞섰고, 저자들은 현재 TSFM에서 scaling law가 엄밀히 성립하지 않는다고 결론지었다. ROSE와 TTM은 효율과 정확도를 함께 갖췄고, S²IP-LLM은 dataset별 모델보다 느리면서 정확도도 낮았다."
+    tags: [inference-cost]
+  - text: "lookback 길이를 바꾸는 분석에서 Moirai만 lookback이 길어질수록 꾸준히 좋아졌고, 다른 모델은 불안정했다. 긴 history를 실제로 활용하는 능력이 모델마다 다르다는 것을 보여준다."
+    tags: [context-horizon]
+limitations:
+  - text: "일부 TSFM은 full-shot 학습이 너무 오래 걸려 full-shot 평가를 일부 모델에만 했다고 저자들이 밝혔다. 학습 시간을 최대 10시간으로 제한했고 이를 넘긴 모델은 결과표에서 빠져 있다. 단기 예측 데이터셋에 적용할 수 없는 모델도 있었다."
+    tags: [inference-cost, task-coverage]
+    source: self
+  - text: "few-shot은 5% 샘플링 조건 때문에 장기 예측 데이터셋에서만 평가했다고 저자들이 밝혔다."
+    tags: [task-coverage]
+    source: self
+  - text: "벤치마크를 만든 쪽이 평가 데이터셋 세 개가 이미 TimesFM, UniTS, TTM의 사전학습에 쓰였다는 것을 모른 채 포함했다고 지적했다. TSFM의 사전학습 데이터 구성을 파악하기 어려운 탓으로 보았다. 그 결과 이 모델들은 해당 데이터셋에서 누수가 없는 최고 모델보다 MSE가 47%에서 184%까지 낮았다. 누수가 없는 데이터셋에서 최고 TSFM의 이점은 0.3%에서 14%에 그쳤다. 이 사례는 FoundTS arXiv판을 인용한 것이다. 같은 논문은 KDD판 TSFM-Bench를 series마다 시간 split을 한 번만 하는 series 중심 평가의 예로도 분류했다."
+    tags: [eval-protocol, pretraining-data]
+    source: cited
+    by: "Rethinking Evaluation in the Era of Time Series Foundation Models: (Un)known Information Leakage Challenges (2025)"
+    by_id: TSFM-BenchReqs
+    by_link: https://arxiv.org/abs/2510.13654
+  - text: "TSFM-Bench가 정보 누수를 다루지도 논의하지도 않는다고 지적했다. 평가 데이터셋이 TSFM의 사전학습과 평가에 흔히 쓰이는 잘 알려진 데이터셋으로 구성되어 있다는 점도 함께 들었다."
+    tags: [eval-protocol, pretraining-data]
+    source: cited
+    by: "TS-Arena: A Live Forecast Pre-Registration Platform (2025)"
+    by_link: https://arxiv.org/abs/2512.20761
+  - text: "GIFT-Eval, Monash와 함께 TSFM-Bench를 도메인별로 고르지 않게 섞은 집계형 leaderboard로 분류했다. 이런 집계는 healthcare, finance, energy 같은 개별 도메인 성능을 가려서 전체 점수가 모델 선택을 오도할 수 있다고 주장했다. 이 비판은 초록에서 확인했다."
+    tags: [eval-protocol, task-coverage]
+    source: cited
+    by: "Position: Time-Series Foundation Models Require Explicit Domain-Level Benchmarks (ICML 2026)"
+    by_link: https://icml.cc/virtual/2026/poster/67138
+  # review: KDD 2025 리뷰는 공개되지 않아 미기재.
+  - text: "[analyst] horizon마다 여러 lookback 중 가장 좋은 결과를 보고하는데, 그 선택을 validation에서 했는지 test에서 했는지 본문에 밝히지 않았다. test 기준 선택이라면 설정 조합이 많은 모델일수록 유리한 낙관적 편향이 생긴다. zero-shot 모델과 dataset별 모델 모두 이 선택의 혜택을 받으므로 순위 비교에도 영향을 줄 수 있다."
+    tags: [eval-protocol, context-horizon]
+    source: analyst
+  - text: "[analyst] few-shot 설정은 학습 구간의 5%만 쓰지만 validation 구간은 전부 쓴다. split이 7:1:2라면 학습에 쓰는 양은 전체의 약 3.5%이고 validation은 10%다. early stopping과 모델 선택에 학습 데이터보다 큰 validation을 쓰는 셈이라, 실제 데이터가 부족한 상황의 few-shot과는 다르다."
+    tags: [eval-protocol, adaptation]
+    source: analyst
+builds_on: [TFB]
+compared_against: [TimesFM, Moirai, MOMENT, Chronos, Timer, UniTS, TTM, ROSE, GPT4TS, CALF, S2IP-LLM, Time-LLM, LLMMixer, UniTime, TimesNet, FEDformer, iTransformer, PatchTST, FITS, TimeMixer, DLinear]
+open_questions:
+  - "큰 TSFM이 full-shot fine-tuning 후 zero-shot보다 나빠지는 이유는 무엇인가. fine-tuning 방법의 문제인가, 사전학습 표현이 망가지는 것인가."
+  - "평가 데이터셋과 사전학습 corpus의 중복을 제거하면 TSFM zero-shot이 dataset별 모델의 few-shot을 이긴다는 결론이 유지되는가."
+  - "Moirai처럼 변수를 함께 처리하는 구조가 상관이 강한 데이터에서만 이득을 주는가, 상관이 약한 데이터에서는 손해를 보는가."
+  - "lookback이 길어질 때 Moirai를 제외한 모델이 불안정해지는 원인은 무엇인가. 오래된 history가 노이즈로 작용하는 것인가."
+hooks:
+  - "관측 그래프를 넣는 다변량 시계열 PFN의 평가 설계에 바로 쓸 수 있다. TSFM-Bench는 PEMS08과 Traffic을 포함하고 데이터셋마다 correlation 점수를 매겼다(Traffic 0.814). channel-independent TSFM이 상관이 강한 데이터에서 무너지고 Moirai만 버틴다는 결과는 그래프 구조를 넣어야 하는 이유를 보여주는 기존 근거다. 같은 protocol(split, drop last 미적용, lookback 집합)을 따르면 결과표를 그대로 비교 대상으로 쓸 수 있다."
+  - "lookback이 길어질수록 Moirai만 좋아지고 나머지는 불안정했다는 결과는 obsolete history 연구의 출발점이 된다. TSFM-Bench는 가장 좋은 lookback만 보고해서 이 민감도를 가렸다. lookback에 따른 성능 곡선 자체를 결과로 보고하면 차별점이 된다. shifting 특성 점수가 높은 데이터셋(대표 예 ETTm2)을 regime shift 실험 대상으로 고를 수 있다."
+  - "few-shot window 샘플링 방식만 바꿔도 MSE가 눈에 띄게 달라진다는 결과는 context를 어떻게 뽑는지가 결과를 좌우한다는 일반적 근거다. ImbNodePFN에서 class-balanced와 instance-balanced context sampling을 비교할 때, 샘플링 protocol을 고정하고 보고해야 한다는 주장의 보조 근거로 쓸 수 있다."
+notes: "arXiv v1~v4(2024)의 제목은 'FoundTS: Comprehensive and Unified Benchmarking of Foundation Models for Time Series Forecasting'이었다. v5(2025-06)부터 TSFM-Bench로 바뀌었고 KDD 2025에 이 제목으로 게재됐다. id는 하네스 규칙대로 FoundTS를 유지하고 title·citation은 게재판을 따랐다. TSFM-BenchReqs의 참고문헌에 따르면 FoundTS arXiv판 저자 목록에는 Qingsong Wen이 있었지만 KDD판에는 없다. pages 5595--5606은 AAU 저장소의 출판사 PDF 표지와 ECNU 저장소 페이지에서 확인했다. 요약은 KDD판 기준이다. MOMENT.yaml의 cited 항목이 FoundTS arXiv판을 인용하고 있다."
+added: 2026-10-30
