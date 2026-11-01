@@ -45,6 +45,8 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
 
 ## COUP-F01 — Label→feature 반복 피드백이 일방향 추론보다 유용하다.
 
@@ -75,6 +77,8 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use, observation-mask, uncertainty; keywords=feature distribution
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
 
 ## HET-F01 — Adapted HetGFD가 cross-type path 입력보다 큰 증분을 준다.
 
@@ -479,6 +483,8 @@
 - 닫지 않은 것: Oracle headroom을 실제로 회수하는 다른 risk estimator는 기각하지 않는다. 학습 selector는 이 실험에서 미실행이다.
 - 원문: [findings/sources/graphpfn-2026-11-01/reliability.md](../findings/sources/graphpfn-2026-11-01/reliability.md)
 
+- [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
@@ -493,5 +499,7 @@
 - 닫지 않은 것: 출처 의존성이 label 예측을 실제로 왜곡하는 다른 prior와 정확한 uncertainty 추론은 기각하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/source_error.md](../findings/sources/graphpfn-2026-11-01/source_error.md)
 
+- [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.

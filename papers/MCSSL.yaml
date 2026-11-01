@@ -1,0 +1,49 @@
+id: MCSSL
+title: "Martingale-Consistent Self-Supervised Learning"
+authors: "Moritz Gögl, Hanwen Xing, Christopher Yau"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2605.11846
+citation:
+  type: misc
+  title: "Martingale-Consistent Self-Supervised Learning"
+  authors: ["Moritz Gögl", "Hanwen Xing", "Christopher Yau"]
+  year: 2026
+  arxiv: "2605.11846"
+  url: https://arxiv.org/abs/2605.11846
+  verified_from:
+    - https://arxiv.org/abs/2605.11846
+    - https://arxiv.org/html/2605.11846v1
+areas: [ml-foundations]
+problem: "관측 정보가 늘어날 때 예측이 조건부 평균에서 일관되도록 SSL을 학습한다."
+core_idea: "Nested 관측 F1⊂F2에서 g(F1)=E[g(F2)|F1]을 학습한다. 개별 view를 같게 만들지 않고 refinement의 평균만 제약한다. Prediction/latent variants와 두 조건부 독립 completion을 이용한 추정기를 제시한다(§3–4)."
+key_assumptions:
+  - "이론의 unbiasedness는 올바른 조건부분포와 조건부 독립 refinement를 전제한다."
+  - "실험은 학습된 stochastic imputer로 조건부분포를 근사한다."
+  - "Martingale penalty만으로는 상수 해를 배제하지 못해 predictive objective가 필요하다(§3.3)."
+strengths:
+  - text: "정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다."
+    tags: [information-consistency, observation-mask, uncertainty]
+  - text: "두 독립 refinement의 residual 내적으로 squared conditional-mean penalty를 추정한다."
+    tags: [information-consistency, auxiliary-loss]
+limitations:
+  - text: "Refinement mechanism의 품질에 의존하며 architecture·scale과의 상호작용이 미해결이다(§6)."
+    tags: [information-consistency, prior-mismatch, inference-cost]
+    source: self
+  - text: "Latent-space 보장은 encoder가 보존한 정보에 상대적이다(§3.5)."
+    tags: [information-consistency, tokenization]
+    source: self
+  - text: "[analyst] GraphPFN·새 graph/schema의 zero-shot 성과는 검증하지 않았다."
+    tags: [zero-shot-gap, graph-structure-use]
+    source: analyst
+builds_on: [SimCLR, BYOL]
+compared_against: [SimCLR, BYOL]
+open_questions:
+  - "Graph와 context labels에 조건화한 refinement에서도 일관성과 분류 효용을 함께 얻는가?"
+hooks:
+  - "앞서 제안한 관측-주변화 일관성의 직접 선행연구다. 원리 자체를 우리의 novelty로 주장하지 않는다."
+  - "FMARG-F01/P02의 frozen probability averaging과 이 논문의 학습 목적을 구분한다. 기존 실패 해결이나 실험 재개로 판정하지 않는다."
+  - "PFN 확장은 미실행 가설이다. 같은 refiner·예산에서 query CE, 단순 view alignment, martingale objective를 구분해야 한다."
+notes: "2026-05-12 v1 본문 확인. 정식 venue·공식 코드 URL은 확인하지 않아 생략했다. 학습된 q를 쓰는 추정기의 unbiasedness를 참 데이터 조건부분포에 대한 보장으로 확대하지 않는다."
+added: 2026-11-02
