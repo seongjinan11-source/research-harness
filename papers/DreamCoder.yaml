@@ -1,0 +1,60 @@
+id: DreamCoder
+title: "DreamCoder: Growing generalizable, interpretable knowledge with wake-sleep Bayesian program learning"
+authors: "Kevin Ellis, Catherine Wong, Maxwell Nye, Mathias Sable-Meyer, Luc Cary, Lucas Morales, Luke Hewitt, Armando Solar-Lezama, Joshua B. Tenenbaum"
+venue: "arXiv 2020 (제공된 v1 원고)"
+year: 2020
+links:
+  paper: https://arxiv.org/abs/2006.08381
+citation:
+  type: misc
+  title: "DreamCoder: Growing generalizable, interpretable knowledge with wake-sleep Bayesian program learning"
+  authors: ["Kevin Ellis", "Catherine Wong", "Maxwell Nye", "Mathias Sable-Meyer", "Luc Cary", "Lucas Morales", "Luke Hewitt", "Armando Solar-Lezama", "Joshua B. Tenenbaum"]
+  year: 2020
+  arxiv: "2006.08381"
+  url: https://arxiv.org/abs/2006.08381
+  verified_from:
+    - https://arxiv.org/abs/2006.08381
+    - https://arxiv.org/html/2006.08381
+areas: [neurosymbolic, ml-foundations]
+problem: "태스크마다 프로그램을 처음부터 탐색하지 않고, 재사용할 개념과 탐색 전략을 함께 학습할 수 있는가?"
+core_idea: "Wake에서 neural recognition model로 프로그램 탐색을 안내한다. Sleep에서는 찾은 해의 공통 부분을 새 library primitive로 추상화하고, replay와 생성한 dream task로 recognition model을 훈련한다. 프로그램 prior와 amortized search를 반복적으로 개선한다."
+key_assumptions:
+  - "초기 primitive, 타입, 실행기와 태스크 likelihood를 제공해야 한다."
+  - "여러 태스크에 재사용할 프로그램 구조가 있어야 한다."
+strengths:
+  - text: "해의 공통 코드를 계층적 library로 압축해 더 복잡한 프로그램을 짧게 표현한다."
+    tags: [program-synthesis, library-learning, interpretability]
+  - text: "학습한 library의 dream task와 실제 해의 replay로 neural search를 개선한다."
+    tags: [amortized-inference, program-synthesis]
+  - text: "List 처리·그림·장면 구성 등에서 학습한 구성요소를 미지 태스크에 재사용한다."
+    tags: [compositional-generalization, task-coverage]
+limitations:
+  - text: "Discussion은 명확한 기호 해로 설명되는 문제를 중심으로 평가했으며, 현실의 광범위한 noise·uncertainty 처리는 향후 과제로 남긴다."
+    tags: [robustness, uncertainty, task-coverage]
+    source: self
+    evidence:
+      url: https://arxiv.org/html/2006.08381
+      section: Discussion
+  - text: "훈련에는 상당한 탐색 자원이 필요하다. 본문은 보통 20–100 CPU에서 약 하루, 최소 Lisp primitive 실험에는 64 CPU에서 약 5일을 보고한다."
+    tags: [inference-cost]
+    source: self
+    evidence:
+      url: https://arxiv.org/html/2006.08381
+      section: "Results; From learning libraries to learning languages"
+  - text: "[analyst] Library 확장은 주어진 primitive를 조합하므로, 원시 연산 자체가 부족한 영역의 표현 문제까지 자동 해결한다고 볼 수 없다."
+    tags: [program-synthesis, task-coverage]
+    source: analyst
+    evidence:
+      url: https://arxiv.org/html/2006.08381
+      section: "Wake phase; From learning libraries to learning languages"
+builds_on: [Exploration-Compression, EC2, NeurallyGuidedProgramSynthesis]
+compared_against: [Exploration-Compression, RobustFill, Enumeration, Memorize]
+open_questions:
+  - "불확실한 관측을 처리하면서도 library 압축의 이점을 유지할 수 있는가?"
+hooks:
+  - "[접목 가설] PFN의 고정 synthetic task generator를 재사용 가능한 생성 프로그램 library로 확장할 수 있다. 효과는 별도 검증이 필요하다."
+notes: >-
+  사용자 링크의 2020 v1 제목·저자순서·철자를 기준으로 기록했다.
+  PLDI 2021의 다른 제목(Bootstrapping Inductive Program Synthesis with Wake-Sleep Library Learning)과 인용 메타데이터를 혼합하지 않았다.
+  강점 근거는 Wake-Sleep, Results; 한계 근거는 각 evidence에 표시했다.
+added: 2026-11-01

@@ -13,6 +13,7 @@ areas:
   ml-foundations: ML 근본론 (scaling, ICL 이론, 일반화 등)
   benchmark: 벤치마크·평가·분석 연구
   survey: 서베이
+  neurosymbolic: 신경망과 기호 프로그램·논리 추론의 결합
 
 tags:
   # --- 데이터 / 사전학습 ---
@@ -41,6 +42,10 @@ tags:
   distribution-shift: 학습 분포 밖 조건(밀도·signal 외삽, 새 그래프 bank 등)으로의 일반화
   observation-mask: 관측 안 된 값과 관측된 0(nonedge 등)의 구분, 결측·관측 과정 처리
   model-based-baseline: 알려진 family·prior를 쓰는 명시적 추론 기준선(grid posterior 등)과의 비교
+  program-synthesis: 예제로부터 실행 가능한 프로그램을 찾거나 program sketch를 채우는 방법과 제약
+  library-learning: 여러 태스크의 해에서 재사용 가능한 함수·추상화 라이브러리를 학습하는 방법과 제약
+  differentiable-reasoning: 기호·논리 추론을 통해 확률과 gradient를 계산하는 방법과 제약
+  compositional-generalization: 학습한 구성요소를 새로운 조합·길이·추론 사슬에 재사용하는 일반화
   # --- 일반 ---
   task-coverage: 지원 태스크 범위 (예측만, 분류만 등)
   zero-shot-gap: zero-shot 성능, fine-tuning·probe 의존도

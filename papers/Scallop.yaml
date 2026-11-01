@@ -1,0 +1,73 @@
+id: Scallop
+title: "Scallop: A Language for Neurosymbolic Programming"
+authors: "Ziyang Li, Jiani Huang, Mayur Naik"
+venue: "PACMPL 7 (PLDI 2023)"
+year: 2023
+links:
+  paper: https://arxiv.org/abs/2304.04812
+  code: https://github.com/scallop-lang/scallop
+  proceedings: https://doi.org/10.1145/3591280
+citation:
+  type: article
+  title: "Scallop: A Language for Neurosymbolic Programming"
+  authors: ["Ziyang Li", "Jiani Huang", "Mayur Naik"]
+  year: 2023
+  journal: "Proceedings of the ACM on Programming Languages"
+  volume: 7
+  arxiv: "2304.04812"
+  url: https://doi.org/10.1145/3591280
+  verified_from:
+    - https://arxiv.org/abs/2304.04812
+    - https://arxiv.org/html/2304.04812
+    - https://pldi23.sigplan.org/details/pldi-2023-pldi/61/Scallop-A-Language-for-Neurosymbolic-Programming
+    - https://www.cis.upenn.edu/~jianih/res/papers/pldi23_scallop.pdf
+areas: [neurosymbolic, ml-foundations]
+problem: "논리 추론을 neural perception과 결합할 때, 태스크별로 추론기와 gradient 계산을 새로 구현하는 부담을 줄인다."
+core_idea: "관계형 데이터와 확장 Datalog로 추론을 기술하고, provenance semiring으로 값과 gradient를 전파한다. Recursion·negation·aggregation을 지원하며, provenance 선택으로 추론의 정밀도와 비용을 조절한다."
+key_assumptions:
+  - "태스크를 관계와 논리 프로그램으로 표현하고 neural model과 연결해야 한다."
+  - "연산·종료 조건에 맞는 provenance를 선택해야 한다."
+strengths:
+  - text: "지각과 기호 추론을 분리하면서도 최종 감독 신호로 함께 학습하는 공통 인터페이스를 제공한다."
+    tags: [differentiable-reasoning, interpretability]
+  - text: "Recursion·negation·aggregation으로 이미지·언어·그래프 등의 8개 응용을 표현한다."
+    tags: [task-coverage, compositional-generalization]
+  - text: "Top-k proof 등으로 계산량을 조절하며, MNIST-R에서 DeepProbLog 2021 확장판 대비 학습 시간을 줄였다."
+    tags: [inference-cost, differentiable-reasoning]
+limitations:
+  - text: "Top-k proof의 k를 늘리면 Boolean formula와 weighted model counting 비용이 커져 runtime이 급증한다."
+    tags: [inference-cost, differentiable-reasoning]
+    source: self
+    evidence:
+      url: https://arxiv.org/html/2304.04812
+      section: "6.4 Runtime Efficiency"
+  - text: "고급 statistical sampling과 generative modeling은 아직 지원하지 않으며 향후 과제로 남겼다."
+    tags: [task-coverage, uncertainty]
+    source: self
+    evidence:
+      url: https://arxiv.org/html/2304.04812
+      section: "7 Related Work, Probabilistic Programming"
+  - text: "최선의 provenance가 태스크마다 다르다. 빠른 근사가 항상 좋은 성능을 내지 않으며, damp는 복잡한 recursion에 덜 적합하다."
+    tags: [adaptation, differentiable-reasoning]
+    source: self
+    evidence:
+      url: https://arxiv.org/html/2304.04812
+      section: "4.5.2; 6.3 Performance and Accuracy"
+  - text: "[analyst] 논리 프로그램을 제공하는 인터페이스와 일부 fact 학습은 있지만, DreamCoder식 함수 library 자동 발명의 대체재로 평가된 것은 아니다."
+    tags: [program-synthesis, library-learning]
+    source: analyst
+    evidence:
+      url: https://arxiv.org/html/2304.04812
+      section: "3 Language; 6.2 Expressiveness"
+builds_on: [Scallop-2021, DeepProbLog-2021, TensorLog, Datalog, ProvenanceSemirings]
+compared_against: [DeepProbLog-2021, Scallop-2021, DQN, NGS, CNN, S4, GAT, CTP]
+open_questions:
+  - "Task별 provenance와 proof 예산을 validation 의존 없이 선택할 수 있는가?"
+hooks:
+  - "[접목 가설] Relational PFN의 작은 기호 태스크에서 learned head와 provenance 추론을 비교할 수 있다. Top-k 근사와 exact 추론을 구분해야 한다."
+notes: >-
+  근거: §3–4 언어·추론, §6 평가, §7 향후 지원 범위.
+  §1·§6·참고문헌의 DeepProbLog는 Neural Probabilistic Logic Programming in DeepProbLog (2021)이다.
+  이를 2018 항목과 혼동하지 않도록 외부 노드 DeepProbLog-2021로 표시하고 2018 항목을 향한 비판 화살표를 만들지 않았다.
+  논문 원고는 PACMPL 7 PLDI를 표기하며 공식 PLDI 프로그램에서 발표를 확인했다.
+added: 2026-11-01

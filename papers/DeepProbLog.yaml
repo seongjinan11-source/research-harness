@@ -1,0 +1,64 @@
+id: DeepProbLog
+title: "DeepProbLog: Neural Probabilistic Logic Programming"
+authors: "Robin Manhaeve, Sebastijan Dumančić, Angelika Kimmig, Thomas Demeester, Luc De Raedt"
+venue: "NeurIPS 2018"
+year: 2018
+links:
+  paper: https://arxiv.org/abs/1805.10872
+  proceedings: https://proceedings.neurips.cc/paper/2018/hash/dc5d637ed5e62c36ecb73b654b05ba2a-Abstract.html
+citation:
+  type: inproceedings
+  title: "DeepProbLog: Neural Probabilistic Logic Programming"
+  authors: ["Robin Manhaeve", "Sebastijan Dumančić", "Angelika Kimmig", "Thomas Demeester", "Luc De Raedt"]
+  year: 2018
+  booktitle: "Advances in Neural Information Processing Systems"
+  volume: 31
+  arxiv: "1805.10872"
+  url: https://proceedings.neurips.cc/paper/2018/hash/dc5d637ed5e62c36ecb73b654b05ba2a-Abstract.html
+  verified_from:
+    - https://arxiv.org/abs/1805.10872
+    - https://arxiv.org/html/1805.10872v2
+    - https://proceedings.neurips.cc/paper/2018/hash/dc5d637ed5e62c36ecb73b654b05ba2a-Abstract.html
+areas: [neurosymbolic, ml-foundations]
+problem: "지각을 담당하는 neural network와 확률적 논리 추론을 최종 답의 감독 신호로 함께 학습한다."
+core_idea: "ProbLog에 neural predicate를 더해 network 출력을 확률적 사실로 다룬다. Query에 필요한 프로그램을 grounding하고 SDD로 compile한다. Gradient semiring으로 답의 확률과 미분을 계산해 논리 쪽의 확률과 neural network를 함께 갱신한다."
+key_assumptions:
+  - "배경 규칙과 neural predicate의 입출력 영역을 지정해야 한다."
+  - "Query의 grounding과 knowledge compilation이 실행 가능해야 한다."
+strengths:
+  - text: "지각 결과를 하나로 확정하지 않고, 여러 후보의 확률을 논리 추론에 전파할 수 있다."
+    tags: [uncertainty, differentiable-reasoning]
+  - text: "중간 숫자 라벨 없이 이미지 쌍의 합만으로 숫자 인식기를 학습한다."
+    tags: [differentiable-reasoning, interpretability]
+  - text: "재귀 규칙을 이용해 한 자리 숫자로 훈련한 인식기를 세 자리 숫자의 덧셈에 재사용한다."
+    tags: [compositional-generalization, task-coverage]
+limitations:
+  - text: "자릿수를 늘린 덧셈에서는 인식 오류가 누적되어, 한 자리 문제보다 정확도가 떨어진다고 보고한다."
+    tags: [robustness, compositional-generalization]
+    source: self
+    evidence:
+      url: https://arxiv.org/html/1805.10872v2
+      section: "6 Experimental Evaluation, T2"
+  - text: "[analyst] Program induction은 주어진 sketch의 빈 부분을 채우는 설정이다. 프로그램 구조나 함수 library 전체를 자동 발명하는 평가와 구분해야 한다."
+    tags: [program-synthesis, library-learning]
+    source: analyst
+    evidence:
+      url: https://arxiv.org/html/1805.10872v2
+      section: "6 Experimental Evaluation, Program Induction"
+  - text: "[analyst] 추론은 grounding과 SDD compilation에 의존하므로, 최종 추론기를 neural network만으로 대체한 것은 아니다. 대규모화 비용은 별도 평가가 필요하다."
+    tags: [inference-cost, amortized-inference]
+    source: analyst
+    evidence:
+      url: https://arxiv.org/html/1805.10872v2
+      section: "4 DeepProbLog Inference"
+builds_on: [ProbLog, aProbLog, SDD]
+compared_against: [CNN, Differentiable-Forth]
+open_questions:
+  - "불확실한 predicate 수가 늘어도 학습에 유용한 gradient를 적은 비용으로 계산할 수 있는가?"
+hooks:
+  - "[접목 가설] Learned evidence head와 명시적 추론기를 분리하는 PFN 실험의 설계 참고가 된다. 정확한 모델 의미론과 실제 calibration은 별도로 확인해야 한다."
+notes: >-
+  사용자 지정 NeurIPS 2018 논문을 다룬다.
+  Scallop 2023의 비교 대상은 2021 확장판이므로 그 실행시간을 2018 논문의 측정값으로 옮기거나 직접적인 critiques 화살표를 만들지 않았다.
+  강점 근거는 §3–6, 한계·분석 근거는 각 evidence에 표시했다.
+added: 2026-11-01
