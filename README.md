@@ -25,6 +25,10 @@ python src/harness.py check \
 ```
 
 ## 내 연구 기록 (`findings/`)
+다른 연구자나 모델에게 검토를 요청할 때는 [GraphPFN 연구 인계서](RESEARCH_HANDOFF_KO.md)를 먼저 전달한다.
+현재 목표, 누적 실패의 정확한 범위, 최근 두 pilot, 강한 대조군, 미실행 후보와 복사할 요청문을 묶었다.
+수치의 상세 원문은 인계서에서 연결한 `findings/sources/` 보고서와 구조화 기록을 확인한다.
+
 실패·중단·보존·교훈을 `findings/<project>.yaml`에 쌓는다. `check`는 논문뿐 아니라 이 기록과도 대조해서,
 이미 닫은 갈래(닫은 범위와 닫지 않은 것까지), 재사용할 자산, 아직 안 한 것을 함께 보여준다.
 
