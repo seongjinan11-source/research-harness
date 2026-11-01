@@ -1,0 +1,89 @@
+project: Native heterogeneous 입력·기존 relational FM 대조
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/native_blocks.md
+setting: DBLP native block missing 및 ACM/IMDB/Freebase 개발용 비교. Adapted implementation과 공식 모델 성과를 구분.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: HET-F01
+  kind: failure
+  claim: Adapted HetGFD가 cross-type path 입력보다 큰 증분을 준다.
+  observation: 'DBLP k=5 full: cross-type 89.96%, adapted HetGFD 89.92%; drop_A 90.18/90.19%. k=20 full은 둘 다93.55%.'
+  verdict: 새 메소드 headroom 부족
+  failure_reason: 관계 경로와 남은 native source가 이미 강한 신호를 전달했다. 격차가 작다는 관찰은 확인했지만 redundancy만이 원인이라는 인과 분해는 하지 않았다.
+  reason_status: supported
+  excluded_explanations: []
+  closed_scope: 현재 DBLP adapted diffusion의 작은 차이를 범용 missing hetero-PFN 기여로 확대
+  not_closed: 원래 HetGFD/HGT 재현이나 다른 schema에서의 결론이 아니다. 다중 block 소실 조건은 별도 여지가 있다.
+  reopen_when: 타입별 feature 의미와 관측 pattern을 보존하며 기존 path redundancy를 넘어서는 장치가 나올 때.
+  comparison_floor: Native cross-type paths + frozen GraphPFN, 강한 attribute-free metapath LP
+  recheck: 파생 helper feature 누수를 제거하고, 실제 native block graph에서 missing/full 대비와 최강 구조 기준선을 함께 비교한다.
+  reopen_tags: &id001
+  - feature-heterogeneity
+  - graph-structure-use
+  - observation-mask
+  reopen_keywords: &id002
+  - native feature
+  - cross-type
+  - heterogeneous
+  - feature block
+  - diffusion
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/native_blocks.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open
+- id: HET-P01
+  kind: preserved
+  claim: Typed path 정보를 column으로 전달해도 기존 PFN이 이미 활용한다.
+  observation: Gate1-P의 B5g는 k=3의 세 decision graph에서 사전 val-oracle−1%p 기준을 충족했다. 새 learned path adapter를 그 격차만으로
+    정당화하지 않았다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/hetero_gate1p.md
+  - findings/sources/graphpfn-2026-11-01/hetero_gate0.md
+  tags:
+  - graph-structure-use
+  - feature-heterogeneity
+  keywords:
+  - typed path
+  - B5g
+  - path columns
+  evidence: 원 보고서 snapshot 확인
+  do_not_claim: Val oracle은 배포 모델이 아니며, 새로운 학습된 heterogeneous PFN의 성과도 아니다.
+- id: HET-L01
+  kind: lesson
+  claim: 기존 relational FM도 현재 node-classification adapter에서는 자동으로 missing에 강하지 않았다.
+  observation: RDB-PFN의 ACM k20 mean_count_depth5 full81.53%/missing66.55%, official_depth2 full74.87%/missing35.18%.
+    RT budget 표는 64-query·1 seed 대조로 제한된다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/rdb.csv
+  - findings/sources/graphpfn-2026-11-01/rt.csv
+  - findings/sources/graphpfn-2026-11-01/rt_coverage.csv
+  - findings/sources/graphpfn-2026-11-01/history.md
+  tags:
+  - feature-heterogeneity
+  - context-scale
+  - eval-protocol
+  keywords:
+  - RDB-PFN
+  - PluRel
+  - Relational Transformer
+  - coverage
+  evidence: 원 보고서 snapshot 확인
+- id: HET-L02
+  kind: lesson
+  claim: 미리 집계된 helper feature를 독립 native 관측값으로 취급하지 않는다.
+  observation: ACM/IMDB helper feature는 target feature에서 파생된 집계일 수 있음을 확인했다. DBLP는 서로 다른 native source block으로 별도
+    처리했다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/native_blocks.md
+  tags:
+  - observation-mask
+  - eval-protocol
+  keywords:
+  - derived helper feature
+  - leakage
+  - native block
+  evidence: 원 보고서 snapshot 확인

@@ -1,0 +1,53 @@
+project: 출처 중첩·공유 보간 오차 attention
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/source_error.md
+setting: 1 seed, 64 updates×2 episodes, 16 heldout synthetic graphs; stochastic feature 위치를 맞춘 paired 결과.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: SRC-F01
+  kind: failure
+  claim: Source covariance를 보정하면 분류가 개선된다.
+  observation: Vanilla accuracy 57.01%, covariance 57.04%. Covariance−vanilla +0.032%p, graph CI [−0.092,+0.157].
+    Source correspondence 파괴 시 working error score는 0.1395 증가했지만 분류 변화는 작았다.
+  verdict: 독립적인 task-level 이득 미확인
+  failure_reason: 오차 proxy가 출처 구조를 감지하는 것과 label decision에 유용한 보정은 달랐다. Working covariance가 실제 posterior error인지도
+    보장되지 않는다. 분류 실패의 고유 원인은 미상이다.
+  reason_status: unknown
+  excluded_explanations: []
+  closed_scope: 현재 source-overlap penalty/log 보정을 메인 방법으로 확대
+  not_closed: 출처 의존성이 label 예측을 실제로 왜곡하는 다른 prior와 정확한 uncertainty 추론은 기각하지 않는다.
+  reopen_when: 공유 imputation error와 label risk를 연결하는 검증 가능한 오차 모델·추론법이 나올 때.
+  comparison_floor: Vanilla continuation, matched/log/diagonal, covariance-shuffled controls
+  recheck: 분류 성능을 바꾸는 source dependency task에서 correspondence control과 새 graph·seed를 함께 비교한다.
+  reopen_tags: &id001
+  - uncertainty
+  - observation-mask
+  - amortized-inference
+  reopen_keywords: &id002
+  - covariance
+  - provenance
+  - shared error
+  - correlated error
+  - source dependence
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/source_error.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open
+- id: SRC-L01
+  kind: lesson
+  claim: 추가 사전학습의 효과를 오차 보정 모듈 효과로 치환하지 않는다.
+  observation: Initial 대비 accuracy는 올랐지만 matched continuation 대비 증분은 약0.03%p였다. Balanced accuracy와 macro-F1은 initial
+    대비 하락했다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/source_error.md
+  tags:
+  - eval-protocol
+  - uncertainty
+  keywords:
+  - matched continuation
+  - proxy vs utility
+  evidence: 원 보고서 snapshot 확인

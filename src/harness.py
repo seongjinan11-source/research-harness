@@ -21,6 +21,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import yaml
+from revisit import REASON_KO, revisit_candidates, revisit_markdown, research_log_markdown
 
 ROOT = Path(__file__).resolve().parent.parent
 PAPERS_DIR = ROOT / "papers"
@@ -63,6 +64,9 @@ def load_findings():
             e = dict(e)
             e["project"] = f.get("project", f["_file"])
             e["project_scope"] = f.get("closed_scope", "")
+            e["source"] = f.get("source", "")
+            e["setting"] = f.get("setting", "")
+            e.setdefault("source_refs", as_list(f.get("source")))
             e["_file"] = f["_file"]
             out.append(e)
     return out
@@ -264,6 +268,24 @@ def validate(papers, ideas, areas, tags, findings=()):
         for t in as_list(e.get("tags")):
             if t not in tags:
                 warns.append(f"finding {e.get('id')}: 미등록 tag '{t}'")
+        if e.get("kind") == "failure":
+            for field in ("claim", "observation", "verdict", "closed_scope", "not_closed",
+                          "failure_reason", "reason_status", "reopen_when", "recheck", "comparison_floor"):
+                if not e.get(field):
+                    warns.append(f"finding {e.get('id')}: {field} 없음")
+            if e.get("reason_status") not in REASON_KO:
+                warns.append(f"finding {e.get('id')}: 원인 근거 수준 잘못됨")
+            for field in ("reopen_tags", "reopen_keywords", "source_refs"):
+                if not as_list(e.get(field)):
+                    warns.append(f"finding {e.get('id')}: {field} 없음")
+        for t in as_list(e.get("reopen_tags")):
+            if t not in tags:
+                warns.append(f"finding {e.get('id')}: 미등록 reopen tag '{t}'")
+        for ref in as_list(e.get("source_refs")):
+            relative = str(ref).split("#", 1)[0]
+            resolved = (ROOT / relative).resolve()
+            if not resolved.is_relative_to(ROOT.resolve()) or not resolved.is_file():
+                warns.append(f"finding {e.get('id')}: 원문 파일 없음 {relative}")
     return warns
 
 
@@ -404,8 +426,10 @@ def check_idea(papers, tags_q, keywords, text="", findings=()):
     hits = defaultdict(list)
     for e in findings:
         ov = tags_q & set(as_list(e.get("tags")))
-        blob = " ".join(str(e.get(k, "")) for k in ("claim", "observation", "closed_scope", "not_closed", "do_not_claim"))
+        blob = " ".join(str(e.get(k, "")) for k in ("claim", "observation", "closed_scope", "not_closed", "do_not_claim",
+            "failure_reason", "reopen_when", "recheck", "comparison_floor"))
         blob += " " + " ".join(as_list(e.get("keywords")))
+        blob += " " + " ".join(as_list(e.get("reopen_keywords")))
         kh = [k for k in kws if k in blob.lower()]
         if ov or kh:
             hits[e.get("kind")].append((e, sorted(ov), kh))
@@ -429,6 +453,10 @@ def check_idea(papers, tags_q, keywords, text="", findings=()):
                     L.append(f"  - 닫은 범위: {e['closed_scope']}")
                 if e.get("not_closed"):
                     L.append(f"  - 닫지 않은 것: {e['not_closed']}")
+                L.append(f"  - 원인·병목 [{REASON_KO.get(e.get('reason_status'), '미기록')}]: {e.get('failure_reason', '')}")
+                L.append(f"  - 재검토 조건: {e.get('reopen_when', '')}")
+                L.append(f"  - 기준선 / 최소 재검증: {e.get('comparison_floor', '')} / {e.get('recheck', '')}")
+                L.append(f"  - 원문: {'; '.join(as_list(e.get('source_refs')))}")
             elif kind == "preserved" and e.get("do_not_claim"):
                 L.append(f"  - {e.get('observation', '')} (확대 금지: {e['do_not_claim']})")
             elif e.get("observation"):
@@ -496,6 +524,7 @@ def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path, findings
         ["Candidates", "A의 한계 하나와 B의 강점이 같은 태그로 걸린 건. 'A의 약점을 B의 장치로 메운다'는 접목 후보예요. 점수 = 한계 출처 신뢰도 × 태그 희소성 (+분야 교차 0.3). 후보 제안용이고, 실제로 메워지는지는 직접 판단."],
         ["Gaps", "태그별로 '한계로 지적한 논문'과 '해결했다는 논문'을 모은 표. '빈칸'은 아무도 해결 못 한 축이라 아이디어 후보지예요."],
         ["My Findings", "내 연구의 실패·중단·보존·교훈 기록 (findings/*.yaml). check가 이 기록과도 대조해요. '닫지 않은 것'까지 같이 읽어야 실패를 과하게 일반화하지 않아요."],
+        ["Revisit", "실패 병목과 논문 강점의 재검토 단서. 원인 수준·재개 조건·최소 재검증을 함께 읽으세요. 자동 매칭은 해결 판정이 아니에요."],
         ["Backlog", "한계를 지적했지만 아직 하네스에 항목이 없는 후속 논문. 다음에 추가할 후보예요."],
         ["Ideas", "check --save 로 저장한 아이디어 기록."],
         ["Citations", "논문별 인용 정보와 BibTeX. 모든 필드는 '확인한 페이지'에서 직접 읽은 값이에요. 전체 BibTeX는 out/refs.bib."],
@@ -557,10 +586,20 @@ def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path, findings
              "lesson": PatternFill("solid", fgColor="E8F0FE"), "untested": None}
     rows = [[e.get("project", ""), e.get("id", ""), KIND_KO.get(e.get("kind"), e.get("kind", "")), e.get("claim", ""),
              e.get("observation", ""), e.get("verdict", ""), e.get("closed_scope", ""),
-             e.get("not_closed", "") or e.get("do_not_claim", ""), c(e.get("tags")), c(e.get("keywords")), e.get("evidence", "")]
+             e.get("not_closed", "") or e.get("do_not_claim", ""), c(e.get("tags")), c(e.get("keywords")), e.get("evidence", ""),
+             REASON_KO.get(e.get("reason_status"), ""), e.get("failure_reason", ""), e.get("reopen_when", ""),
+             e.get("comparison_floor", ""), e.get("recheck", ""), c(e.get("source_refs")), e.get("setting", "")]
             for e in findings]
-    sheet("My Findings", ["project", "id", "구분", "가설·주장", "관찰", "판정", "닫은 범위", "닫지 않은 것 / 확대 금지", "tags", "keywords", "근거"],
-          [22, 11, 12, 45, 70, 22, 40, 50, 26, 30, 10], rows, fills=[kfill.get(e.get("kind")) for e in findings])
+    sheet("My Findings", ["project", "id", "구분", "가설·주장", "관찰", "판정", "닫은 범위", "닫지 않은 것 / 확대 금지", "tags", "keywords", "근거",
+          "원인 수준", "원인·병목", "재검토 조건", "강한 대조군", "최소 재검증", "원문", "실험 조건"],
+          [22, 14, 12, 45, 70, 22, 40, 50, 26, 30, 10, 15, 65, 65, 45, 65, 65, 65], rows, fills=[kfill.get(e.get("kind")) for e in findings])
+    rows = [[r["finding_id"], r["project"], r["paper_id"], r["signal"], r["failure_reason"],
+        REASON_KO.get(r["reason_status"], ""), "\n".join(m["strength"] for m in r["matches"]),
+        c(r["tags"]), c(r["keywords"]), r["reopen_when"], r["comparison_floor"], r["recheck"],
+        r["status"], r["paper_link"], c(r["source_refs"])] for r in revisit_candidates(papers, findings)]
+    sheet("Revisit", ["finding", "project", "논문", "검색 근거", "원인·병목", "원인 수준", "기록된 논문 강점", "일치 태그", "일치 키워드",
+        "재검토 조건", "강한 대조군", "최소 재검증", "판정", "논문 링크", "원문"],
+        [16, 24, 18, 28, 60, 15, 65, 25, 30, 65, 45, 65, 35, 45, 60], rows, links=[14])
 
     rows = [[b["title"], ", ".join(sorted(b["targets"])), len(b["targets"]), b["link"]] for b in backlog(papers)]
     sheet("Backlog", ["후속 논문 (아직 하네스에 없음)", "이 논문이 비판한 항목", "비판 수", "링크"], [70, 30, 9, 40], rows, links=[4])
@@ -648,11 +687,17 @@ def graph_data(papers, ideas, areas, tags, findings=()):
         nodes.append({"id": f"f:{e['id']}", "label": e["id"], "group": "finding", "shape": "diamond", "size": 9,
                       "color": fcolor.get(e.get("kind"), "#777"), "font": {"color": "#555", "size": 10},
                       "detail": {"kind": "finding", "fkind": KIND_KO.get(e.get("kind"), ""), **{k: e.get(k, "") for k in
-                                 ("id", "project", "claim", "observation", "verdict", "closed_scope", "not_closed", "do_not_claim")},
+                                 ("id", "project", "claim", "observation", "verdict", "closed_scope", "not_closed", "do_not_claim",
+                                  "failure_reason", "reason_status", "reopen_when", "recheck", "comparison_floor", "source_refs", "setting")},
+                                 "reason_label": REASON_KO.get(e.get("reason_status"), ""),
                                  "tags": as_list(e.get("tags"))}})
         for t in as_list(e.get("tags")):
             used_tags.add(t)
             edges.append({"from": f"f:{e['id']}", "to": f"t:{t}", "type": "finding"})
+
+    for item in revisit_candidates(papers, findings):
+        edges.append({"from": f"p:{item['paper_id']}", "to": f"f:{item['finding_id']}",
+            "type": "revisit", "text": item["signal"] + ": " + item["reopen_when"]})
 
     for t in sorted(used_tags):
         nodes.append({"id": f"t:{t}", "label": t, "group": "tag", "shape": "ellipse",
@@ -685,6 +730,7 @@ GRAPH_HTML = r"""<!DOCTYPE html>
   <label><input type="checkbox" id="e_ext"> 외부 모델 노드</label>
   <label><input type="checkbox" id="e_weak" checked> 조사자 판단 한계 포함</label>
   <label><input type="checkbox" id="e_find"> 내 연구 기록 (실패·보존·교훈)</label>
+  <label><input type="checkbox" id="e_revisit"> 재검토 단서 (논문 → 실패, 해결 판정 아님)</label>
  </div>
  <div class="lg" style="margin-top:6px">
   <span><i class="sw" style="background:#2e7d32"></i>강점</span>
@@ -711,6 +757,7 @@ function styleEdge(e){
     s.title = (e.by? "["+e.by+"] ":"") + e.text; }
   else if(e.type==="idea"){ s.color={color:"#d4a400"}; s.dashes=true; }
   else if(e.type==="finding"){ s.color={color:"#888",opacity:.5}; s.dashes=[2,4]; s.width=1; }
+  else if(e.type==="revisit"){ s.color={color:"#8e44ad",opacity:.6}; s.dashes=true; s.arrows="to"; s.title=e.text; }
   else if(e.type==="critiques"){ s.color={color:"#E67E22"}; s.arrows="to"; s.width=2.2; s.title="비판: "+e.text; }
   else { s.color={color:"#4C78A8"}; s.arrows="to"; s.width=1.5; }
   return s;
@@ -724,13 +771,14 @@ const edgeView = new vis.DataView(edges, {filter: e => {
   if(e.type==="builds_on") return ck("e_builds");
   if(e.type==="critiques") return ck("e_crit");
   if(e.type==="finding") return ck("e_find");
+  if(e.type==="revisit") return ck("e_find") && ck("e_revisit");
   if(e.type==="builds_on_ext") return ck("e_builds") && ck("e_ext");
   return true; }});
 function ck(id){ return document.getElementById(id).checked; }
 const net = new vis.Network(document.getElementById("net"), {nodes:nodeView, edges:edgeView}, {
   physics:{solver:"forceAtlas2Based", forceAtlas2Based:{gravitationalConstant:-60, springLength:120}, stabilization:{iterations:300}},
   interaction:{hover:true, tooltipDelay:120}, nodes:{margin:8}, edges:{smooth:{type:"continuous"}}});
-["e_strength","e_limitation","e_crit","e_builds","e_ext","e_weak","e_find"].forEach(id => document.getElementById(id).onchange = () => {nodeView.refresh(); edgeView.refresh();});
+["e_strength","e_limitation","e_crit","e_builds","e_ext","e_weak","e_find","e_revisit"].forEach(id => document.getElementById(id).onchange = () => {nodeView.refresh(); edgeView.refresh();});
 
 function paperHTML(d){
   const L = d.links||{};
@@ -760,8 +808,12 @@ net.on("click", ev => {
   if(d.kind==="paper") h = paperHTML(d);
   else if(d.kind==="tag") h = tagHTML(d);
   else if(d.kind==="finding") h = `<h2>${esc(d.id)}</h2><div class="src">${esc(d.project)} · ${esc(d.fkind)}</div><h3>가설·주장</h3><div>${esc(d.claim)}</div>
+     ${d.setting?`<h3>실험 조건</h3><div>${esc(d.setting)}</div>`:""}
      ${d.observation?`<h3>관찰</h3><div>${esc(d.observation)}</div>`:""}${d.verdict?`<h3>판정</h3><div>${esc(d.verdict)}</div>`:""}
      ${d.closed_scope?`<h3>닫은 범위</h3><div>${esc(d.closed_scope)}</div>`:""}${d.not_closed?`<h3>닫지 않은 것</h3><div>${esc(d.not_closed)}</div>`:""}
+     ${d.failure_reason?`<h3>원인·병목 (${esc(d.reason_label)})</h3><div>${esc(d.failure_reason)}</div>`:""}
+     ${d.reopen_when?`<h3>무엇이 달라지면 재검토하나?</h3><div>${esc(d.reopen_when)}</div><h3>강한 대조군</h3><div>${esc(d.comparison_floor)}</div><h3>최소 재검증</h3><div>${esc(d.recheck)}</div>`:""}
+     ${d.source_refs?`<h3>원문</h3><div>${esc((d.source_refs||[]).join("; "))}</div>`:""}
      ${d.do_not_claim?`<h3>확대 금지</h3><div>${esc(d.do_not_claim)}</div>`:""}<div>${tg(d.tags)}</div>`;
   else if(d.kind==="idea") h = `<h2>💡 ${esc(d.id)}</h2><div>${esc(d.text)}</div><div>${tg(d.tags)}</div>`;
   else h = `<h2>${esc(d.id)}</h2><div class="src">하네스 밖의 모델 (builds_on 대상)</div>`;
@@ -812,6 +864,8 @@ def main(argv=None):
     sub.add_parser("validate")
     sub.add_parser("tags")
     sub.add_parser("link", help="cited 한계의 by 제목이 하네스 논문과 일치하면 by_id를 YAML에 기입")
+    rv = sub.add_parser("revisit", help="논문 강점과 실패 병목의 재검토 단서 (해결 판정 아님)")
+    rv.add_argument("--paper", default="", help="새로 추가한 paper ID만 대조")
     ck = sub.add_parser("check")
     ck.add_argument("--tags", default="")
     ck.add_argument("--keywords", default="")
@@ -854,6 +908,16 @@ def main(argv=None):
             print(f"{r['tag']:<22} {r['status']:<16} 한계:{','.join(r['limited']) or '-'}  강점:{','.join(r['addressed']) or '-'}")
         return 0
 
+    if a.cmd == "revisit":
+        if a.paper and a.paper not in {p["id"] for p in papers}:
+            print(f"알 수 없는 paper ID: {a.paper}", file=sys.stderr)
+            return 1
+        found = revisit_candidates(papers, findings, a.paper or None)
+        relevant = {r["finding_id"] for r in found}
+        selected = [e for e in findings if not a.paper or e["id"] in relevant]
+        print(revisit_markdown(selected, found))
+        return 0
+
     if a.cmd == "check":
         tq = [t.strip() for t in a.tags.split(",") if t.strip()]
         kw = [k.strip() for k in a.keywords.split(",") if k.strip()]
@@ -882,10 +946,14 @@ def main(argv=None):
     write_excel(papers, ideas, areas, tags, cands, tagrows, OUT_DIR / "research_harness.xlsx", findings)
     write_graph(graph_data(papers, ideas, areas, tags, findings), OUT_DIR / "graph.html")
     write_candidates_md(cands, tagrows, OUT_DIR / "candidates.md")
+    revisits = revisit_candidates(papers, findings)
+    (OUT_DIR / "revisit.md").write_text(revisit_markdown(findings, revisits), encoding="utf-8")
+    (OUT_DIR / "revisit_candidates.json").write_text(json.dumps(revisits, ensure_ascii=False, indent=2), encoding="utf-8")
+    (OUT_DIR / "research_log.md").write_text(research_log_markdown(findings), encoding="utf-8")
     keys = bib_keys(papers)
     (OUT_DIR / "refs.bib").write_text("\n\n".join(b for b in (bibtex(p, keys[p["id"]]) for p in papers) if b) + "\n", encoding="utf-8")
     print(f"논문 {len(papers)}편, 내 연구 기록 {len(findings)}건, 아이디어 {len(ideas)}개, 접목 후보 {len(cands)}건")
-    print("→ out/research_harness.xlsx, out/graph.html, out/candidates.md, out/refs.bib")
+    print(f"→ out/research_harness.xlsx, out/graph.html, out/candidates.md, out/refs.bib; 재검토 단서 {len(revisits)}건 (해결 판정 아님)")
     return 0
 
 

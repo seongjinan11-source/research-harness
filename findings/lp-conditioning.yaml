@@ -1,0 +1,39 @@
+project: LP-conditioned structural residual
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/lpc.md
+setting: 소형 일방향 prototype에 LP offset/내부 conditioning 추가, 2 seeds 및 새 paired factorial; 새 schema 아님.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: LPC-F01
+  kind: failure
+  claim: LP internal conditioning이 output offset과 Plain을 일관되게 넘는다.
+  observation: Matched conditioned−Plain−0.35%p, heldout_shape+0.90%p; offset 대비−0.03/+0.35%p. 새 factorial 내부 효과+0.36~0.52%p이나
+    relation 추가효과+0.10 CI[−0.21,+0.42], feature 효과+0.06 CI[−0.11,+0.23]. NLL/Brier는 offset-only가 더 좋았다.
+  verdict: LP residual tuning·대규모 확장 중단
+  failure_reason: 보인 이득 대부분과 output offset 효과를 구분해야 했고, schema adaptation 특유의 이득이라는 증거가 약했다. 조기 relation aggregation이
+    원인이라는 설명은 가설이지 확정 원인이 아니다.
+  reason_status: unknown
+  excluded_explanations: []
+  closed_scope: 현재 LP offset/residual conditioning 확대
+  not_closed: Relation 정보를 합치기 전 보존하는 구조와 별도 semantic schema 전이는 별개다.
+  reopen_when: 압축된 LP 확률보다 풍부한 context 정보를 활용하며 output offset만의 효과를 넘어서는 연산이 나올 때.
+  comparison_floor: Plain, offset-only, 같은 파라미터·초기화·학습 budget
+  recheck: Relation 수·feature 폭·missing을 분리한 factorial과 새로운 semantic schema에서 내부 conditioning의 독립 증분을 확인한다.
+  reopen_tags: &id001
+  - graph-structure-use
+  - distribution-shift
+  - amortized-inference
+  reopen_keywords: &id002
+  - LP conditioning
+  - residual
+  - relation evidence
+  - schema adaptation
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/lpc.md
+  - findings/sources/graphpfn-2026-11-01/lpc_factorial.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open

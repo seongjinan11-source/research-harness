@@ -1,0 +1,40 @@
+project: Frozen counterfactual PFN residual
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/ratio.md
+setting: λ=1 고정, LP × PFN-full/PFN-neutral; 실제 개발 graph, 새 학습 없음.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: RATIO-F01
+  kind: failure
+  claim: Full−Neutral log probability가 LP에 더할 새로운 feature evidence다.
+  observation: FISF ratio ACM82.35%, IMDB34.45%; LP85.55/35.41%, Full PFN74.36/44.55%. Controlled ratio ACM82.22/IMDB34.50%도
+    개선하지 못했다.
+  verdict: Frozen 비율 보정 중단
+  failure_reason: Neutral이 정확한 feature marginalization이 아니므로 비율을 likelihood ratio로 해석할 근거가 없다. IMDB LP log margin은0.134~0.151로
+    작고, residual argmax 변경률34.68%였다. 원인별 기여는 분리하지 않았다.
+  reason_status: supported
+  excluded_explanations: []
+  closed_scope: 현재 frozen full/neutral 확률 비율의 λ=1 보정
+  not_closed: LP-conditioned 학습과 일관된 생성모형의 likelihood ratio 일반은 별개다.
+  reopen_when: 통제 입력의 의미와 feature marginalization을 정의하고 확률 비율이 유효한 증거가 되는 조건을 제시하는 방법이 나올 때.
+  comparison_floor: LP/PFN alone, 50:50, controlled neutral
+  recheck: 먼저 feature intervention으로 순효용을 확인하고, 동일 구조·주입 아래 ratio가 정답 방향 보정인지 새 graph에서 평가한다.
+  reopen_tags: &id001
+  - uncertainty
+  - amortized-inference
+  - graph-structure-use
+  reopen_keywords: &id002
+  - likelihood ratio
+  - counterfactual
+  - neutral
+  - evidence correction
+  - double counting
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/ratio.md
+  - findings/sources/graphpfn-2026-11-01/feature_intervention.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open

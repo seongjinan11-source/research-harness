@@ -1,0 +1,70 @@
+project: 초기 JR-PFN과 decoder 표현력
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/jr.md
+setting: Feature-free binary SBM, target8+helper4, 총 context1/2/4, Exact Bayes 소형 열거.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: JR-P01
+  kind: preserved
+  claim: Exclusive의 joint-role 제약 보존은 강한 Plain/factorized를 넘었다.
+  observation: Exclusive JR−Large Plain+3.20%p, JR−Factorized+1.76%p. Learned posterior−known prior는+0.14%p에 그쳤다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/jr.md
+  tags:
+  - uncertainty
+  - amortized-inference
+  keywords:
+  - joint role
+  - exclusive
+  - factorized
+  evidence: 원 보고서 snapshot 확인
+  do_not_claim: 모든 prior에서 우월하거나 context에서 미지 joint dependence를 새로 식별했다는 성과가 아니다.
+- id: JR-P02
+  kind: preserved
+  claim: Context posterior에는 실제 predictive value가 있었다.
+  observation: Exclusive 총 context4에서 역할 정보0.12447 nats, exact role update 기대 NLL 이득0.02278. Decoder/predictive
+    병목도 함께 있었다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/posterior_shift.md
+  tags:
+  - uncertainty
+  - amortized-inference
+  keywords:
+  - posterior information
+  - Bayes
+  - conditional decoder
+  evidence: 원 보고서 snapshot 확인
+  do_not_claim: 오라클 posterior의 이득이 곧 학습 모델의 성과나 효율을 보장하지 않는다.
+- id: JR-L01
+  kind: lesson
+  claim: Positive-only diffusion의 구조적 불가능성은 loss로 고칠 수 없었다.
+  observation: Context label이 모두 A일 때 당시 decoder는 모든 query에서 p(A)≥0.5. Exact teacher는 nonedge로 반대 class를 지지할 수 있었다.
+    이후 contrastive/BP decoder가 이 제한을 넘었다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/distillation.md
+  - findings/sources/graphpfn-2026-11-01/contrastive.md
+  tags:
+  - graph-structure-use
+  - observation-mask
+  keywords:
+  - positive diffusion
+  - nonedge
+  - expressivity
+  evidence: 원 보고서 snapshot 확인
+- id: JR-L02
+  kind: lesson
+  claim: 이미 해결한 중간 병목을 현재 미해결 문제로 다시 제안하지 않는다.
+  observation: 양의 diffusion 표현력 문제는 contrastive decoder로 전환했다. 이후 EAJ/R1의 경쟁력 실패는 별개의 문제이며 기존 LLBP 항목에 보존한다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/contrastive.md
+  - findings/sources/graphpfn-2026-11-01/llbp.md
+  tags:
+  - eval-protocol
+  - amortized-inference
+  keywords:
+  - superseded
+  - resolved blocker
+  - chronology
+  evidence: 원 보고서 snapshot 확인

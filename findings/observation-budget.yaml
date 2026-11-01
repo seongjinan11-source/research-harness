@@ -1,0 +1,100 @@
+project: Observation-aware subgraph policy
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/observation.md
+setting: Frozen 공개 GraphPFN, 새64/32 graphs, 2 policies×3 seeds, node budget64 학습·32/64/96평가, query8/graph.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: OBS-F01
+  kind: failure
+  claim: Mask-aware 학습 정책이 강한 경로 규칙을 넘는다.
+  observation: Budget64 Observation/Paths NLL matched1.07193/1.05353, cluster1.08551/1.07685. 차이+0.01839 CI[−0.06529,+0.10213],
+    +0.00866 CI[−0.11473,+0.11820].
+  verdict: 주 성공 기준 미통과·확장 보류
+  failure_reason: Mask를 보는 것은 유용했지만 비슷한 효과를 고정 shortest-path closure도 얻었다. Joint subset 표현력·stochastic train/deterministic
+    inference·학습 budget 중 정확한 원인은 분리하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  closed_scope: 현재 mask/geometry shared-node MLP를 더 학습해 메인 방법으로 확대
+  not_closed: 모든 learned retrieval을 기각하지 않는다. Budget32 cluster 차이−0.19284 CI[−0.39771,+0.00284]는 보조 개발 신호이며 승리가
+    아니다.
+  reopen_when: 동일 resident budget에서 mask-aware 공동 부분그래프 구성이 강한 경로 규칙보다 나은 utility를 보이는 장치가 나올 때.
+  comparison_floor: Evidence-paths, PPR, equal-capacity structure policy, random, context prior
+  recheck: Fresh graph에서 사전 budget·mask gate를 고정하고 preprocessing/search를 포함한 비용과 label 예측을 함께 비교한다.
+  reopen_tags: &id001
+  - observation-mask
+  - context-scale
+  - graph-structure-use
+  reopen_keywords: &id002
+  - subgraph
+  - halo
+  - retrieval
+  - observation policy
+  - evidence path
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/observation.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open
+- id: OBS-F02
+  kind: failure
+  claim: 부분그래프 선택 개선으로 경쟁력 있는 확률 예측을 확보했다.
+  observation: 사후 Laplace context-prior NLL0.85241/Brier0.55736. Budget64 Observation의 matched NLL은+0.21952 CI[+0.12555,+0.31655],
+    cluster+0.23310 CI[+0.14044,+0.32727] 더 나빴다.
+  verdict: 단순 확률 기준선에도 경쟁력 부족
+  failure_reason: Frozen PFN끼리의 상대 개선이 단순 class prior 대비 utility를 보장하지 않았다. Calibration·적은 context·subgraph mismatch·전처리
+    중 원인은 미상이다.
+  reason_status: unknown
+  excluded_explanations: []
+  closed_scope: PPR/구조 정책 대비 개선만으로 좋은 missing-feature predictor라고 주장
+  not_closed: 확률 점수 비교를 accuracy의 같은 결론으로 자동 확대하지 않는다. Prior 대조는 사후 sanity check다.
+  reopen_when: 극소 context·불완전 입력에서 단순 prior보다 좋은 확률 정보를 실제로 회수하는 추론 원리가 나올 때.
+  comparison_floor: Uniform class probability, Laplace context prior, full graph, strongest fixed retrieval
+  recheck: 학습 전에 단순 확률·majority 대조를 고정하고 NLL/Brier/accuracy를 독립 graph에서 함께 평가한다.
+  reopen_tags: &id003
+  - uncertainty
+  - prior-mismatch
+  - context-scale
+  reopen_keywords: &id004
+  - context prior
+  - calibration
+  - small context
+  - frozen backbone
+  - probabilistic prediction
+  tags: *id003
+  keywords: *id004
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/observation.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open
+- id: OBS-P01
+  kind: preserved
+  claim: 관측 상태를 선택 정책에 주는 독립 NLL 효과
+  observation: Budget64 Observation−Structure NLL matched−0.16128 CI[−0.27147,−0.05871], cluster−0.24695 CI[−0.38936,−0.11246].
+    PPR 대비도 두 조건 NLL CI가0 미만이었다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/observation.md
+  tags:
+  - observation-mask
+  - graph-structure-use
+  keywords:
+  - mask aware
+  - policy input
+  evidence: 원 보고서 snapshot 확인
+  do_not_claim: Feature 값의 인과적 효용, strong rule 초과, 확실한 accuracy 개선이나 실제 heterograph 전이로 확대하지 않는다.
+- id: OBS-L01
+  kind: lesson
+  claim: 학습 정책의 선택 단계 속도를 end-to-end 우위로 승격하지 않는다.
+  observation: Matched budget64 selection1.76ms vs Paths13.73ms지만 PCFI+forward 포함 약146.82/155.90ms. Global statistics와
+    정책학습 비용은 이 합계 밖이다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/observation.md
+  tags:
+  - inference-cost
+  - eval-protocol
+  keywords:
+  - retrieval latency
+  - end-to-end cost
+  evidence: 원 보고서 snapshot 확인

@@ -1,0 +1,54 @@
+project: Predictor reliability Gate A/B
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/reliability.md
+setting: ACM/IMDB 99.5% missing, k5/20/class, 세 context/mask draw의 개발용 진단.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: SEL-F01
+  kind: failure
+  claim: Context Brier·local reliability로 PFN/LP의 정답을 선택할 수 있다.
+  observation: 'IMDB k20 FISF: PFN44.55%, LP35.41%, Global41.51%, Local41.92%, Oracle59.16%. Local은 최강 predictor보다2.63%p
+    낮았다.'
+  verdict: Gate B 실패, Gate C 보류
+  failure_reason: Brier와 accuracy 목적이 불일치하는 사례를 직접 관측했다. IMDB seed11에서 LP의 test Brier0.6624가 PFN0.6672보다 좋지만 accuracy는35.54%
+    vs44.65%였다. Context noise만으로 설명할 수 없다.
+  reason_status: supported
+  excluded_explanations:
+  - Context Brier 추정 noise만의 문제라는 설명은 실제 test Brier/accuracy 역전으로 충분하지 않다.
+  closed_scope: 현재 crossfit Brier·local propagation 기반 predictor 선택 규칙
+  not_closed: Oracle headroom을 실제로 회수하는 다른 risk estimator는 기각하지 않는다. 학습 selector는 이 실험에서 미실행이다.
+  reopen_when: 극소 context에서 정확도 효용과 uncertainty를 함께 식별하는 추정법이 나올 때.
+  comparison_floor: 최강 단일 PFN/LP, global/local selector, fixed mixture
+  recheck: Query 정답 없는 입력만으로 실제 선택 utility를 독립 graph에서 평가하고 proper score와 accuracy를 분리한다.
+  reopen_tags: &id001
+  - uncertainty
+  - observation-mask
+  - context-scale
+  reopen_keywords: &id002
+  - predictor reliability
+  - Brier
+  - decision risk
+  - few-shot selection
+  - confidence
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/reliability.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open
+- id: SEL-P01
+  kind: preserved
+  claim: Within-query complementarity는 실제로 있다.
+  observation: ACM k20 FISF oracle90.43%, IMDB59.16%. Oracle은 query 정답으로 만든 상한이다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/reliability.md
+  tags:
+  - uncertainty
+  - graph-structure-use
+  keywords:
+  - oracle
+  - complementarity
+  evidence: 원 보고서 snapshot 확인
+  do_not_claim: 큰 oracle gap만으로 selector 학습의 성공 가능성을 입증하지 않는다.

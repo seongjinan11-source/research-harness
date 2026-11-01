@@ -1,0 +1,38 @@
+project: Feature↔Label 양방향 추론
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/history.md
+setting: 10K 규모 quadratic prototype, 합성1536 tasks, 2 seeds, 384 updates; 공식 GraphPFN 아님.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: COUP-F01
+  kind: failure
+  claim: Label→feature 반복 피드백이 일방향 추론보다 유용하다.
+  observation: Matched 일방향72.72%, 양방향72.66%; 차이−0.06%p CI[−0.50,+0.39]. Shape shift 차이−0.01%p CI[−0.52,+0.55].
+  verdict: 피드백 증분 미확인
+  failure_reason: 피드백의 추가 정보를 확보하지 못했다. 관측 feature가 전혀 없으면 latent H가0에 머물고 피드백 제거와 출력이 같았다. 이 구조적 퇴화가 모든 조건의 미개선을
+    설명하지는 않는다.
+  reason_status: supported
+  excluded_explanations: []
+  closed_scope: 현재 quadratic coupling을 더 반복·확대하는 방향
+  not_closed: 비선형 label-conditioned feature inference와 다른 유효 prior는 평가하지 않았다.
+  reopen_when: 라벨 피드백이 실제로 새로운 feature 상태를 만들고 그 정보가 일방향 모델에 없음을 보이는 추론 연산이 나올 때.
+  comparison_floor: 동일 예산 일방향 모델, 피드백 제거, 강한 context ridge baseline
+  recheck: Zero-observation 퇴화와 nonzero 조건을 나눠 같은 초기화·task·예산으로 실제 예측 증분을 비교한다.
+  reopen_tags: &id001
+  - graph-structure-use
+  - amortized-inference
+  - observation-mask
+  reopen_keywords: &id002
+  - bidirectional
+  - feature-label
+  - feedback
+  - latent feature
+  - quadratic
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/history.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open

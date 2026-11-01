@@ -1,0 +1,53 @@
+project: PCFI/FISF 입력 확장
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/views.md
+setting: Cora/CiteSeer 개발 그래프와 PubMed secondary, frozen GraphPFN, context/mask 일치.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: VIEW-F01
+  kind: failure
+  claim: Support metadata·다중 전파 view·PCFI/FISF 입력 결합이 범용 증분을 준다.
+  observation: 8조건 평균 PCFI 69.65%, PCFI/FISF views 69.73%, multiscale 69.61%. 사전 +1%p 양쪽 parent 초과 기준을 만족한 후보는 없었다.
+  verdict: 전체 조건 진입 기준 미통과
+  failure_reason: 출력에 보인 증분이 작고 조건별 부호가 달랐다. 표현 정보 중복, projection 손실, frozen backbone의 활용 한계 중 무엇이 주원인인지는 분리하지 못했다.
+  reason_status: unknown
+  excluded_explanations: []
+  closed_scope: 현재 frozen 저차원 support/view 추가를 범용 메소드로 확대
+  not_closed: Native cell-wise provenance encoder를 학습하는 방법과 입력 자체를 바꾸는 학습은 평가하지 않았다.
+  reopen_when: 관측 provenance를 정보 손실 없이 표현·학습하고 equal-width 값 대조를 넘는 장치가 나올 때.
+  comparison_floor: PCFI/FISF parents, equal-width value controls, 같은 비용의 single predictor
+  recheck: 같은 차원·추론 비용으로 새 실제 graph에서 parent 둘과 metadata 없는 값 대조를 함께 비교한다.
+  reopen_tags: &id001
+  - observation-mask
+  - feature-heterogeneity
+  - prior-mismatch
+  reopen_keywords: &id002
+  - provenance
+  - support
+  - missing
+  - feature token
+  - multi-view
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/views.md
+  - findings/sources/graphpfn-2026-11-01/pubmed.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open
+- id: VIEW-P01
+  kind: preserved
+  claim: PubMed whole-node secondary에서 input view의 작은 긍정 신호
+  observation: 평균 PCFI 70.05%, FISF 71.50%, input views 73.00%, prediction average 71.97%.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/pubmed.md
+  - findings/sources/graphpfn-2026-11-01/views.md
+  tags:
+  - observation-mask
+  - feature-heterogeneity
+  keywords:
+  - PubMed
+  - PCFI FISF views
+  evidence: 원 보고서 snapshot 확인
+  do_not_claim: 한 graph의 secondary이며 전체 조건 우위·novelty·독립 다중 domain 검증으로 확대하지 않는다.

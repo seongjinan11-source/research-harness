@@ -1,0 +1,38 @@
+project: Common-context witness 고정 곱셈
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/binding.md
+setting: 실제 개발 graph, feature-free LP, 새 학습0회, 고정 same-context product.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: BIND-F01
+  kind: failure
+  claim: Class pooling 전 context identity를 보존해 곱하면 실제 graph에서 좋아진다.
+  observation: 'k20 pooling-before-product: ACM76.390% vs uniform LP85.555%, IMDB28.311% vs35.413%. IMDB k20 test
+    row 약96.1%는 공통 seed support가0이었다.'
+  verdict: 고정 common-witness product 중단
+  failure_reason: 동일 witness를 강제하는 곱셈이 현재 sparse-support graph에서 대부분의 evidence를 제거했다. 표현력 collision toy가 실제 오류 원인이라는
+    증거는 없었다.
+  reason_status: supported
+  excluded_explanations: []
+  closed_scope: 현재 모든 relation이 같은 context witness를 가져야 하는 고정 곱셈
+  not_closed: Task별 variable binding·논리 연산을 추론하는 일반 executor는 별개다.
+  reopen_when: 공유 witness가 필요한 경우와 별개 witness를 허용할 경우를 관측 context로 구분하는 연산이 나올 때.
+  comparison_floor: Uniform LP, class-pooling 후 product, 같은 graph의 강한 PFN
+  recheck: 먼저 실제 common-support 빈도와 오류의 관계를 확인하고, 고정 곱셈이 아닌 task-adaptive binding의 independent gain을 비교한다.
+  reopen_tags: &id001
+  - graph-structure-use
+  - compositional-generalization
+  reopen_keywords: &id002
+  - binding
+  - witness
+  - logical query
+  - shared context
+  - sparse support
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/binding.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open

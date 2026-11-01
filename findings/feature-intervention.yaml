@@ -1,0 +1,38 @@
+project: 실제 관측 feature 기여의 개입 분석
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/feature_intervention.md
+setting: ACM/IMDB k20/class, 99.5% missing의 Full/No-observed/Shuffle 및 독립 FISF injection 통제.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: FEAT-F01
+  kind: failure
+  claim: IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.
+  observation: IMDB FISF Full44.55%→No-observed44.51%; controlled Full−Zero0.03%p. 제거 전후 argmax는 평균30.47% 바뀌었으므로
+    feature가 예측에 무영향이라는 뜻은 아니다.
+  verdict: 해당 feature-reliability 동기 약화
+  failure_reason: 평균상 실제 값 효과가 거의 상쇄됐다. 구조 입력 PFN과 synthetic-input 경로의 차이를 feature-only evidence로 오인할 수 없다. Node별
+    양·음의 효과가 왜 상쇄되는지는 미상이다.
+  reason_status: supported
+  excluded_explanations: []
+  closed_scope: 현재 IMDB/99.5% 결과의 PFN−LP 격차를 실제 feature 복원 이득으로 설명
+  not_closed: 다른 결측률·graph와 query별 feature utility는 기각하지 않는다.
+  reopen_when: 실제 관측 feature의 양·음 utility를 누수 없이 분리하거나, 유효 feature가 남는 조건을 특정한 방법이 나올 때.
+  comparison_floor: Structure-only PFN, no-observed end-to-end, independent-injection controlled Full/Zero
+  recheck: Mask·context·query·graph를 맞춘 제거/셔플 개입에서 실제 값 경로와 synthetic injection 변화를 분리한다.
+  reopen_tags: &id001
+  - observation-mask
+  - uncertainty
+  - graph-structure-use
+  reopen_keywords: &id002
+  - feature intervention
+  - predictive utility
+  - alignment
+  - synthetic injection
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/feature_intervention.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open

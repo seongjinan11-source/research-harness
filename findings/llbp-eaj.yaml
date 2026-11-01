@@ -12,6 +12,22 @@ related: [GraphPFN, NodePFN]   # 하네스 안의 관련 논문 (같은 graph PF
 entries:
   # ------------------------------------------------------------ 실패·중단
   - id: LLBP-F01
+    failure_reason: Component conditional fit 개선이 최종 predictive 개선으로 이어지지 않았다. Positive diffusion의 표현력 제한도 뒤에 확인했지만
+      전체 미개선의 유일 원인으로 분해하지 않았다.
+    reason_status: supported
+    reopen_when: 표현 가능한 decoder에서 conditional 감독의 독립 predictive 이득을 보이는 방법이 나올 때.
+    reopen_tags:
+    - auxiliary-loss
+    - graph-structure-use
+    reopen_keywords:
+    - conditional
+    - decoder
+    - expressivity
+    comparison_floor: Predictive-only JR, Plain predictive distillation
+    recheck: Decoder와 teacher를 고정하고 auxiliary의 독립 증분을 같은 task·예산으로 비교한다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "Role-conditional 감독을 더하면 최종 예측이 개선된다."
     observation: "C_conditional − B_predictive에서 conditional KL은 세 prior 모두 줄었지만, predictive KL 증분의 paired 95% CI는 세 prior 모두 0을 포함했다 (Independent +0.000188, Exclusive −0.000181, Coupled −0.000582)."
@@ -23,6 +39,21 @@ entries:
     evidence: 원문 확인
 
   - id: LLBP-F02
+    failure_reason: Posterior fit 감소와 predictive KL 악화가 함께 관측됐다. 목적의 불일치나 decoder 오차 보상 중 원인을 하나로 확정하지 못했다.
+    reason_status: unknown
+    reopen_when: Posterior 정확성과 deployment prediction을 동시에 보존하는 감독·추론 원리가 나올 때.
+    reopen_tags:
+    - auxiliary-loss
+    - uncertainty
+    reopen_keywords:
+    - posterior
+    - predictive
+    - decoder
+    comparison_floor: Predictive-only, conditional-only, exact posterior substitution
+    recheck: 같은 decoder에서 posterior KL과 deployment predictive KL을 따로 평가한다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "Posterior까지 정확하게 학습하면 최종 예측도 좋아진다."
     observation: "D_all − C_conditional에서 posterior KL은 줄었지만 predictive KL은 세 prior 모두 늘었고 CI도 모두 0을 제외했다 (예: Independent +0.004039, CI [+0.002707, +0.005418])."
@@ -34,6 +65,22 @@ entries:
     evidence: 원문 확인
 
   - id: LLBP-F03
+    failure_reason: 추가 likelihood auxiliary는 predictive-only보다 악화했다. Local likelihood fit이 label risk와 정렬되지 않을
+      가능성은 가설이며 정확한 원인은 미상이다.
+    reason_status: unknown
+    reopen_when: Local factor 감독이 query risk에 도움이 되는 조건을 증명·검증한 방법이 나올 때.
+    reopen_tags:
+    - auxiliary-loss
+    - observation-mask
+    reopen_keywords:
+    - likelihood
+    - auxiliary
+    - predictive
+    comparison_floor: Learned BP predictive-only, fitted constant
+    recheck: 같은 potential·BP·role update에서 loss만 바꿔 independent gain을 본다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "Masked-edge likelihood auxiliary가 learned BP의 핵심 학습 기여다."
     observation: "BP + auxiliary − BP predictive-only가 Independent +0.000374 [+0.000187, +0.000587], Exclusive +0.000261 [+0.000144, +0.000364]로 유의하게 나빴고, Coupled는 CI가 0을 포함했다."
@@ -45,6 +92,23 @@ entries:
     evidence: 원문 확인
 
   - id: LLBP-F04
+    failure_reason: Potential과 frozen role posterior의 OOD 불일치 및 conditional 근사 오차가 후보였다. 뒤의 coherent-update 대조가
+      일부 병목을 지지하지만 모든 shift의 원인을 확정하지 않는다.
+    reason_status: supported
+    reopen_when: 새 graph 통계로 일관된 role/parameter evidence를 추론하고 단순 EB/grid를 넘는 방법이 나올 때.
+    reopen_tags:
+    - distribution-shift
+    - amortized-inference
+    reopen_keywords:
+    - potential
+    - role
+    - joint
+    - likelihood
+    comparison_floor: Constant+update, density estimator, Grid6/81
+    recheck: 같은 conditional branches에서 posterior·potential 교차 대조와 새 density/signal bank를 평가한다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "Learned potential + 기존 frozen role q만으로 넓은 조건에서 adaptive OOD 추론이 된다."
     observation: "Matched에서는 좋아졌지만, Coupled에서는 auxiliary 포함 learned BP가 constant보다 나빴다. Density 0.12 외삽에서는 일부 Plain/signed 대조보다도 나빴고, density/signal 이동에서 oracle potential과의 차이가 커졌다."
@@ -56,6 +120,22 @@ entries:
     evidence: 원문 확인
 
   - id: LLBP-F05
+    failure_reason: 같은 BP branches에서 coherent joint weights가 frozen role q보다 좋았다. 큰 개선을 같은 주변분포의 dependence 효과
+      전체로 돌릴 수는 없다.
+    reason_status: confirmed
+    reopen_when: 일관된 evidence 갱신을 미지 family에서도 정확하고 저렴하게 구현하는 장치가 나올 때.
+    reopen_tags:
+    - amortized-inference
+    - distribution-shift
+    reopen_keywords:
+    - joint
+    - evidence
+    - role marginal
+    comparison_floor: Joint grid, same-marginal product, frozen-grid
+    recheck: Conditional branches와 marginals를 맞춰 role update와 dependence 증분을 분리한다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "Parameter 후보를 혼합하되 기존 role q를 유지해도 충분하다."
     observation: "Coupled/high density에서 true-parameter Bayes KL이 기존 MRP 0.112820, full-grid parameter mixture + frozen role q 0.078075, 같은 BP branches + coherent joint weights 0.017615였다. 개선의 대부분은 role marginal 갱신에서 왔다 (dependence만 분리한 same-marginal 차이는 −0.001434 [−0.001946, −0.000872])."
@@ -67,6 +147,22 @@ entries:
     evidence: 원문 확인
 
   - id: LLBP-F06
+    failure_reason: 학습 evidence의 정확도와 공통 BP 비용이 병목이었다. Posterior-only 속도 증분이 end-to-end에 크게 전달되지 않았다.
+    reason_status: supported
+    reopen_when: 강한 classical update의 품질을 유지하며 전체 branch/evidence 비용을 줄이는 연산이 나올 때.
+    reopen_tags:
+    - amortized-inference
+    - inference-cost
+    reopen_keywords:
+    - evidence
+    - amortized
+    - inference
+    - shared computation
+    comparison_floor: Constant+role-update, exact-product, Joint Grid6/81
+    recheck: Posterior 추정만의 시간과 shared BP를 포함한 end-to-end 품질·비용을 분리한다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "EAJ(Evidence-Amortized Joint PFN)가 exact-grid를 비슷한 품질·훨씬 낮은 전체 비용으로 대체한다."
     observation: "Independent heads, analytic initializer, own-product보다는 좋았지만 teacher exact marginals의 곱보다 여섯 조건 모두 나빴다. Signal-high에서는 Constant+update가 세 prior 모두 EAJ보다 좋았다 (EAJ−Constant CI 모두 0 초과). Posterior-only는 exact evidence보다 약 1.9–2.9배 빨랐지만 공통 81×4 BP 때문에 end-to-end 감소는 약 6–12%였다."
@@ -78,6 +174,23 @@ entries:
     evidence: 원문 확인
 
   - id: LLBP-F07
+    failure_reason: 실제 decoder에 맞춘 predictive weights와 정확한 Bayesian posterior 복원은 다른 목적이었다. Direct predictive 개선은
+      있었지만 classical 기준선을 넘지 못했다.
+    reason_status: supported
+    reopen_when: Decoder 오차를 다루면서 posterior 해석과 predictive quality를 함께 보장하는 방법이 나올 때.
+    reopen_tags:
+    - amortized-inference
+    - uncertainty
+    reopen_keywords:
+    - posterior
+    - predictive
+    - decoder
+    - aggregation
+    comparison_floor: Direct predictive EAJ, Constant+update, exact-grid
+    recheck: 두 KL과 실제 NLL/Brier를 함께 보고 calibrated posterior라는 주장을 별도 검증한다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "EAJ를 직접 predictive 학습하면 실용성과 posterior 해석을 함께 회복한다."
     observation: "B는 A보다 unknown-parameter exact-grid predictive KL을 여섯 조건 모두 개선했다 (상대 약 15.7–31.9%, CI 0 제외). 그러나 posterior KL은 여섯 조건 모두 악화했고, signal-high 세 prior 모두 Constant+role-update보다 NLL·Brier가 유의하게 나빴으며, accuracy 개선은 미확인이었다. Convex oracle 기준 A→oracle gap 중 B가 회수한 비율은 약 16–32%였다."
@@ -89,6 +202,23 @@ entries:
     evidence: 사용자 보고
 
   - id: LLBP-F08
+    failure_reason: Low density에서는 exact role update도 실패해 Bethe partition 근사만으로 설명할 수 없었다. Potential·conditional·parameter
+      uncertainty 상호작용은 미해결이다.
+    reason_status: supported
+    reopen_when: Sparse/OOD potential uncertainty와 conditional inference를 함께 해결하는 연산이 나올 때.
+    reopen_tags:
+    - distribution-shift
+    - uncertainty
+    reopen_keywords:
+    - potential
+    - sparse
+    - density
+    - Bayesian
+    comparison_floor: Constant+update, R1, Grid6/81
+    recheck: Low density를 포함한 새 bank에서 exact/Bethe·conditional 교차를 고정해 본다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "같은 potential에서 role weights를 다시 계산하는 자기-update가 OOD 문제를 전반적으로 해결한다."
     observation: "Exclusive high density에서는 자기 exact update 0.04029가 Constant+update 0.05073보다 좋았다 (세 prior 모두 CI 0 제외). 하지만 low density에서는 자기 exact update 0.01159가 frozen q 0.00915, Constant+update 0.00917보다 나빴다. Bethe를 exact로 바꿔도 해결되지 않았다."
@@ -100,6 +230,22 @@ entries:
     evidence: 사용자 보고
 
   - id: LLBP-F09
+    failure_reason: Self-update를 미분해 학습하는 경로는 작동했지만 R1 대비 이득이 없었다. Optimization·model bias 중 고유 원인은 미상이다.
+    reason_status: unknown
+    reopen_when: 동일 계산 budget에서 inference-aware 학습의 독립 이득을 보이는 원리가 나올 때.
+    reopen_tags:
+    - amortized-inference
+    - adaptation
+    reopen_keywords:
+    - unrolled
+    - differentiable
+    - belief propagation
+    - training
+    comparison_floor: Frozen R1, R0, Constant+update, Grid6
+    recheck: 추론 시 head 제거 효과와 새 학습 효과를 분리하고 initial state·schedule·예산을 맞춘다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "자기-update 경로까지 학습하는 T1이 R1보다 우수하다."
     observation: "T1−R1 KL −0.000192, 95% CI [−0.000576, +0.000164], accuracy 약 −0.093%p. Low-density 세 prior에서는 R1보다 좋았지만 별도 16조건에서 KL 점추정이 악화했고, low density에서도 R0에는 못 미쳤다."
@@ -111,6 +257,23 @@ entries:
     evidence: 사용자 보고
 
   - id: LLBP-F10
+    failure_reason: 교차 대조에서 learned conditional 손해와 비가법 interaction을 확인했다. Role weights만 고치면 된다는 단일 원인 설명은 지지되지
+      않는다.
+    reason_status: supported
+    reopen_when: Potential·partition·conditional 오차를 일관되게 제어하는 추론 연산이 나올 때.
+    reopen_tags:
+    - distribution-shift
+    - graph-structure-use
+    reopen_keywords:
+    - conditional
+    - interaction
+    - potential
+    - BP
+    comparison_floor: Constant/learned weights×conditional 교차, exact update
+    recheck: 네 교차 조합과 exact-role/BP conditional을 함께 비교해 단일 병목 주장을 검증한다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "Low-density 실패는 partition 근사 또는 role weights만의 문제다."
     observation: "Constant/learned weights × constant/learned conditional 네 조합 교차에서 learned conditional 교체는 세 prior 모두 손해였다. Learned weights 교체는 Independent·Exclusive에서 손해, Coupled에서 도움이었고, 비가법적 상호작용이 있었다. Exact role update에서도 실패했다."
@@ -122,6 +285,23 @@ entries:
     evidence: 사용자 보고
 
   - id: LLBP-F11
+    failure_reason: 현재 known-family에서 작은 training-support joint grid가 품질·비용 기준을 더 잘 충족했다. Learned 모델 전체가 불필요하다는
+      보편 원인은 아니다.
+    reason_status: confirmed
+    reopen_when: 작은 명시적 grid가 처리하지 못하는 실제 family/schema에서 우위를 보이는 범용 추론법이 나올 때.
+    reopen_tags:
+    - amortized-inference
+    - model-based-baseline
+    reopen_keywords:
+    - grid
+    - Bayesian
+    - model based
+    - unknown family
+    comparison_floor: 사전 prior 고정 Grid6/81, Constant+update, R1
+    recheck: 알려진 family·prior 접근 조건과 end-to-end 비용을 맞춘 새 bank에서 비교한다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "R1은 강한 model-based 기준선보다 좋은 메인 메소드다."
     observation: "Bayes predictive KL / NLL이 R1 0.020488 / 0.615840, Joint Grid81 0.014249 / 0.610493, Joint Grid6 0.011939 / 0.608083이었다. Grid6이 KL·NLL·Brier 모두 우수했고 paired CI가 0을 제외했다. R1−Constant는 −0.001744 [−0.002072, −0.001425]로 유의하게 좋았다."
@@ -133,6 +313,23 @@ entries:
     evidence: 사용자 보고
 
   - id: LLBP-F12
+    failure_reason: 병렬 grid와의 실제 latency가 비슷했고 posterior/branch 수 감소가 큰 전체 속도 이점으로 이어지지 않았다. 작업 메모리 절감은 별도로 보존한다.
+    reason_status: confirmed
+    reopen_when: 실제 처리 규모나 memory constraint에서 quality를 유지하는 비용 우위를 입증하는 연산이 나올 때.
+    reopen_tags:
+    - inference-cost
+    - amortized-inference
+    reopen_keywords:
+    - parallel
+    - latency
+    - memory
+    - scalable
+    - shared
+    comparison_floor: 병렬 Grid6/81, R1
+    recheck: 동일 hardware·batch·quality 범위에서 latency 반복 변동과 total/working memory 및 최대 처리 graph를 측정한다.
+    source_refs:
+    - findings/sources/llbp-eaj-retrospective-2026-11-01.md
+    revisit_status: open
     kind: failure
     claim: "R1은 품질이 낮아도 큰 속도 이점으로 정당화된다."
     observation: "RTX 3090에서 단일 graph latency R1 5.17 ms vs Grid6 4.66 ms, Batch16 6.41 ms vs 6.81 ms, Batch16 추가 작업 메모리 1.44 MiB vs 64.04 MiB. Latency 반복 측정의 분산·CI는 없다."

@@ -1,0 +1,28 @@
+# 한 프로젝트 = 파일 하나. 원문은 findings/sources/에 그대로 보존한다.
+# 실패 항목을 추가할 때 아래 필드를 채우고 validate/build를 실행한다.
+project: 프로젝트 이름
+date: YYYY-MM-DD
+source: findings/sources/보고서.md
+setting: 데이터·context·missing 정의·모델·예산·개발/독립 평가 범위
+closed_scope: 이 프로젝트에서 실제로 닫은 범위
+entries:
+  - id: PROJECT-F01
+    kind: failure
+    claim: 검증하려던 가설
+    observation: 원문 수치·대조·CI를 옮기고 oracle과 실제 예측을 구분
+    verdict: 미입증/악화/경쟁력 부족/중단 중 실제 판정
+    failure_reason: 확인된 병목 또는 원인 미상이라고 명시
+    reason_status: unknown  # confirmed / supported / hypothesis / unknown
+    excluded_explanations: []  # 대조로 배제한 설명만
+    closed_scope: 어떤 구현·예산·조건에서 무엇을 닫았나
+    not_closed: 미실행이나 전체 방향을 실패로 세지 않도록 남기는 범위
+    reopen_when: 새 장치가 어떤 병목을 실제로 해결하면 재검토하나
+    comparison_floor: 먼저 넘어야 할 강한 기준선
+    recheck: 같은 정보·예산으로 할 최소 독립 재검증
+    tags: []
+    keywords: []
+    reopen_tags: []  # taxonomy의 병목 관련 tag
+    reopen_keywords: []  # 찾고 싶은 연산·원리, 구체적 동의어
+    source_refs: [findings/sources/보고서.md]
+    evidence: 원문 확인/사용자 보고/수식·구현 검증 등 실제 근거
+    revisit_status: open  # 이미 해결된 중간 병목은 superseded, 후속 결과를 별도 명시

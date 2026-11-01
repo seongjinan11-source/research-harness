@@ -1,0 +1,70 @@
+project: Context path 선택과 고정 LP/PFN 혼합
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/transfer.md
+setting: 기존 실제 개발 graph, k5/20/class, 같은 context와 public test. 새 dataset holdout 아님.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: XFER-F01
+  kind: failure
+  claim: DBLP에서 통했던 context-LOO path 선택을 다른 graph로 옮기면 강하다.
+  observation: Expanded LOO는 ACM k20 75.78% vs uniform LP85.55%, IMDB k5 27.53% vs uniform32.04%. Context accuracy로
+    목적을 바꿔도 IMDB k20 33.55%였다.
+  verdict: 고정 선택 규칙의 전이 실패
+  failure_reason: 소수 context의 ranking이 query utility와 맞지 않았다. 후보 pool 확대와 accuracy 목적 변경만으로는 해결되지 않았다. 추정 분산·risk
+    mismatch의 상대 기여는 미상이다.
+  reason_status: supported
+  excluded_explanations:
+  - Uniform/union 후보가 없어서만 실패했다는 설명은 확대 pool 대조로 충분하지 않았다.
+  closed_scope: 현재 LOO scalar score로 하나의 metapath를 고르는 규칙
+  not_closed: Context가 유용한 관계를 알려주는 다른 설정이나 relation 의미 추론 일반은 기각하지 않는다.
+  reopen_when: 극소 context의 추정 불확실성과 실제 query risk를 다루며 task 내 utility를 식별하는 방법이 나올 때.
+  comparison_floor: Uniform/union LP, individual paths, fixed GraphPFN path inputs
+  recheck: 독립 graph에서 동일 context·후보 pool·선택 예산으로 사전 규칙을 고정해 검증한다.
+  reopen_tags: &id001
+  - uncertainty
+  - distribution-shift
+  - graph-structure-use
+  reopen_keywords: &id002
+  - leave-one-out
+  - relation utility
+  - few-shot
+  - context selection
+  - risk estimation
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/transfer.md
+  - findings/sources/graphpfn-2026-11-01/expanded.md
+  - findings/sources/graphpfn-2026-11-01/accuracy_selector.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open
+- id: XFER-F02
+  kind: failure
+  claim: LP와 PFN 확률의 고정 혼합이 각자의 강점을 보존한다.
+  observation: 'k20 FISF/LP 50:50: ACM82.20% vs LP85.55%, IMDB42.54% vs FISF44.55%. 같은 query에서 상보성은 있지만 혼합은 최강 단일
+    예측기를 못 넘었다.'
+  verdict: 고정 혼합 메인 방향 중단
+  failure_reason: 서로 맞히는 query가 다르다는 사실이 고정 확률 평균의 utility를 보장하지 않았다. 중복 증거가 원인일 수 있으나 직접 분리한 결과는 아니다.
+  reason_status: unknown
+  excluded_explanations: []
+  closed_scope: 현재 50:50/equal-thirds 사후 확률 혼합
+  not_closed: 모든 ensemble이 불가능한 것도, 각 branch가 feature-only/structure-only인 것도 아니다.
+  reopen_when: 중복 evidence와 decision risk를 실제 관측량으로 구분하며 최강 단일 predictor를 보존하는 원리가 나올 때.
+  comparison_floor: LP alone, PCFI/FISF+PFN alone, compute-matched fixed mixtures
+  recheck: 같은 query·context에서 within-task 오류 보완성과 독립 개발/확인 graph의 평균·worst-case utility를 함께 본다.
+  reopen_tags: &id003
+  - uncertainty
+  - graph-structure-use
+  reopen_keywords: &id004
+  - ensemble
+  - fusion
+  - complementarity
+  - double counting
+  tags: *id003
+  keywords: *id004
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/fusion.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open

@@ -1,0 +1,53 @@
+project: Plain relation adaptation과 CRR 제안 철회
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/role_reversal.md
+setting: 기존 Plain, exact-degree bipartite 재배선, 역할 교환·mechanism freeze·label shuffle 진단. CRR 추가 학습은 하지 않음.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: ROLE-L01
+  kind: lesson
+  claim: Plain이 전역 relation utility 적응을 못한다는 전제로 새 router를 정당화하지 않는다.
+  observation: 공유 relation MLP에 relation-ID embedding이 없고, context 통계를 따라 역할 교환에 적응했다. Conflict end-to-end는 약2.09%p
+    하락해 완전 robustness는 아니다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/role_reversal.md
+  tags:
+  - graph-structure-use
+  - distribution-shift
+  keywords:
+  - CRR
+  - role reversal
+  - context routing
+  - relation ID
+  evidence: 원 보고서 snapshot 확인
+- id: ROLE-L02
+  kind: lesson
+  claim: k=1의 centered label-alignment 통계에는 식별 한계가 있다.
+  observation: 클래스당 context 하나면 서로 다른 class centered one-hot 내적은 모두 −1/C다. 이 통계만 복잡하게 인코딩해도 새 정보가 생기지 않는다. 재배선 경로
+    품질 차이도 함께 고려해야 한다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/role_reversal.md
+  tags:
+  - uncertainty
+  - graph-structure-use
+  keywords:
+  - k=1
+  - identifiability
+  - label alignment
+  evidence: 원 보고서 snapshot 확인
+- id: ROLE-U01
+  kind: untested
+  claim: 새 CRR router·query-conditioned relation inference의 독립 학습
+  observation: CRR 제안은 Plain과 기능이 겹쳐 철회했다. 기존 모델 진단을 새 router를 실제 학습해 실패한 결과로 세지 않는다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/role_reversal.md
+  tags:
+  - graph-structure-use
+  - adaptation
+  keywords:
+  - CRR
+  - query-conditioned
+  - local relation utility
+  evidence: 원 보고서 snapshot 확인

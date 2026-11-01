@@ -1,0 +1,53 @@
+project: Relation-wise Evidence Head
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/evidence.md
+setting: 소형 shared relation backbone, 3 seeds, consistent/noisy/conflict, k1/3/5/10/20/class, 99.5% missing.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: EVID-F01
+  kind: failure
+  claim: Relation 출처를 보존하는 head가 강한 Plain의 class decision을 개선한다.
+  observation: Conflict Separate86.09%, Mean85.34%, Plain88.96%. Separate−Plain−2.88%p CI[−3.66,−2.09], Separate−Mean+0.74%p
+    CI[+0.49,+1.03].
+  verdict: 현재 Evidence Head No-Go
+  failure_reason: Plain 정답을 잃는 mass5.36%가 구제2.48%보다 컸다. 정보 중복과 representation 간섭 중 원인은 식별하지 못했다. Confidence를 낮춰서
+    NLL이 좋아졌다는 설명은 후속 분석에서 기각됐다.
+  reason_status: unknown
+  excluded_explanations:
+  - '과신을 줄여 확률 점수가 좋아졌다는 설명: Plain은 confidence63.99% vs accuracy88.96%로 과소확신이었다.'
+  closed_scope: 현재 histogram/evidence head의 확대와 calibration/margin loss로 구제
+  not_closed: Relation source 정보가 불필요하다는 결론이나 다른 내부 추론 연산의 기각은 아니다.
+  reopen_when: Plain의 강한 결정 능력을 유지하면서 출처별 정보의 독립 가치를 회수하는 장치가 나올 때.
+  comparison_floor: Plain, Mean/Separate 동일 용량 control, fixed context-weighted evidence
+  recheck: 동일 task에서 harmed/rescued partition과 NLL/Brier/accuracy를 함께 비교하고 conflict 강도별 증분을 확인한다.
+  reopen_tags: &id001
+  - graph-structure-use
+  - uncertainty
+  reopen_keywords: &id002
+  - relation evidence
+  - decision boundary
+  - class margin
+  - source preservation
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/evidence.md
+  - findings/sources/graphpfn-2026-11-01/evidence_utility.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open
+- id: EVID-L01
+  kind: lesson
+  claim: 확률 점수 개선을 relation 출처의 새 정보나 accuracy 개선으로 치환하지 않는다.
+  observation: Conflict NLL0.5320→0.3585, Brier0.2905→0.2044; NLL 개선의 산술90.5%는 Mean에서도 나타났다. Confidence63.99→84.31%였다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/evidence_utility.md
+  tags:
+  - uncertainty
+  - eval-protocol
+  keywords:
+  - underconfidence
+  - calibration
+  - NLL vs accuracy
+  evidence: 원 보고서 snapshot 확인

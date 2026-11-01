@@ -38,6 +38,16 @@
 2. `findings/<project>.yaml`에 항목을 나눠 적는다. kind는 failure(실패·중단) / preserved(보존한 결과) / lesson(교훈) / untested(미실행, 실패로 세지 않음).
 3. failure는 claim, observation(수치는 원문 그대로), verdict, closed_scope(정확히 무엇을 닫았는지), not_closed(닫지 않은 것)를 반드시 쓴다. preserved는 do_not_claim(확대 금지 주장)을 쓴다.
 4. 원문에 없는 수치·원인·판정을 만들지 않는다. 태그는 taxonomy.yaml에서 고르고, 검색에 걸릴 keywords를 넉넉히 단다.
+5. failure_reason과 reason_status(confirmed/supported/hypothesis/unknown)를 기록한다. 원인 미상인 결과에 설명을 지어내지 않는다. 배제한 설명은 excluded_explanations에 별도로 쓴다.
+6. reopen_when, reopen_tags, reopen_keywords, comparison_floor, recheck, source_refs를 채운다. 새 논문이 무엇을 바꾸어야 재검토하는지와 최소 독립 실험을 명시한다.
+7. 미실행과 제안 철회는 실제 학습 실패로 세지 않는다. 보존할 긍정 결과·후속으로 해결된 중간 병목을 함께 남긴다. 기존 관찰·ID·판정을 덮어쓰지 않는다.
+8. validate → build를 실행하고, source snapshot hash 및 기존 ID 보존을 검사한다.
+
+## 새 논문과 내 실패의 접점을 볼 때
+1. 검증한 논문 metadata를 추가한 뒤 `python src/harness.py revisit --paper ID`를 실행한다.
+2. 자동 매칭은 강점·태그·키워드의 검색 단서다. 원문에서 장치·가정·입력·비용이 재검토 조건을 충족하는지 확인하기 전에는 해결·재개·novelty라고 말하지 않는다.
+3. Benchmark/survey를 해결 메소드로 삼지 않는다. 기존에 이미 쓰거나 이긴/진 방법이 다시 뜬 경우도 구분한다.
+4. `recheck`의 강한 기준선과 정보·예산 대조를 유지한다. 필요하면 독립 graph/schema에서 먼저 작은 재검증을 한다. 자동 매칭만으로 GPU 실험을 재개하지 않는다.
 
 ## 아이디어 점검 요청을 받으면
 1. 아이디어를 taxonomy 태그 2~4개와 키워드로 바꾼다.

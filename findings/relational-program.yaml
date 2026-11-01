@@ -1,0 +1,55 @@
+project: Compiler–Executor GraphPFN pilot
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/program.md
+setting: Fully observed Boolean graph, 문법222개(학습186/미학습36), train/test512/64 graphs, 3 seeds, context총4/8/16.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: PROG-F01
+  kind: failure
+  claim: 고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.
+  observation: '미학습 조합: compiler61.59%/NLL0.68349, Plain56.15%/0.68425, relational features+TabPFN85.18%/0.33352,
+    ProgramGrid87.73%/0.23073. Grid latency도 더 짧았다.'
+  verdict: 현재 compiler 확장 보류
+  failure_reason: 관측 정보는 Grid/TabPFN이 회수했지만 compiler는 context 증가에도 약61.6%에 머물렀다. 표현·search guidance·학습 최적화 중 정확한
+    원인은 식별하지 못했다.
+  reason_status: unknown
+  excluded_explanations: []
+  closed_scope: 현재 작은 compiler를 missing·대형 heterograph로 확대
+  not_closed: 프로그램 합성·library learning 일반은 기각하지 않는다. 후보 문법 자체는 학습 중 모두 제공했고 missing은 실험하지 않았다.
+  reopen_when: Context에서 계산 구성을 더 효율적으로 식별하고 bounded enumeration/강한 PFN feature 기준선을 넘어서는 장치가 나올 때.
+  comparison_floor: Cached ProgramGrid grammar prior, relational execution features+TabPFN, matched Plain
+  recheck: 같은 grammar와 program prior, 후보 구조 접근, fresh graph와 heldout composition에서 품질과 end-to-end 비용을 맞춰 비교한다.
+  reopen_tags: &id001
+  - program-synthesis
+  - compositional-generalization
+  - amortized-inference
+  reopen_keywords: &id002
+  - compiler
+  - program
+  - library
+  - search guidance
+  - binding
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/program.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open
+- id: PROG-U01
+  kind: untested
+  claim: Primitive library를 실제로 학습하거나 missing hidden fact를 공동 주변화하는 확장
+  observation: 실행된 pilot은 고정 grammar/executor의 fully observed 비교다. BDD/weighted model counting, learned library,
+    무한 grammar 탐색 성과는 없다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/program.md
+  tags:
+  - library-learning
+  - program-synthesis
+  - uncertainty
+  keywords:
+  - library learning
+  - hidden fact
+  - weighted model counting
+  evidence: 원 보고서 snapshot 확인

@@ -1,0 +1,84 @@
+project: Reference-regret prior curriculum
+date: '2026-11-01'
+source: findings/sources/graphpfn-2026-11-01/regret.md
+setting: 공개 GraphPFN continued training, 새64/32 graphs, 3 schedule seeds, 15 runs. Finite bank sampling만 변경.
+closed_scope: 아래 각 항목의 구현·조건·예산에 한정. 미실행 방법과 전체 연구 방향을 실패로 세지 않는다.
+related:
+- GraphPFN
+entries:
+- id: REG-F01
+  kind: failure
+  claim: Reference-regret priority가 hard-loss sampling 및 같은 비용의 Random보다 유리하다.
+  observation: Matched NLL Regret0.76377, Loss0.76467, RandomBudget0.76266. Regret−Loss−0.00090 CI[−0.00543,+0.00404],
+    Regret−RandomBudget+0.00111 CI[−0.00145,+0.00387].
+  verdict: 메인 방법 확장 보류
+  failure_reason: Reference의 독립 utility와 채점 비용을 정당화하지 못했다. Stale priority·짧은 학습·input loss 중 원인별 영향은 분리하지 않았다. Loss와
+    regret의 초기 Spearman0.4264는 다른 task를 강조함을 보일 뿐 효용 증명이 아니다.
+  reason_status: unknown
+  excluded_explanations: []
+  closed_scope: 현재 cached finite-bank reference-regret sampler 확대
+  not_closed: 학습된 생성기·library·무한 stream prior learning을 구현하거나 실패시킨 것은 아니다.
+  reopen_when: Reference의 추가 감독 비용을 회수하면서 실제로 회수 가능한 task difficulty를 식별하는 학습·생성 원리가 나올 때.
+  comparison_floor: Random, Manual, Loss priority, cold-score-cost-matched RandomBudget, frozen FISF
+  recheck: 새 graph bank와 고정 비용으로 Loss/RandomBudget을 함께 넘는지 확인하고 task weighting과 generator 학습을 분리한다.
+  reopen_tags: &id001
+  - pretraining-data
+  - prior-mismatch
+  - inference-cost
+  reopen_keywords: &id002
+  - regret
+  - curriculum
+  - task generation
+  - hard example
+  - reference cost
+  tags: *id001
+  keywords: *id002
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/regret.md
+  - findings/sources/graphpfn-2026-11-01/regret_scope.md
+  evidence: 원 보고서 snapshot 확인
+  revisit_status: open
+- id: REG-P01
+  kind: preserved
+  claim: 같은 update 수의 Random 대비 작은 Matched NLL 개선은 있었다.
+  observation: Regret−Random−0.00185 CI[−0.00353,−0.00034]. Accuracy58.78→58.79%로 정확도 개선은 미확인.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/regret.md
+  tags:
+  - pretraining-data
+  - uncertainty
+  keywords:
+  - regret
+  - matched updates
+  evidence: 원 보고서 snapshot 확인
+  do_not_claim: Loss priority·같은 비용 대조·OOD를 넘었다고 확대하지 않는다.
+- id: REG-L01
+  kind: lesson
+  claim: Singleton observed feature centering은 입력 정보를 없앨 수 있다.
+  observation: Test99.5% whole-node에서 PCFI input 전체가0인 episode는 uniform20/32, clustered32/32. 관측 행0~1개에서 centering
+    손실을 직접 확인했다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/regret.md
+  - findings/sources/graphpfn-2026-11-01/regret_scope.md
+  tags:
+  - observation-mask
+  - feature-heterogeneity
+  keywords:
+  - singleton
+  - centering
+  - all zero
+  - normalization
+  evidence: 원 보고서 snapshot 확인
+- id: REG-U01
+  kind: untested
+  claim: 학습된 prior generator·새 mechanism library
+  observation: 실행한 것은 같은 official generator의 finite task bank를 재가중하는 pilot이다.
+  source_refs:
+  - findings/sources/graphpfn-2026-11-01/regret.md
+  tags:
+  - pretraining-data
+  - library-learning
+  keywords:
+  - neural generator
+  - library learning
+  evidence: 원 보고서 snapshot 확인
