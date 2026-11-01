@@ -1,0 +1,348 @@
+# 내 연구의 실패·중단·보존 기록. 아이디어 점검(check) 때 "이미 닫은 갈래"로 걸린다.
+# 원문: sources/llbp-eaj-retrospective-2026-11-01.md (수치는 원문 그대로, 새 수치를 만들지 않음)
+project: Learned-Likelihood BP / EAJ
+id_prefix: LLBP
+date: 2026-11-01
+source: findings/sources/llbp-eaj-retrospective-2026-11-01.md
+setting: "known-family binary SBM, feature-free 관계 그래프, target 8개 + helper 4개, 두 관계와 네 role 가설, 총 context 1/2/4 (클래스당 아님). 작은 latent state는 exact enumeration, conditional BP는 고정 반복."
+bottom_line: "학습과 추론의 몇몇 개선은 실제로 얻었지만, 현재 문제에서 작은 명시적 grid(Joint Grid6)를 넘는 새 메인 메소드는 만들지 못했다."
+closed_scope: "현재 문제·구조·예산에서 loss/head/재학습을 추가해 메인 메소드로 만드는 갈래. BP 전체, learned potential 전체, 모든 후속 연구가 불가능하다는 결론은 아니다."
+related: [GraphPFN, NodePFN]   # 하네스 안의 관련 논문 (같은 graph PFN 계열)
+
+entries:
+  # ------------------------------------------------------------ 실패·중단
+  - id: LLBP-F01
+    kind: failure
+    claim: "Role-conditional 감독을 더하면 최종 예측이 개선된다."
+    observation: "C_conditional − B_predictive에서 conditional KL은 세 prior 모두 줄었지만, predictive KL 증분의 paired 95% CI는 세 prior 모두 0을 포함했다 (Independent +0.000188, Exclusive −0.000181, Coupled −0.000582)."
+    verdict: 추가 이득 미확인
+    closed_scope: "기존 staged decoder에 conditional loss를 더해 메인 메소드로 확장하는 갈래"
+    not_closed: "conditional distillation 일반이 불가능하다는 결론은 아니다. 추가 감독은 의도한 conditional 오차를 실제로 줄였다."
+    tags: [auxiliary-loss]
+    keywords: [conditional distillation, role-conditional, staged decoder, teacher 감독, conditional loss]
+    evidence: 원문 확인
+
+  - id: LLBP-F02
+    kind: failure
+    claim: "Posterior까지 정확하게 학습하면 최종 예측도 좋아진다."
+    observation: "D_all − C_conditional에서 posterior KL은 줄었지만 predictive KL은 세 prior 모두 늘었고 CI도 모두 0을 제외했다 (예: Independent +0.004039, CI [+0.002707, +0.005418])."
+    verdict: 유의 악화
+    closed_scope: "현재 architecture·loss weight·예산에서 posterior loss를 추가하는 것"
+    not_closed: "posterior 감독 일반의 기각이 아니라, component 오차 감소가 최종 품질을 보장하지 않는다는 결과다."
+    tags: [auxiliary-loss, amortized-inference]
+    keywords: [posterior loss, posterior KL, distillation, staged decoder]
+    evidence: 원문 확인
+
+  - id: LLBP-F03
+    kind: failure
+    claim: "Masked-edge likelihood auxiliary가 learned BP의 핵심 학습 기여다."
+    observation: "BP + auxiliary − BP predictive-only가 Independent +0.000374 [+0.000187, +0.000587], Exclusive +0.000261 [+0.000144, +0.000364]로 유의하게 나빴고, Coupled는 CI가 0을 포함했다."
+    verdict: 유의 악화 (새 loss 기여 주장 중단)
+    closed_scope: "masked-edge likelihood loss를 새 학습 원리·핵심 성능 증분으로 주장하는 것"
+    not_closed: "auxiliary 없이도 potential을 학습하고 BP로 좋은 예측을 만들 수 있었다. 실패한 것은 학습 가능성이 아니라 추가 loss의 우수성 주장이다."
+    tags: [auxiliary-loss, observation-mask]
+    keywords: [masked-edge likelihood, auxiliary loss, learned potential, BP, MRP]
+    evidence: 원문 확인
+
+  - id: LLBP-F04
+    kind: failure
+    claim: "Learned potential + 기존 frozen role q만으로 넓은 조건에서 adaptive OOD 추론이 된다."
+    observation: "Matched에서는 좋아졌지만, Coupled에서는 auxiliary 포함 learned BP가 constant보다 나빴다. Density 0.12 외삽에서는 일부 Plain/signed 대조보다도 나빴고, density/signal 이동에서 oracle potential과의 차이가 커졌다."
+    verdict: 범용성 미확보
+    closed_scope: "관측 통계 encoder로 potential을 학습해 고정 role head와 결합하는 것만으로 범용 추론기를 주장하는 것"
+    not_closed: "원인은 확정하지 못했다: potential point estimate, frozen posterior의 분포 이동, conditional BP 근사, 이들의 상호작용."
+    tags: [distribution-shift, amortized-inference]
+    keywords: [learned potential, frozen q, OOD, density shift, signal shift]
+    evidence: 원문 확인
+
+  - id: LLBP-F05
+    kind: failure
+    claim: "Parameter 후보를 혼합하되 기존 role q를 유지해도 충분하다."
+    observation: "Coupled/high density에서 true-parameter Bayes KL이 기존 MRP 0.112820, full-grid parameter mixture + frozen role q 0.078075, 같은 BP branches + coherent joint weights 0.017615였다. 개선의 대부분은 role marginal 갱신에서 왔다 (dependence만 분리한 same-marginal 차이는 −0.001434 [−0.001946, −0.000872])."
+    verdict: 기대 기각 + 해석 기각
+    closed_scope: "frozen-hybrid로 충분하다는 기대, 그리고 전체 개선을 H–parameter dependence 보존만의 효과로 보는 해석"
+    not_closed: "frozen hybrid도 정규화된 분포이며 일부 조건부 dependence를 보존한다. 단순 독립 head의 곱이라고 부르지 않는다."
+    tags: [model-based-baseline, amortized-inference]
+    keywords: [joint grid, parameter mixture, frozen role q, coherent joint update, role marginal]
+    evidence: 원문 확인
+
+  - id: LLBP-F06
+    kind: failure
+    claim: "EAJ(Evidence-Amortized Joint PFN)가 exact-grid를 비슷한 품질·훨씬 낮은 전체 비용으로 대체한다."
+    observation: "Independent heads, analytic initializer, own-product보다는 좋았지만 teacher exact marginals의 곱보다 여섯 조건 모두 나빴다. Signal-high에서는 Constant+update가 세 prior 모두 EAJ보다 좋았다 (EAJ−Constant CI 모두 0 초과). Posterior-only는 exact evidence보다 약 1.9–2.9배 빨랐지만 공통 81×4 BP 때문에 end-to-end 감소는 약 6–12%였다."
+    verdict: 경쟁력 미달 (대체·확장 중단)
+    closed_scope: "EAJ에 새 surrogate loss를 더하거나 모델·학습량을 늘려 경쟁력을 추격하는 갈래"
+    not_closed: "joint 표현 자체의 장점(약한 head 대비)은 있었다."
+    tags: [amortized-inference, model-based-baseline, inference-cost]
+    keywords: [EAJ, evidence-amortized, evidence head, exact grid, posterior amortization, joint posterior]
+    evidence: 원문 확인
+
+  - id: LLBP-F07
+    kind: failure
+    claim: "EAJ를 직접 predictive 학습하면 실용성과 posterior 해석을 함께 회복한다."
+    observation: "B는 A보다 unknown-parameter exact-grid predictive KL을 여섯 조건 모두 개선했다 (상대 약 15.7–31.9%, CI 0 제외). 그러나 posterior KL은 여섯 조건 모두 악화했고, signal-high 세 prior 모두 Constant+role-update보다 NLL·Brier가 유의하게 나빴으며, accuracy 개선은 미확인이었다. Convex oracle 기준 A→oracle gap 중 B가 회수한 비율은 약 16–32%였다."
+    verdict: 부분 성공·메소드 구제 실패 (predictive 개선을 posterior 복원 개선으로 보는 해석 기각)
+    closed_scope: "EAJ에 새 surrogate loss를 추가하는 갈래"
+    not_closed: "직접 predictive 학습이 작동하지 않았다는 결론은 틀리다. B의 출력은 decoder에 맞춘 aggregation weights로 남긴다."
+    tags: [amortized-inference, auxiliary-loss, model-based-baseline]
+    keywords: [direct predictive training, predictive KL, posterior KL, convex oracle, EAJ, aggregation weights]
+    evidence: 사용자 보고
+
+  - id: LLBP-F08
+    kind: failure
+    claim: "같은 potential에서 role weights를 다시 계산하는 자기-update가 OOD 문제를 전반적으로 해결한다."
+    observation: "Exclusive high density에서는 자기 exact update 0.04029가 Constant+update 0.05073보다 좋았다 (세 prior 모두 CI 0 제외). 하지만 low density에서는 자기 exact update 0.01159가 frozen q 0.00915, Constant+update 0.00917보다 나빴다. Bethe를 exact로 바꿔도 해결되지 않았다."
+    verdict: 보편적 OOD 해결 주장 기각
+    closed_scope: "potential과 weights를 맞추면 분포 이동도 전반적으로 해결된다는 주장"
+    not_closed: "자기-update는 특정 조건에서 유효한 추론 개선이다."
+    tags: [distribution-shift]
+    keywords: [self-update, R1, Bethe, partition function, low density, high density]
+    evidence: 사용자 보고
+
+  - id: LLBP-F09
+    kind: failure
+    claim: "자기-update 경로까지 학습하는 T1이 R1보다 우수하다."
+    observation: "T1−R1 KL −0.000192, 95% CI [−0.000576, +0.000164], accuracy 약 −0.093%p. Low-density 세 prior에서는 R1보다 좋았지만 별도 16조건에서 KL 점추정이 악화했고, low density에서도 R0에는 못 미쳤다."
+    verdict: 추가 이득 미확인
+    closed_scope: "T1의 우수성을 확보하기 위해 loss·예산을 계속 늘리는 것"
+    not_closed: "head 없는 학습 경로와 gradient 흐름은 확인됐다. 더 큰 예산에서 절대 개선되지 않는다는 증명은 아니다."
+    tags: [adaptation, amortized-inference]
+    keywords: [T1, retraining, self-update training, head-free training]
+    evidence: 사용자 보고
+
+  - id: LLBP-F10
+    kind: failure
+    claim: "Low-density 실패는 partition 근사 또는 role weights만의 문제다."
+    observation: "Constant/learned weights × constant/learned conditional 네 조합 교차에서 learned conditional 교체는 세 prior 모두 손해였다. Learned weights 교체는 Independent·Exclusive에서 손해, Coupled에서 도움이었고, 비가법적 상호작용이 있었다. Exact role update에서도 실패했다."
+    verdict: 단일 병목 설명 기각
+    closed_scope: "role posterior만 고치면 된다는 설명, exact partition이면 해결된다는 설명"
+    not_closed: "기각하지 못한 가능성: potential 추정 편향, parameter uncertainty 부족, conditional BP 오차, 과확신, 이들의 상호작용."
+    tags: [distribution-shift]
+    keywords: [low density, interaction, Bethe, exact partition, conditional BP, cross analysis]
+    evidence: 사용자 보고
+
+  - id: LLBP-F11
+    kind: failure
+    claim: "R1은 강한 model-based 기준선보다 좋은 메인 메소드다."
+    observation: "Bayes predictive KL / NLL이 R1 0.020488 / 0.615840, Joint Grid81 0.014249 / 0.610493, Joint Grid6 0.011939 / 0.608083이었다. Grid6이 KL·NLL·Brier 모두 우수했고 paired CI가 0을 제외했다. R1−Constant는 −0.001744 [−0.002072, −0.001425]로 유의하게 좋았다."
+    verdict: 경쟁력 미달
+    closed_scope: "R1을 강한 기준선보다 우수한 메인 메소드로 승격하는 것"
+    not_closed: "R1−R0, R1−Constant의 유의한 개선은 그대로 남는다. Grid6과 Grid81은 격자 수뿐 아니라 prior 자체가 다르므로 '작은 grid가 일반적으로 낫다'로 해석하지 않는다."
+    tags: [model-based-baseline]
+    keywords: [R1, Grid6, Grid81, strong baseline, joint grid, NLL, Brier]
+    evidence: 사용자 보고
+
+  - id: LLBP-F12
+    kind: failure
+    claim: "R1은 품질이 낮아도 큰 속도 이점으로 정당화된다."
+    observation: "RTX 3090에서 단일 graph latency R1 5.17 ms vs Grid6 4.66 ms, Batch16 6.41 ms vs 6.81 ms, Batch16 추가 작업 메모리 1.44 MiB vs 64.04 MiB. Latency 반복 측정의 분산·CI는 없다."
+    verdict: 큰 속도 우위 미확보
+    closed_scope: "R1의 존재 이유를 추론 가속으로 바꾸는 것"
+    not_closed: "추가 작업 메모리 절감은 사실이다. 다만 더 큰 graph 처리나 배포상 이익은 검증하지 않았고, 이를 사후 메인 주장으로 바꾸지 않기로 했다."
+    tags: [inference-cost, model-based-baseline]
+    keywords: [latency, memory, R1, Grid6, speed]
+    evidence: 사용자 보고
+
+  # ------------------------------------------------------------ 보존한 결과 (실패로 오해하면 안 되는 것)
+  - id: LLBP-P1
+    kind: preserved
+    claim: "Learned BP checkpoint: 원래 positive/signed decoder보다 좋은 matched 확률 예측"
+    observation: "Matched Bayes predictive KL이 Frozen positive D 0.063955 / 0.052586 / 0.085548에서 Learned BP predictive-only 0.015946 / 0.011013 / 0.028391로 줄었다 (Independent / Exclusive / Coupled). 단순 signed diffusion만으로는 이 개선을 설명할 수 없었다."
+    do_not_claim: "모든 생성 family에서 learned likelihood가 필요하다."
+    tags: [graph-structure-use]
+    keywords: [learned BP, learned potential, signed decoder, positive decoder]
+    evidence: 원문 확인
+
+  - id: LLBP-P2
+    kind: preserved
+    claim: "R1 자기-update: 같은 potential의 활용 방식만 바꿔 개선했고, 새 graph bank에서 재현됐다."
+    observation: "R1−R0 KL −0.012995 (약 38.8% 감소), accuracy +0.376%p."
+    do_not_claim: "학습 단계도 head가 필요 없었다."
+    tags: [amortized-inference]
+    keywords: [R1, self-update, role weights]
+    evidence: 사용자 보고
+
+  - id: LLBP-P3
+    kind: preserved
+    claim: "R1−Constant paired 결과"
+    observation: "최신 비교에서 KL 개선 CI가 0을 제외했다 (−0.001744 [−0.002072, −0.001425])."
+    do_not_claim: "강한 모든 baseline보다 우수하다."
+    tags: [model-based-baseline]
+    keywords: [R1, constant potential]
+    evidence: 사용자 보고
+
+  - id: LLBP-P4
+    kind: preserved
+    claim: "T1: head 없는 학습 경로와 gradient 흐름 확인"
+    observation: "Role-update 경로까지 gradient가 흐르는 것을 검증했다."
+    do_not_claim: "R1보다 우수한 학습법이다."
+    tags: [adaptation]
+    keywords: [T1, head-free]
+    evidence: 사용자 보고
+
+  - id: LLBP-P5
+    kind: preserved
+    claim: "EAJ A→B: 직접 predictive 학습의 효과"
+    observation: "여섯 조건 모두 grid predictive KL 개선 CI가 0을 제외했다."
+    do_not_claim: "posterior 복원도 개선됐다."
+    tags: [amortized-inference]
+    keywords: [EAJ, direct predictive training]
+    evidence: 사용자 보고
+
+  - id: LLBP-P6
+    kind: preserved
+    claim: "Convex oracle: 보고된 certificate와 큰 미회수 gap"
+    observation: "Graph-shared convex oracle 12,096개의 최적성 certificate를 확인했다고 보고됐다. 정확한 bound는 메시지 손상으로 미상이다."
+    do_not_claim: "현재 모델이 그 gap을 쉽게 회수한다."
+    tags: [amortized-inference]
+    keywords: [convex oracle, certificate, oracle gap]
+    evidence: 사용자 보고
+
+  - id: LLBP-P7
+    kind: preserved
+    claim: "Nonedge/mask 대조: 관측 상태에 맞는 factor를 쓰는 것이 중요하다."
+    observation: "Observed nonedge를 버리거나 unknown pair를 nonedge로 처리하면 크게 악화했다. 예: Independent에서 edge-only BP 0.082736 vs full edge/nonedge BP 0.016319, 관측률 0.2에서 올바른 mask 0.000226 vs unknown→nonedge 0.044486."
+    do_not_claim: "모든 현실 데이터에서 해당 관측 구분이 주어진다."
+    tags: [observation-mask]
+    keywords: [nonedge, observation mask, unknown pair, missing edge]
+    evidence: 원문 확인
+
+  - id: LLBP-P8
+    kind: preserved
+    claim: "작업 메모리: 지정 Batch16 측정에서 큰 절감"
+    observation: "추가 작업 메모리 1.44 MiB vs 64.04 MiB (총 GPU 메모리 차이가 아님)."
+    do_not_claim: "실제 처리 가능한 graph 규모가 더 크다."
+    tags: [inference-cost]
+    keywords: [memory, R1]
+    evidence: 사용자 보고
+
+  - id: LLBP-P9
+    kind: preserved
+    claim: "Joint Grid6/81과 Constant+update는 이후 비교 자산으로 보존한다."
+    observation: "알려진 family와 선언된 prior를 쓰는 model-based 기준선이 learned 방법이 넘어야 할 기준이 됐다."
+    do_not_claim: "어떤 하나의 grid prior가 모든 조건을 지배한다 (Grid81은 matched Exclusive·sparse observation에서, Grid6은 low density에서 상대적으로 나쁠 수 있었다)."
+    tags: [model-based-baseline]
+    keywords: [Grid6, Grid81, constant+update, baseline]
+    evidence: 원문 확인
+
+  # ------------------------------------------------------------ 반복된 교훈
+  - id: LLBP-L0
+    kind: lesson
+    claim: "Teacher를 정확하게 주는 것과 decoder가 그 target을 표현할 수 있는 것은 다르다."
+    observation: "양의 relation weight와 normalization을 쓰는 label diffusion은 context가 전부 클래스 a이면 모든 query에서 p(a) ≥ 1/2를 유지한다. Nonedge로 반대 클래스를 지지하는 exact SBM teacher를 표현할 수 없었고, 이후 decoder 자체를 바꾸는 방향으로 이동했다."
+    tags: [graph-structure-use, auxiliary-loss]
+    keywords: [decoder constraint, label diffusion, positive weight, nonedge, expressivity]
+    evidence: 원문 확인
+
+  - id: LLBP-L1
+    kind: lesson
+    claim: "Component fitting이 좋아져도 전체 predictor가 좋아진다는 보장은 없다."
+    observation: "초기 conditional/posterior loss, EAJ predictive 학습의 posterior 악화, low-density 교차 분석에서 반복해서 분리됐다."
+    tags: [auxiliary-loss]
+    keywords: [component loss, auxiliary supervision]
+    evidence: 원문 확인
+
+  - id: LLBP-L2
+    kind: lesson
+    claim: "더 직접적인 loss가 메소드 경쟁력을 해결해주지 않는다. Loss 변경의 효과와 메소드 경쟁력은 다른 질문이다."
+    observation: "EAJ에서는 직접 predictive 학습이 지표를 개선했지만 Constant+update를 넘지 못했고, T1은 R1 대비 추가 이득이 없었다."
+    tags: [auxiliary-loss, model-based-baseline]
+    keywords: [direct loss, predictive loss]
+    evidence: 원문 확인
+
+  - id: LLBP-L3
+    kind: lesson
+    claim: "일관된 추론이라고 OOD가 해결되지 않는다. 같은 potential 기반 추론은 잘못 맞는 potential을 자동으로 교정하지 않는다."
+    observation: "Self-update는 효과가 있었지만 low density를 해결하지 못했다."
+    tags: [distribution-shift]
+    keywords: [self-consistency, OOD]
+    evidence: 원문 확인
+
+  - id: LLBP-L4
+    kind: lesson
+    claim: "Neural amortization이나 branch 수 감소가 곧 wall-clock 우위는 아니다."
+    observation: "EAJ에서는 공통 BP 계산이 비용을 지배했고, R1은 병렬 Grid6과 latency가 비슷했다."
+    tags: [inference-cost, amortized-inference]
+    keywords: [amortization, speedup, latency, branch]
+    evidence: 원문 확인
+
+  - id: LLBP-L5
+    kind: lesson
+    claim: "기준선 하나를 이겼다고 메인 메소드가 되지 않는다. 약한 비교의 유의성과 강한 비교의 경쟁력은 다른 기준이다."
+    observation: "R1−R0, R1−Constant는 성공이었지만 Grid6과의 비교에서 승격 근거가 사라졌다."
+    tags: [model-based-baseline]
+    keywords: [baseline, main method]
+    evidence: 원문 확인
+
+  - id: LLBP-L6
+    kind: lesson
+    claim: "강한 기준선(이미 존재하는 명시적 grid 등)과의 품질·비용 비교를 재학습·확장 실험보다 먼저 한다."
+    observation: "Joint-grid가 이미 강했는데도 R1 개선 후 T1 재학습을 먼저 했다. R1 대 병렬 Grid6/81 비교가 T1보다 앞에 있어야 했다."
+    tags: [model-based-baseline, eval-protocol]
+    keywords: [experiment order, strong baseline first, kill-first]
+    evidence: 원문 확인
+
+  - id: LLBP-L7
+    kind: lesson
+    claim: "'추론 변경 효과가 확인된 후보'를 '메인 방법'으로 부르지 않는다. 반대로 강한 기준선에 밀렸다고 국소 개선의 실재까지 부정하지 않는다."
+    observation: "R1을 성급하게 '메인 방법으로 유지'라고 표현했다가 Grid6 비교 후 정정했다."
+    tags: [eval-protocol]
+    keywords: [claim calibration, main method]
+    evidence: 원문 확인
+
+  - id: LLBP-L8
+    kind: lesson
+    claim: "Posterior KL, predictive KL, accuracy, 비용, 일반화는 각각 다른 검증이 필요하다. 한 단계의 성공을 다음 단계의 성공처럼 이어 붙이지 않는다."
+    observation: "여러 목표의 성공을 하나의 강한 주장으로 연결할 위험이 있었다."
+    tags: [eval-protocol]
+    keywords: [metric, claim chaining]
+    evidence: 원문 확인
+
+  - id: LLBP-L9
+    kind: lesson
+    claim: "Oracle까지 gap이 크다는 것은 다음 투자의 자동 근거가 아니다."
+    observation: "Gap을 관측 정보와 현재 모델로 회수할 수 있는지, 회수해도 강한 baseline을 넘는지는 별개였다."
+    tags: [amortized-inference]
+    keywords: [oracle gap, headroom]
+    evidence: 원문 확인
+
+  - id: LLBP-L10
+    kind: lesson
+    claim: "원래 목표가 무너진 뒤 남은 장점 하나(메모리 등)에 맞춰 목표를 사후 변경하지 않는다. 실패 조건에 맞춘 gate·temperature 추가도 기본 연장으로 채택하지 않는다."
+    observation: "메모리 이점은 사실이지만 검증 없이 메인 주장으로 바꾸지 않았다."
+    tags: [eval-protocol]
+    keywords: [post-hoc, goal shifting, gate, temperature]
+    evidence: 원문 확인
+
+  # ------------------------------------------------------------ 미실행·미검증 (실패로 세지 않음)
+  - id: LLBP-U1
+    kind: untested
+    claim: "관계의 관측과정 자체를 학습하는 BP"
+    observation: "제안만 있었고 완료된 실험이 없다."
+    tags: [observation-mask]
+    keywords: [observation process, missingness, learned observation model]
+    evidence: 원문 확인
+
+  - id: LLBP-U2
+    kind: untested
+    claim: "Relation missingness가 label/role에 의존하는 설정"
+    observation: "실험하지 않았다."
+    tags: [observation-mask]
+    keywords: [MNAR, informative missingness]
+    evidence: 원문 확인
+
+  - id: LLBP-U3
+    kind: untested
+    claim: "Unseen semantic schema, 실제 heterograph, 큰 graph scaling"
+    observation: "실험하지 않았다."
+    tags: [graph-scale, feature-heterogeneity]
+    keywords: [heterograph, schema, scaling]
+    evidence: 원문 확인
+
+  - id: LLBP-U4
+    kind: untested
+    claim: "Temperature/shrinkage/density gate, 더 큰 모델, 추가 surrogate loss, 더 긴 T1 학습"
+    observation: "추가 실행을 제안하지 않았거나 중단한 것이지, 실제로 학습해서 실패를 증명한 것은 아니다."
+    tags: [distribution-shift, auxiliary-loss]
+    keywords: [temperature, shrinkage, gate, bigger model, surrogate loss]
+    evidence: 원문 확인

@@ -1,0 +1,88 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: Moirai-MoE
+title: "Moirai-MoE: Empowering Time Series Foundation Models with Sparse Mixture of Experts"
+authors: "Xu Liu, Juncheng Liu, Gerald Woo, Taha Aksu, Yuxuan Liang, Roger Zimmermann, Chenghao Liu, Junnan Li, Silvio Savarese, Caiming Xiong, Doyen Sahoo (Salesforce AI Research / NUS / HKUST(GZ))"
+venue: "ICML 2025"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2410.10469
+  openreview: https://openreview.net/forum?id=SrEOUSyJcR
+
+citation:
+  type: inproceedings
+  title: "Moirai-MoE: Empowering Time Series Foundation Models with Sparse Mixture of Experts"
+  authors: ["Xu Liu", "Juncheng Liu", "Gerald Woo", "Taha Aksu", "Yuxuan Liang", "Roger Zimmermann", "Chenghao Liu", "Junnan Li", "Silvio Savarese", "Caiming Xiong", "Doyen Sahoo"]
+  year: 2025
+  booktitle: "Proceedings of the 42nd International Conference on Machine Learning"
+  publisher: "PMLR"
+  volume: 267
+  pages: "38940--38962"
+  arxiv: "2410.10469"
+  url: https://proceedings.mlr.press/v267/liu25an.html
+  verified_from:
+    - https://proceedings.mlr.press/v267/liu25an.html
+    - https://raw.githubusercontent.com/mlresearch/v267/main/assets/liu25an/liu25an.pdf
+    - https://arxiv.org/abs/2410.10469v1
+
+areas: [tsfm]
+problem: "Moirai처럼 사람이 정한 frequency 기준으로 projection layer를 나누는 specialization은 frequency와 실제 패턴이 잘 맞지 않고, 한 window 안에서 바뀌는 분포도 담지 못한다. 이런 heuristic 없이 이질적인 시계열 corpus에서 데이터가 스스로 specialization 단위를 정하도록 만드는 것이 목표다."
+core_idea: "Moirai의 frequency별 multi patch size projection을 없애고, patch 크기 16의 단일 residual MLP projection으로 token을 만든다. backbone은 masked encoder 대신 decoder-only causal Transformer이고, 모든 layer의 FFN을 expert 32개짜리 sparse MoE layer로 바꿔 token마다 2개 expert만 활성화한다. routing은 처음부터 학습하는 linear gate 대신, single projection으로 미리 학습한 dense Moirai의 attention 출력을 LOTSA에서 mini-batch k-means로 군집화하고 그 centroid까지의 Euclidean 거리로 정한다. 학습 목표는 다음 token에 대한 mixture distribution(Moirai와 같은 구성)의 negative log-likelihood이며, sequence의 30%는 정규화 통계 계산에만 쓰고 loss에서 뺀다. 다변량 입력은 Moirai처럼 변수를 한 sequence로 펴서 처리한다. 크기는 Small(활성 11M, 전체 117M)과 Base(활성 86M, 전체 935M) 두 가지이고, Moirai와 같은 LOTSA로 학습했다."
+key_assumptions:
+  - "patch 16짜리 token 하나가 specialization의 적절한 단위이고, 단일 patch 크기 하나로 모든 frequency를 다룰 수 있다고 가정한다."
+  - "dense 모델의 표현을 군집화한 centroid가 실제 데이터 분포를 잘 반영하므로, 고정된 routing 기준으로 써도 된다고 본다."
+  - "변수를 한 sequence로 편 causal attention만으로 변수 내 의존성과 변수 간 의존성을 함께 잡을 수 있다고 가정한다."
+  - "instance normalization으로 level과 scale을 지워도 되고, 정규화 통계는 sequence 일부만으로 안정적으로 추정할 수 있다고 본다."
+  - "사전학습 데이터는 Moirai와 같은 LOTSA를 그대로 쓴다. 따라서 성능 향상은 데이터가 아니라 구조와 학습 목표에서 온다고 해석한다."
+strengths:
+  - text: "frequency별 projection 없이 단일 projection과 MoE로 token 단위 specialization을 데이터가 정하게 했다. Monash 29개 데이터셋에서 Small이 같은 규모의 Moirai-Small보다 17%, 더 큰 Moirai-Base와 Moirai-Large보다 각각 8%, 7% 좋았고, Moirai가 넘지 못했던 Chronos도 앞섰다."
+    tags: [tokenization]
+  - text: "활성 parameter 수를 Moirai와 맞춰서 추론 시간이 거의 같다. 같은 설정에서 Moirai-MoE-Small과 Base는 273초와 370초로 Moirai-Small과 Base의 264초, 358초와 비슷했다. patch 크기 1로 autoregressive 예측하는 Chronos(551~2,780초)보다는 훨씬 빨랐다."
+    tags: [inference-cost]
+  - text: "dense 모델의 표현 군집을 routing 기준으로 쓰는 token clustering gate가 expert 수를 4개에서 64개까지 바꿔도 linear gate보다 일관되게 좋았다. load balancing loss를 붙인 linear gate와 비교해도 마찬가지여서, 처음부터 학습하는 gate의 초기화 문제를 피하는 간단한 방법이 된다."
+    tags: [training-stability]
+  - text: "학습에 쓰지 않은 10개 데이터셋 zero-shot 평가에서 Base가 CRPS와 MASE 평균 모두 최고였고, 평가 데이터 일부가 사전학습에 들어간 TimesFM, Chronos, Time-MoE보다도 나았다. Small도 모든 크기의 Moirai보다 CRPS가 3~14%, MASE가 8~16% 좋았다. point 예측 지표 외에 PICP, QICE 같은 구간 coverage 지표까지 함께 보고했다."
+    tags: [zero-shot-gap, uncertainty]
+  - text: "next-token prediction으로 학습 목표를 바꿔 학습 효율을 높였다. 50k step 학습이 masked filling 100k step과 비슷한 성능을 냈고, Moirai-MoE-Small은 25k step만에 125k step 학습한 Moirai-Small을 넘었다."
+    tags: [inference-cost]
+  - text: "시계열 foundation model의 MoE 내부를 처음으로 분석했다. 얕은 layer에서는 frequency마다 expert 선택 분포가 다르지만 마지막 layer에서는 거의 같아져서, 깊이 갈수록 frequency에 무관한 표현을 만든다는 점을 보였다. frequency가 달라도 패턴이 비슷한 NN5 Daily와 Traffic Hourly는 embedding과 expert 분포가 비슷해진다는 점도 확인했다."
+    tags: [interpretability]
+limitations:
+  - text: "decoder-only 구조라 autoregressive 추론이 느리다는 점을 저자들이 한계로 들었다. quantization, pruning, KV caching을 향후 과제로 제시했지만, 새 token이 생길 때마다 instance normalization 통계를 다시 계산해야 해서 cache한 hidden state가 무효가 되는 문제가 있다고 스스로 지적했다."
+    tags: [inference-cost]
+    source: self
+  - text: "Monash 추론에서 거의 선택되지 않는 expert가 있다고 인정했다. 이런 expert를 잘라 내 추론 효율을 높이는 것은 향후 과제로 남겼다."
+    tags: [inference-cost]
+    source: self
+  - text: "계산 자원 요구가 너무 커서 Large 모델은 제시하지 않았다고 밝혔다. 그래서 MoE 구조가 Moirai-Large(310M) 이상의 규모에서도 같은 이득을 주는지는 확인되지 않았다."
+    tags: [inference-cost]
+    source: self
+  - text: "Moirai-MoE와 Time-MoE가 언어 모델에서 가져온 token 단위 routing을 그대로 쓴다고 비판했다. 시계열에서는 이웃한 time step들이 하나의 국소 구조를 이루는데, token마다 따로 expert를 고르면 그 구조가 여러 expert로 쪼개지고, 고립된 token은 noise나 부분 신호에 휘둘릴 수 있다는 것이 근거다. 대안으로 연속된 segment 단위로 routing하는 MoE를 제안했지만, 본문 결과표에서 Moirai-MoE와 직접 비교하지는 않았다."
+    tags: [tokenization]
+    source: cited
+    by: "Seg-MoE: Multi-Resolution Segment-wise Mixture-of-Experts for Time Series Forecasting Transformers (2026)"
+    by_link: https://arxiv.org/abs/2601.21641
+  - text: "Time-MoE와 Moirai-MoE가 token마다 다른 expert를 고르는 방식은 그렇게 해야 하는 동기가 불분명하고, 원래 시계열이 가진 통계적 정보를 무시한다고 비판했다. 대안으로 한 변수 시계열의 token들을 같은 expert에 보내는 series 단위 routing을 제안했다. Moirai-MoE와의 실험 비교는 없다."
+    tags: [tokenization]
+    source: cited
+    by: "Time Tracker: Mixture-of-Experts-Enhanced Foundation Time Series Forecasting Model with Decoupled Training Pipelines (2025)"
+    by_link: https://arxiv.org/abs/2505.15151
+  # review: ICML 2025 OpenReview forum(https://openreview.net/forum?id=SrEOUSyJcR)은 브라우저 검증에 막혀 열 수 없었고 ICML은 리뷰를 공개하지 않아 미기재.
+  - text: "[analyst] 성능 향상이 MoE에서 왔다는 결론이 ablation으로 충분히 분리되지 않았다. Monash 정규화 MAE로 보면 multi projection 상태에서 dense를 MoE로 바꾼 효과는 0.75에서 0.72였고, MoE 안에서 multi projection을 single patch 16으로 바꾼 효과는 0.72에서 0.65로 더 컸다. 그런데 dense decoder에 single patch 16만 적용한 구성은 보고하지 않았다. routing centroid를 얻기 위해 single projection dense 모델을 이미 학습했는데도 그 성능은 나와 있지 않다. 원래 Moirai와 비교할 때는 batch 크기(256에서 1,024)와 학습 step 수도 달라서, 개선폭에는 학습 설정 차이도 섞여 있다."
+    tags: [eval-protocol, tokenization]
+    source: analyst
+  - text: "[analyst] 다변량 처리에 대한 근거가 거의 없다. 변수를 펴서 causal attention을 한다는 한 문장 외에는 변수 간 causal mask를 어떻게 정의하는지, covariate를 어떻게 넣는지 설명이 없다. 단순히 펴서 causal mask를 걸면 변수 순서에 따라 볼 수 있는 정보가 달라지는데 이를 어떻게 처리했는지 알 수 없다. 다변량 정보가 도움이 되는지 확인하는 실험도 없고, 평가는 단변량인 Monash와 context length를 validation으로 고른 zero-shot 설정이 중심이다."
+    tags: [channel-dependency, eval-protocol]
+    source: analyst
+builds_on: [Moirai, PatchTST, Mixtral, GShard, Sparse Upcycling, LLaMA 3]
+compared_against: [Moirai, TimesFM, Chronos, Time-MoE, TTM, Timer, LLMTime, TiDE, PatchTST, iTransformer, MoLE-DLinear, Seasonal Naive]
+open_questions:
+  - "MoE 자체의 기여는 얼마인가. dense decoder-only에 single patch 16만 적용한 구성과 비교해야 답할 수 있다. 같은 그룹의 후속작 Moirai 2.0은 MoE 없이 dense decoder-only와 single patch 구성을 택했지만, 그 이유나 MoE와의 비교는 제시하지 않았다."
+  - "token 단위가 routing의 올바른 단위인가. segment 단위(Seg-MoE)나 series 단위(Time Tracker) routing이 국소 패턴과 non-stationarity를 더 잘 잡는가."
+  - "드물게 쓰이는 expert를 잘라도 성능이 유지되는가. expert가 trend나 seasonality 같은 해석 가능한 패턴과 대응하는가."
+  - "instance normalization과 KV cache를 함께 쓸 수 있는 정규화 방식은 무엇인가."
+hooks:
+  - "nuisance context: Moirai-MoE는 token마다 expert를 고르므로, nuisance stream을 추가했을 때 대상 변수 token의 expert 선택 분포가 얼마나 바뀌는지를 모델이 무관한 context를 흡수하는 정도의 내부 지표로 쓸 수 있다. 출력 오차만 보는 audit에 routing 변화라는 mechanistic 근거를 더하는 셈이다. 저자들이 보인 것처럼 깊은 layer에서 routing이 frequency와 무관해진다면, 관련 있는 stream과 무관한 stream의 token도 깊은 layer에서 같은 expert로 섞이는지 같은 방법으로 볼 수 있다."
+  - "obsolete history: 정규화 통계를 context 전체나 일부에서 계산하므로, regime shift 뒤에는 이 통계 자체가 이미 쓸모없어진 구간의 level과 scale을 반영한다. obsolete history의 해악이 attention보다 정규화 단계에서 먼저 생기는지, 최근 구간만으로 정규화했을 때 얼마나 회복되는지를 분리해서 재는 실험을 설계할 수 있다."
+  - "graph PFN feature 인터페이스: 사전학습된 dense 모델의 hidden state를 k-means로 군집화하고 그 centroid를 고정된 routing 기준으로 쓰는 아이디어는, 그래프마다 다른 feature 공간을 공통 token으로 바꾸는 per-graph codebook을 만들 때도 쓸 수 있다. 사전학습된 encoder 표현의 centroid로 codebook을 초기화하는 쪽이 처음부터 학습하는 쪽보다 안정적인지 비교해 볼 만하다."
+notes: "ICML 2025 정식판은 PMLR v267, pp.38940-38962이다. arXiv v1(2024-10-14) 페이지에는 저자가 10명이고 Junnan Li가 없다. PMLR 페이지와 PMLR PDF에는 Junnan Li를 포함한 11명이 실려 있어 citation은 PMLR을 따랐다. 논문 본문에 코드 링크가 없어 links.code는 비웠다. 같은 그룹의 Moirai 2.0(https://arxiv.org/abs/2511.11698)은 Moirai-MoE를 정규화 처리의 출처로 인용할 뿐 MoE를 비판하거나 비교하지 않는다. Chronos-2와 Sundial 본문에서는 Moirai-MoE 언급을 찾지 못했다. Time-MoE는 Moirai-MoE를 expert와 routing 설계가 다른 concurrent work로만 소개한다."
+added: 2026-10-30

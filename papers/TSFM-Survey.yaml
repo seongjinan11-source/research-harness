@@ -1,0 +1,60 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: TSFM-Survey
+title: "Foundation Models for Time Series: A Survey"
+authors: "Siva Rama Krishna Kottapalli, Karthik Hubli, Sandeep Chandrashekhara, Garima Jain, Sunayana Hubli, Gayathri Botla, Ramesh Doddaiah"
+venue: "arXiv 2025"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2504.04011
+
+citation:
+  type: misc
+  title: "Foundation Models for Time Series: A Survey"
+  authors: ["Siva Rama Krishna Kottapalli", "Karthik Hubli", "Sandeep Chandrashekhara", "Garima Jain", "Sunayana Hubli", "Gayathri Botla", "Ramesh Doddaiah"]
+  year: 2025
+  arxiv: "2504.04011"
+  url: https://arxiv.org/abs/2504.04011
+  verified_from:
+    - https://arxiv.org/abs/2504.04011v1
+    - https://arxiv.org/html/2504.04011v1
+  # arXiv에는 v1(2025-04-05)만 있고 journal-ref가 없다. 학회·저널 게재는 확인하지 못해 misc로 둔다.
+
+areas: [survey, tsfm]
+problem: "시계열 pretrained model이 빠르게 늘었지만, 기존 서베이는 넓은 개관에 머물러 architecture나 학습 objective 같은 설계 선택을 깊게 비교하는 taxonomy가 부족하다."
+core_idea: "transformer 기반 시계열 pretrained model을 여섯 축으로 분류한다. 축은 architecture(non-transformer, encoder-decoder, encoder-only, decoder-only, LLM 적응형), patch 사용 여부, objective function(MSE, Huber, negative log-likelihood, log-likelihood), 단변량·다변량 지원, 확률적·결정적 출력, 모델 규모다. 이 축으로 TTM, TimeGPT, MOMENT, MOIRAI, Timer-XL, Time-MoE, Toto, Timer, TimesFM, Lag-Llama, Chronos, AutoTimes, LLMTime, Time-LLM, FPT를 하나씩 설명하고, Table 2에서 architecture, 단변량·다변량, 파라미터 수, 사전학습 데이터 규모, patch, loss, 확률적 출력 여부를 한눈에 비교한다. 마지막으로 모델별 한계를 모아 정리한다. 자체 실험은 없다."
+key_assumptions:
+  - "모델을 고를 때 중요한 것은 architecture, patch, objective, 변수 처리, 출력 형태, 규모라는 설계 축이라고 본다."
+  - "각 모델의 특성과 한계는 원 논문의 서술을 근거로 정리하며, 따로 실험해서 검증하지는 않는다."
+  - "transformer 계열이 시계열 foundation model의 중심이라고 보고 그 범위 안에서 정리한다."
+strengths:
+  - text: "objective function을 분류 축으로 따로 세웠다. 같은 architecture라도 MSE, Huber, likelihood 중 무엇으로 학습했는지에 따라 point forecast만 내는지 분포를 내는지가 갈린다는 점을 드러낸다. 저자들은 기존 서베이가 objective가 architecture 선택에 미치는 영향을 거의 다루지 않았다고 지적한다."
+    tags: [uncertainty]
+  - text: "Table 2가 15개 모델을 같은 열로 정리해서 모델 선택용 참고표로 쓰기 좋다. 예를 들어 MOMENT와 TimesFM은 결정적 출력, Chronos와 MOIRAI는 확률적 출력, Time-MoE는 point forecast만 낸다는 점을 바로 비교할 수 있다."
+    tags: [uncertainty, channel-dependency, tokenization]
+  - text: "모델별 한계를 한 절에 모았다. TimesFM은 주로 단변량이고 명시적인 확률 예측이 없으며, MOIRAI는 frequency별 patch 크기 대응이 heuristic이고 고차원 시계열로 잘 확장되지 않으며, Lag-Llama는 단변량만 지원한다는 식이다. 한계를 태그로 엮는 이 하네스의 입력으로 바로 쓸 수 있다."
+    tags: [channel-dependency, uncertainty]
+  - text: "covariate 처리 방식도 모델별로 짚었다. TTM은 fine-tuning 때 외생 신호를 넣을 수 있고 Timer-XL은 추가 covariate를 다루지만, TimeGPT는 과거 부하 데이터에만 의존해서 기상 예보 같은 외부 요인을 넣기 어렵다고 정리했다."
+    tags: [covariates]
+limitations:
+  # self: 서베이 자체의 한계를 밝힌 절은 없다. 결론의 '규모와 계산 효율의 trade-off'는 분야의 과제이지 서베이의 한계가 아니어서 넣지 않았다.
+  - text: "후속 서베이는 이 서베이를 pretraining 단계에 초점을 둔 연구로 분류했다. 그러면서 TSFM의 post-training, 즉 사전학습 이후의 적응 방법에 초점을 둔 정리는 여전히 부족하다고 지적했다."
+    tags: [adaptation]
+    source: cited
+    by: "Post-Training in Time Series Foundation Models: A Unifying Framework (2026)"
+    by_link: https://arxiv.org/pdf/2607.20002
+  - text: "[analyst] 같은 모델에 대한 서술이 절마다 어긋난다. MOMENT는 한 절에서 단변량 전용이라고 하면서 다른 절에서는 channel을 독립적으로 처리해 다변량을 다룬다고 쓴다. MOIRAI의 loss는 categorical cross-entropy와 log-likelihood로 엇갈리고, TimesFM의 사전학습 데이터 규모도 본문은 200B, Table 2는 100B로 다르다. Table 2의 값은 원 논문과 대조한 뒤에 써야 한다."
+    tags: [channel-dependency, pretraining-data]
+    source: analyst
+  - text: "[analyst] 단변량·다변량 축이 '채널을 독립적으로 처리하는 모델'과 '변수 간 의존성을 학습하는 모델'을 구분하지 못한다. MOMENT 서술이 엇갈리는 것도 이 때문이다. 평가 benchmark, 사전학습 데이터와 test set의 중복, 실험 비교는 다루지 않는다. Moirai-MoE, Sundial, Chronos-Bolt, TimesFM 2.0도 빠져 있어서 최신 모델 비교에는 쓰기 어렵다."
+    tags: [channel-dependency, eval-protocol]
+    source: analyst
+builds_on: []
+compared_against: []
+open_questions:
+  - "objective function 선택이 zero-shot 정확도와 calibration에 각각 얼마나 영향을 주는가. 서베이는 축을 세웠지만 효과를 재지는 않았다."
+  - "여섯 축 중 어떤 축이 downstream 성능 차이를 가장 많이 설명하는가. 같은 benchmark 위에서 축별 효과를 분리할 수 있는가."
+hooks:
+  - "nuisance-context 연구에서 모델을 분류할 때 이 서베이의 단변량·다변량 이분법으로는 부족하다. 채널 독립(MOMENT, TimesFM, Chronos), 변수를 한 sequence로 펴서 attention하는 방식(MOIRAI), group 단위로 변수 간 정보를 섞는 이후 모델(Chronos-2)처럼 변수 정보가 섞이는 경로로 나눠야 irrelevant stream의 영향이 어디서 들어오는지 설명할 수 있다."
+  - "MVTS 이상탐지에서 TSFM을 고를 때 objective 축이 바로 쓰인다. TSAD-OneLiners가 보였듯 MSE 복원 모델은 정규화 때문에 분산 detector로 무너지고, 예측 모델은 horizon에 따라 point와 sequence anomaly 사이에서 trade-off가 생긴다. likelihood로 학습한 확률적 모델은 예측 분포 아래의 확률을 점수로 쓸 수 있으므로, 이 실패를 피하는지 시험해 볼 후보군을 Table 2에서 바로 고를 수 있다."
+notes: "다룬 모델 중 하네스 id가 있는 것은 MOMENT, TimesFM, Moirai, Time-MoE다. 서베이라 builds_on과 compared_against는 비워 두었다."
+added: 2026-10-30

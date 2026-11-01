@@ -62,21 +62,25 @@ limitations:
     tags: [prior-mismatch, pretraining-data]
     source: cited
     by: "A Fair Evaluation of Graph Foundation Models for Node Property Prediction (2026)"
+    by_id: GFM-FairEval
     by_link: https://arxiv.org/abs/2606.24509
   - text: "node마다 representation 하나만 유지하고 feature 차원 상한이 고정돼 있다고 지적한다. 지원 class 수를 넘는 데이터셋 열에서는 NodePFN 결과를 아예 보고할 수 없었다."
     tags: [feature-heterogeneity, label-space]
     source: cited
     by: "To Learn is to Wander: Learning Across Graphs and Tasks with Random Walks (2026)"
+    by_id: Wander
     by_link: https://arxiv.org/abs/2610.06694
   - text: "labeled node 사이의 dense self-attention 때문에 큰 그래프에서 추론 비용이 크다고 지적한다. 성능-비용 비교에서 NodePFN은 더 싸면서 더 정확한 방법에 dominate되어 Pareto frontier에 들지 못했고, 잘 튜닝된 supervised 방법보다 성능이 낮았다."
     tags: [inference-cost, context-scale, zero-shot-gap]
     source: cited
     by: "NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)"
+    by_id: NodeGround
     by_link: https://arxiv.org/abs/2609.39673
   - text: "원 논문의 평가는 5만 node 미만 그래프에 한정되고 GNN baseline도 두 개뿐이라, GFM의 실제 경쟁력을 판단하기에 부족했다고 지적한다."
     tags: [eval-protocol, graph-scale]
     source: cited
     by: "NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)"
+    by_id: NodeGround
     by_link: https://arxiv.org/abs/2609.39673
   - text: "[analyst] context 라벨 분포가 한 번도 통제되지 않는다. 사전학습의 context/query 분할은 stratification 없는 random partition이고, SCM이 만드는 class 비율도 따로 다루지 않는다. 반면 실제 평가는 class당 20개를 고정한 class-balanced context만 쓴다. 따라서 context가 불균형할 때 NodePFN이 어떻게 동작하는지는 검증되지 않았다."
     tags: [label-imbalance, eval-protocol]

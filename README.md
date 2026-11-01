@@ -23,8 +23,12 @@ python src/harness.py check \
   --save graph_ts_prior
 ```
 
+## 내 연구 기록 (`findings/`)
+실패·중단·보존·교훈을 `findings/<project>.yaml`에 쌓는다. `check`는 논문뿐 아니라 이 기록과도 대조해서,
+이미 닫은 갈래(닫은 범위와 닫지 않은 것까지), 재사용할 자산, 아직 안 한 것을 함께 보여준다.
+
 ## 결과물 (`out/`)
-- `research_harness.xlsx` — Papers / Claims / Candidates / Gaps / Ideas / Citations / Tags 시트
+- `research_harness.xlsx` — Papers / Claims / Candidates / Gaps / My Findings / Backlog / Ideas / Citations / Tags 시트
 - `graph.html` — 브라우저로 여는 인터랙티브 그래프. 논문(박스)과 태그(타원)가 강점(초록)·한계(빨강) 선으로 연결되고, 후속 논문 → 원 논문 비판은 주황 화살표. 오프라인 동작.
 - `candidates.md` — 접목 후보 순위와 빈칸(아무도 해결 못 한 축)
 - `refs.bib` — 전체 BibTeX. `citation` 블록(확인한 페이지에서 읽은 값)에서 자동 생성

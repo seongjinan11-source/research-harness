@@ -57,32 +57,38 @@ limitations:
   - text: "통합 forecasting 벤치마크에서 MOMENT를 channel independence를 가정하는 대표 모델로 분류했다. 변수 간 상관이 강한 데이터셋에서는 channel dependence를 다루는 foundation model보다 뒤처졌고, 특히 Traffic에서 고전했다고 지적했다. runtime과 정확도 양쪽에서 dataset-specific 모델에 밀린다는 평가도 함께 내렸다."
     tags: [channel-dependency, inference-cost]
     source: cited
-    by: "FoundTS: Comprehensive and Unified Benchmarking of Foundation Models for Time Series Forecasting (2024)"
+    by: "TSFM-Bench: A Comprehensive and Unified Benchmark of Foundation Models for Time Series Forecasting (KDD 2025; arXiv 초판 제목 FoundTS)"
+    by_id: FoundTS
     by_link: https://arxiv.org/abs/2410.11802
   - text: "MOMENT가 고정된 입력 context 길이에 묶여 있다는 점을 범용성의 제약으로 꼽았다. 여섯 개 벤치마크 평균의 zero-shot 장기 예측 비교에서 MOMENT는 MSE와 MAE가 가장 나쁜 baseline이었다."
     tags: [context-horizon, zero-shot-gap]
     source: cited
     by: "Time-MoE: Billion-Scale Time Series Foundation Models with Mixture of Experts (ICLR 2025)"
+    by_id: Time-MoE
     by_link: https://arxiv.org/abs/2409.16040
   - text: "MOMENT의 사전학습 데이터에 anomaly detection 데이터셋이 포함되어 있어 평가 데이터 오염 위험을 주요 우려로 제기했다. 단변량 벤치마크에서는 MOMENT가 foundation model 중 유일하게 상위권에 들었지만 Sub-PCA, KShapeAD, POLY 같은 단순 통계 기법보다는 아래였다. 다변량 벤치마크에서는 상위 12개 안에 들지 못했다."
     tags: [eval-protocol, channel-dependency]
     source: cited
     by: "The Elephant in the Room: Towards A Reliable Time-Series Anomaly Detection Benchmark (NeurIPS 2024 Datasets and Benchmarks)"
+    by_id: TSB-AD
     by_link: https://proceedings.neurips.cc/paper_files/paper/2024/file/c3f3c690b7a99fba16d0efd35cb83b2c-Paper-Datasets_and_Benchmarks_Track.pdf
   - text: "MOMENT를 포함한 다섯 TSFM 계열을 reconstruction·forecasting error 기반 anomaly detector로 평가했다. 모델 크기와 context 길이를 바꿔도 moving-window variance 같은 한 줄짜리 baseline과 유의미한 차이가 없었다. 이상 구간이 정상 구간보다 꼭 더 복원하기 어렵지 않기 때문에, 복원 오차로 이상을 잡는다는 전제 자체가 이 모델들에서 성립하지 않는다는 진단이다."
     tags: [task-coverage, zero-shot-gap]
     source: cited
     by: "When Foundation Models are One-Liners: Limitations and Future Directions for Time Series Anomaly Detection (ICLR 2026)"
+    by_id: TSAD-OneLiners
     by_link: https://openreview.net/forum?id=H27kvyG4qf
   - text: "MOMENT는 기본 설정에서 단변량 입력만 다루고 확률적 예측을 내지 못한다고 정리했다. 불확실성 추정이 필요한 응용에는 바로 쓰기 어렵다는 뜻이다."
     tags: [uncertainty, channel-dependency]
     source: cited
     by: "Foundation Models for Time Series: A Survey (2025)"
+    by_id: TSFM-Survey
     by_link: https://arxiv.org/abs/2504.04011
   - text: "MOMENT-Large의 layer 간 CKA 유사도를 보면 여러 layer가 거의 같은 표현을 내는 block 구조가 나타났다. 이 중복 block을 잘라내도 장기 예측 성능은 거의 유지되면서 메모리가 크게 줄었다. 385M 파라미터 중 상당 부분이 효율적으로 쓰이지 않는다는 뜻이다. MOMENT 저자 일부가 참여한 후속 분석이다."
     tags: [inference-cost, interpretability]
     source: cited
     by: "Exploring Representations and Interventions in Time Series Foundation Models (ICML 2025)"
+    by_id: TSFM-Interventions
     by_link: https://arxiv.org/abs/2409.12915
   # review: ICML 2024 OpenReview forum(https://openreview.net/forum?id=FVvf69a5rx)은 존재하지만 리뷰 본문을 확인하지 못해 미기재.
   - text: "[analyst] Time-series Pile에는 평가에 쓰인 ETT, Electricity, Traffic, Weather, UCR 데이터셋의 train split이 그대로 들어 있다. test split은 분리했으므로 엄밀한 누수는 아니다. 그래도 장기 예측, classification, imputation 결과는 같은 데이터셋의 다른 구간을 본 in-distribution 성능에 가깝고, 처음 보는 도메인으로의 일반화를 보여주지는 않는다."

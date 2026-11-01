@@ -7,6 +7,7 @@
 - `papers/<id>.yaml` — 논문 한 편 = 파일 하나. **유일한 원본**. 형식은 `papers/_TEMPLATE.yaml`.
 - `taxonomy.yaml` — 강점과 한계에 공통으로 붙이는 태그. 같은 태그가 A의 한계이자 B의 강점이면 접목 후보가 된다.
 - `ideas/<이름>.yaml` — `check --save`로 저장한 아이디어.
+- `findings/<project>.yaml` — **내 연구의 실패·중단·보존·교훈·미실행 기록**. 원문은 `findings/sources/`. check가 이 기록과도 대조한다.
 - `out/` — 빌드 결과물 (엑셀, 그래프, 후보). 직접 고치지 않는다.
 - `src/harness.py` — build / validate / tags / link / check.
 
@@ -32,6 +33,12 @@
 - BibTeX는 직접 쓰지 않는다. build가 `citation` 블록에서 `out/refs.bib`를 생성한다.
 - `cited` 한계의 `by`(제목·연도)도 같은 기준이다. 지적한 문장을 실제로 본 논문만 넣는다.
 
+## 실패 기록·연구 회고를 받으면
+1. 원문을 `findings/sources/`에 그대로 저장한다.
+2. `findings/<project>.yaml`에 항목을 나눠 적는다. kind는 failure(실패·중단) / preserved(보존한 결과) / lesson(교훈) / untested(미실행, 실패로 세지 않음).
+3. failure는 claim, observation(수치는 원문 그대로), verdict, closed_scope(정확히 무엇을 닫았는지), not_closed(닫지 않은 것)를 반드시 쓴다. preserved는 do_not_claim(확대 금지 주장)을 쓴다.
+4. 원문에 없는 수치·원인·판정을 만들지 않는다. 태그는 taxonomy.yaml에서 고르고, 검색에 걸릴 keywords를 넉넉히 단다.
+
 ## 아이디어 점검 요청을 받으면
 1. 아이디어를 taxonomy 태그 2~4개와 키워드로 바꾼다.
 2. `python src/harness.py check --tags ... --keywords ... --text "..." --save <이름>`
@@ -39,6 +46,8 @@
    - 같은 축을 강점으로 가진 논문은 **기각 사유가 아니라 차별점을 정리할 대상**이다.
    - 같은 축의 한계(특히 cited/review)는 동기로 인용할 근거다.
    - 하네스에 관련 논문이 없으면, 외부 검색으로 선행연구를 찾아 먼저 추가할지 제안한다.
+   - "내 연구에서 이미 확인한 것"에 failure가 걸리면, 새 아이디어가 그 항목의 **닫은 범위** 안에 있는지 밖에 있는지를 먼저 판단해서 말한다. 이름만 바꾼 반복이면 분명히 지적하고, 닫지 않은 것에 해당하면 실패 기록을 근거로 기각하지 않는다.
+   - 강한 기준선 비교를 재학습·확장 실험보다 먼저 하라는 교훈(LLBP-L6)을 실험 계획에 반영한다.
 
 ## 작성 규칙
 - 설명은 한국어, ML 용어는 영어 그대로. 키워드 나열이 아니라 바로 읽히는 문장으로.

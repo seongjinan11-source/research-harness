@@ -1,0 +1,77 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: GFM-FairEval
+title: "A Fair Evaluation of Graph Foundation Models for Node Property Prediction"
+authors: "Oleg Platonov, Gleb Bazhenov, Dmitry Eremeev, Liudmila Prokhorenkova (HSE University / Yandex Research)"
+venue: "ICML 2026 Workshop: Graph Foundation Models (poster)"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2606.24509
+  openreview: https://openreview.net/forum?id=u6ssKNnrki
+  workshop: https://icml.cc/virtual/2026/67508
+
+# --- 인용 정보: 모든 필드는 verified_from 페이지에서 직접 읽은 값만. 모르면 그 줄을 지운다. ---
+citation:
+  type: misc
+  title: "A Fair Evaluation of Graph Foundation Models for Node Property Prediction"
+  authors: ["Oleg Platonov", "Gleb Bazhenov", "Dmitry Eremeev", "Liudmila Prokhorenkova"]
+  year: 2026
+  arxiv: "2606.24509"
+  url: https://arxiv.org/abs/2606.24509
+  verified_from:
+    - https://arxiv.org/abs/2606.24509
+    - https://arxiv.org/pdf/2606.24509
+    - https://icml.cc/virtual/2026/67508
+
+areas: [benchmark, graph-fm, pfn]
+problem: "GFM 논문마다 데이터셋·split·baseline이 제각각이고 GNN baseline이 제대로 튜닝되지 않은 경우가 많아서, node property prediction에서 GFM이 잘 튜닝된 GNN을 실제로 이기는지 알 수 없다. 이 논문은 하나의 통일된 protocol로 이 질문에 답하려 한다."
+core_idea: "평가 데이터는 GraphLand의 100만 노드 미만 데이터셋 10개다. 분류는 4개(multiclass 1개, binary 3개)이고 회귀가 6개이며, 지표는 각각 accuracy, AP, R²이다. Split은 GraphLand 공식 RL split(층화 random 10%/10%/80%) 하나만 쓴다. GFM은 9개를 공식 구현으로 돌린다. 이 중 6개(OpenGraph, AnyGraph, TS-GNN, GCOPE, SAMGPT, MDGFM)는 PFN이 아닌 계열이고, 3개(G2T-FM, TAG, GraphPFN)는 PFN 계열이다. GFM은 ICL 모드와 finetuning 모드로 따로 평가하고, finetuning에서는 learning rate만 10개 값으로 탐색한다. Baseline은 GCN, GraphSAGE, GAT, local Graph Transformer를 residual·normalization이 들어간 두 개선 codebase(Platonov et al. 2023, Luo et al. 2024)로 구현한 8개 GNN이다. 각 GNN은 데이터셋마다 Optuna TPE로 100 trial 튜닝하고 10회 평균을 보고한다. 성능 외에 tuning·학습·추론 시간과 VRAM을 A100 80GB 기준으로 모델별로 표에 기록한다. 결론은 두 가지다. 첫째, PFN이 아닌 GFM은 모든 데이터셋에서 튜닝된 GNN보다 낮다. 둘째, PFN 계열 GFM만 GNN을 넘지만 추론 비용과 메모리가 훨씬 크다."
+key_assumptions:
+  - "GraphLand의 산업 데이터 10개가 실제 node property prediction 응용을 대표한다고 본다. Cora류 citation network나 heterophily 소형 데이터셋은 라벨 오류·중복·feature 부재 같은 문제가 있다며 의도적으로 제외한다."
+  - "GNN 쪽은 100 trial 튜닝, GFM 쪽은 공식 기본값 + learning rate 탐색이면 '공정한' 비교라고 본다. GFM은 hyperparameter 탐색이 적게 필요하다는 점 자체를 장점으로 계산한다."
+  - "라벨이 적은 random split 한 가지(RL)로 결론을 내도 된다고 가정한다. GraphLand에 있는 라벨이 많은 split이나 temporal split은 쓰지 않는다."
+  - "사전학습 비용은 모델 제작자가 한 번만 치르므로 사용자 쪽 비용 비교에서 빼도 된다고 본다."
+strengths:
+  - text: "GNN baseline을 진지하게 세웠다. 네 가지 고전 구조를 residual·normalization이 들어간 두 codebase로 각각 구현해 8개 variant를 만들고, 데이터셋마다 100 trial TPE 탐색 후 10회 평균±표준편차를 보고한다. 이전 GFM 논문들의 '튜닝 안 된 GNN 대비 우위' 주장을 걸러내는 장치로 작동한다."
+    tags: [eval-protocol]
+  - text: "9개 GFM을 하나의 split·지표·데이터 위에서 공식 구현으로 다시 돌렸다. LLM projection, SVD projection, synthetic edge, 데이터셋별 입출력 모듈, PFN 등 서로 다른 적응 방식을 같은 표에 놓았다. 그 결과 PFN이 아닌 GFM 6개는 분류 normalized score가 3~24 수준인데, 가장 강한 GNN(Crit.-GAT)은 91.5여서 격차가 분명하게 드러난다."
+    tags: [eval-protocol, feature-heterogeneity]
+  - text: "Tuning 시간, 학습 1회, 추론 1회, VRAM을 모델과 데이터셋별로 모두 표에 적었다. 덕분에 'PFN이 이기지만 비싸다'는 결론을 숫자로 확인할 수 있다. 예를 들어 tolokers-2에서 GNN 추론은 0.05초인데 GraphPFN은 6초이고, TAG는 city-reviews에서 추론에 30분 넘게 걸린다."
+    tags: [inference-cost]
+  - text: "ICL과 finetuning을 분리해 보고한다. PFN 계열은 finetuning이 거의 항상 도움이 된다는 점과, ICL만으로도 다른 GFM과 대부분의 GNN을 이긴다는 점을 따로 보여준다. GraphPFN은 ICL에서 best GNN을 8개 중 6개 데이터셋에서 넘고, finetuning에서는 10개 데이터셋 모두 1위다."
+    tags: [zero-shot-gap, adaptation]
+  - text: "분류뿐 아니라 회귀 6개를 포함해 node property prediction 전체를 다룬다. 회귀를 지원하지 않는 GFM이 많다는 사실 자체가 비교에서 드러난다."
+    tags: [task-coverage]
+limitations:
+  - text: "평가한 GFM 목록이 망라적이지 않아서, 더 새로운 모델이나 동시기 모델은 빠졌을 수 있다고 저자들이 인정한다."
+    tags: [eval-protocol]
+    source: self
+  - text: "실험이 GraphLand 하나에만 기대고 있어서, 사내 데이터·특수 도메인·feature 유형이나 분포가 다른 데이터셋으로 결론이 일반화되지 않을 수 있다고 저자들이 밝힌다."
+    tags: [eval-protocol, feature-heterogeneity]
+    source: self
+  - text: "GraphLand의 100만 노드 이상 데이터셋 4개는 평가한 GFM 중 어느 것도 처리하지 못해 제외했다. 따라서 결론은 100만 노드 미만 그래프로 한정된다. 남은 데이터셋에서도 GraphPFN 학습 VRAM이 city-reviews 146.66GB, city-roads-L 145.49GB로 80GB GPU 한 장을 넘어 model parallelism을 써야 했다."
+    tags: [graph-scale, context-scale]
+    source: self
+  - text: "NodeGround의 benchmark 비교표는 이 논문을 benchmark가 아닌 평가 protocol로 분류한다. 그 표에서 이 논문은 node classification 데이터셋 4개, split 설정 1개로 집계되고, 다중 지표 평가와 leaderboard는 없으며 run-level 결과 공개는 부분적이라고 표시된다. Hyperparameter 탐색 통제, validation 기반 선택, 학습·tuning·추론 비용 측정은 모두 충족으로 표시된다."
+    tags: [eval-protocol]
+    source: cited
+    by: "NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)"
+    by_id: NodeGround
+    by_link: https://arxiv.org/abs/2609.39673
+  - text: "[analyst] '튜닝된 GNN을 넘는 건 PFN 계열뿐'이라는 결론은 분류 데이터셋 4개 중 3개가 binary인 구성 위에 서 있다. 또 baseline GNN 풀에 GCNII·GPRGNN 같은 계열이 없다. 51개 데이터셋을 쓴 NodeGround에서는 튜닝된 GCNII·GPRGNN이 전체 1·2위였고, GraphPFN의 우위는 binary task에 몰려 있었다. 따라서 이 논문의 결론은 데이터셋 구성과 GNN 풀에 따라 뒤집힐 수 있고, multiclass·다중 class 조건에서는 뒷받침되지 않는다. 또한 저자 4명 모두 GraphPFN 저자이고, G2T-FM(Eremeev et al.)과 GraphLand(Bazhenov et al.)도 이 저자들이 1저자인 이전 작업이다."
+    tags: [eval-protocol, label-space]
+    source: analyst
+  - text: "[analyst] 비용 논증이 정성적이다. GNN은 100 trial, GraphPFN finetuning은 learning rate 10개만 탐색한 상태에서 tuning 시간을 비교한다(예: city-reviews에서 1.08일 대 1.88일). 같은 compute 예산에서 GNN을 덜 튜닝했을 때 성능이 어떤지는 보여주지 않는다. NodeGround의 budget curve 분석에서는 10/10/80 split에서 부분 튜닝한 supervised 방법이 비용 대비 성능 frontier에서 GraphPFN을 앞질렀다."
+    tags: [inference-cost, eval-protocol]
+    source: analyst
+builds_on: [GraphLand]
+compared_against: [OpenGraph, AnyGraph, TS-GNN, GCOPE, SAMGPT, MDGFM, G2T-FM, TAG, GraphPFN, GCN, GraphSAGE, GAT, GraphTransformer]
+open_questions:
+  - "GCNII·GPRGNN 같은 더 강한 GNN 계열과 multiclass 데이터셋을 늘려도 'PFN 계열만 GNN을 넘는다'는 결론이 유지되는가? NodeGround의 집계 결과는 아니라는 쪽이다."
+  - "GraphLand의 temporal split처럼 context와 query 노드의 분포가 다를 때도 PFN ICL의 우위가 남는가? 이 논문은 random split 하나만 본다."
+  - "같은 총 compute 예산(tuning+학습+추론)으로 맞추면 GNN과 GraphPFN finetuning 중 무엇이 나은가?"
+  - "PFN 계열은 이기고 다른 GFM은 모두 지는 이유가 tabular prior인지, per-feature tokenization인지, 대량 synthetic 사전학습인지 분해되지 않았다."
+hooks:
+  - "(불균형 context, ImbNodePFN) 이 논문은 NodePFN을 평가에서 아예 뺐다. GraphPFN 논문에서 NodePFN이 크게 밀렸기 때문이고, 저자들은 이유로 오래된 TabPFN 기반 구조, LimiX 초기화 없이 처음부터 학습한 점, 단순한 graph prior를 든다. ImbNodePFN을 NodePFN 위에 만든다면 리뷰어는 GraphPFN 비교를 요구할 것이다. 그러니 backbone·초기화·prior 세 축을 통제한 ablation으로 '불균형 처리 효과'와 '세 가지 차이에서 오는 효과'를 분리해 두는 것이 좋다. 또 이 논문은 class 불균형을 전혀 분석하지 않으므로, AP를 쓰는 binary 3개 데이터셋과 GraphLand RL split, 튜닝 GNN codebase를 그대로 가져다 불균형 축의 '공정한' 비교 protocol로 재사용할 수 있다."
+  - "(이질 feature 공간, per-graph codebook) 저자들은 PFN 계열의 큰 메모리 사용을 feature마다 token을 따로 두는 구조 탓으로 돌린다. GraphPFN 학습 VRAM이 city-reviews에서 146.66GB였다는 수치는, codebook 인터페이스가 정확도를 유지하면서 메모리를 얼마나 줄이는지 보여줄 직접적인 비교 기준이 된다."
+notes: "NodePFN은 평가 대상이 아니다(위 hook 참조). GraphPFN은 ICL 10회 ensemble이 기본이며, ICL에서 G2T-FM·TAG를 10개 중 6개 데이터셋에서 이기고 finetuning에서 격차가 커진다. G2T-FM은 저자 권장대로 LimiX-16M backbone으로, TAG는 TabPFNv2와 LimiX-16M 둘 다로 평가했고 TAG는 ICL만 돌렸다. 유일한 multiclass 데이터셋인 hm-categories는 21개 class다(GraphLand 논문 기준). 여기서 GraphPFN finetuning이 78.67로 Crit.-GAT의 73.46을 앞섰다. 이는 10개 초과 class에서 GraphPFN이 불리하다는 NodeGround 결과와 대비되며, finetuning 여부가 갈림길일 수 있다.저자 순서: arXiv abs·PDF는 Platonov, Bazhenov, Eremeev, Prokhorenkova 순이지만 ICML workshop 페이지는 Eremeev와 Bazhenov 순서가 바뀌어 있다. citation은 arXiv 순서를 따랐다. Workshop 게재는 icml.cc에서 확인했으나 proceedings 수록은 확인하지 못해 misc로 두었다. OpenReview forum은 브라우저 인증 화면에 막혀 리뷰를 읽지 못했다. 논문은 코드가 GitHub에 있다고 하지만 본문에서 URL을 확인하지 못했다."
+added: 2026-10-30

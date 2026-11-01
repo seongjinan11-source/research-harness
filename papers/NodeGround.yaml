@@ -1,0 +1,69 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: NodeGround
+title: "NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era"
+authors: "Jinmo Lee, Dooho Lee, Minho Jeong, Jaemin Yoo (Nums AI; 앞의 세 명 equal contribution)"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2609.39673
+  code: https://github.com/nums-ai/nodeground
+
+# --- 인용 정보: 모든 필드는 verified_from 페이지에서 직접 읽은 값만. 모르면 그 줄을 지운다. ---
+citation:
+  type: misc
+  title: "NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era"
+  authors: ["Jinmo Lee", "Dooho Lee", "Minho Jeong", "Jaemin Yoo"]
+  year: 2026
+  arxiv: "2609.39673"
+  url: https://arxiv.org/abs/2609.39673
+  verified_from:
+    - https://arxiv.org/abs/2609.39673
+    - https://arxiv.org/html/2609.39673v1
+
+areas: [benchmark, graph-fm, pfn]
+problem: "GFM은 새 그래프마다 학습·튜닝할 부담을 줄여준다고 주장하지만, 기존 평가는 데이터셋이 적거나 baseline이 약하고 비용 비교도 없다. 그래서 GFM이 정확도와 전체 workflow 비용 양쪽에서 실제로 나은지 판단할 수 없다. 이 논문은 이를 가릴 대규모 node classification benchmark를 만든다."
+core_idea: "데이터는 PyG, OGB, Platonov et al.의 heterophily 모음, text-attributed graph 모음에서 모은 후보 117개에서 출발한다. 동질 그래프의 단일 라벨 node classification인지, 라벨 외 attribute가 유의미한지, 규모 제한을 넘지 않는지, 중복이 없는지를 차례로 걸러 51개를 남긴다. 도메인은 web·social·scholarly 각 13개, commerce 7개, transport 4개, finance 1개다. 라벨 조건은 class-stratified 10/10/80(라벨 부족)과 50/25/25(라벨 풍부) 두 가지이며, 각각 split과 seed를 고정한 5개 반복으로 돌린다. 비교 대상은 GFM 6개(GraphAny, GVT, Node4All, G2T-FM, NodePFN, GraphPFN)와 supervised 방법 15개다. GFM은 공개된 사전학습 가중치를 그대로 두고, 전처리·label conditioning·head 학습처럼 인터페이스가 허용하는 target별 선택지만 고른다. Supervised 방법은 기본 설정과, 기본값 포함 최대 201개 설정 중 validation cross-entropy로 고른 튜닝 버전 두 가지로 평가한다. 주 지표는 binary에서 AUROC, multiclass에서 accuracy이고, 순위는 방법 간 pairwise 승패로 만든 Elo로 낸다. 비용은 학습+튜닝 시간과 예측 시간을 더한 workflow 시간과 peak GPU 메모리로 재고(GFM 사전학습 비용은 제외), Mean Improvability 대 Mean Overhead의 Pareto frontier와 튜닝 예산별 곡선으로 비교한다. 마지막으로 7개 데이터셋 성질로 22개 부분집합을 만들어 조건별 순위를 본다. 성질에는 adjusted homophily, feature 차원·nonzero 비율, binary/multiclass와 class 분포 불균형, class 수, 그래프 크기, degree 등이 들어간다."
+key_assumptions:
+  - "실제 사용자는 사전학습 비용을 치르지 않으므로, GFM의 비용은 target 그래프에서의 적응·추론 시간만으로 계산해도 된다고 본다."
+  - "GFM은 공개된 가중치와 공식 인터페이스가 허용하는 선택지 안에서만 쓰는 것이 '실사용' 조건이라고 본다. 본문 서술상 PFN 계열은 target 데이터에서 가중치를 바꾸지 않는 방식으로 다뤄진다."
+  - "Class-stratified random split에서 라벨 노드와 query 노드가 같은 분포에서 나온다고 가정한다. Community나 시점이 다른 non-IID 배치는 다루지 않는다."
+  - "51개 데이터셋에 같은 가중치를 주고 Elo로 집계하면 방법 간 우열이 공정하게 요약된다고 본다. 결측 결과는 default GCN 값으로 채운다."
+strengths:
+  - text: "데이터셋 규모와 다양성이 지금까지의 GFM 평가 중 가장 넓다. 117개 후보에서 51개로 줄인 5단계 필터 기준을 문서화했다. 남은 데이터셋은 degree가 여러 자릿수에 걸쳐 있고, homophily가 강한 heterophily부터 강한 homophily까지, feature가 희소·밀집 고차원까지, class 분포가 균형부터 심한 불균형까지 퍼져 있다."
+    tags: [eval-protocol]
+  - text: "모든 방법이 같은 split과 seed를 쓰고, supervised 방법은 기본 설정과 201개 설정 튜닝 버전을 함께 보고한다. GCNII, GPRGNN, Polynormer 같은 강한 baseline이 포함되어 있다. 주 지표 외에 macro-F1, cross-entropy 같은 보조 지표도 기록하고, 코드·평가 pipeline·run-level 결과·leaderboard를 공개한다."
+    tags: [eval-protocol]
+  - text: "비용을 workflow 단위로 잰다. 튜닝 trial 전체 시간을 포함한 workflow 시간과 peak GPU 메모리를 측정하고, Pareto frontier와 튜닝 예산 1~201개 곡선으로 'GFM이 덜 튜닝한 GNN보다 싸고 좋은가'를 직접 묻는다. 그 결과 구체적인 trade-off가 숫자로 나온다. 예를 들어 50/25/25에서 GraphPFN은 Mean Improvability가 가장 낮았고 모든 supervised 튜닝 궤적보다도 낮았지만, workflow 비용은 데이터셋별 가장 싼 방법의 약 84배(Mean Overhead 약 6.4)였다."
+    tags: [inference-cost]
+  - text: "7개 데이터셋 성질로 22개 부분집합을 만들어 '어떤 조건에서 GFM이 지는가'를 진단한다. 예를 들어 GraphPFN은 binary task, high-degree 그래프, 중간 수준 homophily에서는 튜닝된 GCNII·GPRGNN보다 앞서지만, 강한 homophily, 고차원 feature, 심한 불균형 target, 10개 초과 class에서는 뒤진다. 평균 순위 하나로는 보이지 않는 약점을 드러낸다."
+    tags: [label-imbalance, label-space, feature-heterogeneity, graph-structure-use]
+  - text: "라벨 조건을 두 가지로 나눠 PFN 계열의 context 크기 의존성을 보여준다. GraphPFN은 10/10/80에서 6위였다가 50/25/25에서 Elo 3위로 올라간다. 반대로 고차원 feature·심한 불균형 target·10개 초과 class의 약점은 라벨을 늘려도 남는다."
+    tags: [context-scale, label-imbalance]
+limitations:
+  - text: "고정된 라벨 예산과 공유 split에서의 node classification만 다룬다. 라벨 노드와 query 노드가 다른 community나 다른 시점에서 오는 non-IID 설정은 담지 못한다고 저자들이 인정한다."
+    tags: [eval-protocol, nonstationarity]
+    source: self
+  - text: "Link prediction이나 graph classification으로는 결론이 확장되지 않는다고 저자들이 밝힌다."
+    tags: [task-coverage]
+    source: self
+  - text: "Multilabel, heterogeneous, web-scale 그래프는 범위에서 뺐고, directed·temporal 그래프는 정적 무방향 그래프로 바꿔 썼다. 따라서 방향성이나 시간 정보를 쓰는 GFM의 이점은 이 benchmark에서 측정되지 않는다."
+    tags: [graph-scale, task-coverage]
+    source: self
+  - text: "[analyst] 본문 서술상 GFM은 공개 가중치를 그대로 두고 인터페이스 선택지만 튜닝한다. 반면 supervised 방법은 201개 설정으로 튜닝한다. GFM-FairEval에서는 GraphPFN finetuning이 거의 항상 성능을 올렸고 GraphLand 10개 데이터셋 모두에서 1위였다. 그러므로 '튜닝된 GNN이 GFM보다 낫다'는 결론은 가중치를 고정한 GFM과 충분히 튜닝한 GNN의 비교로 읽어야 한다. GraphPFN finetuning 여부는 부록 C.4에 있을 것으로 보이는데, 이번 조사에서는 확인하지 못했다."
+    tags: [adaptation, eval-protocol]
+    source: analyst
+  - text: "[analyst] '심한 불균형 target' 부분집합의 정의(통계량과 기준값)는 본문에 없고 부록 B.4로 미뤄져 있다. 또 multiclass 주 지표가 accuracy라서, 불균형 조건의 순위는 다수 class를 맞히는 능력에 크게 좌우될 수 있다. Macro-F1은 보조 지표로만 기록된다. 결측 결과를 default GCN 값으로 채운 건수도 본문에 없다. 이 때문에 GraphPFN의 10개 초과 class 약점이 실제 예측 결과인지, 대체값이 섞인 것인지 본문만으로는 구분되지 않는다."
+    tags: [label-imbalance, eval-protocol, label-space]
+    source: analyst
+builds_on: [TabArena, OGB]
+compared_against: [GraphAny, GVT, Node4All, G2T-FM, NodePFN, GraphPFN, MLP, GCN, GraphSAGE, GAT, APPNP, SGC, GCNII, FAGCN, GPRGNN, LINKX, GATv2, NodeFormer, SGFormer, NAGphormer, Polynormer]
+open_questions:
+  - "GraphPFN을 finetuning까지 허용하면 multiclass·불균형·고차원 조건의 열세가 줄어드는가? GFM-FairEval과 결론이 갈리는 지점을 직접 맞춰 보는 실험이 없다."
+  - "GraphPFN이 심한 불균형 target에서 지는 원인은 무엇인가? 사전학습 prior의 class 분포, ICL context 구성, accuracy라는 지표 선택 중 어느 쪽이 큰지 분해되지 않았다."
+  - "라벨 노드가 특정 community나 과거 시점에 몰린 non-IID 배치에서는 PFN ICL과 튜닝된 GNN 중 어느 쪽이 더 취약한가?"
+  - "GraphPFN이 강한 homophily에서 GNN에 지는 현상은 prior의 homophily 분포가 0 근처에 몰린 것과 관련이 있는가?"
+hooks:
+  - "(불균형 context, ImbNodePFN) GraphPFN이 심한 불균형 target에서 튜닝된 GNN에 지고, 라벨을 50%까지 늘려도 이 약점이 남는다는 독립 보고다. '라벨을 더 주는 것으로는 안 풀리고 prior나 context sampling 수준의 개입이 필요하다'는 motivation으로 그대로 인용할 수 있다. NodePFN도 평가 대상에 들어 있으므로, 공개된 run-level 결과에서 불균형 부분집합의 NodePFN·GraphPFN 결과를 뽑아 baseline으로 쓰면 재실험 비용을 줄일 수 있다. 다만 불균형 기준값은 부록 B.4에서 직접 확인해야 한다. 비교 가능성을 위해 NodeGround의 부분집합 정의를 그대로 채택하고, 주 지표가 accuracy이므로 macro-F1이나 balanced accuracy를 함께 보고하는 것을 추천한다."
+  - "(이질 feature 공간, per-graph codebook) 고차원 feature는 GraphPFN이 두 라벨 조건 모두에서 지는 조건이다. NodeGround의 고차원 feature 부분집합(희소·밀집 모두 포함)은 codebook 인터페이스를 tSVD(NodePFN), per-feature token(GraphPFN)과 비교할 기성 평가 세트가 된다."
+notes: "NodePFN은 평가 대상 6개 GFM 중 하나지만, 본문에는 개별 순위나 수치가 없다. Pareto 분석에서 GVT·GraphPFN을 뺀 나머지 GFM이 모두 더 싸고 더 좋은 방법에 지배된다는 서술과, G2T-FM·NodePFN·GraphPFN이 context 길이에 따라 self-attention 비용이 제곱으로 커진다는 서술에만 포함된다. 기존 평가의 약점으로는 NodePFN이 5만 노드 미만 그래프만 썼고, G2T-FM·GraphPFN이 입력 feature 500개 미만만 다뤘으며, GraphAny·NodePFN이 GNN 두 개하고만 비교했다는 점을 든다. GraphPFN의 10개 초과 class 약점은 tabular backbone의 출력 공간을 넘기 때문이며 output coding 같은 장치가 필요하다고 설명한다. 불균형 정의: 본문은 class 분포가 균형부터 심한 불균형까지 걸쳐 있다고만 쓰고, '심한 불균형 target' 부분집합의 통계량·기준값은 부록 B.4에 있다. arXiv PDF가 반복해서 rate limit에 걸리고 HTML판에는 부록 본문이 빠져 있어 이 기준을 읽지 못했다. Homophily는 adjusted homophily(Newman assortativity의 라벨 기반 형태)로 잰다. GraphPFN의 10/10/80 '6위'는 본문에서 Figure 1의 평균 순위 비교와 함께 서술되어 Elo 순위인지 불분명하다. 50/25/25 '3위'는 초록에서 Elo로 명시된다. 이 논문 이후의 비판(cited)이나 OpenReview 리뷰는 찾지 못했다."
+added: 2026-10-30

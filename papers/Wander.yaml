@@ -1,0 +1,76 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: Wander
+title: "To Learn is to Wander: Learning Across Graphs and Tasks with Random Walks"
+authors: "Louis Tichelman, Xingyue Huang, Jinwoo Kim, İsmail İlkan Ceylan (TU Wien / AITHYRA / University of Oxford / KAIST)"
+venue: "NeurIPS 2026 Workshop (Bridging Optimal Transport, Learning and Structured Data) poster; arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2610.06694
+  code: https://github.com/louistichelman/wander-gfm
+  openreview: https://openreview.net/forum?id=4eDEWr5iWf
+  workshop: https://neurips.cc/virtual/2026/159390
+citation:
+  type: misc
+  title: "To Learn is to Wander: Learning Across Graphs and Tasks with Random Walks"
+  authors: ["Louis Tichelman", "Xingyue Huang", "Jinwoo Kim", "İsmail İlkan Ceylan"]
+  year: 2026
+  arxiv: "2610.06694"
+  url: https://arxiv.org/abs/2610.06694
+  verified_from:
+    - https://arxiv.org/abs/2610.06694
+    - https://arxiv.org/html/2610.06694v2
+    - https://neurips.cc/virtual/2026/159390
+areas: [graph-fm, pfn]
+problem: "기존 graph foundation model은 attributed homogeneous graph의 node prediction, knowledge graph의 link prediction처럼 한 가지 graph modality나 task 안에서만 일반화한다. 이 논문은 하나의 사전학습 checkpoint로 처음 보는 그래프, feature 공간, relation schema, task를 모두 다룰 수 있는지, 그리고 그런 모델이 어떤 예측 함수를 배워야 하는지를 묻는다."
+core_idea: "저자들은 TabPFN의 prior-predictive 관점을 따라, 관측된 그래프를 prior에서 뽑힌 완전한 그래프의 부분 관측으로 본다. 그러면 node classification은 가려진 label을, link prediction은 빠진 edge를 채우는 문제가 되고, 최적 예측기는 query target의 posterior expectation이 된다. 공통 인터페이스는 random walk다. Walk 안의 노드와 relation은 처음 등장한 순서로 anonymize되고, 각 walk는 feature 차원마다, class마다, 그리고 구조 channel 하나마다 따로 기록된다. Feature는 차원당 scalar token 하나, label은 class당 token 하나(관측된 양성·음성·미관측), 구조는 query head와의 관계를 나타내는 token 하나로 표현된다. 각 layer는 네 단계로 이루어진다. 노드 하나의 channel token끼리 RoPE self-attention을 하고, 모든 노드가 labeled context 노드에만 attention하는 in-context update를 거친다. 이어서 walk 시퀀스를 bidirectional GRU로 읽어 노드 상태에 대한 update 제안과 confidence를 내고, 이 제안들을 softmax 가중 평균으로 합친다. Feature·label channel은 forward마다 무작위로 섞은 뒤 RoPE 위치를 붙이므로, 차원 수와 class 수가 달라도 같은 모듈을 공유한다. 사전학습 데이터는 NodePFN식·GraphPFN식 synthetic attributed graph에 Watts–Strogatz, random geometric, kernel(graphon) 기반 구조 prior를 섞고, 실제 knowledge graph 3개(FB15k-237, WN18RR, CoDEx Medium)를 더한 것이다. Walk 수와 길이는 추론 때 파라미터 변경 없이 늘리거나 줄일 수 있다."
+key_assumptions:
+  - "실제 그래프가 synthetic attributed graph prior와 실제 knowledge graph 3개가 덮는 분포의 부분 관측이라고 가정한다. Multi-relational 쪽은 synthetic 생성이 어려워 실제 KG 세 개에만 기댄다."
+  - "Bayes-optimal predictor에 대한 universality 결과는 연결된 관측 그래프, 노드 수 n 이상의 walk 길이, 충분히 균일한 walk sampler, 각 모듈의 injective encoding(A1–A5)을 전제로 한다. 저자들은 실제 구현이 이 가정을 정확히 만족한다고 주장하지 않는다."
+  - "Feature 차원과 class를 교환 가능한 channel로 다룬다. 즉 각 feature의 의미를 몰라도 scalar 값과 무작위 RoPE 위치만으로 처리할 수 있다고 본다."
+  - "입력은 관측된 그래프 전체이고, in-context update는 모든 labeled 노드를 context로 쓴다. Context 라벨의 분포나 크기에 대한 별도 장치는 없다."
+  - "Link prediction에 실제로 쓰는 self-adversarial BCE는 이론의 Bayes-optimal predictor를 정확한 population minimizer로 갖지 않는다. 즉 이론과 학습 목적 사이에 작은 간극을 감수한다."
+strengths:
+  - text: "하나의 checkpoint가 zero-shot으로 세 task 모두에서 최고이거나 그에 가까운 성능을 낸다. Knowledge graph 54개의 link prediction에서 MRR 0.399로 전용 모델 FLOCK(0.391)과 비슷하거나 조금 높았다. Homogeneous link prediction 10개 데이터셋에서는 평균 Recall@20 43.39%로 데이터셋별로 튜닝한 NBFNet(38.82%)을 앞섰다. Node classification 26개 그래프에서는 평균 정확도 68.20%로 GraphPFN(66.55%)과 튜닝된 GCN(60.64%)보다 높았다."
+    tags: [task-coverage, zero-shot-gap]
+  - text: "Feature와 class를 channel별 token으로 다루고 같은 종류의 channel끼리 모듈을 공유하므로, feature 차원 수와 class 수에 제한 없이 차원 축소 없이 처리한다. 같은 표에서 NodePFN은 지원 class 수를 넘는 데이터셋 계열(Cit. Full, HM Cat.)에서 아예 빠졌다."
+    tags: [feature-heterogeneity, label-space]
+  - text: "구조적 수용 범위를 추론 때 조절할 수 있다. Message passing 기반 GFM은 이 범위가 network 깊이에 고정된다. 서로 떨어진 25×25 grid 5개에 grid마다 label을 2개만 준 GRIDS에서, walk 길이를 4에서 64로 늘리자 정확도가 56.6%에서 96.6%로 올랐다. Labeled 노드를 지나는 walk만 남기면 100%였다. 같은 과제에서 GraphPFN은 23.3%, NodePFN은 26.6%였다. Feature 없는 실제 그래프 4개에서도 Wander는 76.5%로 GraphPFN(60.1%)을 크게 앞섰다."
+    tags: [graph-structure-use]
+  - text: "이론적 근거가 분명하다. 적절한 가정 아래 bounded connected graph에서 Bayes-optimal predictor를 universal하게 근사할 수 있음을 보였고, 필요한 walk 길이가 이전 random-walk 결과처럼 cover time에 비례할 필요가 없다. 또 prior에 새 그래프 family를 섞어도, 관측이 그 family를 배제하는 곳에서는 target risk가 나빠지지 않는다는 prior expansion 정리를 제시해 넓은 prior mixing을 정당화한다."
+    tags: [theory-gap, prior-mismatch]
+  - text: "Synthetic prior가 NodePFN식과 GraphPFN식 생성기에 Watts–Strogatz, random geometric, graphon 기반 구조를 더해 섞는다. 그래서 GraphPFN prior가 덮지 못한다고 인정한 공간·기하 구조 그래프를 사전학습 분포에 명시적으로 포함한다."
+    tags: [prior-mismatch, pretraining-data]
+  - text: "Task 간 joint pretraining이 성능을 깎지 않고 일부 task를 돕는다. 같은 학습 step을 준 single-task 모델과 비교하면 KG link prediction과 node classification은 거의 같았고, homogeneous link prediction은 40.37%에서 43.39%로 올랐다. 사전학습 KG에는 node feature가 없었는데도, 추론 때 entity 이름의 MiniLM embedding을 feature로 붙이면 edge type과 결합해 성능이 더 올랐다(WN18RR MRR 0.550에서 0.564, ConceptNet100k 0.258에서 0.334)."
+    tags: [task-coverage, pretraining-data]
+limitations:
+  - text: "사전학습 prior가 아직 좁다. Attributed graph는 대부분 synthetic이고, multi-relational 사전학습은 실제 KG 세 개뿐이다. 저자들은 node feature와 edge type을 함께 가진 그래프 쪽으로 prior를 넓히는 것을 향후 과제로 든다."
+    tags: [pretraining-data, prior-mismatch]
+    source: self
+  - text: "Walk 예산이 크고 sampling을 반복할수록 추론 비용이 커진다. 예산을 줄이면 재학습 없이 빨라지지만 예측 성능이 떨어질 수 있다. 더 효율적이고 적응적인 sampling 전략은 향후 과제로 남았다."
+    tags: [inference-cost]
+    source: self
+  - text: "Node classification과 link prediction만 지원한다. Node regression과 graph classification으로의 확장은 향후 과제다."
+    tags: [task-coverage]
+    source: self
+  - text: "Universality 정리는 A1–A5 가정, 연결된 관측 그래프, 노드 수 이상의 walk 길이를 요구하며, 실제 구현이 이를 만족한다고 주장하지 않는다. Link prediction에 쓰는 self-adversarial BCE도 이론상 최적 예측기를 정확히 최소화하지 않는다고 저자들이 밝힌다."
+    tags: [theory-gap]
+    source: self
+  - text: "[analyst] 구조 task에서의 큰 우위와 달리, feature가 있는 실제 node classification에서는 GraphPFN 대비 우위가 평균 1.65점으로 작다. 14개 데이터셋 계열 중 5개(Airports, Wiki filt., Actor, Roman Empire, HM Cat.)에서는 GraphPFN이 앞섰다. 튜닝된 GCN과의 격차도 Roman Empire(79.6 대 65.4)와 HM Cat.(66.4 대 48.7)에서 컸다. 극적인 수치(GRIDS 96.6%)는 long-range 전파가 필요하도록 설계된 synthetic 과제와 feature 없는 그래프에서 나온 것이다."
+    tags: [zero-shot-gap, graph-structure-use]
+    source: analyst
+  - text: "[analyst] 라벨 불균형과 그래프 규모 쪽은 검증되지 않았다. Context는 모든 labeled 노드이고 그 라벨 분포에 대한 분석이 없으며, GRIDS는 class마다 label 2개로 구성상 균형이다. 입력이 관측 그래프 전체인데도 본문에는 runtime·peak 메모리 수치가 없고(부록으로 넘김), 평가는 Pokec 100k 같은 중간 규모 그래프까지다."
+    tags: [label-imbalance, graph-scale, inference-cost]
+    source: analyst
+builds_on: [RWNN, Flock, TabPFN, NodePFN, GraphPFN]
+compared_against: [ULTRA, TRIX, Flock, CommonNeighbors, ResourceAllocation, BUDDY, NBFNet, AnyGraph, GCN, TabPFNv3, GraphAny, NodePFN, GraphPFN]
+open_questions:
+  - "Walk 수와 길이를 label 없이 그래프마다 어떻게 정해야 하는가? 저자들은 효율적·적응적 sampling을 향후 과제로 들었다. LoGIC처럼 예산을 정한 context 구성을 walk 시작점 선택에 적용할 수 있는가?"
+  - "Roman Empire·HM Cat.처럼 튜닝된 GCN과 GraphPFN에 뒤지는 데이터셋에서, 열세의 원인이 walk sampling 분산인지, 이웃 전체를 집계하지 못하는 구조인지, prior 부족인지 분해되지 않았다."
+  - "Context 라벨이 치우치거나 class가 많을 때 class별 label token(양성·음성·미관측)과 in-context attention은 어떻게 동작하는가? Minority class 양성이 몇 개뿐일 때의 거동은 보고되지 않았다."
+  - "Synthetic multi-relational prior를 만들 수 있다면 실제 KG 세 개에 대한 의존을 없앨 수 있는가? Node feature와 edge type을 함께 가진 그래프 prior는 어떻게 설계해야 하는가?"
+hooks:
+  - "(불균형 context, ImbNodePFN) Wander는 10개 class 제한이 없고 GraphPFN보다 평균이 높은 node classification GFM이므로, ImbNodePFN의 강한 비교 대상이 된다. 공식 코드(louistichelman/wander-gfm)가 있으니 skewed context에서 그대로 돌려 보는 것을 추천한다. 설계 측면에서 흥미로운 점이 하나 있다. Node query에서 walk의 절반은 무작위 query 노드에서, 나머지 절반은 labeled context 노드 중 uniform으로 뽑은 노드에서 시작한다. 즉 walk 시작점 분포가 instance-balanced라서, 라벨이 치우치면 minority class 노드는 walk 출발점이 되는 일이 드물다. 이 시작점 분포를 class-balanced로 바꾸는 것은 재학습 없는 추론 시점 개입이다. 사용자의 class-balanced vs instance-balanced context sampling 축이 walk sampler에도 그대로 나타나는 셈이므로, 같은 비교를 두 계열(GraphPFN류와 random-walk류) 모델에서 보여 줄 수 있다."
+  - "(이질 feature 공간, per-graph codebook) Wander는 feature 차원마다 scalar token을 두고 channel을 무작위로 섞어 이질성을 푼다. 구조상 노드마다 차원 수만큼 token이 생기므로, GraphPFN의 per-feature token과 마찬가지로 고차원 text feature에서 비용이 커질 수 있다. Per-graph codebook은 tSVD(NodePFN), per-feature token(GraphPFN), 무작위 permutation된 per-dimension token(Wander) 사이에서 고차원 feature 데이터셋의 정확도와 메모리로 포지셔닝할 수 있다."
+  - "(그래프 구조를 넣은 MVTS PFN) Wander의 prior에는 random geometric graph가 들어 있다. GraphPFN이 덮지 못한다고 인정한 공간 그래프를 포함한 것이므로, PEMS 같은 교통 sensor graph용 prior 설계에 직접 참고할 수 있다. 또 walk 길이로 수용 범위를 추론 때 바꾸는 성질은 센서 간 long-range 공간 의존을 다룰 때 고정 깊이 adapter의 대안이 된다."
+notes: "NeurIPS 2026 workshop 'Bridging Optimal Transport, Learning and Structured Data: Toward Geometric Distributional Learning'의 poster로 neurips.cc에서 확인했다. Workshop은 proceedings가 아니므로 citation.type은 misc로 두었다. arXiv에는 comments·journal-ref가 없다. 저자 철자는 arXiv 표기(İsmail İlkan Ceylan)를 따랐고, neurips.cc에는 'Ismail Ilkan Ceylan'으로 적혀 있다. OpenReview forum은 브라우저 확인 화면에 막혀 리뷰를 읽지 못했다. 본문에서 GraphPFN을 'Graphany (Eremeev et al., 2026)'로 잘못 표기한 곳이 있다. 모델 크기, runtime, finetuning, prior ablation은 부록에 있으며 이번에는 확인하지 못했다."
+added: 2026-10-30

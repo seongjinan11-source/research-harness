@@ -1,0 +1,96 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: Time-MoE
+title: "Time-MoE: Billion-Scale Time Series Foundation Models with Mixture of Experts"
+authors: "Xiaoming Shi, Shiyu Wang, Yuqi Nie, Dianqi Li, Zhou Ye, Qingsong Wen, Ming Jin"
+venue: "ICLR 2025"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2409.16040
+  code: https://github.com/Time-MoE/Time-MoE
+  openreview: https://openreview.net/forum?id=e1wDDFmlVu
+
+citation:
+  type: inproceedings
+  title: "Time-MoE: Billion-Scale Time Series Foundation Models with Mixture of Experts"
+  authors: ["Xiaoming Shi", "Shiyu Wang", "Yuqi Nie", "Dianqi Li", "Zhou Ye", "Qingsong Wen", "Ming Jin"]
+  year: 2025
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2409.16040"
+  url: https://iclr.cc/virtual/2025/poster/28954
+  verified_from:
+    - https://arxiv.org/abs/2409.16040v3
+    - https://iclr.cc/virtual/2025/poster/28954
+
+areas: [tsfm]
+problem: "dense transformer로 시계열 foundation model을 키우면 학습·추론 비용이 같이 커진다. 이 논문은 비용을 억제하면서 모델을 billion 규모까지 키워 zero-shot 예측 성능을 끌어올릴 수 있는지를 묻는다."
+core_idea: "LLaMA·Qwen 계열 LLM 구조를 따른 decoder-only transformer에서 모든 FFN을 sparse mixture-of-experts(MoE) layer로 바꾼다. 각 MoE layer에는 항상 켜지는 shared expert 하나와 top-2로 고르는 expert 8개가 있다. 입력은 patch를 쓰지 않고 시점 하나하나를 SwiGLU로 embedding하는 point-wise tokenization이며, RoPE와 RMSNorm을 쓰고 최대 4,096 시점까지 본다. 출력은 horizon 1, 8, 32, 64용 head 네 개를 함께 학습하고, 추론 때는 이 head들을 greedy하게 이어 붙여 임의 길이 horizon을 만든다. 손실은 Huber loss에 expert 사용을 고르게 만드는 load-balancing 보조 손실을 더한 것이다. 사전학습 데이터로는 9개 도메인, 약 309B 시점 규모의 Time-300B를 직접 정제해 공개했다. 크기는 base(전체 113M, 활성 50M), large(453M, 200M), ultra(2.4B, 1.1B) 세 가지다."
+key_assumptions:
+  - "시점마다 token을 만드는 point-wise tokenization이 patch보다 시간 정보를 덜 잃는다고 보고, 그 대가인 긴 token 열의 비용은 MoE의 sparse 계산으로 감당할 수 있다고 가정한다."
+  - "다변량 입력은 channel independence로 단변량 여러 개로 쪼개면 충분하다고 본다. 변수 간 의존성은 모델에 들어가지 않는다."
+  - "Huber loss로 학습한 point forecast가 목표이며, 예측 분포나 불확실성은 다루지 않아도 된다고 전제한다."
+  - "load-balancing 손실만 걸어 주면 expert들이 데이터 성격에 따라 알아서 분업한다고 가정한다."
+  - "Nature 도메인(기상·기후)이 관측치의 약 90%를 차지하는 Time-300B가 다른 도메인까지 일반화할 만큼 다양하다고 본다."
+strengths:
+  - text: "sparse MoE로 시계열 foundation model을 처음 2.4B 파라미터까지 키웠다. 같은 활성 파라미터의 dense 모델과 비교하면 학습 비용은 평균 78%, 추론 비용은 39% 줄었다. ultra 모델도 8GB 미만 VRAM의 소비자용 GPU에서 돌아간다."
+    tags: [inference-cost]
+  - text: "309B 시점 규모의 Time-300B와 정제 pipeline을 공개했다. 결측 구간은 평균으로 채우지 않고 잘라내고, 1·2차 차분 비율로 비정상 window를 걸러낸다. 학습 코드와 데이터가 모두 공개되어 있어서, TimeSqueeze처럼 backbone과 데이터를 그대로 두고 tokenizer만 바꾸는 통제 실험의 기반으로 쓰이고 있다."
+    tags: [pretraining-data]
+  - text: "여러 해상도의 출력 head를 함께 학습해서 긴 horizon을 적은 decoding step으로 만든다. ablation에서 horizon 1짜리 head 하나로만 autoregressive하게 예측하면 MSE가 1.382까지 무너졌지만, 네 head를 쓰면 0.262였고 추론도 가장 빨랐다."
+    tags: [context-horizon, inference-cost]
+  - text: "TSLib 장기 예측 6개 데이터셋의 zero-shot 평균 MSE에서 ultra가 0.322로 Moirai-large(0.359), TimesFM(0.396), Chronos-large(0.416), MOMENT(0.461)보다 낮았다. 저자들은 각각 대비 11%, 23%, 30% 감소라고 보고한다. 같은 데이터셋의 train split으로 한 epoch만 fine-tuning해도 iTransformer, PatchTST 같은 full-shot 모델보다 평균 MSE가 24% 낮았다."
+    tags: [zero-shot-gap, adaptation]
+  - text: "RoPE와 causal attention 덕분에 최대 4,096 시점까지 가변 길이 context를 하나의 모델로 처리한다. zero-shot 평가에서는 horizon에 따라 512부터 3,072까지 context를 썼다."
+    tags: [context-horizon]
+limitations:
+  - text: "load-balancing 보조 손실을 빼면 가장 잘 맞는 expert의 gating 점수만 계속 커져서 expert layer가 사실상 작은 FFN 하나로 무너졌다고 저자들이 보고한다. 이때 horizon 96 평균 MSE는 0.262에서 0.275로 나빠졌다. sparse 모델의 학습 안정성이 보조 손실에 크게 기대고 있다는 뜻이다."
+    tags: [training-stability]
+    source: self
+  - text: "저자들의 ablation에서 horizon 1 head만 남기고 한 step씩 autoregressive하게 예측하면 MSE가 0.262에서 1.382로 폭증했다. 긴 horizon의 정확도가 모델 자체보다 multi-resolution head가 decoding step 수를 줄여 주는 데 크게 의존한다는 것을 저자들 실험이 보여준다."
+    tags: [context-horizon]
+    source: self
+  - text: "다변량 입력은 channel independence로 단변량 series로 바꿔 처리한다고 저자들이 명시한다. 변수 간 의존성이나 covariate는 모델링하지 않는다."
+    tags: [channel-dependency, covariates]
+    source: self
+  - text: "Time-MoE가 기존 gating 함수를 그대로 가져다 썼을 뿐 새로운 gating을 제안하거나 MoE 내부 동작을 분석하지 않았다고 지적한다. point-wise tokenization은 시계열의 의미 단위를 담지 못해 성능을 제한할 수 있다고도 본다. 실제로 사전학습에 쓰이지 않은 10개 데이터셋 zero-shot 평가에서, 누수 데이터셋을 뺀 평균 MASE(seasonal naive 대비 정규화)는 Time-MoE base·large 모두 0.695였다. 이는 Moirai-MoE base(0.611)뿐 아니라 TimesFM(0.640), Chronos-base(0.631), Moirai-large(0.685)보다도 나쁜 값이다. 이 표에서 Electricity와 Solar는 Time-MoE의 사전학습에 포함된 non-zero-shot 데이터셋으로 표시되었다. 다만 Time-MoE는 context를 4,096으로 고정했고 Moirai 계열은 context를 탐색했다."
+    tags: [tokenization, zero-shot-gap, eval-protocol]
+    source: cited
+    by: "Moirai-MoE: Empowering Time Series Foundation Models with Sparse Mixture of Experts (ICML 2025)"
+    by_id: Moirai-MoE
+    by_link: https://proceedings.mlr.press/v267/liu25an.html
+  - text: "TimesFM, Timer와 함께 Time-MoE를 연속값을 embedding하고 MSE나 quantile loss로 단봉 분포를 맞추는 모델로 분류한다. 예측 분포가 도메인마다 크게 갈리는 상황에서 이런 고정된 prior loss는 mode collapse와 지나치게 매끄러운 예측을 낳고, 예측의 신뢰 수준을 알려주지 못해 의사결정에 쓰기 어렵다고 비판한다. TSLib zero-shot에서 Sundial은 더 적은 파라미터로 Time-MoE 대비 평균 MSE를 7.57% 낮췄다고 보고한다."
+    tags: [uncertainty]
+    source: cited
+    by: "Sundial: A Family of Highly Capable Time Series Foundation Models (ICML 2025)"
+    by_id: Sundial
+    by_link: https://proceedings.mlr.press/v267/liu25be.html
+  - text: "Time-MoE 같은 point-wise encoding은 sequence가 길어질수록 확장성이 떨어지며, 이것이 긴 context 사전학습의 병목이라고 지적한다. 이 논문은 Time-MoE의 backbone, Time-300B, 손실을 그대로 두고 tokenizer만 SSM 기반 dynamic patching으로 바꿨다. 그 결과 학습이 최대 20배 빠르고 사전학습 데이터 효율이 8배 높다고 보고한다."
+    tags: [tokenization, inference-cost, context-scale]
+    source: cited
+    by: "TimeSqueeze: Dynamic Patching for Efficient Time Series Forecasting (2026)"
+    by_link: https://arxiv.org/abs/2603.11352
+  - text: "MOMENT, Chronos, TimesFM, Time-MoE, TSPulse 다섯 계열을 reconstruction·forecasting error 기반 anomaly detector로 평가했다. 모델 크기와 context 길이를 바꿔도 moving-window variance 같은 한 줄짜리 baseline과 유의미한 차이가 없었다. 예측 오차로 이상을 잡는다는 전제가 Time-MoE 같은 forecasting TSFM에서도 성립하지 않는다는 진단이다."
+    tags: [task-coverage, zero-shot-gap]
+    source: cited
+    by: "When Foundation Models are One-Liners: Limitations and Future Directions for Time Series Anomaly Detection (ICLR 2026)"
+    by_id: TSAD-OneLiners
+    by_link: https://openreview.net/forum?id=H27kvyG4qf
+  # review: ICLR 2025 OpenReview forum(https://openreview.net/forum?id=e1wDDFmlVu)은 공개 리뷰가 있지만 브라우저 검증에 막혀 본문을 읽지 못해 미기재.
+  - text: "[analyst] 확장 효과의 근거가 좁다. zero-shot 평가는 TSLib 6개 데이터셋뿐이고 그중 4개가 같은 출처의 ETT 변형이며 지표도 MSE·MAE만 쓴다. 이 안에서도 base와 large의 평균 MSE는 0.336으로 같았다. 또 Time-300B 관측치의 90.5%가 Nature 도메인(기상·기후)인데 zero-shot 6개 중 Weather와 Global Temp 2개가 바로 그 도메인이다. 처음 보는 도메인으로의 일반화를 보여주기에는 부족하며, Moirai-MoE의 더 넓은 평가에서 순위가 뒤집힌 것과도 맞아떨어진다."
+    tags: [eval-protocol, pretraining-data]
+    source: analyst
+  - text: "[analyst] MoE 자체의 기여가 생각보다 작다. ablation에서 MoE를 dense로 바꾸면 horizon 96 평균 MSE가 0.262에서 0.272로, top-k를 1부터 8까지 바꿔도 0.262~0.269 사이에서만 움직였다. expert가 데이터셋마다 다르게 쓰인다는 주장도 gating 점수 그림의 정성적 해석뿐이다. 따라서 성능 이득 중 어디까지가 expert 분업이고 어디까지가 규모·데이터·head 설계인지는 분리되지 않았다."
+    tags: [interpretability, theory-gap]
+    source: analyst
+builds_on: [decoder-only LLM (LLaMA, Qwen), Switch Transformer, DeepSeekMoE, PatchTST]
+compared_against: [Moirai, TimesFM, MOMENT, Chronos, iTransformer, TimeMixer, TimesNet, PatchTST, Crossformer, TiDE, DLinear, FEDformer]
+open_questions:
+  - "point-wise token의 장점(세밀한 시간 정보)과 patch token의 장점(짧은 sequence, 의미 단위)을 같은 backbone·데이터에서 비교하면 어느 쪽이 남는가. TimeSqueeze가 tokenizer만 바꾸는 실험을 시작했지만 장기 context에서의 정확도 비교는 아직 정리되지 않았다."
+  - "expert가 실제로 도메인·주파수·regime 중 무엇에 따라 분업하는가. gating 분포를 정량적으로 분석하면 MoE가 단순한 용량 확장 이상의 역할을 하는지 판단할 수 있다."
+  - "Huber loss point forecast 구조에 quantile·generative head를 붙여도 MoE의 비용 이점이 유지되는가."
+  - "Nature 도메인이 지배적인 사전학습 데이터에서 다른 도메인으로의 zero-shot 성능은 도메인 비중을 바꾸면 어떻게 달라지는가."
+hooks:
+  - "(obsolete history) Time-MoE는 시점마다 token이 있고 데이터셋마다 gating 분포가 다르게 나타난다고 보고됐다. 그래서 regime shift 이전 token과 이후 token의 expert routing 분포를 비교하는 probe를 바로 만들 수 있다. routing이 regime을 따라 바뀐다면, 학습 없이 shift 지점을 찾는 신호이자 shift 이전 token을 masking할 근거로 쓸 수 있다. 원 논문은 horizon마다 context를 512~3,072로 고정했으므로, 실험에서는 context 길이를 고정한 채 shift 위치만 옮겨야 효과가 섞이지 않는다."
+  - "(obsolete history, 학습 쪽 처방) Time-MoE는 사전학습 코드와 Time-300B가 모두 공개되어 있어 TimeSqueeze처럼 작은 base 모델을 다시 학습하는 통제 실험이 가능하다. 서로 다른 regime 구간을 이어 붙인 synthetic sequence를 섞어 사전학습하면, 오래된 history를 무시하는 능력을 사전학습 단계에서 심을 수 있는지 시험할 수 있다. 추론 시 context를 수동으로 자르는 방법이 비교 기준이 된다."
+  - "(irrelevant context, graph 시계열 PFN) channel-independent 모델이라 TimesFM·MOMENT처럼 nuisance stream에 구조적으로 영향받지 않는 기준선이다. PEMS류로 평가하려면 Time-300B의 Transport 도메인(관측치의 0.69%)에 어떤 데이터셋이 들어 있는지 논문에 목록이 없으므로 저장소에서 먼저 대조해야 한다."
+notes: "ICLR 2025 poster로 확인(iclr.cc 가상 페이지). 정식 proceedings 페이지는 접근하지 못해 booktitle은 iclr.cc 페이지 표기(ICLR 2025)만 적었다. arXiv v4 본문 기준으로 정리했다. 논문에 별도 limitation 절이 없어 self 한계는 저자들이 실험·서술로 직접 인정한 내용만 넣었다. 확률 예측은 지원하지 않으며 Foundation Models for Time Series: A Survey(2025, https://arxiv.org/abs/2504.04011)도 Time-MoE를 point forecast만 내는 모델로 분류한다. TSFM-BenchReqs(v3)의 부록은 Monash의 Oikolab Weather와 Pedestrian Counts가 Moirai, Time-MoE, Sundial, Toto의 사전학습 데이터에 함께 들어 있어 기간이 겹치는 전역 기상 패턴이 샐 수 있다고 이론적 우려만 제기했다. 그래서 cited 한계로는 넣지 않았다."
+added: 2026-10-30

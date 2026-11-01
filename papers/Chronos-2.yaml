@@ -1,0 +1,98 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: Chronos-2
+title: "Chronos-2: From Univariate to Universal Forecasting"
+authors: "Abdul Fatir Ansari, Oleksandr Shchur, Jaris Küken, Andreas Auer, Boran Han, Pedro Mercado, Syama Sundar Rangapuram, Huibin Shen, Lorenzo Stella, Xiyuan Zhang, Mononito Goswami, Shubham Kapoor, Danielle C. Maddix, Pablo Guerron, Tony Hu, Junming Yin, Nick Erickson, Prateek Mutalik Desai, Hao Wang, Huzefa Rangwala, George Karypis, Yuyang Wang, Michael Bohlke-Schneider (Amazon 외)"
+venue: "arXiv 2025"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2510.15821
+  code: https://github.com/amazon-science/chronos-forecasting
+
+citation:
+  type: misc
+  title: "Chronos-2: From Univariate to Universal Forecasting"
+  authors: ["Abdul Fatir Ansari", "Oleksandr Shchur", "Jaris Küken", "Andreas Auer", "Boran Han", "Pedro Mercado", "Syama Sundar Rangapuram", "Huibin Shen", "Lorenzo Stella", "Xiyuan Zhang", "Mononito Goswami", "Shubham Kapoor", "Danielle C. Maddix", "Pablo Guerron", "Tony Hu", "Junming Yin", "Nick Erickson", "Prateek Mutalik Desai", "Hao Wang", "Huzefa Rangwala", "George Karypis", "Yuyang Wang", "Michael Bohlke-Schneider"]
+  year: 2025
+  arxiv: "2510.15821"
+  url: https://arxiv.org/abs/2510.15821
+  verified_from:
+    - https://arxiv.org/abs/2510.15821v1
+    - https://arxiv.org/html/2510.15821v1
+
+areas: [tsfm, mvts]
+problem: "기존 TSFM 대부분은 단변량 예측만 하고, 다변량 의존성이나 과거·미래 covariate를 zero-shot으로 함께 쓰지 못한다. 이 논문은 단변량, 다변량, covariate 기반 예측을 하나의 사전학습 모델로 추가 학습 없이 처리하는 것을 목표로 한다."
+core_idea: "T5 encoder를 따른 encoder-only transformer(120M)가 patch 단위 입력을 받는다. 입력은 평균·표준편차로 표준화한 뒤 sinh⁻¹을 씌우는 robust scaling을 거치고, 시간 index와 관측 mask가 meta feature로 붙는다. 각 block은 두 종류의 attention을 번갈아 쓴다. time attention은 series 하나 안에서 patch끼리 보는 self-attention(RoPE)이다. group attention은 같은 group ID를 가진 series들 사이에서 같은 patch index끼리만 정보를 섞는다. series 사이에는 자연스러운 순서가 없으므로 group attention에는 positional embedding을 쓰지 않는다. covariate는 별도 모듈 없이 같은 group의 series로 넣는다. past-only covariate는 미래 칸을 결측으로, known covariate는 미래 값까지 채워 넣고, 범주형 covariate는 수치로 encoding한다. 출력은 0.01부터 0.99까지 quantile 21개를 여러 patch에 걸쳐 한 번에 내는 direct multi-step 예측이고, loss는 target 차원에만 건다. 학습 데이터는 Chronos·GIFT-Eval 사전학습 corpus 일부에 synthetic 데이터를 더했다. 다변량·covariate 능력은 전적으로 synthetic 데이터에서 나온다. 단변량 생성기로 뽑은 series들에 동시점 상관이나 lead-lag 같은 의존성을 입히는 'multivariatizer'로 다변량 task를 만들고, 그중 일부 변수를 무작위로 known covariate로 지정한다. context는 1단계 2,048에서 2단계 8,192로 늘린다."
+key_assumptions:
+  - "어떤 series끼리 정보를 섞을지 사용자가 group ID로 알려준다고 가정한다. 같은 group 안의 관계는 모델이 context에서 스스로 추론해야 한다."
+  - "multivariatizer가 만드는 synthetic 의존성(동시점 상관, lead-lag, cointegration 등)이 실제 다변량·covariate 관계를 충분히 덮는다고 본다."
+  - "변수 간 상호작용은 같은 patch index끼리 주고받는 것으로 충분하고, 시간 방향 관계는 time attention이 따로 처리한다고 가정한다."
+  - "known covariate의 미래 값은 정확히 주어진다고 전제한다. 학습 때 covariate는 의존성이 입혀진 변수 중에서 무작위로 고른다."
+  - "covariate는 수치형 또는 범주형이어야 한다. text 같은 다른 modality는 다루지 않는다."
+strengths:
+  - text: "하나의 모델이 단변량, 다변량, past-only·known·categorical covariate 예측을 모두 zero-shot으로 처리한다. 저자들의 기능 비교표에서 이 다섯 가지와 cross learning을 모두 지원하는 사전학습 모델은 Chronos-2뿐이다."
+    tags: [covariates, channel-dependency, task-coverage]
+  - text: "group attention은 group 마스크만으로 섞을 series를 정하고 순서를 가정하지 않으므로 변수 수가 몇 개든 같은 모델로 처리한다. 메모리는 변수 수에 선형으로 늘어난다고 보고하는데, 이는 일부 baseline(COSMIC, Moirai-1.0)의 제곱 증가와 대비된다."
+    tags: [channel-dependency, context-scale]
+  - text: "fev-bench에서 win rate 90.7%, skill score 47.3%로 1위였고, 2위 TiRex와 3위 TimesFM-2.5와의 차이는 bootstrap 신뢰구간 기준으로 유의했다. GIFT-Eval(WQL skill 51.4%)과 Chronos Benchmark II(46.6%)에서도 모든 지표에서 가장 좋았다. 이득이 가장 큰 곳은 covariate task였다. fev-bench와 Chronos Benchmark II 데이터는 학습에 쓰지 않았다."
+    tags: [zero-shot-gap, covariates]
+  - text: "실제 다변량 데이터 없이 synthetic multivariatizer만으로 다변량·covariate 능력을 얻었다. synthetic 데이터만으로 학습한 변형도 GIFT-Eval과 Chronos Benchmark II에서 본 모델에 거의 근접해, synthetic prior 설계의 효과를 보여준다."
+    tags: [pretraining-data, prior-mismatch]
+  - text: "에너지(전력 가격)와 소매(Rossmann 매출) 사례에서 covariate를 쓰는 in-context learning(ICL) 모드가 단변량 모드보다 눈에 띄게 정확했다. 소매 사례에서 단변량 예측은 거의 평평했지만, 판촉·휴일 covariate를 쓰자 매출 변동을 따라갔다."
+    tags: [covariates]
+  - text: "quantile을 21개(0.01~0.99)로 촘촘히 내서 극단 구간까지 다룬다. A10G GPU 한 장에서 초당 약 300개 series를 처리하고, 28M짜리 Small 모델은 약 2배 빠르면서 GIFT-Eval skill이 약 1점만 낮다. context를 8,192로 늘린 2단계 학습은 고주파 데이터에서 특히 도움이 되었다."
+    tags: [uncertainty, inference-cost, context-horizon]
+limitations:
+  - text: "수치형과 범주형 covariate만 지원한다고 저자들이 밝힌다. text 같은 multimodal 입력으로의 확장은 향후 방향으로 남겼다."
+    tags: [covariates, task-coverage]
+    source: self
+  - text: "단변량을 넘어서는 능력은 전적으로 synthetic 데이터에 기대고 있다고 저자들이 명시한다. synthetic만으로 학습한 변형은 fev-bench skill score가 45.9%로 본 모델(47.3%)보다 낮아, 실제 데이터가 여전히 기여한다는 점도 저자들 ablation에 나타난다."
+    tags: [pretraining-data, prior-mismatch]
+    source: self
+  - text: "저자들 결과에서 다변량 task에 대한 ICL 이득은 크지 않았다. 단변량 모드만으로도 다변량 구조를 직접 모델링하는 Toto-1.0보다 좋았다. 즉 fev-bench 다변량 subset에서의 우위 대부분은 변수 간 정보가 아니라 단변량 예측력에서 나온다."
+    tags: [channel-dependency]
+    source: self
+  - text: "학습 corpus가 GIFT-Eval test 구간과는 겹치지 않지만 일부 GIFT-Eval 데이터셋의 train 구간과는 부분적으로 겹친다고 저자들이 밝힌다."
+    tags: [eval-protocol]
+    source: self
+  - text: "GIFT-Eval에서 Chronos-2는 group attention을 켜든 끄든 성능이 거의 같았다고 보고한다. 원시 변수 공간에서 변수를 섞는 방식이 실질적인 관계 정보를 거의 더하지 못한다는 해석이다. 서로 전혀 다른 시계열을 넣어도 group attention map이 거의 똑같아지는 semantic collapse와 over-smoothing도 지적한다. group attention은 어떤 변수끼리 상호작용할지는 정하지만 이질적인 의미를 어떻게 정렬할지는 다루지 못하고, 촘촘한 attention이 오히려 의미 있는 신호를 희석할 수 있다고 본다."
+    tags: [channel-dependency, interpretability]
+    source: cited
+    by: "Falcon-X: A Time Series Foundation Model for Heterogeneous Multivariate Modeling (2026)"
+    by_link: https://arxiv.org/abs/2605.27286
+  - text: "target과 covariate 사이에 단순한 관계(항등, 합, 제곱식 등)를 심은 통제 실험에서 TabPFN-TS가 Chronos-2보다 관계를 더 잘 잡았고, 특히 짧은 horizon에서 차이가 컸다. aggregate 실험에서는 covariate를 넣자 Chronos-2가 모든 설정에서 오히려 조금 나빠졌다(예: 1344-336 설정 0.1880에서 0.1940). target 자체를 covariate로 줘도 TabPFN-TS보다 덜 활용했다(SOLAR 0.0456 대 0.0000). Chronos-2는 단변량 예측력은 더 강하지만, 벤치마크 성능이 단순한 covariate 관계를 제대로 모델링한다는 보장은 아니라는 결론이다."
+    tags: [covariates]
+    source: cited
+    by: "Investigating simple target-covariate relationships for Chronos-2 and TabPFN-TS (ICLR 2026 Workshop on Time Series in the Age of Large Models)"
+    by_link: https://arxiv.org/abs/2605.12200
+  - text: "전력 부하 예측에서 미래 covariate에 Gaussian noise를 점점 크게 넣어 보았다. covariate가 정확할 때는 Chronos-2가 zero-shot과 fine-tuning 모두에서 가장 좋았지만, noise가 커질수록 성능이 떨어졌다. noise 배율 1과 5에서는 처음부터 학습한 TimesNet이 fine-tuning한 Chronos-2까지 앞섰다. covariate를 적극적으로 쓰는 만큼 covariate 품질이 나빠질 때 더 취약하다는 뜻이다."
+    tags: [robustness, covariates]
+    source: cited
+    by: "Benchmarking Time Series Foundation Models for Load Forecasting Under Covariate Uncertainty (2026)"
+    by_link: https://arxiv.org/abs/2610.07232
+  - text: "생성기 parameter 하나만 바꾸는 intervention 실험으로 Chronos-2와 TimesFM-2.5를 분석했다. 일정 간격으로 추세 방향이 뒤집히는 regime switch 데이터에서 Chronos-2는 dwell time이 50 이상이면 regime을 보존하지 못했다(TimesFM-2.5는 25 이상). AR 계수와 Hurst 지수 실험에서는 두 모델 모두 지속성(persistence)을 과대추정하는 경향을 보였다. 저자들은 학습 데이터가 추세·주기 패턴에 치우친 탓일 수 있다고 추측하지만 검증하지는 않았다."
+    tags: [nonstationarity]
+    source: cited
+    by: "Causal Analysis for Time Series Foundation Models (2026)"
+    by_link: https://arxiv.org/abs/2608.24303
+  # review: arXiv 기술 보고서로, 확인한 범위에서 OpenReview 심사 기록을 찾지 못해 미기재.
+  - text: "[analyst] 보고된 벤치마크 결과는 ICL을 켠 상태다. fev-bench 설정표에는 Chronos-2를 cross learning을 켜고 batch size 100으로 돌렸다고 적혀 있다. Chronos-2 논문의 full cross learning 설명대로라면 같은 batch에 들어간 series가 모두 하나의 group으로 묶인다. 따라서 예측이 어떤 series와 같은 batch에 들어갔는지에 달라질 수 있는데, 논문은 무관한 series나 순수 noise covariate를 같은 group에 넣었을 때의 영향을 한 번도 시험하지 않았다. 학습 쪽도 마찬가지다. synthetic covariate task는 의존성이 입혀진 변수 중 일부를 known covariate로 지정하는 방식이라, 논문 설명만 보면 target과 무관한 변수를 일부러 섞는 경우가 prior에 없다. 무관한 context를 무시하는 법을 배울 학습 신호가 없었을 가능성이 있다."
+    tags: [robustness, covariates, prior-mismatch]
+    source: analyst
+  - text: "[analyst] 평가의 독립성이 약하다. 헤드라인 결과인 fev-bench는 저자 8명 중 7명이 Chronos-2 저자와 겹치는 논문에서 나왔고, Chronos Benchmark II는 Chronos 논문의 벤치마크다. 외부 벤치마크인 GIFT-Eval에서는 train 구간 일부가 겹치고, TimesFM-2.5와의 WQL skill 차이도 51.4% 대 51.0%로 작다. 게다가 GIFT-Eval에서는 group attention 유무로 성능이 거의 변하지 않았다는 후속 보고가 있다. 그러므로 multivariate·covariate 능력의 우위는 사실상 fev-bench covariate subset 하나에 크게 기대고 있다."
+    tags: [eval-protocol]
+    source: analyst
+builds_on: [Chronos, Chronos-Bolt, T5, KernelSynth, TabPFN-TS]
+compared_against: [TiRex, TimesFM, Toto, Moirai-2.0, TabPFN-TS, COSMIC, Sundial, Chronos-Bolt, AutoARIMA, AutoETS, AutoTheta, Seasonal Naive, Naive]
+open_questions:
+  - "같은 group 안에 무관한 series나 noise covariate가 섞이면 target 예측이 얼마나 나빠지는가. group attention이 관련 있는 변수만 골라 쓰는지, 아니면 group 전체를 평균적으로 섞는지 아직 검증되지 않았다."
+  - "synthetic prior에 target과 무관한 변수를 일부러 넣어 학습하면 무관한 context에 대한 강건성이 생기는가. 그 대가로 관련 있는 covariate를 쓰는 능력이 줄지는 않는가."
+  - "group attention의 완전 연결 구조 대신 관측 그래프나 변수 간 관계를 mask로 주면 다변량 task에서 ICL 이득이 커지는가."
+  - "known covariate의 미래 값이 noise가 낀 예측값일 때 이를 얼마나 믿을지 모델이 스스로 조절하게 만들 수 있는가."
+  - "regime이 바뀐 뒤 8,192 길이 context 안의 오래된 history가 예측을 끌고 가는가. 지속성 과대추정 경향과 어떤 관계가 있는가."
+hooks:
+  - "(irrelevant/nuisance context, 핵심) Chronos-2는 같은 가중치로 단변량 모드(series마다 다른 group ID)와 ICL 모드(공유 group ID)를 모두 돌릴 수 있다. 그래서 nuisance stream의 해악을 'ICL(target + nuisance) 오차 - 단변량(target) 오차'로 모델 안에서 깨끗하게 잴 수 있다. 원 논문은 평균 이득만 보였고 무관한 series를 group에 넣는 실험은 없으므로 이 공백이 연구의 출발점이다. 동기는 외부 근거로 받칠 수 있다. Falcon-X는 GIFT-Eval에서 group attention이 거의 기여하지 않고 attention map이 입력과 상관없이 비슷하다고 보고했다. Berthelier 등은 covariate를 넣으면 오히려 나빠지는 경우를, Kaljevic 등은 noise 낀 covariate에서의 성능 하락을 보였다. SimpleTimeBench(ICML 2026 workshop)는 Chronos-2를 포함한 다변량 TSFM이 covariate 속 선행지표를 덜 쓴다고 보고했다. 이 연구들은 관련은 있지만 품질이 나쁜 covariate를 다룬다. 사용자 연구는 아예 무관한 stream을 다루고, 무시해야 할 때와 써야 할 때의 비대칭을 재는 것으로 차별화된다."
+  - "(메커니즘과 처방) 논문 설명상 synthetic covariate는 의존성이 입혀진 변수 중에서만 고르므로, prior에 '무시해야 할 변수'가 없을 가능성이 높다. 이것을 가설로 세우고 nuisance 변수를 섞은 synthetic task로 짧게 fine-tuning해서 강건성이 생기는지 보면 진단과 처방을 한 번에 보여줄 수 있다. ImbNodePFN에서 prior에 label skew를 주입하는 것과 같은 논리다. 더 싼 audit도 있다. fev-bench가 cross learning을 켜고 batch size 100으로 돌리므로, series를 batch 사이에 섞어 재배치했을 때 leaderboard 수치가 얼마나 흔들리는지 재면 batch 구성 민감도를 바로 보여줄 수 있다."
+  - "(graph 시계열 PFN) group attention은 group 안에서 같은 patch index끼리 완전 연결로 attention하고 순서 정보가 없다. 따라서 group mask를 관측 센서 그래프의 adjacency mask로 바꾸는 것이 가장 직접적인 구조 주입이며, GraphPFN의 adjacency-masked adapter와 같은 설계다. PEMS에서 완전 group, 그래프 mask, 단변량 모드 세 가지를 같은 가중치로 비교하면 그래프 구조의 순수 기여를 분리할 수 있다. Falcon-X가 보고한 것처럼 지금의 group attention이 실질 정보를 거의 못 쓴다면, 그 점이 구조 정보가 들어갈 여지가 된다."
+  - "(obsolete history) context가 8,192까지 늘었지만 shift 이전 history를 덜 반영하는 장치는 없다. Causal Analysis 논문이 보고한 regime 보존 실패(dwell time 50 이상)와 지속성 과대추정은 오래된 history가 예측을 끌고 간다는 가설과 맞닿아 있다. shift 이후 context를 잘라낸 경우와 전체 context를 쓴 경우의 차이로 obsolete history의 비용을 재는 실험의 대상으로 적합하다."
+notes: "arXiv v1(2025-10-17)만 존재하며 학회 게재는 확인하지 못해 misc로 두었다. 코드 링크는 논문 본문에 나온 GitHub 저장소다. 비교 대상 TimesFM은 TimesFM-2.5, Moirai는 Moirai-2.0 기준이다. 본 논문 결과는 ICL을 켠 상태이며(5.2절), fev-bench 설정(Shchur et al., fev-bench v2 Table 12)은 cross learning True, batch size 100이다. fev-bench 저자는 Shchur, Ansari, Turkmen, Stella, Erickson, Guerron, Bohlke-Schneider, Wang이다. 독립 보정 평가(Evaluating Accuracy and Probabilistic Reliability of Zero-Shot TSFMs, 2026)는 Chronos-2를 정확도와 구간 보정이 가장 균형 잡힌 모델로 평가했다. SimpleTimeBench(Foundations without Fundamentals: Zero-Shot Blind Spots in Time Series FMs, ICML 2026 FMSD workshop, https://openreview.net/forum?id=iIRdd86Xkr)는 초록만 확인했다. Chronos-2 fine-tuning이 특정 task는 개선하지만 다른 기본 패턴을 망가뜨린다는 내용이라 cited 한계에는 넣지 않고 hooks에서만 언급했다."
+added: 2026-10-30

@@ -62,31 +62,37 @@ limitations:
     tags: [pretraining-data, channel-dependency, uncertainty]
     source: cited
     by: "Unified Training of Universal Time Series Forecasting Transformers (Moirai, 2024)"
+    by_id: Moirai
     by_link: https://arxiv.org/abs/2402.02592
   - text: "GIFT-Eval에서 TimesFM은 medium·long horizon으로 갈수록 성능이 크게 떨어졌다. 저자들은 decoder-only 구조의 recursive multi-step 예측에서 오차가 누적되기 때문이라고 해석한다. 또한 TimesFM 사전학습 데이터가 GIFT-Eval test 데이터와 일부 겹친다고 표시했다."
     tags: [context-horizon, eval-protocol]
     source: cited
     by: "GIFT-Eval: A Benchmark For General Time Series Forecasting Model Evaluation (2024)"
+    by_id: GIFT-Eval
     by_link: https://arxiv.org/abs/2410.10393
   - text: "TimesFM이 frequency embedding으로 데이터를 frequency 단위로 구분하는 방식을 사람이 정한 heuristic이라고 비판한다. frequency가 실제 패턴을 잘 대변하지 못하고, non-stationary 시계열에는 frequency 단위 구분이 너무 거칠다는 것이 근거다. 평가에서도 TimesFM의 Monash와 Electricity 결과에 사전학습 데이터 중복 표시를 달았다."
     tags: [tokenization, nonstationarity, eval-protocol]
     source: cited
     by: "Moirai-MoE: Empowering Time Series Foundation Models with Sparse Mixture of Experts (2025)"
+    by_id: Moirai-MoE
     by_link: https://arxiv.org/abs/2410.10469
   - text: "TimesFM처럼 MSE나 quantile loss로 단봉(unimodal) 분포를 맞추는 모델은 도메인마다 크게 다른 예측 분포 앞에서 mode collapse와 지나치게 매끄러운 예측을 낳는다고 지적한다. 예측의 신뢰 수준을 알려주지 못해 의사결정용으로는 신뢰도가 떨어진다는 점도 함께 든다."
     tags: [uncertainty]
     source: cited
     by: "Sundial: A Family of Highly Capable Time Series Foundation Models (2025)"
+    by_id: Sundial
     by_link: https://arxiv.org/abs/2502.00816
   - text: "TimesFM을 univariate 전용 사전학습 모델로 분류하고, 다변량 의존성과 covariate를 무시하는 기존 TSFM의 대표 사례로 든다. 기능 비교표에서 TimesFM(2.5 기준)은 multivariate, past/known/categorical covariate, cross-learning을 모두 지원하지 않는다."
     tags: [channel-dependency, covariates]
     source: cited
     by: "Chronos-2: From Univariate to Universal Forecasting (2025)"
+    by_id: Chronos-2
     by_link: https://arxiv.org/abs/2510.15821
   - text: "기존 한 벤치마크가 TimesFM(및 UniTS, TTM)의 사전학습에 이미 쓰인 데이터셋 3개를 test로 써서, 해당 모델들이 누수 없는 최고 모델보다 MSE가 47~184% 낮게 나왔다고 추정한다. 누수 없는 데이터셋에서는 최고 TSFM의 우위가 0.3~14%에 그쳤다. Monash의 Australian Electricity Demand처럼 어떤 모델은 사전학습에, TimesFM은 zero-shot 평가에 쓰는 데이터셋은 모델 간 비교에 쓸 수 없다고도 지적한다."
     tags: [eval-protocol]
     source: cited
-    by: "Challenges and Requirements for Benchmarking Time Series Foundation Models (2025)"
+    by: "Rethinking Evaluation in the Era of Time Series Foundation Models: (Un)known Information Leakage Challenges (arXiv v3; v2 제목 Challenges and Requirements for Benchmarking TSFMs)"
+    by_id: TSFM-BenchReqs
     by_link: https://arxiv.org/abs/2510.13654
   - text: "[analyst] 실제 데이터의 time point 대부분이 Wiki pageview와 Google Trends라는 웹 관심도 시계열이다. 교통·전력 같은 물리 센서 시계열(Traffic, LibCity, Electricity)은 비중이 아주 작고 바로 그 데이터들이 흔한 벤치마크와 겹친다. 따라서 센서 네트워크 데이터에서의 zero-shot 성능이 일반화 능력인지 작은 중복 데이터의 기억인지 이 논문만으로는 구분하기 어렵다."
     tags: [pretraining-data, eval-protocol]

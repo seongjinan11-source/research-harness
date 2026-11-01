@@ -1,0 +1,77 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: LoGIC
+title: "LoGIC: Budgeted Context Construction for Node-Level Graph In-Context Learning with Tabular Foundation Models"
+authors: "Mingqi Yang, Zidong Guo, Jihui Yang, Wenming Zuo (South China University of Technology / Meta Superintelligence Lab)"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2609.05955
+citation:
+  type: misc
+  title: "LoGIC: Budgeted Context Construction for Node-Level Graph In-Context Learning with Tabular Foundation Models"
+  authors: ["Mingqi Yang", "Zidong Guo", "Jihui Yang", "Wenming Zuo"]
+  year: 2026
+  arxiv: "2609.05955"
+  url: https://arxiv.org/abs/2609.05955
+  verified_from:
+    - https://arxiv.org/abs/2609.05955
+    - https://arxiv.org/pdf/2609.05955
+    - https://arxiv.org/html/2609.05955
+areas: [graph-fm, pfn, tabular-fm]
+problem: "G2T-FM·GraphPFN처럼 tabular foundation model을 graph learner로 쓰는 방식은 labeled 노드 전체를 prompt에 넣는다. 이 기본값 때문에 attention 비용이 context 크기의 제곱으로 커지고, adapter backbone은 그래프 전체를 메모리에 올려야 한다. 이 논문은 가중치를 고정한 backbone과 정해진 예산 아래에서, 주어진 query 노드들에 대해 어떤 labeled 노드와 어떤 unlabeled 노드를 prompt에 넣어야 하는지를 묻는다."
+core_idea: "저자들은 context 구성을 두 가지 예산의 배분 문제로 정식화한다. 첫째는 예측 근거가 되는 labeled 노드 수 k이고, 둘째는 adapter의 message passing만 돕는 halo 노드 수 h이다. Halo는 query와 선택된 labeled 노드의 1-hop 이웃에서 뽑으며, feature와 edge는 남기고 label은 가린다. Labeled 노드는 세 가지 training-free retrieval channel 중 하나로 점수를 매겨 상위 k개를 고른다. Structural channel은 query 묶음에서 시작한 Personalized PageRank 질량을, feature channel은 backbone의 변환된 feature 공간에서의 kNN 거리를, coverage channel은 labeled pool에서의 uniform random sample을 쓴다. Query 노드는 reverse Cuthill-McKee 순서로 정렬한 뒤 크기 q의 묶음으로 나누고, 묶음마다 context 하나와 forward pass 하나를 공유한다. Channel과 k는 데이터셋마다 validation 성능으로 고르고, 점수가 비슷하면 train edge의 label assortativity로 tie-break한다. 이 과정은 backbone 가중치를 전혀 바꾸지 않는 추론 시점 인터페이스이며, G2T featurization을 쓴 TabPFNv2·LimiX와 adapter형 GraphPFN-1.3에 그대로 붙는다."
+key_assumptions:
+  - "Transductive 설정을 가정한다. Labeled 노드와 query 노드가 같은 그래프에 있고, 추론 시점에 이웃 구조를 볼 수 있어야 한다."
+  - "어떤 channel이 통할지는 그래프 성질에 달려 있다고 본다. 라벨이 edge를 따라 매끄러우면 PPR이, raw feature가 정보적이면 feature-kNN이, disassortative 구조라서 국소 retrieval이 해로우면 전역 coverage가 유리하다는 가정이다."
+  - "Validation에서의 설정 순위가 test 순위를 충분히 잘 예측한다고 가정한다. 저자들도 일부 데이터셋에서는 둘이 어긋날 수 있다고 인정한다."
+  - "현재 backbone에는 약 512 row의 최소 용량이 있어서, 그보다 작은 예산은 쓰지 않는다는 전제를 둔다."
+  - "Adapter backbone에는 1-hop 수용 영역을 보존하는 halo가 도움이 되며, 사전학습 그래프와 규모가 비슷한 subgraph가 오히려 더 유리한 입력일 수 있다고 본다."
+strengths:
+  - text: "예산을 정한 context만으로 full-context 정확도를 유지하면서 peak 메모리를 크게 줄인다. GraphPFN 기준 artnet-exp에서 full graph 추론은 51.86 AP에 19.59GB였는데, LoGIC은 52.06 AP에 8.24GB였다. TabPFNv2 기준 tolokers-2에서도 4.10GB가 2.20GB로 줄었고 AP는 오히려 조금 올랐다."
+    tags: [context-scale, inference-cost]
+  - text: "가중치를 고정한 graph ICL을 백만 노드 규모로 확장했다. 163만 노드, 183 class의 pokec-regions에서 76.8k개 query를 약 40분, peak 4.2GB로 예측해 36.3% 정확도를 냈다. 같은 크기의 random context는 8.6%에 그쳤다. 저자들은 그래프 전체를 올리려면 약 2TB가 필요하다고 추정한다."
+    tags: [graph-scale]
+  - text: "Backbone을 재학습하지 않는 추론 시점 인터페이스라서, pure-tabular backbone(G2T featurization + TabPFNv2·LimiX)과 adapter backbone(GraphPFN)에 같은 방식으로 붙는다. 정식화 자체가 full-context tabular 추론, per-query retrieval, full-graph 추론을 특수한 경우로 포함하므로 기존 protocol과의 관계도 분명하다."
+    tags: [adaptation, inference-cost]
+  - text: "Full context가 항상 최선은 아니라는 점을 보였다. TabPFNv2로 twitch-views에서 LoGIC은 73.25 R²로 published full-context 70.21보다 3점 높았고, LimiX에서도 74.15 대 71.31이었다. 어떤 labeled 노드를 넣느냐가 그 자체로 성능을 움직이는 설계 변수라는 뜻이다."
+    tags: [robustness, graph-structure-use]
+  - text: "Label 예산과 구조 예산을 분리한 halo 설계가 adapter backbone에서 효과를 보였다. tolokers-2에서 PPR context(k=4096)만 넣으면 54.20 AP였지만, label을 가린 1-hop halo를 더하자 61.09 AP로 올라 full-graph 기준치(61.29)에 거의 도달했다."
+    tags: [graph-structure-use, context-scale]
+limitations:
+  - text: "평가 범위가 tabular node attribute를 가진 그래프의 transductive node classification·regression에 한정된다. Inductive·streaming 그래프와 link-level·graph-level task는 다루지 않았다."
+    tags: [task-coverage]
+    source: self
+  - text: "예산은 backbone 한 번의 입력 크기를 묶을 뿐 전체 작업량을 묶지 않는다. Query 묶음 수에 비례해 runtime이 늘어나며, tolokers-2의 TabPFNv2 실행처럼 full context보다 느린 경우도 있었다(7.66초 대 6.84초)."
+    tags: [inference-cost]
+    source: self
+  - text: "Channel과 예산 k를 데이터셋마다 validation으로 골라야 하고, validation 순위와 test 순위가 어긋날 수 있다. Assortativity와 최적 channel의 관계도 경험적일 뿐 결정적이지 않다. 예를 들어 assortativity가 0에 가까운 artnet-exp에서도 PPR이 이겼고, 양의 assortativity를 가진 avazu-ctr에서는 feature-kNN이 이겼다. 그래프 간에 설정을 옮기는 규칙은 향후 과제로 남았다."
+    tags: [adaptation]
+    source: self
+  - text: "약 512 row 아래로 예산을 줄이면 모든 channel의 성능이 크게 떨어진다. 즉 예산을 무한정 줄일 수는 없고, 이 하한은 현재 backbone의 용량에서 온다."
+    tags: [context-scale]
+    source: self
+  - text: "튜닝된 per-dataset 모델을 대체하지는 못한다. hm-prices·twitch-views·avazu-ctr에서는 학습된 모델과의 격차가 컸다. 메모리가 충분하면 full-context LimiX(city-reviews 78.98 대 76.97 AP)나 full-graph GraphPFN이 여전히 앞서는 데이터셋도 있다."
+    tags: [zero-shot-gap]
+    source: self
+  - text: "Halo는 1-hop만 쓰고, 1-hop 이웃이 상한을 넘으면 uniform sampling으로 근사한다. Adapter가 여러 block에 걸쳐 만드는 다중 hop 수용 영역과 맞춘 halo 정책은 향후 과제로 남았다."
+    tags: [graph-structure-use]
+    source: self
+  - text: "[analyst] Context 선택이 가장 중요해질 multiclass 분류가 사실상 평가되지 않았다. 주 실험의 GraphLand 8개는 binary classification 3개와 regression 5개다. 유일한 multiclass인 pokec-regions(183 class)는 규모 시연이며, 어떤 backbone을 썼는지와 10개 class 제한을 어떻게 넘었는지가 본문에 없고 학습된 baseline도 없다. Coverage channel도 uniform sample이라서 라벨 분포를 기댓값으로만 보존하고 class coverage는 보장하지 않는다. 논문이 언급한 class별 stratified 변형은 보고된 결과에 쓰이지 않았고, PPR·feature-kNN에는 class 균형 장치가 없다. 따라서 query 묶음마다 context 라벨 분포가 달라질 수 있지만, 그 영향과 minority class 동작은 분석되지 않았다."
+    tags: [label-imbalance, label-space, eval-protocol]
+    source: analyst
+  - text: "[analyst] Full context 대비 이득은 대부분 0.3점 이내이고, 가장 큰 이득은 twitch-views에서 나왔다. 그런데 k=4096 channel 비교에서 twitch-views의 최선 channel은 PPR이나 feature-kNN이 아니라 uniform random인 coverage였다(72.00 대 PPR 70.20, feature-kNN 68.95). 그래서 정교한 retrieval의 효과와 backbone이 너무 긴 context에서 나빠지는 효과가 분리되지 않는다. TAG식 random subsampling이나 LoCalPFN식 per-query kNN retrieval과 같은 예산에서 정면 비교한 실험도 없다."
+    tags: [eval-protocol, robustness]
+    source: analyst
+builds_on: [GraphPFN, G2T-FM, TabPFNv2, LimiX, LoCalPFN]
+compared_against: [GraphPFN, G2T-FM, LightGBM-NFA, GCN, GraphSAGE, GAT, GraphTransformer]
+open_questions:
+  - "Full context보다 작은 context가 더 나은 이유가 retrieval이 관련 노드를 잘 골라서인지, 아니면 사전학습 때 본 context 규모와 더 비슷해서인지 분해되지 않았다. 사전학습 단계부터 budgeted subgraph episode로 학습하면 이 간극이 사라지는가?"
+  - "라벨 분포가 치우치거나 class가 많을 때, 같은 예산 k 안에서 class-balanced와 instance-balanced 중 어떤 배분이 나은가? 이 선택은 backbone이 사전학습에서 익힌 label prior와 어떻게 상호작용하는가?"
+  - "Channel 선택을 validation 없이 그래프 통계만으로, 또는 여러 retrieval 신호를 학습된 mixture로 할 수 있는가? 저자들이 향후 과제로 든 transfer rule과 query 묶음별 적응 예산은 아직 열려 있다."
+  - "Adapter 깊이에 맞춘 multi-hop halo나 fine-tuning과 결합했을 때도 budgeted context의 이점이 유지되는가?"
+hooks:
+  - "(불균형 context, ImbNodePFN) LoGIC은 추론 시점 context 구성을 labeled 예산과 halo 예산이라는 명시적 설계 변수로 만든다. 이 틀에서 사용자의 class-balanced vs instance-balanced 질문은 'labeled 예산을 class 축으로 어떻게 나누는가'로 정확히 옮겨진다. 주의할 점이 하나 있다. LoGIC의 uniform coverage와 class별 proportional stratified 변형은 둘 다 원래 skew를 그대로 보존하므로, 사실상 instance-balanced에 해당한다. Class-balanced 배분은 LoGIC에 없다. 그래서 같은 k에서 uniform, proportional stratified, class-balanced, PPR을 나란히 놓으면 LoGIC의 빈칸을 채우는 실험이 된다. Halo 메커니즘은 특히 쓸모가 크다. Class-balanced로 majority labeled 노드를 context에서 빼더라도 그 노드들을 label을 가린 halo로 남기면 그래프 구조는 잃지 않는다. 이렇게 하면 '라벨 분포 변화'와 '구조 손실'이라는 두 효과가 분리된다. 또 리뷰어가 'prior에 skew를 넣지 말고 추론 때 context만 재균형하면 되지 않느냐'고 물을 수 있다. 따라서 LoGIC식 class-balanced context를 ImbNodePFN의 필수 baseline으로 넣는 것을 추천한다. LoGIC이 multiclass 평가를 거의 하지 않았다는 점은 차별점으로 쓸 수 있다."
+  - "(이질 feature 공간, per-graph codebook) LoGIC은 context table의 row(노드) 수를 줄이고, per-graph codebook은 column(feature) 표현을 바꾼다. 두 축은 직교하므로 경쟁이 아니라 결합 대상이다. LoGIC도 avazu-ctr에서는 G2T-FM protocol을 따라 PCA-64로 feature를 줄였으므로, feature 차원 병목은 여전히 남아 있다."
+  - "(MVTSFM irrelevant context, 그래프 시계열 PFN) twitch-views에서 일부 context를 빼자 오히려 성능이 3점 오른 결과는, tabular·graph PFN도 무관한 context를 무시하지 못한다는 증거로 읽힌다. 이는 사용자의 MVTSFM irrelevant/nuisance context 논문의 주장과 같은 현상을 다른 분야에서 보여 주므로 related work에서 인용할 근거가 된다. 그래프 시계열 PFN에서 센서 수가 많을 때(PEMS 수백 개)는 sensor graph 위 PPR로 관련 변수만 context로 고르고, 나머지 이웃은 값을 가린 halo로 두는 설계로 옮겨 볼 수 있다."
+notes: "arXiv 원고에 'submitted to the IEEE for possible publication' 문구만 있고 게재처는 확인되지 않았다. 교신저자는 Wenming Zuo다. 코드 링크는 원고에 없다. citation.year는 arXiv 식별자(2609)에서 읽었다. 실험의 adapter backbone은 GraphPFN-1.3이다."
+added: 2026-10-30

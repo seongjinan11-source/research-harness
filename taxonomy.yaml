@@ -35,6 +35,12 @@ tags:
   context-horizon: 입력 context 길이·예측 horizon 제약
   nonstationarity: 분포 변화, regime shift, 오래된 history 처리
   tokenization: patching·tokenization·입력 표현 설계
+  # --- 추론 / 학습 설계 ---
+  auxiliary-loss: 보조 loss·component 감독(posterior, conditional 등)이 최종 예측 개선으로 이어지는지
+  amortized-inference: 학습된 posterior·evidence head(amortization)와 exact·명시적 추론의 관계
+  distribution-shift: 학습 분포 밖 조건(밀도·signal 외삽, 새 그래프 bank 등)으로의 일반화
+  observation-mask: 관측 안 된 값과 관측된 0(nonedge 등)의 구분, 결측·관측 과정 처리
+  model-based-baseline: 알려진 family·prior를 쓰는 명시적 추론 기준선(grid posterior 등)과의 비교
   # --- 일반 ---
   task-coverage: 지원 태스크 범위 (예측만, 분류만 등)
   zero-shot-gap: zero-shot 성능, fine-tuning·probe 의존도

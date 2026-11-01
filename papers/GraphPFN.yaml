@@ -68,21 +68,25 @@ limitations:
     tags: [inference-cost, graph-scale]
     source: cited
     by: "A Fair Evaluation of Graph Foundation Models for Node Property Prediction (2026)"
+    by_id: GFM-FairEval
     by_link: https://arxiv.org/abs/2606.24509
   - text: "GraphPFN의 adapter 방식은 graph attention이 message passing을 하도록 전체 그래프를 가속기 메모리에 올려 두고, 학습 table 전체를 context로 쓴다고 지적한다. 그래서 peak 메모리가 노드 수뿐 아니라 그래프 크기와 feature 수에 따라 커진다. 이 논문은 GraphPFN checkpoint를 그대로 둔 채 예산을 정한 subgraph context만 구성해도 정확도가 비슷하거나 조금 높게 나온다고 보고한다. 예를 들어 artnet-exp에서 peak 메모리가 약 19.6GB에서 8.2GB로 줄었다."
     tags: [context-scale, graph-scale, inference-cost]
     source: cited
     by: "LoGIC: Budgeted Context Construction for Node-Level Graph In-Context Learning with Tabular Foundation Models (2026)"
+    by_id: LoGIC
     by_link: https://arxiv.org/abs/2609.05955
   - text: "대규모 node classification benchmark에서 GraphPFN은 가장 강한 GFM이었지만, 데이터셋 조건별로 보면 강한 homophily, 고차원 feature, 심하게 불균형한 target에서 튜닝된 GNN(GCNII, GPRGNN)에 뒤졌다. 10개 초과 class task도 불리했다. 라벨을 50%까지 늘려도 고차원 feature·불균형 target·다중 class 약점은 남았다. 저자들은 사전학습 표현을 새 그래프에 적응시키는 능력의 한계로 해석한다."
     tags: [label-imbalance, feature-heterogeneity, label-space, graph-structure-use]
     source: cited
     by: "NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)"
+    by_id: NodeGround
     by_link: https://arxiv.org/abs/2609.39673
   - text: "GraphPFN 같은 message passing 기반 foundation model은 구조적 수용 범위가 network 깊이에 고정되어 추론 시 조절할 수 없고, 표현력도 표준 message passing 범위에 묶인다고 지적한다. 실제로 node feature가 없는 구조 위주 task에서 GraphPFN은 크게 실패했다(Grids 23.3% vs random-walk 기반 Wander 96.6%)."
     tags: [graph-structure-use]
     source: cited
     by: "To Learn is to Wander: Learning Across Graphs and Tasks with Random Walks (2026)"
+    by_id: Wander
     by_link: https://arxiv.org/abs/2610.06694
   - text: "[analyst] ICL만 놓고 보면 G2T-LimiX 대비 우위가 크지 않다. GraphLand 전체 평균 rank는 3.50 대 3.88이고, tolokers-2·avazu-ctr·city-roads-M에서는 G2T-LimiX가 앞선다. 헤드라인의 큰 격차는 대부분 finetuning에서 나온다. 또 twitch-views처럼 random feature 추가 여부로 성능이 크게 바뀌는 데이터셋이 있어, 일부 이득은 추론 시 trick에도 기대고 있다."
     tags: [zero-shot-gap, eval-protocol]

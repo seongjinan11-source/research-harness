@@ -1,0 +1,87 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: TSB-AD
+title: "The Elephant in the Room: Towards A Reliable Time-Series Anomaly Detection Benchmark"
+authors: "Qinghua Liu, John Paparrizos"
+venue: "NeurIPS 2024 Datasets and Benchmarks"
+year: 2024
+links:
+  paper: https://proceedings.neurips.cc/paper_files/paper/2024/file/c3f3c690b7a99fba16d0efd35cb83b2c-Paper-Datasets_and_Benchmarks_Track.pdf
+  code: https://github.com/TheDatumOrg/TSB-AD
+
+citation:
+  type: inproceedings
+  title: "The Elephant in the Room: Towards A Reliable Time-Series Anomaly Detection Benchmark"
+  authors: ["Qinghua Liu", "John Paparrizos"]
+  year: 2024
+  booktitle: "Advances in Neural Information Processing Systems"
+  volume: 37
+  pages: "108231--108261"
+  url: https://proceedings.neurips.cc/paper_files/paper/2024/hash/c3f3c690b7a99fba16d0efd35cb83b2c-Abstract-Datasets_and_Benchmarks_Track.html
+  verified_from:
+    - https://proceedings.neurips.cc/paper_files/paper/2024/hash/c3f3c690b7a99fba16d0efd35cb83b2c-Abstract-Datasets_and_Benchmarks_Track.html
+    - https://proceedings.neurips.cc/paper_files/paper/2024/file/c3f3c690b7a99fba16d0efd35cb83b2c-Paper-Datasets_and_Benchmarks_Track.pdf
+    - https://neurips.cc/virtual/2024/poster/97690
+  # arXiv 판은 찾지 못했다. publisher는 페이지에서 확인되지 않아 뺐다.
+
+areas: [benchmark, mvts, tsfm]
+problem: "시계열 이상탐지(TSAD) 분야는 라벨이 잘못된 데이터셋, 편향된 평가 지표, 논문마다 다른 실험 설정 때문에 어떤 방법이 실제로 나은지 믿을 만하게 비교하지 못하고 있다. 이 세 가지를 한꺼번에 바로잡은 benchmark를 만드는 것이 목표다."
+core_idea: "첫째, 데이터셋을 정제한다. 공개 데이터셋 46개(단변량 13개, 다변량 20개, 다변량 channel에서 뽑은 단변량 13개)를 모은 뒤, 잘못된 라벨이나 run-to-failure 편향 같은 흔한 결함을 수작업으로 걸러낸다. 이어서 detector 출력과 사람의 판단을 함께 써서 라벨을 good, biased, hard, context 부족으로 나누고, 단계마다 네 명의 annotator 합의를 거친다. 그 결과 40개 데이터셋의 시계열 1,070개(단변량 TSB-AD-U 870개, 다변량 TSB-AD-M 200개)가 남는다. 둘째, 평가 지표 10개를 lag 민감도와 무작위 점수에 대한 편향 기준으로 비교해서 VUS-PR을 표준으로 권고한다. 셋째, 통계 기법 25개, neural network 10개, foundation model 5개로 이루어진 40개 알고리즘을 같은 조건에서 돌린다. 데이터셋마다 15%를 hyperparameter tuning용으로 떼어 450개 넘는 variant를 탐색하고, 알고리즘별로 가장 좋은 설정 하나를 골라 나머지 데이터에서 평가한다. 순위 차이는 Friedman·Nemenyi 검정의 critical difference diagram으로 확인한다."
+key_assumptions:
+  - "네 명의 annotator 합의와 detector 기반 점검을 거친 라벨이 정답에 충분히 가깝다고 본다."
+  - "라벨 품질을 판정할 때 기존 detector가 오탐·미탐 없이 이상을 잡아내는지를 근거로 쓴다. 기존 detector가 찾을 수 있는 이상이 믿을 만한 라벨이라는 전제가 깔려 있다."
+  - "VUS-PR의 tolerance buffer와 연속 라벨이 이상 구간 경계의 모호함과 예측 lag를 공정하게 흡수한다고 본다."
+  - "tuning split에서 고른 hyperparameter 설정 하나가 그 알고리즘의 대표 성능이라고 본다."
+  - "foundation model은 sliding context에서 낸 예측과 실제 값의 MSE를 anomaly score로 쓰는 방식으로 평가해도 그 잠재력을 대표한다고 본다."
+strengths:
+  - text: "데이터셋 결함을 체계적으로 걸러냈다. 비슷한 패턴에 라벨이 엇갈린 경우, 이상이 하나뿐이거나 끝부분에만 몰린 경우, classification 데이터를 이상탐지용으로 바꾼 경우, 비현실적인 이상 비율 같은 알려진 문제를 제거했다. 남은 1,070개는 당시 최대 규모였던 이전 collection의 거의 두 배이고, 코드와 데이터를 모두 공개했다."
+    tags: [eval-protocol]
+  - text: "평가 지표 10개를 같은 조건에서 비교해 어떤 지표가 왜 믿기 어려운지 보였다. point adjustment를 쓴 F1에서는 무작위 점수가 비교 방법들 사이에서 26위에 올랐다. VUS-PR은 예측과 라벨 사이 lag에 가장 덜 민감하고 무작위 점수를 우대하지도 않아서 표준 지표로 권고되었다."
+    tags: [eval-protocol]
+  - text: "hyperparameter tuning을 합성 데이터셋 하나가 아니라 모든 데이터셋에서 떼어낸 15% tuning split으로 했다. 40개 알고리즘과 450개 넘는 variant를 같은 전처리와 같은 지표로 비교했기 때문에, 방법마다 다른 데이터셋을 골라 쓰던 기존 비교보다 결과를 믿을 수 있다."
+    tags: [eval-protocol]
+  - text: "neural network가 당연히 낫다는 통념을 데이터로 반박했다. 단변량에서는 Sub-PCA, KShapeAD, POLY, Series2Graph가 1~4위였고 상위 12개 중 절반 넘게 통계 기법이었다. neural network 안에서도 단순한 CNN과 LSTM이 복잡한 transformer 구조보다 나았다. 반면 다변량에서는 PCA 다음으로 CNN과 OmniAnomaly가 2·3위에 올라, 변수 간 관계를 학습하는 neural 방법이 다변량에서 더 경쟁력 있음을 보였다."
+    tags: [channel-dependency]
+  - text: "foundation model을 이상 유형별로 나눠서 평가했다. point anomaly에서는 TimesFM과 Chronos가 1위와 3위였지만, sequence anomaly에서는 짧은 look-back window로 한 step씩 예측하는 구조 때문에 고전했다. fine-tuning한 MOMENT는 zero-shot MOMENT보다 나았고 단변량 5위에 올랐다. LLM 기반 OFA는 성능이 좋지 않았다."
+    tags: [zero-shot-gap, context-horizon, task-coverage]
+limitations:
+  - text: "저자들은 어떤 benchmark도 완벽하지 않다고 인정했다. 수작업 검수가 소수의 숙련된 시계열 사용자에게 의존했다는 점을 한계로 들고, 앞으로도 dataset 정제 방식을 계속 다듬겠다고 밝혔다."
+    tags: [eval-protocol]
+    source: self
+  - text: "foundation model은 사전학습 corpus가 커서 TSAD 데이터셋이 섞여 들어갈 수 있고, 이 데이터 오염이 가장 큰 우려라고 저자들이 직접 밝혔다. 실제로 MOMENT의 사전학습 데이터에는 anomaly detection 데이터셋이 포함되어 있다. 따라서 foundation model의 순위는 이 단서를 달고 읽어야 한다."
+    tags: [eval-protocol, pretraining-data]
+    source: self
+  - text: "TSB-AD-U 평가 시계열 중 50개에서 라벨 문제를 찾았다. 47개는 이상 라벨이 정상 구간과 임의로 겹쳤고, UCR 시계열 3개는 라벨이 한 칸씩 어긋나 있었다. 또 VUS-PR은 점수의 순위만 보기 때문에, 한 번의 spike를 빼면 일정한 시계열에서 10^-5 수준의 미세한 흔들림만으로 점수가 0.05에서 0.51로 뛰는 사례를 보였다. 문제 시계열을 빼면 forecasting 기반 TSFM과 단순 baseline 사이의 격차도 줄었다."
+    tags: [eval-protocol]
+    source: cited
+    by: "When Foundation Models are One-Liners: Limitations and Future Directions for Time Series Anomaly Detection (ICLR 2026)"
+    by_id: TSAD-OneLiners
+    by_link: https://openreview.net/forum?id=H27kvyG4qf
+  - text: "후속 benchmark의 비교표에서 TSB-AD는 zero-shot과 few-shot 평가 protocol이 없는 benchmark로 분류되었다. foundation model을 평가 대상에 넣은 점은 인정했지만, 학습 데이터가 없거나 적은 조건에서 방법들을 체계적으로 비교하는 축은 없다는 지적이다. TSB-AD 안에 zero-shot MOMENT 결과는 있지만 protocol 차원의 비교 축은 아니다."
+    tags: [eval-protocol, zero-shot-gap]
+    source: cited
+    by: "TAB: Unified Benchmarking of Time Series Anomaly Detection Methods (PVLDB 2025)"
+    by_link: https://arxiv.org/abs/2506.18046
+  - text: "TSB-AD가 권고한 VUS-PR을 무작위 점수와 best-of-N seed 선택으로 공격해 봤다. UCR, SMD, SMAP, MSL에서는 대체로 버텼지만, NAB에서는 시도 횟수를 늘리면 부풀려지는 시계열 비율이 25%에 이르렀다. 한 benchmark에서 안전한 지표가 다른 benchmark에서도 안전하다는 보장은 없다는 결론이다. TSB-AD의 지표 분석은 독립적이거나 adversarial한 감사가 아니었다고 분류했다."
+    tags: [eval-protocol, robustness]
+    source: cited
+    by: "Did We Actually Fix It? An Independent Adversarial Stress-Test of Post-Point-Adjustment Evaluation Metrics for Time-Series Anomaly Detection (2026)"
+    by_link: https://arxiv.org/pdf/2607.11969
+  # review: NeurIPS 2024 D&B 트랙은 OpenReview를 쓰지만, OpenReview가 이 환경에서 브라우저 인증 화면만 돌려줘서 리뷰 본문을 확인하지 못했다. 미기재.
+  - text: "[analyst] 데이터 정제 과정에 기존 detector가 깊이 관여한다. 다변량 데이터에서 단변량 channel을 고를 때 여러 detector의 점수가 높은 상위 40%만 남겼고, 라벨 품질 점검에서도 적어도 하나의 detector가 이상을 잡아내는지를 좋은 라벨의 근거로 썼다. 그래서 기존 방법이 탐지할 수 있는 형태의 이상이 과대표집되었을 수 있다. 단순한 통계 기법이 강하다는 결론의 일부가 이 선택 효과일 가능성을 배제하기 어렵다. 기존 detector가 놓치는 유형의 이상을 잡는 새 방법은 이 benchmark에서 제대로 보상받지 못할 수 있다."
+    tags: [eval-protocol]
+    source: analyst
+  - text: "[analyst] foundation model을 다변량 시계열에 어떻게 적용했는지 본문에 설명이 없다. TSB-AD-M 상위 12개에 foundation model이 하나도 없지만, channel별로 따로 돌렸는지조차 알 수 없어서 다변량에서 foundation model이 약하다는 해석까지는 내릴 수 없다. 다변량 subset도 200개로 단변량 870개보다 훨씬 작아서, 다변량 순위는 단변량 순위보다 흔들리기 쉽다."
+    tags: [channel-dependency, eval-protocol]
+    source: analyst
+builds_on: [VUS]
+compared_against: [MOMENT, TimesFM, Chronos, Lag-Llama, OFA, Sub-PCA, KShapeAD, POLY, Series2Graph, PCA, CNN, LSTMAD, OmniAnomaly, USAD, AnomalyTransformer, TranAD, TimesNet, TSB-UAD]
+open_questions:
+  - "기존 detector에 기대지 않고 라벨 품질을 검증할 방법은 무엇인가. detector가 놓치는 이상까지 공정하게 평가하려면 정제 절차가 어떻게 바뀌어야 하는가."
+  - "VUS-PR이 점수 순위만 보기 때문에 생기는 문제를 어떻게 막을 것인가. 점수의 크기나 정상 구간과의 margin까지 반영하는 지표가 필요한가."
+  - "foundation model을 다변량 이상탐지에서 공정하게 평가하려면 channel 처리 방식과 사전학습 데이터 중복을 어떻게 통제해야 하는가."
+  - "통계 기법이 강하다는 결론이 데이터셋 구성(point anomaly 비중, 시계열 길이) 때문인지, 방법 자체의 우위 때문인지 분리할 수 있는가."
+hooks:
+  - "MVTS 이상탐지 방향에서 TSB-AD-M과 VUS-PR은 사실상 표준 평가 세트다. 다변량 1위가 PCA라는 점이 중요하다. 새 방법이 변수 간 구조를 쓴다고 주장하려면 PCA와 CNN을 반드시 넘어야 하고, critical difference diagram으로 차이가 유의한지까지 보여야 한다."
+  - "TSB-AD의 라벨 분류(good, biased, hard, context 부족)는 alarm triage의 판정 구조와 닮았다. 특히 context 부족은 '이 경보가 이상인지 확인할 근거가 입력 window 안에 없다'는 범주다. agentic falsification 방식의 triage에서 '반증 불가, 근거 부족' 판정의 기준 사례로 이 범주의 시계열을 쓸 수 있다."
+  - "TSB-AD-U의 일부는 다변량 데이터에서 정보가 많은 channel을 골라 만든 것이다. 원래 다변량 데이터로 돌아가면 '대상 channel 하나 + 나머지 channel'이라는 설정을 바로 만들 수 있다. 단변량 detector와 전 channel을 넣은 다변량 detector를 같은 이상 라벨로 비교하면, irrelevant stream이 이상탐지 성능을 떨어뜨리는지 재는 nuisance-context 실험이 된다."
+added: 2026-10-30

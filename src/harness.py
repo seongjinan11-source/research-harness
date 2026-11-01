@@ -25,6 +25,7 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 PAPERS_DIR = ROOT / "papers"
 IDEAS_DIR = ROOT / "ideas"
+FINDINGS_DIR = ROOT / "findings"
 OUT_DIR = ROOT / "out"
 TAXONOMY = ROOT / "taxonomy.yaml"
 VIS_JS = ROOT / "src" / "vendor" / "vis-network.min.js"
@@ -32,6 +33,7 @@ VIS_JS = ROOT / "src" / "vendor" / "vis-network.min.js"
 # 한계의 출처별 신뢰 가중치: 외부에서 확인된 한계일수록 접목 근거로 강하다.
 SOURCE_WEIGHT = {"cited": 1.0, "review": 0.8, "self": 0.6, "analyst": 0.4}
 SOURCE_KO = {"cited": "후속 논문 지적", "review": "리뷰 지적", "self": "저자 인정", "analyst": "조사자 판단"}
+KIND_KO = {"failure": "실패·중단", "preserved": "보존한 결과", "lesson": "교훈", "untested": "미실행 (실패 아님)"}
 
 
 # ---------------------------------------------------------------- loading
@@ -51,6 +53,19 @@ def load_dir(d: Path):
         data["_file"] = p.name
         items.append(data)
     return items
+
+
+def load_findings():
+    """findings/*.yaml: 내 연구의 실패·보존·교훈·미실행 기록. 항목마다 project 정보를 붙여 평탄화."""
+    out = []
+    for f in load_dir(FINDINGS_DIR):
+        for e in f.get("entries") or []:
+            e = dict(e)
+            e["project"] = f.get("project", f["_file"])
+            e["project_scope"] = f.get("closed_scope", "")
+            e["_file"] = f["_file"]
+            out.append(e)
+    return out
 
 
 def as_list(x):
@@ -157,8 +172,26 @@ def critique_links(papers):
     return out
 
 
+def backlog(papers):
+    """한계를 지적했지만 아직 하네스에 없는 후속 논문 목록 (다음에 추가할 후보)."""
+    tidx, ids = title_index(papers), {p["id"] for p in papers}
+    items = {}
+    for p in papers:
+        for lim in as_list(p.get("limitations")):
+            if lim.get("source") != "cited":
+                continue
+            bid = resolve_by_id(lim, tidx)
+            if bid in ids:
+                continue
+            title = re.sub(r"\s*\([^)]*\)\s*$", "", str(lim.get("by", ""))).strip()
+            k = norm_title(title)
+            it = items.setdefault(k, {"title": lim.get("by", ""), "link": lim.get("by_link", ""), "targets": set()})
+            it["targets"].add(p["id"])
+    return sorted(items.values(), key=lambda x: (-len(x["targets"]), x["title"]))
+
+
 # ---------------------------------------------------------------- validate
-def validate(papers, ideas, areas, tags):
+def validate(papers, ideas, areas, tags, findings=()):
     warns, ids = [], set()
     for p in papers:
         pid = p.get("id")
@@ -221,6 +254,16 @@ def validate(papers, ideas, areas, tags):
         for t in as_list(i.get("tags")):
             if t not in tags:
                 warns.append(f"idea {i.get('id')}: 미등록 tag '{t}'")
+    fids = set()
+    for e in findings:
+        if e.get("id") in fids:
+            warns.append(f"finding 중복 id: {e.get('id')}")
+        fids.add(e.get("id"))
+        if e.get("kind") not in KIND_KO:
+            warns.append(f"finding {e.get('id')}: kind '{e.get('kind')}' 잘못됨")
+        for t in as_list(e.get("tags")):
+            if t not in tags:
+                warns.append(f"finding {e.get('id')}: 미등록 tag '{t}'")
     return warns
 
 
@@ -298,7 +341,7 @@ def tag_table(papers, tags):
     return rows
 
 
-def check_idea(papers, tags_q, keywords, text=""):
+def check_idea(papers, tags_q, keywords, text="", findings=()):
     tags_q, kws = set(tags_q), [k.lower() for k in keywords if k]
     prior, motive, kw_hits = [], [], []
     for p in papers:
@@ -322,13 +365,20 @@ def check_idea(papers, tags_q, keywords, text=""):
         L.append(f"> {text}\n")
     L.append(f"태그: {', '.join(sorted(tags_q)) or '-'} / 키워드: {', '.join(keywords) or '-'}\n")
 
+    is_eval = lambda p: bool({"benchmark", "survey"} & set(as_list(p.get("areas"))))
+    methods = [x for x in prior if not is_eval(x[0])]
+    evals = [x for x in prior if is_eval(x[0])]
     L.append("## 1. 차별점을 정리해야 할 선행연구")
-    L.append("같은 축을 이미 강점으로 내세운 논문이에요. 기각 사유가 아니라, 무엇이 다른지 한 줄로 써둘 대상입니다.\n")
-    if prior:
-        for p, c, ov in prior:
+    L.append("같은 축을 이미 강점으로 내세운 방법 논문이에요. 기각 사유가 아니라, 무엇이 다른지 한 줄로 써둘 대상입니다.\n")
+    if methods:
+        for p, c, ov in methods:
             L.append(f"- **{p['id']}** [{', '.join(sorted(ov))}] {c['text']}")
     else:
         L.append("- 하네스 안에는 아직 없음. 외부 검색으로 한 번 더 확인할 것.")
+    if evals:
+        L.append("\n평가·분석 연구 중 이 축을 다룬 것 (실험 설계·평가 protocol 참고용):")
+        for p, c, ov in evals:
+            L.append(f"- **{p['id']}** [{', '.join(sorted(ov))}] {c['text']}")
     L.append("")
 
     L.append("## 2. 동기로 인용할 수 있는 한계")
@@ -349,11 +399,46 @@ def check_idea(papers, tags_q, keywords, text=""):
     else:
         L.append("- 없음")
     L.append("")
+
+    # 4. 내 연구 기록
+    hits = defaultdict(list)
+    for e in findings:
+        ov = tags_q & set(as_list(e.get("tags")))
+        blob = " ".join(str(e.get(k, "")) for k in ("claim", "observation", "closed_scope", "not_closed", "do_not_claim"))
+        blob += " " + " ".join(as_list(e.get("keywords")))
+        kh = [k for k in kws if k in blob.lower()]
+        if ov or kh:
+            hits[e.get("kind")].append((e, sorted(ov), kh))
+    L.append("## 4. 내 연구에서 이미 확인한 것")
+    if not hits:
+        L.append("- 걸리는 기록 없음")
+    head = {"failure": "### 이미 닫은 갈래 — 같은 가설을 이름만 바꿔 반복하는 건 아닌지 확인",
+            "lesson": "### 반복된 교훈",
+            "preserved": "### 보존한 결과 — 재사용할 수 있는 자산",
+            "untested": "### 아직 안 한 것 — 실패로 세지 않음"}
+    for kind in ("failure", "lesson", "preserved", "untested"):
+        if not hits.get(kind):
+            continue
+        L.append(head[kind])
+        for e, ov, kh in hits[kind]:
+            why = ", ".join(ov + kh)
+            L.append(f"- **{e['id']}** ({e['project']}) [{why}] {e.get('claim', '')}")
+            if kind == "failure":
+                L.append(f"  - 판정: {e.get('verdict', '')}. {e.get('observation', '')}")
+                if e.get("closed_scope"):
+                    L.append(f"  - 닫은 범위: {e['closed_scope']}")
+                if e.get("not_closed"):
+                    L.append(f"  - 닫지 않은 것: {e['not_closed']}")
+            elif kind == "preserved" and e.get("do_not_claim"):
+                L.append(f"  - {e.get('observation', '')} (확대 금지: {e['do_not_claim']})")
+            elif e.get("observation"):
+                L.append(f"  - {e['observation']}")
+        L.append("")
     return "\n".join(L)
 
 
 # ---------------------------------------------------------------- excel
-def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path):
+def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path, findings=()):
     keys = bib_keys(papers)
     crit = critique_links(papers)
     critiqued_by, critiques = defaultdict(list), defaultdict(list)
@@ -410,6 +495,8 @@ def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path):
         ["Claims", "장점·한계 한 줄씩. 한계는 출처(저자 인정 / 후속 논문 지적 / 리뷰 지적 / 조사자 판단)를 구분해요."],
         ["Candidates", "A의 한계 하나와 B의 강점이 같은 태그로 걸린 건. 'A의 약점을 B의 장치로 메운다'는 접목 후보예요. 점수 = 한계 출처 신뢰도 × 태그 희소성 (+분야 교차 0.3). 후보 제안용이고, 실제로 메워지는지는 직접 판단."],
         ["Gaps", "태그별로 '한계로 지적한 논문'과 '해결했다는 논문'을 모은 표. '빈칸'은 아무도 해결 못 한 축이라 아이디어 후보지예요."],
+        ["My Findings", "내 연구의 실패·중단·보존·교훈 기록 (findings/*.yaml). check가 이 기록과도 대조해요. '닫지 않은 것'까지 같이 읽어야 실패를 과하게 일반화하지 않아요."],
+        ["Backlog", "한계를 지적했지만 아직 하네스에 항목이 없는 후속 논문. 다음에 추가할 후보예요."],
         ["Ideas", "check --save 로 저장한 아이디어 기록."],
         ["Citations", "논문별 인용 정보와 BibTeX. 모든 필드는 '확인한 페이지'에서 직접 읽은 값이에요. 전체 BibTeX는 out/refs.bib."],
         ["Tags", "태그 정의. 새 태그는 taxonomy.yaml에 먼저 추가."],
@@ -466,6 +553,18 @@ def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path):
     sheet("Gaps", ["tag", "설명", "상태", "한계로 지적한 논문", "해결했다는 논문"],
           [22, 60, 20, 36, 36], rows, fills=[gap_fill if r["status"].startswith("빈칸") else None for r in tagrows])
 
+    kfill = {"failure": PatternFill("solid", fgColor="FDECEA"), "preserved": PatternFill("solid", fgColor="E8F5E9"),
+             "lesson": PatternFill("solid", fgColor="E8F0FE"), "untested": None}
+    rows = [[e.get("project", ""), e.get("id", ""), KIND_KO.get(e.get("kind"), e.get("kind", "")), e.get("claim", ""),
+             e.get("observation", ""), e.get("verdict", ""), e.get("closed_scope", ""),
+             e.get("not_closed", "") or e.get("do_not_claim", ""), c(e.get("tags")), c(e.get("keywords")), e.get("evidence", "")]
+            for e in findings]
+    sheet("My Findings", ["project", "id", "구분", "가설·주장", "관찰", "판정", "닫은 범위", "닫지 않은 것 / 확대 금지", "tags", "keywords", "근거"],
+          [22, 11, 12, 45, 70, 22, 40, 50, 26, 30, 10], rows, fills=[kfill.get(e.get("kind")) for e in findings])
+
+    rows = [[b["title"], ", ".join(sorted(b["targets"])), len(b["targets"]), b["link"]] for b in backlog(papers)]
+    sheet("Backlog", ["후속 논문 (아직 하네스에 없음)", "이 논문이 비판한 항목", "비판 수", "링크"], [70, 30, 9, 40], rows, links=[4])
+
     rows = [[i.get("id", ""), str(i.get("date", "")), i.get("text", ""), c(i.get("tags")), c(i.get("keywords"))]
             for i in ideas]
     sheet("Ideas", ["id", "date", "아이디어", "tags", "keywords"], [18, 11, 90, 30, 30], rows)
@@ -491,7 +590,7 @@ def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path):
 AREA_COLORS = ["#4C78A8", "#F58518", "#54A24B", "#B279A2", "#E45756", "#72B7B2", "#9D755D", "#EECA3B"]
 
 
-def graph_data(papers, ideas, areas, tags):
+def graph_data(papers, ideas, areas, tags, findings=()):
     ids = {p["id"] for p in papers}
     used_areas = [a for a in areas if any(a in as_list(p.get("areas")) for p in papers)]
     area_color = {a: AREA_COLORS[i % len(AREA_COLORS)] for i, a in enumerate(used_areas)}
@@ -544,6 +643,17 @@ def graph_data(papers, ideas, areas, tags):
             used_tags.add(t)
             edges.append({"from": f"i:{i['id']}", "to": f"t:{t}", "type": "idea"})
 
+    fcolor = {"failure": "#9E3B3B", "preserved": "#3B7D4A", "lesson": "#3B5B9E", "untested": "#999999"}
+    for e in findings:
+        nodes.append({"id": f"f:{e['id']}", "label": e["id"], "group": "finding", "shape": "diamond", "size": 9,
+                      "color": fcolor.get(e.get("kind"), "#777"), "font": {"color": "#555", "size": 10},
+                      "detail": {"kind": "finding", "fkind": KIND_KO.get(e.get("kind"), ""), **{k: e.get(k, "") for k in
+                                 ("id", "project", "claim", "observation", "verdict", "closed_scope", "not_closed", "do_not_claim")},
+                                 "tags": as_list(e.get("tags"))}})
+        for t in as_list(e.get("tags")):
+            used_tags.add(t)
+            edges.append({"from": f"f:{e['id']}", "to": f"t:{t}", "type": "finding"})
+
     for t in sorted(used_tags):
         nodes.append({"id": f"t:{t}", "label": t, "group": "tag", "shape": "ellipse",
                       "color": {"background": "#f3f3f3", "border": "#999"}, "font": {"color": "#333", "size": 12},
@@ -574,6 +684,7 @@ GRAPH_HTML = r"""<!DOCTYPE html>
   <label><input type="checkbox" id="e_builds" checked> builds_on</label>
   <label><input type="checkbox" id="e_ext"> 외부 모델 노드</label>
   <label><input type="checkbox" id="e_weak" checked> 조사자 판단 한계 포함</label>
+  <label><input type="checkbox" id="e_find"> 내 연구 기록 (실패·보존·교훈)</label>
  </div>
  <div class="lg" style="margin-top:6px">
   <span><i class="sw" style="background:#2e7d32"></i>강점</span>
@@ -599,25 +710,27 @@ function styleEdge(e){
     s.color={color:"#c62828",opacity:.75}; s.width= strong?3:1.2; s.dashes = e.source==="analyst";
     s.title = (e.by? "["+e.by+"] ":"") + e.text; }
   else if(e.type==="idea"){ s.color={color:"#d4a400"}; s.dashes=true; }
+  else if(e.type==="finding"){ s.color={color:"#888",opacity:.5}; s.dashes=[2,4]; s.width=1; }
   else if(e.type==="critiques"){ s.color={color:"#E67E22"}; s.arrows="to"; s.width=2.2; s.title="비판: "+e.text; }
   else { s.color={color:"#4C78A8"}; s.arrows="to"; s.width=1.5; }
   return s;
 }
 const nodes = new vis.DataSet(DATA.nodes.map(n => ({...n, title: n.detail && n.detail.title ? n.detail.title : undefined})));
 const edges = new vis.DataSet(DATA.edges.map(styleEdge));
-const nodeView = new vis.DataView(nodes, {filter: n => n.group!=="external" || ck("e_ext")});
+const nodeView = new vis.DataView(nodes, {filter: n => (n.group!=="external" || ck("e_ext")) && (n.group!=="finding" || ck("e_find"))});
 const edgeView = new vis.DataView(edges, {filter: e => {
   if(e.type==="strength") return ck("e_strength");
   if(e.type==="limitation") return ck("e_limitation") && (e.source!=="analyst" || ck("e_weak"));
   if(e.type==="builds_on") return ck("e_builds");
   if(e.type==="critiques") return ck("e_crit");
+  if(e.type==="finding") return ck("e_find");
   if(e.type==="builds_on_ext") return ck("e_builds") && ck("e_ext");
   return true; }});
 function ck(id){ return document.getElementById(id).checked; }
 const net = new vis.Network(document.getElementById("net"), {nodes:nodeView, edges:edgeView}, {
   physics:{solver:"forceAtlas2Based", forceAtlas2Based:{gravitationalConstant:-60, springLength:120}, stabilization:{iterations:300}},
   interaction:{hover:true, tooltipDelay:120}, nodes:{margin:8}, edges:{smooth:{type:"continuous"}}});
-["e_strength","e_limitation","e_crit","e_builds","e_ext","e_weak"].forEach(id => document.getElementById(id).onchange = () => {nodeView.refresh(); edgeView.refresh();});
+["e_strength","e_limitation","e_crit","e_builds","e_ext","e_weak","e_find"].forEach(id => document.getElementById(id).onchange = () => {nodeView.refresh(); edgeView.refresh();});
 
 function paperHTML(d){
   const L = d.links||{};
@@ -638,6 +751,7 @@ function tagHTML(d){
   return `<h2>${esc(d.id)}</h2><div>${esc(d.desc)}</div>
    <h3>이 축을 강점으로 가진 논문 (${S.length})</h3><ul>${S.map(e=>`<li><b>${esc(nm(e.from))}</b> ${esc(e.text)}</li>`).join("")||"<li>없음</li>"}</ul>
    <h3>이 축이 한계인 논문 (${Lm.length})</h3><ul>${Lm.map(e=>`<li><b>${esc(nm(e.from))}</b> ${esc(e.text)}<br><span class="src">${esc(e.source_ko)}${e.by?" — "+esc(e.by):""}</span></li>`).join("")||"<li>없음</li>"}</ul>
+   ${(()=>{const F=ins.filter(e=>e.type==="finding").map(e=>nodes.get(e.from)).filter(Boolean); return F.length?`<h3>내 연구 기록 (${F.length})</h3><ul>${F.map(n=>`<li><b>${esc(n.label)}</b> [${esc(n.detail.fkind)}] ${esc(n.detail.claim)}</li>`).join("")}</ul>`:"";})()}
    ${S.length&&Lm.length?"<p><b>접목 후보:</b> 위 강점 논문의 장치로 아래 한계를 메울 수 있는지 볼 만해요.</p>":(Lm.length&&!S.length?"<p><b>빈칸:</b> 하네스 안에서 이 한계를 해결한 논문이 아직 없어요.</p>":"")}`;
 }
 net.on("click", ev => {
@@ -645,6 +759,10 @@ net.on("click", ev => {
   const n = nodes.get(ev.nodes[0]); const d = n.detail||{}; let h="";
   if(d.kind==="paper") h = paperHTML(d);
   else if(d.kind==="tag") h = tagHTML(d);
+  else if(d.kind==="finding") h = `<h2>${esc(d.id)}</h2><div class="src">${esc(d.project)} · ${esc(d.fkind)}</div><h3>가설·주장</h3><div>${esc(d.claim)}</div>
+     ${d.observation?`<h3>관찰</h3><div>${esc(d.observation)}</div>`:""}${d.verdict?`<h3>판정</h3><div>${esc(d.verdict)}</div>`:""}
+     ${d.closed_scope?`<h3>닫은 범위</h3><div>${esc(d.closed_scope)}</div>`:""}${d.not_closed?`<h3>닫지 않은 것</h3><div>${esc(d.not_closed)}</div>`:""}
+     ${d.do_not_claim?`<h3>확대 금지</h3><div>${esc(d.do_not_claim)}</div>`:""}<div>${tg(d.tags)}</div>`;
   else if(d.kind==="idea") h = `<h2>💡 ${esc(d.id)}</h2><div>${esc(d.text)}</div><div>${tg(d.tags)}</div>`;
   else h = `<h2>${esc(d.id)}</h2><div class="src">하네스 밖의 모델 (builds_on 대상)</div>`;
   document.getElementById("info").innerHTML = h;
@@ -702,8 +820,8 @@ def main(argv=None):
     a = ap.parse_args(argv)
 
     areas, tags = load_taxonomy()
-    papers, ideas = load_dir(PAPERS_DIR), load_dir(IDEAS_DIR)
-    warns = validate(papers, ideas, areas, tags)
+    papers, ideas, findings = load_dir(PAPERS_DIR), load_dir(IDEAS_DIR), load_findings()
+    warns = validate(papers, ideas, areas, tags, findings)
 
     if a.cmd == "validate":
         print("\n".join(warns) or "문제 없음")
@@ -742,7 +860,7 @@ def main(argv=None):
         unknown = [t for t in tq if t not in tags]
         if unknown:
             print(f"경고: 미등록 태그 {unknown}", file=sys.stderr)
-        report = check_idea(papers, tq, kw, a.text)
+        report = check_idea(papers, tq, kw, a.text, findings)
         print(report)
         if a.save:
             name = re.sub(r"[^\w\-]+", "_", a.save)
@@ -761,12 +879,12 @@ def main(argv=None):
     cands = combination_candidates(papers)
     tagrows = tag_table(papers, tags)
     OUT_DIR.mkdir(exist_ok=True)
-    write_excel(papers, ideas, areas, tags, cands, tagrows, OUT_DIR / "research_harness.xlsx")
-    write_graph(graph_data(papers, ideas, areas, tags), OUT_DIR / "graph.html")
+    write_excel(papers, ideas, areas, tags, cands, tagrows, OUT_DIR / "research_harness.xlsx", findings)
+    write_graph(graph_data(papers, ideas, areas, tags, findings), OUT_DIR / "graph.html")
     write_candidates_md(cands, tagrows, OUT_DIR / "candidates.md")
     keys = bib_keys(papers)
     (OUT_DIR / "refs.bib").write_text("\n\n".join(b for b in (bibtex(p, keys[p["id"]]) for p in papers) if b) + "\n", encoding="utf-8")
-    print(f"논문 {len(papers)}편, 아이디어 {len(ideas)}개, 접목 후보 {len(cands)}건")
+    print(f"논문 {len(papers)}편, 내 연구 기록 {len(findings)}건, 아이디어 {len(ideas)}개, 접목 후보 {len(cands)}건")
     print("→ out/research_harness.xlsx, out/graph.html, out/candidates.md, out/refs.bib")
     return 0
 
