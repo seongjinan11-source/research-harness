@@ -1,0 +1,85 @@
+project: Context-conditioned feature belief GraphPFN 설계 검토
+date: '2026-11-02'
+source: findings/sources/context-feature-belief-2026-11-02/DESIGN.md
+setting: 문헌 검토와 정확한 두 상태 산술 예시. 새 neural density·PFN·공유 suffix·coherence 학습은 미실행. 기존 FMARG 실험 판정을 덮어쓰지 않는다.
+related:
+- GraphPFN
+- PEMix
+- MCSSL
+- MaM
+entries:
+- id: CFB-U01
+  kind: untested
+  claim: Context labels에 조건화한 joint feature law와 shared observed encoder/particle suffix를 학습한 GraphPFN
+  observation: 최종 목표와 loss/계산 공유의 설계만 정리했다. 새 neural model 학습, random-fill null control, label-blind 대비, CE-only
+    대비 coherence의 독립 이득, latency·memory 및 실제 graph/schema 전이는 아직 실행하지 않았다.
+  tags:
+  - observation-mask
+  - graph-structure-use
+  - uncertainty
+  - inference-cost
+  keywords:
+  - context-conditioned feature posterior
+  - joint feature law
+  - shared encoder
+  - particle suffix
+  - martingale consistency
+  source_refs:
+  - findings/sources/context-feature-belief-2026-11-02/DESIGN.md
+  evidence: 사용자 제안과 문헌을 연결한 미실행 설계안
+- id: CFB-L01
+  kind: lesson
+  claim: 관측 refinement의 martingale coherence와 효율적 marginalization 자체는 선행 원리다.
+  observation: MCSSL(2026)의 §3–4가 관측 refinement의 평균 일관성과 two-sample estimator를 다룬다. MaM(ICML2024)은 marginalization
+    self-consistency와 arbitrary marginal 직접 근사를 다룬다. GraphPFN에 해당 loss를 더했다는 사실만으로 새 원리를 주장하지 않는다.
+  tags:
+  - eval-protocol
+  - uncertainty
+  - amortized-inference
+  keywords:
+  - MartingaleSSL
+  - MaM
+  - marginalization self-consistency
+  - novelty overlap
+  source_refs:
+  - findings/sources/context-feature-belief-2026-11-02/DESIGN.md
+  evidence: arXiv2605.11846 원문과 PMLR v235/liu24az 및 arXiv2310.12920 원문 확인
+- id: CFB-L02
+  kind: lesson
+  claim: 관측 전 예측도 Monte Carlo 평균이면 coarse–refined 두 replica 전체를 독립화해야 하는 경우가 있다.
+  observation: 정확한 scalar 예시에서 올바른 tower squared residual은0, 한 refinement에 직접 맞춘 기대 penalty는0.1024다. 두 독립 refinement를
+    써도 분산0.01인 coarse estimate를 공용하면 기대 penalty0.01이 남는다. Coarse/refined replica 전체를 독립화하면 약8.7e-19다. 이는 수학 예시이고
+    GraphPFN 성능 수치가 아니다.
+  tags:
+  - uncertainty
+  - eval-protocol
+  - auxiliary-loss
+  keywords:
+  - double sampling
+  - conditional independence
+  - stochastic coarse prediction
+  - Monte Carlo variance
+  source_refs:
+  - findings/sources/context-feature-belief-2026-11-02/DESIGN.md
+  - findings/sources/context-feature-belief-2026-11-02/math_sanity.py
+  - findings/sources/context-feature-belief-2026-11-02/math_sanity.json
+  evidence: 동일 conditional law의 두 상태와 확률을 완전 열거한 산술 검사
+- id: CFB-L03
+  kind: lesson
+  claim: Query CE와 coherence만으로 feature 가설의 의미가 식별되지는 않는다.
+  observation: Decoder가 가설을 무시해도 관측 입력의 predictive distribution을 직접 표현할 수 있다. 또한 feature 확률[.1,.2,.3,.4]와[.14,.1,.36,.4]는
+    label probabilities[.1,.4,.6,.9]에서 모두 평균.63을 준다. 이 coarse/full-reveal 예시에서는 Bayes CE와 coherence가 같아도
+    feature law가 다르다. 임의의 틀린 q와 모든 refinement에서 성립한다는 주장은 아니다.
+  tags:
+  - uncertainty
+  - auxiliary-loss
+  - theory-gap
+  keywords:
+  - latent ignored
+  - feature posterior nonidentifiability
+  - proper conditional density
+  - predictive coherence
+  source_refs:
+  - findings/sources/context-feature-belief-2026-11-02/DESIGN.md
+  - findings/sources/context-feature-belief-2026-11-02/math_sanity.json
+  evidence: 동일 predictive moment와 서로 다른 네 상태 feature law를 구성한 반례; 학습된 모델에서 관측한 실패 원인은 아님

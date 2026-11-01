@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 20개 프로젝트 · 88개 기록 (실패·중단 32개, 보존 19개, 교훈 27개, 미실행 10개)
+총 21개 프로젝트 · 92개 기록 (실패·중단 32개, 보존 19개, 교훈 30개, 미실행 11개)
 
 ## Common-context witness 고정 곱셈
 
@@ -20,6 +20,34 @@ k20 pooling-before-product: ACM76.390% vs uniform LP85.555%, IMDB28.311% vs35.41
 - 기준선: Uniform LP, class-pooling 후 product, 같은 graph의 강한 PFN
 - 최소 재검증: 먼저 실제 common-support 빈도와 오류의 관계를 확인하고, 고정 곱셈이 아닌 task-adaptive binding의 independent gain을 비교한다.
 - 원문: [findings/sources/graphpfn-2026-11-01/binding.md](../findings/sources/graphpfn-2026-11-01/binding.md)
+
+## Context-conditioned feature belief GraphPFN 설계 검토
+
+실험 조건: 문헌 검토와 정확한 두 상태 산술 예시. 새 neural density·PFN·공유 suffix·coherence 학습은 미실행. 기존 FMARG 실험 판정을 덮어쓰지 않는다.
+
+### CFB-U01 [미실행] Context labels에 조건화한 joint feature law와 shared observed encoder/particle suffix를 학습한 GraphPFN
+
+최종 목표와 loss/계산 공유의 설계만 정리했다. 새 neural model 학습, random-fill null control, label-blind 대비, CE-only 대비 coherence의 독립 이득, latency·memory 및 실제 graph/schema 전이는 아직 실행하지 않았다.
+
+- 원문: [findings/sources/context-feature-belief-2026-11-02/DESIGN.md](../findings/sources/context-feature-belief-2026-11-02/DESIGN.md)
+
+### CFB-L01 [교훈] 관측 refinement의 martingale coherence와 효율적 marginalization 자체는 선행 원리다.
+
+MCSSL(2026)의 §3–4가 관측 refinement의 평균 일관성과 two-sample estimator를 다룬다. MaM(ICML2024)은 marginalization self-consistency와 arbitrary marginal 직접 근사를 다룬다. GraphPFN에 해당 loss를 더했다는 사실만으로 새 원리를 주장하지 않는다.
+
+- 원문: [findings/sources/context-feature-belief-2026-11-02/DESIGN.md](../findings/sources/context-feature-belief-2026-11-02/DESIGN.md)
+
+### CFB-L02 [교훈] 관측 전 예측도 Monte Carlo 평균이면 coarse–refined 두 replica 전체를 독립화해야 하는 경우가 있다.
+
+정확한 scalar 예시에서 올바른 tower squared residual은0, 한 refinement에 직접 맞춘 기대 penalty는0.1024다. 두 독립 refinement를 써도 분산0.01인 coarse estimate를 공용하면 기대 penalty0.01이 남는다. Coarse/refined replica 전체를 독립화하면 약8.7e-19다. 이는 수학 예시이고 GraphPFN 성능 수치가 아니다.
+
+- 원문: [findings/sources/context-feature-belief-2026-11-02/DESIGN.md](../findings/sources/context-feature-belief-2026-11-02/DESIGN.md); [findings/sources/context-feature-belief-2026-11-02/math_sanity.py](../findings/sources/context-feature-belief-2026-11-02/math_sanity.py); [findings/sources/context-feature-belief-2026-11-02/math_sanity.json](../findings/sources/context-feature-belief-2026-11-02/math_sanity.json)
+
+### CFB-L03 [교훈] Query CE와 coherence만으로 feature 가설의 의미가 식별되지는 않는다.
+
+Decoder가 가설을 무시해도 관측 입력의 predictive distribution을 직접 표현할 수 있다. 또한 feature 확률[.1,.2,.3,.4]와[.14,.1,.36,.4]는 label probabilities[.1,.4,.6,.9]에서 모두 평균.63을 준다. 이 coarse/full-reveal 예시에서는 Bayes CE와 coherence가 같아도 feature law가 다르다. 임의의 틀린 q와 모든 refinement에서 성립한다는 주장은 아니다.
+
+- 원문: [findings/sources/context-feature-belief-2026-11-02/DESIGN.md](../findings/sources/context-feature-belief-2026-11-02/DESIGN.md); [findings/sources/context-feature-belief-2026-11-02/math_sanity.json](../findings/sources/context-feature-belief-2026-11-02/math_sanity.json)
 
 ## Frozen counterfactual PFN residual
 

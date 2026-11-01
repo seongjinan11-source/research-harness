@@ -3,7 +3,7 @@
 A의 한계 하나와 B의 강점이 같은 태그로 걸린 경우예요. 점수는 한계 출처 신뢰도(후속 논문 1.0, 리뷰 0.8, 저자 0.6, 조사자 0.4) × 겹친 태그의 희소성이고, 분야가 다르면 0.3을 더해요. 여러 논문에 흔한 태그일수록 가중치가 낮아요.
 태그 매칭은 후보를 제안할 뿐이에요. B의 장치가 A의 한계를 실제로 메우는지는 직접 판단해야 합니다.
 
-## 1. GraphPFN ← NodeGround [feature-heterogeneity, graph-structure-use, label-imbalance, label-space] (점수 1.42)
+## 1. GraphPFN ← NodeGround [feature-heterogeneity, graph-structure-use, label-imbalance, label-space] (점수 1.41)
 - **GraphPFN 한계** (후속 논문 지적 — NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)): 대규모 node classification benchmark에서 GraphPFN은 가장 강한 GFM이었지만, 데이터셋 조건별로 보면 강한 homophily, 고차원 feature, 심하게 불균형한 target에서 튜닝된 GNN(GCNII, GPRGNN)에 뒤졌다. 10개 초과 class task도 불리했다. 라벨을 50%까지 늘려도 고차원 feature·불균형 target·다중 class 약점은 남았다. 저자들은 사전학습 표현을 새 그래프에 적응시키는 능력의 한계로 해석한다.
 - **NodeGround 강점**: 7개 데이터셋 성질로 22개 부분집합을 만들어 '어떤 조건에서 GFM이 지는가'를 진단한다. 예를 들어 GraphPFN은 binary task, high-degree 그래프, 중간 수준 homophily에서는 튜닝된 GCNII·GPRGNN보다 앞서지만, 강한 homophily, 고차원 feature, 심한 불균형 target, 10개 초과 class에서는 뒤진다. 평균 순위 하나로는 보이지 않는 약점을 드러낸다.
 
@@ -19,7 +19,7 @@ A의 한계 하나와 B의 강점이 같은 태그로 걸린 경우예요. 점�
 - **Time-MoE 한계** (후속 논문 지적 — TimeSqueeze: Dynamic Patching for Efficient Time Series Forecasting (2026)): Time-MoE 같은 point-wise encoding은 sequence가 길어질수록 확장성이 떨어지며, 이것이 긴 context 사전학습의 병목이라고 지적한다. 이 논문은 Time-MoE의 backbone, Time-300B, 손실을 그대로 두고 tokenizer만 SSM 기반 dynamic patching으로 바꿨다. 그 결과 학습이 최대 20배 빠르고 사전학습 데이터 효율이 8배 높다고 보고한다.
 - **LoGIC 강점**: 예산을 정한 context만으로 full-context 정확도를 유지하면서 peak 메모리를 크게 줄인다. GraphPFN 기준 artnet-exp에서 full graph 추론은 51.86 AP에 19.59GB였는데, LoGIC은 52.06 AP에 8.24GB였다. TabPFNv2 기준 tolokers-2에서도 4.10GB가 2.20GB로 줄었고 AP는 오히려 조금 올랐다.
 
-## 5. Moirai ← TSFM-Survey [channel-dependency, tokenization, uncertainty] (점수 0.85)
+## 5. Moirai ← TSFM-Survey [channel-dependency, tokenization, uncertainty] (점수 0.84)
 - **Moirai 한계** (후속 논문 지적 — Moirai 2.0: When Less Is More for Time Series Forecasting (2025)): 같은 Salesforce 그룹의 후속작이 Moirai의 핵심 설계를 대부분 되돌렸다. masked encoder는 sample 하나당 loss를 한 번만 내고 가려진 일부 token만 loss에 참여해서 데이터 활용이 비효율적이고, 반복 예측 때마다 key-value를 처음부터 다시 계산해야 한다고 지적했다. multi-patch 구성은 frequency 간 학습을 오히려 제약했다고 보고 single patch로 바꿨다. mixture distribution 출력은 실제로는 효과가 덜하고 설계와 최적화를 복잡하게 만들며, NLL이 outlier에서 variance collapse나 불안정한 gradient를 겪을 수 있다며 quantile loss로 대체했다. multivariate 예측과 covariate 지원은 이득이 거의 없었다며 아예 뺐고, 그런 성질을 가진 고품질 데이터가 부족한 탓으로 추정했다.
 - **TSFM-Survey 강점**: Table 2가 15개 모델을 같은 열로 정리해서 모델 선택용 참고표로 쓰기 좋다. 예를 들어 MOMENT와 TimesFM은 결정적 출력, Chronos와 MOIRAI는 확률적 출력, Time-MoE는 point forecast만 낸다는 점을 바로 비교할 수 있다.
 
@@ -39,23 +39,23 @@ A의 한계 하나와 B의 강점이 같은 태그로 걸린 경우예요. 점�
 - **MOMENT 한계** (후속 논문 지적 — When Foundation Models are One-Liners: Limitations and Future Directions for Time Series Anomaly Detection (ICLR 2026)): MOMENT를 포함한 다섯 TSFM 계열을 reconstruction·forecasting error 기반 anomaly detector로 평가했다. 모델 크기와 context 길이를 바꿔도 moving-window variance 같은 한 줄짜리 baseline과 유의미한 차이가 없었다. 이상 구간이 정상 구간보다 꼭 더 복원하기 어렵지 않기 때문에, 복원 오차로 이상을 잡는다는 전제 자체가 이 모델들에서 성립하지 않는다는 진단이다.
 - **Wander 강점**: 하나의 checkpoint가 zero-shot으로 세 task 모두에서 최고이거나 그에 가까운 성능을 낸다. Knowledge graph 54개의 link prediction에서 MRR 0.399로 전용 모델 FLOCK(0.391)과 비슷하거나 조금 높았다. Homogeneous link prediction 10개 데이터셋에서는 평균 Recall@20 43.39%로 데이터셋별로 튜닝한 NBFNet(38.82%)을 앞섰다. Node classification 26개 그래프에서는 평균 정확도 68.20%로 GraphPFN(66.55%)과 튜닝된 GCN(60.64%)보다 높았다.
 
-## 10. NodePFN ← TimesFM [inference-cost, zero-shot-gap] (점수 0.81 · 분야 교차)
-- **NodePFN 한계** (후속 논문 지적 — NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)): labeled node 사이의 dense self-attention 때문에 큰 그래프에서 추론 비용이 크다고 지적한다. 성능-비용 비교에서 NodePFN은 더 싸면서 더 정확한 방법에 dominate되어 Pareto frontier에 들지 못했고, 잘 튜닝된 supervised 방법보다 성능이 낮았다.
-- **TimesFM 강점**: 200M 규모의 비교적 작은 모델로 Monash, Darts, ETT에서 zero-shot 성능이 dataset별 supervised 모델과 비슷한 수준에 도달했다. GPT-3 기반 LLMTime보다 Monash에서 10% 이상 좋으면서 추론 비용은 훨씬 작다.
-
-## 11. Time-MoE ← Wander [task-coverage, zero-shot-gap] (점수 0.81 · 분야 교차)
+## 10. Time-MoE ← Wander [task-coverage, zero-shot-gap] (점수 0.81 · 분야 교차)
 - **Time-MoE 한계** (후속 논문 지적 — When Foundation Models are One-Liners: Limitations and Future Directions for Time Series Anomaly Detection (ICLR 2026)): MOMENT, Chronos, TimesFM, Time-MoE, TSPulse 다섯 계열을 reconstruction·forecasting error 기반 anomaly detector로 평가했다. 모델 크기와 context 길이를 바꿔도 moving-window variance 같은 한 줄짜리 baseline과 유의미한 차이가 없었다. 예측 오차로 이상을 잡는다는 전제가 Time-MoE 같은 forecasting TSFM에서도 성립하지 않는다는 진단이다.
 - **Wander 강점**: 하나의 checkpoint가 zero-shot으로 세 task 모두에서 최고이거나 그에 가까운 성능을 낸다. Knowledge graph 54개의 link prediction에서 MRR 0.399로 전용 모델 FLOCK(0.391)과 비슷하거나 조금 높았다. Homogeneous link prediction 10개 데이터셋에서는 평균 Recall@20 43.39%로 데이터셋별로 튜닝한 NBFNet(38.82%)을 앞섰다. Node classification 26개 그래프에서는 평균 정확도 68.20%로 GraphPFN(66.55%)과 튜닝된 GCN(60.64%)보다 높았다.
 
-## 12. GraphPFN ← Wander [feature-heterogeneity, label-space] (점수 0.7)
+## 11. NodePFN ← TimesFM [inference-cost, zero-shot-gap] (점수 0.8 · 분야 교차)
+- **NodePFN 한계** (후속 논문 지적 — NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)): labeled node 사이의 dense self-attention 때문에 큰 그래프에서 추론 비용이 크다고 지적한다. 성능-비용 비교에서 NodePFN은 더 싸면서 더 정확한 방법에 dominate되어 Pareto frontier에 들지 못했고, 잘 튜닝된 supervised 방법보다 성능이 낮았다.
+- **TimesFM 강점**: 200M 규모의 비교적 작은 모델로 Monash, Darts, ETT에서 zero-shot 성능이 dataset별 supervised 모델과 비슷한 수준에 도달했다. GPT-3 기반 LLMTime보다 Monash에서 10% 이상 좋으면서 추론 비용은 훨씬 작다.
+
+## 12. GraphPFN ← Wander [feature-heterogeneity, label-space] (점수 0.68)
 - **GraphPFN 한계** (후속 논문 지적 — NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)): 대규모 node classification benchmark에서 GraphPFN은 가장 강한 GFM이었지만, 데이터셋 조건별로 보면 강한 homophily, 고차원 feature, 심하게 불균형한 target에서 튜닝된 GNN(GCNII, GPRGNN)에 뒤졌다. 10개 초과 class task도 불리했다. 라벨을 50%까지 늘려도 고차원 feature·불균형 target·다중 class 약점은 남았다. 저자들은 사전학습 표현을 새 그래프에 적응시키는 능력의 한계로 해석한다.
 - **Wander 강점**: Feature와 class를 channel별 token으로 다루고 같은 종류의 channel끼리 모듈을 공유하므로, feature 차원 수와 class 수에 제한 없이 차원 축소 없이 처리한다. 같은 표에서 NodePFN은 지원 class 수를 넘는 데이터셋 계열(Cit. Full, HM Cat.)에서 아예 빠졌다.
 
-## 13. NodePFN ← NodeGround [feature-heterogeneity, label-space] (점수 0.7)
+## 13. NodePFN ← NodeGround [feature-heterogeneity, label-space] (점수 0.68)
 - **NodePFN 한계** (후속 논문 지적 — To Learn is to Wander: Learning Across Graphs and Tasks with Random Walks (2026)): node마다 representation 하나만 유지하고 feature 차원 상한이 고정돼 있다고 지적한다. 지원 class 수를 넘는 데이터셋 열에서는 NodePFN 결과를 아예 보고할 수 없었다.
 - **NodeGround 강점**: 7개 데이터셋 성질로 22개 부분집합을 만들어 '어떤 조건에서 GFM이 지는가'를 진단한다. 예를 들어 GraphPFN은 binary task, high-degree 그래프, 중간 수준 homophily에서는 튜닝된 GCNII·GPRGNN보다 앞서지만, 강한 homophily, 고차원 feature, 심한 불균형 target, 10개 초과 class에서는 뒤진다. 평균 순위 하나로는 보이지 않는 약점을 드러낸다.
 
-## 14. NodePFN ← Wander [feature-heterogeneity, label-space] (점수 0.7)
+## 14. NodePFN ← Wander [feature-heterogeneity, label-space] (점수 0.68)
 - **NodePFN 한계** (후속 논문 지적 — To Learn is to Wander: Learning Across Graphs and Tasks with Random Walks (2026)): node마다 representation 하나만 유지하고 feature 차원 상한이 고정돼 있다고 지적한다. 지원 class 수를 넘는 데이터셋 열에서는 NodePFN 결과를 아예 보고할 수 없었다.
 - **Wander 강점**: Feature와 class를 channel별 token으로 다루고 같은 종류의 channel끼리 모듈을 공유하므로, feature 차원 수와 class 수에 제한 없이 차원 축소 없이 처리한다. 같은 표에서 NodePFN은 지원 class 수를 넘는 데이터셋 계열(Cit. Full, HM Cat.)에서 아예 빠졌다.
 
@@ -99,9 +99,10 @@ A의 한계 하나와 B의 강점이 같은 태그로 걸린 경우예요. 점�
 - **Wander 한계** (저자 인정): 사전학습 prior가 아직 좁다. Attributed graph는 대부분 synthetic이고, multi-relational 사전학습은 실제 KG 세 개뿐이다. 저자들은 node feature와 edge type을 함께 가진 그래프 쪽으로 prior를 넓히는 것을 향후 과제로 든다.
 - **TimesFM 강점**: synthetic 데이터를 빼면 실제 데이터에 드문 granularity(quarterly, yearly, 10분 등)와 15분 ETT에서 성능이 떨어진다는 ablation을 보여, 실제 corpus의 빈 곳을 synthetic prior로 메우는 효과를 실증했다.
 
-## 25. GraphPFN ← MOMENT [feature-heterogeneity] (점수 0.64 · 분야 교차)
-- **GraphPFN 한계** (후속 논문 지적 — NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)): 대규모 node classification benchmark에서 GraphPFN은 가장 강한 GFM이었지만, 데이터셋 조건별로 보면 강한 homophily, 고차원 feature, 심하게 불균형한 target에서 튜닝된 GNN(GCNII, GPRGNN)에 뒤졌다. 10개 초과 class task도 불리했다. 라벨을 50%까지 늘려도 고차원 feature·불균형 target·다중 class 약점은 남았다. 저자들은 사전학습 표현을 새 그래프에 적응시키는 능력의 한계로 해석한다.
-- **MOMENT 강점**: patching, RevIN, 좌측 zero-padding, channel 단위 처리라는 단순한 조합으로 길이·스케일·채널 수가 다른 데이터셋을 한 모델에 넣는다. 데이터셋마다 구조를 바꿀 필요가 없다.
+## 25. PEMix ← TSFM-Survey [channel-dependency, uncertainty] (점수 0.63 · 분야 교차)
+- **PEMix 한계** (저자 인정): Diagonal covariance가 주 모델링 한계라고 저자가 명시한다(Appendix E).
+- **TSFM-Survey 강점**: Table 2가 15개 모델을 같은 열로 정리해서 모델 선택용 참고표로 쓰기 좋다. 예를 들어 MOMENT와 TimesFM은 결정적 출력, Chronos와 MOIRAI는 확률적 출력, Time-MoE는 point forecast만 낸다는 점을 바로 비교할 수 있다.
+- **TSFM-Survey 강점**: 모델별 한계를 한 절에 모았다. TimesFM은 주로 단변량이고 명시적인 확률 예측이 없으며, MOIRAI는 frequency별 patch 크기 대응이 heuristic이고 고차원 시계열로 잘 확장되지 않으며, Lag-Llama는 단변량만 지원한다는 식이다. 한계를 태그로 엮는 이 하네스의 입력으로 바로 쓸 수 있다.
 
 # 빈칸: 한계로만 지적되고, 하네스 안에 해결한 논문이 없는 축
 

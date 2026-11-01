@@ -1,0 +1,47 @@
+id: MaM
+title: "Generative Marginalization Models"
+authors: "Sulin Liu, Peter Ramadge, Ryan P Adams"
+venue: "ICML 2024"
+year: 2024
+links:
+  paper: https://proceedings.mlr.press/v235/liu24az.html
+  code: https://github.com/PrincetonLIPS/MaM
+citation:
+  type: inproceedings
+  title: "Generative Marginalization Models"
+  authors: ["Sulin Liu", "Peter Ramadge", "Ryan P Adams"]
+  year: 2024
+  booktitle: "Proceedings of the 41st International Conference on Machine Learning"
+  publisher: PMLR
+  volume: 235
+  pages: "31773--31807"
+  arxiv: "2310.12920"
+  url: https://proceedings.mlr.press/v235/liu24az.html
+  verified_from:
+    - https://proceedings.mlr.press/v235/liu24az.html
+    - https://arxiv.org/html/2310.12920
+areas: [ml-foundations]
+problem: "이산 data의 arbitrary marginal probability를 반복적인 전체 conditional 계산 없이 추정한다."
+core_idea: "Marginal network와 conditional network 사이의 marginalization self-consistency를 학습한다. Arbitrary marginal likelihood를 한 번의 network pass로 근사한다."
+key_assumptions:
+  - "본문 모델은 유한 alphabet의 discrete variables를 대상으로 한다."
+strengths:
+  - text: "관측 subset의 marginal probability를 직접 근사해 반복 conditional 평가의 비용을 줄인다."
+    tags: [inference-cost, amortized-inference]
+  - text: "Marginal과 conditional을 연결하는 self-consistency를 명시한다."
+    tags: [information-consistency, observation-mask]
+limitations:
+  - text: "Self-consistency가 근사적이면 marginal 비율로 만든 conditional이 정확히 정규화되지 않아 별도 정규화가 필요하다고 §3에서 밝힌다."
+    tags: [uncertainty, theory-gap]
+    source: self
+  - text: "[analyst] 가변 연속 feature 공간과 새 graph context labels를 다루는 GraphPFN의 즉시 대체물은 아니다."
+    tags: [feature-heterogeneity, zero-shot-gap]
+    source: analyst
+builds_on: [AnyOrderAutoregressiveModels]
+compared_against: [AnyOrderAutoregressiveModels, GFlowNet]
+open_questions:
+  - "관측 subset을 직접 주변화하는 연산을 가변 graph/feature schema에 확장할 수 있는가?"
+hooks:
+  - "효율적인 주변화와 self-consistency의 선행연구다. PFN에 loss를 추가했다는 것만으로 novelty를 주장하지 않는다."
+notes: "저자 이름은 PMLR 페이지 표기를 따랐다."
+added: 2026-11-02

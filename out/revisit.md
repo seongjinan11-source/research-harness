@@ -228,8 +228,8 @@
 - 닫지 않은 것: joint 표현 자체의 장점(약한 head 대비)은 있었다.
 - 원문: [findings/sources/llbp-eaj-retrospective-2026-11-01.md](../findings/sources/llbp-eaj-retrospective-2026-11-01.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [MaM](https://proceedings.mlr.press/v235/liu24az.html): 복수 태그 일치 (약한 단서); tags=amortized-inference, inference-cost; keywords=-
+  - 기록된 강점: 관측 subset의 marginal probability를 직접 근사해 반복 conditional 평가의 비용을 줄인다.
 
 ## LLBP-F07 — EAJ를 직접 predictive 학습하면 실용성과 posterior 해석을 함께 회복한다.
 
@@ -320,6 +320,8 @@
 - 닫지 않은 것: 추가 작업 메모리 절감은 사실이다. 다만 더 큰 graph 처리나 배포상 이익은 검증하지 않았고, 이를 사후 메인 주장으로 바꾸지 않기로 했다.
 - 원문: [findings/sources/llbp-eaj-retrospective-2026-11-01.md](../findings/sources/llbp-eaj-retrospective-2026-11-01.md)
 
+- [MaM](https://proceedings.mlr.press/v235/liu24az.html): 복수 태그 일치 (약한 단서); tags=amortized-inference, inference-cost; keywords=-
+  - 기록된 강점: 관측 subset의 marginal probability를 직접 근사해 반복 conditional 평가의 비용을 줄인다.
 - [Time-MoE](https://arxiv.org/abs/2409.16040): 구체 키워드+태그 일치 (미검증); tags=inference-cost; keywords=shared
   - 기록된 강점: sparse MoE로 시계열 foundation model을 처음 2.4B 파라미터까지 키웠다. 같은 활성 파라미터의 dense 모델과 비교하면 학습 비용은 평균 78%, 추론 비용은 39% 줄었다. ultra 모델도 8GB 미만 VRAM의 소비자용 GPU에서 돌아간다.
   - 기록된 강점: 여러 해상도의 출력 head를 함께 학습해서 긴 horizon을 적은 decoding step으로 만든다. ablation에서 horizon 1짜리 head 하나로만 autoregressive하게 예측하면 MSE가 1.382까지 무너졌지만, 네 head를 쓰면 0.262였고 추론도 가장 빨랐다.
