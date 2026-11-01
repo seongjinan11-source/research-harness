@@ -1,0 +1,1202 @@
+[
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - zero",
+    "metric": "nll",
+    "delta": -0.012982624360371469,
+    "low": -0.02440591892349091,
+    "high": -0.001218730617939266
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - zero",
+    "metric": "accuracy",
+    "delta": 0.024902343749999993,
+    "low": -0.0078125,
+    "high": 0.056807454427083265
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - zero",
+    "metric": "brier",
+    "delta": -0.008854600798533237,
+    "low": -0.017822158322543174,
+    "high": 0.00017776708739396214
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - pcfi",
+    "metric": "nll",
+    "delta": -0.019498241290313224,
+    "low": -0.03171465407905879,
+    "high": -0.00815434887515486
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - pcfi",
+    "metric": "accuracy",
+    "delta": 0.04166666666666666,
+    "low": 0.014481608072916654,
+    "high": 0.06966145833333331
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - pcfi",
+    "metric": "brier",
+    "delta": -0.014820731382731583,
+    "low": -0.02403984965977025,
+    "high": -0.006593759256276584
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - native_nan",
+    "metric": "nll",
+    "delta": -0.06463168963739951,
+    "low": -0.09976512470298117,
+    "high": -0.03217846983511587
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - native_nan",
+    "metric": "accuracy",
+    "delta": 0.03336588541666666,
+    "low": 0.009277343749999993,
+    "high": 0.059407552083333315
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - native_nan",
+    "metric": "brier",
+    "delta": -0.03552191736449663,
+    "low": -0.05590006782403511,
+    "high": -0.016638828606615853
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "nll",
+    "delta": -0.03300768805204913,
+    "low": -0.060637256768659546,
+    "high": -0.011668924932678367
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "accuracy",
+    "delta": 0.05419921874999999,
+    "low": 0.019531249999999993,
+    "high": 0.08902994791666666
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "brier",
+    "delta": -0.019629320031089328,
+    "low": -0.03145796805077905,
+    "high": -0.00824129998838303
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "nll",
+    "delta": -6.834171902383307e-05,
+    "low": -0.003935004081483786,
+    "high": 0.003537321289116976
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "accuracy",
+    "delta": 0.003580729166666657,
+    "low": -0.008463541666666664,
+    "high": 0.01448974609374994
+  },
+  {
+    "group": "uniform",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "brier",
+    "delta": -0.00030612614294730665,
+    "low": -0.0034590326485148285,
+    "high": 0.0025445046211551143
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - zero",
+    "metric": "nll",
+    "delta": -0.017316850538530555,
+    "low": -0.03410894647032565,
+    "high": 0.00025952893854882365
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - zero",
+    "metric": "accuracy",
+    "delta": 0.03092447916666667,
+    "low": -0.0017944335937500025,
+    "high": 0.06510416666666666
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - zero",
+    "metric": "brier",
+    "delta": -0.015448252653204287,
+    "low": -0.02837647592095832,
+    "high": -0.002345654383238151
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - pcfi",
+    "metric": "nll",
+    "delta": -0.019263335039723082,
+    "low": -0.03135381123112469,
+    "high": -0.006330751886098339
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - pcfi",
+    "metric": "accuracy",
+    "delta": 0.02587890625,
+    "low": -0.001953125000000005,
+    "high": 0.05192464192708328
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - pcfi",
+    "metric": "brier",
+    "delta": -0.014930627814995313,
+    "low": -0.024081672766325564,
+    "high": -0.006132480166045087
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - native_nan",
+    "metric": "nll",
+    "delta": -0.07149464841353237,
+    "low": -0.10393418546455968,
+    "high": -0.038219417385920676
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - native_nan",
+    "metric": "accuracy",
+    "delta": 0.03971354166666667,
+    "low": 0.007157389322916671,
+    "high": 0.07666422526041662
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - native_nan",
+    "metric": "brier",
+    "delta": -0.04515671864184949,
+    "low": -0.06588526482889215,
+    "high": -0.023473413400711237
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "nll",
+    "delta": -0.03345827134323857,
+    "low": -0.06394512886751137,
+    "high": -0.008111250943427125
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "accuracy",
+    "delta": 0.013509114583333325,
+    "low": -0.014973958333333343,
+    "high": 0.044921874999999986
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "brier",
+    "delta": -0.019419402390988265,
+    "low": -0.03528335604812582,
+    "high": -0.005391386746806429
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "nll",
+    "delta": -0.003908922937758395,
+    "low": -0.006968310689363902,
+    "high": -0.0008745627180763862
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "accuracy",
+    "delta": 0.005045572916666672,
+    "low": -0.006835937499999997,
+    "high": 0.016927083333333343
+  },
+  {
+    "group": "clustered",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "brier",
+    "delta": -0.0022522968847178046,
+    "low": -0.004515050429330188,
+    "high": -8.62836684444291e-05
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - zero",
+    "metric": "nll",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - zero",
+    "metric": "accuracy",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - zero",
+    "metric": "brier",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - pcfi",
+    "metric": "nll",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - pcfi",
+    "metric": "accuracy",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - pcfi",
+    "metric": "brier",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - native_nan",
+    "metric": "nll",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - native_nan",
+    "metric": "accuracy",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - native_nan",
+    "metric": "brier",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "nll",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "accuracy",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "brier",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "nll",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "accuracy",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "brier",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - zero",
+    "metric": "nll",
+    "delta": -0.07197487394660734,
+    "low": -0.12873973148344806,
+    "high": -0.02416989321120405
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - zero",
+    "metric": "accuracy",
+    "delta": 0.016276041666666664,
+    "low": -0.0517578125,
+    "high": 0.0849609375
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - zero",
+    "metric": "brier",
+    "delta": -0.028757801009742706,
+    "low": -0.05686549724014477,
+    "high": -0.0008722075615806294
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - pcfi",
+    "metric": "nll",
+    "delta": -0.062396934012067584,
+    "low": -0.10458803530927187,
+    "high": -0.02128113201841608
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - pcfi",
+    "metric": "accuracy",
+    "delta": 0.0205078125,
+    "low": -0.04134114583333333,
+    "high": 0.08430989583333334
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - pcfi",
+    "metric": "brier",
+    "delta": -0.03613243108769107,
+    "low": -0.06840283043759379,
+    "high": -0.005087715093199655
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - native_nan",
+    "metric": "nll",
+    "delta": -0.11095936889525745,
+    "low": -0.17865852610870203,
+    "high": -0.0519489131662433
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - native_nan",
+    "metric": "accuracy",
+    "delta": 0.004882812499999993,
+    "low": -0.09244791666666667,
+    "high": 0.10872395833333331
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - native_nan",
+    "metric": "brier",
+    "delta": -0.052394375702910154,
+    "low": -0.09013326430157942,
+    "high": -0.014127089877037029
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "nll",
+    "delta": -0.10592414379574179,
+    "low": -0.16822076238087713,
+    "high": -0.05131827716304835
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "accuracy",
+    "delta": 0.029622395833333332,
+    "low": -0.027351888020833343,
+    "high": 0.09082031249999999
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "brier",
+    "delta": -0.055856044124824256,
+    "low": -0.09770731977499666,
+    "high": -0.02041241701382346
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "nll",
+    "delta": 0.003693873083405373,
+    "low": -0.005897098542681403,
+    "high": 0.012541967992231952
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "accuracy",
+    "delta": -0.012695312500000003,
+    "low": -0.03450520833333334,
+    "high": 0.005208333333333325
+  },
+  {
+    "group": "k1",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "brier",
+    "delta": 0.0030521157648414794,
+    "low": -0.0054063091731937785,
+    "high": 0.010482807053999474
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - zero",
+    "metric": "nll",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - zero",
+    "metric": "accuracy",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - zero",
+    "metric": "brier",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "nll",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "accuracy",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "brier",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "nll",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "accuracy",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "brier",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "nll",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "accuracy",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "brier",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "nll",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "accuracy",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "full:0.0:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "brier",
+    "delta": 0.0,
+    "low": 0.0,
+    "high": 0.0
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - zero",
+    "metric": "nll",
+    "delta": -0.01127336002336288,
+    "low": -0.02760804448372921,
+    "high": 0.0060585058867768035
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - zero",
+    "metric": "accuracy",
+    "delta": 0.004557291666666661,
+    "low": -0.03873697916666667,
+    "high": 0.04687499999999999
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - zero",
+    "metric": "brier",
+    "delta": -0.005304023765393902,
+    "low": -0.01635655023952602,
+    "high": 0.006592379742762768
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "nll",
+    "delta": -0.01845920957397941,
+    "low": -0.03380650989588161,
+    "high": -0.0040269997507406535
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "accuracy",
+    "delta": 0.014648437499999997,
+    "low": -0.019531250000000003,
+    "high": 0.05045572916666666
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "brier",
+    "delta": -0.011434506309688819,
+    "low": -0.02188783066338237,
+    "high": -0.0013113861316927367
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "nll",
+    "delta": -0.0493253195625182,
+    "low": -0.0862795032452534,
+    "high": -0.012726921321082451
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "accuracy",
+    "delta": 0.023437499999999993,
+    "low": -0.010091145833333339,
+    "high": 0.0556640625
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "brier",
+    "delta": -0.028442634408136987,
+    "low": -0.05191256027243782,
+    "high": -0.006267943849158269
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "nll",
+    "delta": -0.01645438516654701,
+    "low": -0.03294294702895311,
+    "high": -0.001375230090963448
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "accuracy",
+    "delta": 0.03548177083333333,
+    "low": -0.011393229166666663,
+    "high": 0.08008626302083321
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "brier",
+    "delta": -0.008869761524332432,
+    "low": -0.01973089937709446,
+    "high": 0.00175534685460573
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "nll",
+    "delta": -0.003596623294770786,
+    "low": -0.009569297066046983,
+    "high": 0.002161331938341487
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "accuracy",
+    "delta": 0.0026041666666666626,
+    "low": -0.016927083333333322,
+    "high": 0.021484375
+  },
+  {
+    "group": "uniform_nodes:0.9:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "brier",
+    "delta": -0.0024638640799674112,
+    "low": -0.006574267135022505,
+    "high": 0.0015115756259914382
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - zero",
+    "metric": "nll",
+    "delta": -0.014691888697380005,
+    "low": -0.030479030312056777,
+    "high": 0.0008614537002694404
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - zero",
+    "metric": "accuracy",
+    "delta": 0.04524739583333333,
+    "low": 0.012361653645833328,
+    "high": 0.08333333333333333
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - zero",
+    "metric": "brier",
+    "delta": -0.012405177831672594,
+    "low": -0.025012002868424393,
+    "high": -0.0005528079739565894
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "nll",
+    "delta": -0.020537273006646987,
+    "low": -0.041693541922471,
+    "high": -0.0017769194861826845
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "accuracy",
+    "delta": 0.06868489583333333,
+    "low": 0.030916341145833314,
+    "high": 0.10807291666666666
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "brier",
+    "delta": -0.018206956455774356,
+    "low": -0.03388012611899591,
+    "high": -0.004293528992847628
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "nll",
+    "delta": -0.07993805971228078,
+    "low": -0.12291784237377677,
+    "high": -0.041013462334874316
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "accuracy",
+    "delta": 0.043294270833333336,
+    "low": 0.01138509114583333,
+    "high": 0.07845052083333334
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "brier",
+    "delta": -0.04260120032085625,
+    "low": -0.06562635475116373,
+    "high": -0.02128760962447141
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "nll",
+    "delta": -0.04956099093755119,
+    "low": -0.1044603094929868,
+    "high": -0.010108541031802623
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "accuracy",
+    "delta": 0.07291666666666666,
+    "low": 0.032869466145833325,
+    "high": 0.11425781249999999
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "brier",
+    "delta": -0.03038887853784626,
+    "low": -0.05171320755426817,
+    "high": -0.011276688929100451
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "nll",
+    "delta": 0.003459939856723125,
+    "low": -0.0017256601502919047,
+    "high": 0.008754130009375869
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "accuracy",
+    "delta": 0.004557291666666662,
+    "low": -0.011067708333333334,
+    "high": 0.019856770833333325
+  },
+  {
+    "group": "uniform_nodes:0.995:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "brier",
+    "delta": 0.001851611794072801,
+    "low": -0.0021677964958887754,
+    "high": 0.005840414434588135
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - zero",
+    "metric": "nll",
+    "delta": -0.01378287497926389,
+    "low": -0.03663878586388527,
+    "high": 0.009767993180611292
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - zero",
+    "metric": "accuracy",
+    "delta": 0.03352864583333333,
+    "low": -0.0013020833333333287,
+    "high": 0.07259114583333334
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - zero",
+    "metric": "brier",
+    "delta": -0.014874618892985688,
+    "low": -0.033141112604200045,
+    "high": 0.0033644659490251706
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "nll",
+    "delta": -0.014890323398057445,
+    "low": -0.028708316596275506,
+    "high": -0.003369950664701308
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "accuracy",
+    "delta": 0.0071614583333333365,
+    "low": -0.020833333333333336,
+    "high": 0.0361328125
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "brier",
+    "delta": -0.01017273756563704,
+    "low": -0.020246487849469676,
+    "high": -0.001631401846472726
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "nll",
+    "delta": -0.05709715576863775,
+    "low": -0.09413362833981662,
+    "high": -0.019528728226285628
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "accuracy",
+    "delta": 0.03873697916666667,
+    "low": 0.0042317708333333495,
+    "high": 0.0791015625
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "brier",
+    "delta": -0.04001980363063534,
+    "low": -0.06505790431799453,
+    "high": -0.014830770072211652
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "nll",
+    "delta": -0.02398756743923772,
+    "low": -0.04391010508871224,
+    "high": -0.00588663350394741
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "accuracy",
+    "delta": 0.02539062500000001,
+    "low": -0.014648437499999998,
+    "high": 0.07291666666666667
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "brier",
+    "delta": -0.0191332441039325,
+    "low": -0.03466403617522647,
+    "high": -0.005467694480010431
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "nll",
+    "delta": -0.005005617627530768,
+    "low": -0.008981393215568196,
+    "high": -0.0012227261252549877
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "accuracy",
+    "delta": -0.008463541666666661,
+    "low": -0.02311197916666666,
+    "high": 0.006510416666666683
+  },
+  {
+    "group": "clustered_nodes:0.9:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "brier",
+    "delta": -0.0034657658189166003,
+    "low": -0.006647892350128525,
+    "high": -0.00047349548104725503
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - zero",
+    "metric": "nll",
+    "delta": -0.02085082609779724,
+    "low": -0.03955250334255645,
+    "high": -0.0017455910190260413
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - zero",
+    "metric": "accuracy",
+    "delta": 0.02832031250000001,
+    "low": -0.013020833333333318,
+    "high": 0.0693359375
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - zero",
+    "metric": "brier",
+    "delta": -0.016021886413422885,
+    "low": -0.02994852996439342,
+    "high": -0.0023010994125194457
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "nll",
+    "delta": -0.023636346681388695,
+    "low": -0.044154258556801815,
+    "high": -0.002820971103646842
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "accuracy",
+    "delta": 0.04459635416666667,
+    "low": 0.005200195312500004,
+    "high": 0.083984375
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - pcfi",
+    "metric": "brier",
+    "delta": -0.019688518064353636,
+    "low": -0.035478797885883546,
+    "high": -0.0050335757140273964
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "nll",
+    "delta": -0.08589214105842695,
+    "low": -0.1332764371123008,
+    "high": -0.04203681958791176
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "accuracy",
+    "delta": 0.04069010416666667,
+    "low": 0.0022786458333333443,
+    "high": 0.0830078125
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - native_nan",
+    "metric": "brier",
+    "delta": -0.05029363365306366,
+    "low": -0.078253947019797,
+    "high": -0.024383777238558668
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "nll",
+    "delta": -0.042928975247239445,
+    "low": -0.10093849996939952,
+    "high": 0.003395360723912191
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "accuracy",
+    "delta": 0.0016276041666666817,
+    "low": -0.02408854166666665,
+    "high": 0.02766927083333335
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "brier",
+    "delta": -0.019705560678044035,
+    "low": -0.04453300844681237,
+    "high": 0.00342774249230951
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "nll",
+    "delta": -0.002812228247986024,
+    "low": -0.0070344856265305514,
+    "high": 0.0013338677668038167
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "accuracy",
+    "delta": 0.018554687500000014,
+    "low": 0.0029296875000000113,
+    "high": 0.03548177083333335
+  },
+  {
+    "group": "clustered_nodes:0.995:4",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "brier",
+    "delta": -0.0010388279505190137,
+    "low": -0.004228323459561028,
+    "high": 0.0019279641163114617
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - zero",
+    "metric": "nll",
+    "delta": -0.07197487394660734,
+    "low": -0.12873973148344806,
+    "high": -0.02416989321120405
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - zero",
+    "metric": "accuracy",
+    "delta": 0.016276041666666664,
+    "low": -0.0517578125,
+    "high": 0.0849609375
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - zero",
+    "metric": "brier",
+    "delta": -0.028757801009742706,
+    "low": -0.05686549724014477,
+    "high": -0.0008722075615806294
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - pcfi",
+    "metric": "nll",
+    "delta": -0.062396934012067584,
+    "low": -0.10458803530927187,
+    "high": -0.02128113201841608
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - pcfi",
+    "metric": "accuracy",
+    "delta": 0.0205078125,
+    "low": -0.04134114583333333,
+    "high": 0.08430989583333334
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - pcfi",
+    "metric": "brier",
+    "delta": -0.03613243108769107,
+    "low": -0.06840283043759379,
+    "high": -0.005087715093199655
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - native_nan",
+    "metric": "nll",
+    "delta": -0.11095936889525745,
+    "low": -0.17865852610870203,
+    "high": -0.0519489131662433
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - native_nan",
+    "metric": "accuracy",
+    "delta": 0.004882812499999993,
+    "low": -0.09244791666666667,
+    "high": 0.10872395833333331
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - native_nan",
+    "metric": "brier",
+    "delta": -0.052394375702910154,
+    "low": -0.09013326430157942,
+    "high": -0.014127089877037029
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "nll",
+    "delta": -0.10592414379574179,
+    "low": -0.16822076238087713,
+    "high": -0.05131827716304835
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "accuracy",
+    "delta": 0.029622395833333332,
+    "low": -0.027351888020833343,
+    "high": 0.09082031249999999
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - posterior_mean",
+    "metric": "brier",
+    "delta": -0.055856044124824256,
+    "low": -0.09770731977499666,
+    "high": -0.02041241701382346
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "nll",
+    "delta": 0.003693873083405373,
+    "low": -0.005897098542681403,
+    "high": 0.012541967992231952
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "accuracy",
+    "delta": -0.012695312500000003,
+    "low": -0.03450520833333334,
+    "high": 0.005208333333333325
+  },
+  {
+    "group": "uniform_nodes:0.995:1",
+    "contrast": "joint_samples - diagonal_samples",
+    "metric": "brier",
+    "delta": 0.0030521157648414794,
+    "low": -0.0054063091731937785,
+    "high": 0.010482807053999474
+  }
+]

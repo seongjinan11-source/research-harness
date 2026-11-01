@@ -1,0 +1,16 @@
+id: graph-correlated-feature-marginalization
+date: '2026-11-01'
+text: 대치값 하나 대신 graph-correlated conditional feature law에서 completion을 샘플하고 frozen
+  GraphPFN의 확률을 평균한다. 같은 conditional mean/variance와 forward 예산을 주되 node covariance를
+  제거한 대조로 효과를 분리한다. GP surrogate는 공식 SCM posterior가 아니며 multiple imputation 자체의 novelty를
+  주장하지 않는다.
+tags:
+- observation-mask
+- graph-structure-use
+- uncertainty
+- tokenization
+keywords:
+- joint feature completion
+- conditional covariance
+- missing value
+- feature distribution

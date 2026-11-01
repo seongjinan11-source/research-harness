@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-01",
+  "stage": "frozen_joint_feature_completion_marginalization",
+  "graphs": 32,
+  "graph_seed_start": 9873000,
+  "mask_seed_start": 9875000,
+  "nodes": 192,
+  "queries": 32,
+  "checkpoint_seeds": [11, 12, 13],
+  "checkpoint_arm": "mask_plain",
+  "views": 4,
+  "rho_grid": [-0.9, 0.0, 0.9, 0.99],
+  "global_covariance_fraction": 0.5,
+  "arms": ["zero", "pcfi", "native_nan", "posterior_mean", "joint_samples", "diagonal_samples"],
+  "settings": [["full", 0.0, 4], ["uniform_nodes", 0.9, 4], ["uniform_nodes", 0.995, 4], ["clustered_nodes", 0.9, 4], ["clustered_nodes", 0.995, 4], ["uniform_nodes", 0.995, 1]],
+  "model": "Frozen mask_plain checkpoints from joint_imputation_pfn, all three seeds. These were continued-trained with zero values + original mask and query CE. Every arm uses exactly the same checkpoint. The existing common numeric/mask/token-control interface is reused, without extra updates. Candidate completions enter through its finite-value path; native_nan retains NaNs at encoder_x in this common interface, not the full official preprocessing pipeline.",
+  "feature_law": "Independent feature channels conditional on one shared graph regime rho. Symmetric normalized adjacency S has no self loops; R_rho=(I-rho*S)^(-1), rescaled to unit diagonal. K_rho=0.5*11^T+0.5*R_rho. Equal prior over four rho values. Observed RMS-scaled values determine exact Gaussian conditional means/covariances and the regime posterior under this surrogate law. Padded constant feature is excluded from evidence and sampling. This is not the official SCM feature posterior.",
+  "contrast": "joint_samples and diagonal_samples use identical regime draws and standard normal draws; diagonal_samples retains conditional mean and every conditional variance but removes off-diagonal covariance within each regime. The regime remains graph-shared in both. posterior_mean inserts the posterior mixture mean. All methods use four identical feature-position RNG seeds and arithmetic probability averaging, so point controls get the same number of PFN forwards.",
+  "primary": "Joint samples must beat posterior mean, diagonal samples, zero and PCFI ensembles in paired graph NLL on both uniform and clustered groups (average of 90/99.5 rates), with all paired 95% CI upper limits below zero. Also compare native-NaN encoder and simple context/uniform priors; report accuracy and Brier. No promotion of k1/full after inspection.",
+  "uncertainty": "5000 graph-paired bootstrap draws after averaging rates/checkpoint seeds per graph. Checkpoint seeds and completion RNG schedule held fixed; no multiplicity correction. Finite four-sample Monte Carlo is part of this implementation.",
+  "scope": "An actual frozen-inference candidate and source-preservation kill test, not a trained PFN method or a novelty claim. Fresh synthetic graph bank from the same size-restricted official prior; not real graphs/unseen semantic schemas. No labels_query or hidden feature values enter completion or model forward. A failed frozen replacement does not rule out a jointly trained feature distribution. No target-label tuning of covariance/scale/grid/samples/stopping. No automatic extra loss or training rescue."
+}

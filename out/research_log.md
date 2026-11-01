@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 19개 프로젝트 · 82개 기록 (실패·중단 31개, 보존 17개, 교훈 25개, 미실행 9개)
+총 20개 프로젝트 · 88개 기록 (실패·중단 32개, 보존 19개, 교훈 27개, 미실행 10개)
 
 ## Common-context witness 고정 곱셈
 
@@ -71,6 +71,55 @@ Matched 일방향72.72%, 양방향72.66%; 차이−0.06%p CI[−0.50,+0.39]. Sha
 - 기준선: 동일 예산 일방향 모델, 피드백 제거, 강한 context ridge baseline
 - 최소 재검증: Zero-observation 퇴화와 nonzero 조건을 나눠 같은 초기화·task·예산으로 실제 예측 증분을 비교한다.
 - 원문: [findings/sources/graphpfn-2026-11-01/history.md](../findings/sources/graphpfn-2026-11-01/history.md)
+
+## Frozen GraphPFN joint feature-completion marginalization
+
+실험 조건: 2026-11-01 시작·11-02 완료. Fresh32 official-prior small graphs, 6 conditions, frozen Mask Plain3 seeds, 6 input arms×4 forwards, 추가 optimizer update0. Bayesian GP surrogate의 exact conditional이며 공식 SCM posterior 아님.
+
+### FMARG-F01 [실패·중단] 단일 대치 대신 graph-correlated feature completion의 예측을 평균하면 두 주 결측 조건에서 point/diagonal/zero/PCFI 대조를 모두 넘는다.
+
+uniform NLL zero0.92888, PCFI0.93539, mean0.94890, joint0.91589, diagonal0.91596; clustered NLL zero0.93084, PCFI0.93279, mean0.94698, joint0.91352, diagonal0.91743。Joint−Mean: Uniform-0.03301 CI[-0.06064,-0.01167], Clustered-0.03346 CI[-0.06395,-0.00811]。Joint−Diagonal: Uniform-0.00007 CI[-0.00394,+0.00354], Clustered-0.00391 CI[-0.00697,-0.00087]。
+
+- 판정: 현재 frozen surrogate completion operator의 사전 primary gate 미통과·확대 중단
+- 원인·병목 [원인 미상]: 명시한 Gaussian-process surrogate와 4-sample frozen PFN 연산에서 필요한 동시 우위가 없었다. Feature-law misspecification, zero-fill 학습 PFN의 입력 활용 한계, 유한 Monte Carlo, 실제 feature 정보 부족의 원인은 분리하지 못했다.
+- 닫은 범위: 현재 graph Gaussian surrogate, 고정 zero+mask 학습 PFN, 4 completion·동일 생성 family fresh32 graphs에서 이 연산을 확대해 메인 메소드로 삼는 것
+- 닫지 않은 것: Context labels에 조건화한 feature law, joint predictive training, cross-feature dependency, 정확한 SCM conditional, 실제 graph·unseen schema는 평가하지 않았다. GP likelihood는 공식 SCM posterior가 아니다.
+- 재검토 조건: 관측된 feature evidence와 graph의 joint missing-feature law를 검증 가능하게 연결하고, point fill 및 같은 예산의 covariance 제거·구조 random-feature 대조를 안정적으로 넘는 추론 연산이 나올 때.
+- 기준선: 동일 PFN의 zero/PCFI/mean/native-NaN·independent sampling·context prior. 후속 positive 주장은 별도의 PCFI/FISF-trained 대조, 비조건부 구조 random features, GCNmf/GSPN/PEMix와의 차별화 필요.
+- 최소 재검증: Source·data·예산을 먼저 고정한 새 graph에서 feature conditional의 품질과 predictive marginalization의 증분을 분리한다. Frozen replacement와 distributional-input 재학습을 같은 성과로 세지 않는다.
+- 원문: [findings/sources/feature-marginal-2026-11-02/REPORT.md](../findings/sources/feature-marginal-2026-11-02/REPORT.md); [findings/sources/feature-marginal-2026-11-02/paired.json](../findings/sources/feature-marginal-2026-11-02/paired.json)
+
+### FMARG-P02 [보존] 여러 completion의 확률 평균은 같은 PFN의 단일 mean 대치와 PCFI 입력보다 낮은 NLL을 얻었다.
+
+Joint−Mean NLL: Uniform-0.03301 CI[-0.06064,-0.01167], Clustered-0.03346 CI[-0.06395,-0.00811]。Joint−PCFI: Uniform-0.01950 CI[-0.03171,-0.00815], Clustered-0.01926 CI[-0.03135,-0.00633]。
+
+- 확대 금지: 사전 primary gate 통과나 새 학습법·정확한 posterior 추론·관측 feature 실제 정보 활용·실제 graph 전이·PCFI-trained 모델 초과로 확대하지 않는다. 현재 PCFI는 같은 zero-input-trained checkpoint의 입력 대조다. 일반 ensemble과의 forward 수는 맞췄지만 구조 random-feature 설명은 분리하지 않았다.
+- 원문: [findings/sources/feature-marginal-2026-11-02/REPORT.md](../findings/sources/feature-marginal-2026-11-02/REPORT.md); [findings/sources/feature-marginal-2026-11-02/paired.json](../findings/sources/feature-marginal-2026-11-02/paired.json)
+
+### FMARG-P03 [보존] Clustered missing에서는 rho 내 node covariance 보존이 diagonal sampling보다 작은 추가 NLL 이득을 보였다.
+
+Joint−Diagonal NLL: Clustered-0.00391 CI[-0.00697,-0.00087], Uniform-0.00007 CI[-0.00394,+0.00354], k1+0.00369 CI[-0.00590,+0.01254]。
+
+- 확대 금지: 전 결측 조건의 covariance 우위, k1 해결, feature law 정확성 또는 실제 observed-value 정보 활용이라고 주장하지 않는다. Diagonal arm도 graph 공유 rho에 의한 의존성을 유지한다. 다중 비교 보정 없는 fixed-RNG 소형 pilot이다.
+- 원문: [findings/sources/feature-marginal-2026-11-02/REPORT.md](../findings/sources/feature-marginal-2026-11-02/REPORT.md); [findings/sources/feature-marginal-2026-11-02/paired.json](../findings/sources/feature-marginal-2026-11-02/paired.json)
+
+### FMARG-L01 [교훈] 분포형 input을 적용한 frozen 연산의 성과와 Bayesian posterior·새 학습법을 구분한다.
+
+Completion law는 observed-only RMS 좌표의 Gaussian surrogate이며 context labels에는 조건화하지 않는다. PFN은 zero+mask로 학습했던 checkpoint다. PCFI/native-NaN도 같은 checkpoint의 입력 대조이며 각 입력으로 별도 재학습한 모델 성과가 아니다. Point와 sampling 모두 동일4회 PFN forward의 확률을 평균했다.
+
+- 원문: [findings/sources/feature-marginal-2026-11-02/README.md](../findings/sources/feature-marginal-2026-11-02/README.md); [findings/sources/feature-marginal-2026-11-02/protocol.json](../findings/sources/feature-marginal-2026-11-02/protocol.json)
+
+### FMARG-L02 [교훈] 노드 간 covariance의 진단은 per-cell variance와 일반 ensemble 효과를 통제한다.
+
+Joint와 diagonal에 같은 rho draws·조건부 평균·대각 분산·standard normal draws를 주고 rho 내 off-diagonal covariance만 바꿨다. 두 arm 모두 rho는 graph 공유다. 관측값 clamp·conditional moment node permutation·12000-draw covariance sanity를 확인했다. 이것이 새 정보나 method superiority를 입증하지는 않는다.
+
+- 원문: [findings/sources/feature-marginal-2026-11-02/preflight.json](../findings/sources/feature-marginal-2026-11-02/preflight.json); [findings/sources/feature-marginal-2026-11-02/experiment.py](../findings/sources/feature-marginal-2026-11-02/experiment.py)
+
+### FMARG-U01 [미실행] Joint feature law의 학습과 probabilistic graph 방법 대비 독립적 기여
+
+새 neural law·auxiliary loss를 학습하지 않았다. Context-conditioned density, 별도 PCFI/FISF 학습 checkpoint, 비조건부 구조 random input, PEMix/GSPN 직접 재현, 실제 heterograph 전이는 이번 실행에서 비교하지 않았다. PEMix를 하네스에 추가한 것은 재검토 단서이지 기존 실패 해결 판정이 아니다.
+
+- 원문: [findings/sources/feature-marginal-2026-11-02/PEMix_RECHECK.md](../findings/sources/feature-marginal-2026-11-02/PEMix_RECHECK.md); [findings/sources/feature-marginal-2026-11-02/REPORT.md](../findings/sources/feature-marginal-2026-11-02/REPORT.md)
 
 ## Native heterogeneous 입력·기존 relational FM 대조
 

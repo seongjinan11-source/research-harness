@@ -1,0 +1,33 @@
+{
+  "finite_all_arms": true,
+  "input_excludes_query_labels": true,
+  "completion_label_invariance": true,
+  "moment_node_permutation_max_error": 1.3705703238997557e-13,
+  "sample_covariance_relative_frobenius_error_12000": 0.09407729647042437,
+  "full_inputs_identical": true,
+  "repeat_identical": true,
+  "weights_unchanged": true,
+  "checkpoint_sha256": "5c723a6b05c611d963708faf10da64985391c33e6aff0ed4438644b6a30fa635",
+  "diagnostics": {
+    "regime_weights": [
+      0.2957007799824914,
+      0.7039618948802828,
+      0.000337325137198328,
+      6.294900787738896e-37
+    ],
+    "regime_draws": [
+      1,
+      1,
+      1,
+      0
+    ],
+    "maximum_clamp_error": 0.0,
+    "sample_clipping_fraction": 0.0,
+    "conditional_min_eigenvalue": 0.0
+  },
+  "sources": {
+    "experiment.py": "59aeaaa52b0ba763645f95f8e7ab5068c5f749dc1166ef88d37a4c3ddc769ce8",
+    "protocol.json": "e19fc1bd758dd10ca67bbe2f14759b73b52ac128b9d2f68e7c19f79c4e01aebb",
+    "reference_common": "86473c16ff145f6eb28b8e9a0dd785b8ca836f3ac199f446d3402a4266ab7090"
+  }
+}

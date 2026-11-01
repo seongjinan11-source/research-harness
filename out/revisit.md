@@ -29,8 +29,8 @@
 - 닫지 않은 것: LP-conditioned 학습과 일관된 생성모형의 likelihood ratio 일반은 별개다.
 - 원문: [findings/sources/graphpfn-2026-11-01/ratio.md](../findings/sources/graphpfn-2026-11-01/ratio.md); [findings/sources/graphpfn-2026-11-01/feature_intervention.md](../findings/sources/graphpfn-2026-11-01/feature_intervention.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
 ## FEAT-F01 — IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.
 
@@ -43,8 +43,8 @@
 - 닫지 않은 것: 다른 결측률·graph와 query별 feature utility는 기각하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/feature_intervention.md](../findings/sources/graphpfn-2026-11-01/feature_intervention.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, uncertainty; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
 ## COUP-F01 — Label→feature 반복 피드백이 일방향 추론보다 유용하다.
 
@@ -57,8 +57,24 @@
 - 닫지 않은 것: 비선형 label-conditioned feature inference와 다른 유효 prior는 평가하지 않았다.
 - 원문: [findings/sources/graphpfn-2026-11-01/history.md](../findings/sources/graphpfn-2026-11-01/history.md)
 
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [Wander](https://arxiv.org/abs/2610.06694): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=bidirectional
   - 기록된 강점: 구조적 수용 범위를 추론 때 조절할 수 있다. Message passing 기반 GFM은 이 범위가 network 깊이에 고정된다. 서로 떨어진 25×25 grid 5개에 grid마다 label을 2개만 준 GRIDS에서, walk 길이를 4에서 64로 늘리자 정확도가 56.6%에서 96.6%로 올랐다. Labeled 노드를 지나는 walk만 남기면 100%였다. 같은 과제에서 GraphPFN은 23.3%, NodePFN은 26.6%였다. Feature 없는 실제 그래프 4개에서도 Wander는 76.5%로 GraphPFN(60.1%)을 크게 앞섰다.
+
+## FMARG-F01 — 단일 대치 대신 graph-correlated feature completion의 예측을 평균하면 두 주 결측 조건에서 point/diagonal/zero/PCFI 대조를 모두 넘는다.
+
+- 판정: 현재 frozen surrogate completion operator의 사전 primary gate 미통과·확대 중단
+- 원인·병목 [원인 미상]: 명시한 Gaussian-process surrogate와 4-sample frozen PFN 연산에서 필요한 동시 우위가 없었다. Feature-law misspecification, zero-fill 학습 PFN의 입력 활용 한계, 유한 Monte Carlo, 실제 feature 정보 부족의 원인은 분리하지 못했다.
+- 반증·배제한 설명: Observed clamp·label 분리·covariance sampler·완전 관측 일치·weights 보존을 확인했다. 이것이 surrogate의 통계적 적합성을 보장하지는 않는다.; 모든 arm이 동일 checkpoint와 4개 feature-position view를 사용했다. 별도의 대조군별 재학습 예산 차이는 없다.
+- 재검토 조건: 관측된 feature evidence와 graph의 joint missing-feature law를 검증 가능하게 연결하고, point fill 및 같은 예산의 covariance 제거·구조 random-feature 대조를 안정적으로 넘는 추론 연산이 나올 때.
+- 먼저 이겨야 할 기준선: 동일 PFN의 zero/PCFI/mean/native-NaN·independent sampling·context prior. 후속 positive 주장은 별도의 PCFI/FISF-trained 대조, 비조건부 구조 random features, GCNmf/GSPN/PEMix와의 차별화 필요.
+- 최소 재검증: Source·data·예산을 먼저 고정한 새 graph에서 feature conditional의 품질과 predictive marginalization의 증분을 분리한다. Frozen replacement와 distributional-input 재학습을 같은 성과로 세지 않는다.
+- 닫지 않은 것: Context labels에 조건화한 feature law, joint predictive training, cross-feature dependency, 정확한 SCM conditional, 실제 graph·unseen schema는 평가하지 않았다. GP likelihood는 공식 SCM posterior가 아니다.
+- 원문: [findings/sources/feature-marginal-2026-11-02/REPORT.md](../findings/sources/feature-marginal-2026-11-02/REPORT.md); [findings/sources/feature-marginal-2026-11-02/paired.json](../findings/sources/feature-marginal-2026-11-02/paired.json)
+
+- [PEMix](https://arxiv.org/abs/2610.18113): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use, observation-mask, uncertainty; keywords=feature distribution
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
 ## HET-F01 — Adapted HetGFD가 cross-type path 입력보다 큰 증분을 준다.
 
@@ -71,8 +87,8 @@
 - 닫지 않은 것: 원래 HetGFD/HGT 재현이나 다른 schema에서의 결론이 아니다. 다중 block 소실 조건은 별도 여지가 있다.
 - 원문: [findings/sources/graphpfn-2026-11-01/native_blocks.md](../findings/sources/graphpfn-2026-11-01/native_blocks.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
 ## VIEW-F01 — Support metadata·다중 전파 view·PCFI/FISF 입력 결합이 범용 증분을 준다.
 
@@ -88,6 +104,9 @@
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=feature-heterogeneity, prior-mismatch; keywords=feature token
   - 기록된 강점: LimiX의 per-feature tokenization을 그대로 물려받아, 데이터셋마다 feature 개수가 달라도 차원 축소 없이 하나의 모델로 처리한다. 같은 모델이 node classification과 node regression을 모두 다룬다.
   - 기록된 강점: Graph prior가 구조(multi-level SBM + preferential attachment)와 attribute(MLP·GNN neuron 혼합 SCM)를 분리해 설계되어 있고, 그래프 의존 정도를 mixing 확률로 조절할 수 있다. 부록 분석에서 synthetic graph의 평균 차수·clustering·power-law 적합도 분포가 실제 GraphLand 그래프 통계를 대체로 덮는다.
+- [PEMix](https://arxiv.org/abs/2610.18113): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=missing
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+  - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
 
 ## JIMP-F01 — PFN 내부의 반복 대치가 동일한 대치기를 PFN 앞에서 실행하는 것과 강한 동일 예산 Plain을 넘는다.
 
@@ -100,6 +119,9 @@
 - 닫지 않은 것: 다른 대치 함수족, pretrained feature decoder, latent belief representation, native NaN-input 대조와 실제 그래프 전이는 별개다. 이 실험은 이전 10K quadratic prototype과 다른 공개 GraphPFN 구현이다.
 - 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/paired.json](../findings/sources/joint-imputation-2026-11-01/paired.json)
 
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, tokenization; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+  - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=feature token
   - 기록된 강점: Hand-crafted graph feature(Laplacian PE, PageRank, 이웃 평균 등)에 기대지 않고, 모델 안에서 adjacency-masked attention으로 message passing을 직접 학습한다. 그 결과 ICL만으로도 G2T-FM·TAG와 튜닝된 GNN보다 평균 rank가 높고, 무거운 전처리도 필요 없다.
 
@@ -114,6 +136,8 @@
 - 닫지 않은 것: 모든 task-aware imputation과 PFN용 전처리가 실패했다는 뜻은 아니다. 피처 복원 MSE를 최소화한 모델과 비교한 결과도 아니다.
 - 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json](../findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json)
 
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=observation-mask, tokenization; keywords=-
+  - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
 - [MOMENT](https://arxiv.org/abs/2402.03885): 구체 키워드+태그 일치 (미검증); tags=tokenization; keywords=imputation
   - 기록된 강점: patching, RevIN, 좌측 zero-padding, channel 단위 처리라는 단순한 조합으로 길이·스케일·채널 수가 다른 데이터셋을 한 모델에 넣는다. 데이터셋마다 구조를 바꿀 필요가 없다.
 - [TSFM-Interventions](https://arxiv.org/abs/2409.12915): 구체 키워드+태그 일치 (미검증); tags=tokenization; keywords=imputation
@@ -322,8 +346,9 @@
 - 닫지 않은 것: Imputed-input에 맞춘 prior의 효과는 미평가다. 더 넓은 MNAR 식별 문제도 기각하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/missing_closure.md](../findings/sources/graphpfn-2026-11-01/missing_closure.md); [findings/sources/graphpfn-2026-11-01/missing_pilot.md](../findings/sources/graphpfn-2026-11-01/missing_pilot.md); [findings/sources/graphpfn-2026-11-01/missing_context.md](../findings/sources/graphpfn-2026-11-01/missing_context.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [PEMix](https://arxiv.org/abs/2610.18113): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=missingness
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+  - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
 
 ## OBS-F01 — Mask-aware 학습 정책이 강한 경로 규칙을 넘는다.
 
@@ -340,6 +365,8 @@
   - 기록된 강점: 예산을 정한 context만으로 full-context 정확도를 유지하면서 peak 메모리를 크게 줄인다. GraphPFN 기준 artnet-exp에서 full graph 추론은 51.86 AP에 19.59GB였는데, LoGIC은 52.06 AP에 8.24GB였다. TabPFNv2 기준 tolokers-2에서도 4.10GB가 2.20GB로 줄었고 AP는 오히려 조금 올랐다.
   - 기록된 강점: Full context가 항상 최선은 아니라는 점을 보였다. TabPFNv2로 twitch-views에서 LoGIC은 73.25 R²로 published full-context 70.21보다 3점 높았고, LimiX에서도 74.15 대 71.31이었다. 어떤 labeled 노드를 넣느냐가 그 자체로 성능을 움직이는 설계 변수라는 뜻이다.
   - 기록된 강점: Label 예산과 구조 예산을 분리한 halo 설계가 adapter backbone에서 효과를 보였다. tolokers-2에서 PPR context(k=4096)만 넣으면 54.20 AP였지만, label을 가린 1-hop halo를 더하자 61.09 AP로 올라 full-graph 기준치(61.29)에 거의 도달했다.
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
 ## OBS-F02 — 부분그래프 선택 개선으로 경쟁력 있는 확률 예측을 확보했다.
 
@@ -366,8 +393,8 @@
 - 닫지 않은 것: Context가 유용한 관계를 알려주는 다른 설정이나 relation 의미 추론 일반은 기각하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/transfer.md](../findings/sources/graphpfn-2026-11-01/transfer.md); [findings/sources/graphpfn-2026-11-01/expanded.md](../findings/sources/graphpfn-2026-11-01/expanded.md); [findings/sources/graphpfn-2026-11-01/accuracy_selector.md](../findings/sources/graphpfn-2026-11-01/accuracy_selector.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
 ## XFER-F02 — LP와 PFN 확률의 고정 혼합이 각자의 강점을 보존한다.
 
@@ -380,6 +407,8 @@
 - 닫지 않은 것: 모든 ensemble이 불가능한 것도, 각 branch가 feature-only/structure-only인 것도 아니다.
 - 원문: [findings/sources/graphpfn-2026-11-01/fusion.md](../findings/sources/graphpfn-2026-11-01/fusion.md)
 
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=ensemble
   - 기록된 강점: Hand-crafted graph feature(Laplacian PE, PageRank, 이웃 평균 등)에 기대지 않고, 모델 안에서 adjacency-masked attention으로 message passing을 직접 학습한다. 그 결과 ICL만으로도 G2T-FM·TAG와 튜닝된 GNN보다 평균 rank가 높고, 무거운 전처리도 필요 없다.
 
@@ -416,8 +445,8 @@
 - 닫지 않은 것: Relation source 정보가 불필요하다는 결론이나 다른 내부 추론 연산의 기각은 아니다.
 - 원문: [findings/sources/graphpfn-2026-11-01/evidence.md](../findings/sources/graphpfn-2026-11-01/evidence.md); [findings/sources/graphpfn-2026-11-01/evidence_utility.md](../findings/sources/graphpfn-2026-11-01/evidence_utility.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
 ## PROG-F01 — 고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.
 
@@ -450,8 +479,8 @@
 - 닫지 않은 것: Oracle headroom을 실제로 회수하는 다른 risk estimator는 기각하지 않는다. 학습 selector는 이 실험에서 미실행이다.
 - 원문: [findings/sources/graphpfn-2026-11-01/reliability.md](../findings/sources/graphpfn-2026-11-01/reliability.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
 ## SRC-F01 — Source covariance를 보정하면 분류가 개선된다.
 
@@ -464,4 +493,5 @@
 - 닫지 않은 것: 출처 의존성이 label 예측을 실제로 왜곡하는 다른 prior와 정확한 uncertainty 추론은 기각하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/source_error.md](../findings/sources/graphpfn-2026-11-01/source_error.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.

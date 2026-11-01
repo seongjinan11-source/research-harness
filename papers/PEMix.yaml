@@ -1,0 +1,44 @@
+id: PEMix
+title: "When Missingness Follows the Graph: Beyond Feature Propagation for Missing Features"
+authors: "Enrico Chialà, Francesco Ferrini, Antonio Longa, Bruno Lepri, Filippo Maria Bianchi, Manfred Jaeger, Veronica Lachi"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2610.18113
+citation:
+  type: misc
+  title: "When Missingness Follows the Graph: Beyond Feature Propagation for Missing Features"
+  authors: ["Enrico Chialà", "Francesco Ferrini", "Antonio Longa", "Bruno Lepri", "Filippo Maria Bianchi", "Manfred Jaeger", "Veronica Lachi"]
+  year: 2026
+  arxiv: "2610.18113"
+  url: https://arxiv.org/abs/2610.18113
+  verified_from:
+    - https://arxiv.org/abs/2610.18113
+    - https://arxiv.org/html/2610.18113
+areas: [graph-fm]
+problem: "관측 피처가 연결된 영역에서 함께 사라지면 값 전파가 어려워지는 문제를 다룬다."
+core_idea: "PEMix는 Laplacian positional encoding으로 Gaussian mixture의 component 책임도를 조건화한다. 관측 피처가 없는 노드도 구조를 통해 서로 다른 분포를 받는다. 이 분포의 첫 GCN layer 기대 activation을 계산하고 분류 목적과 함께 학습한다."
+key_assumptions:
+  - "그래프는 완전히 관측돼 있고, 관측 피처와 결측 mask가 구분된다."
+  - "Component 내 feature·구조 표현은 diagonal Gaussian으로 모델링한다."
+strengths:
+  - text: "Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다."
+    tags: [observation-mask, graph-structure-use, uncertainty]
+  - text: "Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다."
+    tags: [observation-mask, tokenization]
+limitations:
+  - text: "Diagonal covariance가 주 모델링 한계라고 저자가 명시한다(Appendix E)."
+    tags: [channel-dependency, uncertainty]
+    source: self
+  - text: "[analyst] 이 결과는 synthetic pretraining 후 새 그래프에서 가중치 갱신 없이 사용하는 PFN 전이를 검증하지 않는다."
+    tags: [zero-shot-gap, adaptation]
+    source: analyst
+builds_on: [GCNmf, FeaturePropagation]
+compared_against: [PCFI, FISF, GCNmf, GNN-MIM]
+open_questions:
+  - "구조 조건부 분포를 새로운 feature 공간에 in-context로 구성할 수 있는가?"
+hooks:
+  - "JIMP-F01/F02의 bounded numeric point-refinement와 다른 함수족의 단서다. 실패 해결로 확정하지 않는다."
+  - "PFN에 샘플을 넘길 때 노드 간 조건부 covariance 보존이 필요한지는 별도 가설이다. PEMix의 직접 주장으로 귀속하지 않는다."
+notes: "2026-10-13 v1 원문 확인. 코드 URL·정식 학회 게재는 확인하지 않아 기입하지 않았다. 현재 feature_marginal_pfn의 Gaussian process surrogate는 PEMix 재현이 아니다."
+added: 2026-11-01
