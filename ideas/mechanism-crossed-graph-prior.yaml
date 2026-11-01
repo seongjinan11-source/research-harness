@@ -1,0 +1,16 @@
+id: mechanism-crossed-graph-prior
+date: '2026-11-02'
+text: Graph/feature generation과 label mechanism을 독립 재조합하는 synthetic graph prior를 같은
+  Mask Plain 구조와 query CE로 검증한다. 독립 SCM 원리는 PFNSeparability가 이미 제안했으므로 novelty로 세지
+  않는다. REG-F01의 finite-bank reweighting과 구분하며 기존 실패 원인이 prior coupling이었다고 단정하지 않는다.
+  Missing predictive는 feature law에도 의존하므로 unlabeled 정보를 무조건 제거하지 않는다. 새 학습은 미실행이다.
+tags:
+- prior-mismatch
+- pretraining-data
+- compositional-generalization
+- observation-mask
+keywords:
+- independent SCM
+- mechanism crossed prior
+- feature label coupling
+- task recombination

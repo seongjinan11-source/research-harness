@@ -1,0 +1,39 @@
+id: TabImpute
+title: "One Pipeline, Many Transformers: Pattern-Specific Imputation Specialists for Tabular Missing Data"
+authors: "Jacob Feitelberg, Dwaipayan Saha, Kyuseong Choi, Zaid Ahmad, Anish Agarwal, Raaz Dwivedi"
+venue: "arXiv 2026 (v6; first submitted 2025)"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2510.02625v6
+  code: https://github.com/jacobf18/tabular
+citation:
+  type: misc
+  title: "One Pipeline, Many Transformers: Pattern-Specific Imputation Specialists for Tabular Missing Data"
+  authors: ["Jacob Feitelberg", "Dwaipayan Saha", "Kyuseong Choi", "Zaid Ahmad", "Anish Agarwal", "Raaz Dwivedi"]
+  year: 2026
+  arxiv: "2510.02625"
+  url: https://arxiv.org/abs/2510.02625v6
+  verified_from: [https://arxiv.org/abs/2510.02625, https://arxiv.org/html/2510.02625v6]
+areas: [pfn, tabular-fm]
+problem: "Missingness pattern마다 별도 알고리즘을 설계하지 않고 zero-shot transformer imputer를 학습한다."
+core_idea: "각 cell을 row-column context의 예측 과제로 만들고 missingness module을 교체하는 synthetic pretraining을 사용한다. 최신 버전의 기본 TabImpute는 MCAR-only로 학습하며 pattern별 specialist도 같은 pipeline으로 만든다."
+key_assumptions:
+  - "기본 synthetic table은 low-rank factor model에서 생성한다."
+strengths:
+  - text: "새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다."
+    tags: [amortized-inference, observation-mask, tokenization]
+limitations:
+  - text: "[analyst] Imputation 성능이 GraphPFN 분류 개선이나 그래프의 long-range feature 추론을 입증하지 않는다."
+    tags: [graph-structure-use, zero-shot-gap]
+    source: analyst
+  - text: "[analyst] Pattern-specialist가 알려진 pattern에 맞는다는 사실은 미지 mechanism 선택 능력과 다르다."
+    tags: [distribution-shift, eval-protocol]
+    source: analyst
+builds_on: [TabPFN]
+compared_against: [MissForest, HyperImpute, MICE, MIWAE, ReMasker, TabPFN]
+open_questions:
+  - "동일 관측 입력·시간 예산에서 graph-aware imputation의 추가 가치가 있는가?"
+hooks:
+  - "학습된 missing-value posterior를 제안할 때 추가할 강한 zero-shot 대조다."
+notes: "구판 제목 Accurate and Fast Zero-Shot Missing-Data Imputation과 최신 v6의 설정이 다르다. 구판의 13 patterns·mixed-pattern training을 v6 결과와 혼합하지 않는다."
+added: 2026-11-02

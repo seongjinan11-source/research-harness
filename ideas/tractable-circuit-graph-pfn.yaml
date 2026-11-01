@@ -1,0 +1,16 @@
+id: tractable-circuit-graph-pfn
+date: '2026-11-02'
+text: 샘플링 대신 유효 확률 circuit에서 missing variables를 소거하는 prior-fitted graph predictor를
+  검토한다. GSPN 및 conditional SPN과 구분하고 locally exact와 global posterior를 혼동하지 않는다. Dynamic
+  scopes와 재사용된 원본 관측의 decomposability가 미해결이므로 고위험 예비 후보이며 구현·학습은 미실행이다.
+tags:
+- differentiable-reasoning
+- uncertainty
+- observation-mask
+- model-based-baseline
+keywords:
+- probabilistic circuit
+- GSPN
+- exact local marginal
+- decomposability
+- dynamic scope

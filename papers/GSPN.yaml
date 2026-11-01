@@ -1,0 +1,41 @@
+id: GSPN
+title: "Tractable Probabilistic Graph Representation Learning with Graph-Induced Sum-Product Networks"
+authors: "Federico Errica, Mathias Niepert"
+venue: "ICLR 2024"
+year: 2024
+links:
+  paper: https://arxiv.org/abs/2305.10544
+  openreview: https://openreview.net/forum?id=h7nOCxFsPg
+  code: https://github.com/nec-research/graph-sum-product-networks
+citation:
+  type: inproceedings
+  title: "Tractable Probabilistic Graph Representation Learning with Graph-Induced Sum-Product Networks"
+  authors: ["Federico Errica", "Mathias Niepert"]
+  year: 2024
+  booktitle: "The 12th International Conference on Learning Representations"
+  url: https://openreview.net/forum?id=h7nOCxFsPg
+  arxiv: "2305.10544"
+  verified_from: ["https://arxiv.org/abs/2305.10544", "https://openreview.net/pdf?id=h7nOCxFsPg"]
+areas: [graph-fm, ml-foundations]
+problem: "그래프의 구조를 사용하면서 missing attributes의 marginal 등 tractable probabilistic query를 계산한다."
+core_idea: "Message-passing computation tree에 locally valid SPN을 구성하고 child sum-node posterior로 parent mixture를 만든다. Missing leaf의 likelihood를 1로 두어 해당 SPN 안에서 적분한다."
+key_assumptions:
+  - "효율적 주변화는 SPN의 decomposability 등 구조적 조건에 의존한다."
+strengths:
+  - text: "숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다."
+    tags: [observation-mask, uncertainty, differentiable-reasoning]
+limitations:
+  - text: "Cyclic graph의 전역 joint 대신 locally valid SPN의 composition을 사용한다고 저자가 명시한다."
+    tags: [theory-gap, graph-structure-use]
+    source: self
+  - text: "[analyst] Synthetic pretraining 후 새 feature 공간과 class semantics로 zero-shot 적응하는 PFN을 검증하지 않는다."
+    tags: [feature-heterogeneity, zero-shot-gap]
+    source: analyst
+builds_on: [SumProductNetworks, CGMM]
+compared_against: [CGMM, GIN, DGI]
+open_questions:
+  - "새 graph의 context로 적응하면서도 circuit의 유효 scope를 유지할 수 있는가?"
+hooks:
+  - "RFILL-F01 뒤에 검토할 sampling-free 계산 후보다. Exact local marginalization을 exact global graph posterior라고 부르지 않는다."
+notes: "공식 ICLR PDF의 publication header를 확인했다. OpenReview forum의 리뷰 본문은 브라우저 확인에 막혀 읽지 못했다."
+added: 2026-11-02

@@ -1,0 +1,38 @@
+id: StructuralMissingPFN
+title: "Nearly Optimal Bayesian Inference for Structural Missingness"
+authors: "Chen Liang, Donghua Yang, Yutong Zhao, Tianle Zhang, Shenghang Zhou, Zhiyu Liang, Hengtong Zhang, Hongzhi Wang, Ziqi Li, Xiyang Zhang, Zheng Liang, Yifei Li"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2601.18500
+citation:
+  type: misc
+  title: "Nearly Optimal Bayesian Inference for Structural Missingness"
+  authors: ["Chen Liang", "Donghua Yang", "Yutong Zhao", "Tianle Zhang", "Shenghang Zhou", "Zhiyu Liang", "Hengtong Zhang", "Hongzhi Wang", "Ziqi Li", "Xiyang Zhang", "Zheng Liang", "Yifei Li"]
+  year: 2026
+  arxiv: "2601.18500"
+  url: https://arxiv.org/abs/2601.18500
+  verified_from: [https://arxiv.org/abs/2601.18500, https://arxiv.org/html/2601.18500]
+areas: [pfn, tabular-fm]
+problem: "구조적 결측과 MNAR에서 point imputation 대신 incomplete-context posterior prediction을 학습한다."
+core_idea: "Second-order SCM으로 feature와 mask를 생성하고 PFN이 incomplete context에서 label predictive를 직접 출력한다. 별도 conditional flow-matching head는 missing-value posterior를 학습하지만 분류에는 completion Monte Carlo를 요구하지 않는다."
+key_assumptions:
+  - "보장과 posterior 해석은 설정한 SCM prior와 학습·근사 조건에 의존한다."
+strengths:
+  - text: "Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다."
+    tags: [observation-mask, amortized-inference, uncertainty]
+limitations:
+  - text: "[analyst] 데이터의 causal 구조가 prior 밖에 있을 때 MNAR 식별이나 near-optimality를 보장하지 않는다."
+    tags: [prior-mismatch, theory-gap]
+    source: analyst
+  - text: "[analyst] Graph-dependent rows, heterogeneous schemas와 우리의 PCFI/FISF+GraphPFN 비교는 검증하지 않는다."
+    tags: [graph-structure-use, feature-heterogeneity, zero-shot-gap]
+    source: analyst
+builds_on: [TabPFN, CausalPFN, ConditionalFlowMatching]
+compared_against: [TabPFN]
+open_questions:
+  - "Graph context에 조건화한 feature posterior의 추가 가치가 direct incomplete-input predictor를 넘는가?"
+hooks:
+  - "CFB-U01의 방향과 직접 겹치는 선행연구다. Flow posterior 또는 missing PFN 자체를 새 발명으로 제안하지 않는다."
+notes: "arXiv v2의 Figure 1 및 Section 5.2를 확인했다. 초록의 posterior integration을 explicit completion ensemble이 분류에 필수라는 뜻으로 읽지 않는다."
+added: 2026-11-02

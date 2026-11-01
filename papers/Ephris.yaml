@@ -1,0 +1,38 @@
+id: Ephris
+title: "Message Passing Does More with Less for In-Context Learning on Graphs"
+authors: "Dooho Lee, Jinmo Lee, Minho Jeong, Kijung Shin, Jaemin Yoo"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2609.37057
+citation:
+  type: misc
+  title: "Message Passing Does More with Less for In-Context Learning on Graphs"
+  authors: ["Dooho Lee", "Jinmo Lee", "Minho Jeong", "Kijung Shin", "Jaemin Yoo"]
+  year: 2026
+  arxiv: "2609.37057"
+  url: https://arxiv.org/abs/2609.37057
+  verified_from: [https://arxiv.org/abs/2609.37057, https://arxiv.org/html/2609.37057]
+areas: [graph-fm, pfn]
+problem: "Graph ICL에서 dense node attention의 비용을 줄이면서 새 graph의 context에 적응한다."
+core_idea: "Scalar feature token을 inducing token으로 refine·compress하고 sparse message passing과 global nodes로 ICL을 수행한다. 다양한 topology와 relational dynamics를 가진 synthetic SCM task로 사전학습한다."
+key_assumptions:
+  - "10개보다 많은 class는 ECOC 분해로 처리한다."
+strengths:
+  - text: "논문은 51 datasets에서 품질과 실행 시간의 Pareto 개선을 보고하며 sparse graph ICL의 강한 비교 대상을 제시한다."
+    tags: [inference-cost, graph-scale, zero-shot-gap]
+limitations:
+  - text: "[analyst] 본문에서 우리의 severe whole-node/clustered feature missing 프로토콜에 대한 성능은 확인하지 못했다."
+    tags: [observation-mask, eval-protocol]
+    source: analyst
+  - text: "[analyst] Sparse message passing과 synthetic pretraining의 조합만으로 새 방법의 novelty를 주장하기 어려워졌다."
+    tags: [tokenization, graph-structure-use]
+    source: analyst
+builds_on: [TabICL, GraphPFN, NodePFN]
+compared_against: [GraphPFN, NodePFN]
+open_questions:
+  - "원래 missing 처리와 preprocessing을 보존했을 때 severe missing에서 성능은 어떤가?"
+hooks:
+  - "새 관측 token PFN 및 prior 변경 실험의 강한 graph ICL 비교 대상이다. 미실행 baseline을 이미 이겼다고 쓰지 않는다."
+notes: "arXiv v1을 확인했다. 해당 비교의 runtime 주장은 저자 보고이며 우리 GPU에서 재측정한 결과가 아니다."
+added: 2026-11-02

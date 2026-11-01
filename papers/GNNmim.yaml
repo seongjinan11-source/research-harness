@@ -1,0 +1,41 @@
+id: GNNmim
+title: "Rethinking GNNs and Missing Features: Challenges, Evaluation and a Robust Solution"
+authors: "Francesco Ferrini, Veronica Lachi, Antonio Longa, Bruno Lepri, Matono Akiyoshi, Andrea Passerini, Xin Liu, Manfred Jaeger"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2601.04855
+  code: https://github.com/francescoferrini/gnnmim
+citation:
+  type: misc
+  title: "Rethinking GNNs and Missing Features: Challenges, Evaluation and a Robust Solution"
+  authors: ["Francesco Ferrini", "Veronica Lachi", "Antonio Longa", "Bruno Lepri", "Matono Akiyoshi", "Andrea Passerini", "Xin Liu", "Manfred Jaeger"]
+  year: 2026
+  arxiv: "2601.04855"
+  url: https://arxiv.org/abs/2601.04855
+  verified_from: [https://arxiv.org/abs/2601.04855, https://arxiv.org/html/2601.04855]
+areas: [graph-fm, benchmark]
+problem: "Sparse citation features와 단순 MCAR 평가가 결측 강건성을 충분히 구분하는지 재검토한다."
+core_idea: "Dense-feature graph와 다양한 missingness 및 shift를 평가한다. GNNmim은 zero-filled values에 mask를 붙여 standard GNN에 제공하는 강한 단순 기준선이다."
+key_assumptions:
+  - "Graph structure와 학습 labels가 관측된 node-level task를 다룬다."
+strengths:
+  - text: "Dense raw-feature 평가와 결측 mechanism shift를 제공해 sparse benchmark의 정보 손실 문제를 구분한다."
+    tags: [eval-protocol, observation-mask, distribution-shift]
+  - text: "복잡한 대치 없이 mask 입력만 사용하는 강한 비교 대상을 제시한다."
+    tags: [eval-protocol, uncertainty]
+limitations:
+  - text: "Missing edges, uncertain topology와 missing labels는 범위 밖이라고 저자가 명시한다."
+    tags: [task-coverage, graph-structure-use]
+    source: self
+  - text: "[analyst] Per-graph supervised GNN 결과를 zero-shot PFN 성과로 해석할 수 없다."
+    tags: [zero-shot-gap, adaptation]
+    source: analyst
+builds_on: [MissingIndicatorMethod]
+compared_against: [PCFI, FeaturePropagation, GCNmf, GSPN, GOODIE, FairAC]
+open_questions:
+  - "동일 입력과 예산의 graph ICL에서도 mask baseline의 강점이 유지되는가?"
+hooks:
+  - "Dense raw-feature real graph를 다음 평가에 포함할 근거다. 우리의 dense synthetic random-control 실패를 sparse citation 문제로 설명하지 않는다."
+notes: "메타데이터는 arXiv v2 표기를 사용했다. Author page의 학회·저자 표기와 혼합하지 않는다."
+added: 2026-11-02

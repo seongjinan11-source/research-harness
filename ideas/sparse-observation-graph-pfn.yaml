@@ -1,0 +1,16 @@
+id: sparse-observation-graph-pfn
+date: '2026-11-02'
+text: 관측 cell과 context labels만 실제 observation token으로 두고 original graph를 이용하는 PFN을
+  검토한다. GRAPE와 Ephris의 기존 표현·연산과 중복이 커서 단순 결합의 novelty는 낮다. Dense zero+mask 및 동일 예산
+  대조와 source identity의 독립 가치를 입증해야 하며 새 학습은 미실행이다.
+tags:
+- observation-mask
+- tokenization
+- graph-structure-use
+- inference-cost
+keywords:
+- sparse observation tokens
+- GRAPE
+- observed cells
+- no imputation
+- Ephris

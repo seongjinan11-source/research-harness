@@ -1,0 +1,272 @@
+# 아이디어 점검 (2026-11-02)
+
+> Graph/feature generation과 label mechanism을 독립 재조합하는 synthetic graph prior를 같은 Mask Plain 구조와 query CE로 검증한다. 독립 SCM 원리는 PFNSeparability가 이미 제안했으므로 novelty로 세지 않는다. REG-F01의 finite-bank reweighting과 구분하며 기존 실패 원인이 prior coupling이었다고 단정하지 않는다. Missing predictive는 feature law에도 의존하므로 unlabeled 정보를 무조건 제거하지 않는다. 새 학습은 미실행이다.
+
+태그: compositional-generalization, observation-mask, pretraining-data, prior-mismatch / 키워드: independent SCM, mechanism crossed prior, feature label coupling, task recombination
+
+## 1. 차별점을 정리해야 할 선행연구
+같은 축을 이미 강점으로 내세운 방법 논문이에요. 기각 사유가 아니라, 무엇이 다른지 한 줄로 써둘 대상입니다.
+
+- **Chronos-2** [pretraining-data, prior-mismatch] 실제 다변량 데이터 없이 synthetic multivariatizer만으로 다변량·covariate 능력을 얻었다. synthetic 데이터만으로 학습한 변형도 GIFT-Eval과 Chronos Benchmark II에서 본 모델에 거의 근접해, synthetic prior 설계의 효과를 보여준다.
+- **DeepProbLog** [compositional-generalization] 재귀 규칙을 이용해 한 자리 숫자로 훈련한 인식기를 세 자리 숫자의 덧셈에 재사용한다.
+- **DreamCoder** [compositional-generalization] List 처리·그림·장면 구성 등에서 학습한 구성요소를 미지 태스크에 재사용한다.
+- **GraphPFN** [pretraining-data, prior-mismatch] Graph prior가 구조(multi-level SBM + preferential attachment)와 attribute(MLP·GNN neuron 혼합 SCM)를 분리해 설계되어 있고, 그래프 의존 정도를 mixing 확률로 조절할 수 있다. 부록 분석에서 synthetic graph의 평균 차수·clustering·power-law 적합도 분포가 실제 GraphLand 그래프 통계를 대체로 덮는다.
+- **GSPN** [observation-mask] 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
+- **MaM** [observation-mask] Marginal과 conditional을 연결하는 self-consistency를 명시한다.
+- **MCSSL** [observation-mask] 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
+- **Moirai** [pretraining-data] LOTSA, 학습 라이브러리 uni2ts, 모델 가중치를 모두 공개했다. LOTSA 대신 Monash와 GluonTS만으로 학습하면 in-distribution인 Monash에서도 정규화 MAE가 0.655에서 0.809로 나빠져, 데이터 다양성이 cross-domain 학습에 중요하다는 점을 보였다.
+- **MOMENT** [pretraining-data] 모델 가중치, 사전학습 데이터(Time-series Pile), 코드를 모두 공개했다. 당시 TSFM 다수가 데이터나 가중치를 닫아 두었던 상황에서 재현과 후속 분석의 기반이 되었다.
+- **NodePFN** [prior-mismatch] cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
+- **NodePFN** [pretraining-data, prior-mismatch] 합성 그래프 수를 늘릴수록 성능이 오르는 prior-scale 분석과, ER·cSBM·BA 구성을 바꾼 prior ablation을 함께 제시해 어떤 prior 성분이 도움이 되는지 일부 보여준다.
+- **PEMix** [observation-mask] Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- **PEMix** [observation-mask] Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
+- **PFNSeparability** [pretraining-data, prior-mismatch] Feature law와 conditional label law의 의존성을 prior 설계의 명시적 선택으로 다룬다.
+- **Scallop** [compositional-generalization] Recursion·negation·aggregation으로 이미지·언어·그래프 등의 8개 응용을 표현한다.
+- **StructuralMissingPFN** [observation-mask] Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
+- **Sundial** [pretraining-data] 약 1조 시점 규모의 TimeBench로 규모를 키우는 효과를 보였다. Large는 Small보다 수렴 training loss가 15.38% 낮았고, TSLib에서도 모델이 클수록 일관되게 좋아졌다.
+- **TabImpute** [observation-mask] 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
+- **Time-MoE** [pretraining-data] 309B 시점 규모의 Time-300B와 정제 pipeline을 공개했다. 결측 구간은 평균으로 채우지 않고 잘라내고, 1·2차 차분 비율로 비정상 window를 걸러낸다. 학습 코드와 데이터가 모두 공개되어 있어서, TimeSqueeze처럼 backbone과 데이터를 그대로 두고 tokenizer만 바꾸는 통제 실험의 기반으로 쓰이고 있다.
+- **TimesFM** [pretraining-data, prior-mismatch] synthetic 데이터를 빼면 실제 데이터에 드문 granularity(quarterly, yearly, 10분 등)와 15분 ETT에서 성능이 떨어진다는 ablation을 보여, 실제 corpus의 빈 곳을 synthetic prior로 메우는 효과를 실증했다.
+- **TimesFM** [pretraining-data] 17M, 70M, 200M으로 키울수록 Monash 오차가 단조 감소해 시계열에서도 규모를 키우는 효과가 있음을 초기에 보였다.
+- **Wander** [prior-mismatch] 이론적 근거가 분명하다. 적절한 가정 아래 bounded connected graph에서 Bayes-optimal predictor를 universal하게 근사할 수 있음을 보였고, 필요한 walk 길이가 이전 random-walk 결과처럼 cover time에 비례할 필요가 없다. 또 prior에 새 그래프 family를 섞어도, 관측이 그 family를 배제하는 곳에서는 target risk가 나빠지지 않는다는 prior expansion 정리를 제시해 넓은 prior mixing을 정당화한다.
+- **Wander** [pretraining-data, prior-mismatch] Synthetic prior가 NodePFN식과 GraphPFN식 생성기에 Watts–Strogatz, random geometric, graphon 기반 구조를 더해 섞는다. 그래서 GraphPFN prior가 덮지 못한다고 인정한 공간·기하 구조 그래프를 사전학습 분포에 명시적으로 포함한다.
+- **Wander** [pretraining-data] Task 간 joint pretraining이 성능을 깎지 않고 일부 task를 돕는다. 같은 학습 step을 준 single-task 모델과 비교하면 KG link prediction과 node classification은 거의 같았고, homogeneous link prediction은 40.37%에서 43.39%로 올랐다. 사전학습 KG에는 node feature가 없었는데도, 추론 때 entity 이름의 MiniLM embedding을 feature로 붙이면 edge type과 결합해 성능이 더 올랐다(WN18RR MRR 0.550에서 0.564, ConceptNet100k 0.258에서 0.334).
+
+평가·분석 연구 중 이 축을 다룬 것 (실험 설계·평가 protocol 참고용):
+- **FoundTS** [pretraining-data] LLM 기반 TSFM에서 사전학습된 LLM 가중치를 무작위 초기화로 바꾸는 ablation을 했다. 대부분의 LLM 기반 모델은 LLM 가중치를 쓸 때 오히려 나빠지거나 차이가 없었고, 시계열로 사전학습한 모델은 사전학습 효과가 뚜렷했다. 텍스트 사전학습 지식이 forecasting에 주는 이득이 제한적이라는 근거를 통제된 비교로 만들었다.
+- **GIFT-Eval** [pretraining-data] test와 겹치지 않는 대규모 사전학습 corpus를 test 벤치마크와 함께 공개했다. 이 corpus로 Moirai를 다시 학습해 누수가 없는 foundation model 비교점을 직접 만들었다. 의도적으로 test 데이터 일부를 넣은 Moirai ablation으로 누수가 성능을 부풀린다는 것도 보였는데, 후속 TSFM-BenchReqs가 이 결과를 긴 horizon과 큰 모델일수록 효과가 커진다는 근거로 인용했다.
+- **GNNmim** [observation-mask] Dense raw-feature 평가와 결측 mechanism shift를 제공해 sparse benchmark의 정보 손실 문제를 구분한다.
+- **TSAD-OneLiners** [pretraining-data] 결론이 특정 설정의 우연이 아님을 보였다. 다섯 계열, 여러 모델 크기, context 길이를 모두 바꿔도 결과가 같았고, 모델을 키워도 정상 구간과 이상 구간의 복원이 함께 좋아질 뿐 오차 차이는 벌어지지 않았다. MOMENT 사전학습에 들어가지 않은 데이터셋만 따로 봐도 같은 현상이 나타나 데이터 오염으로 설명되지 않는다는 점도 확인했다.
+- **TSFM-BenchReqs** [pretraining-data] TSFM 22개와 데이터셋 401개의 용도를 체계적으로 추적해 데이터 재사용 지도를 처음으로 수치화했다. 모든 모델에 공통으로 깨끗한 평가 데이터셋이 없고, 어디에도 학습용으로 쓰이지 않은 데이터셋이 6%뿐이라는 결과는 기존 zero-shot 비교의 전제를 직접 흔든다.
+- **TSFM-BenchReqs** [pretraining-data] 중복이 숨는 구체적 사례를 모았다. Electricity가 Autoformer, Monash, Informer에서 서로 다른 이름으로 쓰이는 경우, Australian Electricity Demand를 1/1000로 줄인 부분집합, 같은 출처를 표기하지만 각각 Lyft와 Uber 데이터인 car ride 데이터셋, 여러 저장소를 거치며 변형된 Solar Alabama 데이터가 그 예다. 벤치마크를 만들 때 바로 쓸 수 있는 점검 목록이 된다.
+
+## 2. 동기로 인용할 수 있는 한계
+이 아이디어가 겨냥하는 축에서 기존 논문이 약하다고 확인된 지점이에요. 후속 논문·리뷰 지적이 가장 강한 근거입니다.
+
+- **FoundTS** (후속 논문 지적 — Rethinking Evaluation in the Era of Time Series Foundation Models: (Un)known Information Leakage Challenges (2025)) [pretraining-data] 벤치마크를 만든 쪽이 평가 데이터셋 세 개가 이미 TimesFM, UniTS, TTM의 사전학습에 쓰였다는 것을 모른 채 포함했다고 지적했다. TSFM의 사전학습 데이터 구성을 파악하기 어려운 탓으로 보았다. 그 결과 이 모델들은 해당 데이터셋에서 누수가 없는 최고 모델보다 MSE가 47%에서 184%까지 낮았다. 누수가 없는 데이터셋에서 최고 TSFM의 이점은 0.3%에서 14%에 그쳤다. 이 사례는 FoundTS arXiv판을 인용한 것이다. 같은 논문은 KDD판 TSFM-Bench를 series마다 시간 split을 한 번만 하는 series 중심 평가의 예로도 분류했다.
+- **FoundTS** (후속 논문 지적 — TS-Arena: A Live Forecast Pre-Registration Platform (2025)) [pretraining-data] TSFM-Bench가 정보 누수를 다루지도 논의하지도 않는다고 지적했다. 평가 데이터셋이 TSFM의 사전학습과 평가에 흔히 쓰이는 잘 알려진 데이터셋으로 구성되어 있다는 점도 함께 들었다.
+- **GIFT-Eval** (후속 논문 지적 — Rethinking Evaluation in the Era of Time Series Foundation Models: (Un)known Information Leakage Challenges (2025)) [pretraining-data] GIFT-Eval을 series를 많이 모으고 각 series는 시간상 한 번만 나누는 방식의 대표 사례로 분류했다. 저자들은 시간과 series를 함께 교차검증하는 방식을 best practice로 보는데 GIFT-Eval은 여기에 해당하지 않는다. 또 GIFT-Eval의 leak-free corpus를 포함한 기존 누수 대책이 누수 경로를 체계적으로 분석하지 않은 사후 대응이라고 평가했다. 구체적 사례로 Solar를 들었다. GIFT-Eval은 Alabama 부분집합을 test로 쓰는데 Chronos 사전학습에는 미국 전체 주의 solar 데이터가 들어 있고, 변형된 Alabama 버전은 Monash를 거쳐 TinyTimeMixers와 Lag-Llama 사전학습에도 쓰였다. Sundial은 GIFT-Eval과의 중복을 제거했다고만 밝히고 목록은 공개하지 않았다.
+- **Moirai** (후속 논문 지적 — GIFT-Eval: A Benchmark For General Time Series Forecasting Model Evaluation (2024)) [pretraining-data] GIFT-Eval에서 Moirai는 foundation model 중 유일하게 multivariate 예측을 지원해서 다변량 데이터에서 다른 foundation model보다는 나았지만, 다변량 데이터 전체의 1위와 2위는 PatchTST와 iTransformer였다. 도메인별로는 Moirai와 Chronos가 대부분 상위였으나 Transport와 Web/CloudOps에서는 PatchTST, TFT 같은 deep learning 모델이 앞섰고, 저자들은 이 도메인 데이터의 높은 entropy와 lumpiness, 사전학습 데이터 부족을 원인으로 추정했다. Moirai의 사전학습 데이터가 GIFT-Eval 평가 데이터와 일부 겹친다는 점도 명시했다. GIFT-Eval에는 Moirai 저자 6명 중 5명이 참여했다.
+- **NodePFN** (후속 논문 지적 — A Fair Evaluation of Graph Foundation Models for Node Property Prediction (2026)) [pretraining-data, prior-mismatch] NodePFN이 약한 이유로 세 가지를 가설로 든다. 첫째, sample 하나를 token 하나로 보는 TabPFN v1 시절 구조를 쓴다. 둘째, 강한 tabular FM에서 초기화하지 않고 처음부터 학습한다. 셋째, GraphPFN보다 prior가 단순하다. 이 이유로 자신들의 공정 비교 평가에서는 NodePFN을 아예 제외했다. 검증된 원인이 아니라 저자들의 추정이라는 점은 감안해야 한다.
+- **TimesFM** (후속 논문 지적 — Unified Training of Universal Time Series Forecasting Transformers (Moirai, 2024)) [pretraining-data] 사전학습 데이터가 Google Trends와 Wiki pageview에 크게 의존해서 시계열이 나온 도메인의 다양성이 부족하다고 지적한다. 비교표에서도 TimesFM을 any-variate zero-shot과 probabilistic forecasting을 지원하지 않는 모델로 분류한다.
+- **Chronos-2** (저자 인정) [pretraining-data, prior-mismatch] 단변량을 넘어서는 능력은 전적으로 synthetic 데이터에 기대고 있다고 저자들이 명시한다. synthetic만으로 학습한 변형은 fev-bench skill score가 45.9%로 본 모델(47.3%)보다 낮아, 실제 데이터가 여전히 기여한다는 점도 저자들 ablation에 나타난다.
+- **DeepProbLog** (저자 인정) [compositional-generalization] 자릿수를 늘린 덧셈에서는 인식 오류가 누적되어, 한 자리 문제보다 정확도가 떨어진다고 보고한다.
+- **GIFT-Eval** (저자 인정) [pretraining-data] TimesFM, Chronos, Moirai의 공개 사전학습 데이터가 GIFT-Eval test와 부분적으로 겹친다고 저자들이 인정했다. 누수 영향은 부록에서 따로 분석했지만, 본문 결과표에는 누수 상태가 서로 다른 공개 모델들이 같은 기준으로 나란히 들어가 있다.
+- **GraphPFN** (저자 인정) [prior-mismatch] Graph prior가 social·information network에 맞춰져 있어 traffic network 같은 공간·기하 구조 그래프는 덮지 못한다. 저자들은 geometric graph 같은 random graph model 추가를 향후 과제로 남긴다.
+- **GraphPFN** (저자 인정) [pretraining-data, prior-mismatch] 부록의 prior ablation에서 단순 degree-corrected SBM으로 사전학습해도 제안한 multi-level SBM + PA prior와 비슷하거나 일부 데이터셋에서 더 좋았다. 저자들도 이전 revision과 결과가 달라졌음을 인정하고, 제안 prior는 일관성과 다양성 때문에 유지했다고 설명한다. 즉 새 graph prior의 성능상 기여는 최종본에서 뒷받침되지 않는다.
+- **MCSSL** (저자 인정) [prior-mismatch] Refinement mechanism의 품질에 의존하며 architecture·scale과의 상호작용이 미해결이다(§6).
+- **Moirai** (저자 인정) [pretraining-data] LOTSA의 도메인과 frequency 다양성을 더 늘려야 한다고 인정했다. 실제로 관측치의 59%가 Energy 도메인, 72%가 hourly 계열에 몰려 있다.
+- **Moirai** (저자 인정) [pretraining-data] LOTSA에 PeMS 기반 대규모 데이터(LargeST)를 넣었기 때문에 PEMS03/04/07/08, PEMS-Bay, 장기 예측 벤치마크의 Traffic처럼 같은 출처의 데이터셋은 더 이상 zero-shot 평가로 볼 수 없다고 저자들이 명시했다. 그래서 장기 예측 평가에서 Traffic을 뺐다.
+- **Sundial** (저자 인정) [pretraining-data, prior-mismatch] TimeBench에는 중·저주파 시계열이 많아서 아주 고주파인 데이터에서의 성능은 보장할 수 없다고 저자들이 인정한다. 모델 용량을 키웠어도 hallucination이 생길 수 있다고 밝히며, 다중 스케일 시계열로의 일반화를 중요한 향후 과제로 든다.
+- **TSB-AD** (저자 인정) [pretraining-data] foundation model은 사전학습 corpus가 커서 TSAD 데이터셋이 섞여 들어갈 수 있고, 이 데이터 오염이 가장 큰 우려라고 저자들이 직접 밝혔다. 실제로 MOMENT의 사전학습 데이터에는 anomaly detection 데이터셋이 포함되어 있다. 따라서 foundation model의 순위는 이 단서를 달고 읽어야 한다.
+- **Wander** (저자 인정) [pretraining-data, prior-mismatch] 사전학습 prior가 아직 좁다. Attributed graph는 대부분 synthetic이고, multi-relational 사전학습은 실제 KG 세 개뿐이다. 저자들은 node feature와 edge type을 함께 가진 그래프 쪽으로 prior를 넓히는 것을 향후 과제로 든다.
+- **Chronos-2** (조사자 판단) [prior-mismatch] [analyst] 보고된 벤치마크 결과는 ICL을 켠 상태다. fev-bench 설정표에는 Chronos-2를 cross learning을 켜고 batch size 100으로 돌렸다고 적혀 있다. Chronos-2 논문의 full cross learning 설명대로라면 같은 batch에 들어간 series가 모두 하나의 group으로 묶인다. 따라서 예측이 어떤 series와 같은 batch에 들어갔는지에 달라질 수 있는데, 논문은 무관한 series나 순수 noise covariate를 같은 group에 넣었을 때의 영향을 한 번도 시험하지 않았다. 학습 쪽도 마찬가지다. synthetic covariate task는 의존성이 입혀진 변수 중 일부를 known covariate로 지정하는 방식이라, 논문 설명만 보면 target과 무관한 변수를 일부러 섞는 경우가 prior에 없다. 무관한 context를 무시하는 법을 배울 학습 신호가 없었을 가능성이 있다.
+- **Ephris** (조사자 판단) [observation-mask] [analyst] 본문에서 우리의 severe whole-node/clustered feature missing 프로토콜에 대한 성능은 확인하지 못했다.
+- **GIFT-Eval** (조사자 판단) [pretraining-data] [analyst] 도메인별 우열 차이를 사전학습 데이터 구성 차이로 설명하지만, 같은 corpus로 학습한 비교는 Moirai 한 계열뿐이다. TimesFM, Chronos, VisionTS는 서로 다른 데이터로 학습한 공개 checkpoint를 그대로 썼기 때문에 아키텍처 효과와 데이터 효과를 분리할 수 없다.
+- **GraphPFN** (조사자 판단) [prior-mismatch] [analyst] 부록 통계에서 synthetic graph의 homophily는 중앙값 0.01, 상위 25% 경계가 0.08로 0 근처에 몰려 있다. 반면 city-reviews(0.69) 같은 강한 homophily 그래프는 prior 분포의 꼬리에 있다. NodeGround가 보고한 강한 homophily 조건에서의 열세와 맞아떨어지며, prior의 라벨-구조 결합 분포가 한쪽으로 치우쳐 있을 가능성을 시사한다. Class 비율도 SCM target 이산화에 맡겨져 있어 명시적으로 통제되지 않는다.
+- **MOMENT** (조사자 판단) [pretraining-data] [analyst] Time-series Pile에는 평가에 쓰인 ETT, Electricity, Traffic, Weather, UCR 데이터셋의 train split이 그대로 들어 있다. test split은 분리했으므로 엄밀한 누수는 아니다. 그래도 장기 예측, classification, imputation 결과는 같은 데이터셋의 다른 구간을 본 in-distribution 성능에 가깝고, 처음 보는 도메인으로의 일반화를 보여주지는 않는다.
+- **NodePFN** (조사자 판단) [prior-mismatch] [analyst] 사전학습 그래프는 모두 1,024 node인데 평가는 Questions처럼 수만 node 그래프에서 이뤄진다. 이 크기·degree 외삽이 GCN branch에 어떤 영향을 주는지 분석이 없고, 큰 그래프를 한 번에 넣는지 나눠 넣는지도 논문에 적혀 있지 않다.
+- **PFNSeparability** (조사자 판단) [observation-mask] [analyst] 그래프 의존성과 missing features가 있는 우리의 prior에 정리를 그대로 적용할 수 없다.
+- **StructuralMissingPFN** (조사자 판단) [prior-mismatch] [analyst] 데이터의 causal 구조가 prior 밖에 있을 때 MNAR 식별이나 near-optimality를 보장하지 않는다.
+- **Sundial** (조사자 판단) [pretraining-data] [analyst] TimeBench 시점의 약 62%가 ERA5 기상 재분석 데이터(3시간·12시간·일·주·월·분기 해상도의 합)이고, LOTSA와 Chronos corpus까지 합치면 약 94%다. 저자들이 고주파 성능을 보장하지 못한다고 인정한 것도 이 구성에서 나온다. GIFT-Eval 표에서도 MASE는 1위였지만 전체 rank는 9.06으로 TimesFM(8.24)과 TabPFN(8.27)보다 뒤였다. 비교 대상은 GIFT-Eval 원 논문의 baseline 13개로 한정되었다.
+- **Time-MoE** (조사자 판단) [pretraining-data] [analyst] 확장 효과의 근거가 좁다. zero-shot 평가는 TSLib 6개 데이터셋뿐이고 그중 4개가 같은 출처의 ETT 변형이며 지표도 MSE·MAE만 쓴다. 이 안에서도 base와 large의 평균 MSE는 0.336으로 같았다. 또 Time-300B 관측치의 90.5%가 Nature 도메인(기상·기후)인데 zero-shot 6개 중 Weather와 Global Temp 2개가 바로 그 도메인이다. 처음 보는 도메인으로의 일반화를 보여주기에는 부족하며, Moirai-MoE의 더 넓은 평가에서 순위가 뒤집힌 것과도 맞아떨어진다.
+- **TimesFM** (조사자 판단) [pretraining-data] [analyst] 실제 데이터의 time point 대부분이 Wiki pageview와 Google Trends라는 웹 관심도 시계열이다. 교통·전력 같은 물리 센서 시계열(Traffic, LibCity, Electricity)은 비중이 아주 작고 바로 그 데이터들이 흔한 벤치마크와 겹친다. 따라서 센서 네트워크 데이터에서의 zero-shot 성능이 일반화 능력인지 작은 중복 데이터의 기억인지 이 논문만으로는 구분하기 어렵다.
+- **TSFM-Survey** (조사자 판단) [pretraining-data] [analyst] 같은 모델에 대한 서술이 절마다 어긋난다. MOMENT는 한 절에서 단변량 전용이라고 하면서 다른 절에서는 channel을 독립적으로 처리해 다변량을 다룬다고 쓴다. MOIRAI의 loss는 categorical cross-entropy와 log-likelihood로 엇갈리고, TimesFM의 사전학습 데이터 규모도 본문은 200B, Table 2는 100B로 다르다. Table 2의 값은 원 논문과 대조한 뒤에 써야 한다.
+
+## 3. 키워드가 등장하는 논문
+- 없음
+
+## 4. 내 연구에서 이미 확인한 것
+### 이미 닫은 갈래 — 같은 가설을 이름만 바꿔 반복하는 건 아닌지 확인
+- **BIND-F01** (Common-context witness 고정 곱셈) [compositional-generalization] Class pooling 전 context identity를 보존해 곱하면 실제 graph에서 좋아진다.
+  - 판정: 고정 common-witness product 중단. k20 pooling-before-product: ACM76.390% vs uniform LP85.555%, IMDB28.311% vs35.413%. IMDB k20 test row 약96.1%는 공통 seed support가0이었다.
+  - 닫은 범위: 현재 모든 relation이 같은 context witness를 가져야 하는 고정 곱셈
+  - 닫지 않은 것: Task별 variable binding·논리 연산을 추론하는 일반 executor는 별개다.
+  - 원인·병목 [진단이 지지]: 동일 witness를 강제하는 곱셈이 현재 sparse-support graph에서 대부분의 evidence를 제거했다. 표현력 collision toy가 실제 오류 원인이라는 증거는 없었다.
+  - 재검토 조건: 공유 witness가 필요한 경우와 별개 witness를 허용할 경우를 관측 context로 구분하는 연산이 나올 때.
+  - 기준선 / 최소 재검증: Uniform LP, class-pooling 후 product, 같은 graph의 강한 PFN / 먼저 실제 common-support 빈도와 오류의 관계를 확인하고, 고정 곱셈이 아닌 task-adaptive binding의 independent gain을 비교한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/binding.md
+- **FEAT-F01** (실제 관측 feature 기여의 개입 분석) [observation-mask] IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.
+  - 판정: 해당 feature-reliability 동기 약화. IMDB FISF Full44.55%→No-observed44.51%; controlled Full−Zero0.03%p. 제거 전후 argmax는 평균30.47% 바뀌었으므로 feature가 예측에 무영향이라는 뜻은 아니다.
+  - 닫은 범위: 현재 IMDB/99.5% 결과의 PFN−LP 격차를 실제 feature 복원 이득으로 설명
+  - 닫지 않은 것: 다른 결측률·graph와 query별 feature utility는 기각하지 않는다.
+  - 원인·병목 [진단이 지지]: 평균상 실제 값 효과가 거의 상쇄됐다. 구조 입력 PFN과 synthetic-input 경로의 차이를 feature-only evidence로 오인할 수 없다. Node별 양·음의 효과가 왜 상쇄되는지는 미상이다.
+  - 재검토 조건: 실제 관측 feature의 양·음 utility를 누수 없이 분리하거나, 유효 feature가 남는 조건을 특정한 방법이 나올 때.
+  - 기준선 / 최소 재검증: Structure-only PFN, no-observed end-to-end, independent-injection controlled Full/Zero / Mask·context·query·graph를 맞춘 제거/셔플 개입에서 실제 값 경로와 synthetic injection 변화를 분리한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/feature_intervention.md
+- **COUP-F01** (Feature↔Label 양방향 추론) [observation-mask] Label→feature 반복 피드백이 일방향 추론보다 유용하다.
+  - 판정: 피드백 증분 미확인. Matched 일방향72.72%, 양방향72.66%; 차이−0.06%p CI[−0.50,+0.39]. Shape shift 차이−0.01%p CI[−0.52,+0.55].
+  - 닫은 범위: 현재 quadratic coupling을 더 반복·확대하는 방향
+  - 닫지 않은 것: 비선형 label-conditioned feature inference와 다른 유효 prior는 평가하지 않았다.
+  - 원인·병목 [진단이 지지]: 피드백의 추가 정보를 확보하지 못했다. 관측 feature가 전혀 없으면 latent H가0에 머물고 피드백 제거와 출력이 같았다. 이 구조적 퇴화가 모든 조건의 미개선을 설명하지는 않는다.
+  - 재검토 조건: 라벨 피드백이 실제로 새로운 feature 상태를 만들고 그 정보가 일방향 모델에 없음을 보이는 추론 연산이 나올 때.
+  - 기준선 / 최소 재검증: 동일 예산 일방향 모델, 피드백 제거, 강한 context ridge baseline / Zero-observation 퇴화와 nonzero 조건을 나눠 같은 초기화·task·예산으로 실제 예측 증분을 비교한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/history.md
+- **FMARG-F01** (Frozen GraphPFN joint feature-completion marginalization) [observation-mask] 단일 대치 대신 graph-correlated feature completion의 예측을 평균하면 두 주 결측 조건에서 point/diagonal/zero/PCFI 대조를 모두 넘는다.
+  - 판정: 현재 frozen surrogate completion operator의 사전 primary gate 미통과·확대 중단. uniform NLL zero0.92888, PCFI0.93539, mean0.94890, joint0.91589, diagonal0.91596; clustered NLL zero0.93084, PCFI0.93279, mean0.94698, joint0.91352, diagonal0.91743。Joint−Mean: Uniform-0.03301 CI[-0.06064,-0.01167], Clustered-0.03346 CI[-0.06395,-0.00811]。Joint−Diagonal: Uniform-0.00007 CI[-0.00394,+0.00354], Clustered-0.00391 CI[-0.00697,-0.00087]。
+  - 닫은 범위: 현재 graph Gaussian surrogate, 고정 zero+mask 학습 PFN, 4 completion·동일 생성 family fresh32 graphs에서 이 연산을 확대해 메인 메소드로 삼는 것
+  - 닫지 않은 것: Context labels에 조건화한 feature law, joint predictive training, cross-feature dependency, 정확한 SCM conditional, 실제 graph·unseen schema는 평가하지 않았다. GP likelihood는 공식 SCM posterior가 아니다.
+  - 원인·병목 [원인 미상]: 명시한 Gaussian-process surrogate와 4-sample frozen PFN 연산에서 필요한 동시 우위가 없었다. Feature-law misspecification, zero-fill 학습 PFN의 입력 활용 한계, 유한 Monte Carlo, 실제 feature 정보 부족의 원인은 분리하지 못했다.
+  - 재검토 조건: 관측된 feature evidence와 graph의 joint missing-feature law를 검증 가능하게 연결하고, point fill 및 같은 예산의 covariance 제거·구조 random-feature 대조를 안정적으로 넘는 추론 연산이 나올 때.
+  - 기준선 / 최소 재검증: 동일 PFN의 zero/PCFI/mean/native-NaN·independent sampling·context prior. 후속 positive 주장은 별도의 PCFI/FISF-trained 대조, 비조건부 구조 random features, GCNmf/GSPN/PEMix와의 차별화 필요. / Source·data·예산을 먼저 고정한 새 graph에서 feature conditional의 품질과 predictive marginalization의 증분을 분리한다. Frozen replacement와 distributional-input 재학습을 같은 성과로 세지 않는다.
+  - 원문: findings/sources/feature-marginal-2026-11-02/REPORT.md; findings/sources/feature-marginal-2026-11-02/paired.json
+- **HET-F01** (Native heterogeneous 입력·기존 relational FM 대조) [observation-mask] Adapted HetGFD가 cross-type path 입력보다 큰 증분을 준다.
+  - 판정: 새 메소드 headroom 부족. DBLP k=5 full: cross-type 89.96%, adapted HetGFD 89.92%; drop_A 90.18/90.19%. k=20 full은 둘 다93.55%.
+  - 닫은 범위: 현재 DBLP adapted diffusion의 작은 차이를 범용 missing hetero-PFN 기여로 확대
+  - 닫지 않은 것: 원래 HetGFD/HGT 재현이나 다른 schema에서의 결론이 아니다. 다중 block 소실 조건은 별도 여지가 있다.
+  - 원인·병목 [진단이 지지]: 관계 경로와 남은 native source가 이미 강한 신호를 전달했다. 격차가 작다는 관찰은 확인했지만 redundancy만이 원인이라는 인과 분해는 하지 않았다.
+  - 재검토 조건: 타입별 feature 의미와 관측 pattern을 보존하며 기존 path redundancy를 넘어서는 장치가 나올 때.
+  - 기준선 / 최소 재검증: Native cross-type paths + frozen GraphPFN, 강한 attribute-free metapath LP / 파생 helper feature 누수를 제거하고, 실제 native block graph에서 missing/full 대비와 최강 구조 기준선을 함께 비교한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/native_blocks.md
+- **VIEW-F01** (PCFI/FISF 입력 확장) [observation-mask, prior-mismatch] Support metadata·다중 전파 view·PCFI/FISF 입력 결합이 범용 증분을 준다.
+  - 판정: 전체 조건 진입 기준 미통과. 8조건 평균 PCFI 69.65%, PCFI/FISF views 69.73%, multiscale 69.61%. 사전 +1%p 양쪽 parent 초과 기준을 만족한 후보는 없었다.
+  - 닫은 범위: 현재 frozen 저차원 support/view 추가를 범용 메소드로 확대
+  - 닫지 않은 것: Native cell-wise provenance encoder를 학습하는 방법과 입력 자체를 바꾸는 학습은 평가하지 않았다.
+  - 원인·병목 [원인 미상]: 출력에 보인 증분이 작고 조건별 부호가 달랐다. 표현 정보 중복, projection 손실, frozen backbone의 활용 한계 중 무엇이 주원인인지는 분리하지 못했다.
+  - 재검토 조건: 관측 provenance를 정보 손실 없이 표현·학습하고 equal-width 값 대조를 넘는 장치가 나올 때.
+  - 기준선 / 최소 재검증: PCFI/FISF parents, equal-width value controls, 같은 비용의 single predictor / 같은 차원·추론 비용으로 새 실제 graph에서 parent 둘과 metadata 없는 값 대조를 함께 비교한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/views.md; findings/sources/graphpfn-2026-11-01/pubmed.md
+- **JIMP-F01** (Public GraphPFN 내부 대치 상태 갱신) [observation-mask] PFN 내부의 반복 대치가 동일한 대치기를 PFN 앞에서 실행하는 것과 강한 동일 예산 Plain을 넘는다.
+  - 판정: 현재 구현 확대 보류·내부 대치 증분 미입증. Uniform NLL: Mask Plain0.88681, PCFI Plain0.89527, Frontend0.89276, Interleaved0.89745. Clustered: 0.88318/0.90248/0.89339/0.89508. Interleaved−Frontend는 Uniform+0.00469 CI[−0.01612,+0.02143], Clustered+0.00169 CI[−0.01132,+0.01571]. 사전에 정한 두 조건·세 대조군 동시 우위 gate 미통과.
+  - 닫은 범위: 네 번의 공유 bounded numeric 갱신을 layers0/3/6/9에 넣는 현재 연산·small official-prior family·192 updates를 더 키워 메인 메소드로 확장
+  - 닫지 않은 것: 다른 대치 함수족, pretrained feature decoder, latent belief representation, native NaN-input 대조와 실제 그래프 전이는 별개다. 이 실험은 이전 10K quadratic prototype과 다른 공개 GraphPFN 구현이다.
+  - 원인·병목 [원인 미상]: 실제 공개 PFN과 대치 상태를 연결해 gradient를 학습했지만, 위치를 바꾼 독립 예측 이득은 확인하지 못했다. 정보 중복·현재 numeric 함수족·prior·학습 예산 중 원인은 분리하지 못했다.
+  - 재검토 조건: 대치 상태를 PFN 추론 중 갱신할 때 사전 대치에 없던 예측 정보를 보존·전달하고, 동일 예산 Plain/PCFI 대조를 넘는 연산이 나올 때.
+  - 기준선 / 최소 재검증: 동일 synthetic missing prior로 추가 학습한 PCFI Plain·Mask Plain·Frontend; native NaN GraphPFN의 같은 예산 학습도 향후 필요 / 공통 전처리·초기화·학습 과제·성공 update 수를 맞춘 새 bank에서 반복 위치 효과를 비교한다. 같은 checkpoint의 피드백 제거와 재학습 대조를 구분하고 NLL/Brier/accuracy를 따로 보고한다.
+  - 원문: findings/sources/joint-imputation-2026-11-01/REPORT.md; findings/sources/joint-imputation-2026-11-01/paired.json
+- **JIMP-F02** (Public GraphPFN 내부 대치 상태 갱신) [observation-mask, prior-mismatch] PFN의 query 분류 목적에 맞춘 사전 대치기로 PCFI를 교체하면 주 결측 조건에서 독립 개선을 얻는다.
+  - 판정: 현재 task-trained frontend의 주 조건 우위 미입증. Frontend−PCFI Plain NLL: Uniform−0.00252 CI[−0.01509,+0.00930], Clustered−0.00909 CI[−0.04275,+0.01993]. Frontend−Mask Plain은 +0.00594/ +0.01021이며 두 CI 모두0 포함. 이 대조 CI는 학습·평가 완료 후 보조 분석으로 계산했고 주 gate는 바꾸지 않았다.
+  - 닫은 범위: 현재 11.6K 추가 파라미터의 shared frontend와 예산을 확장해 우수한 범용 대치기로 주장
+  - 닫지 않은 것: 모든 task-aware imputation과 PFN용 전처리가 실패했다는 뜻은 아니다. 피처 복원 MSE를 최소화한 모델과 비교한 결과도 아니다.
+  - 원인·병목 [원인 미상]: Query CE로 학습된 네 단계 대치가 고정 PCFI나 일반 mask/token adapter보다 유용하다는 증거가 부족했다. 정확한 원인은 미상이며 복원 목적이 아닌 분류 목적을 썼다는 사실만으로 개선되지 않았다.
+  - 재검토 조건: PFN에 필요한 정보와 단순 복원값을 구분하는 대치·입력 연산이 강한 동일 학습 대조보다 안정적인 예측 이득을 보일 때.
+  - 기준선 / 최소 재검증: PCFI Plain, Mask Plain, native NaN input, 동일 예산·초기화·query CE / 대치 연산의 개선과 backbone 추가 학습을 분리하고, 먼저 새 그래프 bank에서 prior-only 확률 대조까지 함께 비교한다.
+  - 원문: findings/sources/joint-imputation-2026-11-01/REPORT.md; findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json
+- **LLBP-F03** (Learned-Likelihood BP / EAJ) [observation-mask] Masked-edge likelihood auxiliary가 learned BP의 핵심 학습 기여다.
+  - 판정: 유의 악화 (새 loss 기여 주장 중단). BP + auxiliary − BP predictive-only가 Independent +0.000374 [+0.000187, +0.000587], Exclusive +0.000261 [+0.000144, +0.000364]로 유의하게 나빴고, Coupled는 CI가 0을 포함했다.
+  - 닫은 범위: masked-edge likelihood loss를 새 학습 원리·핵심 성능 증분으로 주장하는 것
+  - 닫지 않은 것: auxiliary 없이도 potential을 학습하고 BP로 좋은 예측을 만들 수 있었다. 실패한 것은 학습 가능성이 아니라 추가 loss의 우수성 주장이다.
+  - 원인·병목 [원인 미상]: 추가 likelihood auxiliary는 predictive-only보다 악화했다. Local likelihood fit이 label risk와 정렬되지 않을 가능성은 가설이며 정확한 원인은 미상이다.
+  - 재검토 조건: Local factor 감독이 query risk에 도움이 되는 조건을 증명·검증한 방법이 나올 때.
+  - 기준선 / 최소 재검증: Learned BP predictive-only, fitted constant / 같은 potential·BP·role update에서 loss만 바꿔 independent gain을 본다.
+  - 원문: findings/sources/llbp-eaj-retrospective-2026-11-01.md
+- **MISS-F01** (초기 Missingness-aware GraphPFN) [observation-mask, prior-mismatch] Missingness prior 추가가 공식 입력 경로와 미학습 MNAR에서 유리하다.
+  - 판정: 범용 우위 미확보·해당 라인 중단. NaN-input Ours−B4는 label_dep에서 +0.75/+1.43/+0.78%p였지만 degree_dep/self_mask는 약 ±0.1%p. Official imputation의 released GraphPFN이 NaN-trained Ours보다 label_dep에서 0.54/0.63/0.12%p 높았다.
+  - 닫은 범위: NaN 학습의 작은 이득을 official-input robustness나 unseen-MNAR 일반화로 승격
+  - 닫지 않은 것: Imputed-input에 맞춘 prior의 효과는 미평가다. 더 넓은 MNAR 식별 문제도 기각하지 않는다.
+  - 원인·병목 [진단이 지지]: Raw-NaN 기준선이 공식 imputation보다 약했고, official fill만으로도 mask가 잘 드러났다(AUROC 0.97). Context-query mask 관계 불일치에서 mixed-prior 이득이 유지되지 않았다. 이것만으로 모든 원인을 확정하지는 않는다.
+  - 재검토 조건: 관측 메커니즘의 context-query shift를 다루면서 official preprocessing 대비 추가 가치를 보이는 학습 원리가 나올 때.
+  - 기준선 / 최소 재검증: 공개 GraphPFN + official imputation, 동일 예산 B4 / 동일 입력 경로·초기화·예산의 새 bank에서 context-query mismatch와 미학습 mask를 paired 평가한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/missing_closure.md; findings/sources/graphpfn-2026-11-01/missing_pilot.md; findings/sources/graphpfn-2026-11-01/missing_context.md
+- **OBS-F01** (Observation-aware subgraph policy) [observation-mask] Mask-aware 학습 정책이 강한 경로 규칙을 넘는다.
+  - 판정: 주 성공 기준 미통과·확장 보류. Budget64 Observation/Paths NLL matched1.07193/1.05353, cluster1.08551/1.07685. 차이+0.01839 CI[−0.06529,+0.10213], +0.00866 CI[−0.11473,+0.11820].
+  - 닫은 범위: 현재 mask/geometry shared-node MLP를 더 학습해 메인 방법으로 확대
+  - 닫지 않은 것: 모든 learned retrieval을 기각하지 않는다. Budget32 cluster 차이−0.19284 CI[−0.39771,+0.00284]는 보조 개발 신호이며 승리가 아니다.
+  - 원인·병목 [원인 미상]: Mask를 보는 것은 유용했지만 비슷한 효과를 고정 shortest-path closure도 얻었다. Joint subset 표현력·stochastic train/deterministic inference·학습 budget 중 정확한 원인은 분리하지 않았다.
+  - 재검토 조건: 동일 resident budget에서 mask-aware 공동 부분그래프 구성이 강한 경로 규칙보다 나은 utility를 보이는 장치가 나올 때.
+  - 기준선 / 최소 재검증: Evidence-paths, PPR, equal-capacity structure policy, random, context prior / Fresh graph에서 사전 budget·mask gate를 고정하고 preprocessing/search를 포함한 비용과 label 예측을 함께 비교한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/observation.md
+- **OBS-F02** (Observation-aware subgraph policy) [prior-mismatch] 부분그래프 선택 개선으로 경쟁력 있는 확률 예측을 확보했다.
+  - 판정: 단순 확률 기준선에도 경쟁력 부족. 사후 Laplace context-prior NLL0.85241/Brier0.55736. Budget64 Observation의 matched NLL은+0.21952 CI[+0.12555,+0.31655], cluster+0.23310 CI[+0.14044,+0.32727] 더 나빴다.
+  - 닫은 범위: PPR/구조 정책 대비 개선만으로 좋은 missing-feature predictor라고 주장
+  - 닫지 않은 것: 확률 점수 비교를 accuracy의 같은 결론으로 자동 확대하지 않는다. Prior 대조는 사후 sanity check다.
+  - 원인·병목 [원인 미상]: Frozen PFN끼리의 상대 개선이 단순 class prior 대비 utility를 보장하지 않았다. Calibration·적은 context·subgraph mismatch·전처리 중 원인은 미상이다.
+  - 재검토 조건: 극소 context·불완전 입력에서 단순 prior보다 좋은 확률 정보를 실제로 회수하는 추론 원리가 나올 때.
+  - 기준선 / 최소 재검증: Uniform class probability, Laplace context prior, full graph, strongest fixed retrieval / 학습 전에 단순 확률·majority 대조를 고정하고 NLL/Brier/accuracy를 독립 graph에서 함께 평가한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/observation.md
+- **RFILL-F01** (Frozen feature sampling random-fill controls) [observation-mask] 현재 frozen conditional Gaussian completion이 분산을 맞춘 random-fill/graph-prior null보다 안정적으로 좋은 예측을 제공한다.
+  - 판정: 사전 random-control gate 미통과; 현재 frozen conditional의 독립 가치 미입증. uniform: Conditional0.91589, iid-matched0.91367, graph-prior-matched0.91325, iid-unit0.91305, wrong-sign0.91511; clustered: Conditional0.91352, iid-matched0.91728, graph-prior-matched0.91166, iid-unit0.91666, wrong-sign0.91460; Conditional−iid matched +0.00222 [-0.00277, +0.00718] / -0.00376 [-0.00973, +0.00184]; Conditional−graph prior matched +0.00265 [-0.00076, +0.00626] / +0.00186 [-0.00105, +0.00512]
+  - 닫은 범위: 현재 zero-input-trained PFN과 Gaussian surrogate를 실제 feature posterior의 메인 메소드로 확대하는 것
+  - 닫지 않은 것: 실제 관측 피처의 직접 효용·context-conditioned feature-law 학습·shared suffix·coherence 일반은 평가하지 않았다. 분산 맞춤 null에는 second-moment 정보가 남고 unit null에는 실제 값 clamp가 남는다.
+  - 원인·병목 [원인 미상]: 동일 관측 입력·checkpoint·분산/forward-budget 대조에서 요구한 conditional law 우위가 없었다. 관측값에 조건화한 복원, 구조 random feature, 확률 smoothing의 원인별 기여를 완전히 식별한 결과는 아니다.
+  - 재검토 조건: Context와 관측 피처가 joint feature law에 제공하는 추가 정보를 proper feature score와 실제 query improvement로 입증하고, 같은 예산의 random/구조 입력보다 좋은 연산이 나올 때.
+  - 기준선 / 최소 재검증: Variance-matched iid/graph prior, iid unit, zero/PCFI/FISF 입력 및 같은 예산·별도 학습의 강한 PFN. 실제 관측 입력 직접 경로와 proposal 경로를 구분. / 새 학습 가설을 source/data/budget 고정 후 별도 bank에서 비교한다. Label-blind law 대조와 true-label-context conditional-law 증분을 분리하며 query labels를 forward에 사용하지 않는다.
+  - 원문: findings/sources/random-fill-controls-2026-11-02/REPORT.md; findings/sources/random-fill-controls-2026-11-02/paired.json
+- **REG-F01** (Reference-regret prior curriculum) [pretraining-data, prior-mismatch] Reference-regret priority가 hard-loss sampling 및 같은 비용의 Random보다 유리하다.
+  - 판정: 메인 방법 확장 보류. Matched NLL Regret0.76377, Loss0.76467, RandomBudget0.76266. Regret−Loss−0.00090 CI[−0.00543,+0.00404], Regret−RandomBudget+0.00111 CI[−0.00145,+0.00387].
+  - 닫은 범위: 현재 cached finite-bank reference-regret sampler 확대
+  - 닫지 않은 것: 학습된 생성기·library·무한 stream prior learning을 구현하거나 실패시킨 것은 아니다.
+  - 원인·병목 [원인 미상]: Reference의 독립 utility와 채점 비용을 정당화하지 못했다. Stale priority·짧은 학습·input loss 중 원인별 영향은 분리하지 않았다. Loss와 regret의 초기 Spearman0.4264는 다른 task를 강조함을 보일 뿐 효용 증명이 아니다.
+  - 재검토 조건: Reference의 추가 감독 비용을 회수하면서 실제로 회수 가능한 task difficulty를 식별하는 학습·생성 원리가 나올 때.
+  - 기준선 / 최소 재검증: Random, Manual, Loss priority, cold-score-cost-matched RandomBudget, frozen FISF / 새 graph bank와 고정 비용으로 Loss/RandomBudget을 함께 넘는지 확인하고 task weighting과 generator 학습을 분리한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/regret.md; findings/sources/graphpfn-2026-11-01/regret_scope.md
+- **PROG-F01** (Compiler–Executor GraphPFN pilot) [compositional-generalization] 고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.
+  - 판정: 현재 compiler 확장 보류. 미학습 조합: compiler61.59%/NLL0.68349, Plain56.15%/0.68425, relational features+TabPFN85.18%/0.33352, ProgramGrid87.73%/0.23073. Grid latency도 더 짧았다.
+  - 닫은 범위: 현재 작은 compiler를 missing·대형 heterograph로 확대
+  - 닫지 않은 것: 프로그램 합성·library learning 일반은 기각하지 않는다. 후보 문법 자체는 학습 중 모두 제공했고 missing은 실험하지 않았다.
+  - 원인·병목 [원인 미상]: 관측 정보는 Grid/TabPFN이 회수했지만 compiler는 context 증가에도 약61.6%에 머물렀다. 표현·search guidance·학습 최적화 중 정확한 원인은 식별하지 못했다.
+  - 재검토 조건: Context에서 계산 구성을 더 효율적으로 식별하고 bounded enumeration/강한 PFN feature 기준선을 넘어서는 장치가 나올 때.
+  - 기준선 / 최소 재검증: Cached ProgramGrid grammar prior, relational execution features+TabPFN, matched Plain / 같은 grammar와 program prior, 후보 구조 접근, fresh graph와 heldout composition에서 품질과 end-to-end 비용을 맞춰 비교한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/program.md
+- **SEL-F01** (Predictor reliability Gate A/B) [observation-mask] Context Brier·local reliability로 PFN/LP의 정답을 선택할 수 있다.
+  - 판정: Gate B 실패, Gate C 보류. IMDB k20 FISF: PFN44.55%, LP35.41%, Global41.51%, Local41.92%, Oracle59.16%. Local은 최강 predictor보다2.63%p 낮았다.
+  - 닫은 범위: 현재 crossfit Brier·local propagation 기반 predictor 선택 규칙
+  - 닫지 않은 것: Oracle headroom을 실제로 회수하는 다른 risk estimator는 기각하지 않는다. 학습 selector는 이 실험에서 미실행이다.
+  - 원인·병목 [진단이 지지]: Brier와 accuracy 목적이 불일치하는 사례를 직접 관측했다. IMDB seed11에서 LP의 test Brier0.6624가 PFN0.6672보다 좋지만 accuracy는35.54% vs44.65%였다. Context noise만으로 설명할 수 없다.
+  - 재검토 조건: 극소 context에서 정확도 효용과 uncertainty를 함께 식별하는 추정법이 나올 때.
+  - 기준선 / 최소 재검증: 최강 단일 PFN/LP, global/local selector, fixed mixture / Query 정답 없는 입력만으로 실제 선택 utility를 독립 graph에서 평가하고 proper score와 accuracy를 분리한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/reliability.md
+- **SRC-F01** (출처 중첩·공유 보간 오차 attention) [observation-mask] Source covariance를 보정하면 분류가 개선된다.
+  - 판정: 독립적인 task-level 이득 미확인. Vanilla accuracy 57.01%, covariance 57.04%. Covariance−vanilla +0.032%p, graph CI [−0.092,+0.157]. Source correspondence 파괴 시 working error score는 0.1395 증가했지만 분류 변화는 작았다.
+  - 닫은 범위: 현재 source-overlap penalty/log 보정을 메인 방법으로 확대
+  - 닫지 않은 것: 출처 의존성이 label 예측을 실제로 왜곡하는 다른 prior와 정확한 uncertainty 추론은 기각하지 않는다.
+  - 원인·병목 [원인 미상]: 오차 proxy가 출처 구조를 감지하는 것과 label decision에 유용한 보정은 달랐다. Working covariance가 실제 posterior error인지도 보장되지 않는다. 분류 실패의 고유 원인은 미상이다.
+  - 재검토 조건: 공유 imputation error와 label risk를 연결하는 검증 가능한 오차 모델·추론법이 나올 때.
+  - 기준선 / 최소 재검증: Vanilla continuation, matched/log/diagonal, covariance-shuffled controls / 분류 성능을 바꾸는 source dependency task에서 correspondence control과 새 graph·seed를 함께 비교한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/source_error.md
+
+### 반복된 교훈
+- **FMARG-L01** (Frozen GraphPFN joint feature-completion marginalization) [observation-mask] 분포형 input을 적용한 frozen 연산의 성과와 Bayesian posterior·새 학습법을 구분한다.
+  - Completion law는 observed-only RMS 좌표의 Gaussian surrogate이며 context labels에는 조건화하지 않는다. PFN은 zero+mask로 학습했던 checkpoint다. PCFI/native-NaN도 같은 checkpoint의 입력 대조이며 각 입력으로 별도 재학습한 모델 성과가 아니다. Point와 sampling 모두 동일4회 PFN forward의 확률을 평균했다.
+- **HET-L02** (Native heterogeneous 입력·기존 relational FM 대조) [observation-mask] 미리 집계된 helper feature를 독립 native 관측값으로 취급하지 않는다.
+  - ACM/IMDB helper feature는 target feature에서 파생된 집계일 수 있음을 확인했다. DBLP는 서로 다른 native source block으로 별도 처리했다.
+- **JR-L01** (초기 JR-PFN과 decoder 표현력) [observation-mask] Positive-only diffusion의 구조적 불가능성은 loss로 고칠 수 없었다.
+  - Context label이 모두 A일 때 당시 decoder는 모든 query에서 p(A)≥0.5. Exact teacher는 nonedge로 반대 class를 지지할 수 있었다. 이후 contrastive/BP decoder가 이 제한을 넘었다.
+- **MISS-L01** (초기 Missingness-aware GraphPFN) [prior-mismatch] 공식 전처리와 신호 대비 headroom을 먼저 확인한다.
+  - No-missing accuracy 약72.9%, majority 약62%, MCAR 80% 손실 약3.5%p. 약한 입력 경로와의 비교만으로 새 prior의 가치를 주장하지 않는다.
+- **NEXT-L01** (Random-fill controls 이후의 문헌 기반 후보 선별) [observation-mask, prior-mismatch] Missing PFN·flow posterior·separable prior·tractable marginalization 자체를 새 발명이라고 제안하지 않는다.
+  - StructuralMissingPFN은 incomplete context의 direct prediction과 auxiliary flow posterior를 이미 제시한다. PFNSeparability는 feature SCM과 label SCM을 독립적으로 뽑는 원리도 명시한다. GSPN은 모델 내 missing-variable marginalization을 제공한다. 새로운 적용이나 구현만으로 novelty가 확보되지 않는다.
+- **RFILL-L01** (Frozen feature sampling random-fill controls) [observation-mask] 분산 맞춤 null을 완전히 무정보 random baseline이라고 부르지 않는다.
+  - Iid/graph-prior variance-matched null에는 원래 conditional variance 정보가 남는다. Unit-noise에는 missing proposal의 관측값 정보가 없지만 실제 관측 위치의 값은 여전히 PFN에 제공한다. Null 우위/동등성을 전체 observed feature의 무용함으로 확대하지 않는다.
+- **REG-L01** (Reference-regret prior curriculum) [observation-mask] Singleton observed feature centering은 입력 정보를 없앨 수 있다.
+  - Test99.5% whole-node에서 PCFI input 전체가0인 episode는 uniform20/32, clustered32/32. 관측 행0~1개에서 centering 손실을 직접 확인했다.
+
+### 보존한 결과 — 재사용할 수 있는 자산
+- **FMARG-P02** (Frozen GraphPFN joint feature-completion marginalization) [observation-mask] 여러 completion의 확률 평균은 같은 PFN의 단일 mean 대치와 PCFI 입력보다 낮은 NLL을 얻었다.
+  - Joint−Mean NLL: Uniform-0.03301 CI[-0.06064,-0.01167], Clustered-0.03346 CI[-0.06395,-0.00811]。Joint−PCFI: Uniform-0.01950 CI[-0.03171,-0.00815], Clustered-0.01926 CI[-0.03135,-0.00633]。 (확대 금지: 사전 primary gate 통과나 새 학습법·정확한 posterior 추론·관측 feature 실제 정보 활용·실제 graph 전이·PCFI-trained 모델 초과로 확대하지 않는다. 현재 PCFI는 같은 zero-input-trained checkpoint의 입력 대조다. 일반 ensemble과의 forward 수는 맞췄지만 구조 random-feature 설명은 분리하지 않았다.)
+- **FMARG-P03** (Frozen GraphPFN joint feature-completion marginalization) [observation-mask] Clustered missing에서는 rho 내 node covariance 보존이 diagonal sampling보다 작은 추가 NLL 이득을 보였다.
+  - Joint−Diagonal NLL: Clustered-0.00391 CI[-0.00697,-0.00087], Uniform-0.00007 CI[-0.00394,+0.00354], k1+0.00369 CI[-0.00590,+0.01254]。 (확대 금지: 전 결측 조건의 covariance 우위, k1 해결, feature law 정확성 또는 실제 observed-value 정보 활용이라고 주장하지 않는다. Diagonal arm도 graph 공유 rho에 의한 의존성을 유지한다. 다중 비교 보정 없는 fixed-RNG 소형 pilot이다.)
+- **VIEW-P01** (PCFI/FISF 입력 확장) [observation-mask] PubMed whole-node secondary에서 input view의 작은 긍정 신호
+  - 평균 PCFI 70.05%, FISF 71.50%, input views 73.00%, prediction average 71.97%. (확대 금지: 한 graph의 secondary이며 전체 조건 우위·novelty·독립 다중 domain 검증으로 확대하지 않는다.)
+- **JIMP-P01** (Public GraphPFN 내부 대치 상태 갱신) [observation-mask] Context가 클래스당1개인 보조 조건에서 Interleaved는 두 Plain보다 낮은 NLL을 얻었다.
+  - k1/node99.5 NLL은 Mask Plain1.00109, PCFI Plain1.16219, Frontend0.99158, Interleaved0.93901. Interleaved−Mask Plain−0.06208 CI[−0.13935,−0.00259], −PCFI−0.22317 CI[−0.39541,−0.09165]. −Frontend−0.05257 CI[−0.12008,+0.00099]. (확대 금지: 사전 대치보다 유의한 우위, 주 gate 통과, 독립 확인 또는 극소 context 문제 해결로 확대하지 않는다. 같은 k1에서 단순 uniform/context prior의 NLL0.91181이 더 낮다. 이 NLL 비교를 accuracy의 유의 개선으로 바꾸지 않는다.)
+- **LLBP-P7** (Learned-Likelihood BP / EAJ) [observation-mask] Nonedge/mask 대조: 관측 상태에 맞는 factor를 쓰는 것이 중요하다.
+  - Observed nonedge를 버리거나 unknown pair를 nonedge로 처리하면 크게 악화했다. 예: Independent에서 edge-only BP 0.082736 vs full edge/nonedge BP 0.016319, 관측률 0.2에서 올바른 mask 0.000226 vs unknown→nonedge 0.044486. (확대 금지: 모든 현실 데이터에서 해당 관측 구분이 주어진다.)
+- **OBS-P01** (Observation-aware subgraph policy) [observation-mask] 관측 상태를 선택 정책에 주는 독립 NLL 효과
+  - Budget64 Observation−Structure NLL matched−0.16128 CI[−0.27147,−0.05871], cluster−0.24695 CI[−0.38936,−0.11246]. PPR 대비도 두 조건 NLL CI가0 미만이었다. (확대 금지: Feature 값의 인과적 효용, strong rule 초과, 확실한 accuracy 개선이나 실제 heterograph 전이로 확대하지 않는다.)
+- **REG-P01** (Reference-regret prior curriculum) [pretraining-data] 같은 update 수의 Random 대비 작은 Matched NLL 개선은 있었다.
+  - Regret−Random−0.00185 CI[−0.00353,−0.00034]. Accuracy58.78→58.79%로 정확도 개선은 미확인. (확대 금지: Loss priority·같은 비용 대조·OOD를 넘었다고 확대하지 않는다.)
+
+### 아직 안 한 것 — 실패로 세지 않음
+- **CFB-U01** (Context-conditioned feature belief GraphPFN 설계 검토) [observation-mask] Context labels에 조건화한 joint feature law와 shared observed encoder/particle suffix를 학습한 GraphPFN
+  - 최종 목표와 loss/계산 공유의 설계만 정리했다. 새 neural model 학습, random-fill null control, label-blind 대비, CE-only 대비 coherence의 독립 이득, latency·memory 및 실제 graph/schema 전이는 아직 실행하지 않았다.
+- **FMARG-U01** (Frozen GraphPFN joint feature-completion marginalization) [prior-mismatch] Joint feature law의 학습과 probabilistic graph 방법 대비 독립적 기여
+  - 새 neural law·auxiliary loss를 학습하지 않았다. Context-conditioned density, 별도 PCFI/FISF 학습 checkpoint, 비조건부 구조 random input, PEMix/GSPN 직접 재현, 실제 heterograph 전이는 이번 실행에서 비교하지 않았다. PEMix를 하네스에 추가한 것은 재검토 단서이지 기존 실패 해결 판정이 아니다.
+- **JIMP-U01** (Public GraphPFN 내부 대치 상태 갱신) [prior-mismatch] 실제 그래프·새 semantic schema·native NaN baseline·다른 결측 추론 함수족
+  - 이 실행은 작은 동일 생성 family의 새 graph와 일부 mask/context shift를 평가했다. Native NaN-input GraphPFN의 동일 예산 추가 학습, 원래 feature decoder 활용, 복원 분포 학습, 실제 heterograph 전이는 실행하지 않았다. True missing feature를 복원했다고 검증한 것도 아니다.
+- **LLBP-U1** (Learned-Likelihood BP / EAJ) [observation-mask] 관계의 관측과정 자체를 학습하는 BP
+  - 제안만 있었고 완료된 실험이 없다.
+- **LLBP-U2** (Learned-Likelihood BP / EAJ) [observation-mask] Relation missingness가 label/role에 의존하는 설정
+  - 실험하지 않았다.
+- **MISS-U01** (초기 Missingness-aware GraphPFN) [observation-mask] Official imputed-input에 맞춘 Ours-Imp 최종 비교
+  - B4imp는 255/500 update에서 중단, 저장 checkpoint는 update 200. Ours-Imp와 seed 1 및 imp evaluation은 실행하지 않았다.
+- **NEXT-U01** (Random-fill controls 이후의 문헌 기반 후보 선별) [compositional-generalization, observation-mask, pretraining-data, prior-mismatch, independent scm, mechanism crossed prior, feature label coupling, task recombination] 그래프·feature 생성 방식과 label rule의 coupling을 바꾸는 mechanism-crossed graph prior
+  - 현재 1순위 연구 후보지만 독립 SCM 원리 자체는 선행연구다. 단순 pairing 순서가 아닌 생성 joint distribution을 바꾸고 같은 Mask Plain 구조·학습량으로 비교해야 한다. REG-F01은 finite bank의 재가중 실패여서 이 후보를 실행해 실패한 결과가 아니다. RFILL-F01이 이 coupling을 실패 원인으로 입증한 것도 아니다.
+- **NEXT-U02** (Random-fill controls 이후의 문헌 기반 후보 선별) [observation-mask] Observed-cell 집합과 원래 graph를 직접 처리하는 sparse observation GraphPFN
+  - 숫자 completion을 생성하지 않고 (node,feature,value) 관측 token과 context-label token을 원래 graph에 연결한다. GRAPE의 관측 bipartite 표현과 Ephris의 sparse ICL과 겹치므로 단순 tokenization 조합은 novelty가 약하다. 성능·연산 예산을 동시에 확인할 보조 후보로 남긴다.
+- **NEXT-U03** (Random-fill controls 이후의 문헌 기반 후보 선별) [observation-mask] Sampling 대신 tractable circuit으로 missing variables를 소거하는 prior-fitted graph predictor
+  - 확률 circuit의 query conditional을 synthetic tasks에서 학습하는 고위험 후보다. GSPN의 exact local marginal과 conditional SPN은 기존 방법이므로 PFN을 붙였다는 사실만으로 새 메소드가 되지 않는다.
+- **RFILL-U01** (Frozen feature sampling random-fill controls) [observation-mask] 이 대조 이후의 context-conditioned neural feature law와 shared PFN 학습
+  - 이번 실행의 optimizer update는0회다. 새 모델을 실제 학습한 결과가 아니며 CFB-U01의 미실행 항목을 완료나 실패로 바꾸지 않는다.
+- **REG-U01** (Reference-regret prior curriculum) [pretraining-data] 학습된 prior generator·새 mechanism library
+  - 실행한 것은 같은 official generator의 finite task bank를 재가중하는 pilot이다.

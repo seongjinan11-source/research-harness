@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 22개 프로젝트 · 95개 기록 (실패·중단 33개, 보존 19개, 교훈 31개, 미실행 12개)
+총 23개 프로젝트 · 99개 기록 (실패·중단 33개, 보존 19개, 교훈 32개, 미실행 15개)
 
 ## Common-context witness 고정 곱셈
 
@@ -753,6 +753,34 @@ k20 FISF/LP 50:50: ACM82.20% vs LP85.55%, IMDB42.54% vs FISF44.55%. 같은 query
 CRR 제안은 Plain과 기능이 겹쳐 철회했다. 기존 모델 진단을 새 router를 실제 학습해 실패한 결과로 세지 않는다.
 
 - 원문: [findings/sources/graphpfn-2026-11-01/role_reversal.md](../findings/sources/graphpfn-2026-11-01/role_reversal.md)
+
+## Random-fill controls 이후의 문헌 기반 후보 선별
+
+실험 조건: 문헌 원문과 기존 실패의 범위를 대조한 연구 제안. 새로운 GPU 학습·성능 결과가 아니다.
+
+### NEXT-L01 [교훈] Missing PFN·flow posterior·separable prior·tractable marginalization 자체를 새 발명이라고 제안하지 않는다.
+
+StructuralMissingPFN은 incomplete context의 direct prediction과 auxiliary flow posterior를 이미 제시한다. PFNSeparability는 feature SCM과 label SCM을 독립적으로 뽑는 원리도 명시한다. GSPN은 모델 내 missing-variable marginalization을 제공한다. 새로운 적용이나 구현만으로 novelty가 확보되지 않는다.
+
+- 원문: [papers/PFNSeparability.yaml](../papers/PFNSeparability.yaml); [papers/StructuralMissingPFN.yaml](../papers/StructuralMissingPFN.yaml); [papers/GSPN.yaml](../papers/GSPN.yaml)
+
+### NEXT-U01 [미실행] 그래프·feature 생성 방식과 label rule의 coupling을 바꾸는 mechanism-crossed graph prior
+
+현재 1순위 연구 후보지만 독립 SCM 원리 자체는 선행연구다. 단순 pairing 순서가 아닌 생성 joint distribution을 바꾸고 같은 Mask Plain 구조·학습량으로 비교해야 한다. REG-F01은 finite bank의 재가중 실패여서 이 후보를 실행해 실패한 결과가 아니다. RFILL-F01이 이 coupling을 실패 원인으로 입증한 것도 아니다.
+
+- 원문: [papers/PFNSeparability.yaml](../papers/PFNSeparability.yaml); [findings/reference-regret.yaml](../findings/reference-regret.yaml); [findings/random-fill-controls.yaml](../findings/random-fill-controls.yaml)
+
+### NEXT-U02 [미실행] Observed-cell 집합과 원래 graph를 직접 처리하는 sparse observation GraphPFN
+
+숫자 completion을 생성하지 않고 (node,feature,value) 관측 token과 context-label token을 원래 graph에 연결한다. GRAPE의 관측 bipartite 표현과 Ephris의 sparse ICL과 겹치므로 단순 tokenization 조합은 novelty가 약하다. 성능·연산 예산을 동시에 확인할 보조 후보로 남긴다.
+
+- 원문: [papers/Ephris.yaml](../papers/Ephris.yaml); [findings/source-error.yaml](../findings/source-error.yaml); [findings/binding-product.yaml](../findings/binding-product.yaml)
+
+### NEXT-U03 [미실행] Sampling 대신 tractable circuit으로 missing variables를 소거하는 prior-fitted graph predictor
+
+확률 circuit의 query conditional을 synthetic tasks에서 학습하는 고위험 후보다. GSPN의 exact local marginal과 conditional SPN은 기존 방법이므로 PFN을 붙였다는 사실만으로 새 메소드가 되지 않는다.
+
+- 원문: [papers/GSPN.yaml](../papers/GSPN.yaml)
 
 ## Frozen feature sampling random-fill controls
 

@@ -31,6 +31,8 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=amortized-inference, uncertainty; keywords=-
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
 ## FEAT-F01 — IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.
 
@@ -45,8 +47,12 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
 ## COUP-F01 — Label→feature 반복 피드백이 일방향 추론보다 유용하다.
 
@@ -61,6 +67,10 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=amortized-inference, observation-mask; keywords=-
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 복수 태그 일치 (약한 단서); tags=amortized-inference, observation-mask; keywords=-
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
 - [Wander](https://arxiv.org/abs/2610.06694): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=bidirectional
   - 기록된 강점: 구조적 수용 범위를 추론 때 조절할 수 있다. Message passing 기반 GFM은 이 범위가 network 깊이에 고정된다. 서로 떨어진 25×25 grid 5개에 grid마다 label을 2개만 준 GRIDS에서, walk 길이를 4에서 64로 늘리자 정확도가 56.6%에서 96.6%로 올랐다. Labeled 노드를 지나는 walk만 남기면 100%였다. 같은 과제에서 GraphPFN은 23.3%, NodePFN은 26.6%였다. Feature 없는 실제 그래프 4개에서도 Wander는 76.5%로 GraphPFN(60.1%)을 크게 앞섰다.
 
@@ -77,8 +87,12 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use, observation-mask, uncertainty; keywords=feature distribution
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
 ## HET-F01 — Adapted HetGFD가 cross-type path 입력보다 큰 증분을 준다.
 
@@ -108,9 +122,15 @@
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=feature-heterogeneity, prior-mismatch; keywords=feature token
   - 기록된 강점: LimiX의 per-feature tokenization을 그대로 물려받아, 데이터셋마다 feature 개수가 달라도 차원 축소 없이 하나의 모델로 처리한다. 같은 모델이 node classification과 node regression을 모두 다룬다.
   - 기록된 강점: Graph prior가 구조(multi-level SBM + preferential attachment)와 attribute(MLP·GNN neuron 혼합 SCM)를 분리해 설계되어 있고, 그래프 의존 정도를 mixing 확률로 조절할 수 있다. 부록 분석에서 synthetic graph의 평균 차수·clustering·power-law 적합도 분포가 실제 GraphLand 그래프 통계를 대체로 덮는다.
+- [GSPN](https://arxiv.org/abs/2305.10544): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=missing
+  - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=missing
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
   - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=missing
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=missing
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
 
 ## JIMP-F01 — PFN 내부의 반복 대치가 동일한 대치기를 PFN 앞에서 실행하는 것과 강한 동일 예산 Plain을 넘는다.
 
@@ -126,6 +146,8 @@
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, tokenization; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
   - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 복수 태그 일치 (약한 단서); tags=observation-mask, tokenization; keywords=-
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=feature token
   - 기록된 강점: Hand-crafted graph feature(Laplacian PE, PageRank, 이웃 평균 등)에 기대지 않고, 모델 안에서 adjacency-masked attention으로 message passing을 직접 학습한다. 그 결과 ICL만으로도 G2T-FM·TAG와 튜닝된 GNN보다 평균 rank가 높고, 무거운 전처리도 필요 없다.
 
@@ -140,6 +162,8 @@
 - 닫지 않은 것: 모든 task-aware imputation과 PFN용 전처리가 실패했다는 뜻은 아니다. 피처 복원 MSE를 최소화한 모델과 비교한 결과도 아니다.
 - 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json](../findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json)
 
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 구체 키워드+태그 일치 (미검증); tags=observation-mask, tokenization; keywords=imputation
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=observation-mask, tokenization; keywords=-
   - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
 - [MOMENT](https://arxiv.org/abs/2402.03885): 구체 키워드+태그 일치 (미검증); tags=tokenization; keywords=imputation
@@ -242,8 +266,8 @@
 - 닫지 않은 것: 직접 predictive 학습이 작동하지 않았다는 결론은 틀리다. B의 출력은 decoder에 맞춘 aggregation weights로 남긴다.
 - 원문: [findings/sources/llbp-eaj-retrospective-2026-11-01.md](../findings/sources/llbp-eaj-retrospective-2026-11-01.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=amortized-inference, uncertainty; keywords=posterior, predictive
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
 ## LLBP-F08 — 같은 potential에서 role weights를 다시 계산하는 자기-update가 OOD 문제를 전반적으로 해결한다.
 
@@ -272,6 +296,8 @@
 
 - [LoGIC](https://arxiv.org/abs/2609.05955): 구체 키워드+태그 일치 (미검증); tags=adaptation; keywords=training
   - 기록된 강점: Backbone을 재학습하지 않는 추론 시점 인터페이스라서, pure-tabular backbone(G2T featurization + TabPFNv2·LimiX)과 adapter backbone(GraphPFN)에 같은 방식으로 붙는다. 정식화 자체가 full-context tabular 추론, per-query retrieval, full-graph 추론을 특수한 경우로 포함하므로 기존 protocol과의 관계도 분명하다.
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 구체 키워드+태그 일치 (미검증); tags=amortized-inference; keywords=training
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
 
 ## LLBP-F10 — Low-density 실패는 partition 근사 또는 role weights만의 문제다.
 
@@ -352,9 +378,13 @@
 - 닫지 않은 것: Imputed-input에 맞춘 prior의 효과는 미평가다. 더 넓은 MNAR 식별 문제도 기각하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/missing_closure.md](../findings/sources/graphpfn-2026-11-01/missing_closure.md); [findings/sources/graphpfn-2026-11-01/missing_pilot.md](../findings/sources/graphpfn-2026-11-01/missing_pilot.md); [findings/sources/graphpfn-2026-11-01/missing_context.md](../findings/sources/graphpfn-2026-11-01/missing_context.md)
 
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=imputation, missingness
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=missingness
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
   - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=missingness
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
 ## OBS-F01 — Mask-aware 학습 정책이 강한 경로 규칙을 넘는다.
 
@@ -431,8 +461,12 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
 ## REG-F01 — Reference-regret priority가 hard-loss sampling 및 같은 비용의 Random보다 유리하다.
 
@@ -451,6 +485,8 @@
   - 기록된 강점: Graph prior가 구조(multi-level SBM + preferential attachment)와 attribute(MLP·GNN neuron 혼합 SCM)를 분리해 설계되어 있고, 그래프 의존 정도를 mixing 확률로 조절할 수 있다. 부록 분석에서 synthetic graph의 평균 차수·clustering·power-law 적합도 분포가 실제 GraphLand 그래프 통계를 대체로 덮는다.
 - [NodePFN](https://arxiv.org/abs/2604.19028): 복수 태그 일치 (약한 단서); tags=pretraining-data, prior-mismatch; keywords=-
   - 기록된 강점: 합성 그래프 수를 늘릴수록 성능이 오르는 prior-scale 분석과, ER·cSBM·BA 구성을 바꾼 prior ablation을 함께 제시해 어떤 prior 성분이 도움이 되는지 일부 보여준다.
+- [PFNSeparability](https://arxiv.org/abs/2610.14989): 복수 태그 일치 (약한 단서); tags=pretraining-data, prior-mismatch; keywords=-
+  - 기록된 강점: Feature law와 conditional label law의 의존성을 prior 설계의 명시적 선택으로 다룬다.
 - [TimesFM](https://arxiv.org/abs/2310.10688): 복수 태그 일치 (약한 단서); tags=pretraining-data, prior-mismatch; keywords=-
   - 기록된 강점: synthetic 데이터를 빼면 실제 데이터에 드문 granularity(quarterly, yearly, 10분 등)와 15분 ETT에서 성능이 떨어진다는 ablation을 보여, 실제 corpus의 빈 곳을 synthetic prior로 메우는 효과를 실증했다.
 - [Wander](https://arxiv.org/abs/2610.06694): 복수 태그 일치 (약한 단서); tags=pretraining-data, prior-mismatch; keywords=-
@@ -501,10 +537,14 @@
 - 닫지 않은 것: Oracle headroom을 실제로 회수하는 다른 risk estimator는 기각하지 않는다. 학습 selector는 이 실험에서 미실행이다.
 - 원문: [findings/sources/graphpfn-2026-11-01/reliability.md](../findings/sources/graphpfn-2026-11-01/reliability.md)
 
+- [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
 ## SRC-F01 — Source covariance를 보정하면 분류가 개선된다.
 
@@ -517,7 +557,13 @@
 - 닫지 않은 것: 출처 의존성이 label 예측을 실제로 왜곡하는 다른 prior와 정확한 uncertainty 추론은 기각하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/source_error.md](../findings/sources/graphpfn-2026-11-01/source_error.md)
 
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=amortized-inference, observation-mask, uncertainty; keywords=-
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
+- [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
+  - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 복수 태그 일치 (약한 단서); tags=amortized-inference, observation-mask; keywords=-
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.

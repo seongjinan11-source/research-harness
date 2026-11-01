@@ -1,0 +1,40 @@
+id: PFNSeparability
+title: "Characterizing the Separability Gap in Prior-Data Fitted Networks"
+authors: "Julius Kobialka, Manuel Hülskamp, Thomas Nagler, David Rügamer"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2610.14989
+citation:
+  type: misc
+  title: "Characterizing the Separability Gap in Prior-Data Fitted Networks"
+  authors: ["Julius Kobialka", "Manuel Hülskamp", "Thomas Nagler", "David Rügamer"]
+  year: 2026
+  arxiv: "2610.14989"
+  url: https://arxiv.org/abs/2610.14989
+  verified_from: [https://arxiv.org/abs/2610.14989, https://arxiv.org/html/2610.14989]
+areas: [pfn, ml-foundations]
+problem: "PFN의 feature law와 label mechanism이 prior에서 의존할 때 예측 대상과 분포 이동의 영향을 분석한다."
+core_idea: "비분리 prior에서는 query feature도 task posterior를 갱신한다. Misspecification에서 feature law 적합과 conditional label 적합이 충돌할 수 있으며, 반대로 같은 의존성을 이용한 SemiTabICL은 unlabeled observations에서 이득을 얻는다."
+key_assumptions:
+  - "주 이론은 task에 조건부로 row가 iid인 tabular 설정이다."
+strengths:
+  - text: "Feature law와 conditional label law의 의존성을 prior 설계의 명시적 선택으로 다룬다."
+    tags: [prior-mismatch, pretraining-data, theory-gap]
+  - text: "추가 unlabeled row를 실제 사용하는 matched SemiTabICL 대조를 제시한다."
+    tags: [context-scale, adaptation]
+limitations:
+  - text: "Production PFN이 비분리성에서 실제로 얼마나 이득이나 손해를 얻는지는 미확인이라고 저자가 명시한다."
+    tags: [eval-protocol, theory-gap]
+    source: self
+  - text: "[analyst] 그래프 의존성과 missing features가 있는 우리의 prior에 정리를 그대로 적용할 수 없다."
+    tags: [graph-structure-use, observation-mask]
+    source: analyst
+builds_on: [TabPFN, TabICLv2]
+compared_against: [TabICL, SelfTrainingClassifier]
+open_questions:
+  - "Unlabeled 정보의 이득을 유지하면서 잘못된 mechanism coupling을 줄일 수 있는가?"
+hooks:
+  - "REG-F01의 finite-bank 재가중과 다른 prior 변경 후보지만 실패 원인 규명이나 해결 증거는 아니다."
+notes: "두 독립 SCM과 coupling-strength prior는 본문이 이미 제안한다. 이를 우리 novelty라고 부르지 않는다."
+added: 2026-11-02
