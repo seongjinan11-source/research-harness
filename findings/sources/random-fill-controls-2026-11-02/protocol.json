@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-02",
+  "stage": "frozen_sampling_random_fill_controls",
+  "checkpoint_seeds": [11, 12, 13],
+  "views": 4,
+  "graphs": 32,
+  "reference": "feature_marginal_pfn: unchanged bank, Gaussian law, frozen mask_plain checkpoints, original feature-position RNG schedule",
+  "arms": ["conditional_joint", "iid_variance_matched", "graph_prior_variance_matched", "iid_unit", "wrong_sign_mean"],
+  "controls": {
+    "conditional_joint": "Original conditional joint completion, replayed in the same worker process as the controls.",
+    "iid_variance_matched": "Missing mean zero and independent Gaussian noise. Per-cell variance equals the original mixture's analytical conditional variance, including between-component mean variation. Actual observed values remain clamped. This null retains value-dependent variance information; it is not wholly unconditional.",
+    "graph_prior_variance_matched": "Zero missing mean, uniform original rho prior, unconditional graph covariance restricted to missing locations, scaled to the original mixture's per-cell conditional variance. No observed-conditioned mean, rho posterior or conditional covariance. Variance matching still retains the original law's second moments.",
+    "iid_unit": "Zero missing mean and unit-variance independent noise; no actual-value information in the missing proposal. Actual observed values remain clamped.",
+    "wrong_sign_mean": "Same conditional rho draws, covariance and noise as conditional_joint, but the mean at missing cells has its sign reversed. Actual observed values remain clamped. This is an alignment intervention, not a proposed method."
+  },
+  "primary": "conditional_joint must beat both variance-matched nulls in graph-paired NLL on uniform and clustered groups, with both rates 90/99.5 averaged and all four CI upper limits below zero. Also report iid_unit, wrong-sign and existing original point controls. No cherry-picking k1, rate or seed. A failed gate closes the claim that this frozen Gaussian conditional law adds robust value over these nulls, not label-conditioned feature inference generally.",
+  "metrics": "NLL, Brier and accuracy. 5000 paired graph bootstraps after averaging fixed checkpoint seeds/rates. No multiplicity correction. Seed and completion randomness are held fixed. Full and k1 remain secondary.",
+  "scope": "Development-bank mechanism control, not independent final validation and not training the context-conditioned model. Context labels are unchanged and enter the PFN only. No query labels or hidden feature values enter completion or forward. Every scored arm uses four probability views. Identical full-observed arrays share the exact same computed probabilities to avoid redundant calls. No latency superiority claim from concurrent workers."
+}
