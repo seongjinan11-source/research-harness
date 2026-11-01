@@ -1,0 +1,126 @@
+project: Mechanism-crossed GraphPFN controlled-prior pilot
+date: '2026-11-02'
+source: findings/sources/mechanism-crossed-2026-11-02/REPORT.md
+setting: 새64 train/32 test base graphs,4 arms×3 seeds×256 updates; 공개 Mask Plain continuation,
+  마지막 checkpoint 평가.
+related:
+- GraphPFN
+- PFNSeparability
+- GNNmim
+- Ephris
+entries:
+- id: MCP-F01
+  kind: failure
+  claim: 동일 주변분포의 feature-style/label-rule crossing이 강한 입력 기준선을 넘어 공식-prior 결측 과제로
+    전이된다.
+  observation: 'Gate A=False, Gate B=False; controlled:offdiagonal:uniform vs coupled_mask:
+    -0.00119 [-0.00603, +0.00402]; controlled:offdiagonal:clustered vs coupled_mask:
+    -0.00288 [-0.00817, +0.00207]; controlled:offdiagonal:uniform vs coupled_pcfi:
+    +0.00396 [-0.00917, +0.01896]; controlled:offdiagonal:clustered vs coupled_pcfi:
+    -0.01740 [-0.03587, -0.00337]; official:any:uniform vs official_mask: -0.00210
+    [-0.00970, +0.00530]; official:any:clustered vs official_mask: -0.00369 [-0.00928,
+    +0.00194]'
+  verdict: 두 gate 동시 통과 실패; 현재 controlled prior를 메인 방법으로 확대하지 않음
+  failure_reason: 정해진 초기화·256 성공 updates·함수족에서 요구한 predictive 우위를 확보하지 못했다. Prior의
+    한계, 학습량, preprocessing, context 식별 난도 중 원인을 분리한 실험은 아니다.
+  reason_status: unknown
+  excluded_explanations:
+  - 서로 다른 trainable parameter 수나 seed별 update schedule 차이로 대조를 설명할 수 없도록 검사했다.
+  closed_scope: 이 finite controlled family와 공개 Mask Plain continuation 설정에서 단순 mechanism
+    crossing만으로 범용 missing GraphPFN 성과를 주장하는 것
+  not_closed: 다른 그래프 prior·관측 정보가 충분한 task family·실제 graph·동적 learned generator 일반을
+    기각하지 않는다. 기존 공식 prior의 induced coupling 자체가 실패 원인이라고 입증하지 않았다.
+  reopen_when: 어떤 관측 정보와 예측 rule의 조합이 전이에 필요한지를 구체적으로 바꾸는 generator/inference 원리가
+    나오고 동일 비용의 강한 대조를 넘을 근거가 생길 때.
+  comparison_floor: 동일 구조·초기화·update의 Official/Coupled Mask, 입력으로 학습한 Coupled PCFI,
+    context/uniform prior, LP, 4-view random-fill; 실제 graph에서는 PCFI/FISF-trained PFN·Ephris도
+    필요.
+  recheck: 새 독립 bank에서 full/node/cell 조건과 actual-feature 제거·셔플을 고정해 검증한다. 같은 bank의
+    loss/epochs 튜닝으로 구제하지 않는다. Controlled/official family 변경과 coupling만의 효과를 분리한다.
+  tags:
+  - prior-mismatch
+  - pretraining-data
+  - observation-mask
+  - distribution-shift
+  keywords:
+  - mechanism crossed prior
+  - independent SCM
+  - same marginal distributions
+  - controlled prior
+  - official transfer
+  reopen_tags:
+  - prior-mismatch
+  - pretraining-data
+  - compositional-generalization
+  reopen_keywords:
+  - predictive mechanism prior
+  - observation information
+  - graph task generation
+  - mechanism recombination
+  source_refs:
+  - findings/sources/mechanism-crossed-2026-11-02/REPORT.md
+  - findings/sources/mechanism-crossed-2026-11-02/paired.json
+  - findings/sources/mechanism-crossed-2026-11-02/protocol.json
+  evidence: 실제12 checkpoint 학습 및32 fresh base graph 단위 paired 분석
+  revisit_status: open
+- id: MCP-L01
+  kind: lesson
+  claim: Mechanism-crossing의 실제 학습을 기존 finite-bank curriculum과 분리해 기록한다.
+  observation: NEXT-U01의 첫 pilot을 실행했다. 12 checkpoints, 3072 successful updates, 12288
+    probability files 재채점. Concrete feature/mask/query 및 rule-instance marginals를
+    맞췄고 model 구조·초기화·schedule을 유지했다. One graph/update이므로 paired loss는 없다.
+  tags:
+  - eval-protocol
+  - pretraining-data
+  - prior-mismatch
+  keywords:
+  - matched marginal exposures
+  - no paired loss
+  - same initialization
+  - synthetic task distribution
+  source_refs:
+  - findings/sources/mechanism-crossed-2026-11-02/audit.json
+  - findings/sources/mechanism-crossed-2026-11-02/exposure.json
+  - findings/sources/mechanism-crossed-2026-11-02/preflight.json
+  evidence: 실행·source·hash 감사
+- id: MCP-U01
+  kind: untested
+  claim: Real dense-feature graph, heterogeneous schema 및 본격적인 separable generative
+    prior 검증
+  observation: 현재 실행은 graph/function seed가 새로운 작은 binary synthetic family다. 원래 GraphPFN
+    실패의 causal 설명, 실제 데이터 전이, FISF/Ephris 비교, 모든 induced laws의 분리성 보장은 수행하지 않았다. Known-rule
+    sign-only 정보량 진단은 배포 predictor의 성과가 아니다.
+  tags:
+  - zero-shot-gap
+  - feature-heterogeneity
+  - theory-gap
+  keywords:
+  - real graph transfer
+  - unseen schema
+  - induced law separability
+  - privileged information check
+  source_refs:
+  - findings/sources/mechanism-crossed-2026-11-02/REPORT.md
+  - findings/sources/mechanism-crossed-2026-11-02/oracle_information.json
+  evidence: 명시한 미실행 범위
+- id: MCP-P02
+  kind: preserved
+  claim: Constructed off-diagonal 조건의 Coupled Mask 대비 정확도 신호
+  observation: 'controlled:offdiagonal:clustered: accuracy difference +3.434%p, CI
+    [+0.960, +6.152]; controlled:offdiagonal:node: accuracy difference +2.702%p, CI
+    [+0.431, +5.143]'
+  do_not_claim: 사후 선별해 보존한 보조 metric 결과이며 다중 비교 보정과 독립 재검증은 없다. LP·PCFI·Official Mask
+    대비 같은 정확도 우위, NLL 우위 또는 실제 graph 전이로 확대하지 않고 원래 두 gate의 No-Go를 유지한다.
+  tags:
+  - prior-mismatch
+  - distribution-shift
+  - eval-protocol
+  keywords:
+  - mechanism crossing
+  - off diagonal
+  - secondary accuracy
+  - no multiplicity correction
+  source_refs:
+  - findings/sources/mechanism-crossed-2026-11-02/secondary_accuracy.json
+  - findings/sources/mechanism-crossed-2026-11-02/paired.json
+  evidence: 원래 분석에 포함된 secondary accuracy contrast의 사후 보존

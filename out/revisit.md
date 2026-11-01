@@ -367,6 +367,30 @@
   - 기록된 강점: cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
   - 기록된 강점: attention branch와 GCN branch를 층마다 병렬로 두는 단순한 dual-branch 구조로 그래프 구조를 PFN에 넣었다. MPNN branch를 빼면 Cora와 Wisconsin에서 accuracy가 크게 떨어져, 구조 branch의 기여가 ablation으로 확인된다.
 
+## MCP-F01 — 동일 주변분포의 feature-style/label-rule crossing이 강한 입력 기준선을 넘어 공식-prior 결측 과제로 전이된다.
+
+- 판정: 두 gate 동시 통과 실패; 현재 controlled prior를 메인 방법으로 확대하지 않음
+- 원인·병목 [원인 미상]: 정해진 초기화·256 성공 updates·함수족에서 요구한 predictive 우위를 확보하지 못했다. Prior의 한계, 학습량, preprocessing, context 식별 난도 중 원인을 분리한 실험은 아니다.
+- 반증·배제한 설명: 서로 다른 trainable parameter 수나 seed별 update schedule 차이로 대조를 설명할 수 없도록 검사했다.
+- 재검토 조건: 어떤 관측 정보와 예측 rule의 조합이 전이에 필요한지를 구체적으로 바꾸는 generator/inference 원리가 나오고 동일 비용의 강한 대조를 넘을 근거가 생길 때.
+- 먼저 이겨야 할 기준선: 동일 구조·초기화·update의 Official/Coupled Mask, 입력으로 학습한 Coupled PCFI, context/uniform prior, LP, 4-view random-fill; 실제 graph에서는 PCFI/FISF-trained PFN·Ephris도 필요.
+- 최소 재검증: 새 독립 bank에서 full/node/cell 조건과 actual-feature 제거·셔플을 고정해 검증한다. 같은 bank의 loss/epochs 튜닝으로 구제하지 않는다. Controlled/official family 변경과 coupling만의 효과를 분리한다.
+- 닫지 않은 것: 다른 그래프 prior·관측 정보가 충분한 task family·실제 graph·동적 learned generator 일반을 기각하지 않는다. 기존 공식 prior의 induced coupling 자체가 실패 원인이라고 입증하지 않았다.
+- 원문: [findings/sources/mechanism-crossed-2026-11-02/REPORT.md](../findings/sources/mechanism-crossed-2026-11-02/REPORT.md); [findings/sources/mechanism-crossed-2026-11-02/paired.json](../findings/sources/mechanism-crossed-2026-11-02/paired.json); [findings/sources/mechanism-crossed-2026-11-02/protocol.json](../findings/sources/mechanism-crossed-2026-11-02/protocol.json)
+
+- [Chronos-2](https://arxiv.org/abs/2510.15821): 복수 태그 일치 (약한 단서); tags=pretraining-data, prior-mismatch; keywords=-
+  - 기록된 강점: 실제 다변량 데이터 없이 synthetic multivariatizer만으로 다변량·covariate 능력을 얻었다. synthetic 데이터만으로 학습한 변형도 GIFT-Eval과 Chronos Benchmark II에서 본 모델에 거의 근접해, synthetic prior 설계의 효과를 보여준다.
+- [GraphPFN](https://arxiv.org/abs/2509.21489): 복수 태그 일치 (약한 단서); tags=pretraining-data, prior-mismatch; keywords=-
+  - 기록된 강점: Graph prior가 구조(multi-level SBM + preferential attachment)와 attribute(MLP·GNN neuron 혼합 SCM)를 분리해 설계되어 있고, 그래프 의존 정도를 mixing 확률로 조절할 수 있다. 부록 분석에서 synthetic graph의 평균 차수·clustering·power-law 적합도 분포가 실제 GraphLand 그래프 통계를 대체로 덮는다.
+- [NodePFN](https://arxiv.org/abs/2604.19028): 복수 태그 일치 (약한 단서); tags=pretraining-data, prior-mismatch; keywords=-
+  - 기록된 강점: 합성 그래프 수를 늘릴수록 성능이 오르는 prior-scale 분석과, ER·cSBM·BA 구성을 바꾼 prior ablation을 함께 제시해 어떤 prior 성분이 도움이 되는지 일부 보여준다.
+- [PFNSeparability](https://arxiv.org/abs/2610.14989): 복수 태그 일치 (약한 단서); tags=pretraining-data, prior-mismatch; keywords=-
+  - 기록된 강점: Feature law와 conditional label law의 의존성을 prior 설계의 명시적 선택으로 다룬다.
+- [TimesFM](https://arxiv.org/abs/2310.10688): 복수 태그 일치 (약한 단서); tags=pretraining-data, prior-mismatch; keywords=-
+  - 기록된 강점: synthetic 데이터를 빼면 실제 데이터에 드문 granularity(quarterly, yearly, 10분 등)와 15분 ETT에서 성능이 떨어진다는 ablation을 보여, 실제 corpus의 빈 곳을 synthetic prior로 메우는 효과를 실증했다.
+- [Wander](https://arxiv.org/abs/2610.06694): 복수 태그 일치 (약한 단서); tags=pretraining-data, prior-mismatch; keywords=-
+  - 기록된 강점: Synthetic prior가 NodePFN식과 GraphPFN식 생성기에 Watts–Strogatz, random geometric, graphon 기반 구조를 더해 섞는다. 그래서 GraphPFN prior가 덮지 못한다고 인정한 공간·기하 구조 그래프를 사전학습 분포에 명시적으로 포함한다.
+
 ## MISS-F01 — Missingness prior 추가가 공식 입력 경로와 미학습 MNAR에서 유리하다.
 
 - 판정: 범용 우위 미확보·해당 라인 중단

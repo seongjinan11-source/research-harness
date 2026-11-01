@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 23개 프로젝트 · 99개 기록 (실패·중단 33개, 보존 19개, 교훈 32개, 미실행 15개)
+총 24개 프로젝트 · 103개 기록 (실패·중단 34개, 보존 20개, 교훈 33개, 미실행 16개)
 
 ## Common-context witness 고정 곱셈
 
@@ -629,6 +629,42 @@ Matched conditioned−Plain−0.35%p, heldout_shape+0.90%p; offset 대비−0.03
 - 기준선: Plain, offset-only, 같은 파라미터·초기화·학습 budget
 - 최소 재검증: Relation 수·feature 폭·missing을 분리한 factorial과 새로운 semantic schema에서 내부 conditioning의 독립 증분을 확인한다.
 - 원문: [findings/sources/graphpfn-2026-11-01/lpc.md](../findings/sources/graphpfn-2026-11-01/lpc.md); [findings/sources/graphpfn-2026-11-01/lpc_factorial.md](../findings/sources/graphpfn-2026-11-01/lpc_factorial.md)
+
+## Mechanism-crossed GraphPFN controlled-prior pilot
+
+실험 조건: 새64 train/32 test base graphs,4 arms×3 seeds×256 updates; 공개 Mask Plain continuation, 마지막 checkpoint 평가.
+
+### MCP-F01 [실패·중단] 동일 주변분포의 feature-style/label-rule crossing이 강한 입력 기준선을 넘어 공식-prior 결측 과제로 전이된다.
+
+Gate A=False, Gate B=False; controlled:offdiagonal:uniform vs coupled_mask: -0.00119 [-0.00603, +0.00402]; controlled:offdiagonal:clustered vs coupled_mask: -0.00288 [-0.00817, +0.00207]; controlled:offdiagonal:uniform vs coupled_pcfi: +0.00396 [-0.00917, +0.01896]; controlled:offdiagonal:clustered vs coupled_pcfi: -0.01740 [-0.03587, -0.00337]; official:any:uniform vs official_mask: -0.00210 [-0.00970, +0.00530]; official:any:clustered vs official_mask: -0.00369 [-0.00928, +0.00194]
+
+- 판정: 두 gate 동시 통과 실패; 현재 controlled prior를 메인 방법으로 확대하지 않음
+- 원인·병목 [원인 미상]: 정해진 초기화·256 성공 updates·함수족에서 요구한 predictive 우위를 확보하지 못했다. Prior의 한계, 학습량, preprocessing, context 식별 난도 중 원인을 분리한 실험은 아니다.
+- 닫은 범위: 이 finite controlled family와 공개 Mask Plain continuation 설정에서 단순 mechanism crossing만으로 범용 missing GraphPFN 성과를 주장하는 것
+- 닫지 않은 것: 다른 그래프 prior·관측 정보가 충분한 task family·실제 graph·동적 learned generator 일반을 기각하지 않는다. 기존 공식 prior의 induced coupling 자체가 실패 원인이라고 입증하지 않았다.
+- 재검토 조건: 어떤 관측 정보와 예측 rule의 조합이 전이에 필요한지를 구체적으로 바꾸는 generator/inference 원리가 나오고 동일 비용의 강한 대조를 넘을 근거가 생길 때.
+- 기준선: 동일 구조·초기화·update의 Official/Coupled Mask, 입력으로 학습한 Coupled PCFI, context/uniform prior, LP, 4-view random-fill; 실제 graph에서는 PCFI/FISF-trained PFN·Ephris도 필요.
+- 최소 재검증: 새 독립 bank에서 full/node/cell 조건과 actual-feature 제거·셔플을 고정해 검증한다. 같은 bank의 loss/epochs 튜닝으로 구제하지 않는다. Controlled/official family 변경과 coupling만의 효과를 분리한다.
+- 원문: [findings/sources/mechanism-crossed-2026-11-02/REPORT.md](../findings/sources/mechanism-crossed-2026-11-02/REPORT.md); [findings/sources/mechanism-crossed-2026-11-02/paired.json](../findings/sources/mechanism-crossed-2026-11-02/paired.json); [findings/sources/mechanism-crossed-2026-11-02/protocol.json](../findings/sources/mechanism-crossed-2026-11-02/protocol.json)
+
+### MCP-L01 [교훈] Mechanism-crossing의 실제 학습을 기존 finite-bank curriculum과 분리해 기록한다.
+
+NEXT-U01의 첫 pilot을 실행했다. 12 checkpoints, 3072 successful updates, 12288 probability files 재채점. Concrete feature/mask/query 및 rule-instance marginals를 맞췄고 model 구조·초기화·schedule을 유지했다. One graph/update이므로 paired loss는 없다.
+
+- 원문: [findings/sources/mechanism-crossed-2026-11-02/audit.json](../findings/sources/mechanism-crossed-2026-11-02/audit.json); [findings/sources/mechanism-crossed-2026-11-02/exposure.json](../findings/sources/mechanism-crossed-2026-11-02/exposure.json); [findings/sources/mechanism-crossed-2026-11-02/preflight.json](../findings/sources/mechanism-crossed-2026-11-02/preflight.json)
+
+### MCP-U01 [미실행] Real dense-feature graph, heterogeneous schema 및 본격적인 separable generative prior 검증
+
+현재 실행은 graph/function seed가 새로운 작은 binary synthetic family다. 원래 GraphPFN 실패의 causal 설명, 실제 데이터 전이, FISF/Ephris 비교, 모든 induced laws의 분리성 보장은 수행하지 않았다. Known-rule sign-only 정보량 진단은 배포 predictor의 성과가 아니다.
+
+- 원문: [findings/sources/mechanism-crossed-2026-11-02/REPORT.md](../findings/sources/mechanism-crossed-2026-11-02/REPORT.md); [findings/sources/mechanism-crossed-2026-11-02/oracle_information.json](../findings/sources/mechanism-crossed-2026-11-02/oracle_information.json)
+
+### MCP-P02 [보존] Constructed off-diagonal 조건의 Coupled Mask 대비 정확도 신호
+
+controlled:offdiagonal:clustered: accuracy difference +3.434%p, CI [+0.960, +6.152]; controlled:offdiagonal:node: accuracy difference +2.702%p, CI [+0.431, +5.143]
+
+- 확대 금지: 사후 선별해 보존한 보조 metric 결과이며 다중 비교 보정과 독립 재검증은 없다. LP·PCFI·Official Mask 대비 같은 정확도 우위, NLL 우위 또는 실제 graph 전이로 확대하지 않고 원래 두 gate의 No-Go를 유지한다.
+- 원문: [findings/sources/mechanism-crossed-2026-11-02/secondary_accuracy.json](../findings/sources/mechanism-crossed-2026-11-02/secondary_accuracy.json); [findings/sources/mechanism-crossed-2026-11-02/paired.json](../findings/sources/mechanism-crossed-2026-11-02/paired.json)
 
 ## 초기 Missingness-aware GraphPFN
 

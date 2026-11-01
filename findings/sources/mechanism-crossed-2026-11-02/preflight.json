@@ -1,0 +1,29 @@
+{
+  "official_mask": {
+    "total": 20100901,
+    "trainable": 4012259,
+    "gradient_l1": 8629.223169282079,
+    "finite": true
+  },
+  "node_permutation_error": 0.0,
+  "coupled_pcfi": {
+    "total": 20100901,
+    "trainable": 4012259,
+    "gradient_l1": 761.222869944293,
+    "finite": true
+  },
+  "identical_initialization": true,
+  "no_query_labels_in_inputs": true,
+  "sources": {
+    "experiment.py": "960f289d866c2f712a06b23e92679b996a34b8399743c790531aeeada01a03d0",
+    "protocol.json": "89205ee7a552a07cd74e8197d61a6dd5793651147886685e8f74bf3f38451103",
+    "reference_common": "86473c16ff145f6eb28b8e9a0dd785b8ca836f3ac199f446d3402a4266ab7090",
+    "reference_core": "3a73123f9d7b4fe2c67a171a1853840d77e93b41e1bab606881ededc714e293c"
+  },
+  "exposure": {
+    "records": "stored in bank/exposure.json",
+    "rule_instance_marginals_identical": true,
+    "crossed_cartesian_triples_balanced": true,
+    "note": "One graph/update, no pairing objective. All style/rule types seen in training; test graph/function seeds are new."
+  }
+}

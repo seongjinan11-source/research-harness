@@ -1,0 +1,21 @@
+{
+  "contrasts": [
+    {
+      "group": "controlled:offdiagonal:clustered",
+      "contrast": "crossed_mask:standard - coupled_mask:standard",
+      "metric": "accuracy",
+      "delta": 0.03434244791666667,
+      "low": 0.009602864583333346,
+      "high": 0.0615234375
+    },
+    {
+      "group": "controlled:offdiagonal:node",
+      "contrast": "crossed_mask:standard - coupled_mask:standard",
+      "metric": "accuracy",
+      "delta": 0.027018229166666668,
+      "low": 0.004311116536458337,
+      "high": 0.05143229166666667
+    }
+  ],
+  "scope": "Inspected secondary results selected for preservation after the primary No-Go. No multiplicity correction, gate change, new training, or independent validation."
+}

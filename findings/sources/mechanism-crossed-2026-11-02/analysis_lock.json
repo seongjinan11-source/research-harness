@@ -1,0 +1,11 @@
+{
+  "analysis_sha256": "1ed736e134ab651a6b39e24002d4bc832ef51b3185d50afd63f23d89b32aadff",
+  "protocol_sha256": "89205ee7a552a07cd74e8197d61a6dd5793651147886685e8f74bf3f38451103",
+  "sanity_predictors": [
+    "uniform",
+    "laplace_context_prior",
+    "context_clamped_LP_40steps"
+  ],
+  "primary_gates": "Exact Gate A/B in protocol.json; sanity comparisons do not replace the registered contrasts.",
+  "scope": "New synthetic graph seeds; controlled coupled/crossed isolates a constructed finite-bank dependence, not the failure mechanism of the official prior."
+}
