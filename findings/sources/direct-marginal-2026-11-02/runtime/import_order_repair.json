@@ -1,0 +1,8 @@
+{
+  "scope": "supplementary control and measurement helpers only",
+  "cause": "Windows sklearn must be imported before torch; helper started with reverse order",
+  "action": "repair import order and restart descriptive-control helper; no model/data/primary-gate changes",
+  "stopped": [
+    33612
+  ]
+}

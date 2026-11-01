@@ -1,0 +1,706 @@
+{
+  "circuit-direct_graph/accuracy": {
+    "difference": 0.1023272156084656,
+    "ci95": [
+      0.05688364610890654,
+      0.14589172040343906
+    ],
+    "graphs": 48
+  },
+  "circuit-direct_graph/nll": {
+    "difference": -0.08800529805668102,
+    "ci95": [
+      -0.10652797121012994,
+      -0.06928821222233056
+    ],
+    "graphs": 48
+  },
+  "circuit-direct_graph/brier": {
+    "difference": -0.06924597056623848,
+    "ci95": [
+      -0.0840889629233351,
+      -0.054655353754965545
+    ],
+    "graphs": 48
+  },
+  "circuit-direct_graph/grid6_kl": {
+    "difference": -0.09008018955713569,
+    "ci95": [
+      -0.1057392728275713,
+      -0.07439162762686442
+    ],
+    "graphs": 48
+  },
+  "circuit-direct_graph/true_parameter_kl": {
+    "difference": -0.09043636944262645,
+    "ci95": [
+      -0.10665212452756588,
+      -0.07420702703323766
+    ],
+    "graphs": 48
+  },
+  "circuit-mask_pfn/accuracy": {
+    "difference": 0.07899305555555557,
+    "ci95": [
+      0.03889009452160494,
+      0.11790760719797172
+    ],
+    "graphs": 48
+  },
+  "circuit-mask_pfn/nll": {
+    "difference": -0.08195199678469396,
+    "ci95": [
+      -0.10197215095804163,
+      -0.06240238371529717
+    ],
+    "graphs": 48
+  },
+  "circuit-mask_pfn/brier": {
+    "difference": -0.06308793523010282,
+    "ci95": [
+      -0.07941418312850893,
+      -0.047021452491814934
+    ],
+    "graphs": 48
+  },
+  "circuit-mask_pfn/grid6_kl": {
+    "difference": -0.08296790975978181,
+    "ci95": [
+      -0.09817695405996078,
+      -0.06800196404971064
+    ],
+    "graphs": 48
+  },
+  "circuit-mask_pfn/true_parameter_kl": {
+    "difference": -0.08405552956752994,
+    "ci95": [
+      -0.09973936987318857,
+      -0.06828376251088294
+    ],
+    "graphs": 48
+  },
+  "circuit-grid6_exact/accuracy": {
+    "difference": -0.07984044312169312,
+    "ci95": [
+      -0.12880359898589067,
+      -0.03049768518518521
+    ],
+    "graphs": 48
+  },
+  "circuit-grid6_exact/nll": {
+    "difference": 0.0639170389730873,
+    "ci95": [
+      0.024040760568213075,
+      0.10450290855133063
+    ],
+    "graphs": 48
+  },
+  "circuit-grid6_exact/brier": {
+    "difference": 0.05511332642188901,
+    "ci95": [
+      0.022317751415648103,
+      0.08871816606875108
+    ],
+    "graphs": 48
+  },
+  "circuit-grid6_exact/grid6_kl": {
+    "difference": 0.06471615470547876,
+    "ci95": [
+      0.04904999874799777,
+      0.08235298327075516
+    ],
+    "graphs": 48
+  },
+  "circuit-grid6_exact/true_parameter_kl": {
+    "difference": 0.06792769349049167,
+    "ci95": [
+      0.04767501115575267,
+      0.09092167725849389
+    ],
+    "graphs": 48
+  },
+  "circuit-grid6_bp/accuracy": {
+    "difference": -0.08176256613756615,
+    "ci95": [
+      -0.13111376350308643,
+      -0.03230251736111113
+    ],
+    "graphs": 48
+  },
+  "circuit-grid6_bp/nll": {
+    "difference": 0.06437298893316935,
+    "ci95": [
+      0.024247401957787695,
+      0.10530225932702522
+    ],
+    "graphs": 48
+  },
+  "circuit-grid6_bp/brier": {
+    "difference": 0.05560425646092589,
+    "ci95": [
+      0.022677151295865592,
+      0.0892468497754567
+    ],
+    "graphs": 48
+  },
+  "circuit-grid6_bp/grid6_kl": {
+    "difference": 0.06461683655981375,
+    "ci95": [
+      0.048978271342441905,
+      0.0822502178811643
+    ],
+    "graphs": 48
+  },
+  "circuit-grid6_bp/true_parameter_kl": {
+    "difference": 0.06781208685081247,
+    "ci95": [
+      0.04744549730674202,
+      0.0908380929628236
+    ],
+    "graphs": 48
+  },
+  "circuit-oracle_true_parameters/accuracy": {
+    "difference": -0.08754960317460318,
+    "ci95": [
+      -0.13797433035714288,
+      -0.03713555445326287
+    ],
+    "graphs": 48
+  },
+  "circuit-oracle_true_parameters/nll": {
+    "difference": 0.07934605525916234,
+    "ci95": [
+      0.03670647183504691,
+      0.12469049671209623
+    ],
+    "graphs": 48
+  },
+  "circuit-oracle_true_parameters/brier": {
+    "difference": 0.06642347448709525,
+    "ci95": [
+      0.03132505636668839,
+      0.10407151895712723
+    ],
+    "graphs": 48
+  },
+  "circuit-oracle_true_parameters/grid6_kl": {
+    "difference": 0.056893448228163106,
+    "ci95": [
+      0.041864623574786375,
+      0.0740419121089919
+    ],
+    "graphs": 48
+  },
+  "circuit-oracle_true_parameters/true_parameter_kl": {
+    "difference": 0.075289590059592,
+    "ci95": [
+      0.05471728013347033,
+      0.09920114630289016
+    ],
+    "graphs": 48
+  },
+  "circuit-lp/accuracy": {
+    "difference": 0.09970238095238093,
+    "ci95": [
+      0.054782744984567866,
+      0.14165168237433862
+    ],
+    "graphs": 48
+  },
+  "circuit-lp/nll": {
+    "difference": -0.5655638264765709,
+    "ci95": [
+      -0.7337269094198459,
+      -0.403722016726456
+    ],
+    "graphs": 48
+  },
+  "circuit-lp/brier": {
+    "difference": -0.22502583345493968,
+    "ci95": [
+      -0.28335922665997526,
+      -0.16217792807547607
+    ],
+    "graphs": 48
+  },
+  "circuit-lp/grid6_kl": {
+    "difference": -0.5802102370303822,
+    "ci95": [
+      -0.721643714400508,
+      -0.4509006081114214
+    ],
+    "graphs": 48
+  },
+  "circuit-lp/true_parameter_kl": {
+    "difference": -0.5685486808552179,
+    "ci95": [
+      -0.7116409046806069,
+      -0.4378433657793655
+    ],
+    "graphs": 48
+  },
+  "circuit-class_prior/accuracy": {
+    "difference": 0.11739417989417988,
+    "ci95": [
+      0.0769052441578483,
+      0.15667765514770718
+    ],
+    "graphs": 48
+  },
+  "circuit-class_prior/nll": {
+    "difference": -0.16477275793328736,
+    "ci95": [
+      -0.20308093409663347,
+      -0.12492139119765625
+    ],
+    "graphs": 48
+  },
+  "circuit-class_prior/brier": {
+    "difference": -0.13567269321020034,
+    "ci95": [
+      -0.17026049010142277,
+      -0.09939854029761613
+    ],
+    "graphs": 48
+  },
+  "circuit-class_prior/grid6_kl": {
+    "difference": -0.1629456198157657,
+    "ci95": [
+      -0.18604185378563018,
+      -0.13928893052862878
+    ],
+    "graphs": 48
+  },
+  "circuit-class_prior/true_parameter_kl": {
+    "difference": -0.157201286789358,
+    "ci95": [
+      -0.18375622533176092,
+      -0.12903683807222338
+    ],
+    "graphs": 48
+  },
+  "circuit-uniform/accuracy": {
+    "difference": 0.09226190476190473,
+    "ci95": [
+      0.026099881503527315,
+      0.15988808283730158
+    ],
+    "graphs": 48
+  },
+  "circuit-uniform/nll": {
+    "difference": -0.08801872261920556,
+    "ci95": [
+      -0.10668058243688792,
+      -0.06922481017609337
+    ],
+    "graphs": 48
+  },
+  "circuit-uniform/brier": {
+    "difference": -0.06925955388039433,
+    "ci95": [
+      -0.08429999728426958,
+      -0.05445771393712307
+    ],
+    "graphs": 48
+  },
+  "circuit-uniform/grid6_kl": {
+    "difference": -0.08952800449229896,
+    "ci95": [
+      -0.10515762812710794,
+      -0.07401158535056494
+    ],
+    "graphs": 48
+  },
+  "circuit-uniform/true_parameter_kl": {
+    "difference": -0.08976976249671587,
+    "ci95": [
+      -0.10582456628173147,
+      -0.0736678387414665
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-mask_pfn/accuracy": {
+    "difference": 0.07899305555555557,
+    "ci95": [
+      0.03889009452160494,
+      0.11790760719797172
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-mask_pfn/nll": {
+    "difference": -0.08195199678469396,
+    "ci95": [
+      -0.10197215095804163,
+      -0.06240238371529717
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-mask_pfn/grid6_kl": {
+    "difference": -0.08296790975978181,
+    "ci95": [
+      -0.09817695405996078,
+      -0.06800196404971064
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-direct_graph/accuracy": {
+    "difference": 0.1023272156084656,
+    "ci95": [
+      0.05688364610890654,
+      0.14589172040343906
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-direct_graph/nll": {
+    "difference": -0.08800529805668102,
+    "ci95": [
+      -0.10652797121012994,
+      -0.06928821222233056
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-direct_graph/grid6_kl": {
+    "difference": -0.09008018955713569,
+    "ci95": [
+      -0.1057392728275713,
+      -0.07439162762686442
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-grid6_bp/accuracy": {
+    "difference": -0.08176256613756615,
+    "ci95": [
+      -0.13111376350308643,
+      -0.03230251736111113
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-grid6_bp/nll": {
+    "difference": 0.06437298893316935,
+    "ci95": [
+      0.024247401957787695,
+      0.10530225932702522
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-grid6_bp/grid6_kl": {
+    "difference": 0.06461683655981375,
+    "ci95": [
+      0.048978271342441905,
+      0.0822502178811643
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-grid6_exact/accuracy": {
+    "difference": -0.07984044312169312,
+    "ci95": [
+      -0.12880359898589067,
+      -0.03049768518518521
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-grid6_exact/nll": {
+    "difference": 0.0639170389730873,
+    "ci95": [
+      0.024040760568213075,
+      0.10450290855133063
+    ],
+    "graphs": 48
+  },
+  "matched/circuit-grid6_exact/grid6_kl": {
+    "difference": 0.06471615470547876,
+    "ci95": [
+      0.04904999874799777,
+      0.08235298327075516
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-mask_pfn/accuracy": {
+    "difference": 0.08895502645502644,
+    "ci95": [
+      0.043979931382275135,
+      0.13301263503086422
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-mask_pfn/nll": {
+    "difference": -0.10488033819593541,
+    "ci95": [
+      -0.12282262814572967,
+      -0.08660962114307903
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-mask_pfn/grid6_kl": {
+    "difference": -0.09218963285755126,
+    "ci95": [
+      -0.10438314094703408,
+      -0.07984140649788553
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-direct_graph/accuracy": {
+    "difference": 0.09731867283950617,
+    "ci95": [
+      0.04098100611772486,
+      0.15450028246252204
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-direct_graph/nll": {
+    "difference": -0.09035404823149044,
+    "ci95": [
+      -0.10472320721762447,
+      -0.07549165863709303
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-direct_graph/grid6_kl": {
+    "difference": -0.09014951984605941,
+    "ci95": [
+      -0.10156280646048879,
+      -0.07894943538851057
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-grid6_bp/accuracy": {
+    "difference": -0.02765376984126984,
+    "ci95": [
+      -0.07056172150573194,
+      0.015219735174162252
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-grid6_bp/nll": {
+    "difference": 0.003142410490825151,
+    "ci95": [
+      -0.018332344526270708,
+      0.02490204902244838
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-grid6_bp/grid6_kl": {
+    "difference": 0.027118099223100062,
+    "ci95": [
+      0.02177189808347746,
+      0.03317187582721368
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-grid6_exact/accuracy": {
+    "difference": -0.025586970899470905,
+    "ci95": [
+      -0.0680124972442681,
+      0.017691971175044098
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-grid6_exact/nll": {
+    "difference": 0.0032704239720448406,
+    "ci95": [
+      -0.018243651965637292,
+      0.02504769030199619
+    ],
+    "graphs": 48
+  },
+  "density_low/circuit-grid6_exact/grid6_kl": {
+    "difference": 0.0271363694680221,
+    "ci95": [
+      0.021789923937546175,
+      0.03318868128223138
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-mask_pfn/accuracy": {
+    "difference": 0.05764991181657849,
+    "ci95": [
+      0.014929177689594378,
+      0.10155647183641972
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-mask_pfn/nll": {
+    "difference": -0.09201476085588227,
+    "ci95": [
+      -0.11472383091277281,
+      -0.06965984893682074
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-mask_pfn/grid6_kl": {
+    "difference": -0.09164779241880998,
+    "ci95": [
+      -0.10817069392590449,
+      -0.07493898781745444
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-direct_graph/accuracy": {
+    "difference": 0.14161017416225752,
+    "ci95": [
+      0.09007781498015872,
+      0.1930743289792769
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-direct_graph/nll": {
+    "difference": -0.11545572242366396,
+    "ci95": [
+      -0.13538268300539588,
+      -0.09497074939918837
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-direct_graph/grid6_kl": {
+    "difference": -0.11616333691371465,
+    "ci95": [
+      -0.13353957080326062,
+      -0.09932563152168998
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-grid6_bp/accuracy": {
+    "difference": -0.16743827160493827,
+    "ci95": [
+      -0.21481085345017636,
+      -0.12165144124779541
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-grid6_bp/nll": {
+    "difference": 0.1576346506563431,
+    "ci95": [
+      0.10089884958207224,
+      0.21394952964999048
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-grid6_bp/grid6_kl": {
+    "difference": 0.14077324190953797,
+    "ci95": [
+      0.10815731485502775,
+      0.17575389285914217
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-grid6_exact/accuracy": {
+    "difference": -0.16607418430335097,
+    "ci95": [
+      -0.2138751102292769,
+      -0.11969177138447977
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-grid6_exact/nll": {
+    "difference": 0.15899735333414827,
+    "ci95": [
+      0.10286040197037954,
+      0.21435606304164073
+    ],
+    "graphs": 48
+  },
+  "density_high/circuit-grid6_exact/grid6_kl": {
+    "difference": 0.14147445622580954,
+    "ci95": [
+      0.10889074886576776,
+      0.17656448055569654
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-mask_pfn/accuracy": {
+    "difference": 0.0822654872134039,
+    "ci95": [
+      0.03108345045194007,
+      0.13355551421957662
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-mask_pfn/nll": {
+    "difference": -0.10050074856983919,
+    "ci95": [
+      -0.12397372880600747,
+      -0.0772605756656165
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-mask_pfn/grid6_kl": {
+    "difference": -0.09310579349838129,
+    "ci95": [
+      -0.1105839622265722,
+      -0.07595804946693487
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-direct_graph/accuracy": {
+    "difference": 0.14610201719576724,
+    "ci95": [
+      0.08475098517416225,
+      0.20352492559523813
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-direct_graph/nll": {
+    "difference": -0.1253947321585673,
+    "ci95": [
+      -0.1450568466194376,
+      -0.10526801421522394
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-direct_graph/grid6_kl": {
+    "difference": -0.11739241765857601,
+    "ci95": [
+      -0.1332012434581155,
+      -0.10120183429950257
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-grid6_bp/accuracy": {
+    "difference": -0.11016727292768959,
+    "ci95": [
+      -0.1649450231481481,
+      -0.05675653797398592
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-grid6_bp/nll": {
+    "difference": 0.14953480468911362,
+    "ci95": [
+      0.10387540601503398,
+      0.19699333846276193
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-grid6_bp/grid6_kl": {
+    "difference": 0.11055629526056689,
+    "ci95": [
+      0.08268395048819989,
+      0.13899798111581688
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-grid6_exact/accuracy": {
+    "difference": -0.11324680335097,
+    "ci95": [
+      -0.16792104139109346,
+      -0.05913680142195767
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-grid6_exact/nll": {
+    "difference": 0.1483477698158878,
+    "ci95": [
+      0.10295182975285609,
+      0.19527972453722847
+    ],
+    "graphs": 48
+  },
+  "signal_high/circuit-grid6_exact/grid6_kl": {
+    "difference": 0.11105228860833365,
+    "ci95": [
+      0.08308061591531408,
+      0.13942856248309543
+    ],
+    "graphs": 48
+  }
+}

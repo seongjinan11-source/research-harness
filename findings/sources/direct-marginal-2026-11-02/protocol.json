@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-02",
+  "stage": "valid_conditional_tree_circuit_small_known_family",
+  "target_nodes": 8,
+  "helper_nodes": 4,
+  "features": 2,
+  "feature_signal": 0.8,
+  "feature_noise": 0.6,
+  "train_episodes": 2048,
+  "train_seed_start": 9941000,
+  "test_seed_start": 9947000,
+  "test_graphs_per_prior": 64,
+  "cases": [
+    "matched",
+    "density_low",
+    "density_high",
+    "signal_high"
+  ],
+  "contexts": [
+    1,
+    2,
+    4
+  ],
+  "seeds": [
+    11,
+    12,
+    13
+  ],
+  "arms": [
+    "circuit",
+    "direct_graph",
+    "mask_pfn"
+  ],
+  "updates": 256,
+  "batch_size": 8,
+  "lr": 0.001,
+  "public_base_lr": 3e-05,
+  "public_new_lr": 0.001,
+  "weight_decay": 0.0001,
+  "clip": 1.0,
+  "data": "Native binary bipartite SBM: 8 targets, 4 latent helpers, 2 relations, fully observed edge/nonedge states. Three known role-prior families are pooled; prior-family one-hot descriptor is supplied to every learned model. Parameters drawn from the historical six-point training support with masses(.5,.1,.1,.1,.1,.1). Each numeric feature has an independent unknown global orientation, mean .8*orientation*(2Y-1), Gaussian noise sd .6. Labels for unobserved targets/helpers are never an inference input.",
+  "missing": "Full, no features, uniform whole-node50/90/99.5%, graph-clustered whole-node50/90%, cell90%. Masks independent of X/Y conditional on observed G. At 12 nodes,99.5% missing often means zero observations; keep and count these cases. No feature-information filtering. Context indices sampled independently of labels, total1/2/4, targets only.",
+  "circuit": "Graph-conditioned normalized mixture of32 tree distributions (16 learned components with mirrored feature orientations). One latent binary label per original node, one Gaussian leaf per physical feature cell. Tree transitions row-normalized and root/mixture normalized. Spanning tree derived from observed G with label-independent tie priorities. Graph encoder and all circuit parameters see only G, known family descriptor and tree, never X_obs/M/Y_C; leaf evaluation uses actual evidence. Each subtree scope is disjoint. Missing feature leaves integrate to one. Exact sum-product within this conditional model; original cyclic-SBM posterior is NOT exact. Fixed two-relation binary schema and two physical features; full variable-schema GSPN/PFN extension untested.",
+  "direct": "A direct graph predictor with the same structural encoder architecture and a separately learned observation/context input and readout. Parameter counts reported, not claimed identical. Strong public Mask Plain GraphPFN additionally receives original numeric values+mask, node type/degrees, known prior descriptor, and relation-specific one/two-hop context support; graph is original edge union. No target-graph weight updates at evaluation.",
+  "learning": "Sampled query-label cross entropy only, per-graph query mean then batch mean. Same2048 task exposures, same deterministic schedule and256 optimizer updates in all arms. Public PFN uses8 accumulated graph forwards/update, tiny models a batch of8. Public transformer frozen as in existing recipe, graph adapters/input/readout trainable. Final checkpoint only; no validation/test tuning and no auxiliary likelihood/posterior/consistency loss.",
+  "references": "Historical Grid6 prior retained. Extended Gaussian-feature model marginalizes feature orientation exactly. Report exact Grid6 and64-step damped-BP Grid6 with coherent exact branch weights and observed-feature unary fields. Feature-free predictions reduce to the native-family references. A separate true-parameter exact teacher knows actual density/signal and is privileged, not a learner input. Grid6 exact is Bayes under the matched known family, not expected to be beaten systematically; OOD is misspecified for its six-support prior.",
+  "validity": "Before learning: exhaustive finite-label circuit evidence/marginal comparison on5-node model; all-missing normalization; label sum rule; Gaussian-coordinate integration of refined evidence; conditional-ratio equality; disjoint scopes; invariant circuit parameters under evidence changes; finite gradients; independent scalar Grid6 check. MaM-style sum rules are tested algebraically; this is NOT a trained MaM reproduction or a GSPN reproduction.",
+  "gates": "Primary predictive NLL on matched heldout graphs, averaged contexts and whole-node uniform50/90+clustered50/90 within graph. Circuit mechanism gate requires paired NLL CI upper<0 vs both direct_graph and public mask_pfn. Accuracy/Brier and exact-reference predictive KL are separate outcomes. Competitive-method gate additionally requires matched Grid6-exact predictive KL<=.01 and at least2x lower median same-device latency than Grid6-BP measured after our workers finish; concurrent timing alone cannot certify the latter. Strong Grid6-BP and LP/class prior remain in every report. OOD, full/none/cell/99.5 and feature interventions are secondary; no result-dependent rescue.",
+  "statistics": "5000 paired resamples of independent base graphs, average fixed3 training seeds and prespecified masks/contexts within graph. Matched subset has48 base graphs (16 per prior). OOD bank uses new graph seeds in the same known family. No query-level pseudoreplication, no training-seed population CI, no multiple-testing-adjusted subgroup claims.",
+  "interventions": "Secondary context2/clustered50 per case and prior: remove observed physical features, or shuffle their observed values per feature while retaining mask. Recompute direct derived visible-input features. No query labels used. This tests observed feature use separately from probability calibration.",
+  "limits": "Small known-family kill test with a newly implemented valid conditional tree circuit. It does not reproduce GSPN/MaM, solve arbitrary cyclic graph inference, establish semantic-schema generalization, or compare a full sparse-cell architecture. Earlier failed gates and preserved accuracy effects remain unchanged."
+}

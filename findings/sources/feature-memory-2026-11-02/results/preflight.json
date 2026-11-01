@@ -1,0 +1,43 @@
+{
+  "arms": {
+    "context": {
+      "trainable": 4012259,
+      "gradient_l1": 41217.9947412014,
+      "node_permutation_error": 0.0,
+      "empty_memory_finite": true,
+      "route_calls": 0
+    },
+    "context_reference_exactly_identical": true,
+    "all_nodes": {
+      "trainable": 4012259,
+      "gradient_l1": 48395.14694052935,
+      "node_permutation_error": 0.004604339599609375,
+      "empty_memory_finite": true,
+      "route_calls": 60
+    },
+    "observed": {
+      "trainable": 4012259,
+      "gradient_l1": 7346.598177880049,
+      "node_permutation_error": 0.00397220253944397,
+      "empty_memory_finite": true,
+      "route_calls": 60
+    },
+    "pcfi": {
+      "trainable": 4012259,
+      "gradient_l1": 7132.672291457653,
+      "node_permutation_error": 0.0,
+      "empty_memory_finite": true,
+      "route_calls": 0
+    }
+  },
+  "same_initialization": true,
+  "query_labels_not_in_inputs": true,
+  "feature_group_scope": "Two-coordinate native feature groups; original two-bit missing mask distinguishes partial observations.",
+  "sources": {
+    "analyze.py": "b3c792afa3b6785fb001eaa3ec527660764c59d9aa5ec4d59c5ea18debac1e78",
+    "experiment.py": "9a7761dcf20cfadfeef2552fcba85d252a12bedaf63bbba6af21a9b20e83dbf4",
+    "protocol": "694fda57245ead6df6fbdc4aa05dd0aba55619bda302fc034978716c998f56ab",
+    "common": "86473c16ff145f6eb28b8e9a0dd785b8ca836f3ac199f446d3402a4266ab7090",
+    "prior": "960f289d866c2f712a06b23e92679b996a34b8399743c790531aeeada01a03d0"
+  }
+}

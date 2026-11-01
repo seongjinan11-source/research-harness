@@ -1,0 +1,73 @@
+{
+  "training_and_preregistered_analysis_sources_unchanged": true,
+  "bank_files_verified": 6656,
+  "checkpoints": [
+    {
+      "arm": "circuit",
+      "seed": 11,
+      "finite_checkpoint": true,
+      "different_from_initial": true,
+      "sha256": "4f00de748e1925a303149af454270081dc29451f2b4522cd10121bf26fedd529"
+    },
+    {
+      "arm": "circuit",
+      "seed": 12,
+      "finite_checkpoint": true,
+      "different_from_initial": true,
+      "sha256": "aae866850b9170f674303231d6c98f00d8f7d475e4c11c1ab18bc4cdcf158b75"
+    },
+    {
+      "arm": "circuit",
+      "seed": 13,
+      "finite_checkpoint": true,
+      "different_from_initial": true,
+      "sha256": "65ddeed6549fd394edb1d422d896c71c5fcdee8564eccf03e2c1bcc1eedcc461"
+    },
+    {
+      "arm": "direct_graph",
+      "seed": 11,
+      "finite_checkpoint": true,
+      "different_from_initial": true,
+      "sha256": "7ad83679c929a60df56f9ac23b81141c250a9a8542be86175f8b053c279594e2"
+    },
+    {
+      "arm": "direct_graph",
+      "seed": 12,
+      "finite_checkpoint": true,
+      "different_from_initial": true,
+      "sha256": "63ec509d090fd277f8c893b15963aa524135f0dcd39e8c7c8f4d0b113e0c36fb"
+    },
+    {
+      "arm": "direct_graph",
+      "seed": 13,
+      "finite_checkpoint": true,
+      "different_from_initial": true,
+      "sha256": "28cac5c26f517033fb18ac56391a3e24e28866f0bc5fc5469f5a241a152abe52"
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 11,
+      "finite_checkpoint": true,
+      "different_from_initial": true,
+      "sha256": "48010ab6e7d6ade99e5e5c3d30cafba39a2bf63ce5d63d4d09e27b76135b22b9"
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 12,
+      "finite_checkpoint": true,
+      "different_from_initial": true,
+      "sha256": "27266ee144f2d5abf6fe1f1490c7e1ad1e47425ad737b7172b89b1559417d7bb"
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 13,
+      "finite_checkpoint": true,
+      "different_from_initial": true,
+      "sha256": "00c3bdc4518f9f3f7ca48788921150d66c082259ddc787a0348fdcdb7c58ca48"
+    }
+  ],
+  "matched_schedule_per_seed": true,
+  "primary_probabilities_independently_rescored": 44928,
+  "supplements": "Runtime measurement/control scripts have separate provenance; no model or primary gate changes.",
+  "reference_files_hashed": 4608
+}

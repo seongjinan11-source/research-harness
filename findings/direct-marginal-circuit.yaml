@@ -1,0 +1,98 @@
+project: 직접 주변화하는 graph-conditioned tree circuit
+date: '2026-11-02'
+source: findings/sources/direct-marginal-2026-11-02/REPORT_KO.md
+setting: 새12-node binary typed SBM, target8/helper4·relation2·Gaussian feature2. 학습된3 arms×3 fixed seeds, 각2048 task exposures/256 updates. Primary matched48 base graphs, 전체 OOD 포함192 graphs.
+related: [GSPN, MaM, GraphPFN, StructuralMissingPFN]
+entries:
+  - id: DMARG-P01
+    kind: preserved
+    claim: 유효한 conditional circuit을 학습해 두 학습된 직접 예측기보다 좋은 예측을 얻었다.
+    observation: "Primary circuit61.3839%/NLL0.605128/Brier0.430740, public Mask PFN53.4846%/0.687080/0.493828, direct graph51.1512%/0.693134/0.499986. Circuit−Mask accuracy +7.899306%p CI[+3.889009,+11.790761], NLL−0.081952 CI[−0.101972,−0.062402]. Circuit−direct accuracy +10.232722%p CI[+5.688365,+14.589172], NLL−0.088005 CI[−0.106528,−0.069288]."
+    do_not_claim: Grid6나 feature-only 확률모형보다 우월함, 일반 GSPN/MaM 재현, 원래 cyclic SBM의 exact posterior, 새로운 semantic schema 또는 실제 heterogeneous graph 성과로 확대하지 않는다. 파라미터 수는 같지 않다.
+    tags: [differentiable-reasoning, observation-mask, uncertainty, amortized-inference]
+    keywords: [direct marginalization, conditional circuit, normalized tree mixture, predictive gain, GraphPFN]
+    source_refs:
+      - findings/sources/direct-marginal-2026-11-02/REPORT_KO.md
+      - findings/sources/direct-marginal-2026-11-02/results/paired.json
+      - findings/sources/direct-marginal-2026-11-02/results/decision.json
+    evidence: 사전 NLL gate 통과. Primary48 base graphs에서 mask/context·세 고정 seed를 평균한 paired bootstrap5000회. Accuracy도 별도 개선.
+  - id: DMARG-P02
+    kind: preserved
+    claim: 이 소형 family의 circuit은 실제 관측 feature와 node 대응을 활용한다.
+    observation: "Context2/clustered50 보조 조건, 전체192 base graphs. No-observed−standard accuracy−15.451389%p CI[−19.386574,−11.805556], NLL+0.172725 CI[+0.147664,+0.197846]. Shuffled−standard accuracy−13.686343%p CI[−17.534722,−9.953704], NLL+0.352257 CI[+0.280898,+0.432729]."
+    do_not_claim: 원래 IMDB에서 관측값의 평균 효용을 회수했다는 뜻이 아니다. Feature가 class와 연결되도록 만든 Gaussian family의 보조 intervention이며 primary 조건과 다르다. Graph-specific 증분이나 calibrated true posterior를 단독 입증하지 않는다.
+    tags: [observation-mask, uncertainty, graph-structure-use]
+    keywords: [feature intervention, observed alignment, no observed, shuffled observed, actual values]
+    source_refs:
+      - findings/sources/direct-marginal-2026-11-02/results/interventions.json
+      - findings/sources/direct-marginal-2026-11-02/protocol.json
+    evidence: 동일 checkpoint/context/query/graph에서 실제 feature만 제거 또는 순열한 보조 paired 결과.
+  - id: DMARG-F01
+    kind: failure
+    claim: 현재 conditional tree circuit이 알려진 family의 강한 classical inference와 경쟁하는 메인 메소드다.
+    observation: "Grid6-BP69.5602%/NLL0.540755, Grid6-exact69.3680%/0.541211. Circuit−Grid6-BP accuracy−8.176257%p CI[−13.111376,−3.230252], NLL+0.064373 CI[+0.024247,+0.105302]. Grid6-exact predictive KL0.064716으로 목표.01 초과. 같은GPU forward median circuit12.369ms, Grid6-BP13.443ms, Grid6-exact10.427ms. 2배 latency 기준도 미충족."
+    verdict: Neural-baseline gate는 성공했지만 classical 품질·비용 gate는 실패. 현재 구성의 메인 메소드 확대는 보류.
+    failure_reason: "유효한 주변화에도 예측 fit의 격차가 남았다. Tree family의 표현력, G만 보는 potential encoder의 근사, 학습 예산의 기여를 분리하지 않았다. 정확한 고유 원인은 미상이다. 작은 known-family baseline의 우위를 모델 학습 전체의 불필요함으로 확대하지 않는다."
+    reason_status: unknown
+    excluded_explanations:
+      - 모델 내부의 정규화·label 합 규칙·연속 feature 적분·conditional ratio는 열거와 대조했다.
+      - Grid6-BP 비용에서 불필요한 exact query marginal 출력을 제외했고 원 reference와 예측 차이0을 검사했다.
+    closed_scope: 현재56,385-parameter/32-component conditional tree circuit, 고정12-node·2-feature·2-relation family,256-update query-CE 학습을 그대로 메인 방법으로 확대.
+    not_closed: 다른 유효 circuit 구조, family/schema 일반화, exact variable elimination의 다른 근사·공유 연산, MaM 자체를 실행하거나 실패시킨 결과가 아니다. DMARG-P01/P02의 실제 개선과 feature 이용은 보존한다.
+    reopen_when: 강한 known-family inference의 예측 품질을 유지하거나, 작은 고정 grid가 다루지 못하는 family에서 실제 관측값과 구조의 결합 이득을 회수하는 연산이 나올 때.
+    comparison_floor: Gaussian-feature orientation을 적분하는 Grid6 exact/BP, known-feature-only, constant tree, 실제 public Mask PFN 및 같은 예산 direct graph. 더 작은 network 대비 승리만으로 재개하지 않는다.
+    recheck: 같은 관측 정보·학습 task·전체 비용으로 fixed Gaussian 통계를 넘는 graph-specific 이득부터 확인한다. 유효한 circuit의 범위와 원 데이터 posterior를 분리하고 fresh bank·heldout family를 사용한다.
+    tags: [model-based-baseline, amortized-inference, differentiable-reasoning, graph-structure-use]
+    keywords: [tree circuit, Grid6, classical baseline, marginalization, quality cost, encoder fit]
+    reopen_tags: [differentiable-reasoning, graph-structure-use, prior-mismatch]
+    reopen_keywords: [circuit expressivity, graph-conditioned likelihood, variable elimination, unknown family, evidence updating]
+    source_refs:
+      - findings/sources/direct-marginal-2026-11-02/results/paired.json
+      - findings/sources/direct-marginal-2026-11-02/results/benchmark.json
+      - findings/sources/direct-marginal-2026-11-02/results/decision.json
+    evidence: 사전 primary와 경쟁력 기준. 단일GPU·작은graph·고정 training seeds에 한정하며 외부GPU 부하를 통제한 반복실험은 아님.
+    revisit_status: open
+  - id: DMARG-L01
+    kind: lesson
+    claim: 직접 예측기 대비 큰 개선을 graph-specific uncertainty 추론의 기여로 전부 귀속하지 않는다.
+    observation: "설계 고정 뒤 추가한 known-family feature-only 대조는 accuracy58.1329%/NLL0.605147. Circuit−feature-only accuracy+3.251075%p CI[−0.142816,+6.531240], NLL−0.000019 CI[−0.013783,+0.013696]. NLL 추가 개선은 확인되지 않았다. 이 대조는 Gaussian magnitude.8/sd.6를 알고 있으나 graph를 사용하지 않는다. Constant-tree NLL0.685252 대비 circuit NLL−0.080124 CI[−0.125201,−0.035681] 개선은 별도로 보존한다."
+    interpretation: Neural 대비 개선과 올바른 Gaussian family를 아는 간단한 model-based 대조를 넘는 것은 별개다. CI가0을 포함한다고 동등성을 증명한 것은 아니다. 추가 대조로 원래 gate를 소급 변경하지 않는다.
+    tags: [model-based-baseline, eval-protocol, uncertainty]
+    keywords: [feature only, constant potential, Gaussian mixture, post lock controls, novelty attribution]
+    source_refs:
+      - findings/sources/direct-marginal-2026-11-02/results/feature_controls.json
+      - findings/sources/direct-marginal-2026-11-02/runtime/feature_controls.py
+    evidence: Primary lock 뒤 추가한 기술적·해석적 비교. Test tuning이나 독립적인 confirmation이 아님.
+  - id: DMARG-L02
+    kind: lesson
+    claim: 관측 feature가 label context 바깥에만 있는 조건은 아직 회수하지 못한 관계 추론 정보를 드러낸다.
+    observation: "Visible context/mask로 나눈 primary 사후 분할에서 circuit52.6899%/NLL0.699547, Grid6-BP64.8682%/0.624596. Context와 noncontext 양쪽에 관측 feature가 있는 분할은 circuit74.8846%/0.453902였다. 분할은 query truth로 정하지 않았고 추가 유의성·독립 확인 주장을 하지 않는다."
+    interpretation: 모델 전체의 관측 feature 이용 성공이 떨어진 feature source와 context label을 구조로 연결하는 성공을 보장하지 않는다. 이 차이를 tree만의 표현력 한계 또는 encoder 학습 실패로 확정한 것은 아니다.
+    tags: [graph-structure-use, observation-mask, context-scale]
+    keywords: [outside context observations, feature source, label feature connectivity, relational inference gap]
+    source_refs:
+      - findings/sources/direct-marginal-2026-11-02/results/descriptive_breakdowns.json
+      - findings/sources/direct-marginal-2026-11-02/runtime/breakdowns.py
+    evidence: 전체 결과 확인 후 기록한 기술적 분석. 새로운 primary gate나 독립 검증으로 승격하지 않는다.
+  - id: DMARG-L03
+    kind: lesson
+    claim: Valid conditional circuit의 계산 유효성과 데이터 fit을 별도 검증한다.
+    observation: "Circuit의 evidence·marginal 열거 오차, label 합 규칙, Gaussian 좌표 적분, conditional ratio 오차가 약10^-15 수준이었다. Parameters는 G와 알려진 family만 보고 evidence 변경 시 고정됨을 검사했다. 총9개 학습/2304 성공 updates/18432 task exposures/44928 예측을 감사했다. Test4608 episodes 중 실제 feature 관측0개는1353개다."
+    interpretation: 연산의 정규화·decomposable scope는 확인했지만 참 cyclic graph posterior나 calibration을 보장하지 않는다. 별도 likelihood/consistency loss를 학습한 결과가 아니다.
+    tags: [differentiable-reasoning, eval-protocol, uncertainty]
+    keywords: [sum rule, normalization, disjoint scopes, exact enumeration, continuous marginal, source audit]
+    source_refs:
+      - findings/sources/direct-marginal-2026-11-02/results/preflight.json
+      - findings/sources/direct-marginal-2026-11-02/results/audit.json
+      - findings/sources/direct-marginal-2026-11-02/results/final_integrity.json
+    evidence: 실제 preflight·학습·결과 감사. GSPN/MaM 원 논문 재현이 아님.
+  - id: DMARG-U01
+    kind: untested
+    claim: NEXT-U03의 가변 feature/schema·대형 graph circuit 및 독립 MaM 구현
+    observation: 실행한 것은 고정2-feature·2-relation binary family의 conditional tree mixture다. 연속·가변 차원 MaM, 새 semantic relation vocabulary, 대형 cyclic graph의 정확한 주변화, full sparse-cell PFN과 실제 graph 전이는 실행하지 않았다.
+    tags: [feature-heterogeneity, graph-scale, zero-shot-gap, differentiable-reasoning]
+    keywords: [MaM, GSPN, variable schema, large graph, unseen relation, sparse cell]
+    source_refs:
+      - findings/sources/direct-marginal-2026-11-02/protocol.json
+      - findings/sources/direct-marginal-2026-11-02/model.py
+    evidence: 학습·평가 범위의 명시. 미실행 후속을 학습 실패로 세지 않는다.

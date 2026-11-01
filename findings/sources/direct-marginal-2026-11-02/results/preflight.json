@@ -1,0 +1,28 @@
+{
+  "pass_all": true,
+  "errors": {
+    "enumerated_evidence": 0.0,
+    "enumerated_marginal": 5.551115123125783e-16,
+    "normalization": 4.440892098500626e-16,
+    "label_sum_rule": 0.0,
+    "continuous_feature_sum_rule": 1.6653345369377348e-16,
+    "conditional_ratio": 1.1102230246251565e-16,
+    "grid6_scalar_reference": 2.3314683517128287e-15
+  },
+  "quadrature_reported_error": 6.671846065154647e-09,
+  "opposite_class_probability_with_only_class0_context": 0.9525741268224333,
+  "one_scope_per_original_variable": true,
+  "parameters_independent_of_feature_label_evidence": true,
+  "latent_and_query_truth_not_input": true,
+  "public_mask_pfn_trainable_parameters": 4012259,
+  "circuit_parameters": 56385,
+  "sources": {
+    "analyze.py": "c33655c3190488510ead573a1618c623974a1052f6ebe3e8f87c9b16f48d3929",
+    "benchmark.py": "1a738019387324a23f80cb63ab282ce73a896f0bdfa5b8b0d97e9e9b93f3f79b",
+    "data.py": "2ad5df0f5845fa32da2ef6e06d12da7f00e57ef352ee46bb839ddd0db2a213b9",
+    "experiment.py": "b19a1b5e685edd85e0ca83b94112993c581d7fe2df4ffe0027b1ccaff0f3e370",
+    "model.py": "52d67bb64ca81667369189a0a9f7914a0d53bc14139948c47571b7b7cf7388d8",
+    "protocol": "f223d269e69f7c13d166594edfa6d475c685b79cf86bb896088998ad6beae968",
+    "public_common": "86473c16ff145f6eb28b8e9a0dd785b8ca836f3ac199f446d3402a4266ab7090"
+  }
+}

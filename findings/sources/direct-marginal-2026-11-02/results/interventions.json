@@ -1,0 +1,200 @@
+[
+  {
+    "arm": "circuit",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.15451388888888892,
+    "ci95": [
+      -0.19386574074074078,
+      -0.11805555555555558
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "circuit",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": 0.1727248742889631,
+    "ci95": [
+      0.14766388122878515,
+      0.19784583595922103
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "circuit",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": 0.13718604531931675,
+    "ci95": [
+      0.11737133139401786,
+      0.15724767058863812
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "circuit",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.13686342592592596,
+    "ci95": [
+      -0.17534722222222224,
+      -0.09953703703703705
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "circuit",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": 0.35225741156892837,
+    "ci95": [
+      0.2808984728104859,
+      0.43272922203324055
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "circuit",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": 0.18898144462536678,
+    "ci95": [
+      0.15371032794292355,
+      0.2266242700922735
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "direct_graph",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": 0.02517361111111111,
+    "ci95": [
+      -0.004340277777777779,
+      0.05410879629629629
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "direct_graph",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": -0.0005982413198106108,
+    "ci95": [
+      -0.0017102282383237573,
+      0.0004943178575722824
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "direct_graph",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": -0.0005984676351142477,
+    "ci95": [
+      -0.0017099353157280942,
+      0.000494240313731921
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "direct_graph",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": 0.00810185185185184,
+    "ci95": [
+      -0.015046296296296302,
+      0.03240740740740739
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "direct_graph",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": -8.394082452583239e-05,
+    "ci95": [
+      -0.001116449957677007,
+      0.0009698705247369235
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "direct_graph",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": -8.417815581726982e-05,
+    "ci95": [
+      -0.001115668700822302,
+      0.0009691718770896737
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.00173611111111111,
+    "ci95": [
+      -0.019965277777777773,
+      0.01591435185185185
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": 0.00237470827815165,
+    "ci95": [
+      -0.0013848330191303553,
+      0.006582877967687656
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": 0.0019973388420302892,
+    "ci95": [
+      -0.0014739137565526518,
+      0.0056777284180661285
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.0031828703703703685,
+    "ci95": [
+      -0.017939814814814808,
+      0.011574074074074082
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": 0.0010551348325290473,
+    "ci95": [
+      -0.0008904991690897049,
+      0.0029009375504647776
+    ],
+    "graphs": 192
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": 0.0009851338625285657,
+    "ci95": [
+      -0.0009016057270558645,
+      0.002738530575762144
+    ],
+    "graphs": 192
+  }
+]

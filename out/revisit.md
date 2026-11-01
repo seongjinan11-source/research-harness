@@ -34,6 +34,20 @@
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=amortized-inference, uncertainty; keywords=-
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
+## DMARG-F01 — 현재 conditional tree circuit이 알려진 family의 강한 classical inference와 경쟁하는 메인 메소드다.
+
+- 판정: Neural-baseline gate는 성공했지만 classical 품질·비용 gate는 실패. 현재 구성의 메인 메소드 확대는 보류.
+- 원인·병목 [원인 미상]: 유효한 주변화에도 예측 fit의 격차가 남았다. Tree family의 표현력, G만 보는 potential encoder의 근사, 학습 예산의 기여를 분리하지 않았다. 정확한 고유 원인은 미상이다. 작은 known-family baseline의 우위를 모델 학습 전체의 불필요함으로 확대하지 않는다.
+- 반증·배제한 설명: 모델 내부의 정규화·label 합 규칙·연속 feature 적분·conditional ratio는 열거와 대조했다.; Grid6-BP 비용에서 불필요한 exact query marginal 출력을 제외했고 원 reference와 예측 차이0을 검사했다.
+- 재검토 조건: 강한 known-family inference의 예측 품질을 유지하거나, 작은 고정 grid가 다루지 못하는 family에서 실제 관측값과 구조의 결합 이득을 회수하는 연산이 나올 때.
+- 먼저 이겨야 할 기준선: Gaussian-feature orientation을 적분하는 Grid6 exact/BP, known-feature-only, constant tree, 실제 public Mask PFN 및 같은 예산 direct graph. 더 작은 network 대비 승리만으로 재개하지 않는다.
+- 최소 재검증: 같은 관측 정보·학습 task·전체 비용으로 fixed Gaussian 통계를 넘는 graph-specific 이득부터 확인한다. 유효한 circuit의 범위와 원 데이터 posterior를 분리하고 fresh bank·heldout family를 사용한다.
+- 닫지 않은 것: 다른 유효 circuit 구조, family/schema 일반화, exact variable elimination의 다른 근사·공유 연산, MaM 자체를 실행하거나 실패시킨 결과가 아니다. DMARG-P01/P02의 실제 개선과 feature 이용은 보존한다.
+- 원문: [findings/sources/direct-marginal-2026-11-02/results/paired.json](../findings/sources/direct-marginal-2026-11-02/results/paired.json); [findings/sources/direct-marginal-2026-11-02/results/benchmark.json](../findings/sources/direct-marginal-2026-11-02/results/benchmark.json); [findings/sources/direct-marginal-2026-11-02/results/decision.json](../findings/sources/direct-marginal-2026-11-02/results/decision.json)
+
+- [NodePFN](https://arxiv.org/abs/2604.19028): 복수 태그 일치 (약한 단서); tags=graph-structure-use, prior-mismatch; keywords=-
+  - 기록된 강점: cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
+
 ## FEAT-F01 — IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.
 
 - 판정: 해당 feature-reliability 동기 약화
@@ -93,6 +107,26 @@
   - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
+
+## FMEM-F01 — Label context와 관측 feature memory를 분리하면 기존 context-only 및 all-node feature attention보다 accuracy가 높다.
+
+- 판정: 현재 feature-group routing의 사전 accuracy gate 미통과. NLL은 기존 context 및 PCFI보다 악화.
+- 원인·병목 [원인 미상]: 관측 전용 memory에서 추가 예측 가치를 회수하지 못했다. Frozen sample-attention projection, native feature-group 표현, sparse 입력 정보량,512-update prior fit 가운데 고유 원인을 분리하지 않았다. Context-only 제한이 이전 실패의 원인이라는 가설도 확인되지 않았다.
+- 반증·배제한 설명: 초기 가중치·4,012,259 trainable parameters·logical schedule·성공 update 수는 네 arm에서 같았다.; Context arm과 기존 public Mask Plain의 초기 출력이 정확히 일치했고 empty-memory/padding 및 finite gradient를 검사했다.
+- 재검토 조건: Label이 없는 노드의 실제 관측값을 읽는 연산이 strong all-node memory와 PCFI/FISF-trained PFN보다 같은 예산에서 유용하다는 근거가 생길 때.
+- 먼저 이겨야 할 기준선: 동일 초기화·성공 update·prior의 C-only, all-node memory, PCFI/FISF-trained PFN, LP, class prior. Observed-group과 실제 sparse cell 연산을 구분.
+- 최소 재검증: 새 graph bank에서 accuracy primary를 먼저 고정하고 no-observed/shuffled-observed와 전체 비용을 함께 비교한다. 단순 KV mask 변경이나 추가 학습만의 효과로 재개하지 않는다.
+- 닫지 않은 것: 완전한 sparse cell-token 모델, attention projection까지 새로 학습하는 구조, 다른 prior·규모·실제 graph는 평가하지 않았다. MCP-P02의 +3.43%p는 이 실험으로 재현하거나 기각한 것이 아니다.
+- 원문: [findings/sources/feature-memory-2026-11-02/REPORT_KO.md](../findings/sources/feature-memory-2026-11-02/REPORT_KO.md); [findings/sources/feature-memory-2026-11-02/results/paired.json](../findings/sources/feature-memory-2026-11-02/results/paired.json); [findings/sources/feature-memory-2026-11-02/results/interventions.json](../findings/sources/feature-memory-2026-11-02/results/interventions.json)
+
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, tokenization; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+  - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
+- [Ephris](https://arxiv.org/abs/2609.37057): 복수 태그 일치 (약한 단서); tags=graph-structure-use, tokenization; keywords=-
+  - 기록된 강점: Section 3.1과 Appendix B의 feature별 Gather는 context와 query 노드를 모두 사용한다. Context-label embedding도 압축 전 scalar token에 제공하므로, feature memory를 label-context 노드에만 한정하지 않는 직접적인 선행 대조다.
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 복수 태그 일치 (약한 단서); tags=observation-mask, tokenization; keywords=-
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
+  - 기록된 강점: Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.
 
 ## HET-F01 — Adapted HetGFD가 cross-type path 입력보다 큰 증분을 준다.
 

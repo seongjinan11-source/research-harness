@@ -1,0 +1,91 @@
+{
+  "date": "2026-11-02",
+  "stage": "label_feature_memory_split",
+  "nodes": 192,
+  "train_graphs": 64,
+  "test_graphs": 64,
+  "train_seed_start": 9911000,
+  "test_seed_start": 9913000,
+  "mask_seed_start": 9915000,
+  "context_per_class": 4,
+  "queries": 32,
+  "seeds": [
+    11,
+    12,
+    13
+  ],
+  "arms": [
+    "official_mask",
+    "coupled_mask",
+    "crossed_mask",
+    "coupled_pcfi"
+  ],
+  "updates": 256,
+  "base_lr": 3e-05,
+  "new_lr": 0.001,
+  "weight_decay": 0.01,
+  "gradient_clip": 1.0,
+  "train_settings": [
+    [
+      "full",
+      0.0
+    ],
+    [
+      "uniform_nodes",
+      0.9
+    ],
+    [
+      "uniform_nodes",
+      0.995
+    ],
+    [
+      "uniform_cells",
+      0.995
+    ]
+  ],
+  "test_settings": [
+    [
+      "full",
+      0.0
+    ],
+    [
+      "uniform_nodes",
+      0.9
+    ],
+    [
+      "uniform_nodes",
+      0.995
+    ],
+    [
+      "clustered_nodes",
+      0.9
+    ],
+    [
+      "clustered_nodes",
+      0.995
+    ],
+    [
+      "uniform_cells",
+      0.995
+    ]
+  ],
+  "controlled_features": "Four deterministic transforms of one graph-Gaussian field per base graph: Gaussian, centered/scaled exponential, bimodal sign-plus-linear, heavy polynomial. K=.35*11T+.65*diag-normalized inverse(I-rho*S), rho drawn U(.5,.9). No feature ID or style ID is supplied to the model.",
+  "controlled_labels": "Four independent stochastic binary rules from complete X and G: self-linear, L2-normalized neighbor-linear, product of two linear projections, normalized two-hop contrast. Weights, bias, flip and Bernoulli noise drawn independently of feature-style ID. No sample-quantile threshold or class-balance rejection. Both binary classes remain in the output space even when one is absent in a realized graph/context.",
+  "coupling_control": "Each base graph appears with all 4 feature styles. Coupled uses rule=style. Crossed uses rule=(style+floor(graph_id/4)%4)%4. Train graph IDs cover all combinations uniformly. Each base graph's feature realizations and rule-parameter instances have exactly the same marginal exposure counts in both arms. Mask slot=(style+graph_id%4)%4 makes the feature-style/rule/mask Cartesian product balanced in crossed. One graph/update; no paired loss or batching benefit. Class-balanced context selection is a separate declared observation protocol, not a theorem of separability for graph rows.",
+  "official_reference": "Fresh size/feature/binary-restricted official GraphPFN graph_then_attributes prior, original feature/label mechanism and quantile conversion retained. Official vs controlled changes the generator family as well as coupling, so only coupled vs crossed isolates the finite-bank coupling intervention.",
+  "test": "All arms see identical test inputs. 32 fresh base graphs. Controlled: style=graph_id%4, diagonal rule plus one off-diagonal rule with shift=1+floor(graph_id/4)%3. Official: native task on the same base graph draw. All test settings fixed before training. This is new graph/function seeds within specified families, not unseen semantic schema or real-graph validation.",
+  "model": "Same public GraphPFN Mask Plain, same trainable/frozen parameters. Routing modifies feature-group key/value access only; label-token keys always context C. Native feature group is a pair of coordinates; observed-only selects group iff at least one real coordinate observed, retains two-bit mask. Null all-zero key/value allowed only if group has no observations. Padding never counts as observed evidence. No upstream file changes.",
+  "information_check": "Reuse restricted known-rule Gaussian sign information check without filtering tasks. C-only base attention restriction is verified but is NOT assumed to be the cause of previous failures.",
+  "interventions": "Secondary clustered90 official and off-diagonal: remove all observations or shuffle observed rows. Model input never includes query truth. No extra sampling ensembles.",
+  "sampling_controls": "No random-fill ensemble in this pilot; prior frozen random-fill results remain a separate record.",
+  "gates": "Primary accuracy: average official and controlled off-diagonal whole-node uniform/clustered 90/99.5 conditions, equal weight by family/rate/mechanism, paired 64 base graphs, fixed three training seeds. Mechanism gate: observed > context and observed > all_nodes, both graph CI lower>0. Strong-method gate additionally requires observed > PCFI and observed > LP, both CI lower>0. NLL/Brier/full/cell/diagonal reported separately; no NLL requirement hidden inside accuracy primary. Effects that fail main gate are preserved with their scope.",
+  "statistics": "5000 base-graph paired bootstrap after averaging three fixed seeds and prespecified settings within graph. Primary family aggregate selected before training. Family/mask subgroups secondary, no multiplicity-adjusted claims. Last checkpoint only; no test selection. Fresh graph seeds, same declared generator families; no real graph/unseen schema claim.",
+  "training_updates": 512,
+  "routing_arms": [
+    "context",
+    "all_nodes",
+    "observed",
+    "pcfi"
+  ],
+  "train_stream": "Alternating official_mask and crossed_mask streams from the newly drawn bank: 512 logical updates, identical permutation and initial parameters across four arms. No paired loss, no extra head or auxiliary objective. PCFI is trained with actual PCFI input."
+}

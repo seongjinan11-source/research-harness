@@ -1,0 +1,53 @@
+project: Label-context와 observed-feature memory 분리
+date: '2026-11-02'
+source: findings/sources/feature-memory-2026-11-02/REPORT_KO.md
+setting: 새64 train/64 test base graphs, public GraphPFN1.3, 4 arms×3 fixed seeds, arm/seed당512 성공 updates. 공식 및 controlled-crossed 과제의 같은 stream으로 학습.
+related: [GraphPFN, TabImpute, Ephris]
+entries:
+  - id: FMEM-F01
+    kind: failure
+    claim: Label context와 관측 feature memory를 분리하면 기존 context-only 및 all-node feature attention보다 accuracy가 높다.
+    observation: "Primary accuracy context52.3336%, all_nodes51.9552%, observed52.2888%, PCFI53.9246%, LP53.3203%. Observed−context −0.044759%p CI[−1.501516,+1.460826], −all_nodes +0.3337%p CI[−0.9481,+1.6135], −PCFI −1.6357%p CI[−3.4202,+0.0633]. Observed NLL0.692156은 context0.687776 대비 +0.004380 CI[+0.000906,+0.007896], PCFI0.683446 대비 +0.008710 CI[+0.003985,+0.013666] 높았다."
+    verdict: 현재 feature-group routing의 사전 accuracy gate 미통과. NLL은 기존 context 및 PCFI보다 악화.
+    failure_reason: "관측 전용 memory에서 추가 예측 가치를 회수하지 못했다. Frozen sample-attention projection, native feature-group 표현, sparse 입력 정보량,512-update prior fit 가운데 고유 원인을 분리하지 않았다. Context-only 제한이 이전 실패의 원인이라는 가설도 확인되지 않았다."
+    reason_status: unknown
+    excluded_explanations:
+      - 초기 가중치·4,012,259 trainable parameters·logical schedule·성공 update 수는 네 arm에서 같았다.
+      - Context arm과 기존 public Mask Plain의 초기 출력이 정확히 일치했고 empty-memory/padding 및 finite gradient를 검사했다.
+    closed_scope: 현재 공개 frozen-transformer GraphPFN의 native 두 좌표 group에 적용한 C-only/all-node/observed-key routing을 메인 방법으로 확대.
+    not_closed: 완전한 sparse cell-token 모델, attention projection까지 새로 학습하는 구조, 다른 prior·규모·실제 graph는 평가하지 않았다. MCP-P02의 +3.43%p는 이 실험으로 재현하거나 기각한 것이 아니다.
+    reopen_when: Label이 없는 노드의 실제 관측값을 읽는 연산이 strong all-node memory와 PCFI/FISF-trained PFN보다 같은 예산에서 유용하다는 근거가 생길 때.
+    comparison_floor: 동일 초기화·성공 update·prior의 C-only, all-node memory, PCFI/FISF-trained PFN, LP, class prior. Observed-group과 실제 sparse cell 연산을 구분.
+    recheck: 새 graph bank에서 accuracy primary를 먼저 고정하고 no-observed/shuffled-observed와 전체 비용을 함께 비교한다. 단순 KV mask 변경이나 추가 학습만의 효과로 재개하지 않는다.
+    tags: [observation-mask, context-scale, tokenization, graph-structure-use]
+    keywords: [feature memory, label context, observed key value, query query attention, frozen backbone]
+    reopen_tags: [observation-mask, tokenization, graph-structure-use]
+    reopen_keywords: [sparse cell token, observed feature memory, label feature context, feature source]
+    source_refs:
+      - findings/sources/feature-memory-2026-11-02/REPORT_KO.md
+      - findings/sources/feature-memory-2026-11-02/results/paired.json
+      - findings/sources/feature-memory-2026-11-02/results/interventions.json
+    evidence: 사전64-base-graph paired bootstrap5000회, 세 고정 training seed 평균. Query-level 표집이나 새로운 semantic schema 결과가 아님.
+    revisit_status: open
+  - id: FMEM-L01
+    kind: lesson
+    claim: 더 넓은 key/value 접근의 구현 가능성과 실제 feature utility를 구분한다.
+    observation: "12개 모델, 총6144 성공 updates, 저장 예측16896개를 감사했다. Frozen parameters와 source/bank hashes를 보존했다. Observed-group routing은 dense attention mask를 바꾼 구현으로 sparse kernel의 메모리·속도 이점은 주장하지 않는다. Clustered90/off-diagonal에서 관측값 shuffle은 observed arm NLL을 −0.007934 CI[−0.014027,−0.002201] 낮춰 유익한 feature alignment 회수를 지지하지 않았다."
+    tags: [eval-protocol, observation-mask, inference-cost]
+    keywords: [matched schedule, feature grouping, dense masked attention, shuffled observed, source audit]
+    source_refs:
+      - findings/sources/feature-memory-2026-11-02/results/preflight.json
+      - findings/sources/feature-memory-2026-11-02/results/audit.json
+      - findings/sources/feature-memory-2026-11-02/results/final_integrity.json
+      - findings/sources/feature-memory-2026-11-02/results/interventions.json
+    evidence: 실제 학습·예측 및 원본 source/checkpoint/input-bank 감사. 관측값 전체의 무용함을 증명한 결과가 아님.
+  - id: FMEM-U01
+    kind: untested
+    claim: NEXT-U02/REOPEN-U01 중 full sparse-cell 아키텍처와 end-to-end feature-attention 학습
+    observation: 이번 실행은 native feature-pair grouping을 유지한 공개 PFN routing kill test다. 원래 attention projection은 고정했고 별도의 sparse token encoder나 Ephris/Wander 전체를 재현하지 않았다.
+    tags: [tokenization, graph-structure-use, zero-shot-gap]
+    keywords: [sparse cell token, full attention training, Ephris, unseen schema, real graph]
+    source_refs:
+      - findings/sources/feature-memory-2026-11-02/protocol.json
+      - findings/sources/feature-memory-2026-11-02/experiment.py
+    evidence: 실제 실행 범위. 전체 sparse observation 연구를 실패로 닫지 않는다.

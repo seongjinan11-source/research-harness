@@ -1,0 +1,578 @@
+[
+  {
+    "arm": "context",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.0361328125,
+    "ci95": [
+      -0.06771240234375,
+      -0.006022135416666671
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "nll",
+    "difference": 0.00453288222236624,
+    "ci95": [
+      -0.00666841960416081,
+      0.01320570810275862
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "brier",
+    "difference": 0.005109974227679094,
+    "ci95": [
+      -0.004461124908206135,
+      0.01294972264740981
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "accuracy",
+    "difference": 0.0053710937500000035,
+    "ci95": [
+      -0.007486979166666657,
+      0.018391927083333343
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "nll",
+    "difference": 0.001061624668431899,
+    "ci95": [
+      -0.0015267776776861138,
+      0.0038194762265366306
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "brier",
+    "difference": 0.0010525480585107903,
+    "ci95": [
+      -0.0014294085530338844,
+      0.0037277822100305574
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.0166015625,
+    "ci95": [
+      -0.05989990234375,
+      0.025878906249999997
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "nll",
+    "difference": 0.0014636939934865346,
+    "ci95": [
+      -0.004776291738624067,
+      0.007503492779300942
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "brier",
+    "difference": 0.0016405123507753222,
+    "ci95": [
+      -0.0041791368195723405,
+      0.007402110318112493
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.002929687500000004,
+    "ci95": [
+      -0.01904296875,
+      0.012207031249999995
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "nll",
+    "difference": 9.445925320849397e-05,
+    "ci95": [
+      -0.002087353200875375,
+      0.002313448151976038
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "context",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "brier",
+    "difference": 8.358170866910224e-05,
+    "ci95": [
+      -0.00207412502256273,
+      0.0022932773461447915
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.033203125,
+    "ci95": [
+      -0.05875651041666667,
+      -0.008138020833333339
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "nll",
+    "difference": 0.002748290149796469,
+    "ci95": [
+      -0.005938978267428734,
+      0.010836865516203649
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "brier",
+    "difference": 0.0029045487376374883,
+    "ci95": [
+      -0.0051383771483416866,
+      0.010506627786016713
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.005208333333333336,
+    "ci95": [
+      -0.022298177083333332,
+      0.010091145833333325
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "nll",
+    "difference": -0.00024973522595346867,
+    "ci95": [
+      -0.0030855470863622707,
+      0.0026603752056960544
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "brier",
+    "difference": -0.00036896345298628036,
+    "ci95": [
+      -0.0030992532338742227,
+      0.0024352397514032895
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "accuracy",
+    "difference": 0.012695312499999997,
+    "ci95": [
+      -0.01578776041666666,
+      0.04150797526041661
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "nll",
+    "difference": -0.010608012264435144,
+    "ci95": [
+      -0.017360798533857868,
+      -0.004106319644785272
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "brier",
+    "difference": -0.010139578626997228,
+    "ci95": [
+      -0.016767177559474464,
+      -0.0038182511532532334
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "accuracy",
+    "difference": 0.005371093749999998,
+    "ci95": [
+      -0.009765624999999993,
+      0.02213948567708328
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "nll",
+    "difference": 0.00016882072011401624,
+    "ci95": [
+      -0.0026724481813794514,
+      0.0029373106070111677
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "all_nodes",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "brier",
+    "difference": -1.6268393501745783e-05,
+    "ci95": [
+      -0.0028189268847802966,
+      0.0026794132516013776
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.005533854166666668,
+    "ci95": [
+      -0.06804606119791667,
+      0.05778401692708328
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "nll",
+    "difference": -0.005325979064827121,
+    "ci95": [
+      -0.01653041179890467,
+      0.005193725161001467
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "brier",
+    "difference": -0.004641063838313651,
+    "ci95": [
+      -0.015703793568463315,
+      0.005674475807781007
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "accuracy",
+    "difference": 0.004069010416666663,
+    "ci95": [
+      -0.02164713541666667,
+      0.027022298177083272
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "nll",
+    "difference": -0.004025368905704452,
+    "ci95": [
+      -0.008472416312598203,
+      0.0004248659780235932
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "brier",
+    "difference": -0.004176553780812469,
+    "ci95": [
+      -0.00848390159117353,
+      0.00017973847086303645
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.00634765625,
+    "ci95": [
+      -0.08236083984374999,
+      0.06770833333333333
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "nll",
+    "difference": -0.011116641212173425,
+    "ci95": [
+      -0.02566450127901329,
+      0.003585779398702937
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "brier",
+    "difference": -0.00802442022049135,
+    "ci95": [
+      -0.021418485076016614,
+      0.005833789619184074
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "accuracy",
+    "difference": 0.012207031250000002,
+    "ci95": [
+      -0.008955891927083333,
+      0.03694661458333333
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "nll",
+    "difference": -0.00793445922260562,
+    "ci95": [
+      -0.014026539145426247,
+      -0.002201015969895432
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "observed",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "brier",
+    "difference": -0.00714429525271881,
+    "ci95": [
+      -0.012831064827209918,
+      -0.0018287457425819936
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.0341796875,
+    "ci95": [
+      -0.07861328125,
+      0.01123046874999999
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "nll",
+    "difference": 0.01633455373600126,
+    "ci95": [
+      0.005595689287061167,
+      0.027856775789066115
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "official",
+    "intervention": "no_observed",
+    "metric": "brier",
+    "difference": 0.01565553691605498,
+    "ci95": [
+      0.005319130567380606,
+      0.026674533348884095
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.001953125000000005,
+    "ci95": [
+      -0.01595458984375001,
+      0.01220703124999999
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "nll",
+    "difference": -0.0014665037781670777,
+    "ci95": [
+      -0.005197914493078733,
+      0.002297610250161445
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "official",
+    "intervention": "shuffled",
+    "metric": "brier",
+    "difference": -0.0014560473734508044,
+    "ci95": [
+      -0.005070952204232536,
+      0.0021604268587686326
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.006998697916666661,
+    "ci95": [
+      -0.05550537109374999,
+      0.04410807291666667
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "nll",
+    "difference": 0.00585288960872371,
+    "ci95": [
+      -0.003845108696951176,
+      0.01590792229754344
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "offdiagonal",
+    "intervention": "no_observed",
+    "metric": "brier",
+    "difference": 0.005493940000081684,
+    "ci95": [
+      -0.00411208163448485,
+      0.015299549965430507
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "accuracy",
+    "difference": 0.005533854166666668,
+    "ci95": [
+      -0.00944010416666667,
+      0.02099609375
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "nll",
+    "difference": -0.0013392935191670298,
+    "ci95": [
+      -0.004217545335493424,
+      0.001337999919381821
+    ],
+    "graphs": 64
+  },
+  {
+    "arm": "pcfi",
+    "family": "offdiagonal",
+    "intervention": "shuffled",
+    "metric": "brier",
+    "difference": -0.0013016283330483458,
+    "ci95": [
+      -0.00412628179957617,
+      0.001334027876194215
+    ],
+    "graphs": 64
+  }
+]

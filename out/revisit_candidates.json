@@ -215,6 +215,54 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "FMEM-F01",
+    "project": "Label-context와 observed-feature memory 분리",
+    "claim": "Label context와 관측 feature memory를 분리하면 기존 context-only 및 all-node feature attention보다 accuracy가 높다.",
+    "verdict": "현재 feature-group routing의 사전 accuracy gate 미통과. NLL은 기존 context 및 PCFI보다 악화.",
+    "reason_status": "unknown",
+    "failure_reason": "관측 전용 memory에서 추가 예측 가치를 회수하지 못했다. Frozen sample-attention projection, native feature-group 표현, sparse 입력 정보량,512-update prior fit 가운데 고유 원인을 분리하지 않았다. Context-only 제한이 이전 실패의 원인이라는 가설도 확인되지 않았다.",
+    "reopen_when": "Label이 없는 노드의 실제 관측값을 읽는 연산이 strong all-node memory와 PCFI/FISF-trained PFN보다 같은 예산에서 유용하다는 근거가 생길 때.",
+    "recheck": "새 graph bank에서 accuracy primary를 먼저 고정하고 no-observed/shuffled-observed와 전체 비용을 함께 비교한다. 단순 KV mask 변경이나 추가 학습만의 효과로 재개하지 않는다.",
+    "comparison_floor": "동일 초기화·성공 update·prior의 C-only, all-node memory, PCFI/FISF-trained PFN, LP, class prior. Observed-group과 실제 sparse cell 연산을 구분.",
+    "source_refs": [
+      "findings/sources/feature-memory-2026-11-02/REPORT_KO.md",
+      "findings/sources/feature-memory-2026-11-02/results/paired.json",
+      "findings/sources/feature-memory-2026-11-02/results/interventions.json"
+    ],
+    "paper_id": "PEMix",
+    "paper_title": "When Missingness Follows the Graph: Beyond Feature Propagation for Missing Features",
+    "paper_link": "https://arxiv.org/abs/2610.18113",
+    "matches": [
+      {
+        "strength": "Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.",
+        "tags": [
+          "graph-structure-use",
+          "observation-mask"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      },
+      {
+        "strength": "Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.",
+        "tags": [
+          "observation-mask",
+          "tokenization"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-structure-use",
+      "observation-mask",
+      "tokenization"
+    ],
+    "keywords": [],
+    "retrieval_score": 6,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "JIMP-F01",
     "project": "Public GraphPFN 내부 대치 상태 갱신",
     "claim": "PFN 내부의 반복 대치가 동일한 대치기를 PFN 앞에서 실행하는 것과 강한 동일 예산 Plain을 넘는다.",
@@ -617,6 +665,44 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "DMARG-F01",
+    "project": "직접 주변화하는 graph-conditioned tree circuit",
+    "claim": "현재 conditional tree circuit이 알려진 family의 강한 classical inference와 경쟁하는 메인 메소드다.",
+    "verdict": "Neural-baseline gate는 성공했지만 classical 품질·비용 gate는 실패. 현재 구성의 메인 메소드 확대는 보류.",
+    "reason_status": "unknown",
+    "failure_reason": "유효한 주변화에도 예측 fit의 격차가 남았다. Tree family의 표현력, G만 보는 potential encoder의 근사, 학습 예산의 기여를 분리하지 않았다. 정확한 고유 원인은 미상이다. 작은 known-family baseline의 우위를 모델 학습 전체의 불필요함으로 확대하지 않는다.",
+    "reopen_when": "강한 known-family inference의 예측 품질을 유지하거나, 작은 고정 grid가 다루지 못하는 family에서 실제 관측값과 구조의 결합 이득을 회수하는 연산이 나올 때.",
+    "recheck": "같은 관측 정보·학습 task·전체 비용으로 fixed Gaussian 통계를 넘는 graph-specific 이득부터 확인한다. 유효한 circuit의 범위와 원 데이터 posterior를 분리하고 fresh bank·heldout family를 사용한다.",
+    "comparison_floor": "Gaussian-feature orientation을 적분하는 Grid6 exact/BP, known-feature-only, constant tree, 실제 public Mask PFN 및 같은 예산 direct graph. 더 작은 network 대비 승리만으로 재개하지 않는다.",
+    "source_refs": [
+      "findings/sources/direct-marginal-2026-11-02/results/paired.json",
+      "findings/sources/direct-marginal-2026-11-02/results/benchmark.json",
+      "findings/sources/direct-marginal-2026-11-02/results/decision.json"
+    ],
+    "paper_id": "NodePFN",
+    "paper_title": "Learning Posterior Predictive Distributions for Node Classification from Synthetic Graph Priors",
+    "paper_link": "https://arxiv.org/abs/2604.19028",
+    "matches": [
+      {
+        "strength": "cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.",
+        "tags": [
+          "graph-structure-use",
+          "prior-mismatch"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-structure-use",
+      "prior-mismatch"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "EVID-F01",
     "project": "Relation-wise Evidence Head",
     "claim": "Relation 출처를 보존하는 head가 강한 Plain의 class decision을 개선한다.",
@@ -866,6 +952,91 @@
     "tags": [
       "observation-mask",
       "uncertainty"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "FMEM-F01",
+    "project": "Label-context와 observed-feature memory 분리",
+    "claim": "Label context와 관측 feature memory를 분리하면 기존 context-only 및 all-node feature attention보다 accuracy가 높다.",
+    "verdict": "현재 feature-group routing의 사전 accuracy gate 미통과. NLL은 기존 context 및 PCFI보다 악화.",
+    "reason_status": "unknown",
+    "failure_reason": "관측 전용 memory에서 추가 예측 가치를 회수하지 못했다. Frozen sample-attention projection, native feature-group 표현, sparse 입력 정보량,512-update prior fit 가운데 고유 원인을 분리하지 않았다. Context-only 제한이 이전 실패의 원인이라는 가설도 확인되지 않았다.",
+    "reopen_when": "Label이 없는 노드의 실제 관측값을 읽는 연산이 strong all-node memory와 PCFI/FISF-trained PFN보다 같은 예산에서 유용하다는 근거가 생길 때.",
+    "recheck": "새 graph bank에서 accuracy primary를 먼저 고정하고 no-observed/shuffled-observed와 전체 비용을 함께 비교한다. 단순 KV mask 변경이나 추가 학습만의 효과로 재개하지 않는다.",
+    "comparison_floor": "동일 초기화·성공 update·prior의 C-only, all-node memory, PCFI/FISF-trained PFN, LP, class prior. Observed-group과 실제 sparse cell 연산을 구분.",
+    "source_refs": [
+      "findings/sources/feature-memory-2026-11-02/REPORT_KO.md",
+      "findings/sources/feature-memory-2026-11-02/results/paired.json",
+      "findings/sources/feature-memory-2026-11-02/results/interventions.json"
+    ],
+    "paper_id": "Ephris",
+    "paper_title": "Message Passing Does More with Less for In-Context Learning on Graphs",
+    "paper_link": "https://arxiv.org/abs/2609.37057",
+    "matches": [
+      {
+        "strength": "Section 3.1과 Appendix B의 feature별 Gather는 context와 query 노드를 모두 사용한다. Context-label embedding도 압축 전 scalar token에 제공하므로, feature memory를 label-context 노드에만 한정하지 않는 직접적인 선행 대조다.",
+        "tags": [
+          "graph-structure-use",
+          "tokenization"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-structure-use",
+      "tokenization"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "FMEM-F01",
+    "project": "Label-context와 observed-feature memory 분리",
+    "claim": "Label context와 관측 feature memory를 분리하면 기존 context-only 및 all-node feature attention보다 accuracy가 높다.",
+    "verdict": "현재 feature-group routing의 사전 accuracy gate 미통과. NLL은 기존 context 및 PCFI보다 악화.",
+    "reason_status": "unknown",
+    "failure_reason": "관측 전용 memory에서 추가 예측 가치를 회수하지 못했다. Frozen sample-attention projection, native feature-group 표현, sparse 입력 정보량,512-update prior fit 가운데 고유 원인을 분리하지 않았다. Context-only 제한이 이전 실패의 원인이라는 가설도 확인되지 않았다.",
+    "reopen_when": "Label이 없는 노드의 실제 관측값을 읽는 연산이 strong all-node memory와 PCFI/FISF-trained PFN보다 같은 예산에서 유용하다는 근거가 생길 때.",
+    "recheck": "새 graph bank에서 accuracy primary를 먼저 고정하고 no-observed/shuffled-observed와 전체 비용을 함께 비교한다. 단순 KV mask 변경이나 추가 학습만의 효과로 재개하지 않는다.",
+    "comparison_floor": "동일 초기화·성공 update·prior의 C-only, all-node memory, PCFI/FISF-trained PFN, LP, class prior. Observed-group과 실제 sparse cell 연산을 구분.",
+    "source_refs": [
+      "findings/sources/feature-memory-2026-11-02/REPORT_KO.md",
+      "findings/sources/feature-memory-2026-11-02/results/paired.json",
+      "findings/sources/feature-memory-2026-11-02/results/interventions.json"
+    ],
+    "paper_id": "TabImpute",
+    "paper_title": "One Pipeline, Many Transformers: Pattern-Specific Imputation Specialists for Tabular Missing Data",
+    "paper_link": "https://arxiv.org/abs/2510.02625v6",
+    "matches": [
+      {
+        "strength": "새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.",
+        "tags": [
+          "observation-mask",
+          "tokenization"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      },
+      {
+        "strength": "Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.",
+        "tags": [
+          "observation-mask",
+          "tokenization"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "observation-mask",
+      "tokenization"
     ],
     "keywords": [],
     "retrieval_score": 4,

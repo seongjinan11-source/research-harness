@@ -1,0 +1,274 @@
+{
+  "observed-context/accuracy": {
+    "difference": -0.0004475911458333365,
+    "ci95": [
+      -0.015015157063802092,
+      0.01460825602213541
+    ],
+    "graphs": 64
+  },
+  "observed-context/nll": {
+    "difference": 0.004380305753583698,
+    "ci95": [
+      0.0009061126928616935,
+      0.007895675106895355
+    ],
+    "graphs": 64
+  },
+  "observed-context/brier": {
+    "difference": 0.003990582481827932,
+    "ci95": [
+      0.0007386287218309497,
+      0.007273974044048151
+    ],
+    "graphs": 64
+  },
+  "observed-all_nodes/accuracy": {
+    "difference": 0.0033365885416666687,
+    "ci95": [
+      -0.009481302897135412,
+      0.016135152180989563
+    ],
+    "graphs": 64
+  },
+  "observed-all_nodes/nll": {
+    "difference": 0.002582567881003278,
+    "ci95": [
+      -0.0003378995587548427,
+      0.005532694633349902
+    ],
+    "graphs": 64
+  },
+  "observed-all_nodes/brier": {
+    "difference": 0.0021977981125515704,
+    "ci95": [
+      -0.0006250063838373102,
+      0.004974450764818789
+    ],
+    "graphs": 64
+  },
+  "observed-pcfi/accuracy": {
+    "difference": -0.016357421875,
+    "ci95": [
+      -0.03420206705729166,
+      0.0006332397460937103
+    ],
+    "graphs": 64
+  },
+  "observed-pcfi/nll": {
+    "difference": 0.008710154727593957,
+    "ci95": [
+      0.003985165950162645,
+      0.013665858068291818
+    ],
+    "graphs": 64
+  },
+  "observed-pcfi/brier": {
+    "difference": 0.00814170941761419,
+    "ci95": [
+      0.003628281646935235,
+      0.012843877126054897
+    ],
+    "graphs": 64
+  },
+  "observed-lp/accuracy": {
+    "difference": -0.01031494140625,
+    "ci95": [
+      -0.04421437581380209,
+      0.02356160481770831
+    ],
+    "graphs": 64
+  },
+  "observed-lp/nll": {
+    "difference": -0.08580453235486385,
+    "ci95": [
+      -0.12393421880598353,
+      -0.051243437104743654
+    ],
+    "graphs": 64
+  },
+  "observed-lp/brier": {
+    "difference": -0.02068597052361037,
+    "ci95": [
+      -0.0361116466617938,
+      -0.005486636974223019
+    ],
+    "graphs": 64
+  },
+  "observed-uniform/accuracy": {
+    "difference": 0.023376464843750003,
+    "ci95": [
+      8.138020833333894e-05,
+      0.04718119303385415
+    ],
+    "graphs": 64
+  },
+  "observed-uniform/nll": {
+    "difference": -0.0009911715908684261,
+    "ci95": [
+      -0.008748697950979956,
+      0.0054666903885264425
+    ],
+    "graphs": 64
+  },
+  "observed-uniform/brier": {
+    "difference": -0.0012413270770880126,
+    "ci95": [
+      -0.008422850860093638,
+      0.00486864476262788
+    ],
+    "graphs": 64
+  },
+  "observed-class_prior/accuracy": {
+    "difference": 0.01263427734375,
+    "ci95": [
+      -0.007325236002604167,
+      0.03310241699218748
+    ],
+    "graphs": 64
+  },
+  "observed-class_prior/nll": {
+    "difference": 0.002515964871523833,
+    "ci95": [
+      -0.0019430758824842036,
+      0.007103663881685215
+    ],
+    "graphs": 64
+  },
+  "observed-class_prior/brier": {
+    "difference": 0.0021481001637157163,
+    "ci95": [
+      -0.002039965589553034,
+      0.006527390451781043
+    ],
+    "graphs": 64
+  },
+  "official/uniform_nodes/observed-context/accuracy": {
+    "difference": -0.0015462239583333278,
+    "ci95": [
+      -0.029868570963541664,
+      0.027669270833333336
+    ],
+    "graphs": 64
+  },
+  "official/uniform_nodes/observed-all_nodes/accuracy": {
+    "difference": 0.0008138020833333426,
+    "ci95": [
+      -0.02400919596354166,
+      0.025960286458333343
+    ],
+    "graphs": 64
+  },
+  "official/uniform_nodes/observed-pcfi/accuracy": {
+    "difference": -0.03678385416666666,
+    "ci95": [
+      -0.06429036458333334,
+      -0.009844970703125018
+    ],
+    "graphs": 64
+  },
+  "official/uniform_nodes/observed-lp/accuracy": {
+    "difference": 0.008626302083333337,
+    "ci95": [
+      -0.028405761718749995,
+      0.04687703450520832
+    ],
+    "graphs": 64
+  },
+  "official/clustered_nodes/observed-context/accuracy": {
+    "difference": -0.013427734374999997,
+    "ci95": [
+      -0.03491414388020832,
+      0.007812499999999997
+    ],
+    "graphs": 64
+  },
+  "official/clustered_nodes/observed-all_nodes/accuracy": {
+    "difference": -0.008870442708333325,
+    "ci95": [
+      -0.027996826171874992,
+      0.010662841796874982
+    ],
+    "graphs": 64
+  },
+  "official/clustered_nodes/observed-pcfi/accuracy": {
+    "difference": -0.04264322916666666,
+    "ci95": [
+      -0.07641805013020832,
+      -0.010823567708333318
+    ],
+    "graphs": 64
+  },
+  "official/clustered_nodes/observed-lp/accuracy": {
+    "difference": -0.006591796874999993,
+    "ci95": [
+      -0.05371297200520832,
+      0.03995768229166667
+    ],
+    "graphs": 64
+  },
+  "offdiagonal/uniform_nodes/observed-context/accuracy": {
+    "difference": 0.025227864583333336,
+    "ci95": [
+      -0.003011067708333328,
+      0.055586751302083265
+    ],
+    "graphs": 64
+  },
+  "offdiagonal/uniform_nodes/observed-all_nodes/accuracy": {
+    "difference": 0.021972656250000014,
+    "ci95": [
+      -0.008870442708333315,
+      0.05289713541666667
+    ],
+    "graphs": 64
+  },
+  "offdiagonal/uniform_nodes/observed-pcfi/accuracy": {
+    "difference": 0.015869140625000003,
+    "ci95": [
+      -0.01171875,
+      0.04386393229166667
+    ],
+    "graphs": 64
+  },
+  "offdiagonal/uniform_nodes/observed-lp/accuracy": {
+    "difference": -0.011881510416666663,
+    "ci95": [
+      -0.06510416666666666,
+      0.044352213541666664
+    ],
+    "graphs": 64
+  },
+  "offdiagonal/clustered_nodes/observed-context/accuracy": {
+    "difference": -0.01204427083333333,
+    "ci95": [
+      -0.04321695963541666,
+      0.01733601888020831
+    ],
+    "graphs": 64
+  },
+  "offdiagonal/clustered_nodes/observed-all_nodes/accuracy": {
+    "difference": -0.0005696614583333343,
+    "ci95": [
+      -0.02360229492187501,
+      0.02425130208333333
+    ],
+    "graphs": 64
+  },
+  "offdiagonal/clustered_nodes/observed-pcfi/accuracy": {
+    "difference": -0.0018717447916666618,
+    "ci95": [
+      -0.027345784505208335,
+      0.023681640625000003
+    ],
+    "graphs": 64
+  },
+  "offdiagonal/clustered_nodes/observed-lp/accuracy": {
+    "difference": -0.031412760416666664,
+    "ci95": [
+      -0.08765055338541666,
+      0.025396728515624904
+    ],
+    "graphs": 64
+  }
+}

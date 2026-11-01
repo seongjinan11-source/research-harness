@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 25개 프로젝트 · 108개 기록 (실패·중단 34개, 보존 20개, 교훈 35개, 미실행 19개)
+총 27개 프로젝트 · 118개 기록 (실패·중단 36개, 보존 22개, 교훈 39개, 미실행 21개)
 
 ## Common-context witness 고정 곱셈
 
@@ -65,6 +65,61 @@ FISF ratio ACM82.35%, IMDB34.45%; LP85.55/35.41%, Full PFN74.36/44.55%. Controll
 - 기준선: LP/PFN alone, 50:50, controlled neutral
 - 최소 재검증: 먼저 feature intervention으로 순효용을 확인하고, 동일 구조·주입 아래 ratio가 정답 방향 보정인지 새 graph에서 평가한다.
 - 원문: [findings/sources/graphpfn-2026-11-01/ratio.md](../findings/sources/graphpfn-2026-11-01/ratio.md); [findings/sources/graphpfn-2026-11-01/feature_intervention.md](../findings/sources/graphpfn-2026-11-01/feature_intervention.md)
+
+## 직접 주변화하는 graph-conditioned tree circuit
+
+실험 조건: 새12-node binary typed SBM, target8/helper4·relation2·Gaussian feature2. 학습된3 arms×3 fixed seeds, 각2048 task exposures/256 updates. Primary matched48 base graphs, 전체 OOD 포함192 graphs.
+
+### DMARG-P01 [보존] 유효한 conditional circuit을 학습해 두 학습된 직접 예측기보다 좋은 예측을 얻었다.
+
+Primary circuit61.3839%/NLL0.605128/Brier0.430740, public Mask PFN53.4846%/0.687080/0.493828, direct graph51.1512%/0.693134/0.499986. Circuit−Mask accuracy +7.899306%p CI[+3.889009,+11.790761], NLL−0.081952 CI[−0.101972,−0.062402]. Circuit−direct accuracy +10.232722%p CI[+5.688365,+14.589172], NLL−0.088005 CI[−0.106528,−0.069288].
+
+- 확대 금지: Grid6나 feature-only 확률모형보다 우월함, 일반 GSPN/MaM 재현, 원래 cyclic SBM의 exact posterior, 새로운 semantic schema 또는 실제 heterogeneous graph 성과로 확대하지 않는다. 파라미터 수는 같지 않다.
+- 원문: [findings/sources/direct-marginal-2026-11-02/REPORT_KO.md](../findings/sources/direct-marginal-2026-11-02/REPORT_KO.md); [findings/sources/direct-marginal-2026-11-02/results/paired.json](../findings/sources/direct-marginal-2026-11-02/results/paired.json); [findings/sources/direct-marginal-2026-11-02/results/decision.json](../findings/sources/direct-marginal-2026-11-02/results/decision.json)
+
+### DMARG-P02 [보존] 이 소형 family의 circuit은 실제 관측 feature와 node 대응을 활용한다.
+
+Context2/clustered50 보조 조건, 전체192 base graphs. No-observed−standard accuracy−15.451389%p CI[−19.386574,−11.805556], NLL+0.172725 CI[+0.147664,+0.197846]. Shuffled−standard accuracy−13.686343%p CI[−17.534722,−9.953704], NLL+0.352257 CI[+0.280898,+0.432729].
+
+- 확대 금지: 원래 IMDB에서 관측값의 평균 효용을 회수했다는 뜻이 아니다. Feature가 class와 연결되도록 만든 Gaussian family의 보조 intervention이며 primary 조건과 다르다. Graph-specific 증분이나 calibrated true posterior를 단독 입증하지 않는다.
+- 원문: [findings/sources/direct-marginal-2026-11-02/results/interventions.json](../findings/sources/direct-marginal-2026-11-02/results/interventions.json); [findings/sources/direct-marginal-2026-11-02/protocol.json](../findings/sources/direct-marginal-2026-11-02/protocol.json)
+
+### DMARG-F01 [실패·중단] 현재 conditional tree circuit이 알려진 family의 강한 classical inference와 경쟁하는 메인 메소드다.
+
+Grid6-BP69.5602%/NLL0.540755, Grid6-exact69.3680%/0.541211. Circuit−Grid6-BP accuracy−8.176257%p CI[−13.111376,−3.230252], NLL+0.064373 CI[+0.024247,+0.105302]. Grid6-exact predictive KL0.064716으로 목표.01 초과. 같은GPU forward median circuit12.369ms, Grid6-BP13.443ms, Grid6-exact10.427ms. 2배 latency 기준도 미충족.
+
+- 판정: Neural-baseline gate는 성공했지만 classical 품질·비용 gate는 실패. 현재 구성의 메인 메소드 확대는 보류.
+- 원인·병목 [원인 미상]: 유효한 주변화에도 예측 fit의 격차가 남았다. Tree family의 표현력, G만 보는 potential encoder의 근사, 학습 예산의 기여를 분리하지 않았다. 정확한 고유 원인은 미상이다. 작은 known-family baseline의 우위를 모델 학습 전체의 불필요함으로 확대하지 않는다.
+- 닫은 범위: 현재56,385-parameter/32-component conditional tree circuit, 고정12-node·2-feature·2-relation family,256-update query-CE 학습을 그대로 메인 방법으로 확대.
+- 닫지 않은 것: 다른 유효 circuit 구조, family/schema 일반화, exact variable elimination의 다른 근사·공유 연산, MaM 자체를 실행하거나 실패시킨 결과가 아니다. DMARG-P01/P02의 실제 개선과 feature 이용은 보존한다.
+- 재검토 조건: 강한 known-family inference의 예측 품질을 유지하거나, 작은 고정 grid가 다루지 못하는 family에서 실제 관측값과 구조의 결합 이득을 회수하는 연산이 나올 때.
+- 기준선: Gaussian-feature orientation을 적분하는 Grid6 exact/BP, known-feature-only, constant tree, 실제 public Mask PFN 및 같은 예산 direct graph. 더 작은 network 대비 승리만으로 재개하지 않는다.
+- 최소 재검증: 같은 관측 정보·학습 task·전체 비용으로 fixed Gaussian 통계를 넘는 graph-specific 이득부터 확인한다. 유효한 circuit의 범위와 원 데이터 posterior를 분리하고 fresh bank·heldout family를 사용한다.
+- 원문: [findings/sources/direct-marginal-2026-11-02/results/paired.json](../findings/sources/direct-marginal-2026-11-02/results/paired.json); [findings/sources/direct-marginal-2026-11-02/results/benchmark.json](../findings/sources/direct-marginal-2026-11-02/results/benchmark.json); [findings/sources/direct-marginal-2026-11-02/results/decision.json](../findings/sources/direct-marginal-2026-11-02/results/decision.json)
+
+### DMARG-L01 [교훈] 직접 예측기 대비 큰 개선을 graph-specific uncertainty 추론의 기여로 전부 귀속하지 않는다.
+
+설계 고정 뒤 추가한 known-family feature-only 대조는 accuracy58.1329%/NLL0.605147. Circuit−feature-only accuracy+3.251075%p CI[−0.142816,+6.531240], NLL−0.000019 CI[−0.013783,+0.013696]. NLL 추가 개선은 확인되지 않았다. 이 대조는 Gaussian magnitude.8/sd.6를 알고 있으나 graph를 사용하지 않는다. Constant-tree NLL0.685252 대비 circuit NLL−0.080124 CI[−0.125201,−0.035681] 개선은 별도로 보존한다.
+
+- 원문: [findings/sources/direct-marginal-2026-11-02/results/feature_controls.json](../findings/sources/direct-marginal-2026-11-02/results/feature_controls.json); [findings/sources/direct-marginal-2026-11-02/runtime/feature_controls.py](../findings/sources/direct-marginal-2026-11-02/runtime/feature_controls.py)
+
+### DMARG-L02 [교훈] 관측 feature가 label context 바깥에만 있는 조건은 아직 회수하지 못한 관계 추론 정보를 드러낸다.
+
+Visible context/mask로 나눈 primary 사후 분할에서 circuit52.6899%/NLL0.699547, Grid6-BP64.8682%/0.624596. Context와 noncontext 양쪽에 관측 feature가 있는 분할은 circuit74.8846%/0.453902였다. 분할은 query truth로 정하지 않았고 추가 유의성·독립 확인 주장을 하지 않는다.
+
+- 원문: [findings/sources/direct-marginal-2026-11-02/results/descriptive_breakdowns.json](../findings/sources/direct-marginal-2026-11-02/results/descriptive_breakdowns.json); [findings/sources/direct-marginal-2026-11-02/runtime/breakdowns.py](../findings/sources/direct-marginal-2026-11-02/runtime/breakdowns.py)
+
+### DMARG-L03 [교훈] Valid conditional circuit의 계산 유효성과 데이터 fit을 별도 검증한다.
+
+Circuit의 evidence·marginal 열거 오차, label 합 규칙, Gaussian 좌표 적분, conditional ratio 오차가 약10^-15 수준이었다. Parameters는 G와 알려진 family만 보고 evidence 변경 시 고정됨을 검사했다. 총9개 학습/2304 성공 updates/18432 task exposures/44928 예측을 감사했다. Test4608 episodes 중 실제 feature 관측0개는1353개다.
+
+- 원문: [findings/sources/direct-marginal-2026-11-02/results/preflight.json](../findings/sources/direct-marginal-2026-11-02/results/preflight.json); [findings/sources/direct-marginal-2026-11-02/results/audit.json](../findings/sources/direct-marginal-2026-11-02/results/audit.json); [findings/sources/direct-marginal-2026-11-02/results/final_integrity.json](../findings/sources/direct-marginal-2026-11-02/results/final_integrity.json)
+
+### DMARG-U01 [미실행] NEXT-U03의 가변 feature/schema·대형 graph circuit 및 독립 MaM 구현
+
+실행한 것은 고정2-feature·2-relation binary family의 conditional tree mixture다. 연속·가변 차원 MaM, 새 semantic relation vocabulary, 대형 cyclic graph의 정확한 주변화, full sparse-cell PFN과 실제 graph 전이는 실행하지 않았다.
+
+- 원문: [findings/sources/direct-marginal-2026-11-02/protocol.json](../findings/sources/direct-marginal-2026-11-02/protocol.json); [findings/sources/direct-marginal-2026-11-02/model.py](../findings/sources/direct-marginal-2026-11-02/model.py)
 
 ## 실제 관측 feature 기여의 개입 분석
 
@@ -148,6 +203,35 @@ Joint와 diagonal에 같은 rho draws·조건부 평균·대각 분산·standard
 새 neural law·auxiliary loss를 학습하지 않았다. Context-conditioned density, 별도 PCFI/FISF 학습 checkpoint, 비조건부 구조 random input, PEMix/GSPN 직접 재현, 실제 heterograph 전이는 이번 실행에서 비교하지 않았다. PEMix를 하네스에 추가한 것은 재검토 단서이지 기존 실패 해결 판정이 아니다.
 
 - 원문: [findings/sources/feature-marginal-2026-11-02/PEMix_RECHECK.md](../findings/sources/feature-marginal-2026-11-02/PEMix_RECHECK.md); [findings/sources/feature-marginal-2026-11-02/REPORT.md](../findings/sources/feature-marginal-2026-11-02/REPORT.md)
+
+## Label-context와 observed-feature memory 분리
+
+실험 조건: 새64 train/64 test base graphs, public GraphPFN1.3, 4 arms×3 fixed seeds, arm/seed당512 성공 updates. 공식 및 controlled-crossed 과제의 같은 stream으로 학습.
+
+### FMEM-F01 [실패·중단] Label context와 관측 feature memory를 분리하면 기존 context-only 및 all-node feature attention보다 accuracy가 높다.
+
+Primary accuracy context52.3336%, all_nodes51.9552%, observed52.2888%, PCFI53.9246%, LP53.3203%. Observed−context −0.044759%p CI[−1.501516,+1.460826], −all_nodes +0.3337%p CI[−0.9481,+1.6135], −PCFI −1.6357%p CI[−3.4202,+0.0633]. Observed NLL0.692156은 context0.687776 대비 +0.004380 CI[+0.000906,+0.007896], PCFI0.683446 대비 +0.008710 CI[+0.003985,+0.013666] 높았다.
+
+- 판정: 현재 feature-group routing의 사전 accuracy gate 미통과. NLL은 기존 context 및 PCFI보다 악화.
+- 원인·병목 [원인 미상]: 관측 전용 memory에서 추가 예측 가치를 회수하지 못했다. Frozen sample-attention projection, native feature-group 표현, sparse 입력 정보량,512-update prior fit 가운데 고유 원인을 분리하지 않았다. Context-only 제한이 이전 실패의 원인이라는 가설도 확인되지 않았다.
+- 닫은 범위: 현재 공개 frozen-transformer GraphPFN의 native 두 좌표 group에 적용한 C-only/all-node/observed-key routing을 메인 방법으로 확대.
+- 닫지 않은 것: 완전한 sparse cell-token 모델, attention projection까지 새로 학습하는 구조, 다른 prior·규모·실제 graph는 평가하지 않았다. MCP-P02의 +3.43%p는 이 실험으로 재현하거나 기각한 것이 아니다.
+- 재검토 조건: Label이 없는 노드의 실제 관측값을 읽는 연산이 strong all-node memory와 PCFI/FISF-trained PFN보다 같은 예산에서 유용하다는 근거가 생길 때.
+- 기준선: 동일 초기화·성공 update·prior의 C-only, all-node memory, PCFI/FISF-trained PFN, LP, class prior. Observed-group과 실제 sparse cell 연산을 구분.
+- 최소 재검증: 새 graph bank에서 accuracy primary를 먼저 고정하고 no-observed/shuffled-observed와 전체 비용을 함께 비교한다. 단순 KV mask 변경이나 추가 학습만의 효과로 재개하지 않는다.
+- 원문: [findings/sources/feature-memory-2026-11-02/REPORT_KO.md](../findings/sources/feature-memory-2026-11-02/REPORT_KO.md); [findings/sources/feature-memory-2026-11-02/results/paired.json](../findings/sources/feature-memory-2026-11-02/results/paired.json); [findings/sources/feature-memory-2026-11-02/results/interventions.json](../findings/sources/feature-memory-2026-11-02/results/interventions.json)
+
+### FMEM-L01 [교훈] 더 넓은 key/value 접근의 구현 가능성과 실제 feature utility를 구분한다.
+
+12개 모델, 총6144 성공 updates, 저장 예측16896개를 감사했다. Frozen parameters와 source/bank hashes를 보존했다. Observed-group routing은 dense attention mask를 바꾼 구현으로 sparse kernel의 메모리·속도 이점은 주장하지 않는다. Clustered90/off-diagonal에서 관측값 shuffle은 observed arm NLL을 −0.007934 CI[−0.014027,−0.002201] 낮춰 유익한 feature alignment 회수를 지지하지 않았다.
+
+- 원문: [findings/sources/feature-memory-2026-11-02/results/preflight.json](../findings/sources/feature-memory-2026-11-02/results/preflight.json); [findings/sources/feature-memory-2026-11-02/results/audit.json](../findings/sources/feature-memory-2026-11-02/results/audit.json); [findings/sources/feature-memory-2026-11-02/results/final_integrity.json](../findings/sources/feature-memory-2026-11-02/results/final_integrity.json); [findings/sources/feature-memory-2026-11-02/results/interventions.json](../findings/sources/feature-memory-2026-11-02/results/interventions.json)
+
+### FMEM-U01 [미실행] NEXT-U02/REOPEN-U01 중 full sparse-cell 아키텍처와 end-to-end feature-attention 학습
+
+이번 실행은 native feature-pair grouping을 유지한 공개 PFN routing kill test다. 원래 attention projection은 고정했고 별도의 sparse token encoder나 Ephris/Wander 전체를 재현하지 않았다.
+
+- 원문: [findings/sources/feature-memory-2026-11-02/protocol.json](../findings/sources/feature-memory-2026-11-02/protocol.json); [findings/sources/feature-memory-2026-11-02/experiment.py](../findings/sources/feature-memory-2026-11-02/experiment.py)
 
 ## Native heterogeneous 입력·기존 relational FM 대조
 
