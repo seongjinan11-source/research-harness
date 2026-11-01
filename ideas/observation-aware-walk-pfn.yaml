@@ -1,0 +1,16 @@
+id: observation-aware-walk-pfn
+date: '2026-11-02'
+text: Wander의 경로 표현을 바탕으로 관측 feature와 context에 이르는 경로의 mask·재방문 identity를 읽는 PFN을
+  검토한다. OBS-F01의 subgraph 선택 후 PCFI 실행과 계산 대상이 다르다. Original/label-filtered Wander와
+  같은 비용의 긴 uniform walk를 먼저 비교하며, 단순 filtering은 novelty가 아니다. 새 학습·독립 검증은 미실행이다.
+tags:
+- graph-structure-use
+- observation-mask
+- context-scale
+- inference-cost
+keywords:
+- Wander
+- random walk
+- evidence path
+- missing region
+- long range

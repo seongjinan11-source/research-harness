@@ -119,6 +119,64 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "JIMP-F02",
+    "project": "Public GraphPFN 내부 대치 상태 갱신",
+    "claim": "PFN의 query 분류 목적에 맞춘 사전 대치기로 PCFI를 교체하면 주 결측 조건에서 독립 개선을 얻는다.",
+    "verdict": "현재 task-trained frontend의 주 조건 우위 미입증",
+    "reason_status": "unknown",
+    "failure_reason": "Query CE로 학습된 네 단계 대치가 고정 PCFI나 일반 mask/token adapter보다 유용하다는 증거가 부족했다. 정확한 원인은 미상이며 복원 목적이 아닌 분류 목적을 썼다는 사실만으로 개선되지 않았다.",
+    "reopen_when": "PFN에 필요한 정보와 단순 복원값을 구분하는 대치·입력 연산이 강한 동일 학습 대조보다 안정적인 예측 이득을 보일 때.",
+    "recheck": "대치 연산의 개선과 backbone 추가 학습을 분리하고, 먼저 새 그래프 bank에서 prior-only 확률 대조까지 함께 비교한다.",
+    "comparison_floor": "PCFI Plain, Mask Plain, native NaN input, 동일 예산·초기화·query CE",
+    "source_refs": [
+      "findings/sources/joint-imputation-2026-11-01/REPORT.md",
+      "findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json"
+    ],
+    "paper_id": "TabImpute",
+    "paper_title": "One Pipeline, Many Transformers: Pattern-Specific Imputation Specialists for Tabular Missing Data",
+    "paper_link": "https://arxiv.org/abs/2510.02625v6",
+    "matches": [
+      {
+        "strength": "새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.",
+        "tags": [
+          "observation-mask",
+          "tokenization"
+        ],
+        "keywords": [
+          "imputation"
+        ],
+        "specific_keywords": [
+          "imputation"
+        ]
+      },
+      {
+        "strength": "Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.",
+        "tags": [
+          "channel-dependency",
+          "observation-mask",
+          "tokenization"
+        ],
+        "keywords": [
+          "imputation"
+        ],
+        "specific_keywords": [
+          "imputation"
+        ]
+      }
+    ],
+    "tags": [
+      "channel-dependency",
+      "observation-mask",
+      "tokenization"
+    ],
+    "keywords": [
+      "imputation"
+    ],
+    "retrieval_score": 7,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "FEAT-F01",
     "project": "실제 관측 feature 기여의 개입 분석",
     "claim": "IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.",
@@ -354,43 +412,43 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
-    "finding_id": "JIMP-F02",
+    "finding_id": "JIMP-F01",
     "project": "Public GraphPFN 내부 대치 상태 갱신",
-    "claim": "PFN의 query 분류 목적에 맞춘 사전 대치기로 PCFI를 교체하면 주 결측 조건에서 독립 개선을 얻는다.",
-    "verdict": "현재 task-trained frontend의 주 조건 우위 미입증",
+    "claim": "PFN 내부의 반복 대치가 동일한 대치기를 PFN 앞에서 실행하는 것과 강한 동일 예산 Plain을 넘는다.",
+    "verdict": "현재 구현 확대 보류·내부 대치 증분 미입증",
     "reason_status": "unknown",
-    "failure_reason": "Query CE로 학습된 네 단계 대치가 고정 PCFI나 일반 mask/token adapter보다 유용하다는 증거가 부족했다. 정확한 원인은 미상이며 복원 목적이 아닌 분류 목적을 썼다는 사실만으로 개선되지 않았다.",
-    "reopen_when": "PFN에 필요한 정보와 단순 복원값을 구분하는 대치·입력 연산이 강한 동일 학습 대조보다 안정적인 예측 이득을 보일 때.",
-    "recheck": "대치 연산의 개선과 backbone 추가 학습을 분리하고, 먼저 새 그래프 bank에서 prior-only 확률 대조까지 함께 비교한다.",
-    "comparison_floor": "PCFI Plain, Mask Plain, native NaN input, 동일 예산·초기화·query CE",
+    "failure_reason": "실제 공개 PFN과 대치 상태를 연결해 gradient를 학습했지만, 위치를 바꾼 독립 예측 이득은 확인하지 못했다. 정보 중복·현재 numeric 함수족·prior·학습 예산 중 원인은 분리하지 못했다.",
+    "reopen_when": "대치 상태를 PFN 추론 중 갱신할 때 사전 대치에 없던 예측 정보를 보존·전달하고, 동일 예산 Plain/PCFI 대조를 넘는 연산이 나올 때.",
+    "recheck": "공통 전처리·초기화·학습 과제·성공 update 수를 맞춘 새 bank에서 반복 위치 효과를 비교한다. 같은 checkpoint의 피드백 제거와 재학습 대조를 구분하고 NLL/Brier/accuracy를 따로 보고한다.",
+    "comparison_floor": "동일 synthetic missing prior로 추가 학습한 PCFI Plain·Mask Plain·Frontend; native NaN GraphPFN의 같은 예산 학습도 향후 필요",
     "source_refs": [
       "findings/sources/joint-imputation-2026-11-01/REPORT.md",
-      "findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json"
+      "findings/sources/joint-imputation-2026-11-01/paired.json"
     ],
-    "paper_id": "TabImpute",
-    "paper_title": "One Pipeline, Many Transformers: Pattern-Specific Imputation Specialists for Tabular Missing Data",
-    "paper_link": "https://arxiv.org/abs/2510.02625v6",
+    "paper_id": "Ephris",
+    "paper_title": "Message Passing Does More with Less for In-Context Learning on Graphs",
+    "paper_link": "https://arxiv.org/abs/2609.37057",
     "matches": [
       {
-        "strength": "새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.",
+        "strength": "Section 3.1과 Appendix B의 feature별 Gather는 context와 query 노드를 모두 사용한다. Context-label embedding도 압축 전 scalar token에 제공하므로, feature memory를 label-context 노드에만 한정하지 않는 직접적인 선행 대조다.",
         "tags": [
-          "observation-mask",
+          "graph-structure-use",
           "tokenization"
         ],
         "keywords": [
-          "imputation"
+          "feature token"
         ],
         "specific_keywords": [
-          "imputation"
+          "feature token"
         ]
       }
     ],
     "tags": [
-      "observation-mask",
+      "graph-structure-use",
       "tokenization"
     ],
     "keywords": [
-      "imputation"
+      "feature token"
     ],
     "retrieval_score": 5,
     "signal": "구체 키워드+태그 일치 (미검증)",
@@ -876,6 +934,15 @@
         ],
         "keywords": [],
         "specific_keywords": []
+      },
+      {
+        "strength": "Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.",
+        "tags": [
+          "observation-mask",
+          "tokenization"
+        ],
+        "keywords": [],
+        "specific_keywords": []
       }
     ],
     "tags": [
@@ -1298,6 +1365,20 @@
           "imputation",
           "missingness"
         ]
+      },
+      {
+        "strength": "Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.",
+        "tags": [
+          "observation-mask"
+        ],
+        "keywords": [
+          "imputation",
+          "missingness"
+        ],
+        "specific_keywords": [
+          "imputation",
+          "missingness"
+        ]
       }
     ],
     "tags": [
@@ -1309,6 +1390,42 @@
     ],
     "retrieval_score": 4,
     "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "OBS-F01",
+    "project": "Observation-aware subgraph policy",
+    "claim": "Mask-aware 학습 정책이 강한 경로 규칙을 넘는다.",
+    "verdict": "주 성공 기준 미통과·확장 보류",
+    "reason_status": "unknown",
+    "failure_reason": "Mask를 보는 것은 유용했지만 비슷한 효과를 고정 shortest-path closure도 얻었다. Joint subset 표현력·stochastic train/deterministic inference·학습 budget 중 정확한 원인은 분리하지 않았다.",
+    "reopen_when": "동일 resident budget에서 mask-aware 공동 부분그래프 구성이 강한 경로 규칙보다 나은 utility를 보이는 장치가 나올 때.",
+    "recheck": "Fresh graph에서 사전 budget·mask gate를 고정하고 preprocessing/search를 포함한 비용과 label 예측을 함께 비교한다.",
+    "comparison_floor": "Evidence-paths, PPR, equal-capacity structure policy, random, context prior",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/observation.md"
+    ],
+    "paper_id": "Ephris",
+    "paper_title": "Message Passing Does More with Less for In-Context Learning on Graphs",
+    "paper_link": "https://arxiv.org/abs/2609.37057",
+    "matches": [
+      {
+        "strength": "Section 3.1과 Appendix B의 feature별 Gather는 context와 query 노드를 모두 사용한다. Context-label embedding도 압축 전 scalar token에 제공하므로, feature memory를 label-context 노드에만 한정하지 않는 직접적인 선행 대조다.",
+        "tags": [
+          "context-scale",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "context-scale",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
@@ -3019,6 +3136,18 @@
     "matches": [
       {
         "strength": "새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.",
+        "tags": [
+          "observation-mask"
+        ],
+        "keywords": [
+          "missing"
+        ],
+        "specific_keywords": [
+          "missing"
+        ]
+      },
+      {
+        "strength": "Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.",
         "tags": [
           "observation-mask"
         ],

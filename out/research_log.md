@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 24개 프로젝트 · 103개 기록 (실패·중단 34개, 보존 20개, 교훈 33개, 미실행 16개)
+총 25개 프로젝트 · 108개 기록 (실패·중단 34개, 보존 20개, 교훈 35개, 미실행 19개)
 
 ## Common-context witness 고정 곱셈
 
@@ -299,6 +299,40 @@ Context label이 모두 A일 때 당시 decoder는 모든 query에서 p(A)≥0.5
 양의 diffusion 표현력 문제는 contrastive decoder로 전환했다. 이후 EAJ/R1의 경쟁력 실패는 별개의 문제이며 기존 LLBP 항목에 보존한다.
 
 - 원문: [findings/sources/graphpfn-2026-11-01/contrastive.md](../findings/sources/graphpfn-2026-11-01/contrastive.md); [findings/sources/graphpfn-2026-11-01/llbp.md](../findings/sources/graphpfn-2026-11-01/llbp.md)
+
+## 실패 기록과 기존 논문을 연결한 후속 후보 선별
+
+실험 조건: 기존 32 papers와 103 findings를 읽고 원문 및 현재 호출 경로를 점검한 문헌 검토. 새 학습·평가 결과가 아니다.
+
+### REOPEN-L01 [교훈] 현재 LimiX의 기본 sample attention에서 label-context와 feature-memory의 접근 범위가 묶여 있다.
+
+common.py는 context 노드를 앞에 놓고 모든 base layer에 eval_pos=len(context)를 전달한다. Vendor layer.py의 call_sequence_attention은 context와 query 양쪽의 key/value에 x[:, :eval_pos]를 사용한다. 따라서 label이 없는 노드의 관측값을 해당 base attention의 직접 key/value로 읽지는 않는다. Residual의 query 자기 feature와 graph adapter 경로는 존재하므로 '그 관측값을 전혀 사용하지 못한다'는 뜻이 아니다.
+
+- 원문: [findings/sources/literature-reopening-2026-11-02/audit.json](../findings/sources/literature-reopening-2026-11-02/audit.json); [findings/sources/literature-reopening-2026-11-02/common.py](../findings/sources/literature-reopening-2026-11-02/common.py); [findings/sources/literature-reopening-2026-11-02/limix_layer.py](../findings/sources/literature-reopening-2026-11-02/limix_layer.py)
+
+### REOPEN-U01 [미실행] Label memory와 observed-feature memory를 분리하는 graph PFN
+
+TabImpute의 query 상호작용과 Ephris의 전체 노드 feature Gather를 단서로, label 읽기는 C, feature f의 실측값 읽기는 O_f={j:M_jf=1}로 두는 후보. NEXT-U02의 sparse observation 안을 구체화한 것으로, 별개의 발명·학습된 성공으로 세지 않는다.
+
+- 원문: [findings/sources/literature-reopening-2026-11-02/audit.json](../findings/sources/literature-reopening-2026-11-02/audit.json); [papers/TabImpute.yaml](../papers/TabImpute.yaml); [papers/Ephris.yaml](../papers/Ephris.yaml); [findings/post-random-search.yaml](../findings/post-random-search.yaml); [findings/joint-imputation-pfn.yaml](../findings/joint-imputation-pfn.yaml); [findings/random-fill-controls.yaml](../findings/random-fill-controls.yaml)
+
+### REOPEN-U02 [미실행] Missing 영역을 통과하는 경로 자체를 읽는 observation-aware walk PFN
+
+Wander는 긴 walk와 feature-free 예측의 기존 실증을 갖는다. 이를 관측 cell이나 context에 이르는 경로 읽기로 확장하는 후보이며, 원래 Wander부터 강한 baseline으로 쓴다. Wander의 label 방문 walk filter 자체를 새 제안으로 삼지 않는다.
+
+- 원문: [papers/Wander.yaml](../papers/Wander.yaml); [findings/observation-budget.yaml](../findings/observation-budget.yaml); [findings/feature-intervention.yaml](../findings/feature-intervention.yaml)
+
+### REOPEN-U03 [미실행] PFN 전체의 random-fill 평균 대신 확률적인 첫 feature 변환을 학습하는 후보
+
+PEMix는 구조 조건부 mixture의 불확실성을 첫 GNN layer에서 해석적으로 처리한다. PFN의 입력 비선형 변환에 비슷한 생각을 적용할 여지는 있지만 CFB-U01/NEXT-U03의 미해결 사항을 해결한 것은 아니며 우선순위는 낮다.
+
+- 원문: [papers/PEMix.yaml](../papers/PEMix.yaml); [papers/GSPN.yaml](../papers/GSPN.yaml); [findings/context-feature-belief.yaml](../findings/context-feature-belief.yaml); [findings/random-fill-controls.yaml](../findings/random-fill-controls.yaml)
+
+### REOPEN-L02 [교훈] 이번 문헌 대조는 기존 gate를 바꾸지 않고 후보와 진단 대조를 구분한다.
+
+MCP-P02의 off-diagonal/clustered accuracy +3.43%p는 보존한 미독립 재현 신호이며 원래 NLL gate는 실패 그대로다. Feature memory, walk, 기대 token의 우열은 아직 측정하지 않았다. 기존 논문은 이 3.43%p의 원인이나 LLBP-F11의 Grid6 우위를 뒤집지 않았다.
+
+- 원문: [findings/mechanism-crossed-prior.yaml](../findings/mechanism-crossed-prior.yaml); [findings/llbp-eaj.yaml](../findings/llbp-eaj.yaml); [findings/sources/literature-reopening-2026-11-02/audit.json](../findings/sources/literature-reopening-2026-11-02/audit.json)
 
 ## Learned-Likelihood BP / EAJ
 

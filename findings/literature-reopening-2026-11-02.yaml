@@ -1,0 +1,79 @@
+project: 실패 기록과 기존 논문을 연결한 후속 후보 선별
+date: '2026-11-02'
+source: findings/sources/literature-reopening-2026-11-02/audit.json
+setting: 기존 32 papers와 103 findings를 읽고 원문 및 현재 호출 경로를 점검한 문헌 검토. 새 학습·평가 결과가 아니다.
+related: [TabImpute, Ephris, Wander, PEMix, GSPN, StructuralMissingPFN]
+entries:
+  - id: REOPEN-L01
+    kind: lesson
+    claim: 현재 LimiX의 기본 sample attention에서 label-context와 feature-memory의 접근 범위가 묶여 있다.
+    observation: "common.py는 context 노드를 앞에 놓고 모든 base layer에 eval_pos=len(context)를 전달한다. Vendor layer.py의 call_sequence_attention은 context와 query 양쪽의 key/value에 x[:, :eval_pos]를 사용한다. 따라서 label이 없는 노드의 관측값을 해당 base attention의 직접 key/value로 읽지는 않는다. Residual의 query 자기 feature와 graph adapter 경로는 존재하므로 '그 관측값을 전혀 사용하지 못한다'는 뜻이 아니다."
+    interpretation: "이는 확인된 구현 제한이다. JIMP-F01/F02, RFILL-F01, MCP-F01의 실패 원인이라는 인과 주장은 아직 검증하지 않았다. 작은 pilot의 학습 budget이나 prior 문제와 구분해야 한다."
+    tags: [context-scale, observation-mask, tokenization, graph-structure-use]
+    keywords: [feature memory, label context, eval_pos, query key value, sample attention, frozen backbone]
+    source_refs:
+      - findings/sources/literature-reopening-2026-11-02/audit.json
+      - findings/sources/literature-reopening-2026-11-02/common.py
+      - findings/sources/literature-reopening-2026-11-02/limix_layer.py
+    evidence: 호출부와 vendor layer의 원본 byte snapshot. 새로운 성능·원인 규명 결과가 아니다.
+  - id: REOPEN-U01
+    kind: untested
+    claim: Label memory와 observed-feature memory를 분리하는 graph PFN
+    observation: "TabImpute의 query 상호작용과 Ephris의 전체 노드 feature Gather를 단서로, label 읽기는 C, feature f의 실측값 읽기는 O_f={j:M_jf=1}로 두는 후보. NEXT-U02의 sparse observation 안을 구체화한 것으로, 별개의 발명·학습된 성공으로 세지 않는다."
+    proposed_operator: "각 feature token은 관측 cell의 key/value에 attention하고 label token은 context label만 읽는다. 미관측 cell은 실측값 memory에 넣지 않는다. O_f가 비면 명시적 null memory를 쓴다. 원래 graph adapter를 유지하고 먼저 기존 attention projection을 공유해 routing만 바꾼다. Feature-pair grouping에서 한쪽만 관측된 상태를 구분한다."
+    unresolved: "All-node Gather는 Ephris에, query attention 제한 해제는 TabImpute에 이미 있다. Mask 변경만으로 novelty를 주장하지 않는다. Graph adapter를 통한 기존 접근 대비 독립 가치와 관측률 감소 시 품질·비용이 미확인이다. Query끼리 보이는 feature를 공유하는 transductive 설정을 명시한다."
+    comparison_floor: "같은 원 checkpoint·prior·성공 update 수의 C-only 기존 Mask Plain, feature token만 all-node key/value로 바꾼 global attention 대조, observed-only feature memory. Label memory는 모든 arm에서 C만 사용한다. PCFI/FISF-trained PFN, LP, class prior도 유지한다. 외부 Ephris/GRAPE 계열은 정보·학습량 차이를 명시한다."
+    recheck: "모든 arm을 같은 초기화에서 학습하고 새 graph bank에서 accuracy를 사전 primary로 둔다. NLL/Brier·전체 처리 시간·VRAM은 별도 보고한다. Mask율과 관측값의 C 안팎 위치를 나눠 보고 no-observed/shuffled-observed로 실측값 이용을 조사한다. Query label은 입력·memory 구성에 쓰지 않는다. 기존 MCP의 secondary accuracy 신호와 본 후보의 미실행 평가를 혼동하지 않는다."
+    tags: [observation-mask, context-scale, tokenization, graph-structure-use]
+    keywords: [separate feature label memory, observed key value, query query attention, sparse observation, no imputation]
+    source_refs:
+      - findings/sources/literature-reopening-2026-11-02/audit.json
+      - papers/TabImpute.yaml
+      - papers/Ephris.yaml
+      - findings/post-random-search.yaml
+      - findings/joint-imputation-pfn.yaml
+      - findings/random-fill-controls.yaml
+    evidence: 기존 선행연구와 확인한 구현 제약에서 도출한 미실행 가설. 개선폭의 예측이 아니다.
+  - id: REOPEN-U02
+    kind: untested
+    claim: Missing 영역을 통과하는 경로 자체를 읽는 observation-aware walk PFN
+    observation: "Wander는 긴 walk와 feature-free 예측의 기존 실증을 갖는다. 이를 관측 cell이나 context에 이르는 경로 읽기로 확장하는 후보이며, 원래 Wander부터 강한 baseline으로 쓴다. Wander의 label 방문 walk filter 자체를 새 제안으로 삼지 않는다."
+    proposed_operator: "Query에서 걸은 node/relation 열에 실측 feature, original mask, 알려진 context label, 재방문 identity를 기록한다. Missing node도 경로에서 지우지 않고 같은 sequence encoder로 경로 전체를 읽어 query 표현을 갱신한다. PCFI로 숫자를 채운 유도 부분 graph를 기존 PFN에 넘기는 OBS-F01과 계산 대상이 다르다."
+    unresolved: "Mask 조건부 sampling이 walk 예산만 유리하게 바꿨을 가능성을 구분해야 한다. 관측 source에 도달하지 않는 walk에도 구조 정보가 있어 일괄 폐기를 정당화하지 않는다. 여러 walk의 같은 source 재방문을 독립 관측으로 해석하지 않는다. 원래 모델이 이미 같은 능력을 가질 가능성과 sampling 분산·비용 문제가 있다."
+    comparison_floor: "Original Wander, label-filtered Wander, 같은 sequence encoder의 mask-blind와 mask-aware sampling, 예산을 맞춘 긴 uniform walk, shortest-path+PCFI+GraphPFN, LP. 채택한 walk 수뿐 아니라 총 transition 수·sampling 시간·end-to-end 시간을 맞추거나 곡선으로 보여준다."
+    recheck: "먼저 새 graph bank와 학습에 없던 missing 영역 직경에서 비교한다. 긴 거리 connected-component toy뿐 아니라 heterophily와 feature가 필요한 조건도 포함하고 강한 LP를 반드시 비교한다. Accuracy를 primary, NLL/Brier·비용을 secondary로 미리 고정한다. 평범한 긴 walk만으로 효과가 사라지면 mask 고유 메소드라고 부르지 않는다."
+    tags: [graph-structure-use, observation-mask, context-scale, inference-cost]
+    keywords: [random walk, long range, evidence path, observed source, missing region, Wander]
+    source_refs:
+      - papers/Wander.yaml
+      - findings/observation-budget.yaml
+      - findings/feature-intervention.yaml
+    evidence: 미실행 장거리 표현 후보. 기존 실패를 receptive field만으로 설명하지 않는다.
+  - id: REOPEN-U03
+    kind: untested
+    claim: PFN 전체의 random-fill 평균 대신 확률적인 첫 feature 변환을 학습하는 후보
+    observation: "PEMix는 구조 조건부 mixture의 불확실성을 첫 GNN layer에서 해석적으로 처리한다. PFN의 입력 비선형 변환에 비슷한 생각을 적용할 여지는 있지만 CFB-U01/NEXT-U03의 미해결 사항을 해결한 것은 아니며 우선순위는 낮다."
+    proposed_operator: "관측값에는 보통 tokenizer, missing 값에는 학습한 conditional law에서 기대 token이나 component별 token을 만든다. 해석 가능한 basis나 고정 quadrature의 국소 계산으로 시작해 PFN 전체를 completion마다 다시 실행하지 않는다."
+    unresolved: "E[Transformer(T)]와 Transformer(E[T])는 다르다. Cell별 기대 token은 node·feature 사이 joint uncertainty를 일반적으로 보존하지 않는다. 전체의 exact marginalization이라고 부르지 않는다. Proper feature-law 검증 없이 random-fill을 넘은 이유를 posterior 추론으로 귀속하지 않는다. PEMix의 해석적 결과는 특정 GNN layer에 관한 것으로 attention 전체에 직접 옮길 수 없다."
+    comparison_floor: "PEMix/GCNmf 원래 연산, mean token, 같은 moment의 random token, 4-view random-fill, direct Mask Plain, 강한 PCFI/FISF. Known-family BP로 돌아가면 Grid6을 유지한다."
+    recheck: "첫 feature 변환에서만 수치 적분과의 일치를 확인하고 분포 fit과 query 예측을 나눠 평가한다. Joint 의존성을 버린 token 평균에서 성능이 나와도 완전 posterior marginalization의 성공으로 해석하지 않는다."
+    tags: [uncertainty, observation-mask, tokenization, inference-cost]
+    keywords: [expected activation, probabilistic first layer, PEMix, moment token, local quadrature]
+    source_refs:
+      - papers/PEMix.yaml
+      - papers/GSPN.yaml
+      - findings/context-feature-belief.yaml
+      - findings/random-fill-controls.yaml
+    evidence: 미실행 후순위 후보. 새 loss나 sampling의 유효성을 실증한 결과가 아니다.
+  - id: REOPEN-L02
+    kind: lesson
+    claim: 이번 문헌 대조는 기존 gate를 바꾸지 않고 후보와 진단 대조를 구분한다.
+    observation: "MCP-P02의 off-diagonal/clustered accuracy +3.43%p는 보존한 미독립 재현 신호이며 원래 NLL gate는 실패 그대로다. Feature memory, walk, 기대 token의 우열은 아직 측정하지 않았다. 기존 논문은 이 3.43%p의 원인이나 LLBP-F11의 Grid6 우위를 뒤집지 않았다."
+    interpretation: "후보의 단순 조합은 novelty가 아니다. 원 논문 자체, 같은 입력에서 구조만 바꾼 강한 대조, 기존 최강 방법을 먼저 비교한다. Accuracy를 주목적으로 고르는 새 실험과 과거 확률 지표 판정을 분리해 보존한다."
+    tags: [eval-protocol, zero-shot-gap, model-based-baseline]
+    keywords: [independent replication, secondary accuracy, prior gate, strong baseline, untested proposal]
+    source_refs:
+      - findings/mechanism-crossed-prior.yaml
+      - findings/llbp-eaj.yaml
+      - findings/sources/literature-reopening-2026-11-02/audit.json
+    evidence: 문헌 검토 범위. 새 GPU 실험·우월성 주장이 아니다.

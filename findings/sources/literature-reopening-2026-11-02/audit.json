@@ -1,0 +1,93 @@
+{
+  "date": "2026-11-02",
+  "kind": "literature and source inspection, no new experiment",
+  "checked_scope": "32 paper records, 103 pre-existing research findings; original findings and gates preserved",
+  "files": [
+    {
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\joint_imputation_pfn\\common.py",
+      "snapshot": "findings/sources/literature-reopening-2026-11-02/common.py",
+      "sha256": "86473c16ff145f6eb28b8e9a0dd785b8ca836f3ac199f446d3402a4266ab7090",
+      "bytes": 9705,
+      "audited_lines": [
+        [
+          159,
+          177
+        ],
+        [
+          207,
+          210
+        ]
+      ]
+    },
+    {
+      "original": "C:\\Users\\seongjin\\Desktop\\csag_share\\research\\www2027\\results\\graph_pfn_suite_20261016\\upstream\\graphpfn-3b9b115490249cc777227c846babfb55f35bd8c4\\paper\\vendor\\limix\\model\\layer.py",
+      "snapshot": "findings/sources/literature-reopening-2026-11-02/limix_layer.py",
+      "sha256": "89d59efad408a3f8ba5b19849ac37653295d9b63b749eeef3b63daec808e9bb5",
+      "bytes": 29818,
+      "audited_lines": [
+        [
+          551,
+          582
+        ]
+      ]
+    }
+  ],
+  "primary_sources": [
+    {
+      "paper": "TabImpute",
+      "url": "https://arxiv.org/html/2510.02625v6",
+      "sections": [
+        "3 Entry-wise featurization",
+        "3 Architecture"
+      ],
+      "confirmed": "Query-to-query attention restriction is removed for imputation; this is not a graph-classification result."
+    },
+    {
+      "paper": "Ephris",
+      "url": "https://arxiv.org/html/2609.37057",
+      "sections": [
+        "3.1",
+        "Appendix B"
+      ],
+      "confirmed": "Per-feature inducing Gather reads context and query nodes. Labels enter before compression; severe missing-feature benefit is not established here."
+    },
+    {
+      "paper": "Wander",
+      "url": "https://arxiv.org/html/2610.06694v2",
+      "sections": [
+        "D.9",
+        "D.10"
+      ],
+      "confirmed": "Longer walks and context-visited filtering are existing methods, with runtime tradeoffs. Fully featureless graphs are evaluated; our severe-missing protocol is not evaluated here."
+    },
+    {
+      "paper": "PEMix",
+      "url": "https://arxiv.org/html/2610.18113",
+      "sections": [
+        "4",
+        "A.2"
+      ],
+      "confirmed": "Structure-conditioned mixture and analytic first-GNN-layer marginal processing. Boundary rank result is restricted to fixed linear channel-wise propagation."
+    },
+    {
+      "paper": "GSPN",
+      "url": "https://arxiv.org/html/2305.10544",
+      "sections": [
+        "3"
+      ],
+      "confirmed": "Local probabilistic circuits do not resolve global graph joint validity automatically."
+    }
+  ],
+  "conclusions": {
+    "confirmed_code_restriction": "Base sequence attention keys/values are limited to eval_pos context nodes.",
+    "residual_access": "Own feature residuals and graph adapter paths remain. Do not infer complete invisibility of unlabeled observations.",
+    "untested_causal_claim": "This restriction has not been identified as the cause of previous failures.",
+    "ranking": [
+      "separate label and observed-feature memories",
+      "observation-aware walk representation",
+      "probabilistic first feature layer (lower priority)"
+    ],
+    "novelty": "No claim of established novelty or solved failure. Existing all-node attention and query interactions are direct baselines.",
+    "no_new_training": true
+  }
+}

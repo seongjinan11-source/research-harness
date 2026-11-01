@@ -1,0 +1,18 @@
+id: separate-feature-label-memory
+date: '2026-11-02'
+text: Label memory는 context C만, feature memory는 feature별 실제 관측 집합 O_f를 사용한다. 기본 LimiX
+  attention의 context-only key/value 제한과 graph adapter의 기존 접근을 구분해 검증한다. NEXT-U02의
+  구체화이며 all-node attention과 observed-only memory를 같은 투영·학습 예산으로 비교한다. TabImpute/Ephris의
+  기존 연산을 새 발명이라고 주장하지 않는다. 새 학습은 미실행이다.
+tags:
+- observation-mask
+- context-scale
+- tokenization
+- graph-structure-use
+keywords:
+- feature memory
+- label context
+- query query attention
+- observed key value
+- Ephris
+- TabImpute

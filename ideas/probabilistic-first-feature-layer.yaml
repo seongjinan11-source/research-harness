@@ -1,0 +1,16 @@
+id: probabilistic-first-feature-layer
+date: '2026-11-02'
+text: PEMix의 첫 GNN layer 확률 처리에서 입력 feature token 변환의 국소 적분 아이디어를 검토한다. 기대 token을
+  transformer에 넣는 것은 전체 posterior marginalization과 다르며 node 간 joint uncertainty를 보존한다고
+  주장하지 않는다. Proper feature-law와 random-token 대조가 미해결이므로 후순위 미실행 후보로 보존한다.
+tags:
+- uncertainty
+- observation-mask
+- tokenization
+- inference-cost
+keywords:
+- PEMix
+- expected activation
+- moment token
+- local quadrature
+- random fill

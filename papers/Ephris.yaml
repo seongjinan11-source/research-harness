@@ -21,6 +21,8 @@ key_assumptions:
 strengths:
   - text: "논문은 51 datasets에서 품질과 실행 시간의 Pareto 개선을 보고하며 sparse graph ICL의 강한 비교 대상을 제시한다."
     tags: [inference-cost, graph-scale, zero-shot-gap]
+  - text: "Section 3.1과 Appendix B의 feature별 Gather는 context와 query 노드를 모두 사용한다. Context-label embedding도 압축 전 scalar token에 제공하므로, feature memory를 label-context 노드에만 한정하지 않는 직접적인 선행 대조다."
+    tags: [context-scale, tokenization, graph-structure-use]
 limitations:
   - text: "[analyst] 본문에서 우리의 severe whole-node/clustered feature missing 프로토콜에 대한 성능은 확인하지 못했다."
     tags: [observation-mask, eval-protocol]

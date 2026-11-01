@@ -22,6 +22,8 @@ key_assumptions:
 strengths:
   - text: "새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다."
     tags: [amortized-inference, observation-mask, tokenization]
+  - text: "Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다."
+    tags: [tokenization, channel-dependency, observation-mask]
 limitations:
   - text: "[analyst] Imputation 성능이 GraphPFN 분류 개선이나 그래프의 long-range feature 추론을 입증하지 않는다."
     tags: [graph-structure-use, zero-shot-gap]
