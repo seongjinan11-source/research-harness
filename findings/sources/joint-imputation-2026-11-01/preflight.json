@@ -1,0 +1,98 @@
+{
+  "mask_plain": {
+    "parameters": {
+      "total": 20100901,
+      "trainable": 4012259,
+      "new": 10200,
+      "common": {
+        "adapters": 3564288,
+        "encoder_x": 131328,
+        "y_decoder": 306443,
+        "frozen": 16088642
+      }
+    },
+    "gradients": {
+      "extra": 5.57059645652771,
+      "mask_embedding": 14.145891189575195,
+      "base": 7517.906583182514
+    },
+    "step_seconds": 0.41821329994127154,
+    "peak_allocated_mb": 498.94140625,
+    "probability_sum_max_error": 1.1920928955078125e-07
+  },
+  "pcfi_plain": {
+    "parameters": {
+      "total": 20100901,
+      "trainable": 4012259,
+      "new": 10200,
+      "common": {
+        "adapters": 3564288,
+        "encoder_x": 131328,
+        "y_decoder": 306443,
+        "frozen": 16088642
+      }
+    },
+    "gradients": {
+      "extra": 0.15215903520584106,
+      "mask_embedding": 0.3646671772003174,
+      "base": 450.6758735217154
+    },
+    "step_seconds": 0.3226461997255683,
+    "peak_allocated_mb": 526.40087890625,
+    "probability_sum_max_error": 5.960464477539063e-08
+  },
+  "frontend_initial_refinement_max_delta": 0.6233564615249634,
+  "frontend": {
+    "parameters": {
+      "total": 20102321,
+      "trainable": 4013679,
+      "new": 11620,
+      "common": {
+        "adapters": 3564288,
+        "encoder_x": 131328,
+        "y_decoder": 306443,
+        "frozen": 16088642
+      }
+    },
+    "gradients": {
+      "extra": 97.56850981712341,
+      "mask_embedding": 0.4626002311706543,
+      "base": 552.0545850582421
+    },
+    "step_seconds": 0.384353999979794,
+    "peak_allocated_mb": 627.03759765625,
+    "probability_sum_max_error": 1.1920928955078125e-07
+  },
+  "interleaved_initial_refinement_max_delta": 0.4628654718399048,
+  "interleaved": {
+    "parameters": {
+      "total": 20102321,
+      "trainable": 4013679,
+      "new": 11620,
+      "common": {
+        "adapters": 3564288,
+        "encoder_x": 131328,
+        "y_decoder": 306443,
+        "frozen": 16088642
+      }
+    },
+    "gradients": {
+      "extra": 309.74203453958035,
+      "mask_embedding": 9.835783004760742,
+      "base": 2906.1455308180302
+    },
+    "step_seconds": 0.49930520029738545,
+    "peak_allocated_mb": 630.40673828125,
+    "probability_sum_max_error": 1.1920928955078125e-07
+  },
+  "feedback_forward_max_delta": 0.007003188133239746,
+  "node_permutation_max_error": 0.0,
+  "full_observed_refinement_max_delta": 0.0,
+  "common_initialization_identical": true,
+  "frontend_interleaved_parameter_counts_identical": true,
+  "source_files": {
+    "common.py": "86473c16ff145f6eb28b8e9a0dd785b8ca836f3ac199f446d3402a4266ab7090",
+    "experiment.py": "bd1d0153c31a175b6333e175ed7eb8ec38ea4de50a7350e464d67ca229c6ff13",
+    "protocol.json": "117fa781225c0ea0cbeff113e02918ade358b984d56f324e413c04b18d6e045d"
+  }
+}

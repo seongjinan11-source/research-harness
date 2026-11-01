@@ -126,6 +126,15 @@ class MemoryContracts(unittest.TestCase):
             actual = hashlib.sha256((ROOT / row['snapshot']).read_bytes()).hexdigest()
             self.assertEqual(actual, row['sha256'], row['alias'])
 
+    def test_all_dated_archives_keep_verbatim_sources(self):
+        manifests = list((ROOT / 'findings/sources').glob('*/manifest.json'))
+        self.assertGreaterEqual(len(manifests), 2)
+        for path in manifests:
+            for row in json.loads(path.read_text(encoding='utf-8'))['sources']:
+                self.assertNotIn('\\', row['snapshot'])
+                actual = hashlib.sha256((ROOT / row['snapshot']).read_bytes()).hexdigest()
+                self.assertEqual(actual, row['sha256'], (path.name, row['alias']))
+
 
 if __name__ == '__main__':
     unittest.main()

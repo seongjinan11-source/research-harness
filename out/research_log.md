@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 18개 프로젝트 · 75개 기록 (실패·중단 29개, 보존 16개, 교훈 22개, 미실행 8개)
+총 19개 프로젝트 · 82개 기록 (실패·중단 31개, 보존 17개, 교훈 25개, 미실행 9개)
 
 ## Common-context witness 고정 곱셈
 
@@ -131,6 +131,67 @@ ACM/IMDB helper feature는 target feature에서 파생된 집계일 수 있음�
 
 - 확대 금지: 한 graph의 secondary이며 전체 조건 우위·novelty·독립 다중 domain 검증으로 확대하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/pubmed.md](../findings/sources/graphpfn-2026-11-01/pubmed.md); [findings/sources/graphpfn-2026-11-01/views.md](../findings/sources/graphpfn-2026-11-01/views.md)
+
+## Public GraphPFN 내부 대치 상태 갱신
+
+실험 조건: 공개 GraphPFN 1.3 + LimiX 초기화. 합성64 train/32 test graphs, raw features7~16, 전체 graph166~192 test nodes, context최대4/class 및 보조1/class, query32. 4 arms×3 seeds×192 successful updates. 기존 graph adapters/feature encoder/label decoder 추가 학습, 원래 LimiX transformer weights 고정. 공통 observed-only RMS/mask interface, 공식 전처리 재현 아님.
+
+### JIMP-F01 [실패·중단] PFN 내부의 반복 대치가 동일한 대치기를 PFN 앞에서 실행하는 것과 강한 동일 예산 Plain을 넘는다.
+
+Uniform NLL: Mask Plain0.88681, PCFI Plain0.89527, Frontend0.89276, Interleaved0.89745. Clustered: 0.88318/0.90248/0.89339/0.89508. Interleaved−Frontend는 Uniform+0.00469 CI[−0.01612,+0.02143], Clustered+0.00169 CI[−0.01132,+0.01571]. 사전에 정한 두 조건·세 대조군 동시 우위 gate 미통과.
+
+- 판정: 현재 구현 확대 보류·내부 대치 증분 미입증
+- 원인·병목 [원인 미상]: 실제 공개 PFN과 대치 상태를 연결해 gradient를 학습했지만, 위치를 바꾼 독립 예측 이득은 확인하지 못했다. 정보 중복·현재 numeric 함수족·prior·학습 예산 중 원인은 분리하지 못했다.
+- 닫은 범위: 네 번의 공유 bounded numeric 갱신을 layers0/3/6/9에 넣는 현재 연산·small official-prior family·192 updates를 더 키워 메인 메소드로 확장
+- 닫지 않은 것: 다른 대치 함수족, pretrained feature decoder, latent belief representation, native NaN-input 대조와 실제 그래프 전이는 별개다. 이 실험은 이전 10K quadratic prototype과 다른 공개 GraphPFN 구현이다.
+- 재검토 조건: 대치 상태를 PFN 추론 중 갱신할 때 사전 대치에 없던 예측 정보를 보존·전달하고, 동일 예산 Plain/PCFI 대조를 넘는 연산이 나올 때.
+- 기준선: 동일 synthetic missing prior로 추가 학습한 PCFI Plain·Mask Plain·Frontend; native NaN GraphPFN의 같은 예산 학습도 향후 필요
+- 최소 재검증: 공통 전처리·초기화·학습 과제·성공 update 수를 맞춘 새 bank에서 반복 위치 효과를 비교한다. 같은 checkpoint의 피드백 제거와 재학습 대조를 구분하고 NLL/Brier/accuracy를 따로 보고한다.
+- 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/paired.json](../findings/sources/joint-imputation-2026-11-01/paired.json)
+
+### JIMP-F02 [실패·중단] PFN의 query 분류 목적에 맞춘 사전 대치기로 PCFI를 교체하면 주 결측 조건에서 독립 개선을 얻는다.
+
+Frontend−PCFI Plain NLL: Uniform−0.00252 CI[−0.01509,+0.00930], Clustered−0.00909 CI[−0.04275,+0.01993]. Frontend−Mask Plain은 +0.00594/ +0.01021이며 두 CI 모두0 포함. 이 대조 CI는 학습·평가 완료 후 보조 분석으로 계산했고 주 gate는 바꾸지 않았다.
+
+- 판정: 현재 task-trained frontend의 주 조건 우위 미입증
+- 원인·병목 [원인 미상]: Query CE로 학습된 네 단계 대치가 고정 PCFI나 일반 mask/token adapter보다 유용하다는 증거가 부족했다. 정확한 원인은 미상이며 복원 목적이 아닌 분류 목적을 썼다는 사실만으로 개선되지 않았다.
+- 닫은 범위: 현재 11.6K 추가 파라미터의 shared frontend와 예산을 확장해 우수한 범용 대치기로 주장
+- 닫지 않은 것: 모든 task-aware imputation과 PFN용 전처리가 실패했다는 뜻은 아니다. 피처 복원 MSE를 최소화한 모델과 비교한 결과도 아니다.
+- 재검토 조건: PFN에 필요한 정보와 단순 복원값을 구분하는 대치·입력 연산이 강한 동일 학습 대조보다 안정적인 예측 이득을 보일 때.
+- 기준선: PCFI Plain, Mask Plain, native NaN input, 동일 예산·초기화·query CE
+- 최소 재검증: 대치 연산의 개선과 backbone 추가 학습을 분리하고, 먼저 새 그래프 bank에서 prior-only 확률 대조까지 함께 비교한다.
+- 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json](../findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json)
+
+### JIMP-P01 [보존] Context가 클래스당1개인 보조 조건에서 Interleaved는 두 Plain보다 낮은 NLL을 얻었다.
+
+k1/node99.5 NLL은 Mask Plain1.00109, PCFI Plain1.16219, Frontend0.99158, Interleaved0.93901. Interleaved−Mask Plain−0.06208 CI[−0.13935,−0.00259], −PCFI−0.22317 CI[−0.39541,−0.09165]. −Frontend−0.05257 CI[−0.12008,+0.00099].
+
+- 확대 금지: 사전 대치보다 유의한 우위, 주 gate 통과, 독립 확인 또는 극소 context 문제 해결로 확대하지 않는다. 같은 k1에서 단순 uniform/context prior의 NLL0.91181이 더 낮다. 이 NLL 비교를 accuracy의 유의 개선으로 바꾸지 않는다.
+- 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/paired.json](../findings/sources/joint-imputation-2026-11-01/paired.json)
+
+### JIMP-L01 [교훈] Joint imputation의 실행 가능성과 반복 피드백의 예측 가치를 구분한다.
+
+실제 공개 GraphPFN의 feature-pair token 구조를 유지했다. 관측값 clamp, 원래 mask 유지, refiner/encoder gradient, 노드 순열, 동일 Frontend/Interleaved 초기화·파라미터·schedule, frozen weights 보존과 성공 update192회를 검사했다. 이 검사는 구현 연결성을 보여주며 메소드 우수성의 증거는 아니다.
+
+- 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/preflight.json](../findings/sources/joint-imputation-2026-11-01/preflight.json)
+
+### JIMP-L02 [교훈] FP16 실행 보완을 새 loss·아키텍처 개선과 구분하고 성공 optimizer update 수를 맞춘다.
+
+최초 Interleaved seed11은 nonfinite gradient를 clipping이 거부해 중단됐다. 같은 episode에서 GradScaler scale을 낮춰 finite gradient를 얻은 뒤에만 update를 세도록 보완했다. 모델·prior·loss·LR schedule은 유지했다. 완료한 이전 대조군을 재학습하거나, 실패한 partial weights에서 추가 학습하지 않았다. 수치 재시도는 추가 계산 비용으로 별도 기록했다.
+
+- 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/numerical_repair.json](../findings/sources/joint-imputation-2026-11-01/numerical_repair.json)
+
+### JIMP-U01 [미실행] 실제 그래프·새 semantic schema·native NaN baseline·다른 결측 추론 함수족
+
+이 실행은 작은 동일 생성 family의 새 graph와 일부 mask/context shift를 평가했다. Native NaN-input GraphPFN의 동일 예산 추가 학습, 원래 feature decoder 활용, 복원 분포 학습, 실제 heterograph 전이는 실행하지 않았다. True missing feature를 복원했다고 검증한 것도 아니다.
+
+- 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md)
+
+### JIMP-L03 [교훈] 피드백 제거 intervention은 FP16 수치 순서를 맞춰 해석하고, 별도 재학습 대조와 구분한다.
+
+No-feedback 대조의 h+new−old를 h+(new−old)로 묶어 cancellation을 보완하고, 동일 process의 standard와 다시 짝지었다. Full-observed96건의 차이는 정확히0, 별도 process replay의 최대 확률 차이는0.00246981이었다. 보정된 Uniform의 standard−no-feedback NLL은+0.00306 CI[+0.00063,+0.00581]로 feedback이 더 나빴다. Clustered와 k1의 CI는0 포함. 학습·주 예측·checkpoint를 바꾸지 않았다.
+
+- 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/paired_corrected.json](../findings/sources/joint-imputation-2026-11-01/paired_corrected.json); [findings/sources/joint-imputation-2026-11-01/feedback_audit.json](../findings/sources/joint-imputation-2026-11-01/feedback_audit.json)
 
 ## 초기 JR-PFN과 decoder 표현력
 

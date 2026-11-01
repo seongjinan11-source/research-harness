@@ -426,6 +426,129 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "JIMP-F01",
+    "project": "Public GraphPFN 내부 대치 상태 갱신",
+    "claim": "PFN 내부의 반복 대치가 동일한 대치기를 PFN 앞에서 실행하는 것과 강한 동일 예산 Plain을 넘는다.",
+    "verdict": "현재 구현 확대 보류·내부 대치 증분 미입증",
+    "reason_status": "unknown",
+    "failure_reason": "실제 공개 PFN과 대치 상태를 연결해 gradient를 학습했지만, 위치를 바꾼 독립 예측 이득은 확인하지 못했다. 정보 중복·현재 numeric 함수족·prior·학습 예산 중 원인은 분리하지 못했다.",
+    "reopen_when": "대치 상태를 PFN 추론 중 갱신할 때 사전 대치에 없던 예측 정보를 보존·전달하고, 동일 예산 Plain/PCFI 대조를 넘는 연산이 나올 때.",
+    "recheck": "공통 전처리·초기화·학습 과제·성공 update 수를 맞춘 새 bank에서 반복 위치 효과를 비교한다. 같은 checkpoint의 피드백 제거와 재학습 대조를 구분하고 NLL/Brier/accuracy를 따로 보고한다.",
+    "comparison_floor": "동일 synthetic missing prior로 추가 학습한 PCFI Plain·Mask Plain·Frontend; native NaN GraphPFN의 같은 예산 학습도 향후 필요",
+    "source_refs": [
+      "findings/sources/joint-imputation-2026-11-01/REPORT.md",
+      "findings/sources/joint-imputation-2026-11-01/paired.json"
+    ],
+    "paper_id": "GraphPFN",
+    "paper_title": "GraphPFN: A Prior-Data Fitted Graph Foundation Model",
+    "paper_link": "https://arxiv.org/abs/2509.21489",
+    "matches": [
+      {
+        "strength": "Hand-crafted graph feature(Laplacian PE, PageRank, 이웃 평균 등)에 기대지 않고, 모델 안에서 adjacency-masked attention으로 message passing을 직접 학습한다. 그 결과 ICL만으로도 G2T-FM·TAG와 튜닝된 GNN보다 평균 rank가 높고, 무거운 전처리도 필요 없다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "feature token"
+        ],
+        "specific_keywords": [
+          "feature token"
+        ]
+      }
+    ],
+    "tags": [
+      "graph-structure-use"
+    ],
+    "keywords": [
+      "feature token"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "JIMP-F02",
+    "project": "Public GraphPFN 내부 대치 상태 갱신",
+    "claim": "PFN의 query 분류 목적에 맞춘 사전 대치기로 PCFI를 교체하면 주 결측 조건에서 독립 개선을 얻는다.",
+    "verdict": "현재 task-trained frontend의 주 조건 우위 미입증",
+    "reason_status": "unknown",
+    "failure_reason": "Query CE로 학습된 네 단계 대치가 고정 PCFI나 일반 mask/token adapter보다 유용하다는 증거가 부족했다. 정확한 원인은 미상이며 복원 목적이 아닌 분류 목적을 썼다는 사실만으로 개선되지 않았다.",
+    "reopen_when": "PFN에 필요한 정보와 단순 복원값을 구분하는 대치·입력 연산이 강한 동일 학습 대조보다 안정적인 예측 이득을 보일 때.",
+    "recheck": "대치 연산의 개선과 backbone 추가 학습을 분리하고, 먼저 새 그래프 bank에서 prior-only 확률 대조까지 함께 비교한다.",
+    "comparison_floor": "PCFI Plain, Mask Plain, native NaN input, 동일 예산·초기화·query CE",
+    "source_refs": [
+      "findings/sources/joint-imputation-2026-11-01/REPORT.md",
+      "findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json"
+    ],
+    "paper_id": "MOMENT",
+    "paper_title": "MOMENT: A Family of Open Time-series Foundation Models",
+    "paper_link": "https://arxiv.org/abs/2402.03885",
+    "matches": [
+      {
+        "strength": "patching, RevIN, 좌측 zero-padding, channel 단위 처리라는 단순한 조합으로 길이·스케일·채널 수가 다른 데이터셋을 한 모델에 넣는다. 데이터셋마다 구조를 바꿀 필요가 없다.",
+        "tags": [
+          "tokenization"
+        ],
+        "keywords": [
+          "imputation"
+        ],
+        "specific_keywords": [
+          "imputation"
+        ]
+      }
+    ],
+    "tags": [
+      "tokenization"
+    ],
+    "keywords": [
+      "imputation"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "JIMP-F02",
+    "project": "Public GraphPFN 내부 대치 상태 갱신",
+    "claim": "PFN의 query 분류 목적에 맞춘 사전 대치기로 PCFI를 교체하면 주 결측 조건에서 독립 개선을 얻는다.",
+    "verdict": "현재 task-trained frontend의 주 조건 우위 미입증",
+    "reason_status": "unknown",
+    "failure_reason": "Query CE로 학습된 네 단계 대치가 고정 PCFI나 일반 mask/token adapter보다 유용하다는 증거가 부족했다. 정확한 원인은 미상이며 복원 목적이 아닌 분류 목적을 썼다는 사실만으로 개선되지 않았다.",
+    "reopen_when": "PFN에 필요한 정보와 단순 복원값을 구분하는 대치·입력 연산이 강한 동일 학습 대조보다 안정적인 예측 이득을 보일 때.",
+    "recheck": "대치 연산의 개선과 backbone 추가 학습을 분리하고, 먼저 새 그래프 bank에서 prior-only 확률 대조까지 함께 비교한다.",
+    "comparison_floor": "PCFI Plain, Mask Plain, native NaN input, 동일 예산·초기화·query CE",
+    "source_refs": [
+      "findings/sources/joint-imputation-2026-11-01/REPORT.md",
+      "findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json"
+    ],
+    "paper_id": "TSFM-Interventions",
+    "paper_title": "Exploring Representations and Interventions in Time Series Foundation Models",
+    "paper_link": "https://arxiv.org/abs/2409.12915",
+    "matches": [
+      {
+        "strength": "concept이 어느 layer와 어느 patch에서 구분되는지 위치를 찾았다. 일정한 시계열과 sinusoid의 구분은 시계열 전체를 봐야 생기고, 증가·감소 trend는 처음과 끝 patch에서 구분되었다. amplitude 차이는 어디서도 뚜렷하게 구분되지 않았는데, 저자들은 입력 정규화가 원인일 수 있다고 해석했다.",
+        "tags": [
+          "tokenization"
+        ],
+        "keywords": [
+          "imputation"
+        ],
+        "specific_keywords": [
+          "imputation"
+        ]
+      }
+    ],
+    "tags": [
+      "tokenization"
+    ],
+    "keywords": [
+      "imputation"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "LLBP-F08",
     "project": "Learned-Likelihood BP / EAJ",
     "claim": "같은 potential에서 role weights를 다시 계산하는 자기-update가 OOD 문제를 전반적으로 해결한다.",

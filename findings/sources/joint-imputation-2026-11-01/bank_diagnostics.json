@@ -1,0 +1,105 @@
+{
+  "train": {
+    "('full', 0.0, 4)": {
+      "episodes": 64,
+      "zero_observed_rows": 0,
+      "one_observed_row": 0,
+      "min_nodes": 150,
+      "max_nodes": 192,
+      "min_features": 8,
+      "max_features": 16
+    },
+    "('uniform_cells', 0.995, 4)": {
+      "episodes": 64,
+      "zero_observed_rows": 0,
+      "one_observed_row": 0,
+      "min_nodes": 150,
+      "max_nodes": 192,
+      "min_features": 8,
+      "max_features": 16
+    },
+    "('uniform_nodes', 0.9, 4)": {
+      "episodes": 64,
+      "zero_observed_rows": 0,
+      "one_observed_row": 0,
+      "min_nodes": 150,
+      "max_nodes": 192,
+      "min_features": 8,
+      "max_features": 16
+    },
+    "('uniform_nodes', 0.995, 4)": {
+      "episodes": 64,
+      "zero_observed_rows": 28,
+      "one_observed_row": 24,
+      "min_nodes": 150,
+      "max_nodes": 192,
+      "min_features": 8,
+      "max_features": 16
+    }
+  },
+  "test": {
+    "('clustered_nodes', 0.9, 4)": {
+      "episodes": 32,
+      "zero_observed_rows": 0,
+      "one_observed_row": 0,
+      "min_nodes": 166,
+      "max_nodes": 192,
+      "min_features": 7,
+      "max_features": 16
+    },
+    "('clustered_nodes', 0.995, 4)": {
+      "episodes": 32,
+      "zero_observed_rows": 0,
+      "one_observed_row": 32,
+      "min_nodes": 166,
+      "max_nodes": 192,
+      "min_features": 7,
+      "max_features": 16
+    },
+    "('full', 0.0, 4)": {
+      "episodes": 32,
+      "zero_observed_rows": 0,
+      "one_observed_row": 0,
+      "min_nodes": 166,
+      "max_nodes": 192,
+      "min_features": 7,
+      "max_features": 16
+    },
+    "('uniform_cells', 0.995, 4)": {
+      "episodes": 32,
+      "zero_observed_rows": 0,
+      "one_observed_row": 0,
+      "min_nodes": 166,
+      "max_nodes": 192,
+      "min_features": 7,
+      "max_features": 16
+    },
+    "('uniform_nodes', 0.9, 4)": {
+      "episodes": 32,
+      "zero_observed_rows": 0,
+      "one_observed_row": 0,
+      "min_nodes": 166,
+      "max_nodes": 192,
+      "min_features": 7,
+      "max_features": 16
+    },
+    "('uniform_nodes', 0.995, 1)": {
+      "episodes": 32,
+      "zero_observed_rows": 13,
+      "one_observed_row": 10,
+      "min_nodes": 166,
+      "max_nodes": 192,
+      "min_features": 7,
+      "max_features": 16
+    },
+    "('uniform_nodes', 0.995, 4)": {
+      "episodes": 32,
+      "zero_observed_rows": 13,
+      "one_observed_row": 10,
+      "min_nodes": 166,
+      "max_nodes": 192,
+      "min_features": 7,
+      "max_features": 16
+    }
+  }
+}

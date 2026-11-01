@@ -89,6 +89,36 @@
   - 기록된 강점: LimiX의 per-feature tokenization을 그대로 물려받아, 데이터셋마다 feature 개수가 달라도 차원 축소 없이 하나의 모델로 처리한다. 같은 모델이 node classification과 node regression을 모두 다룬다.
   - 기록된 강점: Graph prior가 구조(multi-level SBM + preferential attachment)와 attribute(MLP·GNN neuron 혼합 SCM)를 분리해 설계되어 있고, 그래프 의존 정도를 mixing 확률로 조절할 수 있다. 부록 분석에서 synthetic graph의 평균 차수·clustering·power-law 적합도 분포가 실제 GraphLand 그래프 통계를 대체로 덮는다.
 
+## JIMP-F01 — PFN 내부의 반복 대치가 동일한 대치기를 PFN 앞에서 실행하는 것과 강한 동일 예산 Plain을 넘는다.
+
+- 판정: 현재 구현 확대 보류·내부 대치 증분 미입증
+- 원인·병목 [원인 미상]: 실제 공개 PFN과 대치 상태를 연결해 gradient를 학습했지만, 위치를 바꾼 독립 예측 이득은 확인하지 못했다. 정보 중복·현재 numeric 함수족·prior·학습 예산 중 원인은 분리하지 못했다.
+- 반증·배제한 설명: 대치 모듈이 label readout에 연결되지 않은 dead module이라는 설명은 nonzero gradient와 동작 대조로 지지되지 않는다. 이것이 유용한 정보의 학습을 뜻하지는 않는다.; Frontend와 Interleaved의 초기 가중치·학습 과제 순서·파라미터 수·성공 update 수 차이로 설명할 수 없다. 실제 학습 시간과 수치 재시도 비용은 같다고 주장하지 않는다.
+- 재검토 조건: 대치 상태를 PFN 추론 중 갱신할 때 사전 대치에 없던 예측 정보를 보존·전달하고, 동일 예산 Plain/PCFI 대조를 넘는 연산이 나올 때.
+- 먼저 이겨야 할 기준선: 동일 synthetic missing prior로 추가 학습한 PCFI Plain·Mask Plain·Frontend; native NaN GraphPFN의 같은 예산 학습도 향후 필요
+- 최소 재검증: 공통 전처리·초기화·학습 과제·성공 update 수를 맞춘 새 bank에서 반복 위치 효과를 비교한다. 같은 checkpoint의 피드백 제거와 재학습 대조를 구분하고 NLL/Brier/accuracy를 따로 보고한다.
+- 닫지 않은 것: 다른 대치 함수족, pretrained feature decoder, latent belief representation, native NaN-input 대조와 실제 그래프 전이는 별개다. 이 실험은 이전 10K quadratic prototype과 다른 공개 GraphPFN 구현이다.
+- 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/paired.json](../findings/sources/joint-imputation-2026-11-01/paired.json)
+
+- [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=feature token
+  - 기록된 강점: Hand-crafted graph feature(Laplacian PE, PageRank, 이웃 평균 등)에 기대지 않고, 모델 안에서 adjacency-masked attention으로 message passing을 직접 학습한다. 그 결과 ICL만으로도 G2T-FM·TAG와 튜닝된 GNN보다 평균 rank가 높고, 무거운 전처리도 필요 없다.
+
+## JIMP-F02 — PFN의 query 분류 목적에 맞춘 사전 대치기로 PCFI를 교체하면 주 결측 조건에서 독립 개선을 얻는다.
+
+- 판정: 현재 task-trained frontend의 주 조건 우위 미입증
+- 원인·병목 [원인 미상]: Query CE로 학습된 네 단계 대치가 고정 PCFI나 일반 mask/token adapter보다 유용하다는 증거가 부족했다. 정확한 원인은 미상이며 복원 목적이 아닌 분류 목적을 썼다는 사실만으로 개선되지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: PFN에 필요한 정보와 단순 복원값을 구분하는 대치·입력 연산이 강한 동일 학습 대조보다 안정적인 예측 이득을 보일 때.
+- 먼저 이겨야 할 기준선: PCFI Plain, Mask Plain, native NaN input, 동일 예산·초기화·query CE
+- 최소 재검증: 대치 연산의 개선과 backbone 추가 학습을 분리하고, 먼저 새 그래프 bank에서 prior-only 확률 대조까지 함께 비교한다.
+- 닫지 않은 것: 모든 task-aware imputation과 PFN용 전처리가 실패했다는 뜻은 아니다. 피처 복원 MSE를 최소화한 모델과 비교한 결과도 아니다.
+- 원문: [findings/sources/joint-imputation-2026-11-01/REPORT.md](../findings/sources/joint-imputation-2026-11-01/REPORT.md); [findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json](../findings/sources/joint-imputation-2026-11-01/frontend_comparisons.json)
+
+- [MOMENT](https://arxiv.org/abs/2402.03885): 구체 키워드+태그 일치 (미검증); tags=tokenization; keywords=imputation
+  - 기록된 강점: patching, RevIN, 좌측 zero-padding, channel 단위 처리라는 단순한 조합으로 길이·스케일·채널 수가 다른 데이터셋을 한 모델에 넣는다. 데이터셋마다 구조를 바꿀 필요가 없다.
+- [TSFM-Interventions](https://arxiv.org/abs/2409.12915): 구체 키워드+태그 일치 (미검증); tags=tokenization; keywords=imputation
+  - 기록된 강점: concept이 어느 layer와 어느 patch에서 구분되는지 위치를 찾았다. 일정한 시계열과 sinusoid의 구분은 시계열 전체를 봐야 생기고, 증가·감소 trend는 처음과 끝 patch에서 구분되었다. amplitude 차이는 어디서도 뚜렷하게 구분되지 않았는데, 저자들은 입력 정규화가 원인일 수 있다고 해석했다.
+
 ## LLBP-F01 — Role-conditional 감독을 더하면 최종 예측이 개선된다.
 
 - 판정: 추가 이득 미확인
