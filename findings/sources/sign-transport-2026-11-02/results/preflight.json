@@ -1,0 +1,147 @@
+{
+  "paired_factorial_inputs_valid": true,
+  "hidden_value_poison_invariance": true,
+  "old_replays": [
+    {
+      "arm": "mask_plain",
+      "seed": 11,
+      "old_episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "mask_plain",
+      "seed": 11,
+      "old_episode": 82,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "mask_plain",
+      "seed": 11,
+      "old_episode": 153,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "mask_plain",
+      "seed": 12,
+      "old_episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "mask_plain",
+      "seed": 12,
+      "old_episode": 82,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "mask_plain",
+      "seed": 12,
+      "old_episode": 153,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "mask_plain",
+      "seed": 13,
+      "old_episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "mask_plain",
+      "seed": 13,
+      "old_episode": 82,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "mask_plain",
+      "seed": 13,
+      "old_episode": 153,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "pcfi_plain",
+      "seed": 11,
+      "old_episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "pcfi_plain",
+      "seed": 11,
+      "old_episode": 82,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "pcfi_plain",
+      "seed": 11,
+      "old_episode": 153,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "pcfi_plain",
+      "seed": 12,
+      "old_episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "pcfi_plain",
+      "seed": 12,
+      "old_episode": 82,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "pcfi_plain",
+      "seed": 12,
+      "old_episode": 153,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "pcfi_plain",
+      "seed": 13,
+      "old_episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "pcfi_plain",
+      "seed": 13,
+      "old_episode": 82,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "pcfi_plain",
+      "seed": 13,
+      "old_episode": 153,
+      "max_abs_error": 0.0
+    }
+  ],
+  "model_checks": [
+    {
+      "arm": "mask_plain",
+      "node_permutation_max_error": 0.0
+    },
+    {
+      "arm": "pcfi_plain",
+      "node_permutation_max_error": 0.0
+    }
+  ],
+  "scalar_counterexample": {
+    "positive_output": [
+      1.0,
+      0.9866260290145874,
+      0.9713587760925293,
+      0.955173909664154,
+      0.9393612742424011,
+      0.9254785776138306,
+      0.9152697324752808,
+      0.9105454683303833
+    ],
+    "signed_output": [
+      1.0,
+      -0.9866260290145874,
+      0.9713587760925293,
+      -0.955173909664154,
+      0.9393612742424011,
+      -0.9254785776138306,
+      0.9152697324752808,
+      -0.9105454683303833
+    ]
+  },
+  "new_updates": 0
+}

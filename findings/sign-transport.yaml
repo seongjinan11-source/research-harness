@@ -1,0 +1,64 @@
+project: Frozen GraphPFN sign-transport diagnostic
+date: '2026-11-02'
+source: findings/sources/sign-transport-2026-11-02/REPORT_KO.md
+setting: Known bipartite sign-gauged signal family; label/feature-law2x2;0/1/8/full sources;context1/4 per class;6 frozen checkpoints;0 updates.
+related:
+- GraphPFN
+entries:
+- id: SIGN-P01
+  kind: preserved
+  claim: 관계를 따라 feature 부호가 바뀌는 과제에서, 알려진 법칙으로 PCFI 복원을 바꾸면 같은 frozen 공개 GraphPFN의 classification이 개선된다.
+  observation: mask:accuracy52.405028%/NLL0.709999/Brier0.512094; pcfi:accuracy50.190226%/NLL0.715966/Brier0.520255; known_signed:accuracy56.026584%/NLL0.707501/Brier0.506394;
+    positive_lp:accuracy46.683098%/NLL0.796353/Brier0.572964; signed_lp:accuracy56.260834%/NLL0.687817/Brier0.492625; uniform:accuracy50.265421%/NLL0.693147/Brier0.500000;
+    known_signed-pcfi accuracy%p +5.836358 [95% CI +2.291311, +9.440175]; known_signed-mask accuracy%p +3.621556 [95% CI +0.027501, +7.207857]; known_signed-positive_lp accuracy%p
+    +9.343486 [95% CI +5.338770, +13.482302]; known_signed-signed_lp accuracy%p -0.234249 [95% CI -5.629258, +4.934528]. Primary headroom=True, strong direct/LP/feature-use
+    floor=False.
+  tags:
+  - observation-mask
+  - graph-structure-use
+  - eval-protocol
+  - inference-cost
+  keywords:
+  - feature heterophily
+  - label heterophily
+  - bipartite sign gauge
+  - positive diffusion limitation
+  - frozen GraphPFN
+  - privileged known feature law
+  - signed transport
+  source_refs: &id001
+  - findings/sources/sign-transport-2026-11-02/REPORT_KO.md
+  - findings/sources/sign-transport-2026-11-02/METHOD_KO.md
+  - findings/sources/sign-transport-2026-11-02/protocol.json
+  - findings/sources/sign-transport-2026-11-02/results/statistics.json
+  - findings/sources/sign-transport-2026-11-02/results/common_query_interventions.json
+  - findings/sources/sign-transport-2026-11-02/results/audit.json
+  - findings/sources/sign-transport-2026-11-02/results/cost.json
+  - findings/sources/sign-transport-2026-11-02/results/preflight.json
+  evidence: 기존 matched192-update Mask/PCFI Plain checkpoint6개 재사용, 새 training0. 새32base graphs×32conditions=1024episodes. 세 fixed training seeds 평균 후5000 paired graph bootstrap.
+    Primary t1/g1/k4/8sources.
+  do_not_claim: Known-law g bit를 받은 reconstruction 진단이다. 새 graph에서 부호 법칙을 추론한 학습 결과, arbitrary heterophily·real graph·schema 전이 또는 메소드 novelty가 아니다. 강한 baseline floor=False.
+    Signed LP 대비 우위와 동일-query zero-source 대비 feature-use 이득은 확인하지 못했다. Frozen out-of-prior 비교이며 새 prior에서 matched 학습한 구조 우열이 아니다. 새로운 학습은 실행하지 않았다.
+- id: SIGN-L01
+  kind: lesson
+  claim: Feature 복원의 부호 제약, label heterophily, frozen PFN 분류, known-law 정보 우위를 구분한다.
+  observation: 단일 channel path의+1 source/0 missing start에서 PCFI는 음수를 만들지 못했고 parity 변환은 반대 부호를 만들었다. 최종 factorial은 graph/labels/context/query/mask를 feature law 간 고정했다. Primary
+    결과 mask:accuracy52.405028%/NLL0.709999/Brier0.512094; pcfi:accuracy50.190226%/NLL0.715966/Brier0.520255; known_signed:accuracy56.026584%/NLL0.707501/Brier0.506394; positive_lp:accuracy46.683098%/NLL0.796353/Brier0.572964;
+    signed_lp:accuracy56.260834%/NLL0.687817/Brier0.492625; uniform:accuracy50.265421%/NLL0.693147/Brier0.500000; known_signed-pcfi accuracy%p +5.836358 [95% CI +2.291311,
+    +9.440175]; known_signed-mask accuracy%p +3.621556 [95% CI +0.027501, +7.207857]; known_signed-positive_lp accuracy%p +9.343486 [95% CI +5.338770, +13.482302]; known_signed-signed_lp
+    accuracy%p -0.234249 [95% CI -5.629258, +4.934528].
+  interpretation: PCFI의 단일-channel counterexample은 뒤 PFN의 분류 불가능성 증명이 아니다. Label/feature heterophily는 독립 축이며 실제 달성된 homophily를 보고한다. Privileged g reference의 개선은 unknown-g adaptation의
+    성과가 아니다. Signed diffusion/BP는 기존 자산이므로 새 이름으로 novelty를 주장하지 않는다. 기존 training prior 밖의 frozen 실패를 새 architecture 필요성으로 곧바로 해석하지 않는다. Source 수가 바뀌면 missing-query 집합도 바뀌므로
+    feature intervention은 원 primary query 집합으로 양쪽 예측을 제한한다. 보조 집계 보정은 원 statistics·예측을 보존해 별도 기록했다.
+  tags:
+  - eval-protocol
+  - graph-structure-use
+  - observation-mask
+  keywords:
+  - reconstruction versus classification
+  - feature versus label heterophily
+  - known law oracle
+  - frozen prior mismatch
+  - signed BP already implemented
+  source_refs: *id001
+  evidence: 원137finding과590source 파일은 byte/구조화 hash 그대로 유지한다. 기존 model Plain 이름도 구분한다.

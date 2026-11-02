@@ -1,0 +1,342 @@
+{
+  "date": "2026-11-02",
+  "scope": "Frozen sign-transport probe;0 training updates. Sources copied verbatim; raw inputs/probabilities/checkpoints remain local.",
+  "sources": [
+    {
+      "alias": "bank/development.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\bank\\development.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/bank/development.json",
+      "sha256": "3219742eb6b4a3874f5f6720c3f77c5e82cb76c02da23c3e53e387227f7ee84d",
+      "bytes": 31125
+    },
+    {
+      "alias": "bank/manifest.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\bank\\manifest.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/bank/manifest.json",
+      "sha256": "1a3f0a81219612730ae5ee41ef72d7bd3c71552f6ecabc21cb2fc9bf1f7439ae",
+      "bytes": 505880
+    },
+    {
+      "alias": "logs/audit.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\audit.stderr.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/audit.stderr.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/audit.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\audit.stdout.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/audit.stdout.log",
+      "sha256": "4a6e8d2807b3307baa24863265936eb9e427d32c44ffaabb88863fc200319ef4",
+      "bytes": 19
+    },
+    {
+      "alias": "logs/controls.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\controls.stderr.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/controls.stderr.log",
+      "sha256": "c66d8833200564f09022876db0e44acfef574819c71304365adeebc6a3849bcf",
+      "bytes": 239
+    },
+    {
+      "alias": "logs/controls.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\controls.stdout.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/controls.stdout.log",
+      "sha256": "c6037423a9f89c24a182b5eaeb15118c7a91342344d7d5116c6553bde400983e",
+      "bytes": 15
+    },
+    {
+      "alias": "logs/cost.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\cost.stderr.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/cost.stderr.log",
+      "sha256": "f557494b01c277bedf5ec80565f697584b96c1c97bd4369c717bf49e57792200",
+      "bytes": 713
+    },
+    {
+      "alias": "logs/cost.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\cost.stdout.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/cost.stdout.log",
+      "sha256": "ed90ec8077fb2bef691e30817c12474f688487b4663b9919b5967227c1435b91",
+      "bytes": 11
+    },
+    {
+      "alias": "logs/evaluate_s11.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\evaluate_s11.stderr.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/evaluate_s11.stderr.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/evaluate_s11.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\evaluate_s11.stdout.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/evaluate_s11.stdout.log",
+      "sha256": "a9ef194a2a55dc879356b6b68e9ff7a475babcb885b56d7c3fc9c5c693cfb7af",
+      "bytes": 465
+    },
+    {
+      "alias": "logs/evaluate_s12.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\evaluate_s12.stderr.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/evaluate_s12.stderr.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/evaluate_s12.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\evaluate_s12.stdout.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/evaluate_s12.stdout.log",
+      "sha256": "defa9da65c7ca811639d7bc67b2f0b7bf380d7584b06711d6407dc7a340b915a",
+      "bytes": 465
+    },
+    {
+      "alias": "logs/evaluate_s13.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\evaluate_s13.stderr.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/evaluate_s13.stderr.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/evaluate_s13.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\evaluate_s13.stdout.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/evaluate_s13.stdout.log",
+      "sha256": "253f0411e49c0a482387cc0c14335d5e2225ac3537bbbf1260c9c7e164f8a8ae",
+      "bytes": 465
+    },
+    {
+      "alias": "logs/generate.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\generate.stderr.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/generate.stderr.log",
+      "sha256": "c66d8833200564f09022876db0e44acfef574819c71304365adeebc6a3849bcf",
+      "bytes": 239
+    },
+    {
+      "alias": "logs/generate.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\generate.stdout.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/generate.stdout.log",
+      "sha256": "33eeab40b26edaafcd740dd7aa7919fa5368edd99244b5ddc5d6616e4de461b1",
+      "bytes": 70
+    },
+    {
+      "alias": "logs/preflight.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\preflight.stderr.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/preflight.stderr.log",
+      "sha256": "a6c0cc6a2e336b1909751980238aa5321a29940103e49344a8b6250cb39df838",
+      "bytes": 713
+    },
+    {
+      "alias": "logs/preflight.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\preflight.stdout.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/preflight.stdout.log",
+      "sha256": "cfc53200e39c40a719877d1c81685043aa73811f0adf4b1f77faa5a091a32b59",
+      "bytes": 18
+    },
+    {
+      "alias": "logs/summary.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\summary.stderr.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/summary.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "alias": "logs/summary.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\logs\\summary.stdout.log",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/logs/summary.stdout.log",
+      "sha256": "0a2a5f2613a72392abde08462ba76f280845c563aec10d5f054b71295058c035",
+      "bytes": 2998
+    },
+    {
+      "alias": "METHOD_KO.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\METHOD_KO.md",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/METHOD_KO.md",
+      "sha256": "1d4e490e5fba6fd9cc438edfe3b13a6be3b661491836000431b8c56893155bf0",
+      "bytes": 2920
+    },
+    {
+      "alias": "probe.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\probe.py",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/probe.py",
+      "sha256": "9fcb1d04f3acd4306bc94705aa5f75aede4e4fa2a74d6e50d5d956a7c4a917c1",
+      "bytes": 24874
+    },
+    {
+      "alias": "protocol.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\protocol.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/protocol.json",
+      "sha256": "daba404b9409b099a9737733a15cf8e4319605dd39ff76be520cf79dea70d1c7",
+      "bytes": 6537
+    },
+    {
+      "alias": "REPORT_KO.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\REPORT_KO.md",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/REPORT_KO.md",
+      "sha256": "7af0c74ff56c37bbc78346096abb3d980ade6db96893293d03fd716a5d396e70",
+      "bytes": 10447
+    },
+    {
+      "alias": "results/audit.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\audit.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/audit.json",
+      "sha256": "9564452b78a4e43fa4aab522bbe12454a623a057aa706fb13b5841585af999d8",
+      "bytes": 2396
+    },
+    {
+      "alias": "results/bank_lock.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\bank_lock.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/bank_lock.json",
+      "sha256": "558e039f29c8510597df865f19d097b206841c138d5eab034f982733f6943ac4",
+      "bytes": 181
+    },
+    {
+      "alias": "results/common_query_interventions.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\common_query_interventions.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/common_query_interventions.json",
+      "sha256": "b407315b91ae66c0f490559d21cc402087c9d089a7f5870e07dce7474358ea74",
+      "bytes": 2887
+    },
+    {
+      "alias": "results/complete.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\complete.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/complete.json",
+      "sha256": "83aa64259b9b8b518f972be7c81cb0d7e2bf87946a57f6c69f68d991785a6e48",
+      "bytes": 91
+    },
+    {
+      "alias": "results/controls.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\controls.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/controls.json",
+      "sha256": "07b3cba1ddf90e6d18fc6c28deec87e2ce557d862e3fcad88ba537d78f42f3ac",
+      "bytes": 2140653
+    },
+    {
+      "alias": "results/cost.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\cost.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/cost.json",
+      "sha256": "dbec81782658dd34e4a53418ee748faf140e7a3bf02fb7cb7d79fe2b36dc4905",
+      "bytes": 3339
+    },
+    {
+      "alias": "results/design.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\design.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/design.json",
+      "sha256": "8bb0be55dbf957dc09106b0b1aef9cccc2bc9c9f35d1d1c6c20f7614bb5c82fe",
+      "bytes": 3064
+    },
+    {
+      "alias": "results/mask_plain_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\mask_plain_s11\\evaluation.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/mask_plain_s11/evaluation.json",
+      "sha256": "f178a670a93be4be1f140fd4067dd7e1b94c492c41515e698d3b30625869bde4",
+      "bytes": 944563
+    },
+    {
+      "alias": "results/mask_plain_s11/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\mask_plain_s11\\evaluation_info.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/mask_plain_s11/evaluation_info.json",
+      "sha256": "06a1972dddce2c1218489f17dc745590511ce5c13913e51d8147dda81adb6f9a",
+      "bytes": 218
+    },
+    {
+      "alias": "results/mask_plain_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\mask_plain_s12\\evaluation.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/mask_plain_s12/evaluation.json",
+      "sha256": "3280eaeb5e0ae8b3b10572a80e70f07b222dc718053b671d5fb7a869affb0264",
+      "bytes": 944564
+    },
+    {
+      "alias": "results/mask_plain_s12/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\mask_plain_s12\\evaluation_info.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/mask_plain_s12/evaluation_info.json",
+      "sha256": "b22b60c2b5d7e13ccb6e73ff14d8faec986fce99bb96599f1ef2d1b41b78c159",
+      "bytes": 218
+    },
+    {
+      "alias": "results/mask_plain_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\mask_plain_s13\\evaluation.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/mask_plain_s13/evaluation.json",
+      "sha256": "fb880cd00c4b880bd5c3a6538a599413a43b383efe9dd70b33211dacdcf3c9d2",
+      "bytes": 944772
+    },
+    {
+      "alias": "results/mask_plain_s13/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\mask_plain_s13\\evaluation_info.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/mask_plain_s13/evaluation_info.json",
+      "sha256": "a862c0c4edd87f1bfd933248080c449288cebe99e6cdbd07104309b8b1918dff",
+      "bytes": 218
+    },
+    {
+      "alias": "results/pcfi_plain_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\pcfi_plain_s11\\evaluation.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/pcfi_plain_s11/evaluation.json",
+      "sha256": "319faca73252b3147363ec83645195b51ae1cd0dd4fd9c67aa7880fb35279f6d",
+      "bytes": 1896925
+    },
+    {
+      "alias": "results/pcfi_plain_s11/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\pcfi_plain_s11\\evaluation_info.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/pcfi_plain_s11/evaluation_info.json",
+      "sha256": "dd45fddd2948014e6ac0f98d53f868739248a1feb710b13bc1fb8d5bc70eafcf",
+      "bytes": 218
+    },
+    {
+      "alias": "results/pcfi_plain_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\pcfi_plain_s12\\evaluation.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/pcfi_plain_s12/evaluation.json",
+      "sha256": "5bcd35ad02d092a75efff16643395d88892f3fccc32f6ec29eb131c030ab025b",
+      "bytes": 1897179
+    },
+    {
+      "alias": "results/pcfi_plain_s12/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\pcfi_plain_s12\\evaluation_info.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/pcfi_plain_s12/evaluation_info.json",
+      "sha256": "2ae0f511a3f15839638d4c6ac2747c619c35dcf15a5a61bf106e5221bed4f70b",
+      "bytes": 218
+    },
+    {
+      "alias": "results/pcfi_plain_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\pcfi_plain_s13\\evaluation.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/pcfi_plain_s13/evaluation.json",
+      "sha256": "f27bc946de593caa9e2c68a807e4bedfec5f73f0808c4a3971f0347680888fc2",
+      "bytes": 1897427
+    },
+    {
+      "alias": "results/pcfi_plain_s13/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\pcfi_plain_s13\\evaluation_info.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/pcfi_plain_s13/evaluation_info.json",
+      "sha256": "566ffa63aafcee944a8852529aa8614fd1fd6b11688418f032c580ca5b30fdc7",
+      "bytes": 218
+    },
+    {
+      "alias": "results/preflight.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\preflight.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/preflight.json",
+      "sha256": "66b19a75cb382435bf722177b77f5c0e2e9cc386262ca9c67d89c9dbc8440402",
+      "bytes": 2919
+    },
+    {
+      "alias": "results/statistics.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\results\\statistics.json",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/results/statistics.json",
+      "sha256": "a6caddcf2ff0d6c99268229132c29a2801261ee788568ee20de4b840aebc3234",
+      "bytes": 168191
+    },
+    {
+      "alias": "runtime/common_query_audit.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\runtime\\common_query_audit.py",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/runtime/common_query_audit.py",
+      "sha256": "353da46f5ae34861c4fb168a08e5da9c06a917b64f1d352c5f77f3aa85a86a84",
+      "bytes": 2948
+    },
+    {
+      "alias": "runtime/finalize.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\runtime\\finalize.py",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/runtime/finalize.py",
+      "sha256": "71669fcb3786c5e3c173d09a493e7f2e49e516bc05f2b7253117a5be1e4463f3",
+      "bytes": 23220
+    },
+    {
+      "alias": "runtime/orchestrate.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sign_transport_probe\\runtime\\orchestrate.py",
+      "snapshot": "findings/sources/sign-transport-2026-11-02/runtime/orchestrate.py",
+      "sha256": "b0469dc1253b18ee2988bb1eda778bf93d966fbb00021dbf9f845272f2dd430e",
+      "bytes": 1261
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "reason": "Original supplementary cross-budget differences used each budget's own missing-query subset (full used all queries). This confounds cohort changes with intervention. Restrict both predictions to the prespecified primary8-source missing-query set. No model, bank, saved probabilities or original statistics file was changed.",
+  "original_statistics_sha256": "a6caddcf2ff0d6c99268229132c29a2801261ee788568ee20de4b840aebc3234",
+  "original_primary_and_within_cell_comparisons_unchanged": true,
+  "means": {
+    "pcfi": {
+      "accuracy": 0.5019022631241503,
+      "nll": 0.7159658477586833,
+      "brier": 0.52025548888314
+    },
+    "known_signed": {
+      "accuracy": 0.5602658432208626,
+      "nll": 0.7075013795159761,
+      "brier": 0.5063939333805274
+    },
+    "zero_source": {
+      "accuracy": 0.5369328912912495,
+      "nll": 0.7507529743900629,
+      "brier": 0.5359234993147184
+    },
+    "full": {
+      "accuracy": 0.9194450479313434,
+      "nll": 0.3231749499108212,
+      "brier": 0.17979336709645344
+    }
+  },
+  "contrasts": {
+    "known_signed-zero_source": {
+      "accuracy": {
+        "delta": 0.023332951929613165,
+        "ci95": [
+          -0.010341974903635177,
+          0.05630726909625661
+        ]
+      },
+      "nll": {
+        "delta": -0.04325159487408677,
+        "ci95": [
+          -0.0808872301545076,
+          0.000407656121679078
+        ]
+      },
+      "brier": {
+        "delta": -0.029529565934190788,
+        "ci95": [
+          -0.056296671728426145,
+          0.0018449967213793328
+        ]
+      }
+    },
+    "pcfi-zero_source": {
+      "accuracy": {
+        "delta": -0.035030628167099225,
+        "ci95": [
+          -0.06429188174939746,
+          -0.008488967173209416
+        ]
+      },
+      "nll": {
+        "delta": -0.0347871266313795,
+        "ci95": [
+          -0.06449191931455649,
+          -0.004040186615251464
+        ]
+      },
+      "brier": {
+        "delta": -0.01566801043157834,
+        "ci95": [
+          -0.036648855434744027,
+          0.007258250293623032
+        ]
+      }
+    },
+    "full-pcfi": {
+      "accuracy": {
+        "delta": 0.41754278480719315,
+        "ci95": [
+          0.38860288799862497,
+          0.44667451441030165
+        ]
+      },
+      "nll": {
+        "delta": -0.3927908978478621,
+        "ci95": [
+          -0.4242749043750525,
+          -0.36159471644802166
+        ]
+      },
+      "brier": {
+        "delta": -0.34046212178668656,
+        "ci95": [
+          -0.36505074638159946,
+          -0.3155976870150863
+        ]
+      }
+    }
+  },
+  "strong_floor_corrected": false,
+  "full_reference_note": "Full input also observes context features and uses its own observed-only RMS. This is a full-input reference, not an isolated feature-value-only intervention."
+}

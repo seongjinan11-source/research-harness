@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 32개 프로젝트 · 137개 기록 (실패·중단 41개, 보존 29개, 교훈 45개, 미실행 22개)
+총 33개 프로젝트 · 139개 기록 (실패·중단 41개, 보존 30개, 교훈 46개, 미실행 22개)
 
 ## Common-context witness 고정 곱셈
 
@@ -1246,6 +1246,23 @@ ACM k20 FISF oracle90.43%, IMDB59.16%. Oracle은 query 정답으로 만든 상�
 
 - 확대 금지: 큰 oracle gap만으로 selector 학습의 성공 가능성을 입증하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/reliability.md](../findings/sources/graphpfn-2026-11-01/reliability.md)
+
+## Frozen GraphPFN sign-transport diagnostic
+
+실험 조건: Known bipartite sign-gauged signal family; label/feature-law2x2;0/1/8/full sources;context1/4 per class;6 frozen checkpoints;0 updates.
+
+### SIGN-P01 [보존] 관계를 따라 feature 부호가 바뀌는 과제에서, 알려진 법칙으로 PCFI 복원을 바꾸면 같은 frozen 공개 GraphPFN의 classification이 개선된다.
+
+mask:accuracy52.405028%/NLL0.709999/Brier0.512094; pcfi:accuracy50.190226%/NLL0.715966/Brier0.520255; known_signed:accuracy56.026584%/NLL0.707501/Brier0.506394; positive_lp:accuracy46.683098%/NLL0.796353/Brier0.572964; signed_lp:accuracy56.260834%/NLL0.687817/Brier0.492625; uniform:accuracy50.265421%/NLL0.693147/Brier0.500000; known_signed-pcfi accuracy%p +5.836358 [95% CI +2.291311, +9.440175]; known_signed-mask accuracy%p +3.621556 [95% CI +0.027501, +7.207857]; known_signed-positive_lp accuracy%p +9.343486 [95% CI +5.338770, +13.482302]; known_signed-signed_lp accuracy%p -0.234249 [95% CI -5.629258, +4.934528]. Primary headroom=True, strong direct/LP/feature-use floor=False.
+
+- 확대 금지: Known-law g bit를 받은 reconstruction 진단이다. 새 graph에서 부호 법칙을 추론한 학습 결과, arbitrary heterophily·real graph·schema 전이 또는 메소드 novelty가 아니다. 강한 baseline floor=False. Signed LP 대비 우위와 동일-query zero-source 대비 feature-use 이득은 확인하지 못했다. Frozen out-of-prior 비교이며 새 prior에서 matched 학습한 구조 우열이 아니다. 새로운 학습은 실행하지 않았다.
+- 원문: [findings/sources/sign-transport-2026-11-02/REPORT_KO.md](../findings/sources/sign-transport-2026-11-02/REPORT_KO.md); [findings/sources/sign-transport-2026-11-02/METHOD_KO.md](../findings/sources/sign-transport-2026-11-02/METHOD_KO.md); [findings/sources/sign-transport-2026-11-02/protocol.json](../findings/sources/sign-transport-2026-11-02/protocol.json); [findings/sources/sign-transport-2026-11-02/results/statistics.json](../findings/sources/sign-transport-2026-11-02/results/statistics.json); [findings/sources/sign-transport-2026-11-02/results/common_query_interventions.json](../findings/sources/sign-transport-2026-11-02/results/common_query_interventions.json); [findings/sources/sign-transport-2026-11-02/results/audit.json](../findings/sources/sign-transport-2026-11-02/results/audit.json); [findings/sources/sign-transport-2026-11-02/results/cost.json](../findings/sources/sign-transport-2026-11-02/results/cost.json); [findings/sources/sign-transport-2026-11-02/results/preflight.json](../findings/sources/sign-transport-2026-11-02/results/preflight.json)
+
+### SIGN-L01 [교훈] Feature 복원의 부호 제약, label heterophily, frozen PFN 분류, known-law 정보 우위를 구분한다.
+
+단일 channel path의+1 source/0 missing start에서 PCFI는 음수를 만들지 못했고 parity 변환은 반대 부호를 만들었다. 최종 factorial은 graph/labels/context/query/mask를 feature law 간 고정했다. Primary 결과 mask:accuracy52.405028%/NLL0.709999/Brier0.512094; pcfi:accuracy50.190226%/NLL0.715966/Brier0.520255; known_signed:accuracy56.026584%/NLL0.707501/Brier0.506394; positive_lp:accuracy46.683098%/NLL0.796353/Brier0.572964; signed_lp:accuracy56.260834%/NLL0.687817/Brier0.492625; uniform:accuracy50.265421%/NLL0.693147/Brier0.500000; known_signed-pcfi accuracy%p +5.836358 [95% CI +2.291311, +9.440175]; known_signed-mask accuracy%p +3.621556 [95% CI +0.027501, +7.207857]; known_signed-positive_lp accuracy%p +9.343486 [95% CI +5.338770, +13.482302]; known_signed-signed_lp accuracy%p -0.234249 [95% CI -5.629258, +4.934528].
+
+- 원문: [findings/sources/sign-transport-2026-11-02/REPORT_KO.md](../findings/sources/sign-transport-2026-11-02/REPORT_KO.md); [findings/sources/sign-transport-2026-11-02/METHOD_KO.md](../findings/sources/sign-transport-2026-11-02/METHOD_KO.md); [findings/sources/sign-transport-2026-11-02/protocol.json](../findings/sources/sign-transport-2026-11-02/protocol.json); [findings/sources/sign-transport-2026-11-02/results/statistics.json](../findings/sources/sign-transport-2026-11-02/results/statistics.json); [findings/sources/sign-transport-2026-11-02/results/common_query_interventions.json](../findings/sources/sign-transport-2026-11-02/results/common_query_interventions.json); [findings/sources/sign-transport-2026-11-02/results/audit.json](../findings/sources/sign-transport-2026-11-02/results/audit.json); [findings/sources/sign-transport-2026-11-02/results/cost.json](../findings/sources/sign-transport-2026-11-02/results/cost.json); [findings/sources/sign-transport-2026-11-02/results/preflight.json](../findings/sources/sign-transport-2026-11-02/results/preflight.json)
 
 ## 출처 중첩·공유 보간 오차 attention
 
