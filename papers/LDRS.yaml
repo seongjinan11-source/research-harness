@@ -1,0 +1,63 @@
+id: LDRS
+title: 'LLM-augmented temporal knowledge graph reasoning: A dual-view of semantics and structures'
+authors: Jingyuan Yang, Luyi Bai, Jianze Lv, Jinping Jiang
+venue: Pattern Recognition 2027 (등록된 권호 연도)
+year: 2027
+links:
+  paper: https://www.sciencedirect.com/science/article/pii/S0031320326021758
+citation:
+  type: article
+  title: 'LLM-augmented temporal knowledge graph reasoning: A dual-view of semantics and structures'
+  authors:
+  - Jingyuan Yang
+  - Luyi Bai
+  - Jianze Lv
+  - Jinping Jiang
+  year: 2027
+  journal: Pattern Recognition
+  url: https://doi.org/10.1016/j.patcog.2026.115212
+  volume: '183'
+  verified_from:
+  - https://www.sciencedirect.com/science/article/pii/S0031320326021758
+  - https://api.crossref.org/works?query.title=LLM-augmented+temporal+knowledge+graph+reasoning%3A+A+dual-view+of+semantics+and+structures&rows=3
+review:
+  status: publisher_preview
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  - Highlights / 공개 section snippets
+  full_text_checked: false
+areas:
+- knowledge-graphs
+problem: 과거 상호작용의 반복만으로는 시간에 따라 변하는 사건의 textual semantics와 구조적 noise를 구분하기 어렵다.
+core_idea: '[출판사 초록·공개 발췌 확인; 전체 본문 미확인] LLM으로 역사적 사건 설명을 인코딩하고 attention으로 요약한다. Structural encoder는 stable core와
+  transient residual view를 분리하며 structural plausibility·semantic coherence·recency를 함께 점수화한다.'
+key_assumptions:
+- 과거 사건의 구조와 자연어 설명을 함께 이용할 수 있어야 한다.
+strengths:
+- text: 사건의 자연어 설명과 구조적 이력을 함께 사용한다.
+  tags:
+  - llm-semantics
+  - temporal-kg
+- text: Stable core와 transient residual을 분리하는 dual-view 추론을 제시한다.
+  tags:
+  - multi-view-fusion
+  - nonstationarity
+limitations:
+- text: '[analyst] Core·residual 분리라는 설계가 실제 causal signal과 nuisance의 식별을 보장하는지는 별도 검증이 필요하다.'
+  tags:
+  - interpretability
+  - theory-gap
+  source: analyst
+  evidence:
+    url: https://www.sciencedirect.com/science/article/pii/S0031320326021758
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] 새로운 regime의 유용한 residual까지 제거하지 않는가?'
+hooks:
+- '[접목 가설] 오래된 evidence와 nuisance context를 분리하려는 MVTSFM 실험의 비교 장치로 참고할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다. 출판사가 Crossref에 등록한 정식 권호 연도는 2027이다. 검색 목록의 상대 날짜로 발행일을 추정하지 않았다.
+added: '2026-11-02'

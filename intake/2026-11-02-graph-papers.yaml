@@ -1,0 +1,197 @@
+requested_on: '2026-11-02'
+requested_count: 20
+registered_count: 20
+status_meaning:
+  full_text_reviewed: 본문의 관련 방법·실험·한계 절 확인
+  publisher_preview: 출판사 초록·highlights·공개 section snippets 확인; 전체 본문 미확인
+  abstract_verified: 출판사 또는 출판사 제출 초록 확인; 전체 본문 미확인
+papers:
+- id: DAPF
+  requested_title: 'DAPF: a dual-view adaptive path framework for self-supervised heterogeneous graph representation
+    learning'
+  verified_title: 'DAPF: a dual-view adaptive path framework for self-supervised heterogeneous graph representation
+    learning'
+  source: https://iopscience.iop.org/article/10.1088/2631-8695/aeb5c7/meta
+  status: abstract_verified
+  citation_year: 2026
+  verification_sources:
+  - https://api.crossref.org/works/10.1088%2F2631-8695%2Faeb5c7
+- id: RDGCN
+  requested_title: 'Moving Beyond Graph Homophily: Disentangled Node Representation for Graph Neural Networks'
+  verified_title: 'Moving beyond graph homophily: Disentangled node representation for graph neural networks'
+  source: https://www.sciencedirect.com/science/article/pii/S0893608026012542
+  status: publisher_preview
+  citation_year: 2027
+  verification_sources:
+  - https://www.sciencedirect.com/science/article/pii/S0893608026012542
+  - https://api.crossref.org/works?query.title=Moving+Beyond+Graph+Homophily%3A+Disentangled+Node+Representation+for+Graph+Neural+Networks&rows=3
+  - https://www.sciencedirect.com/science/article/abs/pii/S0893608026012542
+- id: SemHGT
+  requested_title: LLM-Enhanced Heterogeneous Graph Learning with Business Semantics for Financial Fraud Detection
+  verified_title: LLM-Enhanced Heterogeneous Graph Learning with Business Semantics for Financial Fraud Detection
+  source: https://arxiv.org/abs/2610.35298
+  status: full_text_reviewed
+  citation_year: 2026
+  verification_sources:
+  - https://arxiv.org/abs/2610.35298
+  - https://arxiv.org/html/2610.35298v1
+- id: CBCL
+  requested_title: Cross-Branch Contrastive Learning Algorithm in Heterogeneous Networks
+  verified_title: Cross-Branch Contrastive Learning Algorithm in Heterogeneous Networks
+  source: https://latamt.ieeer9.org/index.php/transactions/article/view/10895
+  status: abstract_verified
+  citation_year: 2026
+  verification_sources:
+  - https://latamt.ieeer9.org/index.php/transactions/article/view/10895
+- id: QHGAN
+  requested_title: Quantum heterogeneous graph attention network
+  verified_title: Quantum heterogeneous graph attention network
+  source: https://www.sciencedirect.com/science/article/pii/S003132032602090X
+  status: publisher_preview
+  citation_year: 2027
+  verification_sources:
+  - https://www.sciencedirect.com/science/article/pii/S003132032602090X
+  - https://api.crossref.org/works?query.title=Quantum+heterogeneous+graph+attention+network&rows=3
+- id: RGaKE
+  requested_title: 'RGaKE: randomized and global-aware knowledge graph embedding for link prediction'
+  verified_title: 'RGaKE: randomized and global-aware knowledge graph embedding for link prediction'
+  source: https://www.nature.com/articles/s41598-026-76105-8
+  status: abstract_verified
+  citation_year: 2026
+  verification_sources:
+  - https://www.nature.com/articles/s41598-026-76105-8
+  - https://api.crossref.org/works/10.1038%2Fs41598-026-76105-8
+- id: CoFGraph
+  requested_title: 'CoFGraph: Interleaving Reciprocal Calibration with Confidence Feedback for LLM-Augmented Graph
+    Learning'
+  verified_title: 'CoFGraph: Interleaving Reciprocal Calibration with Confidence Feedback for LLM-Augmented Graph
+    Learning'
+  source: https://aclanthology.org/2026.emnlp-main.1428/
+  status: abstract_verified
+  citation_year: 2026
+  verification_sources:
+  - https://aclanthology.org/2026.emnlp-main.1428/
+  - https://api.crossref.org/works/10.18653%2F2026.emnlp-main.1428
+- id: MASIG
+  requested_title: 'MASIG: Multi-view Augmentation for Graph Representation Learning on Structurally Imbalanced
+    Graphs'
+  verified_title: 'MASIG: Multi-view augmentation for graph representation learning on structurally imbalanced graphs'
+  source: https://www.sciencedirect.com/science/article/pii/S0957417426036675
+  status: publisher_preview
+  citation_year: 2027
+  verification_sources:
+  - https://www.sciencedirect.com/science/article/pii/S0957417426036675
+  - https://api.crossref.org/works?query.title=MASIG%3A+Multi-view+Augmentation+for+Graph+Representation+Learning+on+Structurally+Imbalanced+Graphs&rows=3
+- id: LDRS
+  requested_title: 'LLM-augmented temporal knowledge graph reasoning: A dual-view of semantics and structures'
+  verified_title: 'LLM-augmented temporal knowledge graph reasoning: A dual-view of semantics and structures'
+  source: https://www.sciencedirect.com/science/article/pii/S0031320326021758
+  status: publisher_preview
+  citation_year: 2027
+  verification_sources:
+  - https://www.sciencedirect.com/science/article/pii/S0031320326021758
+  - https://api.crossref.org/works?query.title=LLM-augmented+temporal+knowledge+graph+reasoning%3A+A+dual-view+of+semantics+and+structures&rows=3
+- id: UniSTD
+  requested_title: Distilling Representation Evolution from GNNs into Graph-less MLPs
+  verified_title: Distilling representation evolution from GNNs into graph-less MLPs
+  source: https://www.sciencedirect.com/science/article/pii/S095741742603633X
+  status: publisher_preview
+  citation_year: 2027
+  verification_sources:
+  - https://www.sciencedirect.com/science/article/pii/S095741742603633X
+  - https://api.crossref.org/works?query.title=Distilling+Representation+Evolution+from+GNNs+into+Graph-less+MLPs&rows=3
+- id: HGT-Slot
+  requested_title: Heterogeneous graph transformer with slot-based message passing for node classification
+  verified_title: Heterogeneous graph transformer with slot-based message passing for node classification
+  source: https://www.nature.com/articles/s41598-026-74804-w
+  status: abstract_verified
+  citation_year: 2026
+  verification_sources:
+  - https://www.nature.com/articles/s41598-026-74804-w
+  - https://api.crossref.org/works/10.1038%2Fs41598-026-74804-w
+- id: ES-TKGR
+  requested_title: Synthesizing event semantics for temporal knowledge graph reasoning
+  verified_title: Synthesizing event semantics for temporal knowledge graph reasoning
+  source: https://www.sciencedirect.com/science/article/pii/S0306457326006229
+  status: publisher_preview
+  citation_year: 2027
+  verification_sources:
+  - https://www.sciencedirect.com/science/article/pii/S0306457326006229
+  - https://api.crossref.org/works?query.title=Synthesizing+event+semantics+for+temporal+knowledge+graph+reasoning&rows=3
+- id: HGRL
+  requested_title: Dual-view contrastive learning for heterogeneous graph representation
+  verified_title: Dual-view contrastive learning for heterogeneous graph representation
+  source: https://www.sciencedirect.com/science/article/pii/S0031320326020248
+  status: publisher_preview
+  citation_year: 2027
+  verification_sources:
+  - https://www.sciencedirect.com/science/article/pii/S0031320326020248
+  - https://api.crossref.org/works?query.title=Dual-view+contrastive+learning+for+heterogeneous+graph+representation&rows=3
+- id: G2MLP
+  requested_title: 'Distilling Graph Geometry: Knowledge Gap from GNNs to MLPs'
+  verified_title: 'Distilling Graph Geometry: Knowledge Gap from GNNs to MLPs'
+  source: https://arxiv.org/abs/2610.10520
+  status: full_text_reviewed
+  citation_year: 2026
+  verification_sources:
+  - https://arxiv.org/abs/2610.10520
+  - https://arxiv.org/html/2610.10520v1
+- id: DRKL
+  requested_title: 'Decoupled reverse Kullback–Leibler: Rethinking knowledge distillation loss for bridging GNNs
+    and MLPs'
+  verified_title: 'Decoupled reverse Kullback–Leibler: Rethinking knowledge distillation loss for bridging GNNs
+    and MLPs'
+  source: https://www.sciencedirect.com/science/article/pii/S0031320326020546
+  status: publisher_preview
+  citation_year: 2027
+  verification_sources:
+  - https://www.sciencedirect.com/science/article/pii/S0031320326020546
+  - https://api.crossref.org/works?query.title=Decoupled+reverse+Kullback%E2%80%93Leibler%3A+Rethinking+knowledge+distillation+loss+for+bridging+GNNs+and+MLPs&rows=3
+- id: Lambda-ModE
+  requested_title: 'A module-theoretic foundation for-ModE: A rigorous algebraic framework for knowledge graph embeddings'
+  verified_title: 'A module-theoretic foundation for Λ-ModE: A rigorous algebraic framework for knowledge graph
+    embeddings'
+  source: https://www.sciencedirect.com/science/article/pii/S0020025526011928
+  status: publisher_preview
+  citation_year: 2027
+  verification_sources:
+  - https://www.sciencedirect.com/science/article/pii/S0020025526011928
+  - https://api.crossref.org/works?query.title=A+module-theoretic+foundation+for-ModE%3A+A+rigorous+algebraic+framework+for+knowledge+graph+embeddings&rows=3
+- id: MGHC
+  requested_title: Multi-scale Graph-guided Hybrid Contrastive Learning for Multi-view Clustering
+  verified_title: Multi-scale Graph-guided Hybrid Contrastive Learning for Multi-view Clustering
+  source: https://ieeexplore.ieee.org/abstract/document/11721212/
+  status: abstract_verified
+  citation_year: 2026
+  verification_sources:
+  - https://ieeexplore.ieee.org/abstract/document/11721212/
+  - https://api.crossref.org/works?query.title=Multi-scale+Graph-guided+Hybrid+Contrastive+Learning+for+Multi-view+Clustering&rows=3
+- id: MRN
+  requested_title: Learn from historical subgraph for temporal knowledge graph extrapolation reasoning
+  verified_title: Learn from historical subgraph for temporal knowledge graph extrapolation reasoning
+  source: https://www.sciencedirect.com/science/article/pii/S0950705126018587
+  status: publisher_preview
+  citation_year: 2026
+  verification_sources:
+  - https://www.sciencedirect.com/science/article/pii/S0950705126018587
+  - https://api.crossref.org/works?query.title=Learn+from+historical+subgraph+for+temporal+knowledge+graph+extrapolation+reasoning&rows=3
+- id: scGEN
+  requested_title: 'scGEN: Leveraging an Adaptive Weighting Strategy for Challenging Cell Clustering in Single-Cell
+    RNA-seq'
+  verified_title: 'scGEN: Leveraging an Adaptive Weighting Strategy for Challenging Cell Clustering in Single‐Cell
+    RNA‐seq'
+  source: https://advanced.onlinelibrary.wiley.com/doi/abs/10.1002/advs.77746
+  status: abstract_verified
+  citation_year: 2026
+  verification_sources:
+  - https://advanced.onlinelibrary.wiley.com/doi/abs/10.1002/advs.77746
+  - https://api.crossref.org/works/10.1002%2Fadvs.77746
+- id: EDiS
+  requested_title: 'EDiS: Edge Disjoint Subgraph Sparsification Framework for Graph Neural Networks'
+  verified_title: 'EDiS: Edge Disjoint Subgraph Sparsification Framework for Graph Neural Networks'
+  source: https://arxiv.org/abs/2610.09059
+  status: full_text_reviewed
+  citation_year: 2026
+  verification_sources:
+  - https://arxiv.org/abs/2610.09059
+  - https://arxiv.org/html/2610.09059v1

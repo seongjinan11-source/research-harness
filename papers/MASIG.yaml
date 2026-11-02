@@ -1,0 +1,64 @@
+id: MASIG
+title: 'MASIG: Multi-view augmentation for graph representation learning on structurally imbalanced graphs'
+authors: Bingqian Xue, Mingxia Zhao, Suiyuan Zhang, Bairui Jing, Adele Lu Jia
+venue: Expert Systems with Applications 2027 (등록된 권호 연도)
+year: 2027
+links:
+  paper: https://www.sciencedirect.com/science/article/pii/S0957417426036675
+citation:
+  type: article
+  title: 'MASIG: Multi-view augmentation for graph representation learning on structurally imbalanced graphs'
+  authors:
+  - Bingqian Xue
+  - Mingxia Zhao
+  - Suiyuan Zhang
+  - Bairui Jing
+  - Adele Lu Jia
+  year: 2027
+  journal: Expert Systems with Applications
+  url: https://doi.org/10.1016/j.eswa.2026.134763
+  volume: '334'
+  verified_from:
+  - https://www.sciencedirect.com/science/article/pii/S0957417426036675
+  - https://api.crossref.org/works?query.title=MASIG%3A+Multi-view+Augmentation+for+Graph+Representation+Learning+on+Structurally+Imbalanced+Graphs&rows=3
+review:
+  status: publisher_preview
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  - Highlights / 공개 section snippets
+  full_text_checked: false
+areas:
+- graph-learning
+problem: 작은 연결 성분과 long-tail degree 때문에 발생하는 수용 영역 부족과 representation homogenization을 다룬다.
+core_idea: '[출판사 초록·공개 발췌 확인; 전체 본문 미확인] 연결 성분과 node degree 관점에서 여러 augmentation view를 생성한다. Prototype contrastive
+  alignment로 view 간 표현을 정렬한다.'
+key_assumptions:
+- 연결 성분·차수 정보를 사용할 수 있는 그래프가 필요하다.
+strengths:
+- text: LCC 밖의 노드와 low-/high-degree 노드의 서로 다른 구조적 문제를 augmentation 설계에 반영한다.
+  tags:
+  - structural-imbalance
+  - graph-structure-use
+- text: Multi-view prototype 대조학습을 semi-supervised node classification에 적용한다.
+  tags:
+  - contrastive-learning
+  - multi-view-fusion
+limitations:
+- text: '[analyst] 연결 성분·차수의 불균형을 다루는 장치이며, 클래스 라벨 skew의 교정이나 minority class 성능 개선까지 보장한 것으로 해석하지 않는다.'
+  tags:
+  - label-imbalance
+  - structural-imbalance
+  source: analyst
+  evidence:
+    url: https://www.sciencedirect.com/science/article/pii/S0957417426036675
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] Degree imbalance와 label imbalance를 독립적으로 바꿔도 효과가 유지되는가?'
+hooks:
+- '[접목 가설] ImbNodePFN에서 구조적 고립과 label skew를 분리하는 기준선으로 활용할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다. 출판사가 Crossref에 등록한 정식 권호 연도는 2027이다. 검색 목록의 상대 날짜로 발행일을 추정하지 않았다.
+added: '2026-11-02'

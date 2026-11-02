@@ -1,0 +1,62 @@
+id: MRN
+title: Learn from historical subgraph for temporal knowledge graph extrapolation reasoning
+authors: Lin Zhu, Xin Ren, Luyi Bai
+venue: Knowledge-Based Systems 2026
+year: 2026
+links:
+  paper: https://www.sciencedirect.com/science/article/pii/S0950705126018587
+citation:
+  type: article
+  title: Learn from historical subgraph for temporal knowledge graph extrapolation reasoning
+  authors:
+  - Lin Zhu
+  - Xin Ren
+  - Luyi Bai
+  year: 2026
+  journal: Knowledge-Based Systems
+  url: https://doi.org/10.1016/j.knosys.2026.117132
+  volume: '353'
+  verified_from:
+  - https://www.sciencedirect.com/science/article/pii/S0950705126018587
+  - https://api.crossref.org/works?query.title=Learn+from+historical+subgraph+for+temporal+knowledge+graph+extrapolation+reasoning&rows=3
+review:
+  status: publisher_preview
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  - Highlights / 공개 section snippets
+  full_text_checked: false
+areas:
+- knowledge-graphs
+problem: TKG 이력에서 entity뿐 아니라 relation 자체의 구조와 긴 시간 의존을 표현하는 문제를 다룬다.
+core_idea: '[출판사 초록·공개 발췌 확인; 전체 본문 미확인] E-GAT과 relation-oriented R-GAT으로 timestamp subgraph의 구조를 표현한다. Multi-head
+  GRU로 여러 시간 의존을 전달해 미래 fact를 추론한다.'
+key_assumptions:
+- 시간별 historical subgraph와 entity·relation 이력이 필요하다.
+strengths:
+- text: 인접 relation을 이용해 relation 자체의 representation을 구성한다.
+  tags:
+  - heterogeneous-semantics
+  - temporal-kg
+- text: Multi-head GRU로 subgraph 사이의 긴 시간 의존을 모델링한다.
+  tags:
+  - context-horizon
+  - temporal-kg
+limitations:
+- text: '[analyst] 긴 sequence의 모델링과 regime shift 이후 오래된 이력의 유해성 제거는 다른 문제다. 후자를 검증한 것으로 해석하지 않는다.'
+  tags:
+  - nonstationarity
+  - robustness
+  source: analyst
+  evidence:
+    url: https://www.sciencedirect.com/science/article/pii/S0950705126018587
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] 현재 정보에 맞지 않는 과거 이력을 늘렸을 때도 이득이 유지되는가?'
+hooks:
+- '[접목 가설] Obsolete history를 다루는 MVTSFM에서 긴 이력 모델링과 유용한 이력 선택을 구분하는 참고가 된다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다.
+added: '2026-11-02'

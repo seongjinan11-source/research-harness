@@ -107,6 +107,10 @@
   - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
+- [MASIG](https://www.sciencedirect.com/science/article/pii/S0957417426036675): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=alignment
+  - 기록된 강점: LCC 밖의 노드와 low-/high-degree 노드의 서로 다른 구조적 문제를 augmentation 설계에 반영한다.
+- [MGHC](https://ieeexplore.ieee.org/abstract/document/11721212/): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=alignment
+  - 기록된 강점: 중간 layer별 graph로 여러 granularity의 구조를 학습에 사용한다.
 
 ## COUP-F01 — Label→feature 반복 피드백이 일방향 추론보다 유용하다.
 
@@ -223,6 +227,14 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [HGRL](https://www.sciencedirect.com/science/article/pii/S0031320326020248): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=heterogeneous
+  - 기록된 강점: 관계별 local 구조와 Mamba 기반 long-range 의미를 서로 다른 encoder로 다룬다.
+- [HGT-Slot](https://www.nature.com/articles/s41598-026-74804-w): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=heterogeneous
+  - 기록된 강점: Local slot과 global Transformer prediction을 결합해 3개 node-classification 데이터셋에서 평가했다.
+- [QHGAN](https://www.sciencedirect.com/science/article/pii/S003132032602090X): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=heterogeneous
+  - 기록된 강점: 구조적 중요성과 semantic relevance를 함께 고려한 경로 sampling 및 attention을 설계했다.
+- [SemHGT](https://arxiv.org/abs/2610.35298): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=heterogeneous
+  - 기록된 강점: Target-conditioned path와 global neighbor 정보를 정해진 schema token으로 결합한다.
 
 ## VIEW-F01 — Support metadata·다중 전파 view·PCFI/FISF 입력 결합이 범용 증분을 준다.
 
@@ -343,8 +355,8 @@
 - 닫지 않은 것: conditional distillation 일반이 불가능하다는 결론은 아니다. 추가 감독은 의도한 conditional 오차를 실제로 줄였다.
 - 원문: [findings/sources/llbp-eaj-retrospective-2026-11-01.md](../findings/sources/llbp-eaj-retrospective-2026-11-01.md)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [Lambda-ModE](https://www.sciencedirect.com/science/article/pii/S0020025526011928): 복수 태그 일치 (약한 단서); tags=auxiliary-loss, graph-structure-use; keywords=-
+  - 기록된 강점: Structural filtration과 commutator regularization으로 abstraction 간 일관성을 모델링한다.
 
 ## LLBP-F02 — Posterior까지 정확하게 학습하면 최종 예측도 좋아진다.
 
@@ -516,6 +528,8 @@
 - [Time-MoE](https://arxiv.org/abs/2409.16040): 구체 키워드+태그 일치 (미검증); tags=inference-cost; keywords=shared
   - 기록된 강점: sparse MoE로 시계열 foundation model을 처음 2.4B 파라미터까지 키웠다. 같은 활성 파라미터의 dense 모델과 비교하면 학습 비용은 평균 78%, 추론 비용은 39% 줄었다. ultra 모델도 8GB 미만 VRAM의 소비자용 GPU에서 돌아간다.
   - 기록된 강점: 여러 해상도의 출력 head를 함께 학습해서 긴 horizon을 적은 decoding step으로 만든다. ablation에서 horizon 1짜리 head 하나로만 autoregressive하게 예측하면 MSE가 1.382까지 무너졌지만, 네 head를 쓰면 0.262였고 추론도 가장 빨랐다.
+- [UniSTD](https://www.sciencedirect.com/science/article/pii/S095741742603633X): 구체 키워드+태그 일치 (미검증); tags=inference-cost; keywords=shared
+  - 기록된 강점: 배포된 MLP forward에서 graph access를 요구하지 않도록 설계했다.
 
 ## LPC-F01 — LP internal conditioning이 output offset과 Plain을 일관되게 넘는다.
 
@@ -528,6 +542,8 @@
 - 닫지 않은 것: Relation 정보를 합치기 전 보존하는 구조와 별도 semantic schema 전이는 별개다.
 - 원문: [findings/sources/graphpfn-2026-11-01/lpc.md](../findings/sources/graphpfn-2026-11-01/lpc.md); [findings/sources/graphpfn-2026-11-01/lpc_factorial.md](../findings/sources/graphpfn-2026-11-01/lpc_factorial.md)
 
+- [HGRL](https://www.sciencedirect.com/science/article/pii/S0031320326020248): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=residual
+  - 기록된 강점: 관계별 local 구조와 Mamba 기반 long-range 의미를 서로 다른 encoder로 다룬다.
 - [NodePFN](https://arxiv.org/abs/2604.19028): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=residual
   - 기록된 강점: cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
   - 기록된 강점: attention branch와 GCN branch를 층마다 병렬로 두는 단순한 dual-branch 구조로 그래프 구조를 PFN에 넣었다. MPNN branch를 빼면 Cora와 Wisconsin에서 accuracy가 크게 떨어져, 구조 branch의 기여가 ablation으로 확인된다.
@@ -595,6 +611,8 @@
   - 기록된 강점: Section 3.1과 Appendix B의 feature별 Gather는 context와 query 노드를 모두 사용한다. Context-label embedding도 압축 전 scalar token에 제공하므로, feature memory를 label-context 노드에만 한정하지 않는 직접적인 선행 대조다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [EDiS](https://arxiv.org/abs/2610.09059): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=subgraph
+  - 기록된 강점: 동일 edge budget의 sparse view를 바꾸며 학습하고 cut-edge 보존을 조건부로 분석한다.
 
 ## OBS-F02 — 부분그래프 선택 개선으로 경쟁력 있는 확률 예측을 확보했다.
 
@@ -651,6 +669,13 @@
   - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=ensemble
   - 기록된 강점: Hand-crafted graph feature(Laplacian PE, PageRank, 이웃 평균 등)에 기대지 않고, 모델 안에서 adjacency-masked attention으로 message passing을 직접 학습한다. 그 결과 ICL만으로도 G2T-FM·TAG와 튜닝된 GNN보다 평균 rank가 높고, 무거운 전처리도 필요 없다.
+- [HGRL](https://www.sciencedirect.com/science/article/pii/S0031320326020248): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=fusion
+  - 기록된 강점: 관계별 local 구조와 Mamba 기반 long-range 의미를 서로 다른 encoder로 다룬다.
+- [RDGCN](https://www.sciencedirect.com/science/article/pii/S0893608026012542): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=fusion
+  - 기록된 강점: Label context·semantic·topological view를 분리해 해로운 정보 혼합을 줄이도록 설계했다.
+  - 기록된 강점: Homophilic·heterophilic 그래프를 포함한 9개 node-classification 데이터셋에서 평가했다.
+- [RGaKE](https://www.nature.com/articles/s41598-026-76105-8): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=fusion
+  - 기록된 강점: Global context와 multi-scale feature fusion을 결합해 4개 KG link-prediction benchmark에서 평가했다.
 
 ## RFILL-F01 — 현재 frozen conditional Gaussian completion이 분산을 맞춘 random-fill/graph-prior null보다 안정적으로 좋은 예측을 제공한다.
 

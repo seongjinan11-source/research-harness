@@ -1,0 +1,80 @@
+id: G2MLP
+title: 'Distilling Graph Geometry: Knowledge Gap from GNNs to MLPs'
+authors: Zhewei Chen, Hao Zhu, Jiaojiao Jiang, Ahad N. Zehmakan
+venue: arXiv 2026
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2610.10520
+citation:
+  type: misc
+  title: 'Distilling Graph Geometry: Knowledge Gap from GNNs to MLPs'
+  authors:
+  - Zhewei Chen
+  - Hao Zhu
+  - Jiaojiao Jiang
+  - Ahad N. Zehmakan
+  year: 2026
+  arxiv: '2610.10520'
+  url: https://arxiv.org/abs/2610.10520
+  verified_from:
+  - https://arxiv.org/abs/2610.10520
+  - https://arxiv.org/html/2610.10520v1
+review:
+  status: full_text_reviewed
+  checked_on: '2026-11-02'
+  checked_sections:
+  - 3 Why Uniform Distillation Fails
+  - 4 G2MLP
+  - 5 Experiments
+  - Appendix H
+  full_text_checked: true
+areas:
+- graph-learning
+problem: GNN에서 MLP로 증류할 때 teacher의 graph-induced geometry를 어디에서 보존할지 결정하는 문제를 다룬다.
+core_idea: '[본문 확인] Ollivier–Ricci curvature로 spectral underfit·overfit이 집중되는 위치를 구분한다. Neighborhood 분포를 diagonal
+  Gaussian moment로 근사해 prediction·representation alignment를 적응적으로 배분한다.'
+key_assumptions:
+- Graph teacher와 neighborhood moment·curvature를 학습 시 계산할 수 있어야 한다.
+strengths:
+- text: 단순 logit matching을 넘어 위치별 graph geometry alignment를 설계했다.
+  tags:
+  - graph-distillation
+  - graph-geometry
+- text: 배포 모델은 graph access 없이 실행하는 일반 MLP로 유지한다.
+  tags:
+  - inference-cost
+  - graph-distillation
+limitations:
+- text: Diagonal Gaussian surrogate는 다봉·상관된 neighborhood 분포의 alignment cost를 충분히 표현하지 못할 수 있다.
+  tags:
+  - graph-geometry
+  - graph-structure-use
+  source: self
+  evidence:
+    url: https://arxiv.org/html/2610.10520v1
+    section: Appendix H, Diagonal Gaussian neighborhood surrogate
+- text: 이론 결과는 upper bound와 구조적 설명이며, curvature-adaptive 정렬이 필요한 조건의 완전한 특성화나 대응 lower bound를 제공하지 않는다.
+  tags:
+  - theory-gap
+  source: self
+  evidence:
+    url: https://arxiv.org/html/2610.10520v1
+    section: Appendix H, Upper-bound nature
+- text: Node-classification 평가는 homophilic benchmark에 한정되며 체계적인 heterophilic 검증을 향후 과제로 남겼다.
+  tags:
+  - distribution-shift
+  - graph-structure-use
+  source: self
+  evidence:
+    url: https://arxiv.org/html/2610.10520v1
+    section: Appendix H, Limited heterophilic evaluation
+builds_on: []
+compared_against:
+- GLNN
+- KRD
+open_questions:
+- '[분석상 질문] Full covariance·mixture surrogate가 추가 비용에 비해 충분한 이득을 주는가?'
+hooks:
+- '[접목 가설] Auxiliary representation alignment가 최종 예측에 도움이 되는 조건을 검증할 기준선으로 참고할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다.
+added: '2026-11-02'

@@ -1,0 +1,64 @@
+id: CoFGraph
+title: 'CoFGraph: Interleaving Reciprocal Calibration with Confidence Feedback for LLM-Augmented Graph Learning'
+authors: Feng Zhao, Tiewen Chen, Xianggan Liu, Ruilin Zhao, Yifan Song
+venue: Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing 2026
+year: 2026
+links:
+  paper: https://aclanthology.org/2026.emnlp-main.1428/
+citation:
+  type: inproceedings
+  title: 'CoFGraph: Interleaving Reciprocal Calibration with Confidence Feedback for LLM-Augmented Graph Learning'
+  authors:
+  - Feng Zhao
+  - Tiewen Chen
+  - Xianggan Liu
+  - Ruilin Zhao
+  - Yifan Song
+  year: 2026
+  url: https://doi.org/10.18653/2026.emnlp-main.1428
+  booktitle: Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing
+  pages: 32624--32635
+  publisher: Association for Computational Linguistics
+  verified_from:
+  - https://aclanthology.org/2026.emnlp-main.1428/
+  - https://api.crossref.org/works/10.18653%2F2026.emnlp-main.1428
+review:
+  status: abstract_verified
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  full_text_checked: false
+areas:
+- graph-learning
+problem: LLM 의미 정보와 그래프 구조가 충돌할 때의 semantic noise 및 반복적인 LLM 호출 비용을 다룬다.
+core_idea: '[초록 확인; 전체 본문 미확인] LLM을 고정하고 lightweight Interpreter를 semantic proxy로 학습한다. Node-wise confidence와 dynamic
+  role switching으로 더 신뢰할 수 있는 view가 다른 view를 보정하게 한다.'
+key_assumptions:
+- Confidence가 view별 신뢰도를 유용하게 구분해야 한다.
+strengths:
+- text: LLM fine-tuning과 지속적인 test-time prompting을 피하도록 semantic proxy를 학습한다.
+  tags:
+  - inference-cost
+  - llm-semantics
+- text: Confidence feedback으로 semantic·structural view를 상호 보정한다.
+  tags:
+  - multi-view-fusion
+  - robustness
+limitations:
+- text: '[analyst] 두 view가 동일한 잘못된 근거를 공유할 때도 confidence가 신뢰도를 구분하는지는 별도 확인해야 한다. 초록만으로 calibration 보장을 판단할 수 없다.'
+  tags:
+  - uncertainty
+  - robustness
+  source: analyst
+  evidence:
+    url: https://aclanthology.org/2026.emnlp-main.1428/
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] Confidence weighting의 이득을 view별 추가 학습량과 분리할 수 있는가?'
+hooks:
+- '[접목 가설] PFN evidence head의 신뢰도 기반 routing을 구현할 때 참고할 수 있다. 보조 view 일치와 최종 예측 개선을 함께 측정해야 한다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다.
+added: '2026-11-02'

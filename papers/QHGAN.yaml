@@ -1,0 +1,64 @@
+id: QHGAN
+title: Quantum heterogeneous graph attention network
+authors: Wenjie Liu, Bohan Du, Qingshan Wu
+venue: Pattern Recognition 2027 (등록된 권호 연도)
+year: 2027
+links:
+  paper: https://www.sciencedirect.com/science/article/pii/S003132032602090X
+  code: https://github.com/wqs1999/DuBoHanQHGAN
+citation:
+  type: article
+  title: Quantum heterogeneous graph attention network
+  authors:
+  - Wenjie Liu
+  - Bohan Du
+  - Qingshan Wu
+  year: 2027
+  journal: Pattern Recognition
+  url: https://doi.org/10.1016/j.patcog.2026.115127
+  volume: '183'
+  verified_from:
+  - https://www.sciencedirect.com/science/article/pii/S003132032602090X
+  - https://api.crossref.org/works?query.title=Quantum+heterogeneous+graph+attention+network&rows=3
+review:
+  status: publisher_preview
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  - Highlights / 공개 section snippets
+  full_text_checked: false
+areas:
+- heterogeneous-graphs
+problem: 이종그래프의 meta-path 탐색 비용과 구조·semantic 정보의 결합을 다룬다.
+core_idea: '[출판사 초록·공개 발췌 확인; 전체 본문 미확인] 2D quantum walk로 meta-path를 탐색하고, semantic-driven progressive sampling으로
+  경로를 거른다. Quantum attention layer에서 node-level과 semantic-level 정보를 결합한다.'
+key_assumptions:
+- Quantum walk와 parameterized quantum circuit 실행 환경을 전제로 한다.
+strengths:
+- text: Quantum walk에 기반한 meta-path 탐색 절차를 제시한다.
+  tags:
+  - meta-paths
+- text: 구조적 중요성과 semantic relevance를 함께 고려한 경로 sampling 및 attention을 설계했다.
+  tags:
+  - heterogeneous-semantics
+  - graph-structure-use
+limitations:
+- text: '[analyst] 초록의 탐색 연산 복잡도 개선을 전체 학습의 wall-clock 또는 quantum hardware 이득으로 곧바로 해석하지 않는다. 상태 준비·측정·시뮬레이션 비용의
+    확인이 필요하다.'
+  tags:
+  - inference-cost
+  - eval-protocol
+  source: analyst
+  evidence:
+    url: https://www.sciencedirect.com/science/article/pii/S003132032602090X
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] 고전적 path sampler와 동일한 evidence·연산 예산에서도 이득이 유지되는가?'
+hooks:
+- '[접목 가설] Quantum component 자체보다 semantic-aware path filtering을 먼저 고전적 기준선으로 비교할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다. 출판사가 Crossref에 등록한 정식 권호 연도는 2027이다. 검색 목록의 상대 날짜로 발행일을 추정하지 않았다. 모델 약칭은 출판사 초록의 QHGAN을 사용했다. Quantum
+  speedup의 실측 성립을 주장하지 않는다.
+added: '2026-11-02'

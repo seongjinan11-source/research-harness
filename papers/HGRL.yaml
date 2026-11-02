@@ -1,0 +1,66 @@
+id: HGRL
+title: Dual-view contrastive learning for heterogeneous graph representation
+authors: Rongyao Hu, Binyun Yang, Jiangzhang Gan, Li Li, Fei Ye, Jinyu Guo, Tong Liu
+venue: Pattern Recognition 2027 (등록된 권호 연도)
+year: 2027
+links:
+  paper: https://www.sciencedirect.com/science/article/pii/S0031320326020248
+citation:
+  type: article
+  title: Dual-view contrastive learning for heterogeneous graph representation
+  authors:
+  - Rongyao Hu
+  - Binyun Yang
+  - Jiangzhang Gan
+  - Li Li
+  - Fei Ye
+  - Jinyu Guo
+  - Tong Liu
+  year: 2027
+  journal: Pattern Recognition
+  url: https://doi.org/10.1016/j.patcog.2026.115060
+  volume: '183'
+  verified_from:
+  - https://www.sciencedirect.com/science/article/pii/S0031320326020248
+  - https://api.crossref.org/works?query.title=Dual-view+contrastive+learning+for+heterogeneous+graph+representation&rows=3
+review:
+  status: publisher_preview
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  - Highlights / 공개 section snippets
+  full_text_checked: false
+areas:
+- heterogeneous-graphs
+problem: 이종그래프의 local relational pattern과 distant semantic interaction을 함께 학습하는 문제를 다룬다.
+core_idea: '[출판사 초록·공개 발췌 확인; 전체 본문 미확인] SGAM은 type-aware R-GCN과 adaptive residual로 구조를 인코딩한다. MSR은 Mamba·multi-scale
+  fusion·방향성 위치 인코딩으로 긴 semantic 의존을 모델링하고 양방향 대조학습으로 두 view를 정렬한다.'
+key_assumptions:
+- Schema와 node type 및 semantic sequence를 구성할 수 있어야 한다.
+strengths:
+- text: 관계별 local 구조와 Mamba 기반 long-range 의미를 서로 다른 encoder로 다룬다.
+  tags:
+  - heterogeneous-semantics
+  - graph-structure-use
+- text: Semantic·structural view가 서로 augmentation과 감독 신호가 되도록 정렬한다.
+  tags:
+  - contrastive-learning
+  - multi-view-fusion
+limitations:
+- text: '[analyst] View 정렬이 downstream에 유용한 정보 보존을 보장하는 것은 아니므로, 보조 loss와 최종 예측의 이득을 분리해 검증해야 한다.'
+  tags:
+  - auxiliary-loss
+  - theory-gap
+  source: analyst
+  evidence:
+    url: https://www.sciencedirect.com/science/article/pii/S0031320326020248
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] 정렬 loss의 이득이 추가 encoder 용량·계산량과 독립적인가?'
+hooks:
+- '[접목 가설] Relational PFN에서 structure·semantic evidence를 분리하고 합치는 ablation의 대조군으로 참고할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다. 출판사가 Crossref에 등록한 정식 권호 연도는 2027이다. 검색 목록의 상대 날짜로 발행일을 추정하지 않았다.
+added: '2026-11-02'

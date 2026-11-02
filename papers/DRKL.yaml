@@ -1,0 +1,64 @@
+id: DRKL
+title: 'Decoupled reverse Kullback–Leibler: Rethinking knowledge distillation loss for bridging GNNs and MLPs'
+authors: Shaokai Xu, Muyang Li, Qiyan Huang, Yingjie Tian
+venue: Pattern Recognition 2027 (등록된 권호 연도)
+year: 2027
+links:
+  paper: https://www.sciencedirect.com/science/article/pii/S0031320326020546
+  code: https://github.com/xsk160/DRKL
+citation:
+  type: article
+  title: 'Decoupled reverse Kullback–Leibler: Rethinking knowledge distillation loss for bridging GNNs and MLPs'
+  authors:
+  - Shaokai Xu
+  - Muyang Li
+  - Qiyan Huang
+  - Yingjie Tian
+  year: 2027
+  journal: Pattern Recognition
+  url: https://doi.org/10.1016/j.patcog.2026.115090
+  volume: '183'
+  verified_from:
+  - https://www.sciencedirect.com/science/article/pii/S0031320326020546
+  - https://api.crossref.org/works?query.title=Decoupled+reverse+Kullback%E2%80%93Leibler%3A+Rethinking+knowledge+distillation+loss+for+bridging+GNNs+and+MLPs&rows=3
+review:
+  status: publisher_preview
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  - Highlights / 공개 section snippets
+  full_text_checked: false
+areas:
+- graph-learning
+problem: GNN-to-MLP 증류에서 reverse KL의 fitting·regularization 항이 고정 비중으로 결합되는 문제를 다룬다.
+core_idea: '[출판사 초록·공개 발췌 확인; 전체 본문 미확인] Reverse KL의 항을 분리하고 각 항의 비중을 독립적으로 조절한다. Output logits를 증류하는 기존 GKD framework에
+  loss로 적용한다.'
+key_assumptions:
+- Teacher·student의 출력 분포와 가중치 선택 절차가 필요하다.
+strengths:
+- text: Fitting과 regularization 항의 비중을 분리해 prediction 설정에 맞게 조절한다.
+  tags:
+  - graph-distillation
+  - adaptation
+- text: 추가 모델 branch 없이 기존 output-logit 증류 loss를 교체하는 방식이다.
+  tags:
+  - inference-cost
+  - graph-distillation
+limitations:
+- text: '[analyst] Logit loss의 개선을 teacher의 hidden geometry 보존이나 최적 hyperparameter의 데이터셋 간 transfer 보장으로 확대하지 않는다.'
+  tags:
+  - graph-geometry
+  - adaptation
+  source: analyst
+  evidence:
+    url: https://www.sciencedirect.com/science/article/pii/S0031320326020546
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] 동일 tuning 예산에서 representation alignment와 결합해도 이득이 유지되는가?'
+hooks:
+- '[접목 가설] PFN evidence head의 KL 방향·정규화 비중을 바꾸는 가벼운 비교 기준선으로 참고할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다. 출판사가 Crossref에 등록한 정식 권호 연도는 2027이다. 검색 목록의 상대 날짜로 발행일을 추정하지 않았다.
+added: '2026-11-02'

@@ -1,0 +1,64 @@
+id: UniSTD
+title: Distilling representation evolution from GNNs into graph-less MLPs
+authors: Fuqiang Liu, Jiayan Fu, Xinlong Chen, Yang-Geng Fu
+venue: Expert Systems with Applications 2027 (등록된 권호 연도)
+year: 2027
+links:
+  paper: https://www.sciencedirect.com/science/article/pii/S095741742603633X
+citation:
+  type: article
+  title: Distilling representation evolution from GNNs into graph-less MLPs
+  authors:
+  - Fuqiang Liu
+  - Jiayan Fu
+  - Xinlong Chen
+  - Yang-Geng Fu
+  year: 2027
+  journal: Expert Systems with Applications
+  url: https://doi.org/10.1016/j.eswa.2026.134729
+  volume: '334'
+  verified_from:
+  - https://www.sciencedirect.com/science/article/pii/S095741742603633X
+  - https://api.crossref.org/works?query.title=Distilling+Representation+Evolution+from+GNNs+into+Graph-less+MLPs&rows=3
+review:
+  status: publisher_preview
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  - Highlights / 공개 section snippets
+  full_text_checked: false
+areas:
+- graph-learning
+problem: 최종 logits나 고립된 hidden state만 맞추는 증류가 teacher의 layer-wise 표현 변화를 충분히 전달하지 못하는 문제를 다룬다.
+core_idea: '[출판사 초록·공개 발췌 확인; 전체 본문 미확인] Raw·propagation-enhanced·fused view를 shared MLP에 입력한다. Response·trajectory·velocity
+  distillation과 view consistency를 조합해 teacher의 상태와 층간 변화 경향을 전달한다.'
+key_assumptions:
+- Teacher의 여러 층 표현과 그래프 전파로 보강한 feature를 구성할 수 있어야 한다.
+strengths:
+- text: Teacher의 hidden-state 순서와 층간 transition 경향을 함께 증류한다.
+  tags:
+  - graph-distillation
+  - auxiliary-loss
+- text: 배포된 MLP forward에서 graph access를 요구하지 않도록 설계했다.
+  tags:
+  - inference-cost
+  - graph-distillation
+limitations:
+- text: '[analyst] Method는 예측 전에 입력 feature를 만들거나 갱신하기 위한 graph propagation이 남을 수 있다고 명시한다. Graph-free forward와
+    전체 파이프라인의 graph-free 비용을 구분해야 한다.'
+  tags:
+  - inference-cost
+  - eval-protocol
+  source: analyst
+  evidence:
+    url: https://www.sciencedirect.com/science/article/pii/S095741742603633X
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] Feature refresh 비용까지 포함해도 inference 이득이 유지되는가?'
+hooks:
+- '[접목 가설] 여러 보조 감독을 붙일 때 state·trajectory·최종 예측의 기여를 같은 예산에서 분리하는 대조군으로 참고할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다. 출판사가 Crossref에 등록한 정식 권호 연도는 2027이다. 검색 목록의 상대 날짜로 발행일을 추정하지 않았다.
+added: '2026-11-02'

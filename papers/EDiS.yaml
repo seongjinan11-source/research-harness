@@ -1,0 +1,77 @@
+id: EDiS
+title: 'EDiS: Edge Disjoint Subgraph Sparsification Framework for Graph Neural Networks'
+authors: Sai Karthik Navuluru, Siddhartha Shankar Das, Franck Dernoncourt, S M Ferdous, Ryan A. Rossi, Nesreen K.
+  Ahmed, Baris Coskunuzer, Alex Pothen, Lakshman Tamil, Mahantesh M Halappanavar
+venue: arXiv 2026
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2610.09059
+citation:
+  type: misc
+  title: 'EDiS: Edge Disjoint Subgraph Sparsification Framework for Graph Neural Networks'
+  authors:
+  - Sai Karthik Navuluru
+  - Siddhartha Shankar Das
+  - Franck Dernoncourt
+  - S M Ferdous
+  - Ryan A. Rossi
+  - Nesreen K. Ahmed
+  - Baris Coskunuzer
+  - Alex Pothen
+  - Lakshman Tamil
+  - Mahantesh M Halappanavar
+  year: 2026
+  arxiv: '2610.09059'
+  url: https://arxiv.org/abs/2610.09059
+  verified_from:
+  - https://arxiv.org/abs/2610.09059
+  - https://arxiv.org/html/2610.09059v1
+review:
+  status: full_text_reviewed
+  checked_on: '2026-11-02'
+  checked_sections:
+  - 3 EDiS
+  - 4 Experimental Results
+  - 5 Conclusion
+  full_text_checked: true
+areas:
+- graph-learning
+problem: Sparse GNN 학습에서 고정 topology의 한계와 매 epoch 재추출하는 비용을 함께 줄이는 문제를 다룬다.
+core_idea: '[본문 확인] 그래프를 한 번 edge-disjoint subgraph library로 분해해 저장한다. 매 epoch 이 library를 조합해 정확한 edge budget의 sparse
+  view를 만들며, 기본 selector는 feature score와 successive maximum-score covering forest를 이용한다.'
+key_assumptions:
+- 분해와 조합이 가능한 관측 그래프 및 edge score를 제공해야 한다.
+strengths:
+- text: 구조 추출을 한 번 수행한 뒤 여러 budget과 epoch에서 cached decomposition을 재사용한다.
+  tags:
+  - graph-sparsification
+  - inference-cost
+- text: 동일 edge budget의 sparse view를 바꾸며 학습하고 cut-edge 보존을 조건부로 분석한다.
+  tags:
+  - graph-sparsification
+  - graph-structure-use
+limitations:
+- text: Task-aware score, dynamic temporal composition, graph-/link-level prediction 확장을 향후 과제로 남겼다.
+  tags:
+  - task-coverage
+  - nonstationarity
+  source: self
+  evidence:
+    url: https://arxiv.org/html/2610.09059v1
+    section: 5 Conclusion
+- text: 추출 subgraph 수를 늘려도 항상 개선되지 않으며, Lite와 Full의 반응도 다르다고 보고한다.
+  tags:
+  - adaptation
+  - graph-sparsification
+  source: self
+  evidence:
+    url: https://arxiv.org/html/2610.09059v1
+    section: 4 Experimental Results, RQ6
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] 다른 graph/schema에서도 같은 decomposition·score를 재사용할 수 있는가?'
+hooks:
+- '[접목 가설] Graph PFN에서 labeled evidence 예산을 고정한 채 edge budget만 조절하는 대조군으로 참고할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다.
+added: '2026-11-02'

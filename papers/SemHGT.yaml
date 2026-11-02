@@ -1,0 +1,76 @@
+id: SemHGT
+title: LLM-Enhanced Heterogeneous Graph Learning with Business Semantics for Financial Fraud Detection
+authors: Yixuan Chen, Hongyu Zhan, Jie Sheng, Weiyu Han, Shuai Chen, Tianyi Zhang, Xiao Tan, Jun Xia
+venue: arXiv 2026
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2610.35298
+  code: https://anonymous.4open.science/r/SemHGT-528A/
+citation:
+  type: misc
+  title: LLM-Enhanced Heterogeneous Graph Learning with Business Semantics for Financial Fraud Detection
+  authors:
+  - Yixuan Chen
+  - Hongyu Zhan
+  - Jie Sheng
+  - Weiyu Han
+  - Shuai Chen
+  - Tianyi Zhang
+  - Xiao Tan
+  - Jun Xia
+  year: 2026
+  arxiv: '2610.35298'
+  url: https://arxiv.org/abs/2610.35298
+  verified_from:
+  - https://arxiv.org/abs/2610.35298
+  - https://arxiv.org/html/2610.35298v1
+review:
+  status: full_text_reviewed
+  checked_on: '2026-11-02'
+  checked_sections:
+  - 3 Method
+  - 4 Experiments
+  - 6 Conclusion and Future Work
+  full_text_checked: true
+areas:
+- heterogeneous-graphs
+problem: 거래 그래프에서 같은 속성도 카드·상점 등의 역할에 따라 다른 위험 의미를 갖는 문제를 다룬다.
+core_idea: '[본문 확인] Role-aware LLM 설명을 semantic vector로 인코딩해 node feature를 보강한다. 이 의미 정보를 이용해 target별 typed path를
+  샘플링하고, local path와 global neighbor 요약을 schema token으로 만들어 Transformer에 입력한다.'
+key_assumptions:
+- 역할별 prompt, 구조화된 속성, 사전 지정 transaction schema가 필요하다.
+strengths:
+- text: 역할별 business semantics를 feature 보강과 evidence 선택에 함께 활용한다.
+  tags:
+  - heterogeneous-semantics
+  - llm-semantics
+- text: Target-conditioned path와 global neighbor 정보를 정해진 schema token으로 결합한다.
+  tags:
+  - meta-paths
+  - graph-structure-use
+limitations:
+- text: 수작업 schema 의존을 줄이는 meta-path-free 모델과의 결합은 향후 과제로 남겼다.
+  tags:
+  - meta-paths
+  - adaptation
+  source: self
+  evidence:
+    url: https://arxiv.org/html/2610.35298v1
+    section: 6 Conclusion and Future Work
+- text: 변화하는 거래 행동과 fraud objective에 맞게 semantic representation을 적응시키는 문제를 향후 과제로 남겼다.
+  tags:
+  - nonstationarity
+  - llm-semantics
+  source: self
+  evidence:
+    url: https://arxiv.org/html/2610.35298v1
+    section: 6 Conclusion and Future Work
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] 의미 기반 sampling의 이득을 라벨 분포 변화와 evidence 품질 변화로 분해할 수 있는가?'
+hooks:
+- '[접목 가설] Instance-balanced와 class-balanced evidence를 같은 schema·path 예산에서 비교할 참고가 된다. 논문의 sampling은 라벨 균형을 보장하는
+  장치가 아니다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다.
+added: '2026-11-02'

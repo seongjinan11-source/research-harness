@@ -1,0 +1,64 @@
+id: RGaKE
+title: 'RGaKE: randomized and global-aware knowledge graph embedding for link prediction'
+authors: Qingwang Wang, Mingguo Wang, Qiubai Zhu, Chaohui Li, Tao Shen, Wei Chen, Haibin Yuan
+venue: Scientific Reports 2026
+year: 2026
+links:
+  paper: https://www.nature.com/articles/s41598-026-76105-8
+citation:
+  type: article
+  title: 'RGaKE: randomized and global-aware knowledge graph embedding for link prediction'
+  authors:
+  - Qingwang Wang
+  - Mingguo Wang
+  - Qiubai Zhu
+  - Chaohui Li
+  - Tao Shen
+  - Wei Chen
+  - Haibin Yuan
+  year: 2026
+  journal: Scientific Reports
+  url: https://doi.org/10.1038/s41598-026-76105-8
+  verified_from:
+  - https://www.nature.com/articles/s41598-026-76105-8
+  - https://api.crossref.org/works/10.1038%2Fs41598-026-76105-8
+review:
+  status: abstract_verified
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  full_text_checked: false
+areas:
+- knowledge-graphs
+problem: 고정된 entity–relation embedding 배열과 제한된 global context가 미세 상호작용을 충분히 표현하지 못하는 문제를 다룬다.
+core_idea: '[초록 확인; 전체 본문 미확인] Embedding 배열에 randomized perturbation을 적용한다. Spatial attention·channel recalibration으로
+  global awareness를 만들고 multi-scale attention으로 서로 다른 receptive field의 상호작용을 융합한다.'
+key_assumptions:
+- Entity·relation embedding을 학습할 KG triples가 필요하다.
+strengths:
+- text: Randomized embedding 배열로 entity–relation 상호작용의 다양성을 늘리도록 설계했다.
+  tags:
+  - graph-geometry
+- text: Global context와 multi-scale feature fusion을 결합해 4개 KG link-prediction benchmark에서 평가했다.
+  tags:
+  - graph-structure-use
+  - multi-view-fusion
+limitations:
+- text: '[analyst] 4개 benchmark에서의 일반화 주장을 unseen entity·새로운 relation vocabulary에 대한 inductive transfer의 검증으로 확대하지
+    않는다.'
+  tags:
+  - distribution-shift
+  - task-coverage
+  source: analyst
+  evidence:
+    url: https://www.nature.com/articles/s41598-026-76105-8
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] Randomized 배열의 이득이 seed와 embedding 차원에 얼마나 민감한가?'
+hooks:
+- '[접목 가설] 관계 evidence의 representation과 배열 randomization을 분리하는 ablation에 참고할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다.
+added: '2026-11-02'

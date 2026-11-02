@@ -1,0 +1,63 @@
+id: RDGCN
+title: 'Moving beyond graph homophily: Disentangled node representation for graph neural networks'
+authors: Shuyang Fang, Zelong Yang, Yintao Cai, Yuqin Huang, Xiaoping Min
+venue: Neural Networks 2027 (등록된 권호 연도)
+year: 2027
+links:
+  paper: https://www.sciencedirect.com/science/article/pii/S0893608026012542
+citation:
+  type: article
+  title: 'Moving beyond graph homophily: Disentangled node representation for graph neural networks'
+  authors:
+  - Shuyang Fang
+  - Zelong Yang
+  - Yintao Cai
+  - Yuqin Huang
+  - Xiaoping Min
+  year: 2027
+  journal: Neural Networks
+  url: https://doi.org/10.1016/j.neunet.2026.109799
+  volume: '206'
+  verified_from:
+  - https://www.sciencedirect.com/science/article/pii/S0893608026012542
+  - https://api.crossref.org/works?query.title=Moving+Beyond+Graph+Homophily%3A+Disentangled+Node+Representation+for+Graph+Neural+Networks&rows=3
+  - https://www.sciencedirect.com/science/article/abs/pii/S0893608026012542
+review:
+  status: publisher_preview
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  - Highlights / 공개 section snippets
+  full_text_checked: false
+areas:
+- graph-learning
+problem: 단일 embedding에서 label context·semantic feature·topology가 섞여 homophily와 heterophily를 충분히 구분하지 못하는 문제를 다룬다.
+core_idea: '[출판사 초록·공개 발췌 확인; 전체 본문 미확인] 세 관점의 encoder를 분리하고 각 encoder에 regularization을 적용한다. 노드마다 관점의 유용성이 다를 수
+  있도록 adaptive fusion으로 결합한다.'
+key_assumptions:
+- 노드 feature·그래프 구조와 학습 split의 라벨을 활용하는 encoder 설정이 필요하다.
+strengths:
+- text: Label context·semantic·topological view를 분리해 해로운 정보 혼합을 줄이도록 설계했다.
+  tags:
+  - graph-structure-use
+  - multi-view-fusion
+- text: Homophilic·heterophilic 그래프를 포함한 9개 node-classification 데이터셋에서 평가했다.
+  tags:
+  - graph-structure-use
+limitations:
+- text: '[analyst] Label-context view를 PFN과 비교할 때는 split별 라벨 마스킹과 사용 가능한 label 예산을 맞춰야 한다. 누수가 관측됐다는 주장은 아니다.'
+  tags:
+  - eval-protocol
+  source: analyst
+  evidence:
+    url: https://www.sciencedirect.com/science/article/pii/S0893608026012542
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] 세 view의 이득이 label skew와 새로운 graph/schema에서도 유지되는가?'
+hooks:
+- '[접목 가설] 구조·feature·라벨 evidence를 별도로 제어하는 PFN ablation 설계에 참고할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다. 출판사가 Crossref에 등록한 정식 권호 연도는 2027이다. 검색 목록의 상대 날짜로 발행일을 추정하지 않았다.
+added: '2026-11-02'

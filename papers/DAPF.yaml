@@ -1,0 +1,51 @@
+id: DAPF
+title: 'DAPF: a dual-view adaptive path framework for self-supervised heterogeneous graph representation learning'
+authors: Jinlong Ma, Peilin Cheng
+venue: Engineering Research Express 2026
+year: 2026
+links:
+  paper: https://iopscience.iop.org/article/10.1088/2631-8695/aeb5c7/meta
+citation:
+  type: article
+  title: 'DAPF: a dual-view adaptive path framework for self-supervised heterogeneous graph representation learning'
+  authors:
+  - Jinlong Ma
+  - Peilin Cheng
+  year: 2026
+  journal: Engineering Research Express
+  url: https://doi.org/10.1088/2631-8695/aeb5c7
+  volume: '8'
+  verified_from:
+  - https://api.crossref.org/works/10.1088%2F2631-8695%2Faeb5c7
+review:
+  status: abstract_verified
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  full_text_checked: false
+areas:
+- heterogeneous-graphs
+problem: 이종그래프의 전체 meta-path 집계가 개별 경로의 순서와 instance별 의미 차이를 희석하는 문제를 다룬다.
+core_idea: '[초록 확인; 전체 본문 미확인] Adaptive Structure View는 meta-path별 구조를 적응적으로 집계한다. Semantic Path View는 Transformer와
+  path attention으로 개별 경로를 인코딩한다. 대칭적인 cross-view 목적함수와 prototype 대조학습을 결합한다.'
+key_assumptions:
+- 사용할 meta-path 구조와 경로 instance를 구성할 수 있어야 한다.
+strengths:
+- text: 구조적 집계와 순서에 민감한 개별 경로 인코딩을 분리한다.
+  tags:
+  - meta-paths
+  - heterogeneous-semantics
+- text: Cross-view와 prototype 대조학습을 함께 사용하며 ACM·DBLP·AMiner에서 평가했다.
+  tags:
+  - contrastive-learning
+  - multi-view-fusion
+limitations: []
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] 경로 예산과 meta-path 선택을 바꾸어도 강점이 유지되는가?'
+hooks:
+- '[접목 가설] Relational PFN에서 경로 instance 순서의 효과를 구조 집계와 분리하는 대조군으로 참고할 수 있다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다.
+added: '2026-11-02'

@@ -1,0 +1,75 @@
+id: scGEN
+title: 'scGEN: Leveraging an Adaptive Weighting Strategy for Challenging Cell Clustering in Single‐Cell RNA‐seq'
+authors: Fang Huang, Dayu Hu, Yaqi Dai, Aoyi Geng, Renxiang Guan, Hao Quan, Brett A. McGregor, Zhihan Wang, Nadeem
+  Khan, Hongsheng Zhang, Jinghua Zhang, Mingyang Xia, Xiaoqiong Gu, Di Che, Junguk Hur, Xiaoyu Cui, Kai Guo
+venue: Advanced Science 2026
+year: 2026
+links:
+  paper: https://advanced.onlinelibrary.wiley.com/doi/abs/10.1002/advs.77746
+  code: https://github.com/hurlab/scGEN
+citation:
+  type: article
+  title: 'scGEN: Leveraging an Adaptive Weighting Strategy for Challenging Cell Clustering in Single‐Cell RNA‐seq'
+  authors:
+  - Fang Huang
+  - Dayu Hu
+  - Yaqi Dai
+  - Aoyi Geng
+  - Renxiang Guan
+  - Hao Quan
+  - Brett A. McGregor
+  - Zhihan Wang
+  - Nadeem Khan
+  - Hongsheng Zhang
+  - Jinghua Zhang
+  - Mingyang Xia
+  - Xiaoqiong Gu
+  - Di Che
+  - Junguk Hur
+  - Xiaoyu Cui
+  - Kai Guo
+  year: 2026
+  journal: Advanced Science
+  url: https://doi.org/10.1002/advs.77746
+  verified_from:
+  - https://advanced.onlinelibrary.wiley.com/doi/abs/10.1002/advs.77746
+  - https://api.crossref.org/works/10.1002%2Fadvs.77746
+review:
+  status: abstract_verified
+  checked_on: '2026-11-02'
+  checked_sections:
+  - Abstract
+  full_text_checked: false
+areas:
+- single-cell
+problem: Single-cell RNA-seq에서 경계·전이 상태 세포의 미세한 발현 차이가 clustering에 반영되지 않는 문제를 다룬다.
+core_idea: '[초록 확인; 전체 본문 미확인] Gene-aware embedded network에 adaptive feature weighting과 반복적 fine-tuning을 적용한다. 겹치는
+  전사체 profile을 가진 애매한 세포의 구분에 주의를 배분한다.'
+key_assumptions:
+- 세포별 RNA 발현 feature와 unsupervised clustering 설정이 필요하다.
+strengths:
+- text: 발현 feature를 적응적으로 가중해 경계·전이 세포의 구분을 개선하도록 설계했다.
+  tags:
+  - feature-reweighting
+  - adaptation
+- text: 8개 scRNA-seq 데이터셋과 생물학적 분석을 통해 clustering 적용을 평가했다.
+  tags:
+  - interpretability
+limitations:
+- text: '[analyst] 경계 세포의 재분류는 class-balanced context sampling이나 일반 그래프의 label imbalance 교정과 동일한 장치가 아니다.'
+  tags:
+  - label-imbalance
+  - task-coverage
+  source: analyst
+  evidence:
+    url: https://advanced.onlinelibrary.wiley.com/doi/abs/10.1002/advs.77746
+    section: 초록·공개 발췌에 근거한 범위 구분; 관측된 실패 결과 아님
+builds_on: []
+compared_against: []
+open_questions:
+- '[분석상 질문] Adaptive weighting의 이득이 반복 fine-tuning의 추가 계산량과 독립적인가?'
+hooks:
+- '[접목 가설] Ambiguous instance에 대한 weighting을 PFN context 재배분과 비교할 수 있다. 응용 분야 차이를 통제해야 한다.'
+notes: 사용자가 제공한 20편 목록을 2026-11-02에 대조했다. URL의 개인 접근 토큰은 저장하지 않았다. 전체 본문은 확인하지 못했다. 확인 범위 밖의 수치·저자 인정 한계·후속 비판 관계는
+  생성하지 않았다. 동명인 다른 scGen 모델과 구분하며, 본 항목은 DOI 10.1002/advs.77746의 2026 연구다.
+added: '2026-11-02'
