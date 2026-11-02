@@ -1,0 +1,104 @@
+{
+  "status": "PASS_WITH_REPLAY_VARIATION",
+  "input_files_hashed": 1164,
+  "prediction_files_hashed": 8136,
+  "checkpoints": 15,
+  "real_optimizer_updates": 0,
+  "same_initialization_and_schedule_within_seed": true,
+  "original_visible_arrays_preserved": true,
+  "frozen_weights_verified": true,
+  "validation_labels_used": false,
+  "replay": [
+    {
+      "arm": "mask",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.0,
+      "mean_probability_difference": 0.0,
+      "within_session_max_difference": 0.0,
+      "argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "mask",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.0,
+      "mean_probability_difference": 0.0,
+      "within_session_max_difference": 0.0,
+      "argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "pcfi100",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.0,
+      "mean_probability_difference": 0.0,
+      "within_session_max_difference": 0.0,
+      "argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "pcfi100",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.0,
+      "mean_probability_difference": 0.0,
+      "within_session_max_difference": 0.0,
+      "argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "identity",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.004912048578262329,
+      "mean_probability_difference": 0.0009703952237032354,
+      "within_session_max_difference": 0.003820270299911499,
+      "argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "identity",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.012042790651321411,
+      "mean_probability_difference": 0.000712496810592711,
+      "within_session_max_difference": 0.012650519609451294,
+      "argmax_change_fraction": 0.005
+    },
+    {
+      "arm": "static",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.0032078921794891357,
+      "mean_probability_difference": 0.0007321994635276496,
+      "within_session_max_difference": 0.003455042839050293,
+      "argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "static",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.006415084004402161,
+      "mean_probability_difference": 0.0005747428513132036,
+      "within_session_max_difference": 0.008433282375335693,
+      "argmax_change_fraction": 0.004
+    },
+    {
+      "arm": "dynamic",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.004118502140045166,
+      "mean_probability_difference": 0.0010454731527715921,
+      "within_session_max_difference": 0.0021822750568389893,
+      "argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "dynamic",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.010564625263214111,
+      "mean_probability_difference": 0.0006920990417711437,
+      "within_session_max_difference": 0.010547041893005371,
+      "argmax_change_fraction": 0.003
+    }
+  ],
+  "limits": "Only10selectedforecasts replayed; report numericalvariation/argmax changes. .1assertion is a corruption guard,not exact reproducibility. CI conditional onstoredforecasts. Context inputs contain onlyallowedlabels,querylabels returnedseparately. Oldrealbank is development,not independentconfirmation."
+}

@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / 'src'))
 import harness
 
 DATE = '2026-11-03'
-VERSION = 15
+VERSION = 16
 DOCUMENTS = ['RESULTS_SUMMARY_KO.md', 'RESEARCH_HANDOFF_KO.md', 'README.md']
 
 

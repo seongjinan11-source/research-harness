@@ -657,6 +657,21 @@
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=missingness
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
+## NSDT-F01 — 현재 token에서 geometry를 갱신하는 PFN이 PCFI/identity/static보다 missing 분류가 좋고 실제 heterophily의 강한 floor와 경쟁한다.
+
+- 판정: 현재 SO2 token adapter는 사전 gate를 통과하지 못했으며 자동 확대나 추가 loss/head/budget 구제를 하지 않는다.
+- 원인·병목 [원인 미상]: 동일budget의strongarm/realfloor조건중일부가충족되지않았다. 아래수치로확인한현상이며architecture최적화·학습량·RP16·prior차이중고유한원인은분리하지않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 새근거가현재함수족/geometry식별/전이에서구체적으로다른정보나추론을제공하고nativePCFI·identity/static·고정negativeLP의floor를넘을이유를보일때.
+- 먼저 이겨야 할 기준선: 동일초기화·taskorder·updates의Mask/PCFI100/identity/static/dynamic;nativePCFI→같은PFN;publicsingleforward;양/음LP;NLL/Brier/macroF1·fullfeature·source2/8·no-source·전체추론비용.
+- 최소 재검증: 새basegraph와미사용realgraph를먼저고정하고dynamic-static/identity의독립증분,관측anchor,layergeometry변화와signedcos실사용,feature/context개입및numericalreplay를함께평가한다. Secondary를primary로대체하지않는다.
+- 닫지 않은 것: 원본NSDtarget-graph학습재현,일반O(d)/generalrestriction,GraphPFNgraphmodule의완전교체,원본physicalfeature공간,새heterogeneousschema는미검증이다. 일부대조의이득은별도로보존한다.
+- 원문: [findings/sources/nsd-token-2026-11-03/REPORT_KO.md](../findings/sources/nsd-token-2026-11-03/REPORT_KO.md); [findings/sources/nsd-token-2026-11-03/METHOD_KO.md](../findings/sources/nsd-token-2026-11-03/METHOD_KO.md); [findings/sources/nsd-token-2026-11-03/protocol.json](../findings/sources/nsd-token-2026-11-03/protocol.json); [findings/sources/nsd-token-2026-11-03/results/statistics.json](../findings/sources/nsd-token-2026-11-03/results/statistics.json); [findings/sources/nsd-token-2026-11-03/results/audit.json](../findings/sources/nsd-token-2026-11-03/results/audit.json); [findings/sources/nsd-token-2026-11-03/results/control_summary.json](../findings/sources/nsd-token-2026-11-03/results/control_summary.json); [findings/sources/nsd-token-2026-11-03/results/cost.json](../findings/sources/nsd-token-2026-11-03/results/cost.json); [findings/sources/nsd-token-2026-11-03/results/preflight.json](../findings/sources/nsd-token-2026-11-03/results/preflight.json)
+
+- [NeuralSheafDiffusion](https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html): 복수 태그 일치 (약한 단서); tags=graph-geometry, graph-structure-use; keywords=-
+  - 기록된 강점: 양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.
+  - 기록된 강점: 공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.
+
 ## OBS-F01 — Mask-aware 학습 정책이 강한 경로 규칙을 넘는다.
 
 - 판정: 주 성공 기준 미통과·확장 보류

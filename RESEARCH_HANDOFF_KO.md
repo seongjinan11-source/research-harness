@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-03. 최근 업데이트: 누적57편의 문헌과 Sheaf-PCFI synthetic-to-real pilot까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-03. 최근 업데이트: 누적57편의 문헌과 NSD hidden-token PFN pilot까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -27,6 +27,23 @@ Synthetic sheaf−PCFI +0.132%p CI[-0.585,+0.968],heterophily실제평균−0.39
 
 초기생성기confound때문에1152updates를폐기하고전부다시학습했다. Checkpoint재실행최대확률차이.007497/선택episodeargmax2.48%변경을공개하며엄격수치재현PASS라고하지않는다. 기존156항목과844paper/source파일은그대로보존했다. [전체보고서](findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md),[계산정의](findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md),[구조화기록](findings/sheaf-pcfi.yaml).
 
+## NSD hidden-token PFN: 관측에서 시작하는 geometry 갱신
+
+2026-11-03. PCFI warmup/숫자completion대신PFNhiddenstate에서endpointrestriction을학습했다. Mask/PCFI100/identity/static/dynamic을각3seed·1024updates로새로학습했고실제graph학습은0이다. 새64syntheticbasegraph지만family는같고실제4graph는기존developmentbank다.
+
+| 방법 | Cora | CiteSeer | Texas | Wisconsin |
+|---|---:|---:|---:|---:|
+| pcfi100 | 50.15 | 30.84 | 27.77 | 21.61 |
+| identity | 37.16 | 24.24 | 21.43 | 23.28 |
+| static | 36.35 | 25.43 | 19.64 | 24.47 |
+| dynamic | 38.07 | 22.35 | 19.06 | 23.81 |
+| native_pcfi100 | 52.03 | 33.87 | 33.26 | 24.44 |
+| negative_lp | 32.03 | 24.76 | 63.54 | 42.73 |
+
+dynamic-mask +1.000059%p CI[0.3503957146611959, 1.6252314285334988]; dynamic-pcfi100 +1.872436%p CI[0.9591497270029059, 2.839915974434959]; dynamic-identity -0.083220%p CI[-0.563776244897672, 0.40735070413055496]; dynamic-static +0.220777%p CI[-0.2799861039889716, 0.7513131305974036]; realhetero {'mask': -1.1361620621828605, 'pcfi100': -3.2524593752169872, 'identity': -0.9208122226674054, 'static': -0.619619386241721, 'native_pcfi100': -7.415763386429836, 'negative_lp': -31.694600458921744}%p; gates={'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'mask_floor': True, 'expand': False}
+
+현재pilot은확대기준미통과다. 이특정SO2adapter의범위로보존하고모든NSD를기각하지않는다. Numericreplay상태는PASS_WITH_REPLAY_VARIATION이며초기화·taskorder·고정가중치와정보경계를검사했다. [전체보고서](findings/sources/nsd-token-2026-11-03/REPORT_KO.md),[계산정의](findings/sources/nsd-token-2026-11-03/METHOD_KO.md),[구조화기록](findings/nsd-token.yaml).
+
 ## 먼저 읽을 자료
 
 이 파일만 읽어도 핵심 판단은 가능하다. 세부 확인은 다음 순서가 좋다.
@@ -38,7 +55,7 @@ Synthetic sheaf−PCFI +0.132%p CI[-0.585,+0.968],heterophily실제평균−0.39
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 57편, 연구 기록 160항목, 아이디어 12개가 있다. 38개 프로젝트 묶음이며 실패·중단48, 보존36, 교훈53, 미실행23항목이다. 160번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v15는 Sheaf-PCFI의synthetic-only학습·실제가중치고정pilot과NSD문헌을추가한2026-11-03 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 57편, 연구 기록 164항목, 아이디어 13개가 있다. 39개 프로젝트 묶음이며 실패·중단49, 보존37, 교훈55, 미실행23항목이다. 164번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v16은NSD hidden-token의동일예산학습과static/dynamic비교를추가했다. v15는 Sheaf-PCFI의synthetic-only학습·실제가중치고정pilot과NSD문헌을추가한2026-11-03 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
 
 ## TSFM 공동 정보·방해 변수 frozen 비교
 
@@ -329,6 +346,7 @@ Query 자체도 feature가 없는 사전 secondary에서는 Factor64.60%/NLL0.60
 
 ```text
 첨부한 Missing-feature GraphPFN 연구 인계서를 읽고 독립적으로 검토해줘.
+최신NSDtokenpilot은warmPCFI없이hiddenrepresentation과restrictionmap을함께학습했어. 결과와닫은범위를확인하고단순tokenNSD추가를미실행새방법으로다시제안하지말아줘.
 최신 Sheaf-PCFI pilot의bounded No-Go와negativeLP floor,첫좌표직접전달계수a<0비율0,수치재현한계도함께봐줘. 단순PCFI내부화나signed허용을새아이디어로다시제안하지말아줘.
 실제 실행한 결과, 보존한 개선, 미실행 제안을 구분하고, 필요하면 함께 첨부한 보고서와 findings를 확인해줘.
 

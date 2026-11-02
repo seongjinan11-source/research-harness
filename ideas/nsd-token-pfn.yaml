@@ -1,0 +1,27 @@
+id: nsd-token-pfn
+date: '2026-11-03'
+status: completed-bounded-pilot-no-go
+text: 현재 token에서 geometry를 갱신하는 PFN이 PCFI/identity/static보다 missing 분류가 좋고 실제 heterophily의
+  강한 floor와 경쟁한다.
+tags:
+- graph-geometry
+- graph-structure-use
+- observation-mask
+- zero-shot-gap
+- eval-protocol
+keywords:
+- Neural Sheaf Diffusion
+- hidden-token sheaf PFN
+- dynamic restriction maps
+- SO2 connection Laplacian
+- observed token anchoring
+- static dynamic geometry
+- synthetic-only real frozen
+note: findings/sources/nsd-token-2026-11-03/METHOD_KO.md
+followup: findings/sources/nsd-token-2026-11-03/REPORT_KO.md
+pilot_gates:
+  synthetic: false
+  real_input: false
+  negative_lp_floor: false
+  mask_floor: true
+  expand: false

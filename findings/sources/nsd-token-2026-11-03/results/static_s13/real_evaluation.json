@@ -1,0 +1,3554 @@
+[
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 0,
+    "case": "uniform90",
+    "path": "real_Cora_0_uniform90.npz",
+    "sha256": "efa3cff70bf11eefc68a6ff2575184eebf7785b4c6ee0388299789c051508901",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 259,
+    "context_feature_overlap": 4,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_0_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_0_uniform90.npz",
+    "original_sha256": "a9c6df722178fd86fdb1974a316fb8c4e80f999cfc0c0d5493bf4931f732ac55",
+    "prediction": "results/static_s13/real/e0.npz",
+    "prediction_sha256": "e7737b7db0083f2771f1144e9fc585d3c8150c24e4786c3d2f257c04dffb0022",
+    "all": {
+      "accuracy": 0.33,
+      "nll": 1.8223974831164031,
+      "brier": 0.7987101035689149
+    },
+    "missing": {
+      "accuracy": 0.32860262008733626,
+      "nll": 1.8409406581609804,
+      "brier": 0.8050069121002469
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.015480026602745056
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07562261074781418
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06421765685081482
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07831526547670364
+        }
+      ],
+      "input_observed_nodes": 259,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 0,
+    "case": "uniform995",
+    "path": "real_Cora_0_uniform995.npz",
+    "sha256": "a4a671c903f07f82020c93992c2228a6d79e03c10306b50bbcf2de10aa9f5f9e",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 8,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_0_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_0_uniform995.npz",
+    "original_sha256": "16359cb87d4128a9b5bef3781a8df314e21ca4f8ca9c2d61b11da5d2dae47c83",
+    "prediction": "results/static_s13/real/e1.npz",
+    "prediction_sha256": "073272691dfb9a42889b81790fd21f40112c20d154f2ece9f85aa6d234f36b8a",
+    "all": {
+      "accuracy": 0.337,
+      "nll": 1.692051816266491,
+      "brier": 0.7704081956237823
+    },
+    "missing": {
+      "accuracy": 0.33634538152610444,
+      "nll": 1.693659601838012,
+      "brier": 0.7713131176695153
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.014235063455998898
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06370947510004044
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0527961403131485
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06904610246419907
+        }
+      ],
+      "input_observed_nodes": 8,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 0,
+    "case": "cluster90",
+    "path": "real_Cora_0_cluster90.npz",
+    "sha256": "84bcd3a2ad32abcf7f470d4f0250e3260981a14dcd71d7924d3dd67b9f47ca18",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 271,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_0_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_0_cluster90.npz",
+    "original_sha256": "7f79c313a0821b1568ebadd7b7d574b9b84e46f8d8df01cb9abab155c3d58b75",
+    "prediction": "results/static_s13/real/e2.npz",
+    "prediction_sha256": "dd6b317872a6dac150b72a1a818f147926c03a35b630da1f7f855b3bcc7cbd3b",
+    "all": {
+      "accuracy": 0.442,
+      "nll": 1.5840954052480365,
+      "brier": 0.7047445705091359
+    },
+    "missing": {
+      "accuracy": 0.4422657952069717,
+      "nll": 1.5616928523816127,
+      "brier": 0.6957832633847398
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.013972381129860878
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06741835176944733
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05918997526168823
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07183279097080231
+        }
+      ],
+      "input_observed_nodes": 271,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 0,
+    "case": "cluster995",
+    "path": "real_Cora_0_cluster995.npz",
+    "sha256": "8e6a1a0c0651021cb5d43dda03def7a4fe2a8b362f4731eaee1be6bc6f84dadb",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 14,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_0_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_0_cluster995.npz",
+    "original_sha256": "f36f90e7df7af3dd8ca456f6d4df83d37b7b117aee1c8c7338379d8d03b58b0c",
+    "prediction": "results/static_s13/real/e3.npz",
+    "prediction_sha256": "d365297a87cd8c6f5731f7e8291837b7589664a4186cb94c70e117756348cdae",
+    "all": {
+      "accuracy": 0.235,
+      "nll": 1.9678083256426584,
+      "brier": 0.8924413791985589
+    },
+    "missing": {
+      "accuracy": 0.23493975903614459,
+      "nll": 1.9706931254187612,
+      "brier": 0.8933773599856232
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.01388164795935154
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06217053905129433
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05169207975268364
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06693144887685776
+        }
+      ],
+      "input_observed_nodes": 14,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 0,
+    "case": "full",
+    "path": "real_Cora_0_full.npz",
+    "sha256": "87e7587fcf38a18ea1255120db0f1d2ff40748f60e24396ab1aab75ca910f2f1",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 2708,
+    "context_feature_overlap": 28,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_0_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_0_full.npz",
+    "original_sha256": "0e66f0afa6b1a529c14b6ae69d1582052c75297765a3f23a659a3ed7938a1c39",
+    "prediction": "results/static_s13/real/e4.npz",
+    "prediction_sha256": "97146ecab1945cabed9af1f88e837f2836a04965fcd53ba178afa593bc239b46",
+    "all": {
+      "accuracy": 0.384,
+      "nll": 1.6603569684649646,
+      "brier": 0.7376097688905223
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00012852648796979338
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.007206606213003397
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.009454025886952877
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.012372779659926891
+        }
+      ],
+      "input_observed_nodes": 2708,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 1,
+    "case": "uniform90",
+    "path": "real_Cora_1_uniform90.npz",
+    "sha256": "7052b705bd0cac44d29089eea7ff24dd2f9e0d8c10d846848f995a419611e857",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 286,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_1_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_1_uniform90.npz",
+    "original_sha256": "bdb1ebc6306d1d85189af4b82d2c69893a524dcabf373d47a11362690fbac9ba",
+    "prediction": "results/static_s13/real/e5.npz",
+    "prediction_sha256": "b938df269a01a5f8b324e3fc5cdd55c9cd0ad79a23d6592957a5204e7eb3bc1d",
+    "all": {
+      "accuracy": 0.336,
+      "nll": 1.8226774944112254,
+      "brier": 0.8212535805063393
+    },
+    "missing": {
+      "accuracy": 0.3417142857142857,
+      "nll": 1.8212051609316857,
+      "brier": 0.8194174597038459
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.015778927132487297
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07862205803394318
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06985043734312057
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0807512030005455
+        }
+      ],
+      "input_observed_nodes": 286,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 1,
+    "case": "uniform995",
+    "path": "real_Cora_1_uniform995.npz",
+    "sha256": "f9bf9bca1169e546739a0f5013f4e4fc0a4a9a7569e9f3aadc4720ad6fd54f49",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 12,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_1_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_1_uniform995.npz",
+    "original_sha256": "be4af52ed11913ede2f6b5f4a54053790b9dbfee3a471f2e67384f92a82f1bbe",
+    "prediction": "results/static_s13/real/e6.npz",
+    "prediction_sha256": "a47a068855645520221683af55836b094b1a1a617d0b52f8fda751812df9f18a",
+    "all": {
+      "accuracy": 0.33,
+      "nll": 1.7724981862974283,
+      "brier": 0.7855202809096054
+    },
+    "missing": {
+      "accuracy": 0.3293051359516616,
+      "nll": 1.776854651742244,
+      "brier": 0.7872729695064596
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.014369099400937557
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06448062509298325
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0532572902739048
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07139082252979279
+        }
+      ],
+      "input_observed_nodes": 12,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 1,
+    "case": "cluster90",
+    "path": "real_Cora_1_cluster90.npz",
+    "sha256": "c7adc5e7d4a6f385fd5ea93c90f8be1d7ee9fe2dae11a610e221f6456466efcc",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 271,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_1_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_1_cluster90.npz",
+    "original_sha256": "fbf2159c57aeef378d0c628a36e92063d51ac9d535442baa7b2b98ec39cc6513",
+    "prediction": "results/static_s13/real/e7.npz",
+    "prediction_sha256": "a37143edb072fc8dabe0500ff84ed0db45d53b40b1d882cc04e9014db410ab2c",
+    "all": {
+      "accuracy": 0.403,
+      "nll": 1.527785543549666,
+      "brier": 0.7221532585596883
+    },
+    "missing": {
+      "accuracy": 0.40268456375838924,
+      "nll": 1.491718260870556,
+      "brier": 0.7147445080670137
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.014001392759382725
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06707502901554108
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05745929479598999
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07202617079019547
+        }
+      ],
+      "input_observed_nodes": 271,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 1,
+    "case": "cluster995",
+    "path": "real_Cora_1_cluster995.npz",
+    "sha256": "8e1b8fbb05f97d21d0049bdf8624a67e1b9079300fa3029471c9455c776426a7",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 14,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_1_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_1_cluster995.npz",
+    "original_sha256": "e03a49e6194a48464330743ff9da1eeb9e5d27b9d81251fc14c59176439175bb",
+    "prediction": "results/static_s13/real/e8.npz",
+    "prediction_sha256": "e40a5e28d38a608488988ac44c3a86eef3dd2afbe5e568a78d39d6bd56dd8290",
+    "all": {
+      "accuracy": 0.415,
+      "nll": 1.538743971139313,
+      "brier": 0.6879498195677097
+    },
+    "missing": {
+      "accuracy": 0.4130653266331658,
+      "nll": 1.5423805091061915,
+      "brier": 0.6901313105786303
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.014294611290097237
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06435106694698334
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05394592136144638
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07155435532331467
+        }
+      ],
+      "input_observed_nodes": 14,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 1,
+    "case": "full",
+    "path": "real_Cora_1_full.npz",
+    "sha256": "3e959254e65a2cc3ded902d60146309f2125fbbcff200aedea4a24ccda411a18",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 2708,
+    "context_feature_overlap": 28,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_1_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_1_full.npz",
+    "original_sha256": "281505a4908a8f2d9983bbef2b1f5b62f0ba63e21851e2a329da14187bd1d8d9",
+    "prediction": "results/static_s13/real/e9.npz",
+    "prediction_sha256": "666b870d989f3efe121eb45cd3eb72045083d30fb6a2ad2134fa16d47052332e",
+    "all": {
+      "accuracy": 0.322,
+      "nll": 1.7308073539029003,
+      "brier": 0.7757223773118262
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0001291075604967773
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.007247474044561386
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.009362916462123394
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.012063839472830296
+        }
+      ],
+      "input_observed_nodes": 2708,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 2,
+    "case": "uniform90",
+    "path": "real_Cora_2_uniform90.npz",
+    "sha256": "2881e4c87294976b71c5abf24266bc43602dcc06c72eba5d445d5d53e465bbd6",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 294,
+    "context_feature_overlap": 3,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_2_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_2_uniform90.npz",
+    "original_sha256": "be00413dde055730faa0100cf53c761ccf0144e6c514d15cb7f87c5c45d329c3",
+    "prediction": "results/static_s13/real/e10.npz",
+    "prediction_sha256": "e9d76f9bbb6eed7ec9d2b4fbd0973c845927c8d52f81485ccedc0b96690ad757",
+    "all": {
+      "accuracy": 0.349,
+      "nll": 1.8504195075219483,
+      "brier": 0.8145140002790663
+    },
+    "missing": {
+      "accuracy": 0.34541336353340885,
+      "nll": 1.8577168246388882,
+      "brier": 0.8192742434593245
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.01555915642529726
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07688803970813751
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06765401363372803
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07771472632884979
+        }
+      ],
+      "input_observed_nodes": 294,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 2,
+    "case": "uniform995",
+    "path": "real_Cora_2_uniform995.npz",
+    "sha256": "d7ed21c90934467c5d161cd8938bf4d85da129799dfd4a55935a13da2dc450b3",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 21,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_2_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_2_uniform995.npz",
+    "original_sha256": "72b88a4f4080e6e05e71ba2ec2a936c5c8c1a1718070ea53a6606d851adcd13d",
+    "prediction": "results/static_s13/real/e11.npz",
+    "prediction_sha256": "51a9432d9dd354c3c476d91f659fa99ffccb4298626151cbe11b25b80cd688e9",
+    "all": {
+      "accuracy": 0.337,
+      "nll": 1.8571373965695257,
+      "brier": 0.8344876860150893
+    },
+    "missing": {
+      "accuracy": 0.3377016129032258,
+      "nll": 1.858568264846972,
+      "brier": 0.8350407672333882
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.01457128394395113
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06568028032779694
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05534353479743004
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07222674041986465
+        }
+      ],
+      "input_observed_nodes": 21,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 2,
+    "case": "cluster90",
+    "path": "real_Cora_2_cluster90.npz",
+    "sha256": "f3f80c68ad075df3c64676d37ff0bdac2890cfe94278330ec1e4ecd478090009",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 271,
+    "context_feature_overlap": 2,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_2_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_2_cluster90.npz",
+    "original_sha256": "4f42d85893228245266259a3b2b16723ee91ab004c71bc99a9d56ea5c5e4b831",
+    "prediction": "results/static_s13/real/e12.npz",
+    "prediction_sha256": "532f2d36152621005df51bd46beeec3271d67c87f998b7bba69e98081166be83",
+    "all": {
+      "accuracy": 0.545,
+      "nll": 1.2540709451864283,
+      "brier": 0.5788155874296212
+    },
+    "missing": {
+      "accuracy": 0.5121951219512195,
+      "nll": 1.3287657094752607,
+      "brier": 0.6178584346585948
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.013704899698495865
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06582541018724442
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05700981244444847
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06948383152484894
+        }
+      ],
+      "input_observed_nodes": 271,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 2,
+    "case": "cluster995",
+    "path": "real_Cora_2_cluster995.npz",
+    "sha256": "01a7ce779f912ffd18a366773f6b5c39fe5fd6f861e163fdb0f30797c020b0c8",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 14,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_2_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_2_cluster995.npz",
+    "original_sha256": "6cc01fde934edd9621d2872c8481e21852391aa1f409a780ca77505e2dc28af4",
+    "prediction": "results/static_s13/real/e13.npz",
+    "prediction_sha256": "c7754da593d8542478bd556835493027b78827ed1fbec09603e9bd2db201d9ae",
+    "all": {
+      "accuracy": 0.379,
+      "nll": 1.627775052277366,
+      "brier": 0.7340420270552556
+    },
+    "missing": {
+      "accuracy": 0.3778894472361809,
+      "nll": 1.626976166793826,
+      "brier": 0.7340612762711533
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.014405691996216774
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06511828303337097
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.053613197058439255
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07200106978416443
+        }
+      ],
+      "input_observed_nodes": 14,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "Cora",
+    "repetition": 2,
+    "case": "full",
+    "path": "real_Cora_2_full.npz",
+    "sha256": "d589b5bf3db338798fce74c3b8ba119fc534bcbd1ad832d3da7413d69e8d8f92",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 7,
+    "observed_nodes": 2708,
+    "context_feature_overlap": 28,
+    "label_agreement": 0.8099658961727927,
+    "native_features": 1433,
+    "bank_path": "bank/reuse_real_Cora_2_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_Cora_2_full.npz",
+    "original_sha256": "16e963e24d22becf37bf1c398515413a5d04c60cd7828b6b8360a8c2b324dd5d",
+    "prediction": "results/static_s13/real/e14.npz",
+    "prediction_sha256": "026cd4d01112be1eb61483bfae12fe1062f55182b301551449b7f14e0e119ee8",
+    "all": {
+      "accuracy": 0.398,
+      "nll": 1.6037156333465008,
+      "brier": 0.7225366572053913
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00012949250231031328
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.007252099458128214
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00927305780351162
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.012205749750137329
+        }
+      ],
+      "input_observed_nodes": 2708,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 0,
+    "case": "uniform90",
+    "path": "real_CiteSeer_0_uniform90.npz",
+    "sha256": "c8577a635072876aeda999b11b5c2993f1b29625bc974317fc9db4f6513b3484",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 326,
+    "context_feature_overlap": 2,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_0_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_0_uniform90.npz",
+    "original_sha256": "c7d7caed9d4f297d20948635f1b6f0c7dfaf45a61a6e5a1ea5a8289690819fc5",
+    "prediction": "results/static_s13/real/e15.npz",
+    "prediction_sha256": "beac239d3365bcdc411af76d2da98953aacbdf95287d003b632404251fe0ada6",
+    "all": {
+      "accuracy": 0.294,
+      "nll": 2.061941771051013,
+      "brier": 0.9521689550900869
+    },
+    "missing": {
+      "accuracy": 0.29464285714285715,
+      "nll": 2.098534949516207,
+      "brier": 0.9647930972888157
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.010795892216265202
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.055362261831760406
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05117407441139221
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05723115801811218
+        }
+      ],
+      "input_observed_nodes": 326,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 0,
+    "case": "uniform995",
+    "path": "real_CiteSeer_0_uniform995.npz",
+    "sha256": "2d9883b3cde0b9385b9ffb67e9ebf973f979607460300568f3fa72f300a72d28",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 20,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_0_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_0_uniform995.npz",
+    "original_sha256": "0b2468734792fc61a945fd2644c7107133d58e5add8585fc802f9d6d92487a5b",
+    "prediction": "results/static_s13/real/e16.npz",
+    "prediction_sha256": "3b4bac6dc897b417b509815dd6ccfc5680f16b1d9e7cd42665a0c01b90084d5e",
+    "all": {
+      "accuracy": 0.269,
+      "nll": 1.7775389364188072,
+      "brier": 0.8314808285263239
+    },
+    "missing": {
+      "accuracy": 0.2711693548387097,
+      "nll": 1.7751143360200947,
+      "brier": 0.8307323563607686
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.008887906558811665
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.04005425423383713
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.03354637324810028
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.045421063899993896
+        }
+      ],
+      "input_observed_nodes": 20,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 0,
+    "case": "cluster90",
+    "path": "real_CiteSeer_0_cluster90.npz",
+    "sha256": "3dd902c42e460f0854e83cb8d91c6d929dc72da5930baffa6fed1e451ab4d254",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 333,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_0_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_0_cluster90.npz",
+    "original_sha256": "58002f24b1361ae3f97c9a5f61007d41c195b7aceff908e942b875fb93484579",
+    "prediction": "results/static_s13/real/e17.npz",
+    "prediction_sha256": "c60bf7f18cac03437f10a6fe0c313ef8030af04d81c1bf16399d2ca540a9c2f8",
+    "all": {
+      "accuracy": 0.284,
+      "nll": 2.0195417990463445,
+      "brier": 0.935481083049016
+    },
+    "missing": {
+      "accuracy": 0.27906976744186046,
+      "nll": 2.0459291167061986,
+      "brier": 0.948973584255248
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.011018775403499603
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.056313831359148026
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05293475091457367
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05782729387283325
+        }
+      ],
+      "input_observed_nodes": 333,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 0,
+    "case": "cluster995",
+    "path": "real_CiteSeer_0_cluster995.npz",
+    "sha256": "a3419263b28f8e7bdd6e721a7207c60c55d7b8ffc180e27a3f9f5c1319254941",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 17,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_0_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_0_cluster995.npz",
+    "original_sha256": "87185d509e480e716af2024642d9ef2aef5bbf11e61037ca504019e6f35324ba",
+    "prediction": "results/static_s13/real/e18.npz",
+    "prediction_sha256": "72b29d6378e5c457036358cd50d2749143e7904c493412911d41d482996877d7",
+    "all": {
+      "accuracy": 0.26,
+      "nll": 1.8228523668827579,
+      "brier": 0.8545917418457294
+    },
+    "missing": {
+      "accuracy": 0.2562814070351759,
+      "nll": 1.8299026601583877,
+      "brier": 0.8579782368109712
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00835969764739275
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.03769424185156822
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.03177808225154877
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.04202403128147125
+        }
+      ],
+      "input_observed_nodes": 17,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 0,
+    "case": "full",
+    "path": "real_CiteSeer_0_full.npz",
+    "sha256": "df511ea66b3f857c2c155efdfd11ca9d05b0bf831bd4e3e41b96fda4c5c49217",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 3327,
+    "context_feature_overlap": 24,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_0_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_0_full.npz",
+    "original_sha256": "40a5b48900cb78c57d934bf65264774b7fce2c7bef982c8807609f39dca57f87",
+    "prediction": "results/static_s13/real/e19.npz",
+    "prediction_sha256": "78cbc6ec5cae9ab40d57715cd0397a49337526b4bab935a5e8aeda23dd5a8e39",
+    "all": {
+      "accuracy": 0.289,
+      "nll": 1.7658351942800208,
+      "brier": 0.8169266480080367
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 9.449356002733111e-05
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.005395339801907539
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.007077055983245373
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.008882825262844563
+        }
+      ],
+      "input_observed_nodes": 3327,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 1,
+    "case": "uniform90",
+    "path": "real_CiteSeer_1_uniform90.npz",
+    "sha256": "b90e0fd08847b71edf50439366bd7f0369e682adf77e18a7d84e59d5c14fb226",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 322,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_1_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_1_uniform90.npz",
+    "original_sha256": "232ac797921b3d86790583746ace730df043b006daf8c6e98899169bf74590c4",
+    "prediction": "results/static_s13/real/e20.npz",
+    "prediction_sha256": "a93c4a016f25710e1072a8b4555bd1f381d0b58ea741c81dda20464a2a42019b",
+    "all": {
+      "accuracy": 0.277,
+      "nll": 1.8297981535763788,
+      "brier": 0.8606934543630409
+    },
+    "missing": {
+      "accuracy": 0.2855543113101904,
+      "nll": 1.8222285225023973,
+      "brier": 0.8578854469829477
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.011197419837117195
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05807056650519371
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05509789288043976
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05958295613527298
+        }
+      ],
+      "input_observed_nodes": 322,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 1,
+    "case": "uniform995",
+    "path": "real_CiteSeer_1_uniform995.npz",
+    "sha256": "d0577b60eef97f37c4ec0638825f7a7b3b36d1e4d75babad59bc8b0427c071ff",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 13,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_1_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_1_uniform995.npz",
+    "original_sha256": "ea7f6e6966839eb1975195519713a56bf8f12e2a7059dfa84d570b12d72997ac",
+    "prediction": "results/static_s13/real/e21.npz",
+    "prediction_sha256": "27cf561981c8c6f8e2e98361b1d57aecf280b5ba0f500d2652cba170bf1bab33",
+    "all": {
+      "accuracy": 0.306,
+      "nll": 1.9568761226902052,
+      "brier": 0.8865634640568194
+    },
+    "missing": {
+      "accuracy": 0.3065326633165829,
+      "nll": 1.954645580256918,
+      "brier": 0.8857434909401931
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.008886207826435566
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.03999559208750725
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.03428714722394943
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.04431026801466942
+        }
+      ],
+      "input_observed_nodes": 13,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 1,
+    "case": "cluster90",
+    "path": "real_CiteSeer_1_cluster90.npz",
+    "sha256": "210e4fe0d4864ee3032efa375e9952caefea9dd080697687c1d51f139f2936e8",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 333,
+    "context_feature_overlap": 2,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_1_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_1_cluster90.npz",
+    "original_sha256": "5ae033a04ae73029b8227a21768e71830b556a688c6eee6d54b5b0b3e76b8350",
+    "prediction": "results/static_s13/real/e22.npz",
+    "prediction_sha256": "5a7dfc822a392a63960bdb1a3b609688cccd4b3f3bb1c2baec8d5441e1319fb0",
+    "all": {
+      "accuracy": 0.234,
+      "nll": 1.9555445881386797,
+      "brier": 0.918252231828553
+    },
+    "missing": {
+      "accuracy": 0.23995535714285715,
+      "nll": 1.9368351852226247,
+      "brier": 0.9104157346560029
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.011068432591855526
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.056009870022535324
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.052433617413043976
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0576699860394001
+        }
+      ],
+      "input_observed_nodes": 333,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 1,
+    "case": "cluster995",
+    "path": "real_CiteSeer_1_cluster995.npz",
+    "sha256": "08707c97cf3698cc1664e843c390067a8ef94e9b080307d1951b8b34eec98fdd",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 17,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_1_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_1_cluster995.npz",
+    "original_sha256": "858643258e39b7c4f219649cf8c9a39fd32b074431bd7ff93d97efe9408cc29f",
+    "prediction": "results/static_s13/real/e23.npz",
+    "prediction_sha256": "b4e707b2c7b5c7e8a16f6bd2abc788164979e0ce6c6de5c0708888602af2f0e3",
+    "all": {
+      "accuracy": 0.322,
+      "nll": 1.8099916282832662,
+      "brier": 0.8268839849533334
+    },
+    "missing": {
+      "accuracy": 0.3215725806451613,
+      "nll": 1.8106139769604892,
+      "brier": 0.8270326886535858
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.008333122357726097
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.037360455840826035
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.031856413930654526
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.03982490673661232
+        }
+      ],
+      "input_observed_nodes": 17,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 1,
+    "case": "full",
+    "path": "real_CiteSeer_1_full.npz",
+    "sha256": "4d48d9c899b2ac701f3149ef093d80766ab8c3ee09a629351ebbf75e78b15efa",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 3327,
+    "context_feature_overlap": 24,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_1_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_1_full.npz",
+    "original_sha256": "1810101d6054a665e19cce75c5846805ca150ee5e1bbd5dcf7b93353d9a6350a",
+    "prediction": "results/static_s13/real/e24.npz",
+    "prediction_sha256": "53bd6938ff16a8db19f7e9a487307e346d0e0d35295677b4a9a553d2aa02d6d5",
+    "all": {
+      "accuracy": 0.211,
+      "nll": 2.088096600459666,
+      "brier": 0.9565813918964647
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 9.371589840156958e-05
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.005404897034168243
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0071200961247086525
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00904314685612917
+        }
+      ],
+      "input_observed_nodes": 3327,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 2,
+    "case": "uniform90",
+    "path": "real_CiteSeer_2_uniform90.npz",
+    "sha256": "dfa3951224304a3eccd769e179225e55f3d11cf36031aee47c042f26a1aef0bb",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 345,
+    "context_feature_overlap": 2,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_2_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_2_uniform90.npz",
+    "original_sha256": "ba348eb324248653d0e38fc8f452df77fee32dd57d962acf0c5e251125da6c46",
+    "prediction": "results/static_s13/real/e25.npz",
+    "prediction_sha256": "cb189a85b5e1194aed4301064e0a3b719228db35fa8c23103ebc21b2e34a37e8",
+    "all": {
+      "accuracy": 0.264,
+      "nll": 2.019769481682225,
+      "brier": 0.9173375652055904
+    },
+    "missing": {
+      "accuracy": 0.26268320180383314,
+      "nll": 2.0403254053759383,
+      "brier": 0.9244077550335941
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.011114663444459438
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05682191997766495
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05261152237653732
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05731698498129845
+        }
+      ],
+      "input_observed_nodes": 345,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 2,
+    "case": "uniform995",
+    "path": "real_CiteSeer_2_uniform995.npz",
+    "sha256": "527109b25b5361b728e2fd280eb131b019c59929f61364570769336f41813413",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 24,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_2_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_2_uniform995.npz",
+    "original_sha256": "ef1abbcaf034769e32a992b55e80f67702cf3f8ea7eed87fd3ffee9f1e6596dd",
+    "prediction": "results/static_s13/real/e26.npz",
+    "prediction_sha256": "ef6705b48117dd1a1733ec2c4459bbbe033f5e809a2bd6194794f6724d12cd1f",
+    "all": {
+      "accuracy": 0.233,
+      "nll": 1.8630793233561505,
+      "brier": 0.8495867371810425
+    },
+    "missing": {
+      "accuracy": 0.2318548387096774,
+      "nll": 1.8624054829256544,
+      "brier": 0.8496320049201861
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.008948598057031631
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.04042064771056175
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0345471128821373
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0454525426030159
+        }
+      ],
+      "input_observed_nodes": 24,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 2,
+    "case": "cluster90",
+    "path": "real_CiteSeer_2_cluster90.npz",
+    "sha256": "e8fde16dfb6f8ef4af01c0816a898fdb2366b1571a27b1e2f378847cff0fe741",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 333,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_2_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_2_cluster90.npz",
+    "original_sha256": "b2c2944ca7a31b63003052b448c2bf694a55655bac984ba662f449667f71307b",
+    "prediction": "results/static_s13/real/e27.npz",
+    "prediction_sha256": "693753dfe89b075b540bc23b4b63242237a34f1dabff98a425e2d10651a0e6ae",
+    "all": {
+      "accuracy": 0.24,
+      "nll": 1.8483179704399486,
+      "brier": 0.8568855164649587
+    },
+    "missing": {
+      "accuracy": 0.2141280353200883,
+      "nll": 1.8639103813117412,
+      "brier": 0.8623048824675507
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.008511345833539963
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.04191814735531807
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.03736204281449318
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.043898843228816986
+        }
+      ],
+      "input_observed_nodes": 333,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 2,
+    "case": "cluster995",
+    "path": "real_CiteSeer_2_cluster995.npz",
+    "sha256": "8bacb010b5f57de164a62e121166671dbf3878413daf8a63897c680a130ee94d",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 17,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_2_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_2_cluster995.npz",
+    "original_sha256": "a020063ded575ab75996b85562fb30253d8fce1e046b05cd6ffa45eaee7468ed",
+    "prediction": "results/static_s13/real/e28.npz",
+    "prediction_sha256": "14fd4c21643e4e5c354b0f4ad4059aa42b93868f96bf76fff5ea45090b419210",
+    "all": {
+      "accuracy": 0.178,
+      "nll": 1.8614760626820375,
+      "brier": 0.8673343524412896
+    },
+    "missing": {
+      "accuracy": 0.17925478348439072,
+      "nll": 1.8561040803928144,
+      "brier": 0.8659494163286038
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00833282433450222
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.03733326494693756
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.03132518753409386
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.040932249277830124
+        }
+      ],
+      "input_observed_nodes": 17,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "CiteSeer",
+    "repetition": 2,
+    "case": "full",
+    "path": "real_CiteSeer_2_full.npz",
+    "sha256": "f8f7f52ac748063464e3ff2a4b53bcb3523fa735da46448c392daa14ced772b2",
+    "label_mode": "homo",
+    "feature_mode": "real",
+    "classes": 6,
+    "observed_nodes": 3327,
+    "context_feature_overlap": 24,
+    "label_agreement": 0.7355008787346221,
+    "native_features": 3703,
+    "bank_path": "bank/reuse_real_CiteSeer_2_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_CiteSeer_2_full.npz",
+    "original_sha256": "a1184241a05cb05d864e52d5c1b73a06ab96d0416be07ebb23328ebcc97fb6e4",
+    "prediction": "results/static_s13/real/e29.npz",
+    "prediction_sha256": "08596e3e77b2c2c32b44bb1fd2ad51e6f38efff6e3641310eaca560656ca98d6",
+    "all": {
+      "accuracy": 0.265,
+      "nll": 1.883503626270035,
+      "brier": 0.8728536991158465
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 9.401806892128661e-05
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0054492955096066
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.007306476589292288
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.009366131387650967
+        }
+      ],
+      "input_observed_nodes": 3327,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 0,
+    "case": "uniform90",
+    "path": "real_texas_0_uniform90.npz",
+    "sha256": "61cd1bc30f0a6ddcb229543c067850707924de7297fca0dbd37fb104f716ad97",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 17,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_0_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_0_uniform90.npz",
+    "original_sha256": "ed9fbe50e0e7a367b8d4c05aaeb6d0f3df124a0d5302bc02b7faadd1c3762001",
+    "prediction": "results/static_s13/real/e30.npz",
+    "prediction_sha256": "d1dac24fe442dd438b10a7c21fbcce0ebd1a38e4a99d5770639d275202f0153c",
+    "all": {
+      "accuracy": 0.1388888888888889,
+      "nll": 2.126807723884238,
+      "brier": 1.0712392363999612
+    },
+    "missing": {
+      "accuracy": 0.15151515151515152,
+      "nll": 2.058898169438095,
+      "brier": 1.0415163846128486
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.020127814263105392
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09471993148326874
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08458894491195679
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.10024261474609375
+        }
+      ],
+      "input_observed_nodes": 17,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 0,
+    "case": "uniform995",
+    "path": "real_texas_0_uniform995.npz",
+    "sha256": "4a5c59425653bcc86687f4eb00b0af3d749034cc2f4461b61d34ca3859972eb4",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 2,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_0_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_0_uniform995.npz",
+    "original_sha256": "054eadd825d4eb094e6da5bf2faaecfdd947678f4f860b53458f636695397e97",
+    "prediction": "results/static_s13/real/e31.npz",
+    "prediction_sha256": "21261c703ec1ddc3e974e7112eaa9e0518e488425aca90631ce53c78d74503a3",
+    "all": {
+      "accuracy": 0.08333333333333333,
+      "nll": 2.0358760760575114,
+      "brier": 1.000122350115763
+    },
+    "missing": {
+      "accuracy": 0.08333333333333333,
+      "nll": 2.0358760760575114,
+      "brier": 1.000122350115763
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.020951898768544197
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09500588476657867
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08247244358062744
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0994027704000473
+        }
+      ],
+      "input_observed_nodes": 2,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 0,
+    "case": "cluster90",
+    "path": "real_texas_0_cluster90.npz",
+    "sha256": "221ff938372d89e15fc7e20ed9a5994e7d7b7f5af889da557c69d085ad54e84a",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 18,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_0_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_0_cluster90.npz",
+    "original_sha256": "4c42e3fa225aac99d51f840a844114902c3a170f55889ba334f3964130fe7d8a",
+    "prediction": "results/static_s13/real/e32.npz",
+    "prediction_sha256": "385e64d7847a975e93e0ed045dedaf8288c209e6281e645ecafd3de4d1b73621",
+    "all": {
+      "accuracy": 0.1111111111111111,
+      "nll": 2.2289926688867245,
+      "brier": 1.0684698100865717
+    },
+    "missing": {
+      "accuracy": 0.13333333333333333,
+      "nll": 2.272496283402322,
+      "brier": 1.0811996290262558
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.02007853239774704
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09789520502090454
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08864045888185501
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09862785041332245
+        }
+      ],
+      "input_observed_nodes": 18,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 0,
+    "case": "cluster995",
+    "path": "real_texas_0_cluster995.npz",
+    "sha256": "8b03abbba6f766a3c7411cb2beeaccb38a227e5d2baccd38b69607def532e245",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 1,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_0_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_0_cluster995.npz",
+    "original_sha256": "ac2eadda64b9f8715e7836b773049c1e04e84aac13f576c9e6bbd48a87e62edc",
+    "prediction": "results/static_s13/real/e33.npz",
+    "prediction_sha256": "a46d43200120318d7f951b836b4cdea001da708aaa0dd85c504e085786c3066a",
+    "all": {
+      "accuracy": 0.16666666666666666,
+      "nll": 1.7924602613031675,
+      "brier": 0.9182537808787394
+    },
+    "missing": {
+      "accuracy": 0.16666666666666666,
+      "nll": 1.7924602613031675,
+      "brier": 0.9182537808787394
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.02113325148820877
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09572672843933105
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08268198370933533
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09940533339977264
+        }
+      ],
+      "input_observed_nodes": 1,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 0,
+    "case": "full",
+    "path": "real_texas_0_full.npz",
+    "sha256": "8a721010abde07d5836b4dbe195f71a9ec71dec8c6789b4d9fb9a81451c19084",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 183,
+    "context_feature_overlap": 17,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_0_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_0_full.npz",
+    "original_sha256": "9e952363ceae738b1983e9352fcca359d40a22e778869f497509f4d06a974d2b",
+    "prediction": "results/static_s13/real/e34.npz",
+    "prediction_sha256": "4bedd000a55b31e8f394311a5125db6a7f36c2b0cf9c28bafde5dc6df9a371d7",
+    "all": {
+      "accuracy": 0.3611111111111111,
+      "nll": 1.6420944462325915,
+      "brier": 0.7583694400878661
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0001803787745302543
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.009014718234539032
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.010788359679281712
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.014937197789549828
+        }
+      ],
+      "input_observed_nodes": 183,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 1,
+    "case": "uniform90",
+    "path": "real_texas_1_uniform90.npz",
+    "sha256": "9e974d3901632737b3ee11dd7b91196e8ef880257017514872195c183d3eade2",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 17,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_1_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_1_uniform90.npz",
+    "original_sha256": "404a82c5511e2fd06526cef3e2014b1009c2408b17c5fea113d2d401b6d06dfc",
+    "prediction": "results/static_s13/real/e35.npz",
+    "prediction_sha256": "28623b9e459244dbe03b4ff34d7193a62519947a7609d25411702ed26a4224d3",
+    "all": {
+      "accuracy": 0.05555555555555555,
+      "nll": 2.7510444623598564,
+      "brier": 1.1889073468111846
+    },
+    "missing": {
+      "accuracy": 0.058823529411764705,
+      "nll": 2.7431644495392513,
+      "brier": 1.1867061229636457
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.020338905975222588
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09853436797857285
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08779910951852798
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09685304015874863
+        }
+      ],
+      "input_observed_nodes": 17,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 1,
+    "case": "uniform995",
+    "path": "real_texas_1_uniform995.npz",
+    "sha256": "702f7b8121d39de01e5148fd222fcb6700caeadb1cec6102317070f4f0e894b9",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 0,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_1_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_1_uniform995.npz",
+    "original_sha256": "2a104bfb6c72cff5e37f6f1214ca99ed67b5404aedc68996d05e86b88a258df1",
+    "prediction": "results/static_s13/real/e36.npz",
+    "prediction_sha256": "8478d37ef8650bfbb34f957af14311a0b05a4233d87e6f6b0bf53cc5826cee9b",
+    "all": {
+      "accuracy": 0.1388888888888889,
+      "nll": 2.829848980817094,
+      "brier": 1.1981370651441252
+    },
+    "missing": {
+      "accuracy": 0.1388888888888889,
+      "nll": 2.829848980817094,
+      "brier": 1.1981370651441252
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.010113462805747986
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.04570969194173813
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.04193801060318947
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.05575282499194145
+        }
+      ],
+      "input_observed_nodes": 0,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 1,
+    "case": "cluster90",
+    "path": "real_texas_1_cluster90.npz",
+    "sha256": "d81ac43ce4035d0ef3366afc7760e0fb030c9008c2f344e091083df009b0622f",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 18,
+    "context_feature_overlap": 3,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_1_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_1_cluster90.npz",
+    "original_sha256": "8d1b3668a882acb11e882f7a7b9a7cd9e832a340b83dc2cd1f08d5b26203baef",
+    "prediction": "results/static_s13/real/e37.npz",
+    "prediction_sha256": "607a4b26d00fc921f18ea435f83ed958a7c471c4edc1ac6effd220df5be5dcf3",
+    "all": {
+      "accuracy": 0.08333333333333333,
+      "nll": 2.5335618242114757,
+      "brier": 1.1666332074142882
+    },
+    "missing": {
+      "accuracy": 0.08823529411764706,
+      "nll": 2.5623477957774123,
+      "brier": 1.175474679079092
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.019653791561722755
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09392852336168289
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07780955731868744
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09880604594945908
+        }
+      ],
+      "input_observed_nodes": 18,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 1,
+    "case": "cluster995",
+    "path": "real_texas_1_cluster995.npz",
+    "sha256": "d28581f250c31d1b6c4dc7b96ffe3b0f325a17fb97a8bea4cff1cbefa1b63617",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 1,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_1_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_1_cluster995.npz",
+    "original_sha256": "7205dba62a1d6ed3de5a21ed4ca39b76b7ad0cffc3155fa2dd8f89eb1f9b6fae",
+    "prediction": "results/static_s13/real/e38.npz",
+    "prediction_sha256": "376aeb983c8ab4a85242e651aee559ea62086337f78bc55b9498a6a6db452eda",
+    "all": {
+      "accuracy": 0.08333333333333333,
+      "nll": 2.5521896725610436,
+      "brier": 1.1336860965540085
+    },
+    "missing": {
+      "accuracy": 0.08333333333333333,
+      "nll": 2.5521896725610436,
+      "brier": 1.1336860965540085
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.020597562193870544
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0928315743803978
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07818537950515747
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.10150585323572159
+        }
+      ],
+      "input_observed_nodes": 1,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 1,
+    "case": "full",
+    "path": "real_texas_1_full.npz",
+    "sha256": "a2897781694d94fa862f0d2e18d236f6e01696d90e4b7ab3c34e95af34fd6d6c",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 183,
+    "context_feature_overlap": 17,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_1_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_1_full.npz",
+    "original_sha256": "e7ceaa023335627bf2dfc81d0d743f66e08280ae235f289286070a6ecad917dd",
+    "prediction": "results/static_s13/real/e39.npz",
+    "prediction_sha256": "40db13e372ab73d2a7aec0261c6097fc7903952221882e395d893c374c1b8288",
+    "all": {
+      "accuracy": 0.19444444444444445,
+      "nll": 2.214286130531192,
+      "brier": 0.9734104118010549
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00018021094729192555
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00895834993571043
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.010871571488678455
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.015185439959168434
+        }
+      ],
+      "input_observed_nodes": 183,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 2,
+    "case": "uniform90",
+    "path": "real_texas_2_uniform90.npz",
+    "sha256": "811adbc04d7ab626319fdca37b110f68fcd05af1947176463615dac67a172e4e",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 20,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_2_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_2_uniform90.npz",
+    "original_sha256": "d04ac00b56c235fa688fb8f3b973a54b01ef86ec603e2b1c59e0b4c3ea669429",
+    "prediction": "results/static_s13/real/e40.npz",
+    "prediction_sha256": "07ecdf7a1b940fbb759d4b5378e27f81bddf5e964060e28740c4cb0bf4762856",
+    "all": {
+      "accuracy": 0.3783783783783784,
+      "nll": 2.672190747407657,
+      "brier": 0.8506086795922814
+    },
+    "missing": {
+      "accuracy": 0.40625,
+      "nll": 2.9241828790416013,
+      "brier": 0.8829737876219123
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.022152893245220184
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.10739331692457199
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0876305103302002
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.1016155406832695
+        }
+      ],
+      "input_observed_nodes": 20,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 2,
+    "case": "uniform995",
+    "path": "real_texas_2_uniform995.npz",
+    "sha256": "ba11072bd781769195689b6641ded691aafe1a2307ef0964911a2c3c0def4291",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 0,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_2_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_2_uniform995.npz",
+    "original_sha256": "cff186eb00fb5420fb525294f351e314234c9b11d8fc041d69aa67ae40df0893",
+    "prediction": "results/static_s13/real/e41.npz",
+    "prediction_sha256": "48f45cc1eac6a86a3f73480f33577e1c46ca9f0f115dc4b121281a4a4a74cded",
+    "all": {
+      "accuracy": 0.2972972972972973,
+      "nll": 3.1377000975457254,
+      "brier": 0.8436375590236486
+    },
+    "missing": {
+      "accuracy": 0.2972972972972973,
+      "nll": 3.1377000975457254,
+      "brier": 0.8436375590236486
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.010505926795303822
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.047503769397735596
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.043559473007917404
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.053882841020822525
+        }
+      ],
+      "input_observed_nodes": 0,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 2,
+    "case": "cluster90",
+    "path": "real_texas_2_cluster90.npz",
+    "sha256": "2de1dcd6f26a4fa34db0cfa7b9321f363175ccffe9f141990a80401710b95965",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 18,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_2_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_2_cluster90.npz",
+    "original_sha256": "23f3da20513286922b631da1a14f4a65b34e619ef55f3dd1bd5f0622ca5df2f0",
+    "prediction": "results/static_s13/real/e42.npz",
+    "prediction_sha256": "d0265b241723f7907492930bbe4b5b5253bb77f672095a12fb780be132ca2664",
+    "all": {
+      "accuracy": 0.4594594594594595,
+      "nll": 2.771174252452583,
+      "brier": 0.8088766791503862
+    },
+    "missing": {
+      "accuracy": 0.4411764705882353,
+      "nll": 2.561436577854643,
+      "brier": 0.8174333546739013
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.021099403500556946
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.10224413126707077
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08607368916273117
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.10542742162942886
+        }
+      ],
+      "input_observed_nodes": 18,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 2,
+    "case": "cluster995",
+    "path": "real_texas_2_cluster995.npz",
+    "sha256": "2f2cf1b46dfd9fccb48c1514aca22446632476b8a7979ba61213222e670b6ae4",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 1,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_2_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_2_cluster995.npz",
+    "original_sha256": "cd199873817268a9fd83fcce2dc3bac813440cd36928018971208d4239d47eb7",
+    "prediction": "results/static_s13/real/e43.npz",
+    "prediction_sha256": "fb924a9002b9e5105112d56a03cacd8af1961f5ed86c5423f6b28d09826df660",
+    "all": {
+      "accuracy": 0.32432432432432434,
+      "nll": 3.096573151039024,
+      "brier": 0.8303528532467265
+    },
+    "missing": {
+      "accuracy": 0.32432432432432434,
+      "nll": 3.096573151039024,
+      "brier": 0.8303528532467265
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0220996905118227
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09941595047712326
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08397439122200012
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.10484471172094345
+        }
+      ],
+      "input_observed_nodes": 1,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "texas",
+    "repetition": 2,
+    "case": "full",
+    "path": "real_texas_2_full.npz",
+    "sha256": "0ba94b759bad5ce4c4aa1072330fbb8ba698fadcfb2e8e859c74cb47712a712d",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 183,
+    "context_feature_overlap": 16,
+    "label_agreement": 0.06093189964157706,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_texas_2_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_texas_2_full.npz",
+    "original_sha256": "4d48c5b57d24a76dd7a1228e0eb009ac5d0d2dcf4d74a2bc31b13772ac8d3740",
+    "prediction": "results/static_s13/real/e44.npz",
+    "prediction_sha256": "98662cbc41bcea2744f5b66b14681b8404878c891e8b51aa02fdb1d5942cb2d3",
+    "all": {
+      "accuracy": 0.32432432432432434,
+      "nll": 2.700869928321598,
+      "brier": 0.9493006662369139
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00018281595839653164
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.009418942034244537
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.01142464391887188
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.01602865196764469
+        }
+      ],
+      "input_observed_nodes": 183,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 0,
+    "case": "uniform90",
+    "path": "real_wisconsin_0_uniform90.npz",
+    "sha256": "437e9c34a018f5cb917932c8f277f9b3b7ba4a19b73284f38934645d981d9631",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 31,
+    "context_feature_overlap": 5,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_0_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_0_uniform90.npz",
+    "original_sha256": "3d0b80384f23bf34694be018648837b06d8849fa83aec7aaf56bf0b5b6ddaf2a",
+    "prediction": "results/static_s13/real/e45.npz",
+    "prediction_sha256": "99d211748a1752c9f0147c805a058daacb2a6d2cb713a05476de8386ffcf933a",
+    "all": {
+      "accuracy": 0.19607843137254902,
+      "nll": 1.9086452172420831,
+      "brier": 0.9042419143796628
+    },
+    "missing": {
+      "accuracy": 0.21428571428571427,
+      "nll": 1.897063938563889,
+      "brier": 0.9041958222423024
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.019980264827609062
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09646838903427124
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07686775922775269
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09770996123552322
+        }
+      ],
+      "input_observed_nodes": 31,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 0,
+    "case": "uniform995",
+    "path": "real_wisconsin_0_uniform995.npz",
+    "sha256": "403523abe17390f5bb61bc1057d386c8719c50adb4ad5aa14b969f80ab2142fe",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 1,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_0_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_0_uniform995.npz",
+    "original_sha256": "66ec5586a5fcbf2e25e823973727ae81d602a2c168dd9590d224f99850834c0c",
+    "prediction": "results/static_s13/real/e46.npz",
+    "prediction_sha256": "43cda42975271f92bfb5bdd3c38777d2620dee330a66de975200ba63921ac468",
+    "all": {
+      "accuracy": 0.27450980392156865,
+      "nll": 1.6862811808482001,
+      "brier": 0.8298677675203529
+    },
+    "missing": {
+      "accuracy": 0.27450980392156865,
+      "nll": 1.6862811808482001,
+      "brier": 0.8298677675203529
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.020703045651316643
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09334871917963028
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08001630753278732
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09851124882698059
+        }
+      ],
+      "input_observed_nodes": 1,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 0,
+    "case": "cluster90",
+    "path": "real_wisconsin_0_cluster90.npz",
+    "sha256": "94d19583476ee9ab93882b6bdd689164a0721193ffe77d02424daa2fa9fd6ef2",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 25,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_0_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_0_cluster90.npz",
+    "original_sha256": "b98660dde1cd3b8fcf80baaed98cfad613ff164064a68f30eca4ec352ebbad3c",
+    "prediction": "results/static_s13/real/e47.npz",
+    "prediction_sha256": "e4454aa0e50442520dd027b2583dab845c0932bbe530728ac0b16d160ef426d6",
+    "all": {
+      "accuracy": 0.23529411764705882,
+      "nll": 2.006042513311989,
+      "brier": 0.9618734040322149
+    },
+    "missing": {
+      "accuracy": 0.2,
+      "nll": 2.059538157521172,
+      "brier": 0.9998183962592498
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.018947841599583626
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09087692946195602
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08153009414672852
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.10079330205917358
+        }
+      ],
+      "input_observed_nodes": 25,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 0,
+    "case": "cluster995",
+    "path": "real_wisconsin_0_cluster995.npz",
+    "sha256": "39d1d3fdd0d46a5ebc206847af01e561c2443f74661673c2f9986a4c4de9792b",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 1,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_0_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_0_cluster995.npz",
+    "original_sha256": "6964796598a686818392e3ea8b453be04a8526dd11756e02f17bd1994e61ff34",
+    "prediction": "results/static_s13/real/e48.npz",
+    "prediction_sha256": "f2f750dab04cb05787ef36f143a7713799212b0c43968600ab42c465743fd635",
+    "all": {
+      "accuracy": 0.27450980392156865,
+      "nll": 1.6644622580487338,
+      "brier": 0.8273238822060969
+    },
+    "missing": {
+      "accuracy": 0.27450980392156865,
+      "nll": 1.6644622580487338,
+      "brier": 0.8273238822060969
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.020491257309913635
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09230723232030869
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07901059836149216
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09699077159166336
+        }
+      ],
+      "input_observed_nodes": 1,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 0,
+    "case": "full",
+    "path": "real_wisconsin_0_full.npz",
+    "sha256": "2db1ed0e746014a9386b9e92e2207f7d4afce75816965b2454859a15b8d95994",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 251,
+    "context_feature_overlap": 20,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_0_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_0_full.npz",
+    "original_sha256": "0a3274da91c6c1c7e1d702c7728d59c29044ae0e0ef4668d7c1ae7d777988758",
+    "prediction": "results/static_s13/real/e49.npz",
+    "prediction_sha256": "a28341a1e3e2dec8e06a3f7bca7675ff5d5b37377a8bee04bc8c9b28e26688e2",
+    "all": {
+      "accuracy": 0.19607843137254902,
+      "nll": 1.970318354579814,
+      "brier": 1.0297542856718682
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00017639031284488738
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00879207719117403
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.010959378443658352
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.014468732289969921
+        }
+      ],
+      "input_observed_nodes": 251,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 1,
+    "case": "uniform90",
+    "path": "real_wisconsin_1_uniform90.npz",
+    "sha256": "a1bd90d4643a5254a3b6cc240f97e7017383fc4e73cf8cf42f884b0d4d24973a",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 34,
+    "context_feature_overlap": 12,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_1_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_1_uniform90.npz",
+    "original_sha256": "4300a354def9f0322e44d7fa59d12bc228825d0766512357eff6e3566a0e06a2",
+    "prediction": "results/static_s13/real/e50.npz",
+    "prediction_sha256": "b43f6445914ab35f173cb1dd8f6daf44827f8a52c4a144ffb4e8cac283a63234",
+    "all": {
+      "accuracy": 0.24,
+      "nll": 3.6234922065179522,
+      "brier": 1.0998001936523378
+    },
+    "missing": {
+      "accuracy": 0.21428571428571427,
+      "nll": 3.748934358962669,
+      "brier": 1.134927530296901
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.01821906305849552
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09091383218765259
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07205118983983994
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0799451544880867
+        }
+      ],
+      "input_observed_nodes": 34,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 1,
+    "case": "uniform995",
+    "path": "real_wisconsin_1_uniform995.npz",
+    "sha256": "171e97850e29b49ddf19bc0ab17cf6cd053c6977b164d1d1701604174de4001c",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 0,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_1_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_1_uniform995.npz",
+    "original_sha256": "a4cc96362c2daff93845648358ff66bc5ba7e7531b3b7fe2d4606642dcf950f7",
+    "prediction": "results/static_s13/real/e51.npz",
+    "prediction_sha256": "bb88b0ccc2521ed2f41c38adc1ab0b8c5e3b65263aa87d2567ccb56c31864b15",
+    "all": {
+      "accuracy": 0.36,
+      "nll": 1.4105032160237743,
+      "brier": 0.7263242863729025
+    },
+    "missing": {
+      "accuracy": 0.36,
+      "nll": 1.4105032160237743,
+      "brier": 0.7263242863729025
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00966972578316927
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.043640196323394775
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.03948824852705002
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.051095958799123764
+        }
+      ],
+      "input_observed_nodes": 0,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 1,
+    "case": "cluster90",
+    "path": "real_wisconsin_1_cluster90.npz",
+    "sha256": "226efe2edb6b8da35554ce92bd493fc2d3215bdc0ba4b7237b091384c0c5fe61",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 25,
+    "context_feature_overlap": 4,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_1_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_1_cluster90.npz",
+    "original_sha256": "c1cfe85250ddcafbf685b38de227d1c621cb3b76e5b544f4464537a85d85d564",
+    "prediction": "results/static_s13/real/e52.npz",
+    "prediction_sha256": "34c53974c3e17b4bf93004b1bc083a7b7dafcdf79771d9168b521bd2fd29525d",
+    "all": {
+      "accuracy": 0.26,
+      "nll": 2.202114194419406,
+      "brier": 0.9315967148915434
+    },
+    "missing": {
+      "accuracy": 0.26666666666666666,
+      "nll": 2.2325611138250103,
+      "brier": 0.9369742634318132
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.018354926258325577
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0882631167769432
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07556109130382538
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08865194767713547
+        }
+      ],
+      "input_observed_nodes": 25,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 1,
+    "case": "cluster995",
+    "path": "real_wisconsin_1_cluster995.npz",
+    "sha256": "b6e773ebaffb6a737b980a246df35e4425434703c6829a322fee30372ccda0d0",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 1,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_1_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_1_cluster995.npz",
+    "original_sha256": "a91134777be8eb2ef80a99470348c03b0ba66ecef224aa1fe34d00fce6bcee34",
+    "prediction": "results/static_s13/real/e53.npz",
+    "prediction_sha256": "310aa82a29b37c2b88f65203c3995bac7ece6801221740cd51e3b2515391e184",
+    "all": {
+      "accuracy": 0.34,
+      "nll": 1.3968970285770401,
+      "brier": 0.7257151902270279
+    },
+    "missing": {
+      "accuracy": 0.34,
+      "nll": 1.3968970285770401,
+      "brier": 0.7257151902270279
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.018715402111411095
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08375886082649231
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06994707882404327
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09028025716543198
+        }
+      ],
+      "input_observed_nodes": 1,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 1,
+    "case": "full",
+    "path": "real_wisconsin_1_full.npz",
+    "sha256": "12f6f90c06acdd7be3315ede5db4c053934237c2342b5e8c8f18fc9cf40d89d3",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 251,
+    "context_feature_overlap": 20,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_1_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_1_full.npz",
+    "original_sha256": "df89a791f6367fa583959281689f1eba05b19e3197343f4d0202bf0342366add",
+    "prediction": "results/static_s13/real/e54.npz",
+    "prediction_sha256": "3c99033da5b7f4252392606e779aed46ebdf671064a98a7ed70c9ebc82c8a7bc",
+    "all": {
+      "accuracy": 0.28,
+      "nll": 1.6831069610788558,
+      "brier": 0.8536494156608516
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00016190606402233243
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.008251486346125603
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.010401482693850994
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.013635784387588501
+        }
+      ],
+      "input_observed_nodes": 251,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 2,
+    "case": "uniform90",
+    "path": "real_wisconsin_2_uniform90.npz",
+    "sha256": "66c53609978d96fadc6d9f560702003b84b2a0b39e0ca1fe9736d1820f6918f8",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 27,
+    "context_feature_overlap": 1,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_2_uniform90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_2_uniform90.npz",
+    "original_sha256": "d1de089efa2f1efcac00b902454eee416aa0418874d8f9421de1f374274ea8cf",
+    "prediction": "results/static_s13/real/e55.npz",
+    "prediction_sha256": "43f73ea76452887ba570f7b262d18ea3ea29c90bf75bb176f32740b6d7d160a6",
+    "all": {
+      "accuracy": 0.18,
+      "nll": 1.7848425617073056,
+      "brier": 0.8646078044845136
+    },
+    "missing": {
+      "accuracy": 0.17777777777777778,
+      "nll": 1.7988329759831254,
+      "brier": 0.8615344551224864
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.019184019416570663
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09322775900363922
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0809832215309143
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09176178276538849
+        }
+      ],
+      "input_observed_nodes": 27,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 2,
+    "case": "uniform995",
+    "path": "real_wisconsin_2_uniform995.npz",
+    "sha256": "69110bc4c9a8ed49e021124d73badd575d7303cc21268cc74d1ccd5de4dc6a6f",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 1,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_2_uniform995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_2_uniform995.npz",
+    "original_sha256": "318a593b0b4a7396ca3a758616b04a69bdeafd75272d8a28363dc21b1ff99bb5",
+    "prediction": "results/static_s13/real/e56.npz",
+    "prediction_sha256": "5dec4b8f941359b2288f947e769a83e1b18e9140f50a06ce406e5803edcbbf3f",
+    "all": {
+      "accuracy": 0.22,
+      "nll": 1.675419429233317,
+      "brier": 0.8253609793656945
+    },
+    "missing": {
+      "accuracy": 0.22,
+      "nll": 1.675419429233317,
+      "brier": 0.8253609793656945
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.018167611211538315
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08210192620754242
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06680779904127121
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.0855436623096466
+        }
+      ],
+      "input_observed_nodes": 1,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 2,
+    "case": "cluster90",
+    "path": "real_wisconsin_2_cluster90.npz",
+    "sha256": "04e3aecfcd37ee110089ce19c73cad6bf2941a608d08166f609be8e0eeb7c33d",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 25,
+    "context_feature_overlap": 3,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_2_cluster90.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_2_cluster90.npz",
+    "original_sha256": "58a352a1936c233bd14aeb9d22b0b190a683ba7e7c3c406657ee723fbc17efec",
+    "prediction": "results/static_s13/real/e57.npz",
+    "prediction_sha256": "d1fc775a7a6a0e2a13b21f42a2a56466d8622a59239cc1055d4d66dc988fc0cf",
+    "all": {
+      "accuracy": 0.16,
+      "nll": 2.2492288635760804,
+      "brier": 0.953541122656284
+    },
+    "missing": {
+      "accuracy": 0.14893617021276595,
+      "nll": 2.307229618020689,
+      "brier": 0.969486415326338
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.01951499469578266
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09470687061548233
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.07891792058944702
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.09107113629579544
+        }
+      ],
+      "input_observed_nodes": 25,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 2,
+    "case": "cluster995",
+    "path": "real_wisconsin_2_cluster995.npz",
+    "sha256": "0d1a73281d474bedaec81c3123831827586eb1f50683c60c82f108e9af301643",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 1,
+    "context_feature_overlap": 0,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_2_cluster995.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_2_cluster995.npz",
+    "original_sha256": "74c9667d5789c2e1b2f710700de9e3114723dfc68484d73465e3dad6f8b478b3",
+    "prediction": "results/static_s13/real/e58.npz",
+    "prediction_sha256": "97465070d1f5a6b12915cd97e9b36fbf2ce040156bd79c722365a062b57417de",
+    "all": {
+      "accuracy": 0.18,
+      "nll": 1.663508323516448,
+      "brier": 0.822651775143935
+    },
+    "missing": {
+      "accuracy": 0.18,
+      "nll": 1.663508323516448,
+      "brier": 0.822651775143935
+    },
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.019320473074913025
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08676335960626602
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.06976500153541565
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.08953134715557098
+        }
+      ],
+      "input_observed_nodes": 1,
+      "geometry_updates": 1
+    }
+  },
+  {
+    "split": "real",
+    "graph": "wisconsin",
+    "repetition": 2,
+    "case": "full",
+    "path": "real_wisconsin_2_full.npz",
+    "sha256": "90177d6e355705ba2f0de8e1a4bce2b5854b145c29cea3d5ac1ff37bce06a987",
+    "label_mode": "hetero",
+    "feature_mode": "real",
+    "classes": 5,
+    "observed_nodes": 251,
+    "context_feature_overlap": 20,
+    "label_agreement": 0.17777777777777778,
+    "native_features": 1703,
+    "bank_path": "bank/reuse_real_wisconsin_2_full.npz",
+    "original_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\sheaf_pcfi_pilot\\bank\\real_wisconsin_2_full.npz",
+    "original_sha256": "a1ff581bc4d8858dcdfbb568391972c69bb103d01ccddc28e5164b877fa29049",
+    "prediction": "results/static_s13/real/e59.npz",
+    "prediction_sha256": "9de4a39e8274930bba3f317bbb90785fa265e03ca2f07221d5258ad8b4a533dd",
+    "all": {
+      "accuracy": 0.22,
+      "nll": 1.9897623927554222,
+      "brier": 0.9252235328662738
+    },
+    "missing": null,
+    "diagnostics": {
+      "stages": [
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00016689217591192573
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.00834344606846571
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.010023742914199829
+        },
+        {
+          "negative_cos_fraction": 0.0,
+          "anchor_change": 0.0,
+          "map_refresh_difference": 0.0,
+          "mean_abs_update": 0.013480976223945618
+        }
+      ],
+      "input_observed_nodes": 251,
+      "geometry_updates": 1
+    }
+  }
+]

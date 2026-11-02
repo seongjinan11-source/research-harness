@@ -1,0 +1,5 @@
+# 강한 구조 기준선의 판정 범위
+
+2026-11-03. 주 비교의성능표를열기전에작성했다. Protocol의synthetic/real-input gate는operator효과를확인하는필요조건이다. 별도로고정negativeLP의실제heterophily평균을경쟁력floor로유지한다. 이floor를넘지못하면PCFI대비일부개선이있어도범용homophily/heterophily missing메인메소드로확대하지않는다. 모델별최적LP부호를실제정답으로고르는selector는만들지않는다.
+
+이는기존protocol의strongfloor조건을보고서에서분명히표시하기위한명세다. 학습코드·task·loss·updatebudget을바꾸지않았다. Secondarysource2/8의효과가primary를대체하지않으며,이전real4graphs는계속development범위다.

@@ -1,0 +1,7 @@
+# 결과 판독 전 구조 범위 메모
+
+2026-11-03. 모든방법의성능표를열기전에남긴구현범위다. 현재restriction은edge당한쌍이며,그edge의모든feature token과label token에공유한다. Geometry입력은featuretoken평균+labeltoken의요약이다. 따라서token마다독립적인geometry를추정하는모델은아니다.
+
+생성기에서featurefilter와label-SBM을독립적으로변화시키므로,두종류의evidence에공유transport를쓰는제약이문제가될가능성은있다. 그러나hiddenencoder와좌우mixing도학습되므로,이사실만으로표현불가능성이나실패원인을증명할수는없다. 결과가나오면사후에확정원인으로취급하지않는다.
+
+현재SO(2),4stages,기존GraphPFNgraphadapter유지,RP16,sharedgeometry라는구성을잠근상태로모든arm을끝낸다. 이메모때문에학습구조·loss·예산을바꾸지않았다. Source2/8secondary와realdevelopmentbank의범위도그대로유지한다.

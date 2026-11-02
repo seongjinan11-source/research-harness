@@ -1,0 +1,169 @@
+{
+  "explicit_incidence_error": 4.440892098500626e-16,
+  "minimum_eigenvalue": 0.00010257550268591344,
+  "maximum_eigenvalue": 1.2387182367026888,
+  "node_permutation_error": 0.0,
+  "laplacian_gauge_equivariance_error": 6.661338147750939e-16,
+  "map_gradient_finite_difference_error": 1.8179817651287067e-09,
+  "negative_transport_representable": true,
+  "gauge_scope": "Operator identity under supplied transformed maps; not a claim that the learned map encoder is gauge-equivariant.",
+  "status": "PASS",
+  "smoke_discarded": [
+    {
+      "arm": "mask",
+      "discarded_optimizer_steps": 1,
+      "loss": 2.012908935546875,
+      "geometry_gradient_abs_sum": 0,
+      "nsd_parameter_update_max": 0.0,
+      "layer_map_change": [],
+      "diagnostics": {
+        "stages": [],
+        "input_observed_nodes": 15,
+        "geometry_updates": 0
+      }
+    },
+    {
+      "arm": "pcfi100",
+      "discarded_optimizer_steps": 1,
+      "loss": 1.3074103593826294,
+      "geometry_gradient_abs_sum": 0,
+      "nsd_parameter_update_max": 0.0,
+      "layer_map_change": [],
+      "diagnostics": {
+        "stages": [],
+        "input_observed_nodes": 15,
+        "geometry_updates": 0
+      }
+    },
+    {
+      "arm": "identity",
+      "discarded_optimizer_steps": 1,
+      "loss": 1.9722630977630615,
+      "geometry_gradient_abs_sum": 0,
+      "nsd_parameter_update_max": 0.00010144710540771484,
+      "layer_map_change": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "diagnostics": {
+        "stages": [
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.0,
+            "mean_abs_update": 0.008740385062992573
+          },
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.0,
+            "mean_abs_update": 0.05771613121032715
+          },
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.0,
+            "mean_abs_update": 0.07876134663820267
+          },
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.0,
+            "mean_abs_update": 0.06250911206007004
+          }
+        ],
+        "input_observed_nodes": 15,
+        "geometry_updates": 0
+      }
+    },
+    {
+      "arm": "static",
+      "discarded_optimizer_steps": 1,
+      "loss": 1.9575622081756592,
+      "geometry_gradient_abs_sum": 9.661217350512743,
+      "nsd_parameter_update_max": 0.00010144710540771484,
+      "layer_map_change": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "diagnostics": {
+        "stages": [
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.0,
+            "mean_abs_update": 0.009025822393596172
+          },
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.0,
+            "mean_abs_update": 0.05831141769886017
+          },
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.0,
+            "mean_abs_update": 0.07887565344572067
+          },
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.0,
+            "mean_abs_update": 0.06260794401168823
+          }
+        ],
+        "input_observed_nodes": 15,
+        "geometry_updates": 1
+      }
+    },
+    {
+      "arm": "dynamic",
+      "discarded_optimizer_steps": 1,
+      "loss": 1.9514045715332031,
+      "geometry_gradient_abs_sum": 15.433655671775341,
+      "nsd_parameter_update_max": 0.00010144710540771484,
+      "layer_map_change": [
+        0.0,
+        0.11694269627332687,
+        0.0648522675037384,
+        0.16350197792053223
+      ],
+      "diagnostics": {
+        "stages": [
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.0,
+            "mean_abs_update": 0.009025822393596172
+          },
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.11694269627332687,
+            "mean_abs_update": 0.058555394411087036
+          },
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.0648522675037384,
+            "mean_abs_update": 0.07892074435949326
+          },
+          {
+            "negative_cos_fraction": 0.0,
+            "anchor_change": 0.0,
+            "map_refresh_difference": 0.16350197792053223,
+            "mean_abs_update": 0.06292876601219177
+          }
+        ],
+        "input_observed_nodes": 15,
+        "geometry_updates": 4
+      }
+    }
+  ],
+  "protocol_sha256": "1193d3a87ff9ca57a0cb24ba049bd1c3a0a4dfae44abe85ece588ff0d00602cd"
+}

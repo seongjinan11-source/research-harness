@@ -1,0 +1,115 @@
+project: Interleaved NSD hidden-token GraphPFN
+date: '2026-11-03'
+source: findings/sources/nsd-token-2026-11-03/REPORT_KO.md
+setting: Synthetic-only1024updates,realweightsfrozen;2Dorthogonalendpointrestrictions inPFNlayers0/3/6/9;noPCFIwarmup,mask-awaretokenanchors.
+related:
+- NeuralSheafDiffusion
+entries:
+- id: NSDT-F01
+  kind: failure
+  claim: 현재 token에서 geometry를 갱신하는 PFN이 PCFI/identity/static보다 missing 분류가 좋고 실제 heterophily의 강한 floor와 경쟁한다.
+  observation: 'dynamic-mask +1.000059%p CI[0.3503957146611959, 1.6252314285334988]; dynamic-pcfi100 +1.872436%p CI[0.9591497270029059, 2.839915974434959]; dynamic-identity
+    -0.083220%p CI[-0.563776244897672, 0.40735070413055496]; dynamic-static +0.220777%p CI[-0.2799861039889716, 0.7513131305974036]; realhetero {''mask'': -1.1361620621828605,
+    ''pcfi100'': -3.2524593752169872, ''identity'': -0.9208122226674054, ''static'': -0.619619386241721, ''native_pcfi100'': -7.415763386429836, ''negative_lp'':
+    -31.694600458921744}%p; gates={''synthetic'': False, ''real_input'': False, ''negative_lp_floor'': False, ''mask_floor'': True, ''expand'': False}'
+  verdict: 현재 SO2 token adapter는 사전 gate를 통과하지 못했으며 자동 확대나 추가 loss/head/budget 구제를 하지 않는다.
+  tags: &id001
+  - graph-geometry
+  - graph-structure-use
+  - observation-mask
+  - zero-shot-gap
+  - eval-protocol
+  keywords: &id002
+  - Neural Sheaf Diffusion
+  - hidden-token sheaf PFN
+  - dynamic restriction maps
+  - SO2 connection Laplacian
+  - observed token anchoring
+  - static dynamic geometry
+  - synthetic-only real frozen
+  source_refs: &id003
+  - findings/sources/nsd-token-2026-11-03/REPORT_KO.md
+  - findings/sources/nsd-token-2026-11-03/METHOD_KO.md
+  - findings/sources/nsd-token-2026-11-03/protocol.json
+  - findings/sources/nsd-token-2026-11-03/results/statistics.json
+  - findings/sources/nsd-token-2026-11-03/results/audit.json
+  - findings/sources/nsd-token-2026-11-03/results/control_summary.json
+  - findings/sources/nsd-token-2026-11-03/results/cost.json
+  - findings/sources/nsd-token-2026-11-03/results/preflight.json
+  evidence: 15newcheckpoints/15360validupdates,64trainbasegraphs×8cases×2passes,64freshsynthetictestgraphs;sameknownfamily;real4developmentgraphs/3context-maskrepetitions,0realupdates;graph-pairedbootstrap5000;10selectedreplays;no
+    post-test rescue.
+  revisit_status: open
+  failure_reason: 동일budget의strongarm/realfloor조건중일부가충족되지않았다. 아래수치로확인한현상이며architecture최적화·학습량·RP16·prior차이중고유한원인은분리하지않았다.
+  reason_status: unknown
+  closed_scope: 2D SO2 orthogonalmaps,현재token평균+labeltoken요약,4interleavedstages,기존GraphPFNadapter유지,RP16,1024updates,현재8caseprior와4realdevelopmentgraphs.
+  not_closed: 원본NSDtarget-graph학습재현,일반O(d)/generalrestriction,GraphPFNgraphmodule의완전교체,원본physicalfeature공간,새heterogeneousschema는미검증이다. 일부대조의이득은별도로보존한다.
+  reopen_when: 새근거가현재함수족/geometry식별/전이에서구체적으로다른정보나추론을제공하고nativePCFI·identity/static·고정negativeLP의floor를넘을이유를보일때.
+  reopen_tags:
+  - graph-geometry
+  - graph-structure-use
+  - distribution-shift
+  reopen_keywords:
+  - context-conditioned restriction learning
+  - missing sheaf transport transfer
+  comparison_floor: 동일초기화·taskorder·updates의Mask/PCFI100/identity/static/dynamic;nativePCFI→같은PFN;publicsingleforward;양/음LP;NLL/Brier/macroF1·fullfeature·source2/8·no-source·전체추론비용.
+  recheck: 새basegraph와미사용realgraph를먼저고정하고dynamic-static/identity의독립증분,관측anchor,layergeometry변화와signedcos실사용,feature/context개입및numericalreplay를함께평가한다. Secondary를primary로대체하지않는다.
+- id: NSDT-P02
+  kind: preserved
+  claim: PCFI warmup이나scalar completion 없이관측input/context에서시작하는미분가능hidden-tokenNSD를실제로학습했다.
+  observation: '15checkpoints/15360updates,real0. Denseincidenceerror4.44e-16,gaugeoperatorerror6.66e-16,mapgradientFDerror1.82e-9;negativecos표현가능. Geometrysummary={''identity'':
+    {''test'': {''negative_cos_fraction_by_stage'': [0.0, 0.0, 0.0, 0.0], ''refresh_difference_from_first_by_stage'': [0.0, 0.0, 0.0, 0.0], ''mean_abs_update_by_stage'':
+    [0.010697963440988032, 0.052960935220148206, 0.07029805294587277, 0.06564926690771244], ''max_anchor_change'': 0.0}, ''real'': {''negative_cos_fraction_by_stage'':
+    [0.0, 0.0, 0.0, 0.0], ''refresh_difference_from_first_by_stage'': [0.0, 0.0, 0.0, 0.0], ''mean_abs_update_by_stage'': [0.016955601814616885, 0.07255934600511359,
+    0.0708408071918206, 0.07803297606814238], ''max_anchor_change'': 0.0}}, ''static'': {''test'': {''negative_cos_fraction_by_stage'': [0.035401768441058974,
+    0.035401768441058974, 0.035401768441058974, 0.035401768441058974], ''refresh_difference_from_first_by_stage'': [0.0, 0.0, 0.0, 0.0], ''mean_abs_update_by_stage'':
+    [0.012468416710261308, 0.05790117828291841, 0.07007280394706565, 0.07795775930086772], ''max_anchor_change'': 0.0}, ''real'': {''negative_cos_fraction_by_stage'':
+    [0.037809574139222, 0.037809574139222, 0.037809574139222, 0.037809574139222], ''refresh_difference_from_first_by_stage'': [0.0, 0.0, 0.0, 0.0], ''mean_abs_update_by_stage'':
+    [0.017470616058239505, 0.0731049728476339, 0.06848752803893553, 0.08781429468136695], ''max_anchor_change'': 0.0}}, ''dynamic'': {''test'': {''negative_cos_fraction_by_stage'':
+    [0.04557491266920503, 0.029171333636440977, 0.05023094109239739, 0.028730843677900946], ''refresh_difference_from_first_by_stage'': [0.0, 0.15731143898058994,
+    0.231926916341763, 0.18758576030247948], ''mean_abs_update_by_stage'': [0.012686362562009081, 0.07636543444015034, 0.12386859153371511, 0.10675798059997356],
+    ''max_anchor_change'': 0.0}, ''real'': {''negative_cos_fraction_by_stage'': [0.056218107341919676, 0.012815451396009949, 0.0385544199901536, 0.026737258504403547],
+    ''refresh_difference_from_first_by_stage'': [0.0, 0.1705244907643646, 0.23548217800756296, 0.1913079507390244], ''mean_abs_update_by_stage'': [0.017930461313678987,
+    0.08075738923313718, 0.09712759219110012, 0.08795137744810846], ''max_anchor_change'': 0.0}}}. Syntheticaccuracy={''mask'': 48.6076075042397, ''pcfi100'':
+    47.735229672805175, ''identity'': 49.6908862124429, ''static'': 49.38688903052909, ''dynamic'': 49.60766601915842}.'
+  verdict: 연산·gradient·고정anchor와실제성능수치를보존한다. Geometry갱신의유용성은static대비결과와구분한다.
+  do_not_claim: OperatorPSD/gaugeidentity는전체학습encoder의gaugeequivariance나예측우위를증명하지않는다. 같은container개수를동일유효용량으로쓰지않고원NSD의분류성과를우리의zero-shot성과로이전하지않는다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 15newcheckpoints/15360validupdates,64trainbasegraphs×8cases×2passes,64freshsynthetictestgraphs;sameknownfamily;real4developmentgraphs/3context-maskrepetitions,0realupdates;graph-pairedbootstrap5000;10selectedreplays;no
+    post-test rescue.
+  revisit_status: open
+- id: NSDT-L01
+  kind: lesson
+  claim: Static 대 dynamic과identity 대 learned geometry를같은hiddenstate계산에서분리해야한다.
+  observation: 'dynamic-mask +1.000059%p CI[0.3503957146611959, 1.6252314285334988]; dynamic-pcfi100 +1.872436%p CI[0.9591497270029059, 2.839915974434959]; dynamic-identity
+    -0.083220%p CI[-0.563776244897672, 0.40735070413055496]; dynamic-static +0.220777%p CI[-0.2799861039889716, 0.7513131305974036]; realhetero {''mask'': -1.1361620621828605,
+    ''pcfi100'': -3.2524593752169872, ''identity'': -0.9208122226674054, ''static'': -0.619619386241721, ''native_pcfi100'': -7.415763386429836, ''negative_lp'':
+    -31.694600458921744}%p; gates={''synthetic'': False, ''real_input'': False, ''negative_lp_floor'': False, ''mask_floor'': True, ''expand'': False}'
+  verdict: 맵이변하거나mapgradient가있다는사실만으로갱신이좋다고판정하지않는다. Static/dynamic은파라미터를정확히맞췄고같은dynamiccheckpoint의추론시freeze진단도별도보존했다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 15newcheckpoints/15360validupdates,64trainbasegraphs×8cases×2passes,64freshsynthetictestgraphs;sameknownfamily;real4developmentgraphs/3context-maskrepetitions,0realupdates;graph-pairedbootstrap5000;10selectedreplays;no
+    post-test rescue.
+  revisit_status: open
+- id: NSDT-L02
+  kind: lesson
+  claim: 새synthetic seed·기존realdevelopment입력·고정source수secondary와원래결측primary를구분한다.
+  observation: '64freshsynthetictestgraphs/samefamily;oldreal4graphsreused;source2/8secondary;zero-sourcepartition={''zero'': {''mask'': {''accuracy'': 0.4543286182514291,
+    ''nll'': 1.2988185007618067, ''brier'': 0.6429486271271421, ''macro_f1'': 0.4278729114584917}, ''pcfi100'': {''accuracy'': 0.44423209116973517, ''nll'':
+    1.3409786266430301, ''brier'': 0.657995965814129, ''macro_f1'': 0.41753814453825283}, ''identity'': {''accuracy'': 0.4717294705828587, ''nll'': 1.285556337331326,
+    ''brier'': 0.6336259744975458, ''macro_f1'': 0.4473562333170343}, ''static'': {''accuracy'': 0.4642969102048356, ''nll'': 1.2921813885469344, ''brier'':
+    0.6386165006863453, ''macro_f1'': 0.44123858803215554}, ''dynamic'': {''accuracy'': 0.47200137316866086, ''nll'': 1.2751507734465601, ''brier'': 0.6286047676441575,
+    ''macro_f1'': 0.4509198883918684}}, ''nonzero'': {''mask'': {''accuracy'': 0.4909382981545273, ''nll'': 1.192275645605515, ''brier'': 0.5824419992851108,
+    ''macro_f1'': 0.47065562710524816}, ''pcfi100'': {''accuracy'': 0.48242476064238854, ''nll'': 1.2100167781443243, ''brier'': 0.5933870132638852, ''macro_f1'':
+    0.46371625924504406}, ''identity'': {''accuracy'': 0.5007651653334982, ''nll'': 1.1714056577638723, ''brier'': 0.5710470825739336, ''macro_f1'': 0.48226285720232825},
+    ''static'': {''accuracy'': 0.49839793230265794, ''nll'': 1.1784707400359786, ''brier'': 0.5754354195832959, ''macro_f1'': 0.4795856538584609}, ''dynamic'':
+    {''accuracy'': 0.4997638663122122, ''nll'': 1.1785009847698604, ''brier'': 0.5753771579740121, ''macro_f1'': 0.481522388946737}}};audit=PASS_WITH_REPLAY_VARIATION,maxreplay=0.012042790651321411.'
+  verdict: 이전384updatepilot과새1024update모델의절대차이를구조효과로계산하지않고이번동일예산arm끼리비교한다. Fullfeature/개입/확률점수/비용을함께남기고numericalvariation도공개한다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 15newcheckpoints/15360validupdates,64trainbasegraphs×8cases×2passes,64freshsynthetictestgraphs;sameknownfamily;real4developmentgraphs/3context-maskrepetitions,0realupdates;graph-pairedbootstrap5000;10selectedreplays;no
+    post-test rescue.
+  revisit_status: open

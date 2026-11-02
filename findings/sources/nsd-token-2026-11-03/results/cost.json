@@ -1,0 +1,219 @@
+{
+  "device": "NVIDIA GeForce RTX 3090",
+  "threads": 2,
+  "warmups": 3,
+  "repeats": 10,
+  "records": [
+    {
+      "arm": "mask",
+      "graph": "Cora",
+      "median_ms": 73.84725008159876,
+      "p10_ms": 72.92581000365317,
+      "p90_ms": 74.95984993875027,
+      "samples_ms": [
+        75.19790017977357,
+        73.30269971862435,
+        73.91020003706217,
+        73.78430012613535,
+        74.9333999119699,
+        72.94570002704859,
+        74.70700005069375,
+        74.36110032722354,
+        73.55759991332889,
+        72.7467997930944
+      ],
+      "peak_additional_gpu_mib": 149.71728515625,
+      "scope": "CPU visible RP16input toCPUprobability;pcfi includes100CPUspatial+channelcorrection;NSD includesconfidencepreparation/maps/hiddenupdates. Excludescheckpointloading/initialRP/nativeoriginalfeaturePCFI."
+    },
+    {
+      "arm": "mask",
+      "graph": "texas",
+      "median_ms": 49.29004982113838,
+      "p10_ms": 44.13874028250575,
+      "p90_ms": 54.81636035256088,
+      "samples_ms": [
+        53.343599662184715,
+        54.649300407618284,
+        44.76069984957576,
+        48.556499648839235,
+        44.84099987894297,
+        54.20870007947087,
+        50.02359999343753,
+        56.31989985704422,
+        44.08870032057166,
+        44.144300278276205
+      ],
+      "peak_additional_gpu_mib": 17.19775390625,
+      "scope": "CPU visible RP16input toCPUprobability;pcfi includes100CPUspatial+channelcorrection;NSD includesconfidencepreparation/maps/hiddenupdates. Excludescheckpointloading/initialRP/nativeoriginalfeaturePCFI."
+    },
+    {
+      "arm": "pcfi100",
+      "graph": "Cora",
+      "median_ms": 104.85345008783042,
+      "p10_ms": 101.65945002809167,
+      "p90_ms": 110.00541006214917,
+      "samples_ms": [
+        101.76360001787543,
+        103.63339958712459,
+        100.7221001200378,
+        102.99440007656813,
+        103.82489999756217,
+        105.88200017809868,
+        105.9681000187993,
+        109.91830006241798,
+        109.77539978921413,
+        110.78940005972981
+      ],
+      "peak_additional_gpu_mib": 149.8828125,
+      "scope": "CPU visible RP16input toCPUprobability;pcfi includes100CPUspatial+channelcorrection;NSD includesconfidencepreparation/maps/hiddenupdates. Excludescheckpointloading/initialRP/nativeoriginalfeaturePCFI."
+    },
+    {
+      "arm": "pcfi100",
+      "graph": "texas",
+      "median_ms": 62.141100177541375,
+      "p10_ms": 56.44401991739869,
+      "p90_ms": 66.61543985828757,
+      "samples_ms": [
+        66.27439986914396,
+        59.812100138515234,
+        56.56909989193082,
+        69.68479976058006,
+        55.318300146609545,
+        60.89629977941513,
+        62.8478997386992,
+        63.58319986611605,
+        62.34240019693971,
+        61.93980015814304
+      ],
+      "peak_additional_gpu_mib": 17.20947265625,
+      "scope": "CPU visible RP16input toCPUprobability;pcfi includes100CPUspatial+channelcorrection;NSD includesconfidencepreparation/maps/hiddenupdates. Excludescheckpointloading/initialRP/nativeoriginalfeaturePCFI."
+    },
+    {
+      "arm": "identity",
+      "graph": "Cora",
+      "median_ms": 120.89284998364747,
+      "p10_ms": 119.01990030892193,
+      "p90_ms": 123.02947998978198,
+      "samples_ms": [
+        121.44330004230142,
+        122.33899999409914,
+        123.4135995618999,
+        122.98680003732443,
+        120.28850009664893,
+        119.35860011726618,
+        116.10929993912578,
+        120.70189975202084,
+        119.3433003500104,
+        121.0838002152741
+      ],
+      "peak_additional_gpu_mib": 235.33056640625,
+      "scope": "CPU visible RP16input toCPUprobability;pcfi includes100CPUspatial+channelcorrection;NSD includesconfidencepreparation/maps/hiddenupdates. Excludescheckpointloading/initialRP/nativeoriginalfeaturePCFI."
+    },
+    {
+      "arm": "identity",
+      "graph": "texas",
+      "median_ms": 58.218399761244655,
+      "p10_ms": 52.69259992055595,
+      "p90_ms": 60.64974986948073,
+      "samples_ms": [
+        58.31879982724786,
+        56.412000209093094,
+        58.11799969524145,
+        60.58679986745119,
+        61.21629988774657,
+        55.42830005288124,
+        60.0980999879539,
+        51.964500453323126,
+        52.773499861359596,
+        59.12850005552173
+      ],
+      "peak_additional_gpu_mib": 21.02783203125,
+      "scope": "CPU visible RP16input toCPUprobability;pcfi includes100CPUspatial+channelcorrection;NSD includesconfidencepreparation/maps/hiddenupdates. Excludescheckpointloading/initialRP/nativeoriginalfeaturePCFI."
+    },
+    {
+      "arm": "static",
+      "graph": "Cora",
+      "median_ms": 118.74460009858012,
+      "p10_ms": 115.8473898191005,
+      "p90_ms": 121.35418993420899,
+      "samples_ms": [
+        115.87189976125956,
+        118.84619994089007,
+        117.10479995235801,
+        115.62680033966899,
+        116.29949975758791,
+        118.64300025627017,
+        119.49340021237731,
+        120.12010021135211,
+        121.35179992765188,
+        121.37569999322295
+      ],
+      "peak_additional_gpu_mib": 235.490234375,
+      "scope": "CPU visible RP16input toCPUprobability;pcfi includes100CPUspatial+channelcorrection;NSD includesconfidencepreparation/maps/hiddenupdates. Excludescheckpointloading/initialRP/nativeoriginalfeaturePCFI."
+    },
+    {
+      "arm": "static",
+      "graph": "texas",
+      "median_ms": 55.9758001472801,
+      "p10_ms": 53.38329002261162,
+      "p90_ms": 57.96341993845999,
+      "samples_ms": [
+        56.09410023316741,
+        56.52029998600483,
+        57.70489992573857,
+        53.190600126981735,
+        54.0990000590682,
+        57.406400330364704,
+        53.40470001101494,
+        60.290100052952766,
+        55.857500061392784,
+        53.77590004354715
+      ],
+      "peak_additional_gpu_mib": 21.03515625,
+      "scope": "CPU visible RP16input toCPUprobability;pcfi includes100CPUspatial+channelcorrection;NSD includesconfidencepreparation/maps/hiddenupdates. Excludescheckpointloading/initialRP/nativeoriginalfeaturePCFI."
+    },
+    {
+      "arm": "dynamic",
+      "graph": "Cora",
+      "median_ms": 118.14200016669929,
+      "p10_ms": 117.05108010210097,
+      "p90_ms": 119.88037000410259,
+      "samples_ms": [
+        117.95919993892312,
+        119.7750000283122,
+        120.82869978621602,
+        118.14040038734674,
+        117.06520011648536,
+        118.14359994605184,
+        118.59560012817383,
+        117.48219979926944,
+        116.92399997264147,
+        118.1487999856472
+      ],
+      "peak_additional_gpu_mib": 235.8125,
+      "scope": "CPU visible RP16input toCPUprobability;pcfi includes100CPUspatial+channelcorrection;NSD includesconfidencepreparation/maps/hiddenupdates. Excludescheckpointloading/initialRP/nativeoriginalfeaturePCFI."
+    },
+    {
+      "arm": "dynamic",
+      "graph": "texas",
+      "median_ms": 56.52544996701181,
+      "p10_ms": 53.75289008952677,
+      "p90_ms": 64.54132022336125,
+      "samples_ms": [
+        70.28260035440326,
+        59.78080024942756,
+        56.148100178688765,
+        63.90340020880103,
+        53.922700230032206,
+        54.41690003499389,
+        53.230800200253725,
+        53.81090007722378,
+        56.902799755334854,
+        60.36960007622838
+      ],
+      "peak_additional_gpu_mib": 21.052734375,
+      "scope": "CPU visible RP16input toCPUprobability;pcfi includes100CPUspatial+channelcorrection;NSD includesconfidencepreparation/maps/hiddenupdates. Excludescheckpointloading/initialRP/nativeoriginalfeaturePCFI."
+    }
+  ],
+  "limits": "Run serially after own GPU jobs;other userGPU activity uncontrolled. Current implementations,not a universal latency comparison. No timing claim versusnativePCFI."
+}
