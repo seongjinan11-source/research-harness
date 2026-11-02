@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 36개 프로젝트 · 152개 기록 (실패·중단 46개, 보존 34개, 교훈 50개, 미실행 22개)
+총 37개 프로젝트 · 156개 기록 (실패·중단 47개, 보존 35개, 교훈 51개, 미실행 23개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1415,3 +1415,39 @@ Vanilla accuracy 57.01%, covariance 57.04%. Covariance−vanilla +0.032%p, graph
 Initial 대비 accuracy는 올랐지만 matched continuation 대비 증분은 약0.03%p였다. Balanced accuracy와 macro-F1은 initial 대비 하락했다.
 
 - 원문: [findings/sources/graphpfn-2026-11-01/source_error.md](../findings/sources/graphpfn-2026-11-01/source_error.md)
+
+## TSFM joint-information preservation and nuisance stability frozen pilot
+
+실험 조건: 96newtasks;64product primary/32additivecontrol;10covariates/lag0..3;512history;16rollingorigins;6views;3frozen TSFM pipelines and3past-fit regression arms;no TSFM training.
+
+### TSY-F01 [실패·중단] Frozen Chronos-2가 product 공동정보를 clean pair에서 활용하면서,동일 주변분포 nuisance 추가로 유의한 손해를 보여 conditional-null 재학습의 첫 gate를 통과한다.
+
+raw_ridge:H0.52949060/uv0.54127224/uvN80.56693466; interaction_ridge:H0.52949060/uv0.08431244/uvN80.38916714; interaction_lasso:H0.52464362/uv0.08349705/uvN80.08552194; chronos2:H0.52529146/uv0.52376461/uvN80.52421558; old_null_lora:H0.52529146/uv0.52378149/uvN80.52425984; correlation_chronos2:H0.52529146/uv0.52376461/uvN80.52365485;Chronos G-0.00055529 CI[-0.001053983161375591, -3.125366119051245e-05],Pnull8+0.00045097 CI[-0.00044321180355506124, 0.0013416841079590582];joint=False,nuisance=False.
+
+- 판정: 이 product bank를 근거로 제안2x2를 시작하지 않는다. Clean 공동정보 활용·nuisance 손해가 함께 확인되지 않았으며 강한 전체 interaction sparse regression이 toy를 해결했다.
+- 원인·병목 [원인 미상]: Frozen checkpoint가 clean pair에서도 history 대비 안정적인 이득을 보이지 않았고 nuisance 차이CI도0을 포함했다. 비선형 prior 부족,patching,학습/표현 문제 등 고유 원인은 분리하지 않았다.
+- 닫은 범위: IID Rademacher product,noise.15,10covariates,lag0..3,512history/16origins,이전 frozen Chronos2와 historical Alibaba NI-LoRA checkpoint의 전이 및 이를 근거로 한 자동 확대.
+- 닫지 않은 것: 제안2x2 predictive+conditional-null 학습은 미실행이다. 모든 TSFM,t0,다른 synergy family,실제 시계열·새 메소드 학습을 실패로 세지 않는다. GraphPFN 결과와 별개다.
+- 재검토 조건: 독립 과제에서 clean 공동정보 활용과 nuisance 손해가 함께 확인되고,모든 후보 lagged interaction+강한 sparse regression이 품질·비용에서 충분하지 않을 때.
+- 기준선: Frozen Chronos2,실제이전 NI-LoRA,상관screening,rawRidge,전체후보interactionRidge/Lasso;past-only fit·validation·calibration,privileged oracle은별도표기;task-pairedCI와end-to-end비용.
+- 최소 재검증: 기존bank사후tuning없이새base-taskbank를고정하고G_joint/P_null/실제예측loss를함께본다. 그때만동일checkpoint·trainables·throughput의A/B/C/D학습을실행하고D-B와D-C를분리한다.
+- 원문: [findings/sources/ts-synergy-2026-11-02/REPORT_KO.md](../findings/sources/ts-synergy-2026-11-02/REPORT_KO.md); [findings/sources/ts-synergy-2026-11-02/METHOD_KO.md](../findings/sources/ts-synergy-2026-11-02/METHOD_KO.md); [findings/sources/ts-synergy-2026-11-02/protocol.json](../findings/sources/ts-synergy-2026-11-02/protocol.json); [findings/sources/ts-synergy-2026-11-02/results/statistics.json](../findings/sources/ts-synergy-2026-11-02/results/statistics.json); [findings/sources/ts-synergy-2026-11-02/results/audit.json](../findings/sources/ts-synergy-2026-11-02/results/audit.json); [findings/sources/ts-synergy-2026-11-02/results/benchmark.json](../findings/sources/ts-synergy-2026-11-02/results/benchmark.json)
+
+### TSY-P01 [보존] 모든 변수·지연 interaction 사전 위 sparse regression이 알려진 product family의 공동정보를 회수하면서 동일분포 nuisance의 손해를 작게 유지한다.
+
+InteractionLasso uv0.08349705,uvN80.08552194;privilegedoracle0.08109932;gaprecovery99.0137%;median fulltask16origins Lasso42.9039ms,Chronos119.9050ms.
+
+- 확대 금지: Task별 과거 fitting을 사용한 회귀이므로 zero-shot TSFM 학습 성과가 아니다.10변수/4lag의 희소 product에서의 결과이며 임의 상호작용·real forecasting·일반속도 우위는 아니다. Gaprecovery는기술통계다.
+- 원문: [findings/sources/ts-synergy-2026-11-02/REPORT_KO.md](../findings/sources/ts-synergy-2026-11-02/REPORT_KO.md); [findings/sources/ts-synergy-2026-11-02/METHOD_KO.md](../findings/sources/ts-synergy-2026-11-02/METHOD_KO.md); [findings/sources/ts-synergy-2026-11-02/protocol.json](../findings/sources/ts-synergy-2026-11-02/protocol.json); [findings/sources/ts-synergy-2026-11-02/results/statistics.json](../findings/sources/ts-synergy-2026-11-02/results/statistics.json); [findings/sources/ts-synergy-2026-11-02/results/audit.json](../findings/sources/ts-synergy-2026-11-02/results/audit.json); [findings/sources/ts-synergy-2026-11-02/results/benchmark.json](../findings/sources/ts-synergy-2026-11-02/results/benchmark.json)
+
+### TSY-L01 [교훈] 작은 nuisance 변화량만으로 강건성을 판정하면 공동정보를 쓰지 않는 모델을 보상할 수 있다. 전체 interaction을 받은 Ridge만으로 classical floor를 끝내지 않는다.
+
+Chronos uv0.523765/N80.524216로거의같지만공동정보이득도거의없다. InteractionRidge clean0.084312→N80.389167,동일사전Lasso N80.085522.
+
+- 원문: [findings/sources/ts-synergy-2026-11-02/REPORT_KO.md](../findings/sources/ts-synergy-2026-11-02/REPORT_KO.md); [findings/sources/ts-synergy-2026-11-02/METHOD_KO.md](../findings/sources/ts-synergy-2026-11-02/METHOD_KO.md); [findings/sources/ts-synergy-2026-11-02/protocol.json](../findings/sources/ts-synergy-2026-11-02/protocol.json); [findings/sources/ts-synergy-2026-11-02/results/statistics.json](../findings/sources/ts-synergy-2026-11-02/results/statistics.json); [findings/sources/ts-synergy-2026-11-02/results/audit.json](../findings/sources/ts-synergy-2026-11-02/results/audit.json); [findings/sources/ts-synergy-2026-11-02/results/benchmark.json](../findings/sources/ts-synergy-2026-11-02/results/benchmark.json)
+
+### TSY-U01 [미실행] 실제 미래값 예측 감독과 정보보존 변화에만 적용한 conditional-null 일관성을2x2로 학습하면 공동정보 이득과 nuisance 안정성을 함께 개선한다.
+
+이번에는A/B/C/D를하나도학습하지않았다. Frozen primary joint=False,nuisance=False,all-interaction sparse floor=True이므로사전조건에따라보류했다. 이전AlibabaNI-LoRA의전이실패를새학습법실패로바꾸지않는다.
+
+- 원문: [findings/sources/ts-synergy-2026-11-02/REPORT_KO.md](../findings/sources/ts-synergy-2026-11-02/REPORT_KO.md); [findings/sources/ts-synergy-2026-11-02/METHOD_KO.md](../findings/sources/ts-synergy-2026-11-02/METHOD_KO.md); [findings/sources/ts-synergy-2026-11-02/protocol.json](../findings/sources/ts-synergy-2026-11-02/protocol.json); [findings/sources/ts-synergy-2026-11-02/results/statistics.json](../findings/sources/ts-synergy-2026-11-02/results/statistics.json); [findings/sources/ts-synergy-2026-11-02/results/audit.json](../findings/sources/ts-synergy-2026-11-02/results/audit.json); [findings/sources/ts-synergy-2026-11-02/results/benchmark.json](../findings/sources/ts-synergy-2026-11-02/results/benchmark.json)

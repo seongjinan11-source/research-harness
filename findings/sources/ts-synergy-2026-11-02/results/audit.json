@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "metric_recompute_max_abs": {
+    "raw_ridge": 0.0,
+    "interaction_ridge": 0.0,
+    "interaction_lasso": 0.0,
+    "chronos2": 0.0,
+    "old_null_lora": 0.0,
+    "correlation_chronos2": 0.0
+  },
+  "replay_max_abs": {
+    "chronos2": 1.0728836059570312e-06,
+    "correlation_chronos2": 1.0728836059570312e-06,
+    "old_null_lora": 1.0728836059570312e-06
+  },
+  "replayed_forecasts_per_model": 36,
+  "future_mutation_construction_check": "PASS for96tasks, screening/raw/interaction/context",
+  "marginal_moments": {
+    "product": {
+      "useful_mean": 0.004150390625,
+      "nuisance_mean": -0.00360107421875,
+      "useful_second_moment": 1.0,
+      "nuisance_second_moment": 1.0
+    },
+    "additive_control": {
+      "useful_mean": 0.0008544921875,
+      "nuisance_mean": -0.00244140625,
+      "useful_second_moment": 1.0,
+      "nuisance_second_moment": 1.0
+    }
+  },
+  "input_audit": {
+    "direct_vs_pipeline_max_abs": 0.0,
+    "covariate_permutation_max_abs": 2.384185791015625e-07,
+    "separate_task_group_isolation_max_abs": 2.384185791015625e-07,
+    "causal_signal_alignment": true,
+    "all_pair_true_term_included_without_selection": true,
+    "classical_training_max_target_time": 511,
+    "first_evaluation_target_time": 512
+  },
+  "asset_hashes": {
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\hf_models\\chronos-2\\model.safetensors": "ddcda3c7508bf2528087723e98a20707cc04b7f370ae275a9fd88078ddba4f42",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\hf_models\\chronos-2\\config.json": "ef1143bfdc9c0376d9a056eefca46cb4b1ec3d0ffacd541ff56feb40fb708031",
+    "C:\\Users\\seongjin\\Desktop\\code\\SD-SDGL\\alibaba_ms2021\\ni_lora_state.pt": "7f2ca52a4000ec3c17713fb65a81882183295181a56d13a12234b2fbbb857cdf",
+    "C:\\Users\\seongjin\\Desktop\\code\\SD-SDGL\\alibaba_ms2021\\ni_lora.py": "7640762090477364f2f31f49b31d9fd0012bb6abfba74aff292ead1a153804c7",
+    "C:\\Users\\seongjin\\Desktop\\code\\SD-SDGL\\alibaba_ms2021\\ni_lora_extra.csv": "0789f85f0927eb6682b51e18d6f6978a4b94366c5b418ff06670ddc6d2d913cc",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\ts_synergy_pilot\\protocol.json": "d6ce6847876b2f497dde20556268f411aa39ebdbe192bad446085f3ab4e6df79",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\ts_synergy_pilot\\bank.npz": "bfeadad67300c6197a0aa262af4a9ca0d201cff6a3730e1e19a0ef05c7088c6c"
+  },
+  "no_tsfm_updates": true,
+  "total_tsfm_forecasts": 27648,
+  "classical_fits": 1728,
+  "limitations": "Frozen-stage only; origin-dependent history legitimately includes earlier observed test outcomes; classical coefficients fixed at first origin; LoRA is one historical Alibaba checkpoint, not3 newly trained seeds."
+}

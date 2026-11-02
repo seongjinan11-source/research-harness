@@ -1,0 +1,24 @@
+id: ts-synergy-nuisance
+date: '2026-11-02'
+status: frozen-pilot-completed-training-gated
+text: 'Frozen 비교 완료: product에서 Chronos의 clean 공동정보·nuisance 손해 동시 gate 미통과. 전체 후보 interaction Lasso가 99.01% gap 회수. 제안 2x2 학습은 미실행.'
+tags:
+- channel-dependency
+- covariates
+- robustness
+- eval-protocol
+- inference-cost
+keywords:
+- joint information synergy
+- XOR product time series
+- nuisance invariance
+- Chronos2
+- all-pair interaction Lasso
+- conditional null consistency
+note: findings/sources/ts-synergy-2026-11-02/METHOD_KO.md
+followup: findings/sources/ts-synergy-2026-11-02/REPORT_KO.md
+pilot_gates:
+  joint: false
+  nuisance: false
+  interaction_floor_solves_toy: true
+  run_2x2: false

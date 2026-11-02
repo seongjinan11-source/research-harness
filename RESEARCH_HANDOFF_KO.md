@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: 누적56편의 문헌과 diffusion/ESS 실제 비교까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-02. 최근 업데이트: 누적56편의 문헌과 별도 TSFM 공동정보 frozen 비교까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -23,7 +23,20 @@
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 56편, 연구 기록 152항목, 아이디어 10개가 있다. 36개 프로젝트 묶음이며 실패·중단46, 보존34, 교훈50, 미실행22항목이다. 152번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 56편, 연구 기록 156항목, 아이디어 11개가 있다. 37개 프로젝트 묶음이며 실패·중단47, 보존35, 교훈51, 미실행23항목이다. 156번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+
+## TSFM 공동 정보·방해 변수 frozen 비교
+
+GraphPFN과 별개의 다음 후보를 실제 실행했다. 새96base task(product64 primary/additive32 control),history512·16개1-step origin,유용2+nuisance8,lag0..3,같은Rademacher주변분포다. Chronos2·이전실제 NI-LoRA·상관screening과모든후보interaction Ridge/Lasso를비교했다. 신규TSFM학습은0이다.
+
+| Product primary | H+uv loss | H+uv+N8 loss |
+|---|---:|---:|
+| Frozen Chronos2 | 0.52376 | 0.52422 |
+| 이전 null LoRA | 0.52378 | 0.52426 |
+| 전체 interaction Ridge | 0.08431 | 0.38917 |
+| 전체 interaction Lasso | 0.08350 | 0.08552 |
+
+숫자는21quantile평균twice-pinball loss다. Chronos의clean공동정보이득과nuisance손해가함께확인되지않았다. Lasso는참쌍표시없이764개전체후보특징을과거에서fit해history→privilegedoracle gap의99.01%를회수했다. **사전조건에따라2×2학습은보류했으며학습법실패로세지않는다.** Task별fit classical과zero-shotTSFM의차이를명시하고,다른family·실데이터·다른TSFM으로확대하지않는다. [전체보고서](findings/sources/ts-synergy-2026-11-02/REPORT_KO.md),[계산정의](findings/sources/ts-synergy-2026-11-02/METHOD_KO.md),[구조화기록](findings/ts-synergy.yaml).
 
 ## Diffusion proposal와 Rényi-2/ESS 실제 비교
 

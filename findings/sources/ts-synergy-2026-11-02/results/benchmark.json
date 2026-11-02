@@ -1,0 +1,21 @@
+{
+  "times": {
+    "interaction_lasso": {
+      "median_ms_per_task_16_origins": 42.903900146484375,
+      "p10_ms": 37.4913199339062,
+      "p90_ms": 47.2155699506402,
+      "measurements": 40
+    },
+    "chronos2": {
+      "median_ms_per_task_16_origins": 119.90499985404313,
+      "p10_ms": 118.31588987261057,
+      "p90_ms": 121.11451989039779,
+      "measurements": 40
+    }
+  },
+  "replay_max_abs": {
+    "interaction_lasso": 5.960464477539063e-08,
+    "chronos2": 8.344650268554688e-07
+  },
+  "scope": "8producttasks/5repeats/3warmup, full10covariates, CPU inputs -> CPU21quantile forecasts for16origins; classical includes all-candidate features, alpha validation, refit, residual calibration; neural excludes shared checkpoint loading; isolated implementations on shared RTX3090,4CPUthreads; not real-data deployment benchmark."
+}

@@ -874,3 +874,19 @@
   - 기록된 강점: 그래프와 feature를 covariance에서 결합하며 empirical kernel mean embedding으로 해석한다.
 - [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=covariance
   - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
+
+## TSY-F01 — Frozen Chronos-2가 product 공동정보를 clean pair에서 활용하면서,동일 주변분포 nuisance 추가로 유의한 손해를 보여 conditional-null 재학습의 첫 gate를 통과한다.
+
+- 판정: 이 product bank를 근거로 제안2x2를 시작하지 않는다. Clean 공동정보 활용·nuisance 손해가 함께 확인되지 않았으며 강한 전체 interaction sparse regression이 toy를 해결했다.
+- 원인·병목 [원인 미상]: Frozen checkpoint가 clean pair에서도 history 대비 안정적인 이득을 보이지 않았고 nuisance 차이CI도0을 포함했다. 비선형 prior 부족,patching,학습/표현 문제 등 고유 원인은 분리하지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 독립 과제에서 clean 공동정보 활용과 nuisance 손해가 함께 확인되고,모든 후보 lagged interaction+강한 sparse regression이 품질·비용에서 충분하지 않을 때.
+- 먼저 이겨야 할 기준선: Frozen Chronos2,실제이전 NI-LoRA,상관screening,rawRidge,전체후보interactionRidge/Lasso;past-only fit·validation·calibration,privileged oracle은별도표기;task-pairedCI와end-to-end비용.
+- 최소 재검증: 기존bank사후tuning없이새base-taskbank를고정하고G_joint/P_null/실제예측loss를함께본다. 그때만동일checkpoint·trainables·throughput의A/B/C/D학습을실행하고D-B와D-C를분리한다.
+- 닫지 않은 것: 제안2x2 predictive+conditional-null 학습은 미실행이다. 모든 TSFM,t0,다른 synergy family,실제 시계열·새 메소드 학습을 실패로 세지 않는다. GraphPFN 결과와 별개다.
+- 원문: [findings/sources/ts-synergy-2026-11-02/REPORT_KO.md](../findings/sources/ts-synergy-2026-11-02/REPORT_KO.md); [findings/sources/ts-synergy-2026-11-02/METHOD_KO.md](../findings/sources/ts-synergy-2026-11-02/METHOD_KO.md); [findings/sources/ts-synergy-2026-11-02/protocol.json](../findings/sources/ts-synergy-2026-11-02/protocol.json); [findings/sources/ts-synergy-2026-11-02/results/statistics.json](../findings/sources/ts-synergy-2026-11-02/results/statistics.json); [findings/sources/ts-synergy-2026-11-02/results/audit.json](../findings/sources/ts-synergy-2026-11-02/results/audit.json); [findings/sources/ts-synergy-2026-11-02/results/benchmark.json](../findings/sources/ts-synergy-2026-11-02/results/benchmark.json)
+
+- [Chronos-2](https://arxiv.org/abs/2510.15821): 복수 태그 일치 (약한 단서); tags=channel-dependency, covariates; keywords=-
+  - 기록된 강점: 하나의 모델이 단변량, 다변량, past-only·known·categorical covariate 예측을 모두 zero-shot으로 처리한다. 저자들의 기능 비교표에서 이 다섯 가지와 cross learning을 모두 지원하는 사전학습 모델은 Chronos-2뿐이다.
+- [Moirai](https://arxiv.org/abs/2402.02592): 복수 태그 일치 (약한 단서); tags=channel-dependency, covariates; keywords=-
+  - 기록된 강점: 다변량 시계열을 한 sequence로 펴고 변수 축은 binary attention bias로만 구분해서, 변수 개수가 몇 개든 하나의 모델로 받는다. 변수 순서나 번호를 바꿔도 출력이 그에 맞춰 바뀔 뿐 달라지지 않고, horizon 값이 알려진 dynamic covariate도 같은 sequence에 넣을 수 있다. 이 attention을 learned variate embedding으로 바꾸면 Monash 정규화 MAE가 0.655에서 0.904로 나빠졌다.

@@ -30,6 +30,7 @@ python src/harness.py check \
 SSGP·GGP 선행연구와 직접 Gaussian/probit의 추가 비교·메소드 판정도 기록했다.
 관측의 기대 분류 가치로 학습 prior를 구성하는 [재독 후보](ideas/decision-value-observation-prior.md)는 실행 전 메모로 보존하고, [J/V 두 prior의 실제 학습 결과](findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md)를 별도로 기록했다.
 Diffusion proposal·SMC 보정·Rényi-2/ESS의 [실제 비교](findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md)도 기록했다. 원 논문 재현과 현재 operator pilot의 실패 범위를 구분한다.
+별도 시계열 후보의 [공동정보·nuisance frozen 비교](findings/sources/ts-synergy-2026-11-02/REPORT_KO.md)를 기록했다.2×2학습은 사전조건 미충족으로 미실행이며,GraphPFN 갈래의 실패로 합치지 않는다.
 다른 연구자나 모델에게 검토를 요청할 때는 [GraphPFN 연구 인계서](RESEARCH_HANDOFF_KO.md)도 함께 전달한다.
 현재 목표, 누적 실패의 정확한 범위, 최근 pilot, 강한 대조군, 미실행 후보와 복사할 요청문을 묶었다.
 수치의 상세 원문은 인계서에서 연결한 `findings/sources/` 보고서와 구조화 기록을 확인한다.

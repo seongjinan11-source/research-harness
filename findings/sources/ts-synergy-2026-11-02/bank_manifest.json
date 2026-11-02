@@ -1,0 +1,27 @@
+{
+  "bank_sha256": "bfeadad67300c6197a0aa262af4a9ca0d201cff6a3730e1e19a0ef05c7088c6c",
+  "protocol_sha256": "d6ce6847876b2f497dde20556268f411aa39ebdbe192bad446085f3ab4e6df79",
+  "n_tasks": 96,
+  "n_product": 64,
+  "origins": [
+    511,
+    515,
+    519,
+    523,
+    527,
+    531,
+    535,
+    539,
+    543,
+    547,
+    551,
+    555,
+    559,
+    563,
+    567,
+    571
+  ],
+  "causal_definition": "y[t+1] uses x[:,t-lag] only; forecast context ends at t, no future covariates supplied",
+  "marginal_matching": "Every useful/nuisance channel iid balanced Rademacher; exact population marginals match, empirical counts fluctuate",
+  "split_unit": "Entire independently generated base task; all views/origins remain paired"
+}

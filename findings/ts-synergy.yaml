@@ -1,0 +1,90 @@
+project: TSFM joint-information preservation and nuisance stability frozen pilot
+date: '2026-11-02'
+source: findings/sources/ts-synergy-2026-11-02/REPORT_KO.md
+setting: 96newtasks;64product primary/32additivecontrol;10covariates/lag0..3;512history;16rollingorigins;6views;3frozen TSFM pipelines and3past-fit regression arms;no
+  TSFM training.
+related:
+- Chronos-2
+entries:
+- id: TSY-F01
+  kind: failure
+  claim: Frozen Chronos-2가 product 공동정보를 clean pair에서 활용하면서,동일 주변분포 nuisance 추가로 유의한 손해를 보여 conditional-null 재학습의 첫 gate를 통과한다.
+  observation: raw_ridge:H0.52949060/uv0.54127224/uvN80.56693466; interaction_ridge:H0.52949060/uv0.08431244/uvN80.38916714; interaction_lasso:H0.52464362/uv0.08349705/uvN80.08552194;
+    chronos2:H0.52529146/uv0.52376461/uvN80.52421558; old_null_lora:H0.52529146/uv0.52378149/uvN80.52425984; correlation_chronos2:H0.52529146/uv0.52376461/uvN80.52365485;Chronos
+    G-0.00055529 CI[-0.001053983161375591, -3.125366119051245e-05],Pnull8+0.00045097 CI[-0.00044321180355506124, 0.0013416841079590582];joint=False,nuisance=False.
+  verdict: 이 product bank를 근거로 제안2x2를 시작하지 않는다. Clean 공동정보 활용·nuisance 손해가 함께 확인되지 않았으며 강한 전체 interaction sparse regression이 toy를 해결했다.
+  failure_reason: Frozen checkpoint가 clean pair에서도 history 대비 안정적인 이득을 보이지 않았고 nuisance 차이CI도0을 포함했다. 비선형 prior 부족,patching,학습/표현 문제 등 고유 원인은 분리하지 않았다.
+  reason_status: unknown
+  closed_scope: IID Rademacher product,noise.15,10covariates,lag0..3,512history/16origins,이전 frozen Chronos2와 historical Alibaba NI-LoRA checkpoint의 전이 및 이를 근거로 한
+    자동 확대.
+  not_closed: 제안2x2 predictive+conditional-null 학습은 미실행이다. 모든 TSFM,t0,다른 synergy family,실제 시계열·새 메소드 학습을 실패로 세지 않는다. GraphPFN 결과와 별개다.
+  reopen_when: 독립 과제에서 clean 공동정보 활용과 nuisance 손해가 함께 확인되고,모든 후보 lagged interaction+강한 sparse regression이 품질·비용에서 충분하지 않을 때.
+  comparison_floor: Frozen Chronos2,실제이전 NI-LoRA,상관screening,rawRidge,전체후보interactionRidge/Lasso;past-only fit·validation·calibration,privileged oracle은별도표기;task-pairedCI와end-to-end비용.
+  recheck: 기존bank사후tuning없이새base-taskbank를고정하고G_joint/P_null/실제예측loss를함께본다. 그때만동일checkpoint·trainables·throughput의A/B/C/D학습을실행하고D-B와D-C를분리한다.
+  reopen_tags:
+  - channel-dependency
+  - covariates
+  - robustness
+  reopen_keywords:
+  - conditional synergy nuisance invariance
+  - nonlinear joint covariates
+  - input information preservation
+  tags: &id001
+  - channel-dependency
+  - covariates
+  - robustness
+  - eval-protocol
+  - inference-cost
+  keywords: &id002
+  - joint information synergy
+  - XOR product time series
+  - nuisance invariance
+  - Chronos2
+  - all-pair interaction Lasso
+  - conditional null consistency
+  source_refs: &id003
+  - findings/sources/ts-synergy-2026-11-02/REPORT_KO.md
+  - findings/sources/ts-synergy-2026-11-02/METHOD_KO.md
+  - findings/sources/ts-synergy-2026-11-02/protocol.json
+  - findings/sources/ts-synergy-2026-11-02/results/statistics.json
+  - findings/sources/ts-synergy-2026-11-02/results/audit.json
+  - findings/sources/ts-synergy-2026-11-02/results/benchmark.json
+  evidence: 96new independently generated tasks(64product/32additive),16rolling1-step origins;27648frozen TSFM group forecasts;1728final classical fits plus prefix-only
+    alpha selection;0new TSFM updates;task-paired bootstrap10000;all cached losses recomputed;36forecasts/model replay;future-mutation audit PASS.
+  revisit_status: open
+- id: TSY-P01
+  kind: preserved
+  claim: 모든 변수·지연 interaction 사전 위 sparse regression이 알려진 product family의 공동정보를 회수하면서 동일분포 nuisance의 손해를 작게 유지한다.
+  observation: InteractionLasso uv0.08349705,uvN80.08552194;privilegedoracle0.08109932;gaprecovery99.0137%;median fulltask16origins Lasso42.9039ms,Chronos119.9050ms.
+  verdict: 다음 synergy 후보에서 실제로 이겨야 하는 강한 sparse-interaction 기준선으로 보존한다. 유용한 쌍을 알려준 oracle을 실용 기준선으로 사용하지 않았다.
+  do_not_claim: Task별 과거 fitting을 사용한 회귀이므로 zero-shot TSFM 학습 성과가 아니다.10변수/4lag의 희소 product에서의 결과이며 임의 상호작용·real forecasting·일반속도 우위는 아니다. Gaprecovery는기술통계다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 96new independently generated tasks(64product/32additive),16rolling1-step origins;27648frozen TSFM group forecasts;1728final classical fits plus prefix-only
+    alpha selection;0new TSFM updates;task-paired bootstrap10000;all cached losses recomputed;36forecasts/model replay;future-mutation audit PASS.
+  revisit_status: open
+- id: TSY-L01
+  kind: lesson
+  claim: 작은 nuisance 변화량만으로 강건성을 판정하면 공동정보를 쓰지 않는 모델을 보상할 수 있다. 전체 interaction을 받은 Ridge만으로 classical floor를 끝내지 않는다.
+  observation: Chronos uv0.523765/N80.524216로거의같지만공동정보이득도거의없다. InteractionRidge clean0.084312→N80.389167,동일사전Lasso N80.085522.
+  verdict: G_joint·P_null·실제loss를함께보고,고차원 sparse family에서는 전체후보사전의희소추정 대조를유지한다. Chronos확장원고는이미비선형MLP/RNNprior를포함하므로기존prior가선형뿐이라는동기는쓰지않는다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 96new independently generated tasks(64product/32additive),16rolling1-step origins;27648frozen TSFM group forecasts;1728final classical fits plus prefix-only
+    alpha selection;0new TSFM updates;task-paired bootstrap10000;all cached losses recomputed;36forecasts/model replay;future-mutation audit PASS.
+  revisit_status: open
+- id: TSY-U01
+  kind: untested
+  claim: 실제 미래값 예측 감독과 정보보존 변화에만 적용한 conditional-null 일관성을2x2로 학습하면 공동정보 이득과 nuisance 안정성을 함께 개선한다.
+  observation: 이번에는A/B/C/D를하나도학습하지않았다. Frozen primary joint=False,nuisance=False,all-interaction sparse floor=True이므로사전조건에따라보류했다. 이전AlibabaNI-LoRA의전이실패를새학습법실패로바꾸지않는다.
+  verdict: 구체적인새독립과제와강한기준선경쟁력이확인될때만실행한다. 기존compiler/GraphPFN선택기/BP/EAJ구제와별개다.
+  reopen_when: 공동신호만있을때사용가능하고추가무정보채널때문에손해가나며전체lagged-pair/희소회귀가해결하지못하는새과제확인.
+  comparison_floor: 동일초기checkpoint·trainables·총처리량Anormal/Bnull/Cjoint/Dboth,actualfuturelabel감독;D-B,D-C,0-shot기존모델·past-fitclassical비용을분리.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 96new independently generated tasks(64product/32additive),16rolling1-step origins;27648frozen TSFM group forecasts;1728final classical fits plus prefix-only
+    alpha selection;0new TSFM updates;task-paired bootstrap10000;all cached losses recomputed;36forecasts/model replay;future-mutation audit PASS.
+  revisit_status: open

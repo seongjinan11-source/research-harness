@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은36개 프로젝트 묶음의152항목이다. 실패·중단46개, 보존34개, 교훈50개, 미실행22개이며 **152번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은37개 프로젝트 묶음의156항목이다. 실패·중단47개, 보존35개, 교훈51개, 미실행23개이며 **156번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,19 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## TSFM 공동 정보·방해 변수 frozen 비교
+
+GraphPFN과 별개의 다음 후보를 실제 실행했다. 새96base task(product64 primary/additive32 control),history512·16개1-step origin,유용2+nuisance8,lag0..3,같은Rademacher주변분포다. Chronos2·이전실제 NI-LoRA·상관screening과모든후보interaction Ridge/Lasso를비교했다. 신규TSFM학습은0이다.
+
+| Product primary | H+uv loss | H+uv+N8 loss |
+|---|---:|---:|
+| Frozen Chronos2 | 0.52376 | 0.52422 |
+| 이전 null LoRA | 0.52378 | 0.52426 |
+| 전체 interaction Ridge | 0.08431 | 0.38917 |
+| 전체 interaction Lasso | 0.08350 | 0.08552 |
+
+숫자는21quantile평균twice-pinball loss다. Chronos의clean공동정보이득과nuisance손해가함께확인되지않았다. Lasso는참쌍표시없이764개전체후보특징을과거에서fit해history→privilegedoracle gap의99.01%를회수했다. **사전조건에따라2×2학습은보류했으며학습법실패로세지않는다.** Task별fit classical과zero-shotTSFM의차이를명시하고,다른family·실데이터·다른TSFM으로확대하지않는다. [전체보고서](findings/sources/ts-synergy-2026-11-02/REPORT_KO.md),[계산정의](findings/sources/ts-synergy-2026-11-02/METHOD_KO.md),[구조화기록](findings/ts-synergy.yaml).
 
 ## Diffusion proposal와 Rényi-2/ESS 실제 비교
 
