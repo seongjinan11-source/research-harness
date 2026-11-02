@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-02",
+  "kind": "Documentation precision; no source/bank/protocol/checkpoint mutation",
+  "locked_protocol_phrase": "the actual task realization is sampled independently after selection",
+  "implemented_order": "prepare() draws each graph's actual X/Y once using graphseed+80000000 before its design loop; designs(), scores() and choose() never receive actual X/Y/h. Score draws use graphseed+21000000+settingoffset. Selection and actual realization are independent, with exactly the intended joint law.",
+  "consequence": "Temporal order wording was inaccurate; mask is not selected using realized hidden features, query labels or actual latent state. No change to mask probabilities, supervision, evaluation or interpretation of teacher consistency.",
+  "execution": "The initial hidden Start-Process PowerShell launcher ended without a completed bank or training. prepare/reference and3 independent seed jobs were then executed in tool-managed sessions. The old runtime/run.ps1 is retained as an attempted launcher, not the actual complete orchestration log. Training seed jobs overlap on the same RTX3090; timing is shared-load wall time, not isolated latency."
+}

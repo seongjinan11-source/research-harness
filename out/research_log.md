@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 34개 프로젝트 · 144개 기록 (실패·중단 42개, 보존 32개, 교훈 48개, 미실행 22개)
+총 35개 프로젝트 · 148개 기록 (실패·중단 44개, 보존 33개, 교훈 49개, 미실행 22개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -108,6 +108,49 @@ FISF ratio ACM82.35%, IMDB34.45%; LP85.55/35.41%, Full PFN74.36/44.55%. Controll
 - 기준선: LP/PFN alone, 50:50, controlled neutral
 - 최소 재검증: 먼저 feature intervention으로 순효용을 확인하고, 동일 구조·주입 아래 ratio가 정답 방향 보정인지 새 graph에서 평가한다.
 - 원문: [findings/sources/graphpfn-2026-11-01/ratio.md](../findings/sources/graphpfn-2026-11-01/ratio.md); [findings/sources/graphpfn-2026-11-01/feature_intervention.md](../findings/sources/graphpfn-2026-11-01/feature_intervention.md)
+
+## Expected observation value training priors on public GraphPFN
+
+실험 조건: Consistent64-state finite latent mixture;96nodes/2features;64train/64test graphs;source-context-query disjoint;primary4sources/context8TOTAL;30new checkpoints/6912updates;3fixed seeds;not old192node Gaussian family.
+
+### DVP-F01 [실패·중단] J: entropy 감소로 학습 mask prior를 구성하면 같은 Mask PFN이 random·geometry·2배 random 학습보다 새 random-mask query를 정확히 분류한다.
+
+entropy_mask accuracy55.794271%/NLL0.690654/Brier0.495232; entropy_pcfi accuracy57.313368%/NLL0.680086; vsrandom_mask: accuracy%p +0.499132 [95CI -0.347222,+1.345486]; vsgeometry_mask: accuracy%p +0.412326 [95CI -0.564236,+1.388889]; vsrandom_cost_mask: accuracy%p -0.911458 [95CI -2.083876,+0.239258]; Predeclared Mask primary=False.
+
+- 판정: 사전 Mask accuracy conjunction을 통과하지 못했다. 이번 mask mixture를 메인 메소드로 확대하지 않는다.
+- 원인·병목 [원인 미상]: Mask primary의 세 강한 대조를 모두 넘어야 하는 기준이 충족되지 않았다. J/V의 mask 차이·기대 가치 증가가 작다는 관찰은 있지만, score 추정·학생 fitting·budget·task family의 고유 원인은 분리하지 않았다.
+- 닫은 범위: 64-state finite mixture,96nodes/2features,context2/8total,sources1/4/8,12candidate masks,256draw scores,50%random+50%top3 mixture,unchanged public GraphPFN192updates/seed의 설계와 이를 근거로 한 자동 확대.
+- 닫지 않은 것: 모든 observation-value prior,더 큰 학습,다른 생성 family,새 architecture,실제 missing/heterogeneous graph를 기각하지 않는다. 기존 Gaussian working-model 결과와 이번 consistent finite-family reference는 별개다.
+- 재검토 조건: 관측 설계의 가치가 학생의 transferable decision 연산으로 전달되지 않는 구체적 병목을 새 원리나 독립 증거로 특정하며, 단순 mixture/candidate/update 튜닝을 넘어서는 설계를 제시할 때.
+- 기준선: 같은 family/정보/CE/초기화의random,geometry,extra-random-training;동일 prior에서 실제 학습한 PCFI-PFN;known-family reference;동일-query feature removal/shuffle;전체 cold bank/scoring 비용.
+- 최소 재검증: 기존 final bank를 튜닝하지 않는다. 실제 realization 독립 설계와 teacher consistency를 유지하고 새 family/graph bank에서 accuracy primary·전체 seed·비용을 사전 고정한다.
+- 원문: [findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md](../findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md); [findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md](../findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md); [findings/sources/decision-value-prior-2026-11-02/protocol.json](../findings/sources/decision-value-prior-2026-11-02/protocol.json); [findings/sources/decision-value-prior-2026-11-02/results/statistics.json](../findings/sources/decision-value-prior-2026-11-02/results/statistics.json); [findings/sources/decision-value-prior-2026-11-02/results/audit.json](../findings/sources/decision-value-prior-2026-11-02/results/audit.json); [findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json](../findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json); [findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json](../findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json)
+
+### DVP-F02 [실패·중단] V: Bayes 분류 오류 감소로 학습 mask prior를 구성하면 같은 Mask PFN이 random·geometry·2배 random 학습보다 새 random-mask query를 정확히 분류한다.
+
+decision_mask accuracy55.664062%/NLL0.690199/Brier0.495521; decision_pcfi accuracy56.944444%/NLL0.680549; vsrandom_mask: accuracy%p +0.368924 [95CI -0.781250,+1.605903]; vsgeometry_mask: accuracy%p +0.282118 [95CI -0.889757,+1.540799]; vsrandom_cost_mask: accuracy%p -1.041667 [95CI -2.343750,+0.260417]; Predeclared Mask primary=False.
+
+- 판정: 사전 Mask accuracy conjunction을 통과하지 못했다. 이번 mask mixture를 메인 메소드로 확대하지 않는다.
+- 원인·병목 [원인 미상]: Mask primary의 세 강한 대조를 모두 넘어야 하는 기준이 충족되지 않았다. J/V의 mask 차이·기대 가치 증가가 작다는 관찰은 있지만, score 추정·학생 fitting·budget·task family의 고유 원인은 분리하지 않았다.
+- 닫은 범위: 64-state finite mixture,96nodes/2features,context2/8total,sources1/4/8,12candidate masks,256draw scores,50%random+50%top3 mixture,unchanged public GraphPFN192updates/seed의 설계와 이를 근거로 한 자동 확대.
+- 닫지 않은 것: 모든 observation-value prior,더 큰 학습,다른 생성 family,새 architecture,실제 missing/heterogeneous graph를 기각하지 않는다. 기존 Gaussian working-model 결과와 이번 consistent finite-family reference는 별개다.
+- 재검토 조건: 관측 설계의 가치가 학생의 transferable decision 연산으로 전달되지 않는 구체적 병목을 새 원리나 독립 증거로 특정하며, 단순 mixture/candidate/update 튜닝을 넘어서는 설계를 제시할 때.
+- 기준선: 같은 family/정보/CE/초기화의random,geometry,extra-random-training;동일 prior에서 실제 학습한 PCFI-PFN;known-family reference;동일-query feature removal/shuffle;전체 cold bank/scoring 비용.
+- 최소 재검증: 기존 final bank를 튜닝하지 않는다. 실제 realization 독립 설계와 teacher consistency를 유지하고 새 family/graph bank에서 accuracy primary·전체 seed·비용을 사전 고정한다.
+- 원문: [findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md](../findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md); [findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md](../findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md); [findings/sources/decision-value-prior-2026-11-02/protocol.json](../findings/sources/decision-value-prior-2026-11-02/protocol.json); [findings/sources/decision-value-prior-2026-11-02/results/statistics.json](../findings/sources/decision-value-prior-2026-11-02/results/statistics.json); [findings/sources/decision-value-prior-2026-11-02/results/audit.json](../findings/sources/decision-value-prior-2026-11-02/results/audit.json); [findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json](../findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json); [findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json](../findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json)
+
+### DVP-P03 [보존] Teacher와 일치하는 finite family에서 분리된 피처·라벨이 query 예측에 쓸모 있는 과제를 실제로 구성하고 exact enumeration reference로 검사했다.
+
+Exact-family accuracy74.348958%,no-feature70.312500%;same-query gain%p +4.036458 [95CI +1.888021,+6.380208]. Posterior64-state enumeration exact;J/V expectations Monte Carlo256,independent audit4096draws.
+
+- 확대 금지: 학습된 PFN이나 J/V prior의 성공,unknown-family/GP exact inference,과거 bank의 무정보 원인 확정,실제 heterograph/generalization의 성과가 아니다.
+- 원문: [findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md](../findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md); [findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md](../findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md); [findings/sources/decision-value-prior-2026-11-02/protocol.json](../findings/sources/decision-value-prior-2026-11-02/protocol.json); [findings/sources/decision-value-prior-2026-11-02/results/statistics.json](../findings/sources/decision-value-prior-2026-11-02/results/statistics.json); [findings/sources/decision-value-prior-2026-11-02/results/audit.json](../findings/sources/decision-value-prior-2026-11-02/results/audit.json); [findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json](../findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json); [findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json](../findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json)
+
+### DVP-L01 [교훈] J와 V는 다른 목표지만 이번 family의 관측 설계를 충분히 분리하지 못했다. 선택 점수 증가와 학생의 새 mask 분류 개선을 구분해야 한다.
+
+J/V selected-mask equality73.44~87.50% across6cells;50%shared uniform component;independent4096draw audit on first16train graphs stored. All30 models share4012259 trainable parameters;ordinary192updates,random_cost384;actual6912updates.
+
+- 원문: [findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md](../findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md); [findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md](../findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md); [findings/sources/decision-value-prior-2026-11-02/protocol.json](../findings/sources/decision-value-prior-2026-11-02/protocol.json); [findings/sources/decision-value-prior-2026-11-02/results/statistics.json](../findings/sources/decision-value-prior-2026-11-02/results/statistics.json); [findings/sources/decision-value-prior-2026-11-02/results/audit.json](../findings/sources/decision-value-prior-2026-11-02/results/audit.json); [findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json](../findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json); [findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json](../findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json)
 
 ## 직접 주변화하는 graph-conditioned tree circuit
 

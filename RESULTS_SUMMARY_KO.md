@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은34개 프로젝트 묶음의144항목이다. 실패·중단42개, 보존32개, 교훈48개, 미실행22개이며 **144번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은35개 프로젝트 묶음의148항목이다. 실패·중단44개, 보존33개, 교훈49개, 미실행22개이며 **148번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -14,9 +14,25 @@
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
 
-## 재독 후 미실행 학습 후보
+## J / V 관측 prior 실제 학습 결과
 
-56편의 정리 항목을 선별하고 SSGP/GGP·CSBM·Spatial Context·PFN separability·PEMix 원문을 다시 대조했다. 새 후보는 missing rate 대신 관측 feature의 기대 Bayes 분류 가치로 사전학습 observation prior를 구성하는 것이다. 기존 regret 재가중·mechanism crossing·subgraph 선택과 차이를 명시했고, value-of-information 자체의 선행연구 중복도 남겼다. **새 학습·성능·novelty 입증이 없는 미실행 가설**이다. [재독 메모와 수식](ideas/decision-value-observation-prior.md), [아이디어 기록](ideas/decision-value-observation-prior.yaml).
+재독 후보의 두 prior를 실제로 실행했다. 30개 새 GraphPFN 기반 checkpoint,6,912updates다. 새64graph·96nodes의 consistent64-state finite family이며, primary는 총 context8개/source4개와 자기 피처 없는 query24개다. 기존192-node Gaussian/probit family와 다르므로 절대 정확도를 전후 개선으로 빼지 않는다.
+
+| 학습 prior | 입력 | Primary accuracy % | NLL |
+|---|---|---:|---:|
+| random | mask | 55.2951 | 0.690357 |
+| geometry | mask | 55.3819 | 0.688894 |
+| entropy | mask | 55.7943 | 0.690654 |
+| decision | mask | 55.6641 | 0.690199 |
+| random_cost | mask | 56.7057 | 0.683048 |
+| random | pcfi | 56.9878 | 0.680178 |
+| geometry | pcfi | 56.9227 | 0.680114 |
+| entropy | pcfi | 57.3134 | 0.680086 |
+| decision | pcfi | 56.9444 | 0.680549 |
+| random_cost | pcfi | 57.5304 | 0.673814 |
+
+두 Mask primary 모두 통과하지 못했으며 메인 메소드로 확대하지 않는다. Exact-family reference의 feature gain은 +4.0365 [95% CI +1.8880, +6.3802]%p로 별도 보존한다. J와 V는 실제 mask 선택이 약73~88% 겹쳐 일반 우열을 판정하지 않는다. Graph별 paired CI·seed·전체 조건·피처 제거/셔플·cold 생성 비용·random2배 학습 대조를 [전체 보고서](findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md)와 [구조화 기록](findings/decision-value-prior.yaml)에 남겼다.
+
 
 ## Gaussian/probit의 비교 범위와 선행연구 기록
 

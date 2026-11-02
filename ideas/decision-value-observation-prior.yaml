@@ -1,13 +1,10 @@
 id: decision-value-observation-prior
-status: untested
+status: pilot-completed
 note: ideas/decision-value-observation-prior.md
 date: '2026-11-02'
-text: '미실행 가설: 같은 graph/feature/label 생성 family와 관측 예산에서, 관측값을 공개하기 전 prior predictive
-  평균으로 계산한 feature 관측의 Bayes 0-1 risk 감소를 이용해 학습 mask 배치를 생성한다. 기존 finite-bank reference-regret
-  재가중이나 mechanism crossing과 분리하며, 배포 때 mask를 선택하거나 숨은 값을 조회하지 않는다. 동일 PFN과 CE를 유지하고
-  random mask, 거리/coverage 규칙, 동일 생성 비용 대조와 비교한다. 정확도 관련 VOI와 log-loss 관련 conditional
-  MI를 분리하며, 현재 Gaussian working model을 원 generator의 exact teacher로 가정하지 않는다. 새로운 성능·novelty
-  입증은 없다.'
+text: '실행 완료: 같은 finite graph/feature/label family와 관측 예산에서 J(entropy)·V(Bayes 분류 오류 감소) 학습 mask prior를 실제로 비교했다.30개 공개 GraphPFN 기반 checkpoint/6912updates,64개 새 graph,3seed;사전
+  Mask accuracy gate J=False,V=False. Random·geometry·2배 random 학습·same-prior PCFI·exact-family reference·동일-query 피처 제거/셔플과 비용을 별도 기록했다. 실행 전 가설은 original_proposal_text와
+  note에 보존했다.'
 tags:
 - observation-mask
 - pretraining-data
@@ -20,3 +17,10 @@ keywords:
 - mask prior
 - synthetic task generation
 - feature utility
+original_proposal_text: '미실행 가설: 같은 graph/feature/label 생성 family와 관측 예산에서, 관측값을 공개하기 전 prior predictive 평균으로 계산한 feature 관측의 Bayes 0-1 risk 감소를 이용해 학습 mask 배치를 생성한다.
+  기존 finite-bank reference-regret 재가중이나 mechanism crossing과 분리하며, 배포 때 mask를 선택하거나 숨은 값을 조회하지 않는다. 동일 PFN과 CE를 유지하고 random mask, 거리/coverage 규칙, 동일 생성 비용 대조와 비교한다.
+  정확도 관련 VOI와 log-loss 관련 conditional MI를 분리하며, 현재 Gaussian working model을 원 generator의 exact teacher로 가정하지 않는다. 새로운 성능·novelty 입증은 없다.'
+followup: findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md
+pilot_gates:
+  entropy: false
+  decision: false

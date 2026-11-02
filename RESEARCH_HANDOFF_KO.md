@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: 누적56편의 문헌과 미실행 학습 후보 재독까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-02. 최근 업데이트: 누적56편의 문헌과 J/V 관측 prior 실제 학습까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -23,11 +23,27 @@
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 56편, 연구 기록 144항목, 아이디어 9개가 있다. 34개 프로젝트 묶음이며 실패·중단42, 보존32, 교훈48, 미실행22항목이다. 144번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 56편, 연구 기록 148항목, 아이디어 9개가 있다. 35개 프로젝트 묶음이며 실패·중단44, 보존33, 교훈49, 미실행22항목이다. 148번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
 
-## 재독 후 미실행 학습 후보
+## J / V 관측 prior 실제 학습 결과
 
-56편의 정리 항목을 선별하고 SSGP/GGP·CSBM·Spatial Context·PFN separability·PEMix 원문을 다시 대조했다. 새 후보는 missing rate 대신 관측 feature의 기대 Bayes 분류 가치로 사전학습 observation prior를 구성하는 것이다. 기존 regret 재가중·mechanism crossing·subgraph 선택과 차이를 명시했고, value-of-information 자체의 선행연구 중복도 남겼다. **새 학습·성능·novelty 입증이 없는 미실행 가설**이다. [재독 메모와 수식](ideas/decision-value-observation-prior.md), [아이디어 기록](ideas/decision-value-observation-prior.yaml).
+재독 후보의 두 prior를 실제로 실행했다. 30개 새 GraphPFN 기반 checkpoint,6,912updates다. 새64graph·96nodes의 consistent64-state finite family이며, primary는 총 context8개/source4개와 자기 피처 없는 query24개다. 기존192-node Gaussian/probit family와 다르므로 절대 정확도를 전후 개선으로 빼지 않는다.
+
+| 학습 prior | 입력 | Primary accuracy % | NLL |
+|---|---|---:|---:|
+| random | mask | 55.2951 | 0.690357 |
+| geometry | mask | 55.3819 | 0.688894 |
+| entropy | mask | 55.7943 | 0.690654 |
+| decision | mask | 55.6641 | 0.690199 |
+| random_cost | mask | 56.7057 | 0.683048 |
+| random | pcfi | 56.9878 | 0.680178 |
+| geometry | pcfi | 56.9227 | 0.680114 |
+| entropy | pcfi | 57.3134 | 0.680086 |
+| decision | pcfi | 56.9444 | 0.680549 |
+| random_cost | pcfi | 57.5304 | 0.673814 |
+
+두 Mask primary 모두 통과하지 못했으며 메인 메소드로 확대하지 않는다. Exact-family reference의 feature gain은 +4.0365 [95% CI +1.8880, +6.3802]%p로 별도 보존한다. J와 V는 실제 mask 선택이 약73~88% 겹쳐 일반 우열을 판정하지 않는다. Graph별 paired CI·seed·전체 조건·피처 제거/셔플·cold 생성 비용·random2배 학습 대조를 [전체 보고서](findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md)와 [구조화 기록](findings/decision-value-prior.yaml)에 남겼다.
+
 
 ## Gaussian/probit의 비교 범위와 선행연구 기록
 

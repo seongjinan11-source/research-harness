@@ -54,6 +54,34 @@
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=amortized-inference, uncertainty; keywords=-
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
+## DVP-F01 — J: entropy 감소로 학습 mask prior를 구성하면 같은 Mask PFN이 random·geometry·2배 random 학습보다 새 random-mask query를 정확히 분류한다.
+
+- 판정: 사전 Mask accuracy conjunction을 통과하지 못했다. 이번 mask mixture를 메인 메소드로 확대하지 않는다.
+- 원인·병목 [원인 미상]: Mask primary의 세 강한 대조를 모두 넘어야 하는 기준이 충족되지 않았다. J/V의 mask 차이·기대 가치 증가가 작다는 관찰은 있지만, score 추정·학생 fitting·budget·task family의 고유 원인은 분리하지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 관측 설계의 가치가 학생의 transferable decision 연산으로 전달되지 않는 구체적 병목을 새 원리나 독립 증거로 특정하며, 단순 mixture/candidate/update 튜닝을 넘어서는 설계를 제시할 때.
+- 먼저 이겨야 할 기준선: 같은 family/정보/CE/초기화의random,geometry,extra-random-training;동일 prior에서 실제 학습한 PCFI-PFN;known-family reference;동일-query feature removal/shuffle;전체 cold bank/scoring 비용.
+- 최소 재검증: 기존 final bank를 튜닝하지 않는다. 실제 realization 독립 설계와 teacher consistency를 유지하고 새 family/graph bank에서 accuracy primary·전체 seed·비용을 사전 고정한다.
+- 닫지 않은 것: 모든 observation-value prior,더 큰 학습,다른 생성 family,새 architecture,실제 missing/heterogeneous graph를 기각하지 않는다. 기존 Gaussian working-model 결과와 이번 consistent finite-family reference는 별개다.
+- 원문: [findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md](../findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md); [findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md](../findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md); [findings/sources/decision-value-prior-2026-11-02/protocol.json](../findings/sources/decision-value-prior-2026-11-02/protocol.json); [findings/sources/decision-value-prior-2026-11-02/results/statistics.json](../findings/sources/decision-value-prior-2026-11-02/results/statistics.json); [findings/sources/decision-value-prior-2026-11-02/results/audit.json](../findings/sources/decision-value-prior-2026-11-02/results/audit.json); [findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json](../findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json); [findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json](../findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json)
+
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+
+## DVP-F02 — V: Bayes 분류 오류 감소로 학습 mask prior를 구성하면 같은 Mask PFN이 random·geometry·2배 random 학습보다 새 random-mask query를 정확히 분류한다.
+
+- 판정: 사전 Mask accuracy conjunction을 통과하지 못했다. 이번 mask mixture를 메인 메소드로 확대하지 않는다.
+- 원인·병목 [원인 미상]: Mask primary의 세 강한 대조를 모두 넘어야 하는 기준이 충족되지 않았다. J/V의 mask 차이·기대 가치 증가가 작다는 관찰은 있지만, score 추정·학생 fitting·budget·task family의 고유 원인은 분리하지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 관측 설계의 가치가 학생의 transferable decision 연산으로 전달되지 않는 구체적 병목을 새 원리나 독립 증거로 특정하며, 단순 mixture/candidate/update 튜닝을 넘어서는 설계를 제시할 때.
+- 먼저 이겨야 할 기준선: 같은 family/정보/CE/초기화의random,geometry,extra-random-training;동일 prior에서 실제 학습한 PCFI-PFN;known-family reference;동일-query feature removal/shuffle;전체 cold bank/scoring 비용.
+- 최소 재검증: 기존 final bank를 튜닝하지 않는다. 실제 realization 독립 설계와 teacher consistency를 유지하고 새 family/graph bank에서 accuracy primary·전체 seed·비용을 사전 고정한다.
+- 닫지 않은 것: 모든 observation-value prior,더 큰 학습,다른 생성 family,새 architecture,실제 missing/heterogeneous graph를 기각하지 않는다. 기존 Gaussian working-model 결과와 이번 consistent finite-family reference는 별개다.
+- 원문: [findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md](../findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md); [findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md](../findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md); [findings/sources/decision-value-prior-2026-11-02/protocol.json](../findings/sources/decision-value-prior-2026-11-02/protocol.json); [findings/sources/decision-value-prior-2026-11-02/results/statistics.json](../findings/sources/decision-value-prior-2026-11-02/results/statistics.json); [findings/sources/decision-value-prior-2026-11-02/results/audit.json](../findings/sources/decision-value-prior-2026-11-02/results/audit.json); [findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json](../findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json); [findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json](../findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json)
+
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+
 ## DMARG-F01 — 현재 conditional tree circuit이 알려진 family의 강한 classical inference와 경쟁하는 메인 메소드다.
 
 - 판정: Neural-baseline gate는 성공했지만 classical 품질·비용 gate는 실패. 현재 구성의 메인 메소드 확대는 보류.

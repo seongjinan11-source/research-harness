@@ -1,0 +1,114 @@
+project: Expected observation value training priors on public GraphPFN
+date: '2026-11-02'
+source: findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md
+setting: Consistent64-state finite latent mixture;96nodes/2features;64train/64test graphs;source-context-query disjoint;primary4sources/context8TOTAL;30new checkpoints/6912updates;3fixed
+  seeds;not old192node Gaussian family.
+related:
+- GraphPFN
+- SSGP
+- GGP
+entries:
+- id: DVP-F01
+  kind: failure
+  claim: 'J: entropy 감소로 학습 mask prior를 구성하면 같은 Mask PFN이 random·geometry·2배 random 학습보다 새 random-mask query를 정확히 분류한다.'
+  observation: 'entropy_mask accuracy55.794271%/NLL0.690654/Brier0.495232; entropy_pcfi accuracy57.313368%/NLL0.680086; vsrandom_mask: accuracy%p +0.499132 [95CI
+    -0.347222,+1.345486]; vsgeometry_mask: accuracy%p +0.412326 [95CI -0.564236,+1.388889]; vsrandom_cost_mask: accuracy%p -0.911458 [95CI -2.083876,+0.239258]; Predeclared
+    Mask primary=False.'
+  verdict: 사전 Mask accuracy conjunction을 통과하지 못했다. 이번 mask mixture를 메인 메소드로 확대하지 않는다.
+  tags: &id001
+  - observation-mask
+  - pretraining-data
+  - model-based-baseline
+  - eval-protocol
+  - inference-cost
+  keywords: &id002
+  - J entropy observation prior
+  - V classification value prior
+  - Bayes decision value
+  - training mask design
+  - random extra training
+  - PCFI PFN
+  source_refs: &id003
+  - findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md
+  - findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md
+  - findings/sources/decision-value-prior-2026-11-02/protocol.json
+  - findings/sources/decision-value-prior-2026-11-02/results/statistics.json
+  - findings/sources/decision-value-prior-2026-11-02/results/audit.json
+  - findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json
+  - findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json
+  evidence: Actual30 new public GraphPFN checkpoints/6912updates;64 independent finite-family test graphs;3 fixed initialization seeds;graph-paired bootstrap5000;source/metric/checkpoint
+    audit PASS.
+  revisit_status: open
+  failure_reason: Mask primary의 세 강한 대조를 모두 넘어야 하는 기준이 충족되지 않았다. J/V의 mask 차이·기대 가치 증가가 작다는 관찰은 있지만, score 추정·학생 fitting·budget·task family의 고유 원인은 분리하지 않았다.
+  reason_status: unknown
+  closed_scope: 64-state finite mixture,96nodes/2features,context2/8total,sources1/4/8,12candidate masks,256draw scores,50%random+50%top3 mixture,unchanged public
+    GraphPFN192updates/seed의 설계와 이를 근거로 한 자동 확대.
+  not_closed: 모든 observation-value prior,더 큰 학습,다른 생성 family,새 architecture,실제 missing/heterogeneous graph를 기각하지 않는다. 기존 Gaussian working-model 결과와 이번 consistent
+    finite-family reference는 별개다.
+  reopen_when: 관측 설계의 가치가 학생의 transferable decision 연산으로 전달되지 않는 구체적 병목을 새 원리나 독립 증거로 특정하며, 단순 mixture/candidate/update 튜닝을 넘어서는 설계를 제시할 때.
+  comparison_floor: 같은 family/정보/CE/초기화의random,geometry,extra-random-training;동일 prior에서 실제 학습한 PCFI-PFN;known-family reference;동일-query feature removal/shuffle;전체
+    cold bank/scoring 비용.
+  recheck: 기존 final bank를 튜닝하지 않는다. 실제 realization 독립 설계와 teacher consistency를 유지하고 새 family/graph bank에서 accuracy primary·전체 seed·비용을 사전 고정한다.
+  reopen_tags:
+  - pretraining-data
+  - observation-mask
+  - graph-structure-use
+  reopen_keywords:
+  - decision value student transfer
+  - expected observation utility
+  - informative mask prior
+- id: DVP-F02
+  kind: failure
+  claim: 'V: Bayes 분류 오류 감소로 학습 mask prior를 구성하면 같은 Mask PFN이 random·geometry·2배 random 학습보다 새 random-mask query를 정확히 분류한다.'
+  observation: 'decision_mask accuracy55.664062%/NLL0.690199/Brier0.495521; decision_pcfi accuracy56.944444%/NLL0.680549; vsrandom_mask: accuracy%p +0.368924 [95CI
+    -0.781250,+1.605903]; vsgeometry_mask: accuracy%p +0.282118 [95CI -0.889757,+1.540799]; vsrandom_cost_mask: accuracy%p -1.041667 [95CI -2.343750,+0.260417]; Predeclared
+    Mask primary=False.'
+  verdict: 사전 Mask accuracy conjunction을 통과하지 못했다. 이번 mask mixture를 메인 메소드로 확대하지 않는다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: Actual30 new public GraphPFN checkpoints/6912updates;64 independent finite-family test graphs;3 fixed initialization seeds;graph-paired bootstrap5000;source/metric/checkpoint
+    audit PASS.
+  revisit_status: open
+  failure_reason: Mask primary의 세 강한 대조를 모두 넘어야 하는 기준이 충족되지 않았다. J/V의 mask 차이·기대 가치 증가가 작다는 관찰은 있지만, score 추정·학생 fitting·budget·task family의 고유 원인은 분리하지 않았다.
+  reason_status: unknown
+  closed_scope: 64-state finite mixture,96nodes/2features,context2/8total,sources1/4/8,12candidate masks,256draw scores,50%random+50%top3 mixture,unchanged public
+    GraphPFN192updates/seed의 설계와 이를 근거로 한 자동 확대.
+  not_closed: 모든 observation-value prior,더 큰 학습,다른 생성 family,새 architecture,실제 missing/heterogeneous graph를 기각하지 않는다. 기존 Gaussian working-model 결과와 이번 consistent
+    finite-family reference는 별개다.
+  reopen_when: 관측 설계의 가치가 학생의 transferable decision 연산으로 전달되지 않는 구체적 병목을 새 원리나 독립 증거로 특정하며, 단순 mixture/candidate/update 튜닝을 넘어서는 설계를 제시할 때.
+  comparison_floor: 같은 family/정보/CE/초기화의random,geometry,extra-random-training;동일 prior에서 실제 학습한 PCFI-PFN;known-family reference;동일-query feature removal/shuffle;전체
+    cold bank/scoring 비용.
+  recheck: 기존 final bank를 튜닝하지 않는다. 실제 realization 독립 설계와 teacher consistency를 유지하고 새 family/graph bank에서 accuracy primary·전체 seed·비용을 사전 고정한다.
+  reopen_tags:
+  - pretraining-data
+  - observation-mask
+  - graph-structure-use
+  reopen_keywords:
+  - decision value student transfer
+  - expected observation utility
+  - informative mask prior
+- id: DVP-P03
+  kind: preserved
+  claim: Teacher와 일치하는 finite family에서 분리된 피처·라벨이 query 예측에 쓸모 있는 과제를 실제로 구성하고 exact enumeration reference로 검사했다.
+  observation: Exact-family accuracy74.348958%,no-feature70.312500%;same-query gain%p +4.036458 [95CI +1.888021,+6.380208]. Posterior64-state enumeration exact;J/V
+    expectations Monte Carlo256,independent audit4096draws.
+  do_not_claim: 학습된 PFN이나 J/V prior의 성공,unknown-family/GP exact inference,과거 bank의 무정보 원인 확정,실제 heterograph/generalization의 성과가 아니다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: Actual30 new public GraphPFN checkpoints/6912updates;64 independent finite-family test graphs;3 fixed initialization seeds;graph-paired bootstrap5000;source/metric/checkpoint
+    audit PASS.
+  revisit_status: open
+- id: DVP-L01
+  kind: lesson
+  claim: J와 V는 다른 목표지만 이번 family의 관측 설계를 충분히 분리하지 못했다. 선택 점수 증가와 학생의 새 mask 분류 개선을 구분해야 한다.
+  observation: J/V selected-mask equality73.44~87.50% across6cells;50%shared uniform component;independent4096draw audit on first16train graphs stored. All30 models
+    share4012259 trainable parameters;ordinary192updates,random_cost384;actual6912updates.
+  verdict: 같은 마스크가 많은 작은 pilot에서 J와 V의 일반 우열을 주장하지 않는다. 별도 MC 감사·same-query interventions·cold bank cost·실제로 더 학습한 random control을 유지한다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: Actual30 new public GraphPFN checkpoints/6912updates;64 independent finite-family test graphs;3 fixed initialization seeds;graph-paired bootstrap5000;source/metric/checkpoint
+    audit PASS.
+  revisit_status: open

@@ -1,5 +1,7 @@
 # 관측의 분류 가치로 구성하는 학습 prior — 재독 메모
 
+> 후속: 사용자가 J/V 두 prior의 실행을 승인하여30개 모델을 학습했다. 아래는 실행 전 재독 메모를 보존한 것이며, 최신 결과는 [pilot 보고서](../findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md)와 [구조화 기록](../findings/decision-value-prior.yaml)을 따른다.
+
 2026-11-02. **미실행 연구 가설**이다. 새 모델, teacher, graph bank, optimizer update나 성능 결과는 없다. 56편의 하네스 항목을 선별해 검토했고, 아래 연결의 핵심 원문을 다시 확인했다. 초록·발췌만 확인된 추가 heterogeneous 논문을 전체 본문 검토나 해결 근거로 취급하지 않는다.
 
 ## 원문을 다시 읽고 남긴 판단
