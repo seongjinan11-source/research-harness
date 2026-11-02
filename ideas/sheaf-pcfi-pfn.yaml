@@ -1,0 +1,25 @@
+id: sheaf-pcfi-pfn
+date: '2026-11-03'
+status: completed-bounded-pilot-no-go
+text: PCFI confidence를보존하고2Dtransport를synthetic-only학습한PFN. 현재primarygate불통과,원본NSD전체를기각하지않는다.
+tags:
+- graph-structure-use
+- graph-geometry
+- observation-mask
+- zero-shot-gap
+- eval-protocol
+keywords:
+- Sheaf PCFI
+- homophily heterophily
+- signed transport
+- confidence propagation
+- synthetic-only frozen real PFN
+- RP16
+- negative LP
+note: findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md
+followup: findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md
+pilot_gates:
+  synthetic: false
+  real_development: false
+  real_native_floor: false
+  expand: false

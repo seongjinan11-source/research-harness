@@ -1,0 +1,46 @@
+{
+  "pcfi100_scipy_max_abs": 1.4901161193847656e-07,
+  "pcfi200_scipy_max_abs": 3.5762786865234375e-07,
+  "weighted_identity_error": 7.152557373046875e-07,
+  "signed_identity_error": 7.748603820800781e-07,
+  "sheaf_identity_error": 6.556510925292969e-07,
+  "zero_source_numeric_max": 0.0,
+  "hidden_feature_query_label_poison": "PASS",
+  "router_class_name_permutation_max": 3.5762786865234375e-07,
+  "smoke_discarded": [
+    {
+      "arm": "pcfi100",
+      "loss": 1.3074103593826294,
+      "grad_norm": 3.2249832153320312,
+      "retries": 0,
+      "router_update_max": 0.0,
+      "seconds": 0.4606613996438682
+    },
+    {
+      "arm": "weighted",
+      "loss": 1.309510588645935,
+      "grad_norm": 2.7775638103485107,
+      "retries": 0,
+      "router_update_max": 6.264448165893555e-05,
+      "seconds": 0.32366149965673685
+    },
+    {
+      "arm": "signed",
+      "loss": 1.3368796110153198,
+      "grad_norm": 90.52253723144531,
+      "retries": 0,
+      "router_update_max": 6.264448165893555e-05,
+      "seconds": 0.3128885002806783
+    },
+    {
+      "arm": "sheaf",
+      "loss": 1.3149579763412476,
+      "grad_norm": 3.4920272827148438,
+      "retries": 0,
+      "router_update_max": 6.341934204101562e-05,
+      "seconds": 0.3357553998939693
+    }
+  ],
+  "status": "PASS",
+  "protocol_sha256": "21b484117639c8754aa4b58840af10859a627d49bb7f08a416378721e9f8799a"
+}

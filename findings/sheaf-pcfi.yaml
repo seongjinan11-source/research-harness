@@ -1,0 +1,90 @@
+project: Confidence-weighted Sheaf-PCFI GraphPFN synthetic-to-real pilot
+date: '2026-11-03'
+source: findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md
+setting: Homophily/heterophily only,notheterogeneous;publicGraphPFNinit;6arms×3seeds;syntheticonlyCE,realweightsfixed.
+related:
+- NeuralSheafDiffusion
+entries:
+- id: SPCFI-F01
+  kind: failure
+  claim: Synthetic-trained2D sheaf transport를PCFI에넣으면양수전파및signed scalar보다강하고실제homo/heterophily missing을함께개선한다.
+  observation: 6arms×3seeds/6912validupdates,32newtestgraphs. SyntheticPCFI100 45.159129%,sheaf 45.291396%,difference+0.132267%p CI[-0.5853678292204626,
+    0.968491878548879]. Realheterophily sheaf-PCFI -0.391835%p,nativePCFI -3.308039%p. Gates allFalse. NegativeLP Texas63.5374%,Wisconsin42.7250%.
+  verdict: 현재RP16·symmetric-contraction·384updates구성은확대하지않는다. 일부CiteSeer증분과signed대비이득을범용성공으로승격하지않는다.
+  closed_scope: WarmPCFI100+learned100의특정2Dper-cell수축함수족,공유459parameterrouter,RP16,4selecteddevelopmentgraphs,동일syntheticbank의현재학습구성.
+  not_closed: 원본NSD/FSD-CAP/CPGNN/CLP재현,physicalfeature공간에서의새학습,일반sheaf표현력,heterogeneousgraph는미검증이다. 원본피처추론firstrep는별도진단이며그곳의양수신호도보존한다.
+  failure_reason: PCFI100/200/weighted대비syntheticaccuracy CI가0을포함하며realheterophily평균도낮다. 고유원인은미상이다. 첫좌표직접전달계수a<0비율은0이고cross-stalk사용은관측됐다. 행렬의다른성분·고유값·반복경로의signed효과는이통계로판정할수없다. Warm/RP16/학습량/prior차이를확인된원인으로단정하지않는다.
+  reason_status: unknown
+  excluded_explanations: 관측source clamp·PCFIidentity환원·hidden/query입력경계·routergradient기본검사는통과했다. 이것으로모든구현문제를배제한것은아니다.
+  reopen_when: 새근거가현재함수족/geometry식별/전이의구체적제약을바꾸고,원본피처PCFI와weighted및고정negativeLP보다유리한정보·계산을설명할때.
+  reopen_tags:
+  - graph-geometry
+  - graph-structure-use
+  - distribution-shift
+  reopen_keywords:
+  - missing-aware sheaf transport
+  - heterophily feature geometry identification
+  comparison_floor: 동일prior·초기화·updates의Mask/PCFI100/200/weighted/signed;원본피처PCFI→동일PFN;public초기화;양/음LP;관측0source포함;학습/추론비용과수치재현.
+  recheck: 구조/예산을새bank전에고정하고feature/label법칙을분리한다. 새로운syntheticgraph및미사용realgraph에서missing-queryaccuracy와확률점수,피처제거/셔플,negative実사용과numericalreplay를함께평가한다.
+  tags: &id001
+  - graph-structure-use
+  - graph-geometry
+  - observation-mask
+  - zero-shot-gap
+  - eval-protocol
+  keywords: &id002
+  - Sheaf PCFI
+  - homophily heterophily
+  - signed transport
+  - confidence propagation
+  - synthetic-only frozen real PFN
+  - RP16
+  - negative LP
+  source_refs: &id003
+  - findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md
+  - findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md
+  - findings/sources/sheaf-pcfi-2026-11-03/protocol.json
+  - findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json
+  - findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json
+  - findings/sources/sheaf-pcfi-2026-11-03/results/audit.json
+  - findings/sources/sheaf-pcfi-2026-11-03/results/cost.json
+  - findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md
+  evidence: 384syntheticCEupdates/arm/seed;4selectedrealdevelopmentgraphs,90/99.5%uniform/clustered whole-node masks,missing-query primary;0realupdates;graph-pairedbootstrap5000;original
+    savedprobabilities rescored. Audit checkpoints/hash/info-boundaries pass with numerical replay variation disclosed, not exact-reproduction PASS.
+  revisit_status: open
+- id: SPCFI-P01
+  kind: preserved
+  claim: Confidence·source clamp·inter-channel correction을보존한미분가능2Dtransport와PFN의synthetic-only학습을구현했다.
+  observation: 18validcheckpoints,6912updates,0realupdates. PCFI/SciPymax3.58e-7,identityerrors<7.8e-7,routerweightupdate>6e-5. Hidden/querypoisonPASS.
+    Sheafcross-stalkmean0.055230;first_diagonal_a_negative_fraction0;other_entries/eigenvalues_not_claimed. Nativefirstrep:Texas34.0278%/Wisconsin30.1821%,nativePCFI32.0076%/26.4356%.
+  verdict: 구현·gradient·정보경계와제한된native추론신호를보존한다.
+  do_not_claim: 유효operator구현을성능우위·새sheaf원리·원본NSD재현으로쓰지않는다. Nativefirstrep/seed11은독립확인도원본피처학습도아니며Texas에서는native_signed가더높다. Strictnumericalreplay는완전통과하지않았다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 384syntheticCEupdates/arm/seed;4selectedrealdevelopmentgraphs,90/99.5%uniform/clustered whole-node masks,missing-query primary;0realupdates;graph-pairedbootstrap5000;original
+    savedprobabilities rescored. Audit checkpoints/hash/info-boundaries pass with numerical replay variation disclosed, not exact-reproduction PASS.
+  revisit_status: open
+- id: SPCFI-L01
+  kind: lesson
+  claim: Labelheterophily·featureenergy·projection순서·source수·학습된transport부호는각각실측해야한다.
+  observation: RP16primary에서sheaf의heterophily이득은없다. 원본피처추론firstrep에는일부개선이있다. Synthetictest의첫좌표직접전달계수a<0비율은0이며2D행렬전체의부호와구분한다. Texas99.5%mask의0source도유지했다. 고정negativeLP가현재PFN보다Texas/Wisconsin에서높다.
+  verdict: 부호허용을부호학습과동일시하지않고LP와feature전파도구분한다. Feature제거/shuffle는원래query집합을고정하며약한compressedPCFI하나만floor로쓰지않는다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 384syntheticCEupdates/arm/seed;4selectedrealdevelopmentgraphs,90/99.5%uniform/clustered whole-node masks,missing-query primary;0realupdates;graph-pairedbootstrap5000;original
+    savedprobabilities rescored. Audit checkpoints/hash/info-boundaries pass with numerical replay variation disclosed, not exact-reproduction PASS.
+  revisit_status: open
+- id: SPCFI-L02
+  kind: lesson
+  claim: 설계교정과수치재현의실패는메소드성능과별도로공개한다.
+  observation: 초기class수-featurelaw결합을비교성능판독전에발견해1152updates를폐기하고모든arm을다시학습했다. Oldfolder보존. Numericalreplay .005criterion failed;max0.00749716,selectedepisodeargmaxmax2.4793%.
+    Savedpredictions unchanged;CIconditionalonstoredpredictions.
+  verdict: 기존checkpoint연장이나실제validationtuning은없다. Audit상태는PASS_WITH_REPLAY_VARIATION이며범위를기록했다. 수치원인은미확인이고일반적CUDA문제라고단정하지않는다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 384syntheticCEupdates/arm/seed;4selectedrealdevelopmentgraphs,90/99.5%uniform/clustered whole-node masks,missing-query primary;0realupdates;graph-pairedbootstrap5000;original
+    savedprobabilities rescored. Audit checkpoints/hash/info-boundaries pass with numerical replay variation disclosed, not exact-reproduction PASS.
+  revisit_status: open

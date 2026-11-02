@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: 누적56편의 문헌과 별도 TSFM 공동정보 frozen 비교까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-03. 최근 업데이트: 누적57편의 문헌과 Sheaf-PCFI synthetic-to-real pilot까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -11,6 +11,21 @@
 다음 후보는 현재 함수족으로 부족한 feature–relation 의존성과 그것을 학습·전이하는 추론 연산을 설명해야 한다. 현재 Factor에도 neural potential이 있으므로 모델 전체를 고정 Gaussian factor라고 부르지 않는다. 주요 가정은 binary class/feature-column orientation과 pairwise Ising형 factor이며, 범용 feature semantics를 학습했다고 주장하지 않는다. 이미 구현한 연결 기능에 이름·head·teacher만 추가하는 제안과 구분한다.
 
 이번 검토는 새로운 실험을 즉시 실행하라는 요청이 아니다. 아래 사실과 실패 범위를 검토하고, 설득력 있는 후속 메소드가 있는지 독립적으로 판단해 달라.
+
+## Sheaf-PCFI: synthetic 학습·실제 가중치 고정 비교
+
+2026-11-03에 homophily/heterophily만 남긴 새 PFN pilot을 완료했다. 6arm×3seed,6,912유효updates,64train/32testsyntheticgraphs,실제Cora/CiteSeer/Texas/Wisconsin은가중치고정이다. 주지표는90/99.5% uniform/clustered whole-node missing의결측queryaccuracy다.
+
+| 방법 | Cora | CiteSeer | Texas | Wisconsin |
+|---|---:|---:|---:|---:|
+| PCFI100+PFN | 50.78 | 32.40 | 28.81 | 22.69 |
+| Sheaf-PCFI+PFN | 50.46 | 33.64 | 28.32 | 22.40 |
+| 원본피처 PCFI100→RP16+PFN | 52.68 | 33.92 | 32.42 | 24.92 |
+| 고정 negative LP | 32.03 | 24.76 | 63.54 | 42.73 |
+
+Synthetic sheaf−PCFI +0.132%p CI[-0.585,+0.968],heterophily실제평균−0.392%p로primarygate를통과하지못했다. **현재2D symmetric-contraction/RP16/384updates구성은확대하지않는다.** Synthetictest의첫좌표직접전달계수a<0비율은0이다. 이통계는2D행렬의다른성분·고유값·반복경로의signed효과를판정하지못하며음의geometry학습의성공/실패로확대하지않는다. Native추론firstrep/seed11에서Texas/Wisconsin일부개선은보존하되primary로교체하지않았다. 원본NSD재현과원본피처공간학습은미검증이다.
+
+초기생성기confound때문에1152updates를폐기하고전부다시학습했다. Checkpoint재실행최대확률차이.007497/선택episodeargmax2.48%변경을공개하며엄격수치재현PASS라고하지않는다. 기존156항목과844paper/source파일은그대로보존했다. [전체보고서](findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md),[계산정의](findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md),[구조화기록](findings/sheaf-pcfi.yaml).
 
 ## 먼저 읽을 자료
 
@@ -23,7 +38,7 @@
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 56편, 연구 기록 156항목, 아이디어 11개가 있다. 37개 프로젝트 묶음이며 실패·중단47, 보존35, 교훈51, 미실행23항목이다. 156번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 57편, 연구 기록 160항목, 아이디어 12개가 있다. 38개 프로젝트 묶음이며 실패·중단48, 보존36, 교훈53, 미실행23항목이다. 160번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v15는 Sheaf-PCFI의synthetic-only학습·실제가중치고정pilot과NSD문헌을추가한2026-11-03 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
 
 ## TSFM 공동 정보·방해 변수 frozen 비교
 
@@ -314,6 +329,7 @@ Query 자체도 feature가 없는 사전 secondary에서는 Factor64.60%/NLL0.60
 
 ```text
 첨부한 Missing-feature GraphPFN 연구 인계서를 읽고 독립적으로 검토해줘.
+최신 Sheaf-PCFI pilot의bounded No-Go와negativeLP floor,첫좌표직접전달계수a<0비율0,수치재현한계도함께봐줘. 단순PCFI내부화나signed허용을새아이디어로다시제안하지말아줘.
 실제 실행한 결과, 보존한 개선, 미실행 제안을 구분하고, 필요하면 함께 첨부한 보고서와 findings를 확인해줘.
 
 목표는 새 그래프에서 재학습 없이 심한 node-feature missing을 처리하는 GraphPFN이야.

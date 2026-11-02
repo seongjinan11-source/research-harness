@@ -3657,6 +3657,58 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "SPCFI-F01",
+    "project": "Confidence-weighted Sheaf-PCFI GraphPFN synthetic-to-real pilot",
+    "claim": "Synthetic-trained2D sheaf transport를PCFI에넣으면양수전파및signed scalar보다강하고실제homo/heterophily missing을함께개선한다.",
+    "verdict": "현재RP16·symmetric-contraction·384updates구성은확대하지않는다. 일부CiteSeer증분과signed대비이득을범용성공으로승격하지않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "PCFI100/200/weighted대비syntheticaccuracy CI가0을포함하며realheterophily평균도낮다. 고유원인은미상이다. 첫좌표직접전달계수a<0비율은0이고cross-stalk사용은관측됐다. 행렬의다른성분·고유값·반복경로의signed효과는이통계로판정할수없다. Warm/RP16/학습량/prior차이를확인된원인으로단정하지않는다.",
+    "reopen_when": "새근거가현재함수족/geometry식별/전이의구체적제약을바꾸고,원본피처PCFI와weighted및고정negativeLP보다유리한정보·계산을설명할때.",
+    "recheck": "구조/예산을새bank전에고정하고feature/label법칙을분리한다. 새로운syntheticgraph및미사용realgraph에서missing-queryaccuracy와확률점수,피처제거/셔플,negative実사용과numericalreplay를함께평가한다.",
+    "comparison_floor": "동일prior·초기화·updates의Mask/PCFI100/200/weighted/signed;원본피처PCFI→동일PFN;public초기화;양/음LP;관측0source포함;학습/추론비용과수치재현.",
+    "source_refs": [
+      "findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md",
+      "findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md",
+      "findings/sources/sheaf-pcfi-2026-11-03/protocol.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/audit.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/cost.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md"
+    ],
+    "paper_id": "NeuralSheafDiffusion",
+    "paper_title": "Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs",
+    "paper_link": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html",
+    "matches": [
+      {
+        "strength": "양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.",
+        "tags": [
+          "graph-geometry",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      },
+      {
+        "strength": "공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.",
+        "tags": [
+          "graph-geometry",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-geometry",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "SRC-F01",
     "project": "출처 중첩·공유 보간 오차 attention",
     "claim": "Source covariance를 보정하면 분류가 개선된다.",
@@ -4413,6 +4465,58 @@
     ],
     "keywords": [
       "heterogeneous"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "HET-F01",
+    "project": "Native heterogeneous 입력·기존 relational FM 대조",
+    "claim": "Adapted HetGFD가 cross-type path 입력보다 큰 증분을 준다.",
+    "verdict": "새 메소드 headroom 부족",
+    "reason_status": "supported",
+    "failure_reason": "관계 경로와 남은 native source가 이미 강한 신호를 전달했다. 격차가 작다는 관찰은 확인했지만 redundancy만이 원인이라는 인과 분해는 하지 않았다.",
+    "reopen_when": "타입별 feature 의미와 관측 pattern을 보존하며 기존 path redundancy를 넘어서는 장치가 나올 때.",
+    "recheck": "파생 helper feature 누수를 제거하고, 실제 native block graph에서 missing/full 대비와 최강 구조 기준선을 함께 비교한다.",
+    "comparison_floor": "Native cross-type paths + frozen GraphPFN, 강한 attribute-free metapath LP",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/native_blocks.md"
+    ],
+    "paper_id": "NeuralSheafDiffusion",
+    "paper_title": "Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs",
+    "paper_link": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html",
+    "matches": [
+      {
+        "strength": "양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "diffusion"
+        ],
+        "specific_keywords": [
+          "diffusion"
+        ]
+      },
+      {
+        "strength": "공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "diffusion"
+        ],
+        "specific_keywords": [
+          "diffusion"
+        ]
+      }
+    ],
+    "tags": [
+      "graph-structure-use"
+    ],
+    "keywords": [
+      "diffusion"
     ],
     "retrieval_score": 3,
     "signal": "구체 키워드+태그 일치 (미검증)",
@@ -5734,6 +5838,58 @@
     "matches": [
       {
         "strength": "관계별 local 구조와 Mamba 기반 long-range 의미를 서로 다른 encoder로 다룬다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "fusion"
+        ],
+        "specific_keywords": [
+          "fusion"
+        ]
+      }
+    ],
+    "tags": [
+      "graph-structure-use"
+    ],
+    "keywords": [
+      "fusion"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "XFER-F02",
+    "project": "Context path 선택과 고정 LP/PFN 혼합",
+    "claim": "LP와 PFN 확률의 고정 혼합이 각자의 강점을 보존한다.",
+    "verdict": "고정 혼합 메인 방향 중단",
+    "reason_status": "unknown",
+    "failure_reason": "서로 맞히는 query가 다르다는 사실이 고정 확률 평균의 utility를 보장하지 않았다. 중복 증거가 원인일 수 있으나 직접 분리한 결과는 아니다.",
+    "reopen_when": "중복 evidence와 decision risk를 실제 관측량으로 구분하며 최강 단일 predictor를 보존하는 원리가 나올 때.",
+    "recheck": "같은 query·context에서 within-task 오류 보완성과 독립 개발/확인 graph의 평균·worst-case utility를 함께 본다.",
+    "comparison_floor": "LP alone, PCFI/FISF+PFN alone, compute-matched fixed mixtures",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/fusion.md"
+    ],
+    "paper_id": "NeuralSheafDiffusion",
+    "paper_title": "Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs",
+    "paper_link": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html",
+    "matches": [
+      {
+        "strength": "양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "fusion"
+        ],
+        "specific_keywords": [
+          "fusion"
+        ]
+      },
+      {
+        "strength": "공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.",
         "tags": [
           "graph-structure-use"
         ],

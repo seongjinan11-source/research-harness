@@ -1,0 +1,49 @@
+id: NeuralSheafDiffusion
+title: "Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs"
+authors: "Cristian Bodnar, Francesco Di Giovanni, Benjamin Chamberlain, Pietro Lió, Michael Bronstein"
+venue: "NeurIPS 2022"
+year: 2022
+links:
+  paper: https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html
+  arxiv: https://arxiv.org/abs/2202.04579
+  code: https://github.com/twitter-research/neural-sheaf-diffusion
+citation:
+  type: inproceedings
+  title: "Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs"
+  authors: ["Cristian Bodnar", "Francesco Di Giovanni", "Benjamin Chamberlain", "Pietro Lió", "Michael Bronstein"]
+  year: 2022
+  booktitle: "Advances in Neural Information Processing Systems"
+  volume: 35
+  arxiv: "2202.04579"
+  url: https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html
+  verified_from:
+    - https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html
+    - https://arxiv.org/abs/2202.04579
+areas: [graph-learning]
+problem: "일반 graph diffusion의 heterophily와 oversmoothing 한계를 비자명한 sheaf geometry로 분석하고 개선한다."
+core_idea: "Node와 edge에 vector space를 두고 incident restriction map을 학습해 sheaf Laplacian을 만든다. Signed scalar와 다차원 transport를 통해 양의 weighted diffusion을 확장하며 feature와 geometry를 함께 갱신한다."
+key_assumptions:
+  - "이웃 feature로 restriction map을 학습할 수 있어야 하며, 실험은 각 dataset의 supervised train/validation 절차를 사용한다."
+strengths:
+  - text: "양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다."
+    tags: [graph-structure-use, graph-geometry]
+  - text: "공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다."
+    tags: [graph-geometry, graph-structure-use]
+limitations:
+  - text: "Limitations 절에서 이론이 sheaf의 일반화 성질을 다루지 않는다고 명시한다."
+    tags: [distribution-shift, theory-gap]
+    source: self
+  - text: "General map은 normalization이 어렵고 반복 고유값에서 SVD gradient 문제가 있어 학습이 더 어렵다고 설명한다."
+    tags: [training-stability, inference-cost]
+    source: self
+  - text: "[analyst] 이 논문의 target graph 학습 실험은 synthetic-only 사전학습 후 결측 실제 graph에서 가중치를 고정하는 PFN 전이의 증거가 아니다."
+    tags: [zero-shot-gap, observation-mask, eval-protocol]
+    source: analyst
+builds_on: [SheafNeuralNetworks, CellularSheaves, GCN]
+compared_against: [GCN, GAT, H2GCN, GPRGNN, FAGCN]
+open_questions:
+  - "심한 feature missing에서 context만으로 transport를 정하고 graph 간 전이할 수 있는가?"
+hooks:
+  - "Sheaf-PCFI pilot은 confidence와 inter-channel correction을 보존하고2D symmetric contraction만 비교한다. 원본 NSD 재현으로 부르지 않는다."
+notes: "저자 표기는 공식 proceedings를 따른다. 검토한 arXiv v4 §5/§6/Limitations와 appendix의 비용·validation 절차를 구분했다. 이 논문의 제한은 pilot 결과의 확인된 실패 원인이 아니다."
+added: 2026-11-03

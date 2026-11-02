@@ -293,6 +293,9 @@
   - 기록된 강점: 관계별 local 구조와 Mamba 기반 long-range 의미를 서로 다른 encoder로 다룬다.
 - [HGT-Slot](https://www.nature.com/articles/s41598-026-74804-w): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=heterogeneous
   - 기록된 강점: Local slot과 global Transformer prediction을 결합해 3개 node-classification 데이터셋에서 평가했다.
+- [NeuralSheafDiffusion](https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=diffusion
+  - 기록된 강점: 양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.
+  - 기록된 강점: 공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.
 - [QHGAN](https://www.sciencedirect.com/science/article/pii/S003132032602090X): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=heterogeneous
   - 기록된 강점: 구조적 중요성과 semantic relevance를 함께 고려한 경로 sampling 및 attention을 설계했다.
 - [SemHGT](https://arxiv.org/abs/2610.35298): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=heterogeneous
@@ -733,6 +736,9 @@
   - 기록된 강점: Hand-crafted graph feature(Laplacian PE, PageRank, 이웃 평균 등)에 기대지 않고, 모델 안에서 adjacency-masked attention으로 message passing을 직접 학습한다. 그 결과 ICL만으로도 G2T-FM·TAG와 튜닝된 GNN보다 평균 rank가 높고, 무거운 전처리도 필요 없다.
 - [HGRL](https://www.sciencedirect.com/science/article/pii/S0031320326020248): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=fusion
   - 기록된 강점: 관계별 local 구조와 Mamba 기반 long-range 의미를 서로 다른 encoder로 다룬다.
+- [NeuralSheafDiffusion](https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=fusion
+  - 기록된 강점: 양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.
+  - 기록된 강점: 공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.
 - [RDGCN](https://www.sciencedirect.com/science/article/pii/S0893608026012542): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=fusion
   - 기록된 강점: Label context·semantic·topological view를 분리해 해로운 정보 혼합을 줄이도록 설계했다.
   - 기록된 강점: Homophilic·heterophilic 그래프를 포함한 9개 node-classification 데이터셋에서 평가했다.
@@ -848,6 +854,21 @@
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
+
+## SPCFI-F01 — Synthetic-trained2D sheaf transport를PCFI에넣으면양수전파및signed scalar보다강하고실제homo/heterophily missing을함께개선한다.
+
+- 판정: 현재RP16·symmetric-contraction·384updates구성은확대하지않는다. 일부CiteSeer증분과signed대비이득을범용성공으로승격하지않는다.
+- 원인·병목 [원인 미상]: PCFI100/200/weighted대비syntheticaccuracy CI가0을포함하며realheterophily평균도낮다. 고유원인은미상이다. 첫좌표직접전달계수a<0비율은0이고cross-stalk사용은관측됐다. 행렬의다른성분·고유값·반복경로의signed효과는이통계로판정할수없다. Warm/RP16/학습량/prior차이를확인된원인으로단정하지않는다.
+- 반증·배제한 설명: 관측source clamp·PCFIidentity환원·hidden/query입력경계·routergradient기본검사는통과했다. 이것으로모든구현문제를배제한것은아니다.
+- 재검토 조건: 새근거가현재함수족/geometry식별/전이의구체적제약을바꾸고,원본피처PCFI와weighted및고정negativeLP보다유리한정보·계산을설명할때.
+- 먼저 이겨야 할 기준선: 동일prior·초기화·updates의Mask/PCFI100/200/weighted/signed;원본피처PCFI→동일PFN;public초기화;양/음LP;관측0source포함;학습/추론비용과수치재현.
+- 최소 재검증: 구조/예산을새bank전에고정하고feature/label법칙을분리한다. 새로운syntheticgraph및미사용realgraph에서missing-queryaccuracy와확률점수,피처제거/셔플,negative実사용과numericalreplay를함께평가한다.
+- 닫지 않은 것: 원본NSD/FSD-CAP/CPGNN/CLP재현,physicalfeature공간에서의새학습,일반sheaf표현력,heterogeneousgraph는미검증이다. 원본피처추론firstrep는별도진단이며그곳의양수신호도보존한다.
+- 원문: [findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/protocol.json](../findings/sources/sheaf-pcfi-2026-11-03/protocol.json); [findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json](../findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json); [findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json](../findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json); [findings/sources/sheaf-pcfi-2026-11-03/results/audit.json](../findings/sources/sheaf-pcfi-2026-11-03/results/audit.json); [findings/sources/sheaf-pcfi-2026-11-03/results/cost.json](../findings/sources/sheaf-pcfi-2026-11-03/results/cost.json); [findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md)
+
+- [NeuralSheafDiffusion](https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html): 복수 태그 일치 (약한 단서); tags=graph-geometry, graph-structure-use; keywords=-
+  - 기록된 강점: 양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.
+  - 기록된 강점: 공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.
 
 ## SRC-F01 — Source covariance를 보정하면 분류가 개선된다.
 

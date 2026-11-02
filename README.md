@@ -76,3 +76,18 @@ Claude Code에서는 "XXX 논문 추가해줘"라고 하면 `CLAUDE.md`의 절�
 그래프에서 `내 연구 기록`과 `재검토 단서`를 켜면 논문→실패의 보라색 점선을 볼 수 있다.
 실패 노드를 누르면 원인과 재검토 조건을 읽을 수 있다. 이 저장소의 `out/`이 최신 생성물이며,
 저장소 밖에 과거에 복사한 HTML/XLSX는 자동으로 덮어쓰지 않는다.
+
+## Sheaf-PCFI: synthetic 학습·실제 가중치 고정 비교
+
+2026-11-03에 homophily/heterophily만 남긴 새 PFN pilot을 완료했다. 6arm×3seed,6,912유효updates,64train/32testsyntheticgraphs,실제Cora/CiteSeer/Texas/Wisconsin은가중치고정이다. 주지표는90/99.5% uniform/clustered whole-node missing의결측queryaccuracy다.
+
+| 방법 | Cora | CiteSeer | Texas | Wisconsin |
+|---|---:|---:|---:|---:|
+| PCFI100+PFN | 50.78 | 32.40 | 28.81 | 22.69 |
+| Sheaf-PCFI+PFN | 50.46 | 33.64 | 28.32 | 22.40 |
+| 원본피처 PCFI100→RP16+PFN | 52.68 | 33.92 | 32.42 | 24.92 |
+| 고정 negative LP | 32.03 | 24.76 | 63.54 | 42.73 |
+
+Synthetic sheaf−PCFI +0.132%p CI[-0.585,+0.968],heterophily실제평균−0.392%p로primarygate를통과하지못했다. **현재2D symmetric-contraction/RP16/384updates구성은확대하지않는다.** Synthetictest의첫좌표직접전달계수a<0비율은0이다. 이통계는2D행렬의다른성분·고유값·반복경로의signed효과를판정하지못하며음의geometry학습의성공/실패로확대하지않는다. Native추론firstrep/seed11에서Texas/Wisconsin일부개선은보존하되primary로교체하지않았다. 원본NSD재현과원본피처공간학습은미검증이다.
+
+초기생성기confound때문에1152updates를폐기하고전부다시학습했다. Checkpoint재실행최대확률차이.007497/선택episodeargmax2.48%변경을공개하며엄격수치재현PASS라고하지않는다. 기존156항목과844paper/source파일은그대로보존했다. [전체보고서](findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md),[계산정의](findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md),[구조화기록](findings/sheaf-pcfi.yaml).

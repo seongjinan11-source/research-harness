@@ -16,8 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 import harness
 
-DATE = '2026-11-02'
-VERSION = 14
+DATE = '2026-11-03'
+VERSION = 15
 DOCUMENTS = ['RESULTS_SUMMARY_KO.md', 'RESEARCH_HANDOFF_KO.md', 'README.md']
 
 

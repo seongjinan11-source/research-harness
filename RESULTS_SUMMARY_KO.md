@@ -1,10 +1,10 @@
 # Missing feature GraphPFN 실험 결과 정리
 
-기준일은2026-11-02다. 목표는 **새 그래프에서 가중치를 다시 학습하지 않고, 불완전한 node feature와 context labels로 분류하는 PFN**이다. Heterogeneous schema로의 확장은 장기 목표다.
+기준일은2026-11-03다. 목표는 **새 그래프에서 가중치를 다시 학습하지 않고, 불완전한 node feature와 context labels로 분류하는 PFN**이다. Heterogeneous schema로의 확장은 장기 목표다.
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은37개 프로젝트 묶음의156항목이다. 실패·중단47개, 보존35개, 교훈51개, 미실행23개이며 **156번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은38개 프로젝트 묶음의160항목이다. 실패·중단48개, 보존36개, 교훈53개, 미실행23개이며 **160번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,21 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## Sheaf-PCFI: synthetic 학습·실제 가중치 고정 비교
+
+2026-11-03에 homophily/heterophily만 남긴 새 PFN pilot을 완료했다. 6arm×3seed,6,912유효updates,64train/32testsyntheticgraphs,실제Cora/CiteSeer/Texas/Wisconsin은가중치고정이다. 주지표는90/99.5% uniform/clustered whole-node missing의결측queryaccuracy다.
+
+| 방법 | Cora | CiteSeer | Texas | Wisconsin |
+|---|---:|---:|---:|---:|
+| PCFI100+PFN | 50.78 | 32.40 | 28.81 | 22.69 |
+| Sheaf-PCFI+PFN | 50.46 | 33.64 | 28.32 | 22.40 |
+| 원본피처 PCFI100→RP16+PFN | 52.68 | 33.92 | 32.42 | 24.92 |
+| 고정 negative LP | 32.03 | 24.76 | 63.54 | 42.73 |
+
+Synthetic sheaf−PCFI +0.132%p CI[-0.585,+0.968],heterophily실제평균−0.392%p로primarygate를통과하지못했다. **현재2D symmetric-contraction/RP16/384updates구성은확대하지않는다.** Synthetictest의첫좌표직접전달계수a<0비율은0이다. 이통계는2D행렬의다른성분·고유값·반복경로의signed효과를판정하지못하며음의geometry학습의성공/실패로확대하지않는다. Native추론firstrep/seed11에서Texas/Wisconsin일부개선은보존하되primary로교체하지않았다. 원본NSD재현과원본피처공간학습은미검증이다.
+
+초기생성기confound때문에1152updates를폐기하고전부다시학습했다. Checkpoint재실행최대확률차이.007497/선택episodeargmax2.48%변경을공개하며엄격수치재현PASS라고하지않는다. 기존156항목과844paper/source파일은그대로보존했다. [전체보고서](findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md),[계산정의](findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md),[구조화기록](findings/sheaf-pcfi.yaml).
 
 ## TSFM 공동 정보·방해 변수 frozen 비교
 
@@ -310,7 +325,7 @@ CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teach
 
 1. 이 요약으로 전체 결과와 범위를 확인한다.
 2. [연구 인계서](RESEARCH_HANDOFF_KO.md)의 요청문으로 독립 검토를 요청한다.
-3. 필요한 수치는 연결된 보고서와 [144개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
+3. 필요한 수치는 연결된 보고서와 [160개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-02_v11.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-03_v15.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.

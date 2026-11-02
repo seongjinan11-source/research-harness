@@ -1,0 +1,256 @@
+{
+  "status": "PASS_WITH_REPLAY_VARIATION",
+  "bank_files_hashed": 712,
+  "saved_predictions_hashed": 4756,
+  "checkpoints": [
+    {
+      "arm": "mask",
+      "seed": 11,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "pcfi100",
+      "seed": 11,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "pcfi200",
+      "seed": 11,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "weighted",
+      "seed": 11,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "signed",
+      "seed": 11,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "sheaf",
+      "seed": 11,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "mask",
+      "seed": 12,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "pcfi100",
+      "seed": 12,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "pcfi200",
+      "seed": 12,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "weighted",
+      "seed": 12,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "signed",
+      "seed": 12,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "sheaf",
+      "seed": 12,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "mask",
+      "seed": 13,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "pcfi100",
+      "seed": 13,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "pcfi200",
+      "seed": 13,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "weighted",
+      "seed": 13,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "signed",
+      "seed": 13,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    },
+    {
+      "arm": "sheaf",
+      "seed": 13,
+      "trainable_parameters": 4012718,
+      "checkpoint_verified": true
+    }
+  ],
+  "replay": [
+    {
+      "arm": "mask",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.0,
+      "same_session_repeat_max_difference": 0.0,
+      "front_same_session_max_difference": 0.0,
+      "replay_argmax_change_fraction": 0.0,
+      "same_session_argmax_change_fraction": 0.0,
+      "mean_absolute_probability_difference": 0.0
+    },
+    {
+      "arm": "mask",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.0,
+      "same_session_repeat_max_difference": 0.0,
+      "front_same_session_max_difference": 0.0,
+      "replay_argmax_change_fraction": 0.0,
+      "same_session_argmax_change_fraction": 0.0,
+      "mean_absolute_probability_difference": 0.0
+    },
+    {
+      "arm": "pcfi100",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.0,
+      "same_session_repeat_max_difference": 0.0,
+      "front_same_session_max_difference": 0.0,
+      "replay_argmax_change_fraction": 0.0,
+      "same_session_argmax_change_fraction": 0.0,
+      "mean_absolute_probability_difference": 0.0
+    },
+    {
+      "arm": "pcfi100",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.0,
+      "same_session_repeat_max_difference": 0.0,
+      "front_same_session_max_difference": 0.0,
+      "replay_argmax_change_fraction": 0.0,
+      "same_session_argmax_change_fraction": 0.0,
+      "mean_absolute_probability_difference": 0.0
+    },
+    {
+      "arm": "pcfi200",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.0,
+      "same_session_repeat_max_difference": 0.0,
+      "front_same_session_max_difference": 1.7881393432617188e-07,
+      "replay_argmax_change_fraction": 0.0,
+      "same_session_argmax_change_fraction": 0.0,
+      "mean_absolute_probability_difference": 0.0
+    },
+    {
+      "arm": "pcfi200",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.004345118999481201,
+      "same_session_repeat_max_difference": 0.0019372403621673584,
+      "front_same_session_max_difference": 4.76837158203125e-07,
+      "replay_argmax_change_fraction": 0.007,
+      "same_session_argmax_change_fraction": 0.006,
+      "mean_absolute_probability_difference": 0.00034760762355290353
+    },
+    {
+      "arm": "weighted",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.007497161626815796,
+      "same_session_repeat_max_difference": 0.005206286907196045,
+      "front_same_session_max_difference": 3.5762786865234375e-07,
+      "replay_argmax_change_fraction": 0.024793388429752067,
+      "same_session_argmax_change_fraction": 0.01652892561983471,
+      "mean_absolute_probability_difference": 0.0010976892663165927
+    },
+    {
+      "arm": "weighted",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.0039701759815216064,
+      "same_session_repeat_max_difference": 0.004105955362319946,
+      "front_same_session_max_difference": 2.6226043701171875e-06,
+      "replay_argmax_change_fraction": 0.003,
+      "same_session_argmax_change_fraction": 0.003,
+      "mean_absolute_probability_difference": 0.0003458484134171158
+    },
+    {
+      "arm": "signed",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.0,
+      "same_session_repeat_max_difference": 0.0,
+      "front_same_session_max_difference": 3.5762786865234375e-07,
+      "replay_argmax_change_fraction": 0.0,
+      "same_session_argmax_change_fraction": 0.0,
+      "mean_absolute_probability_difference": 0.0
+    },
+    {
+      "arm": "signed",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.0032371878623962402,
+      "same_session_repeat_max_difference": 0.0029110312461853027,
+      "front_same_session_max_difference": 1.9073486328125e-06,
+      "replay_argmax_change_fraction": 0.001,
+      "same_session_argmax_change_fraction": 0.001,
+      "mean_absolute_probability_difference": 0.00032711384119465947
+    },
+    {
+      "arm": "sheaf",
+      "seed": 11,
+      "split": "test",
+      "max_probability_difference": 0.0,
+      "same_session_repeat_max_difference": 0.0,
+      "front_same_session_max_difference": 3.5762786865234375e-07,
+      "replay_argmax_change_fraction": 0.0,
+      "same_session_argmax_change_fraction": 0.0,
+      "mean_absolute_probability_difference": 0.0
+    },
+    {
+      "arm": "sheaf",
+      "seed": 11,
+      "split": "real",
+      "max_probability_difference": 0.005157262086868286,
+      "same_session_repeat_max_difference": 0.004365146160125732,
+      "front_same_session_max_difference": 2.86102294921875e-06,
+      "replay_argmax_change_fraction": 0.003,
+      "same_session_argmax_change_fraction": 0.004,
+      "mean_absolute_probability_difference": 0.0004137787618674338
+    }
+  ],
+  "locked_sources_unchanged": true,
+  "same_initialization_and_schedule_within_seed": true,
+  "real_optimizer_updates": 0,
+  "validation_labels_used": false,
+  "projection": "Fixed RP16, data-independent map; no hidden-value scaling.",
+  "replay_threshold_change_disclosed": "Initial .005 criterion failed on weighted/test at .00749716. This audit records actual within-session and checkpoint replay differences and argmax changes; broad .1 assertion is only a corruption guard, not an exact-reproduction claim. No training/model/primary predictions changed.",
+  "limits": "Floating point GPU/DGL reduction variability is a hypothesis to be checked by repeat tests, not a proven cause. Query truth stored alongside artifacts for scoring, never passed to predictor. Preflight separately tests poisoned hidden/query values and class-name invariance."
+}

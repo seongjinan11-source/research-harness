@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 37개 프로젝트 · 156개 기록 (실패·중단 47개, 보존 35개, 교훈 51개, 미실행 23개)
+총 38개 프로젝트 · 160개 기록 (실패·중단 48개, 보존 36개, 교훈 53개, 미실행 23개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1375,6 +1375,42 @@ ACM k20 FISF oracle90.43%, IMDB59.16%. Oracle은 query 정답으로 만든 상�
 
 - 확대 금지: 큰 oracle gap만으로 selector 학습의 성공 가능성을 입증하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/reliability.md](../findings/sources/graphpfn-2026-11-01/reliability.md)
+
+## Confidence-weighted Sheaf-PCFI GraphPFN synthetic-to-real pilot
+
+실험 조건: Homophily/heterophily only,notheterogeneous;publicGraphPFNinit;6arms×3seeds;syntheticonlyCE,realweightsfixed.
+
+### SPCFI-F01 [실패·중단] Synthetic-trained2D sheaf transport를PCFI에넣으면양수전파및signed scalar보다강하고실제homo/heterophily missing을함께개선한다.
+
+6arms×3seeds/6912validupdates,32newtestgraphs. SyntheticPCFI100 45.159129%,sheaf 45.291396%,difference+0.132267%p CI[-0.5853678292204626, 0.968491878548879]. Realheterophily sheaf-PCFI -0.391835%p,nativePCFI -3.308039%p. Gates allFalse. NegativeLP Texas63.5374%,Wisconsin42.7250%.
+
+- 판정: 현재RP16·symmetric-contraction·384updates구성은확대하지않는다. 일부CiteSeer증분과signed대비이득을범용성공으로승격하지않는다.
+- 원인·병목 [원인 미상]: PCFI100/200/weighted대비syntheticaccuracy CI가0을포함하며realheterophily평균도낮다. 고유원인은미상이다. 첫좌표직접전달계수a<0비율은0이고cross-stalk사용은관측됐다. 행렬의다른성분·고유값·반복경로의signed효과는이통계로판정할수없다. Warm/RP16/학습량/prior차이를확인된원인으로단정하지않는다.
+- 닫은 범위: WarmPCFI100+learned100의특정2Dper-cell수축함수족,공유459parameterrouter,RP16,4selecteddevelopmentgraphs,동일syntheticbank의현재학습구성.
+- 닫지 않은 것: 원본NSD/FSD-CAP/CPGNN/CLP재현,physicalfeature공간에서의새학습,일반sheaf표현력,heterogeneousgraph는미검증이다. 원본피처추론firstrep는별도진단이며그곳의양수신호도보존한다.
+- 재검토 조건: 새근거가현재함수족/geometry식별/전이의구체적제약을바꾸고,원본피처PCFI와weighted및고정negativeLP보다유리한정보·계산을설명할때.
+- 기준선: 동일prior·초기화·updates의Mask/PCFI100/200/weighted/signed;원본피처PCFI→동일PFN;public초기화;양/음LP;관측0source포함;학습/추론비용과수치재현.
+- 최소 재검증: 구조/예산을새bank전에고정하고feature/label법칙을분리한다. 새로운syntheticgraph및미사용realgraph에서missing-queryaccuracy와확률점수,피처제거/셔플,negative実사용과numericalreplay를함께평가한다.
+- 원문: [findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/protocol.json](../findings/sources/sheaf-pcfi-2026-11-03/protocol.json); [findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json](../findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json); [findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json](../findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json); [findings/sources/sheaf-pcfi-2026-11-03/results/audit.json](../findings/sources/sheaf-pcfi-2026-11-03/results/audit.json); [findings/sources/sheaf-pcfi-2026-11-03/results/cost.json](../findings/sources/sheaf-pcfi-2026-11-03/results/cost.json); [findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md)
+
+### SPCFI-P01 [보존] Confidence·source clamp·inter-channel correction을보존한미분가능2Dtransport와PFN의synthetic-only학습을구현했다.
+
+18validcheckpoints,6912updates,0realupdates. PCFI/SciPymax3.58e-7,identityerrors<7.8e-7,routerweightupdate>6e-5. Hidden/querypoisonPASS. Sheafcross-stalkmean0.055230;first_diagonal_a_negative_fraction0;other_entries/eigenvalues_not_claimed. Nativefirstrep:Texas34.0278%/Wisconsin30.1821%,nativePCFI32.0076%/26.4356%.
+
+- 확대 금지: 유효operator구현을성능우위·새sheaf원리·원본NSD재현으로쓰지않는다. Nativefirstrep/seed11은독립확인도원본피처학습도아니며Texas에서는native_signed가더높다. Strictnumericalreplay는완전통과하지않았다.
+- 원문: [findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/protocol.json](../findings/sources/sheaf-pcfi-2026-11-03/protocol.json); [findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json](../findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json); [findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json](../findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json); [findings/sources/sheaf-pcfi-2026-11-03/results/audit.json](../findings/sources/sheaf-pcfi-2026-11-03/results/audit.json); [findings/sources/sheaf-pcfi-2026-11-03/results/cost.json](../findings/sources/sheaf-pcfi-2026-11-03/results/cost.json); [findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md)
+
+### SPCFI-L01 [교훈] Labelheterophily·featureenergy·projection순서·source수·학습된transport부호는각각실측해야한다.
+
+RP16primary에서sheaf의heterophily이득은없다. 원본피처추론firstrep에는일부개선이있다. Synthetictest의첫좌표직접전달계수a<0비율은0이며2D행렬전체의부호와구분한다. Texas99.5%mask의0source도유지했다. 고정negativeLP가현재PFN보다Texas/Wisconsin에서높다.
+
+- 원문: [findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/protocol.json](../findings/sources/sheaf-pcfi-2026-11-03/protocol.json); [findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json](../findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json); [findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json](../findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json); [findings/sources/sheaf-pcfi-2026-11-03/results/audit.json](../findings/sources/sheaf-pcfi-2026-11-03/results/audit.json); [findings/sources/sheaf-pcfi-2026-11-03/results/cost.json](../findings/sources/sheaf-pcfi-2026-11-03/results/cost.json); [findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md)
+
+### SPCFI-L02 [교훈] 설계교정과수치재현의실패는메소드성능과별도로공개한다.
+
+초기class수-featurelaw결합을비교성능판독전에발견해1152updates를폐기하고모든arm을다시학습했다. Oldfolder보존. Numericalreplay .005criterion failed;max0.00749716,selectedepisodeargmaxmax2.4793%. Savedpredictions unchanged;CIconditionalonstoredpredictions.
+
+- 원문: [findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/protocol.json](../findings/sources/sheaf-pcfi-2026-11-03/protocol.json); [findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json](../findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json); [findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json](../findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json); [findings/sources/sheaf-pcfi-2026-11-03/results/audit.json](../findings/sources/sheaf-pcfi-2026-11-03/results/audit.json); [findings/sources/sheaf-pcfi-2026-11-03/results/cost.json](../findings/sources/sheaf-pcfi-2026-11-03/results/cost.json); [findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md)
 
 ## Frozen GraphPFN sign-transport diagnostic
 
