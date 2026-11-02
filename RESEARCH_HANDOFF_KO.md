@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: SSGP/GGP 문헌과 Gaussian 비교까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-02. 최근 업데이트: 누적56편의 문헌과 미실행 학습 후보 재독까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -23,7 +23,11 @@
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 35편, 연구 기록 144항목, 아이디어 8개가 있다. 34개 프로젝트 묶음이며 실패·중단42, 보존32, 교훈48, 미실행22항목이다. 144번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v10은 SSGP/GGP 문헌과 Gaussian 추가 비교까지 포함한다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 56편, 연구 기록 144항목, 아이디어 9개가 있다. 34개 프로젝트 묶음이며 실패·중단42, 보존32, 교훈48, 미실행22항목이다. 144번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+
+## 재독 후 미실행 학습 후보
+
+56편의 정리 항목을 선별하고 SSGP/GGP·CSBM·Spatial Context·PFN separability·PEMix 원문을 다시 대조했다. 새 후보는 missing rate 대신 관측 feature의 기대 Bayes 분류 가치로 사전학습 observation prior를 구성하는 것이다. 기존 regret 재가중·mechanism crossing·subgraph 선택과 차이를 명시했고, value-of-information 자체의 선행연구 중복도 남겼다. **새 학습·성능·novelty 입증이 없는 미실행 가설**이다. [재독 메모와 수식](ideas/decision-value-observation-prior.md), [아이디어 기록](ideas/decision-value-observation-prior.yaml).
 
 ## Gaussian/probit의 비교 범위와 선행연구 기록
 

@@ -1,0 +1,22 @@
+id: decision-value-observation-prior
+status: untested
+note: ideas/decision-value-observation-prior.md
+date: '2026-11-02'
+text: '미실행 가설: 같은 graph/feature/label 생성 family와 관측 예산에서, 관측값을 공개하기 전 prior predictive
+  평균으로 계산한 feature 관측의 Bayes 0-1 risk 감소를 이용해 학습 mask 배치를 생성한다. 기존 finite-bank reference-regret
+  재가중이나 mechanism crossing과 분리하며, 배포 때 mask를 선택하거나 숨은 값을 조회하지 않는다. 동일 PFN과 CE를 유지하고
+  random mask, 거리/coverage 규칙, 동일 생성 비용 대조와 비교한다. 정확도 관련 VOI와 log-loss 관련 conditional
+  MI를 분리하며, 현재 Gaussian working model을 원 generator의 exact teacher로 가정하지 않는다. 새로운 성능·novelty
+  입증은 없다.'
+tags:
+- observation-mask
+- pretraining-data
+- model-based-baseline
+- eval-protocol
+keywords:
+- Bayes decision value
+- observation design
+- conditional information
+- mask prior
+- synthetic task generation
+- feature utility

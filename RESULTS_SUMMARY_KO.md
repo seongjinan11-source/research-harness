@@ -14,6 +14,10 @@
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
 
+## 재독 후 미실행 학습 후보
+
+56편의 정리 항목을 선별하고 SSGP/GGP·CSBM·Spatial Context·PFN separability·PEMix 원문을 다시 대조했다. 새 후보는 missing rate 대신 관측 feature의 기대 Bayes 분류 가치로 사전학습 observation prior를 구성하는 것이다. 기존 regret 재가중·mechanism crossing·subgraph 선택과 차이를 명시했고, value-of-information 자체의 선행연구 중복도 남겼다. **새 학습·성능·novelty 입증이 없는 미실행 가설**이다. [재독 메모와 수식](ideas/decision-value-observation-prior.md), [아이디어 기록](ideas/decision-value-observation-prior.yaml).
+
 ## Gaussian/probit의 비교 범위와 선행연구 기록
 
 SSGP(IJCAI2007)와 GGP(NeurIPS2018)의 원문·인용·가정·강점·출처별 한계를 추가했다. 현재 Gaussian/probit는 두 논문의 재현이 아니며, 논문 코드로 실행한 대조는 아직 없다. [SSGP](papers/SSGP.yaml), [GGP](papers/GGP.yaml), [문헌과 결과 대조 보고서](findings/sources/gaussian-probit-review-2026-11-02/REVIEW_KO.md).
@@ -265,4 +269,4 @@ CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teach
 3. 필요한 수치는 연결된 보고서와 [144개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-02_v10.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-02_v11.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
