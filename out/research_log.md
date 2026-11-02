@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 30개 프로젝트 · 133개 기록 (실패·중단 39개, 보존 29개, 교훈 43개, 미실행 22개)
+총 31개 프로젝트 · 135개 기록 (실패·중단 40개, 보존 29개, 교훈 44개, 미실행 22개)
 
 ## Common-context witness 고정 곱셈
 
@@ -422,6 +422,29 @@ ACM/IMDB helper feature는 target feature에서 파생된 집계일 수 있음�
 
 - 확대 금지: 한 graph의 secondary이며 전체 조건 우위·novelty·독립 다중 domain 검증으로 확대하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/pubmed.md](../findings/sources/graphpfn-2026-11-01/pubmed.md); [findings/sources/graphpfn-2026-11-01/views.md](../findings/sources/graphpfn-2026-11-01/views.md)
+
+## Literal PCFI inside public GraphPFN
+
+실험 조건: Same public initialization/frozen policy.4 arms×3seeds×256 updates, actual PCFI100steps/1correlation/one12-layer PFN. Primary fresh64 graphs의 자기 피처 없는 query accuracy.
+
+### IPCFI-F01 [실패·중단] 실제 PCFI 전파를 공개 PFN 내부에 배치하고 context/PFN 상태로 전파 가중치를 조절하면 외부 PCFI·내부 고정 PCFI·label-blind router보다 분류가 좋아진다.
+
+external:accuracy49.243267%/NLL0.867128/Brier0.559929; internal_fixed:accuracy49.900698%/NLL0.863062/Brier0.558362; context:accuracy49.413514%/NLL0.863255/Brier0.558625; label_blind:accuracy49.690554%/NLL0.863001/Brier0.558301. context-external accuracy%p +0.170247 CI[-0.557668,+0.866045], NLL -0.003872 CI[-0.010121,+0.001957]; context-internal_fixed accuracy%p -0.487184 CI[-0.861821,-0.130108], NLL +0.000193 CI[-0.001404,+0.001615]; context-label_blind accuracy%p -0.277040 CI[-0.704964,+0.174764], NLL +0.000254 CI[-0.001276,+0.001713]. Primary=False, full2%p guard=True, expand=False.
+
+- 판정: 현재100-step literal PCFI/25-step interleaving/513-parameter router/256-update 구현의 메인 방법 확대를 보류한다. 이 final bank에서 head/loss/temperature/전파 횟수/학습량을 바꿔 구제하지 않는다.
+- 원인·병목 [원인 미상]: 사전 비교를 모두 만족하는 분류 이득을 확인하지 못했다. 전파가 이미 충분한지, context 요약·bounded router·frozen backbone/input interface·prior·최적화·학습량 중 무엇 때문인지는 분리하지 않아 고유 원인은 미상이다. 상수 신호를 row-stochastic 전파로 바꿀 수 없다는 수학적 제약을 전체 실패의 단일 원인으로 쓰지 않는다.
+- 닫은 범위: Official graph/SCM small family의 nodes154~192, physical features8~16, classes2~4. 새64 train/4dev/64final graphs, uniform/clustered node90/99.5 missing, native pair/RMS/mask input,4 arms×3seeds×256 CE updates, 자기 피처 없는 query accuracy primary.
+- 닫지 않은 것: JIMP-F01의 generic refiner와 별개 실행이다. 외부 PCFI의 실제 그래프 성과, 모든 내부 PCFI 방식, 다른 전파/표현/학습 원리, native NaN interface, 실제 heterograph·unseen schema 일반을 기각하지 않는다.
+- 재검토 조건: 현재 동일한 numeric propagation을 다시 배치하거나 bounded weight만 조절하는 것을 넘어, 새 그래프의 context가 전달해야 할 정보를 바꾸는 구체적인 연산이 강한 외부 PCFI/PFN보다 유리할 근거가 생길 때.
+- 기준선: 동일 actual PCFI/100steps/1correlation/12PFN layers의 외부 PCFI, 내부 고정, context와 strict label-blind router, 같은 train tasks/CE/initialization/updates. Context-frequency/uniform prior와 NLL/Brier/CPU→CPU end-to-end 비용도 보고한다.
+- 최소 재검증: 본 final bank는 tuning하지 않는다. 변경할 정보·연산과 사전 primary를 먼저 정하고 독립 graph/schema에서 node-level 대신 base-graph paired 분석으로 한 번 검증한다. Labels-only 효과와 PFN-feedback 전체 효과를 구분한다.
+- 원문: [findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md](../findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md); [findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md](../findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md); [findings/sources/internal-pcfi-2026-11-02/protocol.json](../findings/sources/internal-pcfi-2026-11-02/protocol.json); [findings/sources/internal-pcfi-2026-11-02/results/statistics.json](../findings/sources/internal-pcfi-2026-11-02/results/statistics.json); [findings/sources/internal-pcfi-2026-11-02/results/cost.json](../findings/sources/internal-pcfi-2026-11-02/results/cost.json); [findings/sources/internal-pcfi-2026-11-02/results/audit.json](../findings/sources/internal-pcfi-2026-11-02/results/audit.json); [findings/sources/internal-pcfi-2026-11-02/results/preflight.json](../findings/sources/internal-pcfi-2026-11-02/results/preflight.json); [findings/sources/internal-pcfi-2026-11-02/results/development_actual_pcfi_parity.json](../findings/sources/internal-pcfi-2026-11-02/results/development_actual_pcfi_parity.json)
+
+### IPCFI-L01 [교훈] 실제 PCFI 내부화와 이전 MLP refiner, strict router label-blindness와 labels-only 효과를 분리한다.
+
+새 구현은 PCFI의 공간 전파와 채널 상관 보정 연산을 유지했고 초기 context/label-blind 예측은 내부 고정과 같았다. 작은 그래프의 SciPy 차이는 최대4.43e-7, 실제 dev FP32 kernel/cache 차이는8.54e-5였다. Label-blind router에 PFN states와 labels를 오염시켜도 routing은 같았다.
+
+- 원문: [findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md](../findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md); [findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md](../findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md); [findings/sources/internal-pcfi-2026-11-02/results/preflight.json](../findings/sources/internal-pcfi-2026-11-02/results/preflight.json); [findings/sources/internal-pcfi-2026-11-02/results/development_numeric_repair.json](../findings/sources/internal-pcfi-2026-11-02/results/development_numeric_repair.json)
 
 ## Public GraphPFN 내부 대치 상태 갱신
 

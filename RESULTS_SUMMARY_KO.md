@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은30개 프로젝트 묶음의133항목이다. 실패·중단39개, 보존29개, 교훈43개, 미실행22개이며 **133번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은31개 프로젝트 묶음의135항목이다. 실패·중단40개, 보존29개, 교훈44개, 미실행22개이며 **135번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,19 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## 최신 실제 PCFI 내부화 실험
+
+공개 GraphPFN에서 실제 PCFI를100회 전파+1회 상관 보정으로 구현하고, 외부 처리·내부 고정·context router·strict label-blind router를 각각3seeds/256 updates로 새 학습했다. 이전 generic MLP refiner 재실행이 아니다. Fresh64 final graphs의 uniform/clustered90/99.5%에서 자기 피처 없는 query가 primary다.
+
+| 방법 | Accuracy % | NLL |
+|---|---:|---:|
+| external | 49.24327 | 0.867128 |
+| internal_fixed | 49.90070 | 0.863062 |
+| context | 49.41351 | 0.863255 |
+| label_blind | 49.69055 | 0.863001 |
+
+context-external accuracy%p +0.170247 CI[-0.557668,+0.866045], NLL -0.003872 CI[-0.010121,+0.001957]; context-internal_fixed accuracy%p -0.487184 CI[-0.861821,-0.130108], NLL +0.000193 CI[-0.001404,+0.001615]; context-label_blind accuracy%p -0.277040 CI[-0.704964,+0.174764], NLL +0.000254 CI[-0.001276,+0.001713]. 사전 primary=False, full2%p guard=True, 확대 기준=False. 이 구현의 확대는 보류하며, 고유 실패 원인은 미상이다. Context 대조는 labels-only가 아니라 PFN feedback 경로 전체다. [보고서](findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md), [계산 정의](findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md), [구조화 판정](findings/internal-pcfi.yaml).
 
 ## 최신 feature-law Factor 실험
 
@@ -50,7 +63,7 @@ DBLP의 native source-block 비교에서는 k5 full의 cross-type paths89.96%, a
 
 근거: [원본 좌표 대치](findings/sources/graphpfn-2026-11-01/raw.md), [관측값 개입](findings/sources/graphpfn-2026-11-01/feature_intervention.md), [LP·relational 비교](findings/sources/graphpfn-2026-11-01/history.md), [native block](findings/sources/graphpfn-2026-11-01/native_blocks.md). 결과를 보고 새 그래프의 predictor를 자동 선택하는 규칙을 얻은 것은 아니다.
 
-## 최근 다섯 학습 실험의 실행 범위
+## 최근 여섯 학습 실험의 실행 범위
 
 | 실험 | 새 학습 모델 | 모델당 성공 updates | 평가 bank와 주 조건 |
 |---|---:|---:|---|
@@ -59,8 +72,9 @@ DBLP의 native source-block 비교에서는 k5 full의 cross-type paths89.96%, a
 | Disjoint Factor PFN | 3 arms × 3 seeds =9 | 256 | 새96 graphs 중 matched48, observed nodes3/6, context와 feature source 분리, accuracy primary |
 | Exact Grid6 teacher | 2 arms × 3 seeds =6 | 256 | 기존 train bank 재사용, 새96 graphs 중 matched48, Mask teacher KL primary; 기존 CE9개 재평가 |
 | Feature-law cell Factor | 5 arms × 3 seeds =15 | 256 | 새192 graphs 중 heldout96, 자기 피처 없는 query accuracy primary,3개 law 모두 학습 |
+| 실제 PCFI 내부화 | 4 arms × 3 seeds =12 | 256 | 새64 final graphs, node90/99.5% 자기 피처 없는 query accuracy primary, 외부/내부 고정/context/label-blind |
 
-합계는 **새 모델51개와 성공 updates16,128회**다. Teacher 실험의 기존 CE9개 재평가를 새 학습으로 더하지 않았다. 이 합계는 최근 다섯 실험만 포함하며 전체 연구의 총 학습량이 아니다. 기존 circuit·Factor·teacher는12 nodes, binary classes,2 Gaussian features,2 relations의 family다. 새 cell 실험은 같은 graph 규모에서 feature law3종을 포함한다. Factor·teacher·cell 실험의3/6 observed nodes는75/50% node missing이며99.5% 조건이 아니다. 이 네 소형 실험에서 원래 graph의 edge/nonedge는 완전히 관측된다.
+합계는 **새 모델63개와 성공 updates19,200회**다. Teacher 실험의 기존 CE9개 재평가를 새 학습으로 더하지 않았다. 이 합계는 최근 여섯 실험만 포함하며 전체 연구의 총 학습량이 아니다. 기존 circuit·Factor·teacher는12 nodes, binary classes,2 Gaussian features,2 relations의 family다. Cell 실험은 같은 graph 규모에서 feature law3종을 포함한다. Factor·teacher·cell 실험의3/6 observed nodes는75/50% node missing이며99.5% 조건이 아니다. 이 네 소형 실험에서 원래 graph의 edge/nonedge는 완전히 관측된다. 최신 PCFI 내부화는 별도 official graph/SCM family와 공개 GraphPFN이며12-node Factor의 절대 정확도와 직접 비교하지 않는다.
 
 ### Feature memory 분리
 
@@ -202,7 +216,7 @@ CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teach
 
 1. 이 요약으로 전체 결과와 범위를 확인한다.
 2. [연구 인계서](RESEARCH_HANDOFF_KO.md)의 요청문으로 독립 검토를 요청한다.
-3. 필요한 수치는 연결된 보고서와 [133개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
+3. 필요한 수치는 연결된 보고서와 [135개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-02_v5.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-02_v6.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.

@@ -1,0 +1,65 @@
+{
+  "controls": {
+    "uniform": {
+      "means": {
+        "accuracy": 0.4232139788668114,
+        "nll": 0.8883065599889661,
+        "brier": 0.57421875
+      },
+      "context_minus_prior": {
+        "accuracy": {
+          "delta": 0.07092116029849083,
+          "ci95": [
+            0.009640798833497001,
+            0.13263223635982604
+          ]
+        },
+        "nll": {
+          "delta": -0.02505122697770209,
+          "ci95": [
+            -0.05455555686530002,
+            0.000560377393134328
+          ]
+        },
+        "brier": {
+          "delta": -0.015593580270716705,
+          "ci95": [
+            -0.03572671298521185,
+            0.0018725961232039354
+          ]
+        }
+      }
+    },
+    "context_frequency": {
+      "means": {
+        "accuracy": 0.45997761507286183,
+        "nll": 0.8667546687050772,
+        "brier": 0.5605054450209679
+      },
+      "context_minus_prior": {
+        "accuracy": {
+          "delta": 0.034157524092440314,
+          "ci95": [
+            -0.01941526234455842,
+            0.08581582651901258
+          ]
+        },
+        "nll": {
+          "delta": -0.0034993356938128987,
+          "ci95": [
+            -0.025168506684314872,
+            0.01538023246935627
+          ]
+        },
+        "brier": {
+          "delta": -0.0018802752916845262,
+          "ci95": [
+            -0.01598959175046945,
+            0.01100185273454924
+          ]
+        }
+      }
+    }
+  },
+  "scope": "Nonlearned probability controls computed for transparency after design lock. Secondary; no change to preregistered primary or choice of model/checkpoint."
+}

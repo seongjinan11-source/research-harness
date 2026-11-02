@@ -1,0 +1,52 @@
+TRAIN external 13 32 0.9397
+TRAIN external 13 64 0.82895
+TRAIN external 13 96 0.82468
+TRAIN external 13 128 0.85434
+TRAIN external 13 160 0.85083
+TRAIN external 13 192 0.80993
+TRAIN external 13 224 0.80018
+TRAIN external 13 256 0.8005
+EVAL external 13 112
+EVAL external 13 224
+EVAL external 13 336
+EVAL external 13 448
+EVALUATED external 13 448
+TRAIN internal_fixed 13 32 0.9425
+TRAIN internal_fixed 13 64 0.79834
+TRAIN internal_fixed 13 96 0.83126
+TRAIN internal_fixed 13 128 0.86052
+TRAIN internal_fixed 13 160 0.8535
+TRAIN internal_fixed 13 192 0.81382
+TRAIN internal_fixed 13 224 0.80264
+TRAIN internal_fixed 13 256 0.79873
+EVAL internal_fixed 13 112
+EVAL internal_fixed 13 224
+EVAL internal_fixed 13 336
+EVAL internal_fixed 13 448
+EVALUATED internal_fixed 13 448
+TRAIN context 13 32 0.94082
+TRAIN context 13 64 0.79925
+TRAIN context 13 96 0.8332
+TRAIN context 13 128 0.87048
+TRAIN context 13 160 0.85451
+TRAIN context 13 192 0.81119
+TRAIN context 13 224 0.80228
+TRAIN context 13 256 0.80228
+EVAL context 13 112
+EVAL context 13 224
+EVAL context 13 336
+EVAL context 13 448
+EVALUATED context 13 448
+TRAIN label_blind 13 32 0.93973
+TRAIN label_blind 13 64 0.79727
+TRAIN label_blind 13 96 0.8318
+TRAIN label_blind 13 128 0.86009
+TRAIN label_blind 13 160 0.85517
+TRAIN label_blind 13 192 0.81585
+TRAIN label_blind 13 224 0.80326
+TRAIN label_blind 13 256 0.80028
+EVAL label_blind 13 112
+EVAL label_blind 13 224
+EVAL label_blind 13 336
+EVAL label_blind 13 448
+EVALUATED label_blind 13 448

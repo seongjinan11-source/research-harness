@@ -1,0 +1,238 @@
+{
+  "source_config_bank_and_checkpoint_hashes_valid": true,
+  "all_saved_predictions_recomputed": true,
+  "same_schedules_and_common_initialization": true,
+  "same_frozen_backbone": true,
+  "exact_operations_and_clamps_all_evaluations": true,
+  "new_models": 12,
+  "successful_updates": 3072,
+  "exposures": 3072,
+  "development_smoke_updates_separate": 4,
+  "training_seconds_sum": 771.465462599881,
+  "replays": [
+    {
+      "arm": "external",
+      "seed": 11,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "external",
+      "seed": 11,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "external",
+      "seed": 11,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "external",
+      "seed": 12,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "external",
+      "seed": 12,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "external",
+      "seed": 12,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "external",
+      "seed": 13,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "external",
+      "seed": 13,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "external",
+      "seed": 13,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "internal_fixed",
+      "seed": 11,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "internal_fixed",
+      "seed": 11,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "internal_fixed",
+      "seed": 11,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "internal_fixed",
+      "seed": 12,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "internal_fixed",
+      "seed": 12,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "internal_fixed",
+      "seed": 12,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "internal_fixed",
+      "seed": 13,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "internal_fixed",
+      "seed": 13,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "internal_fixed",
+      "seed": 13,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "context",
+      "seed": 11,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "context",
+      "seed": 11,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "context",
+      "seed": 11,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "context",
+      "seed": 12,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "context",
+      "seed": 12,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "context",
+      "seed": 12,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "context",
+      "seed": 13,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "context",
+      "seed": 13,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "context",
+      "seed": 13,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "label_blind",
+      "seed": 11,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "label_blind",
+      "seed": 11,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "label_blind",
+      "seed": 11,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "label_blind",
+      "seed": 12,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "label_blind",
+      "seed": 12,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "label_blind",
+      "seed": 12,
+      "episode": 230,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "label_blind",
+      "seed": 13,
+      "episode": 1,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "label_blind",
+      "seed": 13,
+      "episode": 116,
+      "max_abs_error": 0.0
+    },
+    {
+      "arm": "label_blind",
+      "seed": 13,
+      "episode": 230,
+      "max_abs_error": 0.0
+    }
+  ],
+  "counts": {
+    "external": 4012259,
+    "internal_fixed": 4012259,
+    "context": 4012772,
+    "label_blind": 4012772
+  },
+  "zero_observation_primary_episodes": 24,
+  "primary_episodes": 256
+}

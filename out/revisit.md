@@ -223,6 +223,26 @@
   - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
   - 기록된 강점: Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.
 
+## IPCFI-F01 — 실제 PCFI 전파를 공개 PFN 내부에 배치하고 context/PFN 상태로 전파 가중치를 조절하면 외부 PCFI·내부 고정 PCFI·label-blind router보다 분류가 좋아진다.
+
+- 판정: 현재100-step literal PCFI/25-step interleaving/513-parameter router/256-update 구현의 메인 방법 확대를 보류한다. 이 final bank에서 head/loss/temperature/전파 횟수/학습량을 바꿔 구제하지 않는다.
+- 원인·병목 [원인 미상]: 사전 비교를 모두 만족하는 분류 이득을 확인하지 못했다. 전파가 이미 충분한지, context 요약·bounded router·frozen backbone/input interface·prior·최적화·학습량 중 무엇 때문인지는 분리하지 않아 고유 원인은 미상이다. 상수 신호를 row-stochastic 전파로 바꿀 수 없다는 수학적 제약을 전체 실패의 단일 원인으로 쓰지 않는다.
+- 반증·배제한 설명: 이전 generic MLP refiner가 아니라 원래 PCFI의 거리 confidence/관측값 clamp/100회 전파/1회 correlation을 구현했고 독립 SciPy 기준과 비교했다.; 네 모델은 같은 공개 초기화·train tasks·seed별 schedule·256 successful CE updates·100 propagation steps·1 correlation·12PFN layers다. Context/label-blind의513개 router 파라미터와 초기 예측도 같다. 고정 대조는 이513개가 없으므로 모든 arm의 정확한 동일 파라미터 비교라고 주장하지 않는다.; Label-blind router는 labels가 섞인 PFN hidden까지 읽지 않는다. 실제 optimizer smoke, router/hidden gradient, 저장/복원, poison/clamp와 source/bank/prediction hash/replay를 확인했다.
+- 재검토 조건: 현재 동일한 numeric propagation을 다시 배치하거나 bounded weight만 조절하는 것을 넘어, 새 그래프의 context가 전달해야 할 정보를 바꾸는 구체적인 연산이 강한 외부 PCFI/PFN보다 유리할 근거가 생길 때.
+- 먼저 이겨야 할 기준선: 동일 actual PCFI/100steps/1correlation/12PFN layers의 외부 PCFI, 내부 고정, context와 strict label-blind router, 같은 train tasks/CE/initialization/updates. Context-frequency/uniform prior와 NLL/Brier/CPU→CPU end-to-end 비용도 보고한다.
+- 최소 재검증: 본 final bank는 tuning하지 않는다. 변경할 정보·연산과 사전 primary를 먼저 정하고 독립 graph/schema에서 node-level 대신 base-graph paired 분석으로 한 번 검증한다. Labels-only 효과와 PFN-feedback 전체 효과를 구분한다.
+- 닫지 않은 것: JIMP-F01의 generic refiner와 별개 실행이다. 외부 PCFI의 실제 그래프 성과, 모든 내부 PCFI 방식, 다른 전파/표현/학습 원리, native NaN interface, 실제 heterograph·unseen schema 일반을 기각하지 않는다.
+- 원문: [findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md](../findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md); [findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md](../findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md); [findings/sources/internal-pcfi-2026-11-02/protocol.json](../findings/sources/internal-pcfi-2026-11-02/protocol.json); [findings/sources/internal-pcfi-2026-11-02/results/statistics.json](../findings/sources/internal-pcfi-2026-11-02/results/statistics.json); [findings/sources/internal-pcfi-2026-11-02/results/cost.json](../findings/sources/internal-pcfi-2026-11-02/results/cost.json); [findings/sources/internal-pcfi-2026-11-02/results/audit.json](../findings/sources/internal-pcfi-2026-11-02/results/audit.json); [findings/sources/internal-pcfi-2026-11-02/results/preflight.json](../findings/sources/internal-pcfi-2026-11-02/results/preflight.json); [findings/sources/internal-pcfi-2026-11-02/results/development_actual_pcfi_parity.json](../findings/sources/internal-pcfi-2026-11-02/results/development_actual_pcfi_parity.json)
+
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, tokenization; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+  - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
+- [Ephris](https://arxiv.org/abs/2609.37057): 복수 태그 일치 (약한 단서); tags=graph-structure-use, tokenization; keywords=-
+  - 기록된 강점: Section 3.1과 Appendix B의 feature별 Gather는 context와 query 노드를 모두 사용한다. Context-label embedding도 압축 전 scalar token에 제공하므로, feature memory를 label-context 노드에만 한정하지 않는 직접적인 선행 대조다.
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 복수 태그 일치 (약한 단서); tags=observation-mask, tokenization; keywords=-
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
+  - 기록된 강점: Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.
+
 ## JIMP-F01 — PFN 내부의 반복 대치가 동일한 대치기를 PFN 앞에서 실행하는 것과 강한 동일 예산 Plain을 넘는다.
 
 - 판정: 현재 구현 확대 보류·내부 대치 증분 미입증

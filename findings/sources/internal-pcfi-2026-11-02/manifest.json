@@ -1,0 +1,769 @@
+{
+  "date": "2026-11-02",
+  "scope": "Literal PCFI inside a public PFN; sources copied verbatim. Checkpoints/raw input and probability banks stay in workspace.",
+  "sources": [
+    {
+      "alias": "bank/development.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\bank\\development.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/bank/development.json",
+      "sha256": "e3c686be0c4dfca7a3392fc7018314d144f4eb1ddb56e99607a303158501dae0",
+      "bytes": 158130
+    },
+    {
+      "alias": "bank/generator.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\bank\\generator.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/bank/generator.json",
+      "sha256": "b6ec315fb813b10f2c98f65ab19b6c9a9166fdf971c4336a9e965938922bf329",
+      "bytes": 8023
+    },
+    {
+      "alias": "bank/manifest.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\bank\\manifest.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/bank/manifest.json",
+      "sha256": "0dd41abcc233c5601422ca6918a1d1ee9d250b34afc84256d6c698670dc38448",
+      "bytes": 407440
+    },
+    {
+      "alias": "logs/finalize.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\finalize.err.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/finalize.err.log",
+      "sha256": "580cc57f8463083c466da3fa184ef5a011dc36246ec2e6dfdd4e626e29ed6c1f",
+      "bytes": 9315
+    },
+    {
+      "alias": "logs/finalize.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\finalize.out.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/finalize.out.log",
+      "sha256": "1f4d72a843feaf8bb8a5e46679406086af4dbcffe589daa180edaeb916454d54",
+      "bytes": 165
+    },
+    {
+      "alias": "logs/finish.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\finish.err.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/finish.err.log",
+      "sha256": "44493977a1a260ae6372ac48e16f4f015b48400f80e0eee877817eb2821674b1",
+      "bytes": 1187
+    },
+    {
+      "alias": "logs/finish.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\finish.out.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/finish.out.log",
+      "sha256": "cab544f078f11f42b5dfeb83cceb631bb4c9ec0ff4810732236e75db127c45cd",
+      "bytes": 2113
+    },
+    {
+      "alias": "logs/prepare.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\prepare.err.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/prepare.err.log",
+      "sha256": "e52d024693785e2f80cc77a3f3e43019f7c72d3679cd5bfdaa3178cea2fcdeb4",
+      "bytes": 18361
+    },
+    {
+      "alias": "logs/prepare.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\prepare.out.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/prepare.out.log",
+      "sha256": "5d2d65be4eafc8d7e29f68fcd26453c0c2f59070ce58e1542389619bff017b03",
+      "bytes": 171
+    },
+    {
+      "alias": "logs/seed11.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\seed11.err.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/seed11.err.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/seed11.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\seed11.out.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/seed11.out.log",
+      "sha256": "fa402fabe44bd71a02614554f14a03529bdb2d37c6ba7bd54193b34a9ab4ba22",
+      "bytes": 1541
+    },
+    {
+      "alias": "logs/seed12.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\seed12.err.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/seed12.err.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/seed12.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\seed12.out.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/seed12.out.log",
+      "sha256": "d4fb3413f682555a93224d713cd362db98758e3e181f42f083c8e14aa78e4beb",
+      "bytes": 1544
+    },
+    {
+      "alias": "logs/seed13.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\seed13.err.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/seed13.err.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/seed13.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\logs\\seed13.out.log",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/logs/seed13.out.log",
+      "sha256": "942c0145a1d11d2e782e427a0eda3c9527c8eff72e4679ec722d2117fc1e7169",
+      "bytes": 1538
+    },
+    {
+      "alias": "METHOD_KO.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\METHOD_KO.md",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md",
+      "sha256": "3a3fd6417a0f7380b1ec9374a9812c0aa726bd5a60606b78d1d69ac977250b25",
+      "bytes": 3825
+    },
+    {
+      "alias": "pcfi_analysis.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\pcfi_analysis.py",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/pcfi_analysis.py",
+      "sha256": "83561021616cd494231abc6f7c6cc07ccf12ed0bc8267f9ffb6dd7169ee7bbda",
+      "bytes": 8252
+    },
+    {
+      "alias": "pcfi_checks.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\pcfi_checks.py",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/pcfi_checks.py",
+      "sha256": "4ece2f4c54d47e284c09e8e320770e17aa07f83fb5b01386d918727400f2007d",
+      "bytes": 7569
+    },
+    {
+      "alias": "pcfi_model.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\pcfi_model.py",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/pcfi_model.py",
+      "sha256": "86932dc6b5f961fc2209b326b99fb49ca07e535496bee676054fcda21993458e",
+      "bytes": 6803
+    },
+    {
+      "alias": "pcfi_shared.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\pcfi_shared.py",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/pcfi_shared.py",
+      "sha256": "d54c4144a3fa501bbbb72ebfde5b5ada794ab12e61390221f8ebf55b4d438d98",
+      "bytes": 2809
+    },
+    {
+      "alias": "pcfi_tasks.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\pcfi_tasks.py",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/pcfi_tasks.py",
+      "sha256": "b804b8e92129e0e95897c230780060981183d568ac220e8f521df62222b1720c",
+      "bytes": 4788
+    },
+    {
+      "alias": "pcfi_trial.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\pcfi_trial.py",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/pcfi_trial.py",
+      "sha256": "7ea1d4e8cd2f07890568fc9cd80e29cd163873f4d82720990de9822b6b78b95b",
+      "bytes": 6181
+    },
+    {
+      "alias": "protocol.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\protocol.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/protocol.json",
+      "sha256": "fbc558b6a62edffe22f9fb1663a2b15fdf876efc8a2ce38326aae2eb125db412",
+      "bytes": 6650
+    },
+    {
+      "alias": "REPORT_KO.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\REPORT_KO.md",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md",
+      "sha256": "6444ca16d54e501dcc0c2f441dce58b3f16d031f96f076c1ea4afd19f312cee2",
+      "bytes": 7955
+    },
+    {
+      "alias": "results/audit.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\audit.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/audit.json",
+      "sha256": "f35a930be0be4e938d6dbeb2a5e061deb2427ff2e6ba7816f41789ab0bad5e25",
+      "bytes": 4681
+    },
+    {
+      "alias": "results/context_s11/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s11\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s11/eval_time.json",
+      "sha256": "0135bd989b6c30143af80cd3f5b2516ebbcd522a63224d48243d29439a8a9648",
+      "bytes": 36
+    },
+    {
+      "alias": "results/context_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s11\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s11/evaluation.json",
+      "sha256": "342f76d99a1281f8fca981c94a2710ddcbe549f841d47ac5b7204fdc9a244d99",
+      "bytes": 479269
+    },
+    {
+      "alias": "results/context_s11/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s11\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s11/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/context_s11/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s11\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s11/progress.json",
+      "sha256": "795d79f171aba4eac1a00e12a4d0d0807c98d2a2e52c7d3ffc106f5c9f34cae3",
+      "bytes": 137
+    },
+    {
+      "alias": "results/context_s11/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s11\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s11/train_log.json",
+      "sha256": "31e8d80c20fedd25f89df5f963a2eb165a06e6605fd919fea726eb9e10e846fa",
+      "bytes": 39370
+    },
+    {
+      "alias": "results/context_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s11\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s11/training.json",
+      "sha256": "90341a91d471b44735e5768aa501a761345d9199c26ac240eff7459afbb4a687",
+      "bytes": 746
+    },
+    {
+      "alias": "results/context_s12/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s12\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s12/eval_time.json",
+      "sha256": "cd7830bd35e6cf68a032dfdc3d8023902d93fcbb0b8dc8458f925850e06b3e47",
+      "bytes": 36
+    },
+    {
+      "alias": "results/context_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s12\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s12/evaluation.json",
+      "sha256": "d94542d467c53a260917ec65a2c279144b5a908cf3ee1c340dd3128d7f4c3454",
+      "bytes": 479131
+    },
+    {
+      "alias": "results/context_s12/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s12\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s12/overflow.json",
+      "sha256": "ecd19d4a679040c8f629a14a953a277b13146037b511b208bb9bdf7c1e239c3e",
+      "bytes": 68
+    },
+    {
+      "alias": "results/context_s12/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s12\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s12/progress.json",
+      "sha256": "a2238685c0d9b6353255dc43a41f100626d51cf50a564ab036f5b1f5d4fe6969",
+      "bytes": 137
+    },
+    {
+      "alias": "results/context_s12/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s12\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s12/train_log.json",
+      "sha256": "8ac4f584360919073fc614f6ad59397403cb43f5b111212e2e05f2f4251c2265",
+      "bytes": 39388
+    },
+    {
+      "alias": "results/context_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s12\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s12/training.json",
+      "sha256": "2f45f43b488bea34ec95c1734873496ba0c98f6362b7d07fe7b9eb7baee68288",
+      "bytes": 747
+    },
+    {
+      "alias": "results/context_s13/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s13\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s13/eval_time.json",
+      "sha256": "7df46dac3d0e9f0d431178f7b6fd9231e9d9b1345fb612bb6eae3d68552d7a29",
+      "bytes": 37
+    },
+    {
+      "alias": "results/context_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s13\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s13/evaluation.json",
+      "sha256": "3078634b5ac282dcfa3db072fd9c899d128c0e6ee1c4555e7b32533ffe5a3c70",
+      "bytes": 479226
+    },
+    {
+      "alias": "results/context_s13/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s13\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s13/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/context_s13/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s13\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s13/progress.json",
+      "sha256": "05457cb902b3d7f897f61e0c59758e188a483f08f9d4cb24a8338cd08e4c9d38",
+      "bytes": 138
+    },
+    {
+      "alias": "results/context_s13/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s13\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s13/train_log.json",
+      "sha256": "45f7be1044a3fb7e044d534868cf304040ef196865775bee2061852e538343c0",
+      "bytes": 39382
+    },
+    {
+      "alias": "results/context_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\context_s13\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/context_s13/training.json",
+      "sha256": "6c2342fb1113880fb82cbad94ec8ac4b28af25de2dd19add41ea481ddf0fc9b8",
+      "bytes": 747
+    },
+    {
+      "alias": "results/cost.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\cost.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/cost.json",
+      "sha256": "438d872b405bf1624d56965deab593947ba6c5f2d19a9efa4bc22f2a1d05ef7b",
+      "bytes": 21313
+    },
+    {
+      "alias": "results/design.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\design.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/design.json",
+      "sha256": "014c993c21e08d6b761813a1d13b4bdda842c81f49e44badf4edfabc7a97728a",
+      "bytes": 1359
+    },
+    {
+      "alias": "results/development_actual_pcfi_parity.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\development_actual_pcfi_parity.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/development_actual_pcfi_parity.json",
+      "sha256": "2dc57a8f9c46f2217b2f2b532a2723ef0237abdc1df32432e63d538b0dc55c83",
+      "bytes": 2539
+    },
+    {
+      "alias": "results/development_numeric_repair.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\development_numeric_repair.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/development_numeric_repair.json",
+      "sha256": "005e4fa75cc10967740eeaaa2bd3f2e712b84d944ecc74fc6a67a71eb8cb80b4",
+      "bytes": 215
+    },
+    {
+      "alias": "results/external_s11/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s11\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s11/eval_time.json",
+      "sha256": "e40613bf8ffdd4a655d24e92b38f94090610b4a42bf13447625a70a2e0f480d7",
+      "bytes": 37
+    },
+    {
+      "alias": "results/external_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s11\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s11/evaluation.json",
+      "sha256": "1721d03c6771174f4883ef7a53d8931833bbdc3cacd7d0770d4add77b131f148",
+      "bytes": 479923
+    },
+    {
+      "alias": "results/external_s11/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s11\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s11/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/external_s11/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s11\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s11/progress.json",
+      "sha256": "ac7322ef3b3a337f3b9136bce2d935ef2dcca1111ed8655f429018a054bc904b",
+      "bytes": 137
+    },
+    {
+      "alias": "results/external_s11/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s11\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s11/train_log.json",
+      "sha256": "850d2e30a72ee29f3c4a81de76f4f43236bc2fc21b01cb50842cd3970cce83e4",
+      "bytes": 39369
+    },
+    {
+      "alias": "results/external_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s11\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s11/training.json",
+      "sha256": "752112555c2786fe7ab820c981e19ad18b77222dc28c10eb5dfda8164cf09daa",
+      "bytes": 748
+    },
+    {
+      "alias": "results/external_s12/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s12\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s12/eval_time.json",
+      "sha256": "8ca82da79c13d1b330f1495c02f3c1d9d5d1e0dc316e9e5aa520e5497b5d3060",
+      "bytes": 37
+    },
+    {
+      "alias": "results/external_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s12\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s12/evaluation.json",
+      "sha256": "9f92f5a0c8d4f9ff52550633ebc861cc8a079912796d630c6276502ebb4502ea",
+      "bytes": 480083
+    },
+    {
+      "alias": "results/external_s12/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s12\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s12/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/external_s12/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s12\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s12/progress.json",
+      "sha256": "bb606007d0b042e5c08a0d20ad121c512e0c25f002bf18ee101eaf4a4906e76a",
+      "bytes": 137
+    },
+    {
+      "alias": "results/external_s12/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s12\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s12/train_log.json",
+      "sha256": "80842a8f4a26261cbd28c1b6202c7d5ab93b6ba7dae511fbae18ab0bab5b0370",
+      "bytes": 39406
+    },
+    {
+      "alias": "results/external_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s12\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s12/training.json",
+      "sha256": "c29f57b1dcd7db204a122073696fbae8ba447bf7030fcc197dca14490e5a60ce",
+      "bytes": 749
+    },
+    {
+      "alias": "results/external_s13/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s13\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s13/eval_time.json",
+      "sha256": "9bf38542c1fb01f74781e79692b804929c20529f30e4d34d9a43d519943fdd22",
+      "bytes": 37
+    },
+    {
+      "alias": "results/external_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s13\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s13/evaluation.json",
+      "sha256": "1cda6b867c1fb2c2a35d379c371a60ffca412cba2a6a69ef6d2f348e2e06dda1",
+      "bytes": 480073
+    },
+    {
+      "alias": "results/external_s13/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s13\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s13/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/external_s13/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s13\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s13/progress.json",
+      "sha256": "02bbede78c1e4214fa758b11bbe660522f41a611420573e577e4c50d66182d0e",
+      "bytes": 133
+    },
+    {
+      "alias": "results/external_s13/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s13\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s13/train_log.json",
+      "sha256": "8eb17c69904241a53363520fa60c23a7c033655e58f0ac6161005f0c6d836742",
+      "bytes": 39432
+    },
+    {
+      "alias": "results/external_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\external_s13\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/external_s13/training.json",
+      "sha256": "15a166ec0a729c5011603f0fd2980b94a0f53d0189469741d66ef99ff38c20d8",
+      "bytes": 749
+    },
+    {
+      "alias": "results/internal_fixed_s11/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s11\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s11/eval_time.json",
+      "sha256": "9733319d0ee43ba57f32a3fc5a646e365f6d85b1f51527421adf9e2190ae31c8",
+      "bytes": 37
+    },
+    {
+      "alias": "results/internal_fixed_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s11\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s11/evaluation.json",
+      "sha256": "46e81fb648fb6d05ade2bfa67927d1a4f1cfc642bd151fa5e1b9698ae8cd7606",
+      "bytes": 485574
+    },
+    {
+      "alias": "results/internal_fixed_s11/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s11\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s11/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/internal_fixed_s11/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s11\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s11/progress.json",
+      "sha256": "383aaea7c74ce8d54adf3b7a4c3e19056b8e450503510d3cfc0d3f4af32d075c",
+      "bytes": 136
+    },
+    {
+      "alias": "results/internal_fixed_s11/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s11\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s11/train_log.json",
+      "sha256": "6f361222e34d4554b85a99ae5c6424a3954010758ae9d19bbb4672341cc54d3b",
+      "bytes": 39385
+    },
+    {
+      "alias": "results/internal_fixed_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s11\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s11/training.json",
+      "sha256": "85f2afd978b6f423c4a5a379125347e743ed6cd4173360155b04777fa038612c",
+      "bytes": 754
+    },
+    {
+      "alias": "results/internal_fixed_s12/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s12\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s12/eval_time.json",
+      "sha256": "b2a9b2bcd0577afbc9230d6f7f94a44450ec59afbfaa431e7fff081ca7b19b9e",
+      "bytes": 36
+    },
+    {
+      "alias": "results/internal_fixed_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s12\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s12/evaluation.json",
+      "sha256": "fc079105e58b238cdee5339b025cbd309a482c79c738cbc5c6601b7ba3895779",
+      "bytes": 485608
+    },
+    {
+      "alias": "results/internal_fixed_s12/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s12\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s12/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/internal_fixed_s12/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s12\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s12/progress.json",
+      "sha256": "12bcebbe194511b868fcb00b422831efb401bf654da92350bae0347b1d3843fa",
+      "bytes": 136
+    },
+    {
+      "alias": "results/internal_fixed_s12/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s12\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s12/train_log.json",
+      "sha256": "2aaa89a095d7a962ab7beb42d0f1d8e361a2c1787edd726dcf90e6d790c14ec9",
+      "bytes": 39399
+    },
+    {
+      "alias": "results/internal_fixed_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s12\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s12/training.json",
+      "sha256": "2df106da0c56e71b30790c9da5ce1ec5618a44ec77be35bdef8b94fca08460ed",
+      "bytes": 754
+    },
+    {
+      "alias": "results/internal_fixed_s13/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s13\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s13/eval_time.json",
+      "sha256": "80f2713744531d36b7e3afc1967112968d6f3d313391b3a9e9509489ac84d8e9",
+      "bytes": 37
+    },
+    {
+      "alias": "results/internal_fixed_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s13\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s13/evaluation.json",
+      "sha256": "0da18445da81b41bcf711dd0b790ceaf7076f7c93855165ff3d4bedc8053aa17",
+      "bytes": 485318
+    },
+    {
+      "alias": "results/internal_fixed_s13/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s13\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s13/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/internal_fixed_s13/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s13\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s13/progress.json",
+      "sha256": "8cd7b30784b58c86907bef36676a1d04ec44ee3ff6155bb4f16020bb7b496125",
+      "bytes": 138
+    },
+    {
+      "alias": "results/internal_fixed_s13/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s13\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s13/train_log.json",
+      "sha256": "858a64794ebee79f72cd0ff261eca33eaf9e4a8a3514fd63a7be6e78a04f64ec",
+      "bytes": 39412
+    },
+    {
+      "alias": "results/internal_fixed_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\internal_fixed_s13\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/internal_fixed_s13/training.json",
+      "sha256": "ce6346567be434a886f76e0c0a7458693df64428b53cf841ae5e0508d7b14f3c",
+      "bytes": 754
+    },
+    {
+      "alias": "results/label_blind_s11/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s11\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s11/eval_time.json",
+      "sha256": "79758ac7227bd13162288e375bb55fee236e81229a1922cd753d1461ef0e174d",
+      "bytes": 35
+    },
+    {
+      "alias": "results/label_blind_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s11\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s11/evaluation.json",
+      "sha256": "ab3c6b7882481c4f9c5e49386774ddb7a0dac1aef2330c6ab1ba4a62c1209381",
+      "bytes": 482759
+    },
+    {
+      "alias": "results/label_blind_s11/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s11\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s11/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/label_blind_s11/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s11\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s11/progress.json",
+      "sha256": "c4e62ea3fdf1cc14ed85524f33f87c891dbcfe72870874679ec776e8b1402b78",
+      "bytes": 137
+    },
+    {
+      "alias": "results/label_blind_s11/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s11\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s11/train_log.json",
+      "sha256": "bc4f577f050b16c6a7ea2993ece1ac00b74ded8cd85b259ec957db51fd85be5c",
+      "bytes": 39404
+    },
+    {
+      "alias": "results/label_blind_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s11\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s11/training.json",
+      "sha256": "dd4aae12f9c4fdee68171999784f907cf64f38a9b16ed5ee9f7f69fbf88ab755",
+      "bytes": 750
+    },
+    {
+      "alias": "results/label_blind_s12/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s12\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s12/eval_time.json",
+      "sha256": "da7f73278ac58fae1046b38304ebe66b37e5293a1e685176c1a43c912391511b",
+      "bytes": 36
+    },
+    {
+      "alias": "results/label_blind_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s12\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s12/evaluation.json",
+      "sha256": "c23198c11b69fe4eee379082accdf7cb3ae6f412f44a61174d4bb7d22c715e00",
+      "bytes": 482835
+    },
+    {
+      "alias": "results/label_blind_s12/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s12\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s12/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/label_blind_s12/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s12\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s12/progress.json",
+      "sha256": "96819a5bf82e9997389bc682fa11591c701748a2f403b5230294fdf0478c7b77",
+      "bytes": 137
+    },
+    {
+      "alias": "results/label_blind_s12/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s12\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s12/train_log.json",
+      "sha256": "c04402bdf619fa7ec4b3a234e26f40ad85e99caa077bb565223c9d764510a0d4",
+      "bytes": 39376
+    },
+    {
+      "alias": "results/label_blind_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s12\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s12/training.json",
+      "sha256": "394b831d8049d658985a6738e5fe23f4e171174278278b8b171983174d734ce5",
+      "bytes": 751
+    },
+    {
+      "alias": "results/label_blind_s13/eval_time.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s13\\eval_time.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s13/eval_time.json",
+      "sha256": "bd3c8bc71726bc11f0101a7e0c3287919444f8f2c96947b463bce3fc1e7766fc",
+      "bytes": 37
+    },
+    {
+      "alias": "results/label_blind_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s13\\evaluation.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s13/evaluation.json",
+      "sha256": "3b9d991d57eb5af2ee9e56b2cd8f5016c015d6fa7b4d6521db76a1a60ca094f3",
+      "bytes": 482925
+    },
+    {
+      "alias": "results/label_blind_s13/overflow.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s13\\overflow.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s13/overflow.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/label_blind_s13/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s13\\progress.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s13/progress.json",
+      "sha256": "9ff9d605666f79a1065022583f6d8f4343961ab87d60072e8f58246b9944893a",
+      "bytes": 135
+    },
+    {
+      "alias": "results/label_blind_s13/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s13\\train_log.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s13/train_log.json",
+      "sha256": "a959a303ad602300477ee2abe71fdeffc99bb9edbde57c1a1d0b0d791c4d9e7c",
+      "bytes": 39383
+    },
+    {
+      "alias": "results/label_blind_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\label_blind_s13\\training.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/label_blind_s13/training.json",
+      "sha256": "8e60837ad9e7136767ffe596f7aaaa453066009932f68926db098112a6c8d12e",
+      "bytes": 751
+    },
+    {
+      "alias": "results/lock.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\lock.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/lock.json",
+      "sha256": "3f43dc3be6fb360c5ddca997346d53e830d8aeeee74ca49f3b48e6a0ad9bc2c4",
+      "bytes": 1565
+    },
+    {
+      "alias": "results/placement_secondary.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\placement_secondary.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/placement_secondary.json",
+      "sha256": "9e1de5a4f9f27ddc0cfd07f8c7f76dc18b52730312aea0b83759fd02d2bc27d3",
+      "bytes": 668
+    },
+    {
+      "alias": "results/preflight.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\preflight.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/preflight.json",
+      "sha256": "0e4353093058c7bbef3a42e4dfc819ab74c4c3c2bcee67807914939812c39f03",
+      "bytes": 1910
+    },
+    {
+      "alias": "results/prior_controls_secondary.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\prior_controls_secondary.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/prior_controls_secondary.json",
+      "sha256": "366ad02e238a7be8b46984fe9fd433290998523645cd1edb057f92b495133478",
+      "bytes": 1679
+    },
+    {
+      "alias": "results/statistics.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\results\\statistics.json",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/results/statistics.json",
+      "sha256": "4e23cf720b089ec0eccff44370edff9e69c999dcdb5daebbd2d0bd348c28c00e",
+      "bytes": 33161
+    },
+    {
+      "alias": "runtime/archive.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\runtime\\archive.py",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/runtime/archive.py",
+      "sha256": "3585162f5a1f1b4327fd122901d1cb260694d11ce83e9f82823b194c74598d66",
+      "bytes": 13039
+    },
+    {
+      "alias": "runtime/finish.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\runtime\\finish.py",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/runtime/finish.py",
+      "sha256": "e5863e683feaec5d05e3604d8c2e3b981fe8e4e3f8834d08b4fd2dec210e45b5",
+      "bytes": 750
+    },
+    {
+      "alias": "runtime/report.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\internal_pcfi_pilot\\runtime\\report.py",
+      "snapshot": "findings/sources/internal-pcfi-2026-11-02/runtime/report.py",
+      "sha256": "c9e3fa961b3b1c87ad9c15c78c5b792814ecad8756ccadd2cf00559028260831",
+      "bytes": 10468
+    }
+  ]
+}

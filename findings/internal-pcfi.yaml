@@ -1,0 +1,91 @@
+project: Literal PCFI inside public GraphPFN
+date: '2026-11-02'
+source: findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md
+setting: Same public initialization/frozen policy.4 arms×3seeds×256 updates, actual PCFI100steps/1correlation/one12-layer PFN. Primary fresh64 graphs의 자기 피처 없는 query accuracy.
+related:
+- GraphPFN
+entries:
+- id: IPCFI-F01
+  kind: failure
+  claim: 실제 PCFI 전파를 공개 PFN 내부에 배치하고 context/PFN 상태로 전파 가중치를 조절하면 외부 PCFI·내부 고정 PCFI·label-blind router보다 분류가 좋아진다.
+  observation: external:accuracy49.243267%/NLL0.867128/Brier0.559929; internal_fixed:accuracy49.900698%/NLL0.863062/Brier0.558362; context:accuracy49.413514%/NLL0.863255/Brier0.558625;
+    label_blind:accuracy49.690554%/NLL0.863001/Brier0.558301. context-external accuracy%p +0.170247 CI[-0.557668,+0.866045], NLL -0.003872 CI[-0.010121,+0.001957]; context-internal_fixed
+    accuracy%p -0.487184 CI[-0.861821,-0.130108], NLL +0.000193 CI[-0.001404,+0.001615]; context-label_blind accuracy%p -0.277040 CI[-0.704964,+0.174764], NLL +0.000254 CI[-0.001276,+0.001713].
+    Primary=False, full2%p guard=True, expand=False.
+  verdict: 현재100-step literal PCFI/25-step interleaving/513-parameter router/256-update 구현의 메인 방법 확대를 보류한다. 이 final bank에서 head/loss/temperature/전파 횟수/학습량을 바꿔 구제하지 않는다.
+  failure_reason: 사전 비교를 모두 만족하는 분류 이득을 확인하지 못했다. 전파가 이미 충분한지, context 요약·bounded router·frozen backbone/input interface·prior·최적화·학습량 중 무엇 때문인지는 분리하지 않아 고유 원인은 미상이다. 상수 신호를
+    row-stochastic 전파로 바꿀 수 없다는 수학적 제약을 전체 실패의 단일 원인으로 쓰지 않는다.
+  reason_status: unknown
+  excluded_explanations:
+  - 이전 generic MLP refiner가 아니라 원래 PCFI의 거리 confidence/관측값 clamp/100회 전파/1회 correlation을 구현했고 독립 SciPy 기준과 비교했다.
+  - 네 모델은 같은 공개 초기화·train tasks·seed별 schedule·256 successful CE updates·100 propagation steps·1 correlation·12PFN layers다. Context/label-blind의513개 router 파라미터와 초기 예측도 같다.
+    고정 대조는 이513개가 없으므로 모든 arm의 정확한 동일 파라미터 비교라고 주장하지 않는다.
+  - Label-blind router는 labels가 섞인 PFN hidden까지 읽지 않는다. 실제 optimizer smoke, router/hidden gradient, 저장/복원, poison/clamp와 source/bank/prediction hash/replay를 확인했다.
+  closed_scope: Official graph/SCM small family의 nodes154~192, physical features8~16, classes2~4. 새64 train/4dev/64final graphs, uniform/clustered node90/99.5 missing, native
+    pair/RMS/mask input,4 arms×3seeds×256 CE updates, 자기 피처 없는 query accuracy primary.
+  not_closed: JIMP-F01의 generic refiner와 별개 실행이다. 외부 PCFI의 실제 그래프 성과, 모든 내부 PCFI 방식, 다른 전파/표현/학습 원리, native NaN interface, 실제 heterograph·unseen schema 일반을 기각하지 않는다.
+  reopen_when: 현재 동일한 numeric propagation을 다시 배치하거나 bounded weight만 조절하는 것을 넘어, 새 그래프의 context가 전달해야 할 정보를 바꾸는 구체적인 연산이 강한 외부 PCFI/PFN보다 유리할 근거가 생길 때.
+  comparison_floor: 동일 actual PCFI/100steps/1correlation/12PFN layers의 외부 PCFI, 내부 고정, context와 strict label-blind router, 같은 train tasks/CE/initialization/updates. Context-frequency/uniform
+    prior와 NLL/Brier/CPU→CPU end-to-end 비용도 보고한다.
+  recheck: 본 final bank는 tuning하지 않는다. 변경할 정보·연산과 사전 primary를 먼저 정하고 독립 graph/schema에서 node-level 대신 base-graph paired 분석으로 한 번 검증한다. Labels-only 효과와 PFN-feedback 전체 효과를 구분한다.
+  reopen_tags:
+  - observation-mask
+  - graph-structure-use
+  - tokenization
+  reopen_keywords:
+  - context conditioned propagation
+  - nonconstant feature evidence
+  - native PFN feature state
+  - feature propagation bottleneck
+  revisit_status: open
+  tags:
+  - observation-mask
+  - graph-structure-use
+  - tokenization
+  - eval-protocol
+  - inference-cost
+  keywords:
+  - literal PCFI
+  - internal diffusion
+  - PFN interleaving
+  - context feedback
+  - strict label blind
+  - confidence weighted propagation
+  - observed clamp
+  - same propagation budget
+  source_refs:
+  - findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md
+  - findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md
+  - findings/sources/internal-pcfi-2026-11-02/protocol.json
+  - findings/sources/internal-pcfi-2026-11-02/results/statistics.json
+  - findings/sources/internal-pcfi-2026-11-02/results/cost.json
+  - findings/sources/internal-pcfi-2026-11-02/results/audit.json
+  - findings/sources/internal-pcfi-2026-11-02/results/preflight.json
+  - findings/sources/internal-pcfi-2026-11-02/results/development_actual_pcfi_parity.json
+  evidence: 새12모델3072 successful CE updates. Dev4 smoke optimizer steps 폐기 후 design lock, 이후64개 final graphs를 생성했다. Primary는4 node-missing episodes×3fixed seeds를 graph 안에서
+    평균하고5000 paired bootstrap. 실제 graph/새 schema가 아니다.
+- id: IPCFI-L01
+  kind: lesson
+  claim: 실제 PCFI 내부화와 이전 MLP refiner, strict router label-blindness와 labels-only 효과를 분리한다.
+  observation: 새 구현은 PCFI의 공간 전파와 채널 상관 보정 연산을 유지했고 초기 context/label-blind 예측은 내부 고정과 같았다. 작은 그래프의 SciPy 차이는 최대4.43e-7, 실제 dev FP32 kernel/cache 차이는8.54e-5였다. Label-blind router에
+    PFN states와 labels를 오염시켜도 routing은 같았다.
+  interpretation: PFN 중간 feature tokens도 이미 context labels를 담을 수 있어 명시적 label input만0으로 두면 label-blind가 아니다. 본 대조는 hidden 경로 전체를 없애므로 PFN feedback+context의 묶음 효과이고 labels-only
+    원인분해가 아니다. 고정 PCFI를25step씩 끼우는 것과 앞에서100step을 완료하는 것은 PFN의 비선형 층 때문에 일반적으로 동치가 아니다. Row-stochastic 연산은 상수 신호를 유지하며 zero-source/zero-start에서 새 값을 만들지 못한다. 이를 바로 전체 failure
+    원인으로 단정하지 않는다.
+  tags:
+  - observation-mask
+  - tokenization
+  - graph-structure-use
+  - eval-protocol
+  keywords:
+  - PCFI versus MLP refiner
+  - hidden label leakage
+  - strict label blind routing
+  - propagation placement
+  - constant signal invariance
+  source_refs:
+  - findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md
+  - findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md
+  - findings/sources/internal-pcfi-2026-11-02/results/preflight.json
+  - findings/sources/internal-pcfi-2026-11-02/results/development_numeric_repair.json
+  evidence: 실제 source/수치검사와 미분·정규화 연산의 범위다. 최초 atomic scatter의 반복 차이는 final 생성 전에 dense 정규화/bmm로 보완했고 네 dev smoke weights는 폐기했다.

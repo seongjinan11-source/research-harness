@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: feature-law Factor cell 교체 결과까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-02. 최근 업데이트: 실제 PCFI 내부화 결과까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -16,13 +16,27 @@
 
 이 파일만 읽어도 핵심 판단은 가능하다. 세부 확인은 다음 순서가 좋다.
 
-1. [최신 Grid6 teacher 판정](findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md), [전체 보고서](findings/sources/grid6-teacher-2026-11-02/REPORT_KO.md), [학습 수식](findings/sources/grid6-teacher-2026-11-02/METHOD.md); 직전 [disjoint-factor 보고서](findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)와 [모델 수식](findings/sources/disjoint-factor-2026-11-02/METHOD.md)
+1. [최신 실제 PCFI 내부화 보고서](findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md)와 [계산 정의](findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md). 실제100-step PCFI를 넣은 네 모델을 학습했으며 이전 generic MLP refiner와 별개다.
+2. [Grid6 teacher 판정](findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md), [전체 보고서](findings/sources/grid6-teacher-2026-11-02/REPORT_KO.md), [학습 수식](findings/sources/grid6-teacher-2026-11-02/METHOD.md); 직전 [disjoint-factor 보고서](findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)와 [모델 수식](findings/sources/disjoint-factor-2026-11-02/METHOD.md)
 2. [직전 circuit 보고서](findings/sources/direct-marginal-2026-11-02/REPORT_KO.md), [feature-memory 보고서](findings/sources/feature-memory-2026-11-02/REPORT_KO.md)
 3. [누적 실패·보존·미실행 기록](out/research_log.md): 필요한 갈래만 검색한다.
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 33편, 연구 기록 133항목, 아이디어 8개가 있다. 30개 프로젝트 묶음이며 실패·중단39, 보존29, 교훈43, 미실행22항목이다. 133번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v5는 feature-law Factor 최종 결과까지 포함한다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 33편, 연구 기록 135항목, 아이디어 8개가 있다. 31개 프로젝트 묶음이며 실패·중단40, 보존29, 교훈44, 미실행22항목이다. 135번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v6는 실제 PCFI 내부화까지 포함한다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+
+## 최신 실제 PCFI 내부화 실험
+
+공개 GraphPFN에서 실제 PCFI를100회 전파+1회 상관 보정으로 구현하고, 외부 처리·내부 고정·context router·strict label-blind router를 각각3seeds/256 updates로 새 학습했다. 이전 generic MLP refiner 재실행이 아니다. Fresh64 final graphs의 uniform/clustered90/99.5%에서 자기 피처 없는 query가 primary다.
+
+| 방법 | Accuracy % | NLL |
+|---|---:|---:|
+| external | 49.24327 | 0.867128 |
+| internal_fixed | 49.90070 | 0.863062 |
+| context | 49.41351 | 0.863255 |
+| label_blind | 49.69055 | 0.863001 |
+
+context-external accuracy%p +0.170247 CI[-0.557668,+0.866045], NLL -0.003872 CI[-0.010121,+0.001957]; context-internal_fixed accuracy%p -0.487184 CI[-0.861821,-0.130108], NLL +0.000193 CI[-0.001404,+0.001615]; context-label_blind accuracy%p -0.277040 CI[-0.704964,+0.174764], NLL +0.000254 CI[-0.001276,+0.001713]. 사전 primary=False, full2%p guard=True, 확대 기준=False. 이 구현의 확대는 보류하며, 고유 실패 원인은 미상이다. Context 대조는 labels-only가 아니라 PFN feedback 경로 전체다. [보고서](findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md), [계산 정의](findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md), [구조화 판정](findings/internal-pcfi.yaml).
 
 ## 최신 feature-law Factor 실험
 
@@ -214,6 +228,7 @@ Disjoint Factor PFN은 초기 fresh bank에서 Mask/PCFI PFN보다 정확도가 
 Factor의 teacher KL은 약26.1% 감소했지만 accuracy 개선은 없었고, query 자신도 feature가 없는 secondary의 accuracy는1.16%p 하락했어.
 Physical feature 제거는 CE와 distilled Factor 둘 다 성능을 낮췄으므로 feature 활용 자체는 보존하되, 그것이 distillation으로 새로 생겼다고 해석하지 말아줘.
 추가로 feature-law3종을 학습한 cell-only 비교에서도 adaptive64.47%, static64.41%, 기존64.63%로 primary 적응 이득을 확인하지 못했어. 부호 제약을 푸는 것만 다시 제안하지 말아줘.
+그 뒤 실제 PCFI100-step 전파를 PFN 내부에 배치해 외부/내부 고정/context/label-blind 네 모델을3seeds로 학습했어. 별도64개 multiclass graph에서 context49.41%, 내부 고정49.90%, 외부49.24%였고 context−고정은−0.487%p CI[−0.862,−0.130]이었어. 현재 bounded weight router의 이득은 미확인이며, 단순히 PCFI를 안에 넣자는 제안을 다시 새 후보로 취급하지 말아줘. 모든 내부화 방법을 기각한 결과는 아니야.
 연결 연산·signed evidence·자기 role-update는 이미 구현했어. 현재 학생도 neural potential을 학습하므로 이를 모델 전체가 고정 Gaussian인 것으로 취급하지 말아줘.
 다음 후보는 현재 binary column orientation/pairwise factor로 부족한 feature–relation 의존성과, 그것을 학습해 새 graph로 전이하는 구체적인 연산을 설명해줘.
 

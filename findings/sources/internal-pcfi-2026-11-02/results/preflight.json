@@ -1,0 +1,61 @@
+{
+  "errors": {
+    "pcfi_scipy_False": 4.424262431967918e-07,
+    "pcfi_scipy_True": 2.5883538712356824e-07,
+    "external_poison": 0.0,
+    "external_node_permutation": 0.0,
+    "external_checkpoint_reload": 0.0,
+    "internal_fixed_poison": 0.0,
+    "internal_fixed_node_permutation": 0.0009423494338989258,
+    "internal_fixed_checkpoint_reload": 0.0,
+    "context_poison": 0.0,
+    "router_class_name_permutation": 0.0,
+    "context_node_permutation": 0.002431154251098633,
+    "full_router_blank": 0.0,
+    "context_checkpoint_reload": 0.0,
+    "label_blind_poison": 0.0,
+    "strict_label_blind_router": 0.0,
+    "label_blind_node_permutation": 0.0009415149688720703,
+    "label_blind_checkpoint_reload": 0.0,
+    "context_initial_vs_internal_fixed": 0.0,
+    "label_blind_initial_vs_internal_fixed": 0.0
+  },
+  "models": [
+    {
+      "arm": "external",
+      "trainable": 4012259,
+      "new": 10200,
+      "smoke_loss": 0.6843873858451843,
+      "grad_norm": 6.0953593254089355,
+      "retries": []
+    },
+    {
+      "arm": "internal_fixed",
+      "trainable": 4012259,
+      "new": 10200,
+      "smoke_loss": 0.659846842288971,
+      "grad_norm": 3.803311586380005,
+      "retries": []
+    },
+    {
+      "arm": "context",
+      "trainable": 4012772,
+      "new": 10713,
+      "smoke_loss": 0.659846842288971,
+      "grad_norm": 3.8096210956573486,
+      "retries": []
+    },
+    {
+      "arm": "label_blind",
+      "trainable": 4012772,
+      "new": 10713,
+      "smoke_loss": 0.659846842288971,
+      "grad_norm": 3.8089444637298584,
+      "retries": []
+    }
+  ],
+  "actual_optimizer_smoke_updates_discarded": 4,
+  "same_common_initialization": true,
+  "same_frozen_weights": true,
+  "scope": "Dev only; initial models/optimizer weights discarded. Numeric PCFI parity and routing path checks do not establish predictive improvement."
+}
