@@ -2,9 +2,9 @@
 
 기준일은2026-11-02다. 목표는 **새 그래프에서 가중치를 다시 학습하지 않고, 불완전한 node feature와 context labels로 분류하는 PFN**이다. Heterogeneous schema로의 확장은 장기 목표다.
 
-현재 독립적인 메인 메소드로 확정한 후보는 없다. 다만 **signed likelihood BP의 효과, 같은 potential의 자기 role-update, conditional circuit의 neural 대조 대비 개선, disjoint feature–label 정보를 연결하는 Factor PFN, Factor의 teacher 분포 근사 개선**은 보존할 결과다. 이 효과들이 강한 model-based 추론보다 좋은 품질·비용이나 실제 graph/schema 전이로 이어졌다는 증거는 아직 부족하다.
+**불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은29개 프로젝트 묶음의129항목이다. 실패·중단38개, 보존28개, 교훈41개, 미실행22개이며 **129번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은29개 프로젝트 묶음의130항목이다. 실패·중단38개, 보존28개, 교훈42개, 미실행22개이며 **130번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -171,11 +171,19 @@ Teacher2048개 offline 준비는15.313s였다. Factor median8.764ms는 Grid6-BP�
 
 미실행이라는 사실이 유망함이나 재학습의 근거는 아니다. 새 후보는 어떤 정보·함수족·추론 연산을 바꾸는지 먼저 명시하고, PCFI/FISF-trained PFN·LP·fixed factors·해당 family의 명시적 추론과 비교해야 한다. 이미 끝난 구성에 이름·head·loss만 추가한 반복과 구분한다.
 
+## 다음 후보가 설명해야 할 학습의 역할
+
+분리된 feature/label source 연결, signed edge/nonedge evidence, 같은 potential의 자기 role-update는 이미 구현한 기능이다. 다음 후보는 현재 함수족으로 부족한 **feature–relation 의존성**을 명시하고, 무엇을 어떻게 학습해 새 graph에서 재학습 없이 활용하는지 설명해야 한다.
+
+현재 Factor 학생도 neural potential과 관측값 계수를 학습한다. 고정된 것은 모든 likelihood 숫자가 아니라 binary class·binary feature-column orientation·pairwise Ising형 factor라는 주요 가정이다. 따라서 기존 결과의 “피처 의미 추론”은 이 작은 방향 잠재변수 범위로 읽어야 한다. 더 복잡한 feature 법칙을 추가했다는 사실만으로 학습의 필요성이나 novelty가 생기지는 않으며, 그 법칙을 다루는 강한 통계 추론과 비교해야 한다.
+
+CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teacher predictive KL을 더 낮췄지만 연결 연산 자체의 발명이나 실제 분류의 범용 이득으로 해석하지 않는다. [연구 판정 원문](findings/sources/factor-position-2026-11-02/user_review.md), [구현 범위](findings/sources/disjoint-factor-2026-11-02/METHOD.md), [teacher 효과](findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md)를 구분한다.
+
 ## 자료를 읽거나 전달하는 순서
 
 1. 이 요약으로 전체 결과와 범위를 확인한다.
 2. [연구 인계서](RESEARCH_HANDOFF_KO.md)의 요청문으로 독립 검토를 요청한다.
-3. 필요한 수치는 연결된 보고서와 [129개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
+3. 필요한 수치는 연결된 보고서와 [130개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-02_v3.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-02_v4.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.

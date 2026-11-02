@@ -71,3 +71,15 @@ entries:
       - findings/sources/grid6-teacher-2026-11-02/protocol.json
       - findings/sources/grid6-teacher-2026-11-02/results/preflight.json
     evidence: 실제 생성·teacher·query loss 경로와 gradient 동등성 검사. Earlier feature-free JR loss 연구와 이번 연속feature/disjoint/parameter-integrated teacher 비교를 구분했다.
+  - id: G6T-L02
+    kind: lesson
+    claim: Factor가 확보한 evidence 연결 연산과 그 연산을 학습하는 독립적인 필요성을 분리한다.
+    observation: Context label→graph factor→관측feature node→shared feature-column latent→다른 node class의 경로가 실제 구현됐다. 새 bank의 feature 제거 하락은 CE Factor에도 있었다. Distillation의 추가 확인 효과는 teacher predictive KL 감소이며 실제 분류·분포 전이의 일반적 우위는 미확인이다.
+    interpretation: 다음 후보는 분리된 피처·라벨 연결, signed evidence, 자기 role-update를 새 기능으로 다시 제안하지 않는다. 현재 학생도 neural potential과 관측값 계수를 학습하므로 이를 전부 고정 Gaussian factor라고 부르지 않는다. 고정된 주요 함수족 가정은 binary class/column orientation과 pairwise Ising형 observed-cell factor다. 새로운 후보는 이 함수족으로 부족한 조건부 feature–relation 의존성을 구체적으로 명시하고, 학습으로 그 의존성을 회수해 새 task에서 활용하는 연산과 강한 통계 대조를 설명해야 한다. 다른 family에서 신경망이 유리할 것이라는 가능성을 이미 확인한 장점으로 쓰지 않는다.
+    tags: [amortized-inference, model-based-baseline, observation-mask, eval-protocol]
+    keywords: [working factor inference, learned potential necessity, feature relation dependency, binary feature orientation, same potential role update, research positioning]
+    source_refs:
+      - findings/sources/factor-position-2026-11-02/user_review.md
+      - findings/sources/disjoint-factor-2026-11-02/METHOD.md
+      - findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md
+    evidence: 사용자 연구 판정을 원문으로 보존하고 기존 구현·보고서와 대조한 해석이다. 새로운 학습·평가나 성능 수치를 추가한 결과가 아니다. 기존129개 항목의 관찰과 판정은 유지한다.

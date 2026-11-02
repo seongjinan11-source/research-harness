@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / 'src'))
 import harness
 
 DATE = '2026-11-02'
-VERSION = 3
+VERSION = 4
 DOCUMENTS = ['RESULTS_SUMMARY_KO.md', 'RESEARCH_HANDOFF_KO.md', 'README.md']
 
 
@@ -25,7 +25,7 @@ def git(*args):
     return subprocess.check_output(['git', '-c', 'core.excludesFile=.git/info/exclude', *args], cwd=ROOT).decode('utf8').strip()
 
 
-def collect():
+def collect(version=VERSION):
     paths = [ROOT / p for p in DOCUMENTS + ['AGENTS.md', 'CLAUDE.md', 'taxonomy.yaml', 'requirements.txt']]
     for name in ['papers', 'ideas', 'findings']:
         paths.extend(p for p in (ROOT / name).rglob('*')
@@ -53,7 +53,7 @@ def collect():
             assert resolved.is_relative_to(ROOT), (document, link)
             assert resolved.relative_to(ROOT).as_posix() in data, (document, link)
     prompt = re.findall(r'```text\s*\n(.*?)```', data['RESEARCH_HANDOFF_KO.md'].decode('utf8'), re.S)[-1].strip()
-    start = f'''GraphPFN 연구 결과 검토 패킷 v{VERSION}
+    start = f'''GraphPFN 연구 결과 검토 패킷 v{version}
 기준일 {DATE}
 
 먼저 RESULTS_SUMMARY_KO.md를 읽고, RESEARCH_HANDOFF_KO.md의 연구 질문과 범위를 확인해 주세요.
@@ -86,18 +86,20 @@ def verify(output):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--output', type=Path, default=ROOT.parent / f'graphpfn_review_packet_{DATE}_v{VERSION}.zip')
+    parser.add_argument('--version', type=int, default=VERSION)
+    parser.add_argument('--output', type=Path)
     parser.add_argument('--verify-only', action='store_true')
     args = parser.parse_args()
-    output = args.output.resolve()
+    assert args.version > 0
+    output = (args.output or ROOT.parent / f'graphpfn_review_packet_{DATE}_v{args.version}.zip').resolve()
     assert output.is_relative_to(ROOT.parent), 'Keep local review artifacts inside this workspace'
     if args.verify_only:
         print(json.dumps(verify(output), ensure_ascii=False, indent=2))
         return
     assert not git('status', '--porcelain'), 'Commit validated research records before creating a versioned packet'
     assert not output.exists(), 'Keep existing versioned packets unchanged; choose a new output name'
-    data, counts = collect()
-    manifest = {'date': DATE, 'version': VERSION, 'source_commit': git('rev-parse', 'HEAD'), 'counts': counts,
+    data, counts = collect(args.version)
+    manifest = {'date': DATE, 'version': args.version, 'source_commit': git('rev-parse', 'HEAD'), 'counts': counts,
                 'purpose': 'Independent review with the cumulative summary, latest Grid6 teacher results and all canonical finding sources; not a complete training environment.',
                 'files': {name: {'bytes': len(blob), 'sha256': hashlib.sha256(blob).hexdigest()} for name, blob in sorted(data.items())}}
     with zipfile.ZipFile(output, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:

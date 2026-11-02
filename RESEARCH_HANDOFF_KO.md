@@ -6,7 +6,9 @@
 
 우리는 **노드 피처가 심하게 결측된 새 그래프에서, target graph 재학습 없이 예측하는 GraphPFN**을 만들고 싶다. 장기적으로 다른 feature 차원과 heterogeneous schema까지 다루되, 현재 실험은 주로 작은 synthetic graph와 일부 실제 그래프에서 수행했다. 여기서 feature missing과 edge observation missing은 다른 문제다.
 
-새로운 이름이나 모듈을 늘리는 것보다, **기존 강한 예측기가 놓치는 정보를 회수하는 학습·추론 원리**를 찾고 싶다. 현재 독립적인 메인 메소드로 확정한 후보는 없다. 그렇다고 모든 시도가 무효인 것은 아니다. Signed likelihood BP, 같은 potential에서의 role update, conditional circuit의 neural baseline 대비 개선, 최근 disjoint-factor predictor의 정확도 개선은 실제로 확인했다. 이 효과를 강한 model-based baseline보다 경쟁력 있는 방법으로 연결하지 못했다.
+**불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Factor는 공개 GraphPFN의 개선 모듈이 아니라 별도로 prior 학습한 작은 structured predictor다. 연결 연산·signed evidence·같은 potential의 자기 role-update는 재사용할 구현 자산이다. Distillation의 추가 성과는 현재 teacher 분포 근사 개선이며 분류·분포 전이의 일반적 우위는 아니다.
+
+다음 후보는 현재 함수족으로 부족한 feature–relation 의존성과 그것을 학습·전이하는 추론 연산을 설명해야 한다. 현재 Factor에도 neural potential이 있으므로 모델 전체를 고정 Gaussian factor라고 부르지 않는다. 주요 가정은 binary class/feature-column orientation과 pairwise Ising형 factor이며, 범용 feature semantics를 학습했다고 주장하지 않는다. 이미 구현한 연결 기능에 이름·head·teacher만 추가하는 제안과 구분한다.
 
 이번 검토는 새로운 실험을 즉시 실행하라는 요청이 아니다. 아래 사실과 실패 범위를 검토하고, 설득력 있는 후속 메소드가 있는지 독립적으로 판단해 달라.
 
@@ -20,7 +22,7 @@
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 33편, 연구 기록 129항목, 아이디어 8개가 있다. 29개 프로젝트 묶음이며 실패·중단38, 보존28, 교훈41, 미실행22항목이다. 129번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v3는 이번 Grid6 teacher 후속·실험 요약과 모든 findings source snapshots를 포함한다. 기존 v2는 disjoint-factor까지이며 Grid6 teacher 후속이 없다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 33편, 연구 기록 130항목, 아이디어 8개가 있다. 29개 프로젝트 묶음이며 실패·중단38, 보존28, 교훈42, 미실행22항목이다. 130번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v4는 이번 연구 포지션과 다음 후보 기준까지 포함한다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
 
 ## 최신 Grid6 teacher 결과
 
@@ -174,7 +176,7 @@ Query 자체도 feature가 없는 사전 secondary에서는 Factor64.60%/NLL0.60
 ## 독립 검토자에게 요청하는 답변
 
 1. **문제 정의를 먼저 비판해 달라.** 현재 관측 정보에서 풀 수 있는 예측 문제인지, known-family oracle gap을 새로운 모델의 필요성으로 잘못 연결하고 있지는 않은지 확인해 달라.
-2. **메소드 후보는 최대 두 개만 제안해 달라.** 후보마다 기존 실패 중 어떤 정보 손실·연산 제한을 바꾸는지 명시해 달라. 기존 실패 원인이 미상이면 그 가정을 표시해 달라.
+2. **메소드 후보는 최대 두 개만 제안해 달라.** 분리된 feature/label 연결·signed evidence·자기 role-update는 이미 구현했다. 후보마다 현재 factor 함수족으로 부족한 feature–relation 의존성과 이를 학습·전이할 연산을 명시해 달라. 기존 실패 원인이 미상이면 그 가정을 표시해 달라.
 3. 후보의 입력, 내부 추론 연산, 학습 목적, 새 graph에서 gradient-free로 하는 일을 수식이나 의사코드로 적어 달라. 새로운 head/loss를 붙이는 것만으로 끝내지 말고 필요한 이유를 설명해 달라.
 4. 가장 가까운 선행연구와 이미 실행한 방법을 함께 비교해 달라. 단순 attention, Bayesian averaging, distillation, BP, circuit 또는 PFN 이름 자체를 novelty로 간주하지 말아 달라.
 5. 새 모델 학습 전에 점검할 강한 비교와, **한 번의 제한된 실험으로 기각 가능한 기준**을 제시해 달라. 그 뒤 끝없이 진단을 늘리기보다 실제 모델 비교로 이어져야 한다.
@@ -193,6 +195,8 @@ Disjoint Factor PFN은 초기 fresh bank에서 Mask/PCFI PFN보다 정확도가 
 후속 fresh bank에서는 exact Grid6 teacher가 공개 Mask PFN을 확실히 개선하지 못했어.
 Factor의 teacher KL은 약26.1% 감소했지만 accuracy 개선은 없었고, query 자신도 feature가 없는 secondary의 accuracy는1.16%p 하락했어.
 Physical feature 제거는 CE와 distilled Factor 둘 다 성능을 낮췄으므로 feature 활용 자체는 보존하되, 그것이 distillation으로 새로 생겼다고 해석하지 말아줘.
+연결 연산·signed evidence·자기 role-update는 이미 구현했어. 현재 학생도 neural potential을 학습하므로 이를 모델 전체가 고정 Gaussian인 것으로 취급하지 말아줘.
+다음 후보는 현재 binary column orientation/pairwise factor로 부족한 feature–relation 의존성과, 그것을 학습해 새 graph로 전이하는 구체적인 연산을 설명해줘.
 
 이 실패 범위를 반복하지 않는 메소드 후보를 최대 2개 제안해줘.
 후보마다 바꾸는 정보/추론 연산, 학습 목적, 가장 가까운 선행연구와의 차이,

@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 29개 프로젝트 · 129개 기록 (실패·중단 38개, 보존 28개, 교훈 41개, 미실행 22개)
+총 29개 프로젝트 · 130개 기록 (실패·중단 38개, 보존 28개, 교훈 42개, 미실행 22개)
 
 ## Common-context witness 고정 곱셈
 
@@ -326,6 +326,12 @@ Matched disjoint context2/observed6에서 distilled Factor의 feature 제거 acc
 기존 master 생성기가 이미 Grid6와 같은 six-support density/signal·joint role·Gaussian orientation prior로 graph와 feature를 생성했다. 이번에는 생성기·train bank를 유지하고 단일 sampled query label 대신 관측에 조건부인 exact Grid6 query marginal을 감독으로 사용했다.
 
 - 원문: [findings/sources/grid6-teacher-2026-11-02/METHOD.md](../findings/sources/grid6-teacher-2026-11-02/METHOD.md); [findings/sources/grid6-teacher-2026-11-02/protocol.json](../findings/sources/grid6-teacher-2026-11-02/protocol.json); [findings/sources/grid6-teacher-2026-11-02/results/preflight.json](../findings/sources/grid6-teacher-2026-11-02/results/preflight.json)
+
+### G6T-L02 [교훈] Factor가 확보한 evidence 연결 연산과 그 연산을 학습하는 독립적인 필요성을 분리한다.
+
+Context label→graph factor→관측feature node→shared feature-column latent→다른 node class의 경로가 실제 구현됐다. 새 bank의 feature 제거 하락은 CE Factor에도 있었다. Distillation의 추가 확인 효과는 teacher predictive KL 감소이며 실제 분류·분포 전이의 일반적 우위는 미확인이다.
+
+- 원문: [findings/sources/factor-position-2026-11-02/user_review.md](../findings/sources/factor-position-2026-11-02/user_review.md); [findings/sources/disjoint-factor-2026-11-02/METHOD.md](../findings/sources/disjoint-factor-2026-11-02/METHOD.md); [findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md](../findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md)
 
 ## Native heterogeneous 입력·기존 relational FM 대조
 
