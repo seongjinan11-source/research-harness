@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: exact Grid6 teacher distillation의 새 graph 평가·비용·재실행 검증 완료.
+기준일: 2026-11-02. 최근 업데이트: exact Grid6 teacher 후속까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -20,7 +20,7 @@
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 33편, 연구 기록 129항목, 아이디어 8개가 있다. 129항목 전부가 실패가 아니다. `failure`, `preserved`, `lesson`, `untested`를 구분한다. 첨부용 ZIP은 버전별 snapshot이다. 기존 v2는 disjoint-factor까지이며 이번 Grid6 teacher 후속이 없다. 최신 본문·구조화 기록·핵심 보고서를 함께 확인하고 대형 raw prediction과 checkpoint는 workspace에서 확인한다. 일부 `source_refs`는 전체 저장소에서 확인해야 한다.
+저장소에는 논문 33편, 연구 기록 129항목, 아이디어 8개가 있다. 29개 프로젝트 묶음이며 실패·중단38, 보존28, 교훈41, 미실행22항목이다. 129번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v3는 이번 Grid6 teacher 후속·실험 요약과 모든 findings source snapshots를 포함한다. 기존 v2는 disjoint-factor까지이며 Grid6 teacher 후속이 없다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
 
 ## 최신 Grid6 teacher 결과
 
@@ -189,7 +189,10 @@ Query 자체도 feature가 없는 사전 secondary에서는 Factor64.60%/NLL0.60
 실제 실행한 결과, 보존한 개선, 미실행 제안을 구분하고, 필요하면 함께 첨부한 보고서와 findings를 확인해줘.
 
 목표는 새 그래프에서 재학습 없이 심한 node-feature missing을 처리하는 GraphPFN이야.
-최근 disjoint-factor predictor는 Mask/PCFI PFN보다 정확도가 높았지만, 고정 factor 대비 학습의 추가 이득은 확인하지 못했고 Grid6보다 전체 NLL이 높았어.
+Disjoint Factor PFN은 초기 fresh bank에서 Mask/PCFI PFN보다 정확도가 높았지만, fixed factor 대비 독립 이득은 확인하지 못했고 Grid6보다 전체 NLL이 높았어.
+후속 fresh bank에서는 exact Grid6 teacher가 공개 Mask PFN을 확실히 개선하지 못했어.
+Factor의 teacher KL은 약26.1% 감소했지만 accuracy 개선은 없었고, query 자신도 feature가 없는 secondary의 accuracy는1.16%p 하락했어.
+Physical feature 제거는 CE와 distilled Factor 둘 다 성능을 낮췄으므로 feature 활용 자체는 보존하되, 그것이 distillation으로 새로 생겼다고 해석하지 말아줘.
 
 이 실패 범위를 반복하지 않는 메소드 후보를 최대 2개 제안해줘.
 후보마다 바꾸는 정보/추론 연산, 학습 목적, 가장 가까운 선행연구와의 차이,
