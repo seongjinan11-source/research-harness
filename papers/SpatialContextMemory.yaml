@@ -1,0 +1,64 @@
+id: SpatialContextMemory
+title: "Spatial Context or Memory? Sizing the Inputs of Neural Surrogates for Partially Observed Fields"
+authors: "Ruige Kong"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2610.12723
+  html: https://arxiv.org/html/2610.12723v2
+  code: https://anonymous.4open.science/r/memory-space-forecasting-5633
+citation:
+  type: misc
+  title: "Spatial Context or Memory? Sizing the Inputs of Neural Surrogates for Partially Observed Fields"
+  authors: ["Ruige Kong"]
+  year: 2026
+  arxiv: "2610.12723"
+  url: https://arxiv.org/abs/2610.12723
+  verified_from:
+    - https://arxiv.org/abs/2610.12723
+review:
+  status: full_text_reviewed
+  checked_on: "2026-11-02"
+  version: v2
+  checked_sections: ["2 Setting and definitions", "3 Exact analysis", "4 Protocol", "5 Results", "7 Limitations", "Appendices G and H"]
+  full_text_checked: true
+areas: [mvts, ml-foundations, benchmark]
+problem: "희소·잡음 센서의 공간 window와 history 길이를 고를 때 정보 부족과 모델 fitting 오차를 구분한다."
+core_idea: "[본문 확인] 동일 입력의 Gaussian Bayes risk로 spatial gap을 정의한다. 선형장으로 모델을 검증한 뒤 Burgers·KS에서 공간·시간 입력과 lead time을 비교한다."
+key_assumptions:
+  - "정확한 최적 오차는 알려진 선형 Gaussian 설정에 한정된다."
+  - "비교마다 target·관측 간격·잡음 realization을 맞춘다."
+strengths:
+  - text: "조건부 분산 기준선으로 정보 부족과 fitting 오차를 분리한다."
+    tags: [model-based-baseline, observation-mask]
+  - text: "상관 길이로 window를 재고, 목표 lead time에 맞춰 고정 입력 예산을 배분한다."
+    tags: [context-scale, context-horizon]
+  - text: "KS의 작은 window에서 history의 상대 이득이 lead time과 함께 커지는 inversion을 관찰했다. Burgers에서는 lead 1의 입력 배분을 lead 8에 재사용한 오차가 해당 lead의 최선 대비 13.5배였다."
+    tags: [context-horizon, context-scale]
+  - text: "선형장 calibration과 paired 비교를 수행하며 사후 분석을 구분한다."
+    tags: [eval-protocol, model-based-baseline]
+limitations:
+  - text: "비선형 spatial gap은 학습한 global FNO 기준 추정이며 최적성을 검증하지 못했다."
+    source: self
+    tags: [model-based-baseline, eval-protocol]
+    evidence: {url: "https://arxiv.org/html/2610.12723v2", section: "7 Limitations"}
+  - text: "Damping이 chaos와 linear instability를 함께 바꾸므로 inversion의 원인을 분리하지 못한다."
+    source: self
+    tags: [theory-gap]
+    evidence: {url: "https://arxiv.org/html/2610.12723v2", section: "7 Limitations"}
+  - text: "장별 잡음 수준·drift·도메인과 짧은 Lyapunov 시간 범위가 일반화를 제한한다."
+    source: self
+    tags: [distribution-shift, context-horizon]
+    evidence: {url: "https://arxiv.org/html/2610.12723v2", section: "7 Limitations"}
+  - text: "일부 KS 비교는 pilot 이후 설계했고 기존 test trajectory를 재사용했다."
+    source: self
+    tags: [eval-protocol]
+    evidence: {url: "https://arxiv.org/html/2610.12723v2", section: "4 Protocol; Appendix G"}
+builds_on: [KalmanFiltering]
+compared_against: [FNO, PatchCNN, PatchGRU, PatchMLP, LinearPatch]
+open_questions:
+  - "Chaos와 linear instability를 독립적으로 바꾸어도 inversion이 남는가?"
+hooks:
+  - "[접목 가설] 부분관측 PFN의 동일 정보 Gaussian 기준선과 공간·시간 입력 예산 대조에 참고한다. 해결·학습 재개 근거는 아니다."
+notes: "서지는 arXiv abstract 제목을 따른다. v2 HTML 제목에는 Dynamical이 추가되어 있다. 분석 연구로 분류해 자동 해결 후보에서 제외한다."
+added: "2026-11-02"
