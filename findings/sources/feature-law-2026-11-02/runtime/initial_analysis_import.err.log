@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "C:\Users\seongjin\Desktop\code\gts_pfn\feature_law_pilot\analysis.py", line 15, in <module>
+    from run import load_model, predict, is_public
+ImportError: cannot import name 'load_model' from 'run' (C:\Users\seongjin\Desktop\code\gts_pfn\fisf_graphpfn\run.py)
+Traceback (most recent call last):
+  File "C:\Users\seongjin\Desktop\code\gts_pfn\feature_law_pilot\runtime\finish.py", line 16, in <module>
+    subprocess.run([sys.executable,'-B','-X','utf8',str(root/'runtime/analyze.py'),action],cwd=root,check=True)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seongjin\anaconda3\envs\sdgl_fm\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\seongjin\\Desktop\\csag_share\\research\\www2027\\results\\graph_pfn_suite_20261016\\windows_graphpfn_env\\Scripts\\python.exe', '-B', '-X', 'utf8', 'C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\analysis.py', 'audit']' returned non-zero exit status 1.

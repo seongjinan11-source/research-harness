@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "C:\Users\seongjin\Desktop\code\gts_pfn\feature_law_pilot\run.py", line 169, in <module>
+    train(args.seed, args.arm)
+  File "C:\Users\seongjin\Desktop\code\gts_pfn\feature_law_pilot\run.py", line 94, in train
+    frozen, initial = C.parameter_digest(model, False), C.parameter_digest(model, True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: parameter_digest() takes 1 positional argument but 2 were given

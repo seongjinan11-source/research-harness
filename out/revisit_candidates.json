@@ -960,6 +960,135 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "FLAW-F01",
+    "project": "Feature-law adaptive observed-cell Factor",
+    "claim": "관측 cell의 부호 제약을 제거하고 새 graph의 column 통계에 조건부인 factor를 학습하면 static과 기존 Factor보다 자기 피처가 없는 query 분류가 좋아진다.",
+    "verdict": "사용자가 정한 primary accuracy 기준을 충족하지 못했으므로, 현재 cell 함수 교체만으로 독립 메인 메소드가 된다는 가설은 닫는다. 추가 head/loss/temperature/updates로 이 bank에서 구제하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "부호 제약 제거와 관측 column 통계 conditioning만으로 이 예산에서 분류 이득을 확인하지 못했다. 관측 정보량·통계 요약·함수족·비선형 최적화·finite BP/Bethe·학습량의 기여를 분리하지 않아 고유 원인은 미상이다. CI에0을 포함한 것을 효과0 또는 동등성의 증명으로 쓰지 않는다.",
+    "reopen_when": "관측 통계로 pointwise rho만 조절하는 것과 다른, 현재 함수족이 놓치는 feature–relation 의존성을 학습·전이하는 구체적인 연산이 등장하고 강한 명시적 법칙 주변화보다 유리할 근거가 생길 때.",
+    "recheck": "이 final bank를 추가 tuning에 쓰지 않는다. 새 연산의 구체적인 차이를 먼저 고정하고 독립 base graphs에서 자기 피처 없는 query accuracy를 primary로 비교하며 Gaussian 보존과 고정 추론 품질–비용을 함께 확인한다.",
+    "comparison_floor": "Original sign-constrained Factor, parameter-matched Flexible-static/adaptive, 동일 frozen graph의 full normalized law/parameter/orientation fixed-exact 및 same24-step fixed-BP, 실제 새 prior로 학습한 Mask/PCFI public PFN. Accuracy/NLL/Brier/reference KL과 end-to-end cost를 분리한다.",
+    "source_refs": [
+      "findings/sources/feature-law-2026-11-02/REPORT_KO.md",
+      "findings/sources/feature-law-2026-11-02/METHOD.md",
+      "findings/sources/feature-law-2026-11-02/protocol.json",
+      "findings/sources/feature-law-2026-11-02/results/statistics.json",
+      "findings/sources/feature-law-2026-11-02/results/cost.json",
+      "findings/sources/feature-law-2026-11-02/results/audit.json",
+      "findings/sources/feature-law-2026-11-02/results/preflight.json",
+      "findings/sources/feature-law-2026-11-02/results/runtime_amendment.json"
+    ],
+    "paper_id": "PEMix",
+    "paper_title": "When Missingness Follows the Graph: Beyond Feature Propagation for Missing Features",
+    "paper_link": "https://arxiv.org/abs/2610.18113",
+    "matches": [
+      {
+        "strength": "Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.",
+        "tags": [
+          "graph-structure-use",
+          "observation-mask"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-structure-use",
+      "observation-mask"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "FLAW-F01",
+    "project": "Feature-law adaptive observed-cell Factor",
+    "claim": "관측 cell의 부호 제약을 제거하고 새 graph의 column 통계에 조건부인 factor를 학습하면 static과 기존 Factor보다 자기 피처가 없는 query 분류가 좋아진다.",
+    "verdict": "사용자가 정한 primary accuracy 기준을 충족하지 못했으므로, 현재 cell 함수 교체만으로 독립 메인 메소드가 된다는 가설은 닫는다. 추가 head/loss/temperature/updates로 이 bank에서 구제하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "부호 제약 제거와 관측 column 통계 conditioning만으로 이 예산에서 분류 이득을 확인하지 못했다. 관측 정보량·통계 요약·함수족·비선형 최적화·finite BP/Bethe·학습량의 기여를 분리하지 않아 고유 원인은 미상이다. CI에0을 포함한 것을 효과0 또는 동등성의 증명으로 쓰지 않는다.",
+    "reopen_when": "관측 통계로 pointwise rho만 조절하는 것과 다른, 현재 함수족이 놓치는 feature–relation 의존성을 학습·전이하는 구체적인 연산이 등장하고 강한 명시적 법칙 주변화보다 유리할 근거가 생길 때.",
+    "recheck": "이 final bank를 추가 tuning에 쓰지 않는다. 새 연산의 구체적인 차이를 먼저 고정하고 독립 base graphs에서 자기 피처 없는 query accuracy를 primary로 비교하며 Gaussian 보존과 고정 추론 품질–비용을 함께 확인한다.",
+    "comparison_floor": "Original sign-constrained Factor, parameter-matched Flexible-static/adaptive, 동일 frozen graph의 full normalized law/parameter/orientation fixed-exact 및 same24-step fixed-BP, 실제 새 prior로 학습한 Mask/PCFI public PFN. Accuracy/NLL/Brier/reference KL과 end-to-end cost를 분리한다.",
+    "source_refs": [
+      "findings/sources/feature-law-2026-11-02/REPORT_KO.md",
+      "findings/sources/feature-law-2026-11-02/METHOD.md",
+      "findings/sources/feature-law-2026-11-02/protocol.json",
+      "findings/sources/feature-law-2026-11-02/results/statistics.json",
+      "findings/sources/feature-law-2026-11-02/results/cost.json",
+      "findings/sources/feature-law-2026-11-02/results/audit.json",
+      "findings/sources/feature-law-2026-11-02/results/preflight.json",
+      "findings/sources/feature-law-2026-11-02/results/runtime_amendment.json"
+    ],
+    "paper_id": "StructuralMissingPFN",
+    "paper_title": "Nearly Optimal Bayesian Inference for Structural Missingness",
+    "paper_link": "https://arxiv.org/abs/2601.18500",
+    "matches": [
+      {
+        "strength": "Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.",
+        "tags": [
+          "amortized-inference",
+          "observation-mask"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "amortized-inference",
+      "observation-mask"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "FLAW-F01",
+    "project": "Feature-law adaptive observed-cell Factor",
+    "claim": "관측 cell의 부호 제약을 제거하고 새 graph의 column 통계에 조건부인 factor를 학습하면 static과 기존 Factor보다 자기 피처가 없는 query 분류가 좋아진다.",
+    "verdict": "사용자가 정한 primary accuracy 기준을 충족하지 못했으므로, 현재 cell 함수 교체만으로 독립 메인 메소드가 된다는 가설은 닫는다. 추가 head/loss/temperature/updates로 이 bank에서 구제하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "부호 제약 제거와 관측 column 통계 conditioning만으로 이 예산에서 분류 이득을 확인하지 못했다. 관측 정보량·통계 요약·함수족·비선형 최적화·finite BP/Bethe·학습량의 기여를 분리하지 않아 고유 원인은 미상이다. CI에0을 포함한 것을 효과0 또는 동등성의 증명으로 쓰지 않는다.",
+    "reopen_when": "관측 통계로 pointwise rho만 조절하는 것과 다른, 현재 함수족이 놓치는 feature–relation 의존성을 학습·전이하는 구체적인 연산이 등장하고 강한 명시적 법칙 주변화보다 유리할 근거가 생길 때.",
+    "recheck": "이 final bank를 추가 tuning에 쓰지 않는다. 새 연산의 구체적인 차이를 먼저 고정하고 독립 base graphs에서 자기 피처 없는 query accuracy를 primary로 비교하며 Gaussian 보존과 고정 추론 품질–비용을 함께 확인한다.",
+    "comparison_floor": "Original sign-constrained Factor, parameter-matched Flexible-static/adaptive, 동일 frozen graph의 full normalized law/parameter/orientation fixed-exact 및 same24-step fixed-BP, 실제 새 prior로 학습한 Mask/PCFI public PFN. Accuracy/NLL/Brier/reference KL과 end-to-end cost를 분리한다.",
+    "source_refs": [
+      "findings/sources/feature-law-2026-11-02/REPORT_KO.md",
+      "findings/sources/feature-law-2026-11-02/METHOD.md",
+      "findings/sources/feature-law-2026-11-02/protocol.json",
+      "findings/sources/feature-law-2026-11-02/results/statistics.json",
+      "findings/sources/feature-law-2026-11-02/results/cost.json",
+      "findings/sources/feature-law-2026-11-02/results/audit.json",
+      "findings/sources/feature-law-2026-11-02/results/preflight.json",
+      "findings/sources/feature-law-2026-11-02/results/runtime_amendment.json"
+    ],
+    "paper_id": "TabImpute",
+    "paper_title": "One Pipeline, Many Transformers: Pattern-Specific Imputation Specialists for Tabular Missing Data",
+    "paper_link": "https://arxiv.org/abs/2510.02625v6",
+    "matches": [
+      {
+        "strength": "새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.",
+        "tags": [
+          "amortized-inference",
+          "observation-mask"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "amortized-inference",
+      "observation-mask"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "FMARG-F01",
     "project": "Frozen GraphPFN joint feature-completion marginalization",
     "claim": "단일 대치 대신 graph-correlated feature completion의 예측을 평균하면 두 주 결측 조건에서 point/diagonal/zero/PCFI 대조를 모두 넘는다.",

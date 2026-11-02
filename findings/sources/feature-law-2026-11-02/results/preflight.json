@@ -1,0 +1,55 @@
+{
+  "errors": {
+    "frozen_graph_j_parity": 0.0,
+    "frozen_graph_constant_parity": 0.0,
+    "exact_latent_sum_independent": 3.3306690738754696e-16,
+    "fixed_bp_tree_parity": 3.3306690738754696e-16,
+    "variance_evidence_even": 0.0,
+    "reference_hidden_poison": 0.0,
+    "reference_class_flip": 3.3306690738754696e-16,
+    "matched_initial_predictions": 5.5384462571694826e-09,
+    "original_hidden_poison": 0.0,
+    "original_class_flip": 0.0,
+    "original_relation_permutation": 2.384185791015625e-07,
+    "original_column_permutation": 2.384185791015625e-07,
+    "static_hidden_poison": 0.0,
+    "static_class_flip": 0.0,
+    "static_relation_permutation": 2.980232238769531e-07,
+    "static_column_permutation": 2.980232238769531e-07,
+    "adaptive_hidden_poison": 0.0,
+    "adaptive_class_flip": 0.0,
+    "adaptive_relation_permutation": 2.384185791015625e-07,
+    "adaptive_column_permutation": 7.748603820800781e-07
+  },
+  "models": [
+    {
+      "arm": "original",
+      "trainable_parameters": 697,
+      "frozen_sha256": "46ee78052ebb60b08cfb61c1195b8dfdf5ec8d7418f5f83cd33cc887348f88d6"
+    },
+    {
+      "arm": "static",
+      "trainable_parameters": 1547,
+      "frozen_sha256": "46ee78052ebb60b08cfb61c1195b8dfdf5ec8d7418f5f83cd33cc887348f88d6"
+    },
+    {
+      "arm": "adaptive",
+      "trainable_parameters": 1575,
+      "frozen_sha256": "46ee78052ebb60b08cfb61c1195b8dfdf5ec8d7418f5f83cd33cc887348f88d6"
+    },
+    {
+      "arm": "mask_pfn",
+      "trainable_parameters": 4012259,
+      "frozen_sha256": "4ee805bf600597c14b068d1eee38896199f829c50effaed36bff7ba0d4b3e1d9"
+    },
+    {
+      "arm": "pcfi_pfn",
+      "trainable_parameters": 4012259,
+      "frozen_sha256": "4ee805bf600597c14b068d1eee38896199f829c50effaed36bff7ba0d4b3e1d9"
+    }
+  ],
+  "discarded_development_optimizer_steps": 3,
+  "same_frozen_graph_digest": true,
+  "all_dev_and_train_masks_and_hashes_checked": true,
+  "scope": "Development numerics only. No final graph generated or accuracy-based model selection. Three smoke weights discarded."
+}

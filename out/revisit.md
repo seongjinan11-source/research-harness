@@ -108,6 +108,24 @@
 - [Wander](https://arxiv.org/abs/2610.06694): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=bidirectional
   - 기록된 강점: 구조적 수용 범위를 추론 때 조절할 수 있다. Message passing 기반 GFM은 이 범위가 network 깊이에 고정된다. 서로 떨어진 25×25 grid 5개에 grid마다 label을 2개만 준 GRIDS에서, walk 길이를 4에서 64로 늘리자 정확도가 56.6%에서 96.6%로 올랐다. Labeled 노드를 지나는 walk만 남기면 100%였다. 같은 과제에서 GraphPFN은 23.3%, NodePFN은 26.6%였다. Feature 없는 실제 그래프 4개에서도 Wander는 76.5%로 GraphPFN(60.1%)을 크게 앞섰다.
 
+## FLAW-F01 — 관측 cell의 부호 제약을 제거하고 새 graph의 column 통계에 조건부인 factor를 학습하면 static과 기존 Factor보다 자기 피처가 없는 query 분류가 좋아진다.
+
+- 판정: 사용자가 정한 primary accuracy 기준을 충족하지 못했으므로, 현재 cell 함수 교체만으로 독립 메인 메소드가 된다는 가설은 닫는다. 추가 head/loss/temperature/updates로 이 bank에서 구제하지 않는다.
+- 원인·병목 [원인 미상]: 부호 제약 제거와 관측 column 통계 conditioning만으로 이 예산에서 분류 이득을 확인하지 못했다. 관측 정보량·통계 요약·함수족·비선형 최적화·finite BP/Bethe·학습량의 기여를 분리하지 않아 고유 원인은 미상이다. CI에0을 포함한 것을 효과0 또는 동등성의 증명으로 쓰지 않는다.
+- 반증·배제한 설명: 세 Factor와 두 fixed-law controls는 사전 선택한 동일 CE seed11 graph encoder/factor를 고정한다. Static1547/adaptive1575 trainable params, 동일 초기 predictive scores, 동일 seed별2048 tasks와256 successful updates다. Frozen graph 재학습 효과가 아니다.; 새15개 모델을 CE만으로 학습했다. Public Mask/PCFI는 새 prior로 실제 학습한 별도 adapter architecture다. Law·actual parameter·orientation·query truth를 predictor 입력에 넣지 않았다.; Dev12 graphs의 수치·finite-gradient smoke weights3개를 폐기하고 설계를 잠근 뒤 final192 graphs를 생성했다. 최종 bank 생성 후 optimizer 전 발생한 keyword-only API 오류만 수정해 같은 bank와 초기화로 재시작했고 원 lock/로그를 보존했다. 분석 entrypoint는 같은 이름의 역사적 모듈과 import 충돌을 분리했다.; 전체 source/config/bank/reference/checkpoint hashes, freeze/schedule, 모든 mask와45개 prediction replay를 확인했다. 작은 tree의 normalized law/orientation 완전 열거와 fixed BP, hidden-value poison, class/relation/column permutation 검사도 통과했다.
+- 재검토 조건: 관측 통계로 pointwise rho만 조절하는 것과 다른, 현재 함수족이 놓치는 feature–relation 의존성을 학습·전이하는 구체적인 연산이 등장하고 강한 명시적 법칙 주변화보다 유리할 근거가 생길 때.
+- 먼저 이겨야 할 기준선: Original sign-constrained Factor, parameter-matched Flexible-static/adaptive, 동일 frozen graph의 full normalized law/parameter/orientation fixed-exact 및 same24-step fixed-BP, 실제 새 prior로 학습한 Mask/PCFI public PFN. Accuracy/NLL/Brier/reference KL과 end-to-end cost를 분리한다.
+- 최소 재검증: 이 final bank를 추가 tuning에 쓰지 않는다. 새 연산의 구체적인 차이를 먼저 고정하고 독립 base graphs에서 자기 피처 없는 query accuracy를 primary로 비교하며 Gaussian 보존과 고정 추론 품질–비용을 함께 확인한다.
+- 닫지 않은 것: 기존 disjoint feature/label 연결 연산·signed likelihood·자기 role-update와 이전 Factor/teacher의 국소 개선은 보존한다. 모든 학습된 feature factor, unseen feature laws, 가변 feature/schema, 더 큰 실제 graph,99.5% missing의 효과를 기각한 결과는 아니다. 이번에도 law 이름은 이미 보았다.
+- 원문: [findings/sources/feature-law-2026-11-02/REPORT_KO.md](../findings/sources/feature-law-2026-11-02/REPORT_KO.md); [findings/sources/feature-law-2026-11-02/METHOD.md](../findings/sources/feature-law-2026-11-02/METHOD.md); [findings/sources/feature-law-2026-11-02/protocol.json](../findings/sources/feature-law-2026-11-02/protocol.json); [findings/sources/feature-law-2026-11-02/results/statistics.json](../findings/sources/feature-law-2026-11-02/results/statistics.json); [findings/sources/feature-law-2026-11-02/results/cost.json](../findings/sources/feature-law-2026-11-02/results/cost.json); [findings/sources/feature-law-2026-11-02/results/audit.json](../findings/sources/feature-law-2026-11-02/results/audit.json); [findings/sources/feature-law-2026-11-02/results/preflight.json](../findings/sources/feature-law-2026-11-02/results/preflight.json); [findings/sources/feature-law-2026-11-02/results/runtime_amendment.json](../findings/sources/feature-law-2026-11-02/results/runtime_amendment.json)
+
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=amortized-inference, observation-mask; keywords=-
+  - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 복수 태그 일치 (약한 단서); tags=amortized-inference, observation-mask; keywords=-
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
+
 ## FMARG-F01 — 단일 대치 대신 graph-correlated feature completion의 예측을 평균하면 두 주 결측 조건에서 point/diagonal/zero/PCFI 대조를 모두 넘는다.
 
 - 판정: 현재 frozen surrogate completion operator의 사전 primary gate 미통과·확대 중단

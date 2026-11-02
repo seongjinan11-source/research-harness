@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: exact Grid6 teacher 후속까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-02. 최근 업데이트: feature-law Factor cell 교체 결과까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -22,7 +22,25 @@
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 33편, 연구 기록 130항목, 아이디어 8개가 있다. 29개 프로젝트 묶음이며 실패·중단38, 보존28, 교훈42, 미실행22항목이다. 130번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v4는 이번 연구 포지션과 다음 후보 기준까지 포함한다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 33편, 연구 기록 133항목, 아이디어 8개가 있다. 30개 프로젝트 묶음이며 실패·중단39, 보존29, 교훈43, 미실행22항목이다. 133번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v5는 feature-law Factor 최종 결과까지 포함한다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+
+## 최신 feature-law Factor 실험
+
+새15개 모델을 동일2048 tasks/256 updates/3 seeds/query CE로 학습했다. Gaussian 평균·heavy-tail 평균·분산 차이 law를 모두 학습하고, 새 graph와 미학습 parameter tuple 조합에서 cell만 바꿨다. Graph encoder/factor는 한 역사적 checkpoint로 고정했다. Law 이름 자체의 미관측 전이나 공개 GraphPFN 개선 모듈은 아니다.
+
+| Primary: heldout96 graphs, 자기 피처 없는 query | Accuracy % | NLL | Reference KL |
+|---|---:|---:|---:|
+| 기존 부호 제약 Factor | 64.6281 | 0.643004 | 0.022515 |
+| Flexible-static | 64.4125 | 0.643406 | 0.021705 |
+| Flexible-adaptive | 64.4675 | 0.650797 | 0.027830 |
+| 고정 law 주변화 exact | 63.4065 | 0.631744 | 0.004696 |
+| 고정 law 주변화 BP | 64.0811 | 0.646232 | 0.023510 |
+| 새로 학습한 Mask PFN | 53.4883 | 0.693767 | 0.068593 |
+| 새로 학습한 PCFI-PFN | 52.9697 | 0.693928 | 0.068545 |
+
+Adaptive−static accuracy +0.054977 CI[-0.976294,+1.037881]%p, adaptive−original -0.160659 CI[-1.202481,+0.821535]%p다. 두 CI에0을 포함해 적응 primary gate를 통과하지 못했다. 이 cell 교체만으로 메인 메소드가 된다는 가설은 닫고 새 loss/head/학습량으로 구제하지 않는다. 원인은 미상이며 부호 제약 제거 자체나 모든 feature-law 학습을 기각하지 않는다. 모든 seed/episode 평균 뒤 **base graph**를 bootstrap했다.
+
+Adaptive 6.759ms, fixed exact 8.861ms, fixed BP 10.077ms. Reference KL은 broad known-family exact reference에 대한 값으로 참 OOD Bayes KL이 아니다. [보고서](findings/sources/feature-law-2026-11-02/REPORT_KO.md), [수식](findings/sources/feature-law-2026-11-02/METHOD.md), [구조화 판정](findings/feature-law-factor.yaml).
 
 ## 최신 Grid6 teacher 결과
 
@@ -195,6 +213,7 @@ Disjoint Factor PFN은 초기 fresh bank에서 Mask/PCFI PFN보다 정확도가 
 후속 fresh bank에서는 exact Grid6 teacher가 공개 Mask PFN을 확실히 개선하지 못했어.
 Factor의 teacher KL은 약26.1% 감소했지만 accuracy 개선은 없었고, query 자신도 feature가 없는 secondary의 accuracy는1.16%p 하락했어.
 Physical feature 제거는 CE와 distilled Factor 둘 다 성능을 낮췄으므로 feature 활용 자체는 보존하되, 그것이 distillation으로 새로 생겼다고 해석하지 말아줘.
+추가로 feature-law3종을 학습한 cell-only 비교에서도 adaptive64.47%, static64.41%, 기존64.63%로 primary 적응 이득을 확인하지 못했어. 부호 제약을 푸는 것만 다시 제안하지 말아줘.
 연결 연산·signed evidence·자기 role-update는 이미 구현했어. 현재 학생도 neural potential을 학습하므로 이를 모델 전체가 고정 Gaussian인 것으로 취급하지 말아줘.
 다음 후보는 현재 binary column orientation/pairwise factor로 부족한 feature–relation 의존성과, 그것을 학습해 새 graph로 전이하는 구체적인 연산을 설명해줘.
 

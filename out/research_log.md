@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 29개 프로젝트 · 130개 기록 (실패·중단 38개, 보존 28개, 교훈 42개, 미실행 22개)
+총 30개 프로젝트 · 133개 기록 (실패·중단 39개, 보존 29개, 교훈 43개, 미실행 22개)
 
 ## Common-context witness 고정 곱셈
 
@@ -211,6 +211,36 @@ Matched 일방향72.72%, 양방향72.66%; 차이−0.06%p CI[−0.50,+0.39]. Sha
 - 기준선: 동일 예산 일방향 모델, 피드백 제거, 강한 context ridge baseline
 - 최소 재검증: Zero-observation 퇴화와 nonzero 조건을 나눠 같은 초기화·task·예산으로 실제 예측 증분을 비교한다.
 - 원문: [findings/sources/graphpfn-2026-11-01/history.md](../findings/sources/graphpfn-2026-11-01/history.md)
+
+## Feature-law adaptive observed-cell Factor
+
+실험 조건: 동일 frozen graph checkpoint 위에서 Original/static/adaptive cell만 바꾼3seeds CE. 새 prior로 Mask/PCFI도 실제 학습. Final192 graphs 중 off-diagonal parameter tuple96개, 자기 피처 없는 query accuracy primary.
+
+### FLAW-F01 [실패·중단] 관측 cell의 부호 제약을 제거하고 새 graph의 column 통계에 조건부인 factor를 학습하면 static과 기존 Factor보다 자기 피처가 없는 query 분류가 좋아진다.
+
+original: accuracy64.628114%/NLL0.643004/Brier0.445450/referenceKL0.022515; static: accuracy64.412478%/NLL0.643406/Brier0.446408/referenceKL0.021705; adaptive: accuracy64.467455%/NLL0.650797/Brier0.449291/referenceKL0.027830; fixed_exact: accuracy63.406498%/NLL0.631744/Brier0.440029/referenceKL0.004696; fixed_bp: accuracy64.081101%/NLL0.646232/Brier0.446208/referenceKL0.023510; mask_pfn: accuracy53.488343%/NLL0.693767/Brier0.499510/referenceKL0.068593; pcfi_pfn: accuracy52.969715%/NLL0.693928/Brier0.499014/referenceKL0.068545. Adaptive−static accuracy%p +0.054977 CI[-0.976294,+1.037881], adaptive−original -0.160659 CI[-1.202481,+0.821535]. 두 primary CI 모두0 포함. Gaussian guard: adaptive−original +0.543981 CI[-0.842978,+2.276235], adaptive−static +0.866127 CI[-0.434124,+2.338011]. Adaptation gate=False, Gaussian guard=True, competitive gate=False. Single-graph cost adaptive6.759ms, fixed exact8.861ms, fixed BP10.077ms.
+
+- 판정: 사용자가 정한 primary accuracy 기준을 충족하지 못했으므로, 현재 cell 함수 교체만으로 독립 메인 메소드가 된다는 가설은 닫는다. 추가 head/loss/temperature/updates로 이 bank에서 구제하지 않는다.
+- 원인·병목 [원인 미상]: 부호 제약 제거와 관측 column 통계 conditioning만으로 이 예산에서 분류 이득을 확인하지 못했다. 관측 정보량·통계 요약·함수족·비선형 최적화·finite BP/Bethe·학습량의 기여를 분리하지 않아 고유 원인은 미상이다. CI에0을 포함한 것을 효과0 또는 동등성의 증명으로 쓰지 않는다.
+- 닫은 범위: 12-node binary native graph/2relations/2features, context총1/2/4개와 observed nodes3/6개 완전 분리, Gaussian mean/Student-t3 mean/variance law를 학습에 모두 넣고 diagonal train/off-diagonal heldout parameter tuples를 비교한 frozen-graph cell-only256-update CE pilot.
+- 닫지 않은 것: 기존 disjoint feature/label 연결 연산·signed likelihood·자기 role-update와 이전 Factor/teacher의 국소 개선은 보존한다. 모든 학습된 feature factor, unseen feature laws, 가변 feature/schema, 더 큰 실제 graph,99.5% missing의 효과를 기각한 결과는 아니다. 이번에도 law 이름은 이미 보았다.
+- 재검토 조건: 관측 통계로 pointwise rho만 조절하는 것과 다른, 현재 함수족이 놓치는 feature–relation 의존성을 학습·전이하는 구체적인 연산이 등장하고 강한 명시적 법칙 주변화보다 유리할 근거가 생길 때.
+- 기준선: Original sign-constrained Factor, parameter-matched Flexible-static/adaptive, 동일 frozen graph의 full normalized law/parameter/orientation fixed-exact 및 same24-step fixed-BP, 실제 새 prior로 학습한 Mask/PCFI public PFN. Accuracy/NLL/Brier/reference KL과 end-to-end cost를 분리한다.
+- 최소 재검증: 이 final bank를 추가 tuning에 쓰지 않는다. 새 연산의 구체적인 차이를 먼저 고정하고 독립 base graphs에서 자기 피처 없는 query accuracy를 primary로 비교하며 Gaussian 보존과 고정 추론 품질–비용을 함께 확인한다.
+- 원문: [findings/sources/feature-law-2026-11-02/REPORT_KO.md](../findings/sources/feature-law-2026-11-02/REPORT_KO.md); [findings/sources/feature-law-2026-11-02/METHOD.md](../findings/sources/feature-law-2026-11-02/METHOD.md); [findings/sources/feature-law-2026-11-02/protocol.json](../findings/sources/feature-law-2026-11-02/protocol.json); [findings/sources/feature-law-2026-11-02/results/statistics.json](../findings/sources/feature-law-2026-11-02/results/statistics.json); [findings/sources/feature-law-2026-11-02/results/cost.json](../findings/sources/feature-law-2026-11-02/results/cost.json); [findings/sources/feature-law-2026-11-02/results/audit.json](../findings/sources/feature-law-2026-11-02/results/audit.json); [findings/sources/feature-law-2026-11-02/results/preflight.json](../findings/sources/feature-law-2026-11-02/results/preflight.json); [findings/sources/feature-law-2026-11-02/results/runtime_amendment.json](../findings/sources/feature-law-2026-11-02/results/runtime_amendment.json)
+
+### FLAW-P01 [보존] 세 feature law를 포함한 새 bank에서도 adaptive Factor는 같은 prior로 실제 학습한 공개 Mask/PCFI PFN보다 자기 피처 없는 query accuracy가 높았다.
+
+Adaptive−Mask accuracy%p +10.979112 CI[+7.342324,+14.631011], NLL -0.042970 CI[-0.081804,-0.001247]. Adaptive−PCFI accuracy%p +11.497740 CI[+7.718815,+15.256125], NLL -0.043131 CI[-0.082211,-0.001461].
+
+- 확대 금지: 두 공개 PFN 비교는 보조·multiplicity 미보정이다. Adaptive는 primary에서 static과 original을 이기지 못했으므로 adaptive cell의 독립적인 기여나 논문 메소드 성공이 아니다. 공개 PFN과 Factor는 architecture/사전학습/graph factor 경로가 달라 정확한 이득 원인을 분리하지 않았다. 이번에는 feature 제거 개입을 하지 않았으므로 이 차이만으로 variance feature를 활용했다고 단정하지 않는다. 고정 law 주변화보다 정확도가 낮은 것이라고 주장하지도 않는다. Adaptive−fixed exact accuracy CI도0을 포함한다.
+- 원문: [findings/sources/feature-law-2026-11-02/REPORT_KO.md](../findings/sources/feature-law-2026-11-02/REPORT_KO.md); [findings/sources/feature-law-2026-11-02/results/statistics.json](../findings/sources/feature-law-2026-11-02/results/statistics.json); [findings/sources/feature-law-2026-11-02/results/audit.json](../findings/sources/feature-law-2026-11-02/results/audit.json)
+
+### FLAW-L01 [교훈] 점별 cell 함수의 표현력 제약 제거와, 새 graph에서 feature law를 추론해 분류를 개선하는 것은 다른 검증이다.
+
+분산 차이의 참 half log-likelihood ratio는 x²의 함수라 큰 양수와 큰 음수가 같은 evidence를 준다. Original x*positiveNN은 이를 그대로 표현할 수 없지만 새 static/adaptive 함수는 짝수 evidence도 허용한다. 그 구조 변경 이후에도 primary adaptive−static과 adaptive−original accuracy 우위는 확인되지 않았다.
+
+- 원문: [findings/sources/feature-law-2026-11-02/METHOD.md](../findings/sources/feature-law-2026-11-02/METHOD.md); [findings/sources/feature-law-2026-11-02/REPORT_KO.md](../findings/sources/feature-law-2026-11-02/REPORT_KO.md); [findings/sources/feature-law-2026-11-02/results/preflight.json](../findings/sources/feature-law-2026-11-02/results/preflight.json); [findings/sources/feature-law-2026-11-02/results/statistics.json](../findings/sources/feature-law-2026-11-02/results/statistics.json)
 
 ## Frozen GraphPFN joint feature-completion marginalization
 

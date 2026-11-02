@@ -1,0 +1,888 @@
+{
+  "date": "2026-11-02",
+  "scope": "Locked feature-law cell-factor comparison. Raw task/prediction arrays and checkpoints remain in workspace. Snapshots are verbatim; independent final graph seeds, not unseen-law generalization.",
+  "sources": [
+    {
+      "alias": "analysis.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\analysis.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/analysis.py",
+      "sha256": "94f997fbd550e5e149adbe713fd559a3caaf0459709453725c998bd7ff23cefb",
+      "bytes": 12206
+    },
+    {
+      "alias": "bank/development_manifest.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\bank\\development_manifest.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/bank/development_manifest.json",
+      "sha256": "d854cc1048e3515f331409b6455207cfd12a456b771d732eb62d78a87e5aab71",
+      "bytes": 831808
+    },
+    {
+      "alias": "bank/manifest.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\bank\\manifest.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/bank/manifest.json",
+      "sha256": "c2f4c61b2b486682ee78e26c57a331de6fe15d1a61ebbb835c43a3c0b47218dd",
+      "bytes": 1280460
+    },
+    {
+      "alias": "checks.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\checks.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/checks.py",
+      "sha256": "adc2559764333a6ab75382a0f3794a146a322917d68b2e6d2907b70779a73593",
+      "bytes": 7910
+    },
+    {
+      "alias": "common.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\common.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/common.py",
+      "sha256": "409808ae4709ad63df325570ec5afdb236fbe53aeae2bc46c27d19205aea7e65",
+      "bytes": 4573
+    },
+    {
+      "alias": "logs/cost_cpu.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\cost_cpu.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/cost_cpu.err.log",
+      "sha256": "f557494b01c277bedf5ec80565f697584b96c1c97bd4369c717bf49e57792200",
+      "bytes": 713
+    },
+    {
+      "alias": "logs/cost_cpu.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\cost_cpu.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/cost_cpu.out.log",
+      "sha256": "344075ea85e9e769511760a3f96bdea2573d26e480ef8a96cb1453452bc5e42e",
+      "bytes": 387
+    },
+    {
+      "alias": "logs/final_summary.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\final_summary.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/final_summary.out.log",
+      "sha256": "85bb1f22f541da6dec92093b2a16dfd8ed9f2241e9f49cfb011f4c247140410a",
+      "bytes": 10828
+    },
+    {
+      "alias": "logs/finalize.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\finalize.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/finalize.err.log",
+      "sha256": "c66d8833200564f09022876db0e44acfef574819c71304365adeebc6a3849bcf",
+      "bytes": 239
+    },
+    {
+      "alias": "logs/finalize.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\finalize.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/finalize.out.log",
+      "sha256": "cd9b2da23435efc2a02de7ac61a7b558675ee6f5a62061a0faacec164730e2b1",
+      "bytes": 304
+    },
+    {
+      "alias": "logs/finish.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\finish.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/finish.err.log",
+      "sha256": "218aa1fe1ff80efd7046b86d83b75a927e4c22ccdaf6f45628973dc2aa9aabe9",
+      "bytes": 1187
+    },
+    {
+      "alias": "logs/finish.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\finish.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/finish.out.log",
+      "sha256": "ca4f2ace7dba96e6f8fa654816a8691d7b8856456a3d31e7904276b0e1e77b85",
+      "bytes": 11343
+    },
+    {
+      "alias": "logs/prepare.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\prepare.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/prepare.err.log",
+      "sha256": "c66d8833200564f09022876db0e44acfef574819c71304365adeebc6a3849bcf",
+      "bytes": 239
+    },
+    {
+      "alias": "logs/prepare.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\prepare.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/prepare.out.log",
+      "sha256": "f864b8163f328b4531005d8cfe419578204fef6d0b8f804790c5e5f7f5baf2d7",
+      "bytes": 92
+    },
+    {
+      "alias": "logs/seed11.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\seed11.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/seed11.err.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/seed11.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\seed11.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/seed11.out.log",
+      "sha256": "a71fdda146b333ce6e025c0a03a39a2d208d885bbec48999f348fe596a95cd03",
+      "bytes": 2788
+    },
+    {
+      "alias": "logs/seed12.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\seed12.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/seed12.err.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/seed12.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\seed12.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/seed12.out.log",
+      "sha256": "d69b89ab371a72e6b2cfe87c2f1a28afccae13a0ddb6de4d7f060e2483acb324",
+      "bytes": 2791
+    },
+    {
+      "alias": "logs/seed13.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\seed13.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/seed13.err.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/seed13.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\logs\\seed13.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/logs/seed13.out.log",
+      "sha256": "86dcc7377f4243a7f46442a2ffe9a7edb9e91de83271102cc97c469856e6056c",
+      "bytes": 2786
+    },
+    {
+      "alias": "METHOD.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\METHOD.md",
+      "snapshot": "findings/sources/feature-law-2026-11-02/METHOD.md",
+      "sha256": "943a65e8c4ed014e85353f527f663f29c7d0ce9eb033da13478260dd7a833413",
+      "bytes": 4599
+    },
+    {
+      "alias": "operators.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\operators.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/operators.py",
+      "sha256": "1884d52530467c8e4aa5b6f76fa83cf8a7479e39d8cd3fbc8176311309be610d",
+      "bytes": 6292
+    },
+    {
+      "alias": "protocol.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\protocol.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/protocol.json",
+      "sha256": "089541da9aa3b55e5c4b5f80ec7e316e8902816135d0e6b657027788f2d67097",
+      "bytes": 7847
+    },
+    {
+      "alias": "reference.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\reference.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/reference.py",
+      "sha256": "54466f19614cdb71a108196eea558b792b22f73ff8c5dcc2b0ff590dc2eab0be",
+      "bytes": 5723
+    },
+    {
+      "alias": "references/manifest.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\references\\manifest.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/references/manifest.json",
+      "sha256": "d49f9b8b1b57034bc37a0128aafc956f23ceb6a9556bf71d34dbec03b73e1ef0",
+      "bytes": 269165
+    },
+    {
+      "alias": "REPORT_KO.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\REPORT_KO.md",
+      "snapshot": "findings/sources/feature-law-2026-11-02/REPORT_KO.md",
+      "sha256": "13e3f04826b545ec83225521672897c409f5ee6a183447c757f151780dab4d85",
+      "bytes": 10164
+    },
+    {
+      "alias": "results/adaptive_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s11\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s11/evaluation.json",
+      "sha256": "28dadb198476119ab24df779236cf4f798dc4b9cb16b3a9cc0930845dcbe931e",
+      "bytes": 1475
+    },
+    {
+      "alias": "results/adaptive_s11/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s11\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s11/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/adaptive_s11/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s11\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s11/progress.json",
+      "sha256": "1098210e2ed3c4ea738aeb4de0d88400fe02a670ddfa6b6b3965019a1e916555",
+      "bytes": 124
+    },
+    {
+      "alias": "results/adaptive_s11/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s11\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s11/train_log.json",
+      "sha256": "584377d67d73223bdacbdff253c813c9d1ff0339816e952e6cb4abe2dbe801ff",
+      "bytes": 35458
+    },
+    {
+      "alias": "results/adaptive_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s11\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s11/training.json",
+      "sha256": "2ca9fefe535d2bca1a8c269b07d6ffe810fe786346e4842a617997a0e28c8b59",
+      "bytes": 657
+    },
+    {
+      "alias": "results/adaptive_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s12\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s12/evaluation.json",
+      "sha256": "ad36c62d92a4c0238f380367762d6be71bd02ac745610093c7f8f331f015f786",
+      "bytes": 1474
+    },
+    {
+      "alias": "results/adaptive_s12/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s12\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s12/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/adaptive_s12/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s12\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s12/progress.json",
+      "sha256": "be3052a904ab383eb0da590b3b2a73b597ec385e6eda3674b16ede5b153778a5",
+      "bytes": 123
+    },
+    {
+      "alias": "results/adaptive_s12/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s12\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s12/train_log.json",
+      "sha256": "f18420fc4fae1d05d92dc29ff87c41b444c1e521bfe10743586feea2e8b79d28",
+      "bytes": 35469
+    },
+    {
+      "alias": "results/adaptive_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s12\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s12/training.json",
+      "sha256": "0a46d28feea4a743989a6edae3e1cc5286f12ef8ecf8b6a5eb171bded31522c3",
+      "bytes": 658
+    },
+    {
+      "alias": "results/adaptive_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s13\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s13/evaluation.json",
+      "sha256": "853041d8349eb7d6eb0808d0d6903f1a8518faf4334ea3a474d9ddaff4793174",
+      "bytes": 1475
+    },
+    {
+      "alias": "results/adaptive_s13/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s13\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s13/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/adaptive_s13/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s13\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s13/progress.json",
+      "sha256": "d3029b86208fa8b69f057b20ad9875673d6a017e4700db481e8ed11d0d02ee90",
+      "bytes": 122
+    },
+    {
+      "alias": "results/adaptive_s13/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s13\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s13/train_log.json",
+      "sha256": "37aeadda798f6bbe5ba0726d2f22f9b450b29db8f9db8ea3bcff9b2df0a1d87a",
+      "bytes": 35482
+    },
+    {
+      "alias": "results/adaptive_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\adaptive_s13\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/adaptive_s13/training.json",
+      "sha256": "30723cbda67248e4ab7c469b1922c453f3a25ed16b0ae319402404689500cc61",
+      "bytes": 658
+    },
+    {
+      "alias": "results/audit.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\audit.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/audit.json",
+      "sha256": "8558e1b547ea59fb43fbd20975fc97e92ab1a516bd45d1fcb40dca528906d55f",
+      "bytes": 5985
+    },
+    {
+      "alias": "results/cost.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\cost.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/cost.json",
+      "sha256": "67b1b7c037df83e0023cbc6545d290423e7e168567e80692737e2422ecc76e17",
+      "bytes": 42380
+    },
+    {
+      "alias": "results/cost_gpu_structured.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\cost_gpu_structured.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/cost_gpu_structured.json",
+      "sha256": "7b4c1e2734581c3a9dfd298c80f75e63d7c8a32ba6a154297bb14255ea8e804c",
+      "bytes": 42208
+    },
+    {
+      "alias": "results/design_lock.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\design_lock.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/design_lock.json",
+      "sha256": "c1b264aa2f84f364562b6e035c2259af696460c60b6460249800e19805ef8e67",
+      "bytes": 1149
+    },
+    {
+      "alias": "results/lock.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\lock.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/lock.json",
+      "sha256": "7b5e3a1de88e970b258b0fa4ca4ab1679daddae3c7e90b64a7e16f390948711e",
+      "bytes": 1241
+    },
+    {
+      "alias": "results/mask_pfn_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s11\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s11/evaluation.json",
+      "sha256": "c83332e94baaed83a0a512fdd3b52e22faa177c350afcac423063ef10a3afd63",
+      "bytes": 1474
+    },
+    {
+      "alias": "results/mask_pfn_s11/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s11\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s11/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/mask_pfn_s11/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s11\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s11/progress.json",
+      "sha256": "bd61c0b3a52d9c439b8aec8206e94920125d91587d85758df0f42ac7c7093526",
+      "bytes": 124
+    },
+    {
+      "alias": "results/mask_pfn_s11/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s11\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s11/train_log.json",
+      "sha256": "de57f1ad3bf960ad9a3ddb795f0ec86018b22d1f64db7b0fa973604f8ba4b97d",
+      "bytes": 35261
+    },
+    {
+      "alias": "results/mask_pfn_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s11\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s11/training.json",
+      "sha256": "1c06f7ad40e0e30704a8c0adb9c88520156f5fc463fd9f6fba4e5da53acfd80a",
+      "bytes": 665
+    },
+    {
+      "alias": "results/mask_pfn_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s12\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s12/evaluation.json",
+      "sha256": "c1b2b3595e5cf0ed93bfde1989d64d73c41b8092c01b516ea3fe0eb5c6c8c1e4",
+      "bytes": 1474
+    },
+    {
+      "alias": "results/mask_pfn_s12/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s12\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s12/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/mask_pfn_s12/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s12\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s12/progress.json",
+      "sha256": "46bc854fa47070abfc50d4da37189fe06253e69c33d312e552989105698ab8f2",
+      "bytes": 123
+    },
+    {
+      "alias": "results/mask_pfn_s12/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s12\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s12/train_log.json",
+      "sha256": "f0bc6d2584b439c14a8c2fcd8ba430d70607985464befedf2b06f2063a385a54",
+      "bytes": 35247
+    },
+    {
+      "alias": "results/mask_pfn_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s12\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s12/training.json",
+      "sha256": "a1090b92cc6db9b1b9247d23d73b491b694f0a9c0af6e1ada4fccd01c32cdce2",
+      "bytes": 665
+    },
+    {
+      "alias": "results/mask_pfn_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s13\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s13/evaluation.json",
+      "sha256": "b5beb8c8d32b857c2eafcefb78fc70a4f90219460eef9b51c507ac7a183ce60a",
+      "bytes": 1474
+    },
+    {
+      "alias": "results/mask_pfn_s13/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s13\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s13/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/mask_pfn_s13/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s13\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s13/progress.json",
+      "sha256": "ee068c6a998b7840ab378a008b8d8f6fb8f80965d4544109f228b256be3d30a9",
+      "bytes": 124
+    },
+    {
+      "alias": "results/mask_pfn_s13/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s13\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s13/train_log.json",
+      "sha256": "9b065a80e9b4ee4daf38aebbe1fb524b27de95afe2ae70906072a67f92b15f2a",
+      "bytes": 35256
+    },
+    {
+      "alias": "results/mask_pfn_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\mask_pfn_s13\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/mask_pfn_s13/training.json",
+      "sha256": "ebcb1ba1604baec809667083380b2d602ebbbac455108893a3464860deed956c",
+      "bytes": 666
+    },
+    {
+      "alias": "results/original_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s11\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s11/evaluation.json",
+      "sha256": "d387461eba4f8b585287ae87a13f2876c661da6bb5d8a05ea4dd6d3bebfb7a5f",
+      "bytes": 1475
+    },
+    {
+      "alias": "results/original_s11/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s11\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s11/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/original_s11/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s11\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s11/progress.json",
+      "sha256": "2e81848ff30443e4465373529b8e200bbf495c5c956aeea325ed45a1edf71bf5",
+      "bytes": 122
+    },
+    {
+      "alias": "results/original_s11/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s11\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s11/train_log.json",
+      "sha256": "4f0e986668f4875166d554bcb50ea655740ad94b00a2fd5b78d4ec550b8aa426",
+      "bytes": 35564
+    },
+    {
+      "alias": "results/original_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s11\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s11/training.json",
+      "sha256": "b66a55c9b9f7c10312939948c45c7ec4038dfd164200bee2854599074e890c67",
+      "bytes": 657
+    },
+    {
+      "alias": "results/original_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s12\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s12/evaluation.json",
+      "sha256": "6f8f323be5d57189813ae0f946850164f5e32e35b953b5b793e1e239db7e54c4",
+      "bytes": 1475
+    },
+    {
+      "alias": "results/original_s12/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s12\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s12/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/original_s12/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s12\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s12/progress.json",
+      "sha256": "9f8a76be6158c701ec80bc2c3ec31dcbdc77a973a69706ba7211ee9588f13216",
+      "bytes": 124
+    },
+    {
+      "alias": "results/original_s12/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s12\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s12/train_log.json",
+      "sha256": "193424154e474ff5f9f1c9a47dd064171abede4153fc26f2e3dc447c420a7c89",
+      "bytes": 35560
+    },
+    {
+      "alias": "results/original_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s12\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s12/training.json",
+      "sha256": "e3f921b77d8e65e8e07fe47ca8d574744d6da3dd110dd28a8ebdf285a178499e",
+      "bytes": 656
+    },
+    {
+      "alias": "results/original_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s13\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s13/evaluation.json",
+      "sha256": "b7a0ecda67183985664b08746ea1bac3c555ffc6b0559a610116790c844c4be7",
+      "bytes": 1474
+    },
+    {
+      "alias": "results/original_s13/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s13\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s13/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/original_s13/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s13\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s13/progress.json",
+      "sha256": "90155a7e9140f6209fbb4f92e02a8119b8e57076f2e8490c58daa60c10311b7a",
+      "bytes": 123
+    },
+    {
+      "alias": "results/original_s13/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s13\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s13/train_log.json",
+      "sha256": "c29e404426a20791c3f5757ff196da78fd61fdbb04df79e303f8c820bfda9002",
+      "bytes": 35552
+    },
+    {
+      "alias": "results/original_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\original_s13\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/original_s13/training.json",
+      "sha256": "11372bae867cf2d9eb5435c9b2b2bf466f42ef0cacdcfae2a6746ef1c3561a81",
+      "bytes": 657
+    },
+    {
+      "alias": "results/pcfi_pfn_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s11\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s11/evaluation.json",
+      "sha256": "122da12bc6f5c4753cd9db78ed265baa9ab86d46d403611369249a5f0b9a4697",
+      "bytes": 1473
+    },
+    {
+      "alias": "results/pcfi_pfn_s11/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s11\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s11/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/pcfi_pfn_s11/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s11\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s11/progress.json",
+      "sha256": "adcc0d5bae29d5988d401493e696fcc9214921c400434ace8da8b6ca44312502",
+      "bytes": 124
+    },
+    {
+      "alias": "results/pcfi_pfn_s11/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s11\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s11/train_log.json",
+      "sha256": "396b6a1ea0030e06b5811b7612079245936c66700c069b9f002802bd9e74480c",
+      "bytes": 35271
+    },
+    {
+      "alias": "results/pcfi_pfn_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s11\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s11/training.json",
+      "sha256": "0b85200ff7b99396d1caf6bf7a5e125a1d9c58bd0222b14167b82b72c21929d3",
+      "bytes": 665
+    },
+    {
+      "alias": "results/pcfi_pfn_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s12\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s12/evaluation.json",
+      "sha256": "e62d5459cf6b8ed9f092216fe2a3a6e09de93615725f608e0a4e5f65942aaf8c",
+      "bytes": 1473
+    },
+    {
+      "alias": "results/pcfi_pfn_s12/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s12\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s12/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/pcfi_pfn_s12/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s12\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s12/progress.json",
+      "sha256": "4d6473c34bc26a2798d147b215d6636f00f5280766808f51d3ede435939953ad",
+      "bytes": 123
+    },
+    {
+      "alias": "results/pcfi_pfn_s12/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s12\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s12/train_log.json",
+      "sha256": "ae0d37bca3128efd34064e269c70f2304459c69e850d0b84856af8222db94930",
+      "bytes": 35262
+    },
+    {
+      "alias": "results/pcfi_pfn_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s12\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s12/training.json",
+      "sha256": "cc9e56ca33e32d2c87d4c4f3d40224d1e532d6a67b7a4385e03601f746b6fa61",
+      "bytes": 665
+    },
+    {
+      "alias": "results/pcfi_pfn_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s13\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s13/evaluation.json",
+      "sha256": "8b4219d0d565560dc8eda58f2a4a9ed1c53d6e303216c78bcdc328d26b6a29b7",
+      "bytes": 1474
+    },
+    {
+      "alias": "results/pcfi_pfn_s13/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s13\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s13/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/pcfi_pfn_s13/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s13\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s13/progress.json",
+      "sha256": "9e825ca7ecb4bfc8b47064b7a72675ccb832dd079aa62c66fccab0ea2c7defb3",
+      "bytes": 124
+    },
+    {
+      "alias": "results/pcfi_pfn_s13/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s13\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s13/train_log.json",
+      "sha256": "00627b948aeec518fd1e08af2cee101f2a7cf40f218e8e7ceb44a8bdd899126d",
+      "bytes": 35258
+    },
+    {
+      "alias": "results/pcfi_pfn_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\pcfi_pfn_s13\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/pcfi_pfn_s13/training.json",
+      "sha256": "f7463bfb0b3e8ee08272b055347ac6666b1a4f856e7c4a7c02c1feaa292b4ee6",
+      "bytes": 664
+    },
+    {
+      "alias": "results/preflight.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\preflight.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/preflight.json",
+      "sha256": "04209bcbd39076b48530b4a4e2bcad6456c564d1a1b58eac1e513de0fd49c06d",
+      "bytes": 2099
+    },
+    {
+      "alias": "results/runtime_amendment.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\runtime_amendment.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/runtime_amendment.json",
+      "sha256": "93dbdb7616bce92bf0e7aa3624eca25753a8df04ecdd1afa8afba8f44ea6723c",
+      "bytes": 528
+    },
+    {
+      "alias": "results/static_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s11\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s11/evaluation.json",
+      "sha256": "50b16bd187ce7d3b87313f37774ad060d6a55bd78fa57a796d1dd2c64ddc834d",
+      "bytes": 1472
+    },
+    {
+      "alias": "results/static_s11/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s11\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s11/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/static_s11/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s11\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s11/progress.json",
+      "sha256": "ae8b53c0a49e602ed1f4183db6172ecb79ae36949fc0a6d37c594eb6b708b52d",
+      "bytes": 123
+    },
+    {
+      "alias": "results/static_s11/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s11\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s11/train_log.json",
+      "sha256": "f10b134a5594697e409946a5bcdd36a103585ebef5b043a1de231dcc133fe9f5",
+      "bytes": 35451
+    },
+    {
+      "alias": "results/static_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s11\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s11/training.json",
+      "sha256": "f09467609ce87ca1f18c7592a9df3dd39743c4d6f9a03e32e8cfbd5c0dc57e5d",
+      "bytes": 655
+    },
+    {
+      "alias": "results/static_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s12\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s12/evaluation.json",
+      "sha256": "8c90da953752ceab66ca3f16c127810a3eeeef730598310594e69c159617cfff",
+      "bytes": 1473
+    },
+    {
+      "alias": "results/static_s12/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s12\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s12/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/static_s12/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s12\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s12/progress.json",
+      "sha256": "2caea1f6df4e3d1b54fca19aa43a6c2ea4725e38dfedce15b223932c4908de87",
+      "bytes": 123
+    },
+    {
+      "alias": "results/static_s12/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s12\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s12/train_log.json",
+      "sha256": "7ee7946db8a6fe4c8a0e8af9a49d68b5fc59021ec6c073d699ed59056256d3cd",
+      "bytes": 35425
+    },
+    {
+      "alias": "results/static_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s12\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s12/training.json",
+      "sha256": "831aab9d978368614835b7a3285f5b002fde852c751bed2cf854ce7190d54d92",
+      "bytes": 656
+    },
+    {
+      "alias": "results/static_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s13\\evaluation.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s13/evaluation.json",
+      "sha256": "630534a6a8cc380f36f5a88a48173cbedac9bbf4a4d6626271412aa8050817fb",
+      "bytes": 1473
+    },
+    {
+      "alias": "results/static_s13/overflow_retries.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s13\\overflow_retries.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s13/overflow_retries.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "alias": "results/static_s13/progress.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s13\\progress.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s13/progress.json",
+      "sha256": "f0c315abcf23960bec4d58a0aae9586f57d0b0bf4cc1ebd88bf549d8062f968d",
+      "bytes": 122
+    },
+    {
+      "alias": "results/static_s13/train_log.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s13\\train_log.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s13/train_log.json",
+      "sha256": "b719dbc518f08a8140947a97824d2aedc7c26a7378561a0496c1527cd2d8b968",
+      "bytes": 35484
+    },
+    {
+      "alias": "results/static_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\static_s13\\training.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/static_s13/training.json",
+      "sha256": "d2add0e70f7773588e6788d3333ad077e465047fe583e2704571930bb78e37a0",
+      "bytes": 656
+    },
+    {
+      "alias": "results/statistics.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\results\\statistics.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/results/statistics.json",
+      "sha256": "94ae3f84c92efebdd938e6d3a9a3e42b05be05c02b284648aa7445cd8a0c7a8c",
+      "bytes": 164738
+    },
+    {
+      "alias": "run.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\run.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/run.py",
+      "sha256": "1b6235d06d1771735df371ff35b2c3a4c84e903bf218e2c2961ae064930f1781",
+      "bytes": 8395
+    },
+    {
+      "alias": "runtime/analyze.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\analyze.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/analyze.py",
+      "sha256": "5cc8f6284c5063779fd42c26e1b7da1c44f4a12d7538d13aa63a0e463ab61215",
+      "bytes": 502
+    },
+    {
+      "alias": "runtime/archive.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\archive.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/archive.py",
+      "sha256": "c06393f10093b5b5f60fc6cd4a4b699567d461ebc127a5c95ac5ec1ddf55388e",
+      "bytes": 17494
+    },
+    {
+      "alias": "runtime/cost_cpu.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\cost_cpu.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/cost_cpu.py",
+      "sha256": "0b64fba637b231f48fd9dc8c38c14399b0c42e5162bd41f8cc52511108a49853",
+      "bytes": 1535
+    },
+    {
+      "alias": "runtime/finish.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\finish.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/finish.py",
+      "sha256": "f8ccad5941967f416a3c90a50e0ff0242eab6b4edc6fe9055704757dd7b74cbf",
+      "bytes": 812
+    },
+    {
+      "alias": "runtime/initial_analysis_import.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\initial_analysis_import.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/initial_analysis_import.err.log",
+      "sha256": "ac06984a691b10e2836947147f8911f7da21d9cbff3bd873cf524924e6e07bc9",
+      "bytes": 1135
+    },
+    {
+      "alias": "runtime/initial_design_lock.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\initial_design_lock.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/initial_design_lock.json",
+      "sha256": "b87c8b4008d787c8f888af8aca229cfe968a5df0eafc8a7d6465339b508c342a",
+      "bytes": 1149
+    },
+    {
+      "alias": "runtime/initial_lock.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\initial_lock.json",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/initial_lock.json",
+      "sha256": "378f3c22e82e404a1b46eee233b278410720d883a56f9292a88b2f8b38f61b5f",
+      "bytes": 1241
+    },
+    {
+      "alias": "runtime/initial_run.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\initial_run.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/initial_run.py",
+      "sha256": "4f1c36129ed8b80b70d80ca6364984ae1fdeeaf9124f1483be7abf6fee616e8b",
+      "bytes": 8156
+    },
+    {
+      "alias": "runtime/initial_seed11.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\initial_seed11.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/initial_seed11.err.log",
+      "sha256": "784027b972998692cea05ada650c14d5245d65f5bede22cd8f037810b0f33e1e",
+      "bytes": 479
+    },
+    {
+      "alias": "runtime/initial_seed11.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\initial_seed11.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/initial_seed11.out.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "alias": "runtime/initial_seed12.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\initial_seed12.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/initial_seed12.err.log",
+      "sha256": "784027b972998692cea05ada650c14d5245d65f5bede22cd8f037810b0f33e1e",
+      "bytes": 479
+    },
+    {
+      "alias": "runtime/initial_seed12.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\initial_seed12.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/initial_seed12.out.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "alias": "runtime/initial_seed13.err.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\initial_seed13.err.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/initial_seed13.err.log",
+      "sha256": "784027b972998692cea05ada650c14d5245d65f5bede22cd8f037810b0f33e1e",
+      "bytes": 479
+    },
+    {
+      "alias": "runtime/initial_seed13.out.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\initial_seed13.out.log",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/initial_seed13.out.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "alias": "runtime/write_report.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\runtime\\write_report.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/runtime/write_report.py",
+      "sha256": "e621952d37b338b4c53a42b4ee564cfdb76e7d134b9ea823c440a3731c300f31",
+      "bytes": 10563
+    },
+    {
+      "alias": "tasks.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\feature_law_pilot\\tasks.py",
+      "snapshot": "findings/sources/feature-law-2026-11-02/tasks.py",
+      "sha256": "0bf267793915e546298fae7ce8ee92b428dd2868b9d7033a8e59295f8c55a95c",
+      "bytes": 5546
+    }
+  ]
+}
