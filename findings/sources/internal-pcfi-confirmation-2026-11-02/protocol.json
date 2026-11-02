@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-02",
+  "question": "Does the development-selected fixed internal PCFI placement reproduce its advantage over external PCFI on independent base graphs with the existing six checkpoints?",
+  "graphs": 128,
+  "graph_seed_start": 14291000,
+  "mask_seed_start": 14311000,
+  "seeds": [11, 12, 13],
+  "arms": ["external", "internal_fixed"],
+  "queries": 32,
+  "settings": [["full", 0.0, 4], ["uniform_nodes", 0.9, 4], ["uniform_nodes", 0.995, 4], ["clustered_nodes", 0.9, 4], ["clustered_nodes", 0.995, 4], ["uniform_cells", 0.995, 4], ["uniform_nodes", 0.995, 1]],
+  "bootstrap_seed": 202611022145,
+  "bootstrap_repeats": 5000,
+  "primary": "Internal-fixed minus external accuracy on queries with no observed physical feature, context at most4/class, four node-missing conditions uniform/clustered90/99.5. Within each episode average queries, then average four settings and three fixed training seeds within each base graph. Paired bootstrap128 base graphs,5000 replicates. Confirmation requires lower95CI>0, plus full-feature accuracy lower95CI>-.02. A CI containing0 is inconclusive, not equivalence.",
+  "secondary": "NLL, Brier, all-query means, individual settings, per-training-seed accuracy, context1/class and cell missing are secondary. All subgroup CIs unadjusted. Full-feature NI guard margin2pp fixed before generation. Context-frequency and uniform baselines are secondary. Never pool old and new bank as independent confirmation.",
+  "training": "Zero new updates; no optimizer, checkpoint selection, tuning, calibration or additional loss. Load the existing final external/internal_fixed checkpoints for seeds11/12/13 using the original locked loader, and verify their hashes before/after evaluation.",
+  "data": "Identical restricted official GraphPFN graph/SCM/task generator and preprocessing to internal_pcfi_pilot: requested192 nodes, degree4-12, nominal raw features8-16, max4 classes. Same heldout query split, observed-only RMS/no recentering, clip10, explicit mask, physical-column accounting. Odd padding is excluded from missing-query membership. Keep zero-observation episodes. Seeds are disjoint from all original requested/actual graph seeds; raw graph fingerprints checked too. Generator AssertionError retries only, recorded; no mask/accuracy resampling.",
+  "locking": "Replay three original bank episodes per checkpoint before locking. Pin all six checkpoint/training hashes, original lock, unchanged imported implementation and all new top-level Python/config sources before generating this final bank. No development bank or new training. Final manifest pins prepared input and raw graph hashes. Existing predictor receives observed inputs and context labels only; query truth is evaluation-only.",
+  "cost": "After evaluation workers finish, same RTX3090, seed11, first base graph's four primary conditions,5 warmups/30 repeats, CPU input to CPU probabilities including geometry and PCFI/PFN, excluding load and bank I/O. Report additional peak work memory, not total GPU; external GPU load uncontrolled.",
+  "decision": "Proceed to a separately locked FP/FISF internalization comparison only if primary confirmation and full-feature guard both pass. Otherwise do not launch that continuation or tune this bank. Preserve original development signal separately. This does not test new training seeds, real graphs, unseen schemas, paper novelty or all possible internal PCFI variants."
+}

@@ -223,6 +223,26 @@
   - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
   - 기록된 강점: Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.
 
+## IPCFIC-F01 — 개발 bank에서 선택한 내부 고정 PCFI의 외부 PCFI 대비 정확도 이득이 추가 학습 없이 새 graph bank에서 재현된다.
+
+- 판정: 새 bank에서 고정 내부 PCFI의 정확도 우위를 사전 기준대로 확인하지 못했다. FP/FISF 내부화 후속 학습은 시작하지 않는다. 이 결과가 모든 내부 PCFI 방식의 무효나 동등성을 의미하지는 않는다.
+- 원인·병목 [원인 미상]: 사전에 고정한 새 bank accuracy 확인 기준을 통과하지 못했다. 고유 원인은 분리하지 않아 미상이며, CI가0을 포함한 경우 효과 없음/동등성을 증명한 것으로 쓰지 않는다.
+- 반증·배제한 설명: 새 학습·checkpoint 선택·온도 tuning 없이 기존6개 checkpoint를 그대로 평가했다. 원 입력/연산/loader 및 저장 예측 replay와 hash를 확인했다.; 원 graph와 requested/actual seed 및 raw graph fingerprint가 겹치지 않는다. Zero-source mask를 제외하거나 성공할 때까지 재추출하지 않았다.
+- 재검토 조건: 같은 배치를 반복하거나 bank를 tuning하는 대신, 현재 checkpoint/입력/연산의 한계를 바꾸는 구체적인 근거가 생기고 강한 외부 PCFI 대조와 새 training seeds 및 독립 graph 검증을 사전 설계할 수 있을 때.
+- 먼저 이겨야 할 기준선: 동일 public PFN 초기화/학습 budget의 외부 actual PCFI, 내부 fixed, context/strict label-blind 개발 대조. Primary missing-query accuracy와 NLL/Brier/full guard 및 CPU→CPU 비용을 분리한다.
+- 최소 재검증: 현재 두 bank를 재선택에 쓰지 않고, 변경할 원리·single primary와 충분한 training-seed/graph 단위를 먼저 잠근다. 원 CI0을 equivalence로 쓰지 않는다.
+- 닫지 않은 것: IPCFI-F01은 context router의 원 판정으로 유지한다. 개발 bank의 fixed 양의 점추정은 삭제하지 않는다. 모든 내부화, native missing interface, 다른 학습/관측 연산, 실제 graph 또는 unseen schema 일반을 기각하지 않는다.
+- 원문: [findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md](../findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md); [findings/sources/internal-pcfi-confirmation-2026-11-02/METHOD_KO.md](../findings/sources/internal-pcfi-confirmation-2026-11-02/METHOD_KO.md); [findings/sources/internal-pcfi-confirmation-2026-11-02/protocol.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/protocol.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/design.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/design.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/statistics.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/statistics.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/audit.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/audit.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/cost.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/cost.json)
+
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, tokenization; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+  - 기록된 강점: Fully missing node에서도 PE-conditioned mixture responsibility가 남아 노드별 대치를 구분할 수 있다.
+- [Ephris](https://arxiv.org/abs/2609.37057): 복수 태그 일치 (약한 단서); tags=graph-structure-use, tokenization; keywords=-
+  - 기록된 강점: Section 3.1과 Appendix B의 feature별 Gather는 context와 query 노드를 모두 사용한다. Context-label embedding도 압축 전 scalar token에 제공하므로, feature memory를 label-context 노드에만 한정하지 않는 직접적인 선행 대조다.
+- [TabImpute](https://arxiv.org/abs/2510.02625v6): 복수 태그 일치 (약한 단서); tags=observation-mask, tokenization; keywords=-
+  - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
+  - 기록된 강점: Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.
+
 ## IPCFI-F01 — 실제 PCFI 전파를 공개 PFN 내부에 배치하고 context/PFN 상태로 전파 가중치를 조절하면 외부 PCFI·내부 고정 PCFI·label-blind router보다 분류가 좋아진다.
 
 - 판정: 현재100-step literal PCFI/25-step interleaving/513-parameter router/256-update 구현의 메인 방법 확대를 보류한다. 이 final bank에서 head/loss/temperature/전파 횟수/학습량을 바꿔 구제하지 않는다.

@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은31개 프로젝트 묶음의135항목이다. 실패·중단40개, 보존29개, 교훈44개, 미실행22개이며 **135번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은32개 프로젝트 묶음의137항목이다. 실패·중단41개, 보존29개, 교훈45개, 미실행22개이며 **137번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,17 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## 내부 고정 PCFI의 새 graph 재검증
+
+기존 checkpoint6개를 새128graph bank에서 추가 학습 없이 확인했다. 원64graph bank를 보고 선택한 후보이며, 생성 family와 학습 seeds11/12/13은 같다.
+
+| 방법 | Missing-query accuracy % | NLL |
+|---|---:|---:|
+| external | 49.821540 | 0.856885 |
+| internal_fixed | 50.041098 | 0.856498 |
+
+Fixed−external accuracy +0.219558, 95% CI [-0.331926, +0.796665]%p. 새 bank에서 고정 내부 PCFI의 정확도 우위를 사전 기준대로 확인하지 못했다. FP/FISF 내부화 후속 학습은 시작하지 않는다. 이 결과가 모든 내부 PCFI 방식의 무효나 동등성을 의미하지는 않는다. NLL/Brier와 비용은 별도로 보고한다. [보고서](findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md), [사전 프로토콜](findings/sources/internal-pcfi-confirmation-2026-11-02/protocol.json), [구조화 판정](findings/internal-pcfi-confirmation.yaml).
 
 ## 최신 실제 PCFI 내부화 실험
 
@@ -216,7 +227,7 @@ CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teach
 
 1. 이 요약으로 전체 결과와 범위를 확인한다.
 2. [연구 인계서](RESEARCH_HANDOFF_KO.md)의 요청문으로 독립 검토를 요청한다.
-3. 필요한 수치는 연결된 보고서와 [135개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
+3. 필요한 수치는 연결된 보고서와 [137개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-02_v6.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-02_v7.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.

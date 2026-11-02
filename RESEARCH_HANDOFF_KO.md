@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: 실제 PCFI 내부화 결과까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-02. 최근 업데이트: 내부 고정 PCFI 재검증까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -16,14 +16,25 @@
 
 이 파일만 읽어도 핵심 판단은 가능하다. 세부 확인은 다음 순서가 좋다.
 
-1. [최신 실제 PCFI 내부화 보고서](findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md)와 [계산 정의](findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md). 실제100-step PCFI를 넣은 네 모델을 학습했으며 이전 generic MLP refiner와 별개다.
+1. [내부 고정 PCFI 재검증](findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md)을 먼저 확인하고, [직전 실제 PCFI 내부화 보고서](findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md)와 [계산 정의](findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md). 실제100-step PCFI를 넣은 네 모델을 학습했으며 이전 generic MLP refiner와 별개다.
 2. [Grid6 teacher 판정](findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md), [전체 보고서](findings/sources/grid6-teacher-2026-11-02/REPORT_KO.md), [학습 수식](findings/sources/grid6-teacher-2026-11-02/METHOD.md); 직전 [disjoint-factor 보고서](findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)와 [모델 수식](findings/sources/disjoint-factor-2026-11-02/METHOD.md)
 2. [직전 circuit 보고서](findings/sources/direct-marginal-2026-11-02/REPORT_KO.md), [feature-memory 보고서](findings/sources/feature-memory-2026-11-02/REPORT_KO.md)
 3. [누적 실패·보존·미실행 기록](out/research_log.md): 필요한 갈래만 검색한다.
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 33편, 연구 기록 135항목, 아이디어 8개가 있다. 31개 프로젝트 묶음이며 실패·중단40, 보존29, 교훈44, 미실행22항목이다. 135번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v6는 실제 PCFI 내부화까지 포함한다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 33편, 연구 기록 137항목, 아이디어 8개가 있다. 32개 프로젝트 묶음이며 실패·중단41, 보존29, 교훈45, 미실행22항목이다. 137번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v7는 내부 고정 PCFI의 독립 graph 재검증까지 포함한다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+
+## 내부 고정 PCFI의 새 graph 재검증
+
+기존 checkpoint6개를 새128graph bank에서 추가 학습 없이 확인했다. 원64graph bank를 보고 선택한 후보이며, 생성 family와 학습 seeds11/12/13은 같다.
+
+| 방법 | Missing-query accuracy % | NLL |
+|---|---:|---:|
+| external | 49.821540 | 0.856885 |
+| internal_fixed | 50.041098 | 0.856498 |
+
+Fixed−external accuracy +0.219558, 95% CI [-0.331926, +0.796665]%p. 새 bank에서 고정 내부 PCFI의 정확도 우위를 사전 기준대로 확인하지 못했다. FP/FISF 내부화 후속 학습은 시작하지 않는다. 이 결과가 모든 내부 PCFI 방식의 무효나 동등성을 의미하지는 않는다. NLL/Brier와 비용은 별도로 보고한다. [보고서](findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md), [사전 프로토콜](findings/sources/internal-pcfi-confirmation-2026-11-02/protocol.json), [구조화 판정](findings/internal-pcfi-confirmation.yaml).
 
 ## 최신 실제 PCFI 내부화 실험
 
@@ -228,7 +239,7 @@ Disjoint Factor PFN은 초기 fresh bank에서 Mask/PCFI PFN보다 정확도가 
 Factor의 teacher KL은 약26.1% 감소했지만 accuracy 개선은 없었고, query 자신도 feature가 없는 secondary의 accuracy는1.16%p 하락했어.
 Physical feature 제거는 CE와 distilled Factor 둘 다 성능을 낮췄으므로 feature 활용 자체는 보존하되, 그것이 distillation으로 새로 생겼다고 해석하지 말아줘.
 추가로 feature-law3종을 학습한 cell-only 비교에서도 adaptive64.47%, static64.41%, 기존64.63%로 primary 적응 이득을 확인하지 못했어. 부호 제약을 푸는 것만 다시 제안하지 말아줘.
-그 뒤 실제 PCFI100-step 전파를 PFN 내부에 배치해 외부/내부 고정/context/label-blind 네 모델을3seeds로 학습했어. 별도64개 multiclass graph에서 context49.41%, 내부 고정49.90%, 외부49.24%였고 context−고정은−0.487%p CI[−0.862,−0.130]이었어. 현재 bounded weight router의 이득은 미확인이며, 단순히 PCFI를 안에 넣자는 제안을 다시 새 후보로 취급하지 말아줘. 모든 내부화 방법을 기각한 결과는 아니야.
+그 뒤 실제 PCFI100-step 전파를 PFN 내부에 배치해 외부/내부 고정/context/label-blind 네 모델을3seeds로 학습했어. 별도64개 multiclass graph에서 context49.41%, 내부 고정49.90%, 외부49.24%였고 context−고정은−0.487%p CI[−0.862,−0.130]이었어. 현재 bounded weight router의 이득은 미확인이며, 단순히 PCFI를 안에 넣자는 제안을 다시 새 후보로 취급하지 말아줘. 모든 내부화 방법을 기각한 결과는 아니야. 이어 기존 external/fixed checkpoint6개를 새128graph에서 추가 학습 없이 검증했어. Fixed−external은 +0.219558, 95% CI [-0.331926, +0.796665]%p였어. 새 bank에서 고정 내부 PCFI의 정확도 우위를 사전 기준대로 확인하지 못했다. FP/FISF 내부화 후속 학습은 시작하지 않는다. 이 결과가 모든 내부 PCFI 방식의 무효나 동등성을 의미하지는 않는다.
 연결 연산·signed evidence·자기 role-update는 이미 구현했어. 현재 학생도 neural potential을 학습하므로 이를 모델 전체가 고정 Gaussian인 것으로 취급하지 말아줘.
 다음 후보는 현재 binary column orientation/pairwise factor로 부족한 feature–relation 의존성과, 그것을 학습해 새 graph로 전이하는 구체적인 연산을 설명해줘.
 

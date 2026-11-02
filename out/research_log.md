@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 31개 프로젝트 · 135개 기록 (실패·중단 40개, 보존 29개, 교훈 44개, 미실행 22개)
+총 32개 프로젝트 · 137개 기록 (실패·중단 41개, 보존 29개, 교훈 45개, 미실행 22개)
 
 ## Common-context witness 고정 곱셈
 
@@ -422,6 +422,29 @@ ACM/IMDB helper feature는 target feature에서 파생된 집계일 수 있음�
 
 - 확대 금지: 한 graph의 secondary이며 전체 조건 우위·novelty·독립 다중 domain 검증으로 확대하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/pubmed.md](../findings/sources/graphpfn-2026-11-01/pubmed.md); [findings/sources/graphpfn-2026-11-01/views.md](../findings/sources/graphpfn-2026-11-01/views.md)
+
+## Fixed internal PCFI independent-graph confirmation
+
+실험 조건: Reused six checkpoints;0 updates; same official generator family;128 new base graphs; missing-query accuracy primary.
+
+### IPCFIC-F01 [실패·중단] 개발 bank에서 선택한 내부 고정 PCFI의 외부 PCFI 대비 정확도 이득이 추가 학습 없이 새 graph bank에서 재현된다.
+
+external:accuracy 49.821540%/NLL 0.856885/Brier 0.552034; internal_fixed:accuracy 50.041098%/NLL 0.856498/Brier 0.552432; fixed-external accuracy%p +0.219558, 95% CI [-0.331926, +0.796665], NLL -0.000388, 95% CI [-0.003777, +0.002808], Brier +0.000398, 95% CI [-0.001679, +0.002518]. Primary=False, full2pp guard=True, continuation=False.
+
+- 판정: 새 bank에서 고정 내부 PCFI의 정확도 우위를 사전 기준대로 확인하지 못했다. FP/FISF 내부화 후속 학습은 시작하지 않는다. 이 결과가 모든 내부 PCFI 방식의 무효나 동등성을 의미하지는 않는다.
+- 원인·병목 [원인 미상]: 사전에 고정한 새 bank accuracy 확인 기준을 통과하지 못했다. 고유 원인은 분리하지 않아 미상이며, CI가0을 포함한 경우 효과 없음/동등성을 증명한 것으로 쓰지 않는다.
+- 닫은 범위: 같은 official graph/SCM family와 training seeds11/12/13에서, 현재100-step literal PCFI의 fixed25-step interleaving을 원 checkpoint 그대로 사용한 독립128graph accuracy confirmation 및 이를 근거로 한 FP/FISF 자동 확장.
+- 닫지 않은 것: IPCFI-F01은 context router의 원 판정으로 유지한다. 개발 bank의 fixed 양의 점추정은 삭제하지 않는다. 모든 내부화, native missing interface, 다른 학습/관측 연산, 실제 graph 또는 unseen schema 일반을 기각하지 않는다.
+- 재검토 조건: 같은 배치를 반복하거나 bank를 tuning하는 대신, 현재 checkpoint/입력/연산의 한계를 바꾸는 구체적인 근거가 생기고 강한 외부 PCFI 대조와 새 training seeds 및 독립 graph 검증을 사전 설계할 수 있을 때.
+- 기준선: 동일 public PFN 초기화/학습 budget의 외부 actual PCFI, 내부 fixed, context/strict label-blind 개발 대조. Primary missing-query accuracy와 NLL/Brier/full guard 및 CPU→CPU 비용을 분리한다.
+- 최소 재검증: 현재 두 bank를 재선택에 쓰지 않고, 변경할 원리·single primary와 충분한 training-seed/graph 단위를 먼저 잠근다. 원 CI0을 equivalence로 쓰지 않는다.
+- 원문: [findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md](../findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md); [findings/sources/internal-pcfi-confirmation-2026-11-02/METHOD_KO.md](../findings/sources/internal-pcfi-confirmation-2026-11-02/METHOD_KO.md); [findings/sources/internal-pcfi-confirmation-2026-11-02/protocol.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/protocol.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/design.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/design.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/statistics.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/statistics.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/audit.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/audit.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/cost.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/cost.json)
+
+### IPCFIC-L01 [교훈] Context router 실패, 내부 고정의 개발 신호, 새 graph 확인, 새 training-seed 일반화를 구분한다.
+
+원64graph bank에서 fixed−external accuracy +0.65743%p CI[-0.11984,+1.37358]였고 세 seed·네 primary cell의 점추정은 모두 양수였다. 그 후보를 선택한 뒤 새128graph bank의 정확도 기준을 잠갔다. 새 결과: external:accuracy 49.821540%/NLL 0.856885/Brier 0.552034; internal_fixed:accuracy 50.041098%/NLL 0.856498/Brier 0.552432; fixed-external accuracy%p +0.219558, 95% CI [-0.331926, +0.796665], NLL -0.000388, 95% CI [-0.003777, +0.002808], Brier +0.000398, 95% CI [-0.001679, +0.002518].
+
+- 원문: [findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md](../findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md); [findings/sources/internal-pcfi-confirmation-2026-11-02/METHOD_KO.md](../findings/sources/internal-pcfi-confirmation-2026-11-02/METHOD_KO.md); [findings/sources/internal-pcfi-confirmation-2026-11-02/protocol.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/protocol.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/design.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/design.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/statistics.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/statistics.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/audit.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/audit.json); [findings/sources/internal-pcfi-confirmation-2026-11-02/results/cost.json](../findings/sources/internal-pcfi-confirmation-2026-11-02/results/cost.json)
 
 ## Literal PCFI inside public GraphPFN
 
