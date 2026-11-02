@@ -1,0 +1,497 @@
+[
+  {
+    "arm": "mask_pfn_ce",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": 0.0034722222222222363,
+    "ci95": [
+      -0.01967592592592592,
+      0.02777777777777778
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_ce",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": -0.0006977144483924317,
+    "ci95": [
+      -0.0036619621594574745,
+      0.0022895564018827167
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_ce",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": -0.000649230522570018,
+    "ci95": [
+      -0.0035636689817979297,
+      0.002305142136128975
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_ce",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.016203703703703696,
+    "ci95": [
+      -0.03819444444444442,
+      0.0035011574074070018
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_ce",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": 0.001129006323826805,
+    "ci95": [
+      -0.0008639955050064585,
+      0.003129464031745818
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_ce",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": 0.0011219141401855777,
+    "ci95": [
+      -0.0008543068992245962,
+      0.00308879816494592
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_ce",
+    "mode": "graph_permuted",
+    "metric": "accuracy",
+    "difference": -0.0474537037037037,
+    "ci95": [
+      -0.11111111111111112,
+      0.017361111111111115
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_ce",
+    "mode": "graph_permuted",
+    "metric": "nll",
+    "difference": 0.019123759323680576,
+    "ci95": [
+      0.0042316770860998075,
+      0.03622592842160485
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_ce",
+    "mode": "graph_permuted",
+    "metric": "brier",
+    "difference": 0.017886826118987672,
+    "ci95": [
+      0.0036791080487864085,
+      0.03374833904239448
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn_ce",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.032407407407407406,
+    "ci95": [
+      -0.07754629629629628,
+      0.011574074074074089
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn_ce",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": 0.001673948690203197,
+    "ci95": [
+      -0.006672898851844486,
+      0.009701362741356741
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn_ce",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": 0.0016140481280893446,
+    "ci95": [
+      -0.006392116802259144,
+      0.009409093268690643
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn_ce",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.02893518518518518,
+    "ci95": [
+      -0.0625,
+      0.003472222222222227
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn_ce",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": 0.002372818859712663,
+    "ci95": [
+      -0.002354410771402105,
+      0.007098133041271033
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn_ce",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": 0.00232065551998866,
+    "ci95": [
+      -0.002274847799949735,
+      0.006921297887087041
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn_ce",
+    "mode": "graph_permuted",
+    "metric": "accuracy",
+    "difference": -0.04050925925925926,
+    "ci95": [
+      -0.10300925925925926,
+      0.02199074074074074
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn_ce",
+    "mode": "graph_permuted",
+    "metric": "nll",
+    "difference": 0.025337975807011553,
+    "ci95": [
+      0.005735978042214853,
+      0.04823037319539109
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn_ce",
+    "mode": "graph_permuted",
+    "metric": "brier",
+    "difference": 0.022566389016048776,
+    "ci95": [
+      0.004870259985788875,
+      0.04290482855532754
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_ce",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.12037037037037039,
+    "ci95": [
+      -0.1967592592592593,
+      -0.04282407407407408
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_ce",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": 0.08198431748690133,
+    "ci95": [
+      -0.08490162571400617,
+      0.22368484771392483
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_ce",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": 0.0819238151903029,
+    "ci95": [
+      -0.02534440878451203,
+      0.17461900778836423
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_ce",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.20833333333333337,
+    "ci95": [
+      -0.2939814814814815,
+      -0.12268518518518522
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_ce",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": 0.2005737349680254,
+    "ci95": [
+      0.010997655123525912,
+      0.3765103410145691
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_ce",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": 0.1553102291768982,
+    "ci95": [
+      0.043622297716358165,
+      0.2589123267222897
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_ce",
+    "mode": "graph_permuted",
+    "metric": "accuracy",
+    "difference": -0.26851851851851855,
+    "ci95": [
+      -0.38078703703703703,
+      -0.15509259259259262
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_ce",
+    "mode": "graph_permuted",
+    "metric": "nll",
+    "difference": 0.42596788557054327,
+    "ci95": [
+      0.20005745128088864,
+      0.6496272033763543
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_ce",
+    "mode": "graph_permuted",
+    "metric": "brier",
+    "difference": 0.2988057412034015,
+    "ci95": [
+      0.1674953986055891,
+      0.43263609532785596
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_distill",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": 0.010416666666666657,
+    "ci95": [
+      -0.02777777777777778,
+      0.060185185185185196
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_distill",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": -0.0009760008594660169,
+    "ci95": [
+      -0.005025519805392415,
+      0.002927148244330935
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_distill",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": -0.0009373488346739826,
+    "ci95": [
+      -0.004922081282345456,
+      0.002888306909626811
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_distill",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.008101851851851862,
+    "ci95": [
+      -0.02777777777777779,
+      0.00925925925925925
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_distill",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": 0.00017934333441925465,
+    "ci95": [
+      -0.0017488364110804144,
+      0.0019908791227623793
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_distill",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": 0.00019559193873640648,
+    "ci95": [
+      -0.0016902391340721107,
+      0.001975089757199054
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_distill",
+    "mode": "graph_permuted",
+    "metric": "accuracy",
+    "difference": -0.04282407407407409,
+    "ci95": [
+      -0.11458333333333333,
+      0.026620370370370346
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_distill",
+    "mode": "graph_permuted",
+    "metric": "nll",
+    "difference": 0.020034578334158913,
+    "ci95": [
+      0.004692334085075482,
+      0.0374246403355514
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn_distill",
+    "mode": "graph_permuted",
+    "metric": "brier",
+    "difference": 0.018865960506651396,
+    "ci95": [
+      0.004251826717500982,
+      0.03532858514021397
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_distill",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.11921296296296298,
+    "ci95": [
+      -0.19097222222222224,
+      -0.04861111111111111
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_distill",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": 0.10575260672016396,
+    "ci95": [
+      -0.028347986871267484,
+      0.22231541234988952
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_distill",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": 0.0894880250196098,
+    "ci95": [
+      -0.009117609908534607,
+      0.17656314025625477
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_distill",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.20717592592592596,
+    "ci95": [
+      -0.28359375,
+      -0.12731481481481485
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_distill",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": 0.18085408526612282,
+    "ci95": [
+      0.03508470378606436,
+      0.3198508065750608
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_distill",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": 0.14387531608261997,
+    "ci95": [
+      0.04039669694661244,
+      0.23844332247647254
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_distill",
+    "mode": "graph_permuted",
+    "metric": "accuracy",
+    "difference": -0.29050925925925924,
+    "ci95": [
+      -0.3958333333333333,
+      -0.17939814814814817
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_distill",
+    "mode": "graph_permuted",
+    "metric": "nll",
+    "difference": 0.35301375773379706,
+    "ci95": [
+      0.19130286737594673,
+      0.5125449649489446
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn_distill",
+    "mode": "graph_permuted",
+    "metric": "brier",
+    "difference": 0.27296595756804287,
+    "ci95": [
+      0.15731951233116961,
+      0.39085003777222915
+    ],
+    "graphs": 48
+  }
+]

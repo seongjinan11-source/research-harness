@@ -150,6 +150,22 @@
   - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
   - 기록된 강점: Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.
 
+## G6T-F01 — 기존 생성 prior의 exact Grid6 predictive를 가르치면 현재 공개 Mask GraphPFN이 teacher 추론을 더 잘 압축한다.
+
+- 판정: 현재 공개 Mask 구성에 exact teacher 감독만 교체하는 갈래의 메인 방법 확대는 보류한다. Factor secondary의 별도 성과는 보존한다.
+- 원인·병목 [원인 미상]: 조밀한 exact 감독만으로 현재 학생의 predictive gap을 줄이는 확실한 이득을 확인하지 못했다. Input 경로·표현력·최적화·frozen backbone·학습량의 기여를 분리하지 않아 고유 원인은 미상이다.
+- 반증·배제한 설명: 모든 새 학생은 원래 CE와 initial/frozen weights·task schedule·optimizer·학습률·trainable parameter 수·2048 exposures/256 successful updates가 일치한다. 기존 학습 checkpoint를 추가 학습한 비교가 아니다.; Teacher는 graph/관측feature/mask/context/family만 사용한다. 실제 query/helper label이나 실제 density/signal/role/feature orientation을 입력받지 않는다. Exact teacher의 normalization·class flip·hidden-value poison과 query-only KL/CE gradient 검사를 통과했다.; Source/bank/teacher/reference hashes, checkpoint 유한성, 저장예측 전체 재채점과45개 예측 재실행을 확인했다. CI에0을 포함한다는 사실을 효과0의 증명으로 해석하지 않는다.
+- 재검토 조건: 학생이 teacher의 관계·관측 정보 추론을 표현하고 회수할 수 있도록 바꾸는 구체적 학습 또는 추론 연산이, 강한 기준선 대비 효율적 예측을 제공할 근거가 생길 때.
+- 먼저 이겨야 할 기준선: 동일 architecture/initialization/tasks/updates의 sampled CE, 실제 PCFI 입력으로 학습한 PFN, Factor CE/distill, fixed-mode factor BP, exact Grid6/Grid6-BP. Teacher 생성과 학생 학습 비용을 포함해 보고한다.
+- 최소 재검증: 실패 bank에서 temperature·새 head·loss 혼합·학습량을 조정해 구제하지 않는다. 무엇을 바꾸는지 먼저 고정하고 새 graph/schema에서 primary KL·accuracy·NLL/Brier와 비용을 분리한다. Student architecture 변경과 teacher 변경을 동시에 하지 않는다.
+- 닫지 않은 것: G6T-P01/P02의 Factor 효과와 이전 disjoint-factor 정확도 개선은 보존한다. Distillation 전체, fully trained 다른 구조, 다른 feature law·real graph·unseen schema·99.5% missing·큰 graph의 teacher 학습은 기각하지 않는다. 기존 feature-free JR distillation과 다른 이번 범위를 구분한다.
+- 원문: [findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md](../findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md); [findings/sources/grid6-teacher-2026-11-02/protocol.json](../findings/sources/grid6-teacher-2026-11-02/protocol.json); [findings/sources/grid6-teacher-2026-11-02/results/paired.json](../findings/sources/grid6-teacher-2026-11-02/results/paired.json); [findings/sources/grid6-teacher-2026-11-02/results/decision.json](../findings/sources/grid6-teacher-2026-11-02/results/decision.json); [findings/sources/grid6-teacher-2026-11-02/results/benchmark.json](../findings/sources/grid6-teacher-2026-11-02/results/benchmark.json); [findings/sources/grid6-teacher-2026-11-02/results/final_integrity.json](../findings/sources/grid6-teacher-2026-11-02/results/final_integrity.json)
+
+- [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=differentiable-reasoning, observation-mask; keywords=-
+  - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+
 ## HET-F01 — Adapted HetGFD가 cross-type path 입력보다 큰 증분을 준다.
 
 - 판정: 새 메소드 headroom 부족

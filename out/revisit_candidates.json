@@ -1193,6 +1193,88 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "G6T-F01",
+    "project": "Exact Grid6 teacher for disjoint-feature PFN",
+    "claim": "기존 생성 prior의 exact Grid6 predictive를 가르치면 현재 공개 Mask GraphPFN이 teacher 추론을 더 잘 압축한다.",
+    "verdict": "현재 공개 Mask 구성에 exact teacher 감독만 교체하는 갈래의 메인 방법 확대는 보류한다. Factor secondary의 별도 성과는 보존한다.",
+    "reason_status": "unknown",
+    "failure_reason": "조밀한 exact 감독만으로 현재 학생의 predictive gap을 줄이는 확실한 이득을 확인하지 못했다. Input 경로·표현력·최적화·frozen backbone·학습량의 기여를 분리하지 않아 고유 원인은 미상이다.",
+    "reopen_when": "학생이 teacher의 관계·관측 정보 추론을 표현하고 회수할 수 있도록 바꾸는 구체적 학습 또는 추론 연산이, 강한 기준선 대비 효율적 예측을 제공할 근거가 생길 때.",
+    "recheck": "실패 bank에서 temperature·새 head·loss 혼합·학습량을 조정해 구제하지 않는다. 무엇을 바꾸는지 먼저 고정하고 새 graph/schema에서 primary KL·accuracy·NLL/Brier와 비용을 분리한다. Student architecture 변경과 teacher 변경을 동시에 하지 않는다.",
+    "comparison_floor": "동일 architecture/initialization/tasks/updates의 sampled CE, 실제 PCFI 입력으로 학습한 PFN, Factor CE/distill, fixed-mode factor BP, exact Grid6/Grid6-BP. Teacher 생성과 학생 학습 비용을 포함해 보고한다.",
+    "source_refs": [
+      "findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md",
+      "findings/sources/grid6-teacher-2026-11-02/protocol.json",
+      "findings/sources/grid6-teacher-2026-11-02/results/paired.json",
+      "findings/sources/grid6-teacher-2026-11-02/results/decision.json",
+      "findings/sources/grid6-teacher-2026-11-02/results/benchmark.json",
+      "findings/sources/grid6-teacher-2026-11-02/results/final_integrity.json"
+    ],
+    "paper_id": "GSPN",
+    "paper_title": "Tractable Probabilistic Graph Representation Learning with Graph-Induced Sum-Product Networks",
+    "paper_link": "https://arxiv.org/abs/2305.10544",
+    "matches": [
+      {
+        "strength": "숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.",
+        "tags": [
+          "differentiable-reasoning",
+          "observation-mask"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "differentiable-reasoning",
+      "observation-mask"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "G6T-F01",
+    "project": "Exact Grid6 teacher for disjoint-feature PFN",
+    "claim": "기존 생성 prior의 exact Grid6 predictive를 가르치면 현재 공개 Mask GraphPFN이 teacher 추론을 더 잘 압축한다.",
+    "verdict": "현재 공개 Mask 구성에 exact teacher 감독만 교체하는 갈래의 메인 방법 확대는 보류한다. Factor secondary의 별도 성과는 보존한다.",
+    "reason_status": "unknown",
+    "failure_reason": "조밀한 exact 감독만으로 현재 학생의 predictive gap을 줄이는 확실한 이득을 확인하지 못했다. Input 경로·표현력·최적화·frozen backbone·학습량의 기여를 분리하지 않아 고유 원인은 미상이다.",
+    "reopen_when": "학생이 teacher의 관계·관측 정보 추론을 표현하고 회수할 수 있도록 바꾸는 구체적 학습 또는 추론 연산이, 강한 기준선 대비 효율적 예측을 제공할 근거가 생길 때.",
+    "recheck": "실패 bank에서 temperature·새 head·loss 혼합·학습량을 조정해 구제하지 않는다. 무엇을 바꾸는지 먼저 고정하고 새 graph/schema에서 primary KL·accuracy·NLL/Brier와 비용을 분리한다. Student architecture 변경과 teacher 변경을 동시에 하지 않는다.",
+    "comparison_floor": "동일 architecture/initialization/tasks/updates의 sampled CE, 실제 PCFI 입력으로 학습한 PFN, Factor CE/distill, fixed-mode factor BP, exact Grid6/Grid6-BP. Teacher 생성과 학생 학습 비용을 포함해 보고한다.",
+    "source_refs": [
+      "findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md",
+      "findings/sources/grid6-teacher-2026-11-02/protocol.json",
+      "findings/sources/grid6-teacher-2026-11-02/results/paired.json",
+      "findings/sources/grid6-teacher-2026-11-02/results/decision.json",
+      "findings/sources/grid6-teacher-2026-11-02/results/benchmark.json",
+      "findings/sources/grid6-teacher-2026-11-02/results/final_integrity.json"
+    ],
+    "paper_id": "PEMix",
+    "paper_title": "When Missingness Follows the Graph: Beyond Feature Propagation for Missing Features",
+    "paper_link": "https://arxiv.org/abs/2610.18113",
+    "matches": [
+      {
+        "strength": "Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.",
+        "tags": [
+          "graph-structure-use",
+          "observation-mask"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-structure-use",
+      "observation-mask"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "HET-F01",
     "project": "Native heterogeneous 입력·기존 relational FM 대조",
     "claim": "Adapted HetGFD가 cross-type path 입력보다 큰 증분을 준다.",

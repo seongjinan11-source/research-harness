@@ -1,0 +1,20 @@
+{
+  "primary_teacher_effect_gate": false,
+  "primary_grid6_kl": 0.1041337062168864,
+  "primary_quality_gate": false,
+  "speed_ratio_grid6_over_mask": 0.20800270309740668,
+  "competitive_compression_gate": false,
+  "primary_effect": {
+    "subset": "primary",
+    "a": "mask_pfn_distill",
+    "b": "mask_pfn_ce",
+    "metric": "grid6_kl",
+    "difference": -0.0006540324410081208,
+    "ci95": [
+      -0.002034231242239231,
+      0.0005831346148425336
+    ],
+    "graphs": 48
+  },
+  "scope": "Exact known-family teacher on unchanged train tasks; fresh same-family test graphs. No method novelty or real/unseen-schema transfer claim."
+}

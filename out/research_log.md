@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 28개 프로젝트 · 125개 기록 (실패·중단 37개, 보존 26개, 교훈 40개, 미실행 22개)
+총 29개 프로젝트 · 129개 기록 (실패·중단 38개, 보존 28개, 교훈 41개, 미실행 22개)
 
 ## Common-context witness 고정 곱셈
 
@@ -289,6 +289,43 @@ Primary accuracy context52.3336%, all_nodes51.9552%, observed52.2888%, PCFI53.92
 이번 실행은 native feature-pair grouping을 유지한 공개 PFN routing kill test다. 원래 attention projection은 고정했고 별도의 sparse token encoder나 Ephris/Wander 전체를 재현하지 않았다.
 
 - 원문: [findings/sources/feature-memory-2026-11-02/protocol.json](../findings/sources/feature-memory-2026-11-02/protocol.json); [findings/sources/feature-memory-2026-11-02/experiment.py](../findings/sources/feature-memory-2026-11-02/experiment.py)
+
+## Exact Grid6 teacher for disjoint-feature PFN
+
+실험 조건: 기존2048 train tasks/초기화/task order/256 updates를 유지해 Mask·Factor 각3 seeds를 exact predictive KL로 새 학습. 기존 CE9개를 fresh96 graph bank에서 재평가. Primary는 matched disjoint48 graphs의 공개 Mask teacher KL이며 Factor는 secondary다.
+
+### G6T-F01 [실패·중단] 기존 생성 prior의 exact Grid6 predictive를 가르치면 현재 공개 Mask GraphPFN이 teacher 추론을 더 잘 압축한다.
+
+Mask CE accuracy55.3475%/NLL0.678973/Grid6 KL0.104788, distill54.6255%/0.679253/0.104134. Distill−CE primary KL−0.000654 CI[−0.002034,+0.000583], accuracy−0.7220%p CI[−3.9174,+2.5422], NLL+0.000280 CI[−0.002496,+0.002959]. Primary teacher-effect gate=False. Mask forward median59.735ms vs Grid6-BP12.425ms, matched KL>.01로 competitive compression gate=False.
+
+- 판정: 현재 공개 Mask 구성에 exact teacher 감독만 교체하는 갈래의 메인 방법 확대는 보류한다. Factor secondary의 별도 성과는 보존한다.
+- 원인·병목 [원인 미상]: 조밀한 exact 감독만으로 현재 학생의 predictive gap을 줄이는 확실한 이득을 확인하지 못했다. Input 경로·표현력·최적화·frozen backbone·학습량의 기여를 분리하지 않아 고유 원인은 미상이다.
+- 닫은 범위: 12-node binary/2-relation/2-Gaussian-feature,50·75% node missing, 원래 frozen-backbone/adapters와256-update 예산에서, sampled-label CE만 exact unknown-parameter Grid6 predictive KL로 교체한 공개 Mask 학생의 확장.
+- 닫지 않은 것: G6T-P01/P02의 Factor 효과와 이전 disjoint-factor 정확도 개선은 보존한다. Distillation 전체, fully trained 다른 구조, 다른 feature law·real graph·unseen schema·99.5% missing·큰 graph의 teacher 학습은 기각하지 않는다. 기존 feature-free JR distillation과 다른 이번 범위를 구분한다.
+- 재검토 조건: 학생이 teacher의 관계·관측 정보 추론을 표현하고 회수할 수 있도록 바꾸는 구체적 학습 또는 추론 연산이, 강한 기준선 대비 효율적 예측을 제공할 근거가 생길 때.
+- 기준선: 동일 architecture/initialization/tasks/updates의 sampled CE, 실제 PCFI 입력으로 학습한 PFN, Factor CE/distill, fixed-mode factor BP, exact Grid6/Grid6-BP. Teacher 생성과 학생 학습 비용을 포함해 보고한다.
+- 최소 재검증: 실패 bank에서 temperature·새 head·loss 혼합·학습량을 조정해 구제하지 않는다. 무엇을 바꾸는지 먼저 고정하고 새 graph/schema에서 primary KL·accuracy·NLL/Brier와 비용을 분리한다. Student architecture 변경과 teacher 변경을 동시에 하지 않는다.
+- 원문: [findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md](../findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md); [findings/sources/grid6-teacher-2026-11-02/protocol.json](../findings/sources/grid6-teacher-2026-11-02/protocol.json); [findings/sources/grid6-teacher-2026-11-02/results/paired.json](../findings/sources/grid6-teacher-2026-11-02/results/paired.json); [findings/sources/grid6-teacher-2026-11-02/results/decision.json](../findings/sources/grid6-teacher-2026-11-02/results/decision.json); [findings/sources/grid6-teacher-2026-11-02/results/benchmark.json](../findings/sources/grid6-teacher-2026-11-02/results/benchmark.json); [findings/sources/grid6-teacher-2026-11-02/results/final_integrity.json](../findings/sources/grid6-teacher-2026-11-02/results/final_integrity.json)
+
+### G6T-P01 [보존] Factor PFN에서는 exact Grid6 predictive distillation이 같은 CE 학생보다 teacher 분포에 대한 KL을 낮췄다.
+
+동일 새 bank, Factor CE accuracy69.8468%/NLL0.575272/KL0.067257, distill69.5877%/0.568642/0.049731. Teacher KL 차이−0.017526 CI[−0.026031,−0.010538], 약26.1% 감소. Fixed-mode factor BP 대비 teacher KL−0.057650 CI[−0.089157,−0.031682]. CE 대비 accuracy−0.2590%p CI[−1.2112,+0.7551], NLL−0.006630 CI[−0.023930,+0.007280].
+
+- 확대 금지: Factor는 사전 secondary라 공개 Mask primary 실패를 대체하지 않는다. Accuracy·실제 sampled-label NLL의 확실한 개선이나 calibration 개선으로 확대하지 않는다. Query 자신도 feature가 없는 사전 secondary에서는 CE64.7164%→distill63.5556%, accuracy−1.1609%p CI[−2.4190,−0.0482]로 오히려 하락했다. 이 보조 비교는 multiplicity 미보정이며 NLL 차이+0.004205 CI[−0.002231,+0.010960]는0을 포함한다. Grid6-BP 대비 전체 accuracy+1.2594%p CI[−0.9537,+3.5799], NLL+0.016771 CI[−0.016408,+0.053202]는 우위나 동등성의 증명이 아니다. Factor median8.764ms vs Grid6-BP12.425ms의 약1.42배와 teacher KL0.049731은 사전 .01/2배 경쟁 기준에 못 미친다. 실제 graph·unseen schema 전이나 novelty를 주장하지 않는다.
+- 원문: [findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md](../findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md); [findings/sources/grid6-teacher-2026-11-02/results/summary.json](../findings/sources/grid6-teacher-2026-11-02/results/summary.json); [findings/sources/grid6-teacher-2026-11-02/results/paired.json](../findings/sources/grid6-teacher-2026-11-02/results/paired.json); [findings/sources/grid6-teacher-2026-11-02/results/benchmark.json](../findings/sources/grid6-teacher-2026-11-02/results/benchmark.json); [findings/sources/grid6-teacher-2026-11-02/results/query_without_features.json](../findings/sources/grid6-teacher-2026-11-02/results/query_without_features.json)
+
+### G6T-P02 [보존] 새 disjoint bank의 사전 보조 개입에서 기존 CE와 distilled Factor 모두 실제 관측feature 활용 효과를 보였다.
+
+Matched disjoint context2/observed6에서 distilled Factor의 feature 제거 accuracy−11.9213%p CI[−19.0972,−4.8611], shuffle−20.7176%p CI[−28.3594,−12.7315], graph permutation−29.0509%p CI[−39.5833,−17.9398]. 기존 CE Factor도 같은 bank에서 제거−12.0370%p CI[−19.6759,−4.2824].
+
+- 확대 금지: Feature 활용 자체가 distillation으로 새로 생겼다는 뜻이 아니다. CE 모델에서도 나타났다. 보조 개입은 primary Mask 성공을 대체하지 않는다. 제거에 대한 NLL/Brier 차이 CI는0을 포함한다. 이전 bank DFACT의 feature-removal 미통과 결과를 삭제하지 않으며 모든결측률·실제 graph로 확대하지 않는다.
+- 원문: [findings/sources/grid6-teacher-2026-11-02/results/interventions.json](../findings/sources/grid6-teacher-2026-11-02/results/interventions.json); [findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md](../findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md); [findings/sources/grid6-teacher-2026-11-02/protocol.json](../findings/sources/grid6-teacher-2026-11-02/protocol.json)
+
+### G6T-L01 [교훈] 생성 prior 재사용과 exact predictive teacher 사용은 다른 변경이며, 이번 효과는 후자에 한정한다.
+
+기존 master 생성기가 이미 Grid6와 같은 six-support density/signal·joint role·Gaussian orientation prior로 graph와 feature를 생성했다. 이번에는 생성기·train bank를 유지하고 단일 sampled query label 대신 관측에 조건부인 exact Grid6 query marginal을 감독으로 사용했다.
+
+- 원문: [findings/sources/grid6-teacher-2026-11-02/METHOD.md](../findings/sources/grid6-teacher-2026-11-02/METHOD.md); [findings/sources/grid6-teacher-2026-11-02/protocol.json](../findings/sources/grid6-teacher-2026-11-02/protocol.json); [findings/sources/grid6-teacher-2026-11-02/results/preflight.json](../findings/sources/grid6-teacher-2026-11-02/results/preflight.json)
 
 ## Native heterogeneous 입력·기존 relational FM 대조
 

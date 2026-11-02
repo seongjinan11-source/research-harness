@@ -1,0 +1,62 @@
+{
+  "errors": {
+    "normalization": 0.0,
+    "hidden_value_poison": 0.0,
+    "class_flip": 8.881784197001252e-16,
+    "no_evidence_symmetry": 5.551115123125783e-16,
+    "context_clamp": 0.0,
+    "bp_only_parity": 0.0,
+    "kl_soft_ce_gradient": 0.0,
+    "hard_ce_gradient": 0.0,
+    "nonquery_teacher_invariance": 0.0,
+    "nonquery_logit_gradient": 0.0
+  },
+  "paired_original_initializations": [
+    {
+      "arm": "mask_pfn",
+      "seed": 11,
+      "initial_sha256": "b24646c244a5a1334fc91ca7ef05df45faafe8c1a790b391e1eb3c0db51c63c8",
+      "schedule_sha256": "03a756f8cc1aabc0d4bc67567634a58c83bbd68991f0f4a62289ec9b5fcd293b"
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 12,
+      "initial_sha256": "bc0e2f3167deee3259123767acd1ffb302e7abf4dedbc4427286cb42385ced75",
+      "schedule_sha256": "18b936afa347fb642bafe043d8275ce40f79f0c374e48c7c7ac9a393964b00d7"
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 13,
+      "initial_sha256": "00132324cfd9afff19ab369866a4b49340830b14de3cde39c2d2d8f681130c59",
+      "schedule_sha256": "c82a7d73bf71b3d4b133db81c586e6765f2d657dc194a56216965829c976e082"
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 11,
+      "initial_sha256": "7e6900f3751eeeabb74974ce435af7d57178aea16a28d5fa2c793347dcd45ca3",
+      "schedule_sha256": "03a756f8cc1aabc0d4bc67567634a58c83bbd68991f0f4a62289ec9b5fcd293b"
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 12,
+      "initial_sha256": "8b3e8ec5c1e49c690f667ddc5de26a58f68121f53b775a4c91f0efc2d3017a72",
+      "schedule_sha256": "18b936afa347fb642bafe043d8275ce40f79f0c374e48c7c7ac9a393964b00d7"
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 13,
+      "initial_sha256": "e48d31d251f24541004093db5b4b740b10721d88810938f24754155677f81f52",
+      "schedule_sha256": "c82a7d73bf71b3d4b133db81c586e6765f2d657dc194a56216965829c976e082"
+    }
+  ],
+  "teacher_only_visible_inputs": true,
+  "teacher_detached_query_rows_only": true,
+  "finite_student_gradients": true,
+  "sources": {
+    "cost_audit.py": "eb39f059bfac83f0238d407582407dc8120be2551b41039fa2d884ffc43014cc",
+    "pilot.py": "540c2d6d65b5f394d44b2f43c112da544e13e76f233e6dd5896fad7b2c38a2be",
+    "report.py": "8df5361fb369eabbd4c60b7d851e94c5b16662ab9b4176c7e74e26e7e7f6ab4e",
+    "protocol.json": "df69b0b622c75ff5a053ebaf7cc36e3d34ff680780063ac507caaadb3332e4d3",
+    "historical_lock": "92bfbea5b43c7edde01c4f3eea7d4a56c4c62ba0383a3a0a35cc460152fc977f"
+  }
+}

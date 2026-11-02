@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: 새 disjoint-factor pilot의 학습·평가·비용 검증 완료.
+기준일: 2026-11-02. 최근 업데이트: exact Grid6 teacher distillation의 새 graph 평가·비용·재실행 검증 완료.
 
 ## 검토받고 싶은 문제
 
@@ -14,13 +14,28 @@
 
 이 파일만 읽어도 핵심 판단은 가능하다. 세부 확인은 다음 순서가 좋다.
 
-1. [최신 disjoint-factor 보고서](findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)와 [모델 수식](findings/sources/disjoint-factor-2026-11-02/METHOD.md)
+1. [최신 Grid6 teacher 판정](findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md), [전체 보고서](findings/sources/grid6-teacher-2026-11-02/REPORT_KO.md), [학습 수식](findings/sources/grid6-teacher-2026-11-02/METHOD.md); 직전 [disjoint-factor 보고서](findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)와 [모델 수식](findings/sources/disjoint-factor-2026-11-02/METHOD.md)
 2. [직전 circuit 보고서](findings/sources/direct-marginal-2026-11-02/REPORT_KO.md), [feature-memory 보고서](findings/sources/feature-memory-2026-11-02/REPORT_KO.md)
 3. [누적 실패·보존·미실행 기록](out/research_log.md): 필요한 갈래만 검색한다.
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 33편, 연구 기록 125항목, 아이디어 8개가 있다. 125항목 전부가 실패가 아니다. `failure`, `preserved`, `lesson`, `untested`를 구분한다. 첨부용 ZIP은 버전별 snapshot이므로 최신 disjoint-factor가 포함됐는지 확인한다. 패킷에는 본문·구조화 기록·핵심 보고서를 담고 대형 raw prediction과 checkpoint는 넣지 않는다. 일부 `source_refs`는 전체 저장소에서 확인해야 한다.
+저장소에는 논문 33편, 연구 기록 129항목, 아이디어 8개가 있다. 129항목 전부가 실패가 아니다. `failure`, `preserved`, `lesson`, `untested`를 구분한다. 첨부용 ZIP은 버전별 snapshot이다. 기존 v2는 disjoint-factor까지이며 이번 Grid6 teacher 후속이 없다. 최신 본문·구조화 기록·핵심 보고서를 함께 확인하고 대형 raw prediction과 checkpoint는 workspace에서 확인한다. 일부 `source_refs`는 전체 저장소에서 확인해야 한다.
+
+## 최신 Grid6 teacher 결과
+
+기존 train2048 tasks·초기화·task order·256 updates를 유지하고 query CE만 exact Grid6 predictive KL로 교체했다. 새6개 모델을 학습하고 기존 CE9개를 새96 graph bank에서 재평가했다. Graph generator 자체를 새로 만든 실험은 아니다.
+
+| 학생 | CE accuracy % / teacher KL | Distill accuracy % / teacher KL | 판정 |
+|---|---:|---:|---|
+| 공개 Mask PFN, primary | 55.3475 / 0.104788 | 54.6255 / 0.104134 | KL 차이−0.000654 CI[−0.002034,+0.000583], primary 미통과 |
+| Factor PFN, secondary | 69.8468 / 0.067257 | 69.5877 / 0.049731 | KL 차이−0.017526 CI[−0.026031,−0.010538], accuracy/NLL 차이 CI는0 포함 |
+
+Matched disjoint48 graphs, total context1/2/4와 observed nodes3/6 및 fixed3 training seeds를 graph 내 평균한 결과다. Mask median59.735ms, Factor8.764ms, Grid6-BP12.425ms이며 품질·2배 latency의 사전 압축 기준은 미통과했다. Factor의 teacher fit 개선은 보존하지만 Mask primary를 대체하거나 새로운 메소드·실제 graph 전이로 승격하지 않는다.
+
+Query 자신도 feature가 없는 사전 secondary에서는 Factor accuracy가 CE64.7164%에서 distill63.5556%로 낮아졌다. 차이−1.1609%p CI[−2.4190,−0.0482]이며 NLL 차이 CI는0을 포함한다. 다중 보조 비교의 CI는 multiplicity 미보정이다. 전체 teacher KL 개선만으로 이 분할에서도 좋아졌다고 주장하지 않는다.
+
+보조 context2/observed6에서 Factor distill의 feature 제거는 accuracy−11.9213%p CI[−19.0972,−4.8611]였다. 기존 CE Factor도 새 bank에서−12.0370%p CI[−19.6759,−4.2824]이므로 실제 disjoint feature 활용의 근거를 보완하지만 그 활용을 distillation이 새로 만들었다고 할 수 없다. 원래 DFACT 기록과 판정은 변경하지 않았다. 자세한 독립 범위와 미해결 원인은 `grid6-teacher.yaml`의 G6T-F01/P01/P02/L01을 확인한다.
 
 ## 이전 실험에서 남긴 판단
 
