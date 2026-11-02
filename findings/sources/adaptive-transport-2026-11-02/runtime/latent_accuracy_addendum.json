@@ -1,0 +1,6 @@
+{
+  "purpose": "Numerical tie handling for secondary latent-law accuracy, declared before any weight-summary inspection. The source prior checks already use1e-8 tolerance around half. Preserve raw diagnostics and report fractional .5 accuracy on tied decisions.",
+  "tolerance": 1e-08,
+  "primary_classification_metrics_unchanged": true,
+  "utc": "2026-11-02T10:12:49.747868+00:00"
+}

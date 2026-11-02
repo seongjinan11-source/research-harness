@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: 부호 전달 진단까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-02. 최근 업데이트: 참 법칙 없는 적응 전달까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -16,14 +16,29 @@
 
 이 파일만 읽어도 핵심 판단은 가능하다. 세부 확인은 다음 순서가 좋다.
 
-1. [최신 부호 전달 진단](findings/sources/sign-transport-2026-11-02/REPORT_KO.md)과 [내부 고정 PCFI 재검증](findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md)을 먼저 확인하고, [직전 실제 PCFI 내부화 보고서](findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md)와 [계산 정의](findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md). 실제100-step PCFI를 넣은 네 모델을 학습했으며 이전 generic MLP refiner와 별개다.
+1. [최신 적응 전달 비교](findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md)와 [부호 전달 진단](findings/sources/sign-transport-2026-11-02/REPORT_KO.md)과 [내부 고정 PCFI 재검증](findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md)을 먼저 확인하고, [직전 실제 PCFI 내부화 보고서](findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md)와 [계산 정의](findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md). 실제100-step PCFI를 넣은 네 모델을 학습했으며 이전 generic MLP refiner와 별개다.
 2. [Grid6 teacher 판정](findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md), [전체 보고서](findings/sources/grid6-teacher-2026-11-02/REPORT_KO.md), [학습 수식](findings/sources/grid6-teacher-2026-11-02/METHOD.md); 직전 [disjoint-factor 보고서](findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)와 [모델 수식](findings/sources/disjoint-factor-2026-11-02/METHOD.md)
 2. [직전 circuit 보고서](findings/sources/direct-marginal-2026-11-02/REPORT_KO.md), [feature-memory 보고서](findings/sources/feature-memory-2026-11-02/REPORT_KO.md)
 3. [누적 실패·보존·미실행 기록](out/research_log.md): 필요한 갈래만 검색한다.
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 33편, 연구 기록 139항목, 아이디어 8개가 있다. 33개 프로젝트 묶음이며 실패·중단41, 보존30, 교훈46, 미실행22항목이다. 139번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v8은 부호 전달 frozen 진단까지 포함한다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 33편, 연구 기록 142항목, 아이디어 8개가 있다. 34개 프로젝트 묶음이며 실패·중단42, 보존31, 교훈47, 미실행22항목이다. 142번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v9는 참 법칙 없는 적응 전달과 직접 통계 추론까지 포함한다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+
+## 참 법칙 없는 적응 전달과 직접 통계 추론
+
+새64graph·2,048episodes에서0 training으로 비교했다. Primary는 sources8,k4/class,네 label/feature-law 조합 평균이다. 8/192관측=95.83% whole-node missing이며99.5% Bernoulli 조건이 아니다.
+
+| 경로 | Missing-query accuracy % | NLL |
+|---|---:|---:|
+| 기존 PCFI Plain·일반 복원 | 51.565242 | 0.715365 |
+| 같은 PCFI Plain·50:50 두 복원 평균 | 52.354767 | 0.702633 |
+| 같은 PCFI Plain·피처만 사용해 적응 | 52.461961 | 0.704598 |
+| 같은 PCFI Plain·피처와 context로 적응 | 52.555985 | 0.705381 |
+| Context 적응 LP (graph-only) | 53.046855 | 0.694709 |
+| 직접 Gaussian/probit 추론 | 56.154827 | 0.672120 |
+
+Context 적응−50:50 accuracy +0.201218 [95% CI -0.127618, +0.537932]%p, context 적응−feature-only +0.094024 [95% CI -0.066909, +0.271023]%p. Primary=False다. 직접 Gaussian/probit의 동일-query feature-removal 차이는 +2.466964 [95% CI +0.884420, +4.166715]%p로 보존한다. 새 neural 학습이나 novelty의 성과가 아니며 frozen 후보 선택기를 확대하지 않는다. [보고서](findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md), [고정 프로토콜](findings/sources/adaptive-transport-2026-11-02/protocol.json), [구조화 판정](findings/adaptive-transport.yaml).
 
 ## 부호 전달과 기존 frozen GraphPFN 진단
 
@@ -267,5 +282,7 @@ Physical feature 제거는 CE와 distilled Factor 둘 다 성능을 낮췄으므
 새 실험을 바로 실행하거나 저장소를 수정하지 말고, 우선 연구 제안과 비판을 답해줘.
 설득력 있는 후보가 없다면 없다고 말해줘.
 추가로 label/feature heterophily를 분리한 sign-transport frozen 진단을 했어. Primary known-law signed−PCFI는 +5.836358 [95% CI +2.291311, +9.440175]%p였어. 같은 PCFI→PFN checkpoint에서 부호 법칙을 반영한 복원의 예측적 가치는 확인했다. 그러나 강한 직접 예측·graph-only 대조를 모두 넘는 기준은 통과하지 못해, 새 학습 모델이 필요하다는 근거로 확대하지 않는다. 참 feature-law g를 안 reference라서 새로운 학습/novelty의 성과로 부르지 말아줘.
+
+추가로 참 부호 법칙을 주지 않고 Gaussian/probit evidence로 두 PCFI 입력 후보를 가중 평균했어. Context 적응−50:50는 +0.201218 [95% CI -0.127618, +0.537932]%p로 primary를 통과하지 못했어. 같은 정보를 직접 처리한 고정 Gaussian/probit는56.154827%였고 feature-removal 대비 +2.466964 [95% CI +0.884420, +4.166715]%p였어. 새 학습은0이야. 이미 구현한 통계 추론 기능과 학습의 독립적인 필요성을 구분해 줘.
 
 ```

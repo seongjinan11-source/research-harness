@@ -4,6 +4,20 @@
 
 원인 수준: 직접 확인 / 진단이 지지 / 미검증 가설 / 원인 미상. 직접 확인은 적힌 병목·대조를 확인했다는 뜻이며 모든 인과 원인을 밝혔다는 뜻은 아니다.
 
+## ADTR-F01 — 관측 feature와 context로 추론한 q(g)를 두 PCFI completion의 가중치로 쓰면 frozen PFN이 고정 평균·feature-only 적응보다 정확해진다.
+
+- 판정: 참 법칙을 주지 않는 적응 PCFI→frozen PFN은 사전 primary를 통과하지 못했다. 피처만 쓰는 적응과50:50 평균을 정확도에서 확실히 넘지 못했고, NLL/Brier는 두 대조보다 악화했다. 같은 입력의 직접 Gaussian/probit 추론은 유의한 피처 활용 이득을 보였다. 이번 입력 가설 선택기를 새 PFN 메소드로 확대하지 않는다.
+- 원인·병목 [원인 미상]: 정확도 primary 두 CI가0을 포함하고 NLL/Brier는 두-completion 평균과 feature-only보다 악화했다. Known-family Gaussian/probit는 직접 예측에서 더 좋았다. 입력 후보·prior mismatch·decoder·weight 추정 중 고유 원인은 분리하지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 추정한 법칙을 입력 가중치로만 전달하지 않고 classifier의 조건부 추론에 활용하는 구체적 연산이 생기며, 고정 직접 Gaussian/signed 추론이 하는 기능과 학습의 추가 가치를 분리할 수 있을 때.
+- 먼저 이겨야 할 기준선: 같은 정보·2branches의50:50와 strict feature-only; Mask/identity/parity PCFI; graph-only adaptive LP; 직접 Gaussian/probit; 동일-query zero-feature; privileged known-law는 reference로만 보고; 비용도 비교.
+- 최소 재검증: 현재 bank를 조정하지 않는다. Label/feature law 교차와 source-context 분리를 유지한 새 graph bank에서 missing-query accuracy·동일-query 피처 제거·NLL/Brier·실제 비용을 사전 고정해 확인한다.
+- 닫지 않은 것: 새 prior matched 학습, 내부 관측-라벨 공동추론, 임의 heterophily·heterogeneous schema와 실제 graph 전이를 기각하지 않는다. 이번에 하지 않은 neural training을 학습 실패로 세지 않는다. 직접 통계 추론의 피처 활용 이득은 보존한다.
+- 원문: [findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md](../findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md); [findings/sources/adaptive-transport-2026-11-02/METHOD_KO.md](../findings/sources/adaptive-transport-2026-11-02/METHOD_KO.md); [findings/sources/adaptive-transport-2026-11-02/protocol.json](../findings/sources/adaptive-transport-2026-11-02/protocol.json); [findings/sources/adaptive-transport-2026-11-02/results/statistics.json](../findings/sources/adaptive-transport-2026-11-02/results/statistics.json); [findings/sources/adaptive-transport-2026-11-02/results/audit.json](../findings/sources/adaptive-transport-2026-11-02/results/audit.json); [findings/sources/adaptive-transport-2026-11-02/results/classical_audit.json](../findings/sources/adaptive-transport-2026-11-02/results/classical_audit.json); [findings/sources/adaptive-transport-2026-11-02/results/latent_accuracy_audit.json](../findings/sources/adaptive-transport-2026-11-02/results/latent_accuracy_audit.json); [findings/sources/adaptive-transport-2026-11-02/runtime/latent_accuracy_addendum.json](../findings/sources/adaptive-transport-2026-11-02/runtime/latent_accuracy_addendum.json); [findings/sources/adaptive-transport-2026-11-02/results/cost.json](../findings/sources/adaptive-transport-2026-11-02/results/cost.json); [findings/sources/adaptive-transport-2026-11-02/results/preflight.json](../findings/sources/adaptive-transport-2026-11-02/results/preflight.json)
+
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+
 ## BIND-F01 — Class pooling 전 context identity를 보존해 곱하면 실제 graph에서 좋아진다.
 
 - 판정: 고정 common-witness product 중단

@@ -1,0 +1,419 @@
+{
+  "date": "2026-11-02",
+  "scope": "Unknown-law frozen adaptive transport versus fixed Gaussian/probit inference;0 new models/updates. Verbatim sources; raw arrays and checkpoints remain local.",
+  "sources": [
+    {
+      "alias": "bank/development.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\bank\\development.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/bank/development.json",
+      "sha256": "39e315f21324b31d86b4a5c3a203c04132a5d2e13bc3c6328e309788e8c506cf",
+      "bytes": 23672
+    },
+    {
+      "alias": "bank/manifest.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\bank\\manifest.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/bank/manifest.json",
+      "sha256": "a72dd9f8660afa47b8efe703de3c210e25e5a03a647fc21042deed754de307db",
+      "bytes": 767897
+    },
+    {
+      "alias": "experiment.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\experiment.py",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/experiment.py",
+      "sha256": "3091af98f93676849ab6eec28a3e0ca79718ec5f28d2d680bca825ff6bf76691",
+      "bytes": 25922
+    },
+    {
+      "alias": "logs/audit.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\audit.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/audit.stderr.log",
+      "sha256": "a6c0cc6a2e336b1909751980238aa5321a29940103e49344a8b6250cb39df838",
+      "bytes": 713
+    },
+    {
+      "alias": "logs/audit.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\audit.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/audit.stdout.log",
+      "sha256": "b4e0fa4f322019a07237b80862a18809af8c8f8a423bad4266f8790a1d932fd5",
+      "bytes": 20
+    },
+    {
+      "alias": "logs/cost.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\cost.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/cost.stderr.log",
+      "sha256": "a6c0cc6a2e336b1909751980238aa5321a29940103e49344a8b6250cb39df838",
+      "bytes": 713
+    },
+    {
+      "alias": "logs/cost.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\cost.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/cost.stdout.log",
+      "sha256": "ed90ec8077fb2bef691e30817c12474f688487b4663b9919b5967227c1435b91",
+      "bytes": 11
+    },
+    {
+      "alias": "logs/evaluate_seed11.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\evaluate_seed11.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/evaluate_seed11.stderr.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/evaluate_seed11.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\evaluate_seed11.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/evaluate_seed11.stdout.log",
+      "sha256": "be5720cc8e86647f76809f7940948c5eb1ebf5e44e985223b70c10e896514184",
+      "bytes": 482
+    },
+    {
+      "alias": "logs/evaluate_seed12.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\evaluate_seed12.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/evaluate_seed12.stderr.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/evaluate_seed12.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\evaluate_seed12.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/evaluate_seed12.stdout.log",
+      "sha256": "0946ea069e497e23ed4d1168603ecef38484412d76993e3135ab1a24fa59eceb",
+      "bytes": 482
+    },
+    {
+      "alias": "logs/evaluate_seed13.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\evaluate_seed13.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/evaluate_seed13.stderr.log",
+      "sha256": "e2d892300c265f6d2a75151537f706b59951ca1316642569957b369a76c47567",
+      "bytes": 474
+    },
+    {
+      "alias": "logs/evaluate_seed13.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\evaluate_seed13.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/evaluate_seed13.stdout.log",
+      "sha256": "74f59814fcf1ba622b32236e12116ae659f7bcedb6cfdf3a187d71f039a14589",
+      "bytes": 482
+    },
+    {
+      "alias": "logs/generate.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\generate.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/generate.stderr.log",
+      "sha256": "c66d8833200564f09022876db0e44acfef574819c71304365adeebc6a3849bcf",
+      "bytes": 239
+    },
+    {
+      "alias": "logs/generate.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\generate.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/generate.stdout.log",
+      "sha256": "eb1f52e71b7589730e0aa8cb15756742c092072c35d9844f4d52259eb9604fd3",
+      "bytes": 126
+    },
+    {
+      "alias": "logs/infer_part0.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\infer_part0.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/infer_part0.stderr.log",
+      "sha256": "c66d8833200564f09022876db0e44acfef574819c71304365adeebc6a3849bcf",
+      "bytes": 239
+    },
+    {
+      "alias": "logs/infer_part0.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\infer_part0.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/infer_part0.stdout.log",
+      "sha256": "da02c170a4a279904d457634fd7a261595e7457acf04a0f13c575d4e952b88e5",
+      "bytes": 106
+    },
+    {
+      "alias": "logs/infer_part1.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\infer_part1.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/infer_part1.stderr.log",
+      "sha256": "c66d8833200564f09022876db0e44acfef574819c71304365adeebc6a3849bcf",
+      "bytes": 239
+    },
+    {
+      "alias": "logs/infer_part1.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\infer_part1.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/infer_part1.stdout.log",
+      "sha256": "e79b15bc54197c1e8609f1e168c968e1d769f3362add6f89a180bb2b61e4ec89",
+      "bytes": 106
+    },
+    {
+      "alias": "logs/infer_part2.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\infer_part2.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/infer_part2.stderr.log",
+      "sha256": "c66d8833200564f09022876db0e44acfef574819c71304365adeebc6a3849bcf",
+      "bytes": 239
+    },
+    {
+      "alias": "logs/infer_part2.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\infer_part2.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/infer_part2.stdout.log",
+      "sha256": "875a618a0952d4cd8d62414747653ef0bad9b80cab37d68b641be8e2760dd65b",
+      "bytes": 106
+    },
+    {
+      "alias": "logs/preflight.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\preflight.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/preflight.stderr.log",
+      "sha256": "a6c0cc6a2e336b1909751980238aa5321a29940103e49344a8b6250cb39df838",
+      "bytes": 713
+    },
+    {
+      "alias": "logs/preflight.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\preflight.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/preflight.stdout.log",
+      "sha256": "cfc53200e39c40a719877d1c81685043aa73811f0adf4b1f77faa5a091a32b59",
+      "bytes": 18
+    },
+    {
+      "alias": "logs/summary.stderr.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\summary.stderr.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/summary.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "alias": "logs/summary.stdout.log",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\logs\\summary.stdout.log",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/logs/summary.stdout.log",
+      "sha256": "0a7c0c499c4a1dfcc51c07d05e249f684c2b82b4a00a22c42c1bfd938885deef",
+      "bytes": 5712
+    },
+    {
+      "alias": "METHOD_KO.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\METHOD_KO.md",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/METHOD_KO.md",
+      "sha256": "31ab6c8c8e50cd1173bd0f882f2655cc4dcee9830390bd1962b8430c2b7a2dcd",
+      "bytes": 3678
+    },
+    {
+      "alias": "protocol.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\protocol.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/protocol.json",
+      "sha256": "de86a31715df6be25d4e04d2c5387c49f3ec1c834ab4a1b216a2a74c99e906e4",
+      "bytes": 7299
+    },
+    {
+      "alias": "REPORT_KO.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\REPORT_KO.md",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md",
+      "sha256": "d38873d73416d3f50eb5d234fda01349cf4a630de5664420aa1f104d6c9e9fc9",
+      "bytes": 13342
+    },
+    {
+      "alias": "results/audit.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\audit.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/audit.json",
+      "sha256": "390bc6327a7ba0fb99c8131746d6823d035a0a0ec1cda0fbe402f945e65bc7ae",
+      "bytes": 2499
+    },
+    {
+      "alias": "results/bank_lock.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\bank_lock.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/bank_lock.json",
+      "sha256": "0808331c616b3d8fa883aa2db4a62f099a6fc0925f0dd313707e086890f2d8db",
+      "bytes": 167
+    },
+    {
+      "alias": "results/classical_audit.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\classical_audit.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/classical_audit.json",
+      "sha256": "cfa526b867c955ff48a70c48f81c9d7d0ea9eebefbb196f128f736710a1b98a1",
+      "bytes": 479
+    },
+    {
+      "alias": "results/complete.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\complete.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/complete.json",
+      "sha256": "f4c3b5d0af8d3c341694dffc90ed37d979bcf034f7b7072c9f74ca20f0e54353",
+      "bytes": 91
+    },
+    {
+      "alias": "results/cost.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\cost.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/cost.json",
+      "sha256": "6ec067aafa40ad928265ac30b967cd90b1d3974117baf55aceb209bd85d3c2e6",
+      "bytes": 7346
+    },
+    {
+      "alias": "results/design.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\design.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/design.json",
+      "sha256": "640b60c2ef8ff45dc590976fa964b511235e0c533fc6e4eb80ef2a11958b4328",
+      "bytes": 3401
+    },
+    {
+      "alias": "results/inference_part0.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\inference_part0.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/inference_part0.json",
+      "sha256": "efa9000117e064db05ee2ea1deefee5f0ca8e2a7db3dc668ebff09aa12386c33",
+      "bytes": 144053
+    },
+    {
+      "alias": "results/inference_part1.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\inference_part1.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/inference_part1.json",
+      "sha256": "f0020ee75ca3cc27699d2b1f5f45d3751e7f0958e71b1d18da9cc51a9b9940b9",
+      "bytes": 144059
+    },
+    {
+      "alias": "results/inference_part2.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\inference_part2.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/inference_part2.json",
+      "sha256": "694a145a2e51cea0497cefb754bd94b01aa635fb6bca1c498875abd9e5dbf97a",
+      "bytes": 143847
+    },
+    {
+      "alias": "results/latent_accuracy_audit.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\latent_accuracy_audit.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/latent_accuracy_audit.json",
+      "sha256": "29615507f9671ac66d05ebcfbb4ca10e4928f90a6b739f59cb7e1e9cbedc6764",
+      "bytes": 6511
+    },
+    {
+      "alias": "results/mask_plain_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\mask_plain_s11\\evaluation.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/mask_plain_s11/evaluation.json",
+      "sha256": "3477b0f4c38178b1a3b45c79cf3ffd22fa9cd6bf25d887b11270cb9b10cd2df0",
+      "bytes": 640092
+    },
+    {
+      "alias": "results/mask_plain_s11/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\mask_plain_s11\\evaluation_info.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/mask_plain_s11/evaluation_info.json",
+      "sha256": "f8a48c9bad3dee03959a12ff4a1e8d6dea203339f040ac9b5f653002bf2b2205",
+      "bytes": 219
+    },
+    {
+      "alias": "results/mask_plain_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\mask_plain_s12\\evaluation.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/mask_plain_s12/evaluation.json",
+      "sha256": "9f2b384e16d963e91cbcf37b5ba238428066607f85246e99ef9ddf033f4b5630",
+      "bytes": 639214
+    },
+    {
+      "alias": "results/mask_plain_s12/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\mask_plain_s12\\evaluation_info.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/mask_plain_s12/evaluation_info.json",
+      "sha256": "474079e7fce29af94c722a34dfc8fdbe5963973dbea0b49b4da2ae3ec5af8990",
+      "bytes": 218
+    },
+    {
+      "alias": "results/mask_plain_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\mask_plain_s13\\evaluation.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/mask_plain_s13/evaluation.json",
+      "sha256": "90484b0b5ee3f4f62f9fc9c43106b9b2fb24c6d1b4dffc167fcdc7295647919f",
+      "bytes": 639906
+    },
+    {
+      "alias": "results/mask_plain_s13/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\mask_plain_s13\\evaluation_info.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/mask_plain_s13/evaluation_info.json",
+      "sha256": "592d7b5987399aea1878bb10c2e47709bcc5e7c7b337a960ddf3f0b655a32d08",
+      "bytes": 217
+    },
+    {
+      "alias": "results/pcfi_plain_s11/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\pcfi_plain_s11\\evaluation.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/pcfi_plain_s11/evaluation.json",
+      "sha256": "69fd56cdcb32b110bc00fb9d82f5cf801b78bfe7395aa4ea040f07b0d16aa972",
+      "bytes": 2308172
+    },
+    {
+      "alias": "results/pcfi_plain_s11/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\pcfi_plain_s11\\evaluation_info.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/pcfi_plain_s11/evaluation_info.json",
+      "sha256": "496141cd80c06b89f55c020970576565a362d66cadd23e5f096c144a67e71777",
+      "bytes": 218
+    },
+    {
+      "alias": "results/pcfi_plain_s12/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\pcfi_plain_s12\\evaluation.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/pcfi_plain_s12/evaluation.json",
+      "sha256": "62e44986297fc1cf7c55d04166826da9df5e3a1ee27b903b80a40910744c229a",
+      "bytes": 2307642
+    },
+    {
+      "alias": "results/pcfi_plain_s12/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\pcfi_plain_s12\\evaluation_info.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/pcfi_plain_s12/evaluation_info.json",
+      "sha256": "83d8b44c9569cdb5994f074adbcbee31f9652a6594ded2dece473897d897c6eb",
+      "bytes": 219
+    },
+    {
+      "alias": "results/pcfi_plain_s13/evaluation.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\pcfi_plain_s13\\evaluation.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/pcfi_plain_s13/evaluation.json",
+      "sha256": "dafe5bbe14edfa3985a82e761843aa814b64c775b3ec322020de5549728d06d6",
+      "bytes": 2309173
+    },
+    {
+      "alias": "results/pcfi_plain_s13/evaluation_info.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\pcfi_plain_s13\\evaluation_info.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/pcfi_plain_s13/evaluation_info.json",
+      "sha256": "988a89d3f7875dca8f133903155df356d86a5bf03f70eecddc148f40599b93b6",
+      "bytes": 218
+    },
+    {
+      "alias": "results/preflight.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\preflight.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/preflight.json",
+      "sha256": "efcbf704a645d213e81a9890fcdd7650a8407f00d1d322c282c1354d796670e8",
+      "bytes": 1463
+    },
+    {
+      "alias": "results/statistics.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\statistics.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/statistics.json",
+      "sha256": "50e2e40fcde6f2fc67af2a3f4256b2a6baecb827797d036e9d507edc6a4aac95",
+      "bytes": 345167
+    },
+    {
+      "alias": "results/weights.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\results\\weights.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/results/weights.json",
+      "sha256": "25047ef387053acafa46bf063aefd4b264fe61dce16cdc671c750c05df18eee1",
+      "bytes": 498126
+    },
+    {
+      "alias": "runtime/classical_audit.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\runtime\\classical_audit.py",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/runtime/classical_audit.py",
+      "sha256": "48242d065474aa928a2af7f5bfa3c222b3cb63c7521119588dd6aa922b72253b",
+      "bytes": 3172
+    },
+    {
+      "alias": "runtime/finalize.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\runtime\\finalize.py",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/runtime/finalize.py",
+      "sha256": "2ecf65b5a486aaf85642b064dc86ef4d3d52c292cc20d6390e111e756c5a6f7d",
+      "bytes": 25530
+    },
+    {
+      "alias": "runtime/latent_accuracy_addendum.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\runtime\\latent_accuracy_addendum.json",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/runtime/latent_accuracy_addendum.json",
+      "sha256": "2e8dbd41f89870c181cdc985cbc61d09d86eb71fccbdae811dc41e7e9cde18c7",
+      "bytes": 388
+    },
+    {
+      "alias": "runtime/latent_accuracy_audit.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\runtime\\latent_accuracy_audit.py",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/runtime/latent_accuracy_audit.py",
+      "sha256": "31dff7b16d77e5acd26ee5eb8a063c6a753409b74e171f3010222b3130d26509",
+      "bytes": 1437
+    },
+    {
+      "alias": "runtime/orchestrate.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\runtime\\orchestrate.py",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/runtime/orchestrate.py",
+      "sha256": "b956f074ea5e52624983077ffae66c84726c56ad57cbaacf355ce4953e638cb1",
+      "bytes": 1375
+    },
+    {
+      "alias": "working_model.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\adaptive_transport_pilot\\working_model.py",
+      "snapshot": "findings/sources/adaptive-transport-2026-11-02/working_model.py",
+      "sha256": "ed34efa25040477c151ce66963bff96a5eb419aa9a0c0a8538a2ed1dc8ce4a04",
+      "bytes": 5605
+    }
+  ]
+}

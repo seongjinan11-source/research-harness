@@ -1,0 +1,214 @@
+{
+  "tolerance": 1e-08,
+  "scope": "Only secondary latent g/t diagnostics. Numerical ties receive expected .5 accuracy. Original statistics and all query classification metrics unchanged.",
+  "groups": {
+    "k1_o0": {
+      "feature_g1": {
+        "fractional_tie_accuracy": 0.5,
+        "tie_fraction": 1.0,
+        "max_abs_from_half": 0.0,
+        "brier": 0.25
+      },
+      "joint_g1": {
+        "fractional_tie_accuracy": 0.5,
+        "tie_fraction": 1.0,
+        "max_abs_from_half": 2.220446049250313e-16,
+        "brier": 0.25
+      },
+      "label_t1": {
+        "fractional_tie_accuracy": 0.48828125,
+        "tie_fraction": 0.5546875,
+        "max_abs_from_half": 0.2638842523181868,
+        "brier": 0.25352757732186226
+      },
+      "joint_t1": {
+        "fractional_tie_accuracy": 0.48828125,
+        "tie_fraction": 0.5546875,
+        "max_abs_from_half": 0.2638842523181868,
+        "brier": 0.25352757732186226
+      }
+    },
+    "k1_o1": {
+      "feature_g1": {
+        "fractional_tie_accuracy": 0.5,
+        "tie_fraction": 1.0,
+        "max_abs_from_half": 1.1102230246251565e-16,
+        "brier": 0.25
+      },
+      "joint_g1": {
+        "fractional_tie_accuracy": 0.5,
+        "tie_fraction": 1.0,
+        "max_abs_from_half": 2.220446049250313e-16,
+        "brier": 0.25
+      },
+      "label_t1": {
+        "fractional_tie_accuracy": 0.48828125,
+        "tie_fraction": 0.5546875,
+        "max_abs_from_half": 0.2638842523181868,
+        "brier": 0.25352757732186226
+      },
+      "joint_t1": {
+        "fractional_tie_accuracy": 0.48828125,
+        "tie_fraction": 0.5546875,
+        "max_abs_from_half": 0.2641308379373496,
+        "brier": 0.25349865418334183
+      }
+    },
+    "k1_o8": {
+      "feature_g1": {
+        "fractional_tie_accuracy": 0.68359375,
+        "tie_fraction": 0.0078125,
+        "max_abs_from_half": 0.49798539639310024,
+        "brier": 0.1930566326349658
+      },
+      "joint_g1": {
+        "fractional_tie_accuracy": 0.69140625,
+        "tie_fraction": 0.0078125,
+        "max_abs_from_half": 0.4979853963931001,
+        "brier": 0.19134506372534527
+      },
+      "label_t1": {
+        "fractional_tie_accuracy": 0.48828125,
+        "tie_fraction": 0.5546875,
+        "max_abs_from_half": 0.2638842523181868,
+        "brier": 0.25352757732186226
+      },
+      "joint_t1": {
+        "fractional_tie_accuracy": 0.47265625,
+        "tie_fraction": 0.5546875,
+        "max_abs_from_half": 0.22285940741226995,
+        "brier": 0.25679025670613154
+      }
+    },
+    "k1_ofull": {
+      "feature_g1": {
+        "fractional_tie_accuracy": 1.0,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.5,
+        "brier": 3.2183181800638975e-220
+      },
+      "joint_g1": {
+        "fractional_tie_accuracy": 1.0,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.5000000000000133,
+        "brier": 1.9335325528427045e-29
+      },
+      "label_t1": {
+        "fractional_tie_accuracy": 0.48828125,
+        "tie_fraction": 0.5546875,
+        "max_abs_from_half": 0.2638842523181868,
+        "brier": 0.25352757732186226
+      },
+      "joint_t1": {
+        "fractional_tie_accuracy": 0.69140625,
+        "tie_fraction": 0.5546875,
+        "max_abs_from_half": 0.5,
+        "brier": 0.1611709091377199
+      }
+    },
+    "k4_o0": {
+      "feature_g1": {
+        "fractional_tie_accuracy": 0.5,
+        "tie_fraction": 1.0,
+        "max_abs_from_half": 0.0,
+        "brier": 0.25
+      },
+      "joint_g1": {
+        "fractional_tie_accuracy": 0.5,
+        "tie_fraction": 1.0,
+        "max_abs_from_half": 4.440892098500626e-16,
+        "brier": 0.25
+      },
+      "label_t1": {
+        "fractional_tie_accuracy": 0.609375,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.4824449423788808,
+        "brier": 0.2299078960976008
+      },
+      "joint_t1": {
+        "fractional_tie_accuracy": 0.609375,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.4824449423788808,
+        "brier": 0.2299078960976008
+      }
+    },
+    "k4_o1": {
+      "feature_g1": {
+        "fractional_tie_accuracy": 0.5,
+        "tie_fraction": 1.0,
+        "max_abs_from_half": 1.1102230246251565e-16,
+        "brier": 0.25
+      },
+      "joint_g1": {
+        "fractional_tie_accuracy": 0.5,
+        "tie_fraction": 1.0,
+        "max_abs_from_half": 3.885780586188048e-16,
+        "brier": 0.25
+      },
+      "label_t1": {
+        "fractional_tie_accuracy": 0.609375,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.4824449423788808,
+        "brier": 0.2299078960976008
+      },
+      "joint_t1": {
+        "fractional_tie_accuracy": 0.609375,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.4824666946106851,
+        "brier": 0.23009244565390072
+      }
+    },
+    "k4_o8": {
+      "feature_g1": {
+        "fractional_tie_accuracy": 0.6015625,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.49779000733814494,
+        "brier": 0.23254677068714621
+      },
+      "joint_g1": {
+        "fractional_tie_accuracy": 0.59375,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.49754272290506707,
+        "brier": 0.2315837397467668
+      },
+      "label_t1": {
+        "fractional_tie_accuracy": 0.609375,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.4824449423788808,
+        "brier": 0.2299078960976008
+      },
+      "joint_t1": {
+        "fractional_tie_accuracy": 0.640625,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.4852913263672211,
+        "brier": 0.22051083889830886
+      }
+    },
+    "k4_ofull": {
+      "feature_g1": {
+        "fractional_tie_accuracy": 1.0,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.5,
+        "brier": 3.2183181800638975e-220
+      },
+      "joint_g1": {
+        "fractional_tie_accuracy": 1.0,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.5000000000000142,
+        "brier": 1.5637106700966065e-29
+      },
+      "label_t1": {
+        "fractional_tie_accuracy": 0.609375,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.4824449423788808,
+        "brier": 0.2299078960976008
+      },
+      "joint_t1": {
+        "fractional_tie_accuracy": 1.0,
+        "tie_fraction": 0.0,
+        "max_abs_from_half": 0.5000000000000038,
+        "brier": 0.0004062445036288719
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은33개 프로젝트 묶음의139항목이다. 실패·중단41개, 보존30개, 교훈46개, 미실행22개이며 **139번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은34개 프로젝트 묶음의142항목이다. 실패·중단42개, 보존31개, 교훈47개, 미실행22개이며 **142번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,21 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## 참 법칙 없는 적응 전달과 직접 통계 추론
+
+새64graph·2,048episodes에서0 training으로 비교했다. Primary는 sources8,k4/class,네 label/feature-law 조합 평균이다. 8/192관측=95.83% whole-node missing이며99.5% Bernoulli 조건이 아니다.
+
+| 경로 | Missing-query accuracy % | NLL |
+|---|---:|---:|
+| 기존 PCFI Plain·일반 복원 | 51.565242 | 0.715365 |
+| 같은 PCFI Plain·50:50 두 복원 평균 | 52.354767 | 0.702633 |
+| 같은 PCFI Plain·피처만 사용해 적응 | 52.461961 | 0.704598 |
+| 같은 PCFI Plain·피처와 context로 적응 | 52.555985 | 0.705381 |
+| Context 적응 LP (graph-only) | 53.046855 | 0.694709 |
+| 직접 Gaussian/probit 추론 | 56.154827 | 0.672120 |
+
+Context 적응−50:50 accuracy +0.201218 [95% CI -0.127618, +0.537932]%p, context 적응−feature-only +0.094024 [95% CI -0.066909, +0.271023]%p. Primary=False다. 직접 Gaussian/probit의 동일-query feature-removal 차이는 +2.466964 [95% CI +0.884420, +4.166715]%p로 보존한다. 새 neural 학습이나 novelty의 성과가 아니며 frozen 후보 선택기를 확대하지 않는다. [보고서](findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md), [고정 프로토콜](findings/sources/adaptive-transport-2026-11-02/protocol.json), [구조화 판정](findings/adaptive-transport.yaml).
 
 ## 부호 전달과 기존 frozen GraphPFN 진단
 
@@ -241,7 +256,7 @@ CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teach
 
 1. 이 요약으로 전체 결과와 범위를 확인한다.
 2. [연구 인계서](RESEARCH_HANDOFF_KO.md)의 요청문으로 독립 검토를 요청한다.
-3. 필요한 수치는 연결된 보고서와 [139개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
+3. 필요한 수치는 연결된 보고서와 [142개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-02_v8.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-02_v9.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
