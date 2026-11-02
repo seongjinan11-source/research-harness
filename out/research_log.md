@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 27개 프로젝트 · 118개 기록 (실패·중단 36개, 보존 22개, 교훈 39개, 미실행 21개)
+총 27개 프로젝트 · 119개 기록 (실패·중단 36개, 보존 23개, 교훈 39개, 미실행 21개)
 
 ## Common-context witness 고정 곱셈
 
@@ -120,6 +120,13 @@ Circuit의 evidence·marginal 열거 오차, label 합 규칙, Gaussian 좌표 �
 실행한 것은 고정2-feature·2-relation binary family의 conditional tree mixture다. 연속·가변 차원 MaM, 새 semantic relation vocabulary, 대형 cyclic graph의 정확한 주변화, full sparse-cell PFN과 실제 graph 전이는 실행하지 않았다.
 
 - 원문: [findings/sources/direct-marginal-2026-11-02/protocol.json](../findings/sources/direct-marginal-2026-11-02/protocol.json); [findings/sources/direct-marginal-2026-11-02/model.py](../findings/sources/direct-marginal-2026-11-02/model.py)
+
+### DMARG-P03 [보존] Feature 노드와 label context가 겹치지 않는 조건에서도 known-family 추론은 관측 feature의 추가 예측 정보를 이용한다.
+
+기존 matched48 graphs의 사후 disjoint subset280 episodes를 선택하고 같은 graph/context/query의 no-feature setting1과 짝지었다. Graph별 episode·고정 training seed 평균 기준 Grid6-exact accuracy60.4874→65.1069%, 차이+4.6195%p CI[+1.9881,+7.7814], NLL0.655644→0.625848, 차이−0.029796 CI[−0.048503,−0.011942]. Grid6-BP accuracy59.4674→65.3938%, 차이+5.9264%p. 같은 조건의 circuit accuracy53.0929→52.4214%, 차이−0.6714%p CI[−3.0503,+1.7070]; public Mask PFN51.5483→51.7390%, 차이+0.1907%p CI[−0.8857,+1.1744].
+
+- 확대 금지: 기존 bank의 탐색적 재분석이며 새 primary·독립 검증·다중 비교 보정·학습된 새 메소드의 성과가 아니다. 이전 episode 평균52.69/64.87%와 이번 graph 평균을 섞지 않는다. Query 자체도 feature가 없는 추가 분할에서는 Grid6-exact accuracy+2.5173%p CI[−0.0241,+5.2686], NLL−0.014387 CI[−0.029204,+0.000323]로0을 포함한다. 이 더 엄격한 조건의 exact 이득을 확정하지 않는다. Graph에서 feature/label 정보를 연결한다는 발상 자체의 novelty, 실제 graph·새 schema 일반화 또는 circuit 실패의 고유 원인을 입증하지 않는다.
+- 원문: [findings/sources/disjoint-feature-2026-11-02/disjoint_feature_reanalysis_20261102.py](../findings/sources/disjoint-feature-2026-11-02/disjoint_feature_reanalysis_20261102.py); [findings/sources/disjoint-feature-2026-11-02/disjoint_feature_reanalysis_20261102.json](../findings/sources/disjoint-feature-2026-11-02/disjoint_feature_reanalysis_20261102.json); [findings/sources/direct-marginal-2026-11-02/protocol.json](../findings/sources/direct-marginal-2026-11-02/protocol.json); [findings/sources/direct-marginal-2026-11-02/results/descriptive_breakdowns.json](../findings/sources/direct-marginal-2026-11-02/results/descriptive_breakdowns.json)
 
 ## 실제 관측 feature 기여의 개입 분석
 

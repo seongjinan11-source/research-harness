@@ -96,3 +96,16 @@ entries:
       - findings/sources/direct-marginal-2026-11-02/protocol.json
       - findings/sources/direct-marginal-2026-11-02/model.py
     evidence: 학습·평가 범위의 명시. 미실행 후속을 학습 실패로 세지 않는다.
+  - id: DMARG-P03
+    kind: preserved
+    claim: Feature 노드와 label context가 겹치지 않는 조건에서도 known-family 추론은 관측 feature의 추가 예측 정보를 이용한다.
+    observation: "기존 matched48 graphs의 사후 disjoint subset280 episodes를 선택하고 같은 graph/context/query의 no-feature setting1과 짝지었다. Graph별 episode·고정 training seed 평균 기준 Grid6-exact accuracy60.4874→65.1069%, 차이+4.6195%p CI[+1.9881,+7.7814], NLL0.655644→0.625848, 차이−0.029796 CI[−0.048503,−0.011942]. Grid6-BP accuracy59.4674→65.3938%, 차이+5.9264%p. 같은 조건의 circuit accuracy53.0929→52.4214%, 차이−0.6714%p CI[−3.0503,+1.7070]; public Mask PFN51.5483→51.7390%, 차이+0.1907%p CI[−0.8857,+1.1744]."
+    do_not_claim: "기존 bank의 탐색적 재분석이며 새 primary·독립 검증·다중 비교 보정·학습된 새 메소드의 성과가 아니다. 이전 episode 평균52.69/64.87%와 이번 graph 평균을 섞지 않는다. Query 자체도 feature가 없는 추가 분할에서는 Grid6-exact accuracy+2.5173%p CI[−0.0241,+5.2686], NLL−0.014387 CI[−0.029204,+0.000323]로0을 포함한다. 이 더 엄격한 조건의 exact 이득을 확정하지 않는다. Graph에서 feature/label 정보를 연결한다는 발상 자체의 novelty, 실제 graph·새 schema 일반화 또는 circuit 실패의 고유 원인을 입증하지 않는다."
+    tags: [graph-structure-use, observation-mask, context-scale, model-based-baseline, eval-protocol]
+    keywords: [disjoint feature label nodes, outside context observations, paired feature removal, recoverable relational information, query without features, graph weighted analysis]
+    source_refs:
+      - findings/sources/disjoint-feature-2026-11-02/disjoint_feature_reanalysis_20261102.py
+      - findings/sources/disjoint-feature-2026-11-02/disjoint_feature_reanalysis_20261102.json
+      - findings/sources/direct-marginal-2026-11-02/protocol.json
+      - findings/sources/direct-marginal-2026-11-02/results/descriptive_breakdowns.json
+    evidence: "관측 mask/context만으로 O∩C=∅ 및 O≠∅를 선택. Graph/context/query/truth가 짝에서 같음을 assert했고 query 정답은 재채점에만 사용했다. 새 모델 forward 없이 저장한 reference·evaluation 결과를 읽었으며 paired graph bootstrap5000회. 원래 gate·관찰·ID는 변경하지 않는다."

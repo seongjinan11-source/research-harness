@@ -1,0 +1,228 @@
+{
+  "scope": "Exploratory post-lock analysis of saved predictions on the existing matched bank. No new learning, primary gate, independent confirmation, or multiplicity-adjusted claim.",
+  "selection": "Original primary masks, observed feature nodes disjoint from context, at least one observed cell outside context. Selection uses visible inputs only. Query labels used for scoring only.",
+  "pairing": "Same graph/context/query/truth; remove all physical features using existing setting1. Assert graph, context, query and truth equality. Average selected episodes and fixed training seeds within graph; 5000 graph bootstrap resamples.",
+  "limits": "Grid6 is a known-family inference reference, not a learned PFN or true-parameter oracle. Query-feature-free partition is an additional exploratory analysis. Model-family assumptions are not established for real graphs.",
+  "selected_episodes": 280,
+  "results": {
+    "grid6_exact": {
+      "graphs": 48,
+      "paired_episode_seed_records": 280,
+      "accuracy": {
+        "observed_graph_mean": 0.6510688303099017,
+        "no_features_graph_mean": 0.6048735119047618,
+        "observed_minus_none": 0.04619531840513983,
+        "exploratory_graph_bootstrap95": [
+          0.019881100009448222,
+          0.07781443885424534
+        ]
+      },
+      "nll": {
+        "observed_graph_mean": 0.6258476379895644,
+        "no_features_graph_mean": 0.655644003866179,
+        "observed_minus_none": -0.029796365876614703,
+        "exploratory_graph_bootstrap95": [
+          -0.048503410983846196,
+          -0.011942044577216777
+        ]
+      },
+      "brier": {
+        "observed_graph_mean": 0.4376406694949833,
+        "no_features_graph_mean": 0.46347275335283955,
+        "observed_minus_none": -0.025832083857856274,
+        "exploratory_graph_bootstrap95": [
+          -0.0417077454064297,
+          -0.010848364322683718
+        ]
+      }
+    },
+    "grid6_bp": {
+      "graphs": 48,
+      "paired_episode_seed_records": 280,
+      "accuracy": {
+        "observed_graph_mean": 0.653938137755102,
+        "no_features_graph_mean": 0.5946741543839758,
+        "observed_minus_none": 0.059263983371126226,
+        "exploratory_graph_bootstrap95": [
+          0.029039346930901985,
+          0.0935946308500251
+        ]
+      },
+      "nll": {
+        "observed_graph_mean": 0.6254828656740722,
+        "no_features_graph_mean": 0.6678385173672888,
+        "observed_minus_none": -0.042355651693216666,
+        "exploratory_graph_bootstrap95": [
+          -0.0742091346817625,
+          -0.016522661106721005
+        ]
+      },
+      "brier": {
+        "observed_graph_mean": 0.437233982178235,
+        "no_features_graph_mean": 0.47337226604744426,
+        "observed_minus_none": -0.036138283869209274,
+        "exploratory_graph_bootstrap95": [
+          -0.06132020383760297,
+          -0.015049384388854855
+        ]
+      }
+    },
+    "lp": {
+      "graphs": 48,
+      "paired_episode_seed_records": 280,
+      "accuracy": {
+        "observed_graph_mean": 0.5053060633975812,
+        "no_features_graph_mean": 0.5053060633975812,
+        "observed_minus_none": 0.0,
+        "exploratory_graph_bootstrap95": [
+          0.0,
+          0.0
+        ]
+      },
+      "nll": {
+        "observed_graph_mean": 1.1199615624448687,
+        "no_features_graph_mean": 1.1199615624448687,
+        "observed_minus_none": 0.0,
+        "exploratory_graph_bootstrap95": [
+          0.0,
+          0.0
+        ]
+      },
+      "brier": {
+        "observed_graph_mean": 0.6632392139445805,
+        "no_features_graph_mean": 0.6632392139445805,
+        "observed_minus_none": 0.0,
+        "exploratory_graph_bootstrap95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "circuit": {
+      "graphs": 48,
+      "paired_episode_seed_records": 840,
+      "accuracy": {
+        "observed_graph_mean": 0.5242143867577895,
+        "no_features_graph_mean": 0.5309285635550517,
+        "observed_minus_none": -0.006714176797262115,
+        "exploratory_graph_bootstrap95": [
+          -0.030502562666656168,
+          0.017069773655990175
+        ]
+      },
+      "nll": {
+        "observed_graph_mean": 0.6956645146246748,
+        "no_features_graph_mean": 0.6913432680299252,
+        "observed_minus_none": 0.004321246594749854,
+        "exploratory_graph_bootstrap95": [
+          -0.004659150834297321,
+          0.015535947622771447
+        ]
+      },
+      "brier": {
+        "observed_graph_mean": 0.5009388130479424,
+        "no_features_graph_mean": 0.4981750618833087,
+        "observed_minus_none": 0.002763751164633769,
+        "exploratory_graph_bootstrap95": [
+          -0.004659520414027974,
+          0.011126821859713984
+        ]
+      }
+    },
+    "mask_pfn": {
+      "graphs": 48,
+      "paired_episode_seed_records": 840,
+      "accuracy": {
+        "observed_graph_mean": 0.5173898494583018,
+        "no_features_graph_mean": 0.5154832766439909,
+        "observed_minus_none": 0.0019065728143109143,
+        "exploratory_graph_bootstrap95": [
+          -0.008857425975791549,
+          0.011744368464978587
+        ]
+      },
+      "nll": {
+        "observed_graph_mean": 0.6908072283582681,
+        "no_features_graph_mean": 0.6904909803627856,
+        "observed_minus_none": 0.00031624799548264637,
+        "exploratory_graph_bootstrap95": [
+          -0.0009926744782509395,
+          0.0016962946781636599
+        ]
+      },
+      "brier": {
+        "observed_graph_mean": 0.49757192854862914,
+        "no_features_graph_mean": 0.49733841005916407,
+        "observed_minus_none": 0.00023351848946503764,
+        "exploratory_graph_bootstrap95": [
+          -0.0009850615800268624,
+          0.0015294323371661583
+        ]
+      }
+    }
+  },
+  "query_without_features": {
+    "grid6_exact": {
+      "graphs": 48,
+      "paired_episode_seed_records": 280,
+      "accuracy": {
+        "observed_graph_mean": 0.6233563240110859,
+        "no_features_graph_mean": 0.5981829884731671,
+        "observed_minus_none": 0.02517333553791887,
+        "exploratory_graph_bootstrap95": [
+          -0.00024059606481481683,
+          0.05268597056878305
+        ]
+      },
+      "nll": {
+        "observed_graph_mean": 0.6447359503114728,
+        "no_features_graph_mean": 0.6591234215053993,
+        "observed_minus_none": -0.014387471193926549,
+        "exploratory_graph_bootstrap95": [
+          -0.029204473179773035,
+          0.0003225042161638975
+        ]
+      },
+      "brier": {
+        "observed_graph_mean": 0.4540925268189853,
+        "no_features_graph_mean": 0.4666029291486303,
+        "observed_minus_none": -0.012510402329645025,
+        "exploratory_graph_bootstrap95": [
+          -0.02538996520343421,
+          0.00015836133924211005
+        ]
+      }
+    },
+    "grid6_bp": {
+      "graphs": 48,
+      "paired_episode_seed_records": 280,
+      "accuracy": {
+        "observed_graph_mean": 0.6272110811917361,
+        "no_features_graph_mean": 0.5855455955530361,
+        "observed_minus_none": 0.041665485638699935,
+        "exploratory_graph_bootstrap95": [
+          0.01392514054232805,
+          0.07496555630353996
+        ]
+      },
+      "nll": {
+        "observed_graph_mean": 0.6443730824335892,
+        "no_features_graph_mean": 0.6726073385490837,
+        "observed_minus_none": -0.028234256115494478,
+        "exploratory_graph_bootstrap95": [
+          -0.06009346715903144,
+          -0.003868548976614843
+        ]
+      },
+      "brier": {
+        "observed_graph_mean": 0.4536826878779358,
+        "no_features_graph_mean": 0.4772169816101706,
+        "observed_minus_none": -0.023534293732234857,
+        "exploratory_graph_bootstrap95": [
+          -0.04840876842453454,
+          -0.0039464232597101355
+        ]
+      }
+    }
+  }
+}
