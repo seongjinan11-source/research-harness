@@ -1,0 +1,44 @@
+id: CSBMInference
+title: "Optimal Inference in Contextual Stochastic Block Models"
+authors: "O. Duranthon, L. Zdeborová"
+venue: "TMLR 2024 (arXiv journal reference); arXiv 2023"
+year: 2023
+links:
+  paper: https://arxiv.org/abs/2306.07948
+  fulltext: https://arxiv.org/html/2306.07948
+  code: https://arxiv.org/src/2306.07948v2/anc/AMP-BP.py
+citation:
+  type: misc
+  title: "Optimal Inference in Contextual Stochastic Block Models"
+  authors: ["O. Duranthon", "L. Zdeborová"]
+  year: 2023
+  arxiv: "2306.07948"
+  url: https://arxiv.org/abs/2306.07948
+  verified_from: [https://arxiv.org/abs/2306.07948, https://arxiv.org/html/2306.07948]
+areas: [graph-fm, ml-foundations]
+problem: "Gaussian node covariates와 graph 구조가 같은 latent community를 설명하는 semi-supervised CSBM에서, GNN이 도달해야 하는 probabilistic inference 기준을 제공한다."
+core_idea: "Node class와 Gaussian feature centroid를 함께 추론한다. Sparse graph 부분에는 BP, dense covariate 부분에는 AMP를 결합하고 semi-supervision을 node prior의 clamp로 넣는다. Bethe free entropy와 모델 parameter estimation도 제공한다."
+key_assumptions:
+  - "주요 분석은 sparse SBM과 Gaussian mixture covariates의 알려진 family, 많은 node·feature 수의 극한을 사용한다."
+  - "Node label은 Rademacher이고 feature centroid가 latent Gaussian인 기본 모형에서 출발하며, unbalanced multi-community와 noisy labels는 확장으로 다룬다."
+  - "Sparse CSBM에서의 AMP–BP 점근적 최적성은 논문에서 conjecture로 제시한다. 유한 graph의 exact 추론 보장으로 해석하지 않는다."
+strengths:
+  - text: "Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다."
+    tags: [graph-structure-use, uncertainty, model-based-baseline]
+  - text: "GNN보다 높은 정확도를 얻는 model-based reference와 공개 구현을 제시하며, Bethe free entropy를 이용한 parameter estimation을 다룬다."
+    tags: [model-based-baseline, differentiable-reasoning]
+limitations:
+  - text: "[analyst] 주요 최적성 논의의 known-family·고차원 가정은 소형 임의 typed graph, variable semantic schema의 보장으로 옮길 수 없다."
+    tags: [prior-mismatch, theory-gap]
+    source: analyst
+  - text: "[analyst] Synthetic task prior에서 potential encoder를 학습해 새 heterogeneous graph에서 gradient 없이 적응하는 PFN 실험은 이 논문의 검증 범위가 아니다."
+    tags: [zero-shot-gap, feature-heterogeneity]
+    source: analyst
+builds_on: [ContextualSBM, BeliefPropagation, ApproximateMessagePassing]
+compared_against: [GPR-GNN, GraphGym graph convolution, GraphGym general convolution, GraphGym graph-attention convolution]
+open_questions:
+  - "Node feature 관측과 label context가 분리된 finite graph에서, 적절히 수정한 model-based 추론과 amortized potential의 품질·비용은 어떠한가?"
+hooks:
+  - "Disjoint factor pilot의 가장 가까운 inference 선행연구다. 새로운 모델에서 node/column latent를 함께 둔 것만으로 novelty를 주장하지 않는다. Grid6 비교를 이 원 논문 구현과의 비교로 바꾸어 쓰지 않는다."
+notes: "arXiv v2 본문의 Setup, AMP–BP, parameter estimation, semi-supervision을 확인했다. arXiv가 TMLR 03/2024를 journal reference로 표기하지만 별도 proceedings metadata를 만들지 않고 misc 인용을 유지한다. 저자는 arXiv abstract page의 표기를 보존했다."
+added: 2026-11-02

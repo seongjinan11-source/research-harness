@@ -1,0 +1,362 @@
+[
+  {
+    "subset": "primary",
+    "arm": "factor_pfn",
+    "graphs": 48,
+    "accuracy": 0.6540040784832452,
+    "nll": 0.6287223652523396,
+    "brier": 0.4147099782155061,
+    "grid6_kl": 0.05625341157895497
+  },
+  {
+    "subset": "primary",
+    "arm": "mask_pfn",
+    "graphs": 48,
+    "accuracy": 0.5709738756613757,
+    "nll": 0.6763678620198429,
+    "brier": 0.48346535982123245,
+    "grid6_kl": 0.12874606246735718
+  },
+  {
+    "subset": "primary",
+    "arm": "pcfi_pfn",
+    "graphs": 48,
+    "accuracy": 0.5523037918871251,
+    "nll": 0.6774007996140071,
+    "brier": 0.48415155754230527,
+    "grid6_kl": 0.12972503777837127
+  },
+  {
+    "subset": "primary",
+    "arm": "constant_factor",
+    "graphs": 48,
+    "accuracy": 0.66005291005291,
+    "nll": 0.6210220022200074,
+    "brier": 0.40465960471315565,
+    "grid6_kl": 0.08317045856659651
+  },
+  {
+    "subset": "primary",
+    "arm": "grid6_exact",
+    "graphs": 48,
+    "accuracy": 0.6629464285714286,
+    "nll": 0.555341114803146,
+    "brier": 0.3863654817025863,
+    "grid6_kl": 0.0
+  },
+  {
+    "subset": "primary",
+    "arm": "grid6_bp",
+    "graphs": 48,
+    "accuracy": 0.6595568783068783,
+    "nll": 0.5551425613849231,
+    "brier": 0.38619610742917865,
+    "grid6_kl": 7.623748227186132e-06
+  },
+  {
+    "subset": "primary",
+    "arm": "feature_only",
+    "graphs": 48,
+    "accuracy": 0.5035135582010583,
+    "nll": 0.6931471805599454,
+    "brier": 0.5,
+    "grid6_kl": 0.13782199181542384
+  },
+  {
+    "subset": "primary",
+    "arm": "lp",
+    "graphs": 48,
+    "accuracy": 0.5570436507936508,
+    "nll": 1.2159950661636334,
+    "brier": 0.6441381842633763,
+    "grid6_kl": 0.6650984616384391
+  },
+  {
+    "subset": "primary",
+    "arm": "class_prior",
+    "graphs": 48,
+    "accuracy": 0.49867724867724866,
+    "nll": 0.7603359701525595,
+    "brier": 0.558752204585538,
+    "grid6_kl": 0.20791984722308246
+  },
+  {
+    "subset": "primary",
+    "arm": "uniform",
+    "graphs": 48,
+    "accuracy": 0.5026455026455027,
+    "nll": 0.6931471805599453,
+    "brier": 0.5,
+    "grid6_kl": 0.13782199181542387
+  },
+  {
+    "subset": "overlap",
+    "arm": "factor_pfn",
+    "graphs": 48,
+    "accuracy": 0.7457561728395062,
+    "nll": 0.4606791036024331,
+    "brier": 0.3027553616808525,
+    "grid6_kl": 0.017017695975238226
+  },
+  {
+    "subset": "overlap",
+    "arm": "mask_pfn",
+    "graphs": 48,
+    "accuracy": 0.556740520282187,
+    "nll": 0.6777452218886989,
+    "brier": 0.4848194378658299,
+    "grid6_kl": 0.26069053575198653
+  },
+  {
+    "subset": "overlap",
+    "arm": "pcfi_pfn",
+    "graphs": 48,
+    "accuracy": 0.5543705908289241,
+    "nll": 0.6778930153180592,
+    "brier": 0.4846245591833364,
+    "grid6_kl": 0.25852404948493174
+  },
+  {
+    "subset": "overlap",
+    "arm": "constant_factor",
+    "graphs": 48,
+    "accuracy": 0.7606646825396824,
+    "nll": 0.4788839262373112,
+    "brier": 0.29854485844268835,
+    "grid6_kl": 0.021537010289105558
+  },
+  {
+    "subset": "overlap",
+    "arm": "grid6_exact",
+    "graphs": 48,
+    "accuracy": 0.7567791005291005,
+    "nll": 0.431376020518975,
+    "brier": 0.2952815769046546,
+    "grid6_kl": 0.0
+  },
+  {
+    "subset": "overlap",
+    "arm": "grid6_bp",
+    "graphs": 48,
+    "accuracy": 0.7587632275132274,
+    "nll": 0.4315199226471728,
+    "brier": 0.2953880837068476,
+    "grid6_kl": 6.530166324544843e-05
+  },
+  {
+    "subset": "overlap",
+    "arm": "feature_only",
+    "graphs": 48,
+    "accuracy": 0.6455026455026455,
+    "nll": 0.5226520614857352,
+    "brier": 0.3724986030912912,
+    "grid6_kl": 0.08230479517158032
+  },
+  {
+    "subset": "overlap",
+    "arm": "lp",
+    "graphs": 48,
+    "accuracy": 0.5570436507936508,
+    "nll": 1.2159950661636334,
+    "brier": 0.6441381842633763,
+    "grid6_kl": 0.7692621094578503
+  },
+  {
+    "subset": "overlap",
+    "arm": "class_prior",
+    "graphs": 48,
+    "accuracy": 0.49867724867724866,
+    "nll": 0.7603359701525595,
+    "brier": 0.558752204585538,
+    "grid6_kl": 0.33823745777942743
+  },
+  {
+    "subset": "overlap",
+    "arm": "uniform",
+    "graphs": 48,
+    "accuracy": 0.5026455026455027,
+    "nll": 0.6931471805599453,
+    "brier": 0.5,
+    "grid6_kl": 0.27248083057494044
+  },
+  {
+    "subset": "density_low",
+    "arm": "factor_pfn",
+    "graphs": 24,
+    "accuracy": 0.6376212522045855,
+    "nll": 0.6326311044920535,
+    "brier": 0.4320011586433177,
+    "grid6_kl": 0.06132368877915643
+  },
+  {
+    "subset": "density_low",
+    "arm": "mask_pfn",
+    "graphs": 24,
+    "accuracy": 0.4937720458553792,
+    "nll": 0.69918439518832,
+    "brier": 0.5050002454890727,
+    "grid6_kl": 0.0468928895077416
+  },
+  {
+    "subset": "density_low",
+    "arm": "pcfi_pfn",
+    "graphs": 24,
+    "accuracy": 0.5182429453262786,
+    "nll": 0.6997629270651009,
+    "brier": 0.5045375452922717,
+    "grid6_kl": 0.048134289985139043
+  },
+  {
+    "subset": "density_low",
+    "arm": "constant_factor",
+    "graphs": 24,
+    "accuracy": 0.6042493386243386,
+    "nll": 0.6961099552035958,
+    "brier": 0.4730987737165548,
+    "grid6_kl": 0.14240671590172627
+  },
+  {
+    "subset": "density_low",
+    "arm": "grid6_exact",
+    "graphs": 24,
+    "accuracy": 0.6455026455026455,
+    "nll": 0.616493627337968,
+    "brier": 0.4304472228989806,
+    "grid6_kl": 0.0
+  },
+  {
+    "subset": "density_low",
+    "arm": "grid6_bp",
+    "graphs": 24,
+    "accuracy": 0.644510582010582,
+    "nll": 0.6162894685087874,
+    "brier": 0.4302581041973072,
+    "grid6_kl": 2.6640626144945183e-06
+  },
+  {
+    "subset": "density_low",
+    "arm": "feature_only",
+    "graphs": 24,
+    "accuracy": 0.4918981481481481,
+    "nll": 0.6931471805599454,
+    "brier": 0.5,
+    "grid6_kl": 0.046035076634386836
+  },
+  {
+    "subset": "density_low",
+    "arm": "lp",
+    "graphs": 24,
+    "accuracy": 0.4603174603174603,
+    "nll": 1.0624659960821645,
+    "brier": 0.609507727057534,
+    "grid6_kl": 0.3899346448907039
+  },
+  {
+    "subset": "density_low",
+    "arm": "class_prior",
+    "graphs": 24,
+    "accuracy": 0.4720568783068783,
+    "nll": 0.782421477620009,
+    "brier": 0.5791997354497355,
+    "grid6_kl": 0.11528669001261727
+  },
+  {
+    "subset": "density_low",
+    "arm": "uniform",
+    "graphs": 24,
+    "accuracy": 0.47767857142857145,
+    "nll": 0.6931471805599453,
+    "brier": 0.5,
+    "grid6_kl": 0.04603507663438685
+  },
+  {
+    "subset": "signal_high",
+    "arm": "factor_pfn",
+    "graphs": 24,
+    "accuracy": 0.835951278659612,
+    "nll": 0.36870915933512566,
+    "brier": 0.23226243975732283,
+    "grid6_kl": 0.041176046090738945
+  },
+  {
+    "subset": "signal_high",
+    "arm": "mask_pfn",
+    "graphs": 24,
+    "accuracy": 0.6297398589065255,
+    "nll": 0.6531546112258713,
+    "brier": 0.46167059764827023,
+    "grid6_kl": 0.26890027261169264
+  },
+  {
+    "subset": "signal_high",
+    "arm": "pcfi_pfn",
+    "graphs": 24,
+    "accuracy": 0.6226300705467372,
+    "nll": 0.6477960226724299,
+    "brier": 0.456638839355384,
+    "grid6_kl": 0.2630412806605185
+  },
+  {
+    "subset": "signal_high",
+    "arm": "constant_factor",
+    "graphs": 24,
+    "accuracy": 0.843832671957672,
+    "nll": 0.36741831442130407,
+    "brier": 0.2248842456330639,
+    "grid6_kl": 0.07451460334039711
+  },
+  {
+    "subset": "signal_high",
+    "arm": "grid6_exact",
+    "graphs": 24,
+    "accuracy": 0.8679728835978836,
+    "nll": 0.33177883391148466,
+    "brier": 0.2132906222261098,
+    "grid6_kl": 0.0
+  },
+  {
+    "subset": "signal_high",
+    "arm": "grid6_bp",
+    "graphs": 24,
+    "accuracy": 0.8679728835978836,
+    "nll": 0.3316288842224676,
+    "brier": 0.21316980646182293,
+    "grid6_kl": 5.701171705043585e-06
+  },
+  {
+    "subset": "signal_high",
+    "arm": "feature_only",
+    "graphs": 24,
+    "accuracy": 0.5002480158730158,
+    "nll": 0.6931471805599454,
+    "brier": 0.5,
+    "grid6_kl": 0.3089542067973657
+  },
+  {
+    "subset": "signal_high",
+    "arm": "lp",
+    "graphs": 24,
+    "accuracy": 0.623181216931217,
+    "nll": 0.9266121342127612,
+    "brier": 0.5044393025980499,
+    "grid6_kl": 0.47146152288726323
+  },
+  {
+    "subset": "signal_high",
+    "arm": "class_prior",
+    "graphs": 24,
+    "accuracy": 0.4907407407407407,
+    "nll": 0.7715666363389762,
+    "brier": 0.5690586419753086,
+    "grid6_kl": 0.3762351754254432
+  },
+  {
+    "subset": "signal_high",
+    "arm": "uniform",
+    "graphs": 24,
+    "accuracy": 0.4950396825396825,
+    "nll": 0.6931471805599453,
+    "brier": 0.5,
+    "grid6_kl": 0.3089542067973657
+  }
+]

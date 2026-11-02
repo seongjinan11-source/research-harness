@@ -29,6 +29,8 @@
 - 닫지 않은 것: LP-conditioned 학습과 일관된 생성모형의 likelihood ratio 일반은 별개다.
 - 원문: [findings/sources/graphpfn-2026-11-01/ratio.md](../findings/sources/graphpfn-2026-11-01/ratio.md); [findings/sources/graphpfn-2026-11-01/feature_intervention.md](../findings/sources/graphpfn-2026-11-01/feature_intervention.md)
 
+- [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=amortized-inference, uncertainty; keywords=-
@@ -48,6 +50,20 @@
 - [NodePFN](https://arxiv.org/abs/2604.19028): 복수 태그 일치 (약한 단서); tags=graph-structure-use, prior-mismatch; keywords=-
   - 기록된 강점: cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
 
+## DFACT-F01 — 현재 learned node/feature factor PFN이 강한 model-based inference와 경쟁하는 독립적인 메인 방법이다.
+
+- 판정: 정확도 개선과 입력 민감도는 보존하지만 현재 known-family 구성의 메인 메소드 확대는 보류한다.
+- 원인·병목 [원인 미상]: 유의한 neural accuracy 개선만으로 learned potential의 필요성이나 classical 대비 품질·비용 우위를 확보하지 못했다. Potential fit, binary model-family 제약, finite BP/Bethe 근사, 학습량의 기여를 분리하지 않았다. 고유 원인은 미상이다.
+- 반증·배제한 설명: Source와 bank lock, all3200 bank hashes, frozen public weights, 실제 성공update·schedule, finite checkpoints와11952 probability 재채점을 확인했다.; Tree에서 BP/Bethe 계산을 독립 열거와 대조했고, class/feature/relation/node 순열과 hidden-value poison 검사를 통과했다. 이것이 cyclic production graph의 정확성 보장은 아니다.; BP-only reference에서 불필요한 exact query moments를 제외했고 원래 reference와 예측 차이0을 확인했다.
+- 재검토 조건: 작은 알려진 Gaussian family의 고정 factor/parameter grid로 충분하지 않은 과제에서, 실제 관측값과 context를 결합하는 학습 원리가 독립적 품질·비용 이득을 제공할 근거가 생길 때.
+- 먼저 이겨야 할 기준선: 동일 입력·예산의 실제 Mask/PCFI/FISF-trained PFN, fixed-factor BP, known-family Grid6 exact/BP, feature-only, LP/class prior. 실제 graph/schema 확장에서는 원래 Ephris/Wander와 해당 model-based 추론도 검토한다.
+- 최소 재검증: 실패 bank에서 새 temperature/head/loss로 구제하지 않는다. 어떤 likelihood/function-family 또는 inference operation을 바꾸는지 먼저 명시하고 새 독립 bank에서 accuracy와 probabilistic quality·cost를 분리해 검증한다. Context total과 per-class, primary와 secondary를 구분한다.
+- 닫지 않은 것: DFACT-P01/P02/P03의 실제 성과를 지우지 않는다. 다른 feature law, 추론 구조, variable schema, 큰 graph에서 학습한 potential의 효용을 기각하지 않는다. 미실행 후속을 실패로 세지 않는다.
+- 원문: [findings/sources/disjoint-factor-2026-11-02/results/decision.json](../findings/sources/disjoint-factor-2026-11-02/results/decision.json); [findings/sources/disjoint-factor-2026-11-02/results/paired.json](../findings/sources/disjoint-factor-2026-11-02/results/paired.json); [findings/sources/disjoint-factor-2026-11-02/results/benchmark.json](../findings/sources/disjoint-factor-2026-11-02/results/benchmark.json); [findings/sources/disjoint-factor-2026-11-02/results/final_integrity.json](../findings/sources/disjoint-factor-2026-11-02/results/final_integrity.json)
+
+- [NodePFN](https://arxiv.org/abs/2604.19028): 복수 태그 일치 (약한 단서); tags=graph-structure-use, prior-mismatch; keywords=-
+  - 기록된 강점: cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
+
 ## FEAT-F01 — IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.
 
 - 판정: 해당 feature-reliability 동기 약화
@@ -61,6 +77,8 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
@@ -85,6 +103,8 @@
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 - [TabImpute](https://arxiv.org/abs/2510.02625v6): 복수 태그 일치 (약한 단서); tags=amortized-inference, observation-mask; keywords=-
   - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
+- [CSBMInference](https://arxiv.org/abs/2306.07948): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=latent feature
+  - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [Wander](https://arxiv.org/abs/2610.06694): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=bidirectional
   - 기록된 강점: 구조적 수용 범위를 추론 때 조절할 수 있다. Message passing 기반 GFM은 이 범위가 network 깊이에 고정된다. 서로 떨어진 25×25 grid 5개에 grid마다 label을 2개만 준 GRIDS에서, walk 길이를 4에서 64로 늘리자 정확도가 56.6%에서 96.6%로 올랐다. Labeled 노드를 지나는 walk만 남기면 100%였다. 같은 과제에서 GraphPFN은 23.3%, NodePFN은 26.6%였다. Feature 없는 실제 그래프 4개에서도 Wander는 76.5%로 GraphPFN(60.1%)을 크게 앞섰다.
 
@@ -101,6 +121,8 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use, observation-mask, uncertainty; keywords=feature distribution
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
@@ -319,6 +341,8 @@
 - 닫지 않은 것: 자기-update는 특정 조건에서 유효한 추론 개선이다.
 - 원문: [findings/sources/llbp-eaj-retrospective-2026-11-01.md](../findings/sources/llbp-eaj-retrospective-2026-11-01.md)
 
+- [CSBMInference](https://arxiv.org/abs/2306.07948): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=sparse
+  - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [Moirai-MoE](https://arxiv.org/abs/2410.10469): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=sparse
   - 기록된 강점: 학습에 쓰지 않은 10개 데이터셋 zero-shot 평가에서 Base가 CRPS와 MASE 평균 모두 최고였고, 평가 데이터 일부가 사전학습에 들어간 TimesFM, Chronos, Time-MoE보다도 나았다. Small도 모든 크기의 Moirai보다 CRPS가 3~14%, MASE가 8~16% 좋았다. point 예측 지표 외에 PICP, QICE 같은 구간 coverage 지표까지 함께 보고했다.
 
@@ -349,6 +373,8 @@
 - 닫지 않은 것: 기각하지 못한 가능성: potential 추정 편향, parameter uncertainty 부족, conditional BP 오차, 과확신, 이들의 상호작용.
 - 원문: [findings/sources/llbp-eaj-retrospective-2026-11-01.md](../findings/sources/llbp-eaj-retrospective-2026-11-01.md)
 
+- [CSBMInference](https://arxiv.org/abs/2306.07948): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=BP
+  - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=BP
   - 기록된 강점: Hand-crafted graph feature(Laplacian PE, PageRank, 이웃 평균 등)에 기대지 않고, 모델 안에서 adjacency-masked attention으로 message passing을 직접 학습한다. 그 결과 ICL만으로도 G2T-FM·TAG와 튜닝된 GNN보다 평균 rank가 높고, 무거운 전처리도 필요 없다.
 - [LoGIC](https://arxiv.org/abs/2609.05955): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=BP
@@ -495,6 +521,8 @@
 - 닫지 않은 것: Context가 유용한 관계를 알려주는 다른 설정이나 relation 의미 추론 일반은 기각하지 않는다.
 - 원문: [findings/sources/graphpfn-2026-11-01/transfer.md](../findings/sources/graphpfn-2026-11-01/transfer.md); [findings/sources/graphpfn-2026-11-01/expanded.md](../findings/sources/graphpfn-2026-11-01/expanded.md); [findings/sources/graphpfn-2026-11-01/accuracy_selector.md](../findings/sources/graphpfn-2026-11-01/accuracy_selector.md)
 
+- [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
@@ -509,6 +537,8 @@
 - 닫지 않은 것: 모든 ensemble이 불가능한 것도, 각 branch가 feature-only/structure-only인 것도 아니다.
 - 원문: [findings/sources/graphpfn-2026-11-01/fusion.md](../findings/sources/graphpfn-2026-11-01/fusion.md)
 
+- [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=ensemble
@@ -527,6 +557,8 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
@@ -569,6 +601,8 @@
 - 닫지 않은 것: Relation source 정보가 불필요하다는 결론이나 다른 내부 추론 연산의 기각은 아니다.
 - 원문: [findings/sources/graphpfn-2026-11-01/evidence.md](../findings/sources/graphpfn-2026-11-01/evidence.md); [findings/sources/graphpfn-2026-11-01/evidence_utility.md](../findings/sources/graphpfn-2026-11-01/evidence_utility.md)
 
+- [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 

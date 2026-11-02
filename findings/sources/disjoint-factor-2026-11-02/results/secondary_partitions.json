@@ -1,0 +1,317 @@
+{
+  "scope": "Query-without-features is prespecified secondary; both-context-classes is a post-lock diagnostic of context support. Neither changes the primary/gates. Same bank, not independent confirmation or multiplicity adjustment.",
+  "results": [
+    {
+      "subset": "query_without_features",
+      "baseline": "mask_pfn",
+      "metric": "accuracy",
+      "factor_mean": 0.6460300925925926,
+      "baseline_mean": 0.5698418209876542,
+      "difference": 0.07618827160493825,
+      "ci95": [
+        0.017945505401234553,
+        0.13619299768518514
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "mask_pfn",
+      "metric": "nll",
+      "factor_mean": 0.6000548280296961,
+      "baseline_mean": 0.6793882650285301,
+      "difference": -0.07933343699883401,
+      "ci95": [
+        -0.13758016529580192,
+        -0.023153813200908223
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "mask_pfn",
+      "metric": "brier",
+      "factor_mean": 0.4183538940282004,
+      "baseline_mean": 0.48633521336369095,
+      "difference": -0.06798131933549062,
+      "ci95": [
+        -0.11455666031507407,
+        -0.022940948563165642
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "pcfi_pfn",
+      "metric": "accuracy",
+      "factor_mean": 0.6460300925925926,
+      "baseline_mean": 0.5448456790123457,
+      "difference": 0.10118441358024689,
+      "ci95": [
+        0.035331307870370345,
+        0.16886496913580243
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "pcfi_pfn",
+      "metric": "nll",
+      "factor_mean": 0.6000548280296961,
+      "baseline_mean": 0.6840925684239259,
+      "difference": -0.08403774039422969,
+      "ci95": [
+        -0.14250326918401432,
+        -0.027776118827023546
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "pcfi_pfn",
+      "metric": "brier",
+      "factor_mean": 0.4183538940282004,
+      "baseline_mean": 0.4898881240527295,
+      "difference": -0.07153423002452909,
+      "ci95": [
+        -0.11821888026338623,
+        -0.026033383291335217
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "constant_factor",
+      "metric": "accuracy",
+      "factor_mean": 0.6460300925925926,
+      "baseline_mean": 0.6330092592592592,
+      "difference": 0.01302083333333331,
+      "ci95": [
+        -0.021078703703703707,
+        0.04622241512345672
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "constant_factor",
+      "metric": "nll",
+      "factor_mean": 0.6000548280296961,
+      "baseline_mean": 0.5993968862523776,
+      "difference": 0.0006579417773186219,
+      "ci95": [
+        -0.0319797491718349,
+        0.039041437324952175
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "constant_factor",
+      "metric": "brier",
+      "factor_mean": 0.4183538940282004,
+      "baseline_mean": 0.41376740902575726,
+      "difference": 0.004586485002443138,
+      "ci95": [
+        -0.01904827064454958,
+        0.03360846715155398
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "grid6_bp",
+      "metric": "accuracy",
+      "factor_mean": 0.6460300925925926,
+      "baseline_mean": 0.6576504629629629,
+      "difference": -0.011620370370370387,
+      "ci95": [
+        -0.03900231481481482,
+        0.016447530864197504
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "grid6_bp",
+      "metric": "nll",
+      "factor_mean": 0.6000548280296961,
+      "baseline_mean": 0.5853401612444596,
+      "difference": 0.014714666785236495,
+      "ci95": [
+        -0.00485389056695211,
+        0.037785102316251616
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "query_without_features",
+      "baseline": "grid6_bp",
+      "metric": "brier",
+      "factor_mean": 0.4183538940282004,
+      "baseline_mean": 0.4075656827086506,
+      "difference": 0.010788211319549738,
+      "ci95": [
+        -0.004719875480680638,
+        0.029493388339231794
+      ],
+      "graphs": 48
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "mask_pfn",
+      "metric": "accuracy",
+      "factor_mean": 0.6975129198966409,
+      "baseline_mean": 0.6455103359173127,
+      "difference": 0.052002583979328165,
+      "ci95": [
+        -0.021967861757105935,
+        0.12597302971576224
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "mask_pfn",
+      "metric": "nll",
+      "factor_mean": 0.5336820395950383,
+      "baseline_mean": 0.6519405151638755,
+      "difference": -0.1182584755688372,
+      "ci95": [
+        -0.20165195549156084,
+        -0.035343495527445964
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "mask_pfn",
+      "metric": "brier",
+      "factor_mean": 0.36657715131510854,
+      "baseline_mean": 0.4597014917606036,
+      "difference": -0.09312434044549515,
+      "ci95": [
+        -0.15461489566868428,
+        -0.031221114199979978
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "pcfi_pfn",
+      "metric": "accuracy",
+      "factor_mean": 0.6975129198966409,
+      "baseline_mean": 0.6309754521963825,
+      "difference": 0.06653746770025842,
+      "ci95": [
+        -0.006786983204134357,
+        0.14002341731266146
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "pcfi_pfn",
+      "metric": "nll",
+      "factor_mean": 0.5336820395950383,
+      "baseline_mean": 0.6512878102442916,
+      "difference": -0.11760577064925333,
+      "ci95": [
+        -0.20020543225323117,
+        -0.03525602606811966
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "pcfi_pfn",
+      "metric": "brier",
+      "factor_mean": 0.36657715131510854,
+      "baseline_mean": 0.4585597696884652,
+      "difference": -0.09198261837335665,
+      "ci95": [
+        -0.1529446093019504,
+        -0.030179849458055116
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "constant_factor",
+      "metric": "accuracy",
+      "factor_mean": 0.6975129198966409,
+      "baseline_mean": 0.695736434108527,
+      "difference": 0.0017764857881136964,
+      "ci95": [
+        -0.021640826873385012,
+        0.02309835271317824
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "constant_factor",
+      "metric": "nll",
+      "factor_mean": 0.5336820395950383,
+      "baseline_mean": 0.5261894371754905,
+      "difference": 0.007492602419547809,
+      "ci95": [
+        -0.014888930114195143,
+        0.02875053196621804
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "constant_factor",
+      "metric": "brier",
+      "factor_mean": 0.36657715131510854,
+      "baseline_mean": 0.35576657579285664,
+      "difference": 0.01081057552225183,
+      "ci95": [
+        -0.004492328446475362,
+        0.025717831643736713
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "grid6_bp",
+      "metric": "accuracy",
+      "factor_mean": 0.6975129198966409,
+      "baseline_mean": 0.686531007751938,
+      "difference": 0.010981912144702845,
+      "ci95": [
+        -0.007267441860465106,
+        0.029231266149870806
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "grid6_bp",
+      "metric": "nll",
+      "factor_mean": 0.5336820395950383,
+      "baseline_mean": 0.5174588295250966,
+      "difference": 0.01622321006994171,
+      "ci95": [
+        -0.008076061126942253,
+        0.04228601102197953
+      ],
+      "graphs": 43
+    },
+    {
+      "subset": "both_context_classes",
+      "baseline": "grid6_bp",
+      "metric": "brier",
+      "factor_mean": 0.36657715131510854,
+      "baseline_mean": 0.35574899821989986,
+      "difference": 0.010828153095208645,
+      "ci95": [
+        -0.0064671643853687726,
+        0.029287368857511705
+      ],
+      "graphs": 43
+    }
+  ]
+}

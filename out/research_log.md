@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 27개 프로젝트 · 119개 기록 (실패·중단 36개, 보존 23개, 교훈 39개, 미실행 21개)
+총 28개 프로젝트 · 125개 기록 (실패·중단 37개, 보존 26개, 교훈 40개, 미실행 22개)
 
 ## Common-context witness 고정 곱셈
 
@@ -127,6 +127,56 @@ Circuit의 evidence·marginal 열거 오차, label 합 규칙, Gaussian 좌표 �
 
 - 확대 금지: 기존 bank의 탐색적 재분석이며 새 primary·독립 검증·다중 비교 보정·학습된 새 메소드의 성과가 아니다. 이전 episode 평균52.69/64.87%와 이번 graph 평균을 섞지 않는다. Query 자체도 feature가 없는 추가 분할에서는 Grid6-exact accuracy+2.5173%p CI[−0.0241,+5.2686], NLL−0.014387 CI[−0.029204,+0.000323]로0을 포함한다. 이 더 엄격한 조건의 exact 이득을 확정하지 않는다. Graph에서 feature/label 정보를 연결한다는 발상 자체의 novelty, 실제 graph·새 schema 일반화 또는 circuit 실패의 고유 원인을 입증하지 않는다.
 - 원문: [findings/sources/disjoint-feature-2026-11-02/disjoint_feature_reanalysis_20261102.py](../findings/sources/disjoint-feature-2026-11-02/disjoint_feature_reanalysis_20261102.py); [findings/sources/disjoint-feature-2026-11-02/disjoint_feature_reanalysis_20261102.json](../findings/sources/disjoint-feature-2026-11-02/disjoint_feature_reanalysis_20261102.json); [findings/sources/direct-marginal-2026-11-02/protocol.json](../findings/sources/direct-marginal-2026-11-02/protocol.json); [findings/sources/direct-marginal-2026-11-02/results/descriptive_breakdowns.json](../findings/sources/direct-marginal-2026-11-02/results/descriptive_breakdowns.json)
+
+## Disjoint feature–label factor PFN pilot
+
+실험 조건: 새96 binary typed-SBM graphs 중 matched48 primary. 관측feature node와 label context 교집합0. 3 arms×3 seeds, 동일2048 task exposures/256 updates. Context는 총1/2/4개,12개 node 중3/6개 관측.
+
+### DFACT-P01 [보존] 관측 feature와 label context가 겹치지 않는 새 graph bank에서 학습된 structured predictor가 두 공개 GraphPFN 입력 대조보다 높은 정확도를 얻었다.
+
+Factor PFN65.4004%/NLL0.628722, Mask PFN57.0974%/0.676368, 실제 PCFI 입력으로 학습한 PFN55.2304%/0.677401. Factor−Mask accuracy+8.3030%p CI[+2.7750,+14.0753], Factor−PCFI+10.1700%p CI[+4.4253,+16.3513]. NLL 차이는 각각−0.047645 CI[−0.141633,+0.050681], −0.048678 CI[−0.142740,+0.049630]로0을 포함한다.
+
+- 확대 금지: 확률 품질의 neural 대비 유의한 우위, strong classical 대비 우위, variable schema·실제 graph 전이, 논문급 novelty로 확대하지 않는다. Matching은 task/step budget이며 파라미터 수·학습 시간은 다르다. Source raw-values/graph intervention과 learned potential의 독립적 가치도 별도로 본다. Low-density의 Factor63.7621%/NLL0.632631 vs Constant60.4249%/0.696110은 보조 point estimate이며 해당 paired CI를 보고하지 않았으므로 일반적인 OOD adaptation 성공으로 승격하지 않는다.
+- 원문: [findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md](../findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md); [findings/sources/disjoint-factor-2026-11-02/protocol.json](../findings/sources/disjoint-factor-2026-11-02/protocol.json); [findings/sources/disjoint-factor-2026-11-02/results/paired.json](../findings/sources/disjoint-factor-2026-11-02/results/paired.json); [findings/sources/disjoint-factor-2026-11-02/results/summary.json](../findings/sources/disjoint-factor-2026-11-02/results/summary.json)
+
+### DFACT-P02 [보존] 학습된 predictor는 disjoint 조건의 feature–node 대응과 graph 구조 변화에 민감하다.
+
+사전 context2/observed6 보조 intervention, matched48 graphs: feature shuffle−11.2269%p CI[−20.3704,−2.0833], graph permutation−21.7593%p CI[−34.3779,−8.7963]. No-observed−standard는−6.1343%p CI[−12.9630,+0.9259]였으며 NLL 차이는−0.046387 CI[−0.276343,+0.134338]였다.
+
+- 확대 금지: Shuffle 민감도만으로 feature 추가의 유익한 순효과를 확정하거나, 원래 feature-removal gate를 통과했다고 쓰지 않는다. CI가0을 포함하는 제거 결과도 feature 효용0의 증명은 아니다. Loopy feedback 차단을 새 방법으로 골라 gate를 바꾸지 않는다.
+- 원문: [findings/sources/disjoint-factor-2026-11-02/results/interventions.json](../findings/sources/disjoint-factor-2026-11-02/results/interventions.json); [findings/sources/disjoint-factor-2026-11-02/results/decision.json](../findings/sources/disjoint-factor-2026-11-02/results/decision.json)
+
+### DFACT-P03 [보존] Query 자체도 feature가 없는 사전 secondary 분할에서 학습된 factor predictor의 neural 대조 대비 개선이 나타났다.
+
+Factor64.6030%/NLL0.600055, Mask56.9842%/0.679388, PCFI54.4846%/0.684093, Constant63.3009%/0.599397, Grid6-BP65.7650%/0.585340. Factor−Mask accuracy+7.6188%p CI[+1.7946,+13.6193], NLL−0.079333 CI[−0.137580,−0.023154]; Factor−PCFI accuracy+10.1184%p CI[+3.5331,+16.8865], NLL−0.084038 CI[−0.142503,−0.027776].
+
+- 확대 금지: 같은 bank의 사전 secondary이며 primary gate를 대체하지 않는다. Constant 대비 accuracy/NLL CI는0을 포함한다. Grid6-BP 대비 NLL 차이+0.014715 CI[−0.004854,+0.037785]도0을 포함하며 동등성을 증명한 것은 아니다. 전체 context·query 조건의 확률 우위나99.5% missing 전이로 확대하지 않는다.
+- 원문: [findings/sources/disjoint-factor-2026-11-02/results/query_without_features.json](../findings/sources/disjoint-factor-2026-11-02/results/query_without_features.json); [findings/sources/disjoint-factor-2026-11-02/results/secondary_partitions.json](../findings/sources/disjoint-factor-2026-11-02/results/secondary_partitions.json); [findings/sources/disjoint-factor-2026-11-02/runtime/secondary_partitions.py](../findings/sources/disjoint-factor-2026-11-02/runtime/secondary_partitions.py)
+
+### DFACT-F01 [실패·중단] 현재 learned node/feature factor PFN이 강한 model-based inference와 경쟁하는 독립적인 메인 방법이다.
+
+Neural accuracy gate=True지만 feature-removal gate=False, mechanism gate=False. Constant factor66.0053%/NLL0.621022 대비 learned65.4004%/0.628722: accuracy−0.6049%p CI[−3.4860,+1.9721], NLL+0.007700 CI[−0.056868,+0.098511]. Grid6-BP65.9557%/NLL0.555143 대비 learned NLL+0.073580 CI[+0.019579,+0.150308]. Grid6-exact predictive KL0.056253>.01. Single-graph forward median6.837ms vs Grid6-BP11.874ms로 약1.74배이며 사전2배 비용 기준 미충족.
+
+- 판정: 정확도 개선과 입력 민감도는 보존하지만 현재 known-family 구성의 메인 메소드 확대는 보류한다.
+- 원인·병목 [원인 미상]: 유의한 neural accuracy 개선만으로 learned potential의 필요성이나 classical 대비 품질·비용 우위를 확보하지 못했다. Potential fit, binary model-family 제약, finite BP/Bethe 근사, 학습량의 기여를 분리하지 않았다. 고유 원인은 미상이다.
+- 닫은 범위: 현재8099-parameter·24-step BP·binary node/column latent·12-node/2-feature/2-relation known-family·256-update 구성을 범용 missing GraphPFN 메인 방법으로 승격하는 것.
+- 닫지 않은 것: DFACT-P01/P02/P03의 실제 성과를 지우지 않는다. 다른 feature law, 추론 구조, variable schema, 큰 graph에서 학습한 potential의 효용을 기각하지 않는다. 미실행 후속을 실패로 세지 않는다.
+- 재검토 조건: 작은 알려진 Gaussian family의 고정 factor/parameter grid로 충분하지 않은 과제에서, 실제 관측값과 context를 결합하는 학습 원리가 독립적 품질·비용 이득을 제공할 근거가 생길 때.
+- 기준선: 동일 입력·예산의 실제 Mask/PCFI/FISF-trained PFN, fixed-factor BP, known-family Grid6 exact/BP, feature-only, LP/class prior. 실제 graph/schema 확장에서는 원래 Ephris/Wander와 해당 model-based 추론도 검토한다.
+- 최소 재검증: 실패 bank에서 새 temperature/head/loss로 구제하지 않는다. 어떤 likelihood/function-family 또는 inference operation을 바꾸는지 먼저 명시하고 새 독립 bank에서 accuracy와 probabilistic quality·cost를 분리해 검증한다. Context total과 per-class, primary와 secondary를 구분한다.
+- 원문: [findings/sources/disjoint-factor-2026-11-02/results/decision.json](../findings/sources/disjoint-factor-2026-11-02/results/decision.json); [findings/sources/disjoint-factor-2026-11-02/results/paired.json](../findings/sources/disjoint-factor-2026-11-02/results/paired.json); [findings/sources/disjoint-factor-2026-11-02/results/benchmark.json](../findings/sources/disjoint-factor-2026-11-02/results/benchmark.json); [findings/sources/disjoint-factor-2026-11-02/results/final_integrity.json](../findings/sources/disjoint-factor-2026-11-02/results/final_integrity.json)
+
+### DFACT-L01 [교훈] Latent node class와 feature centroid를 함께 추론하는 원리는 기존 CSBM 연구와 겹친다.
+
+CSBMInference는 latent community와 Gaussian feature centroid에 대한 AMP–BP, Bethe free entropy와 parameter estimation을 다룬다. 이번 binary column state·mask 처리·learned potential만으로 novelty를 주장하지 않는다.
+
+- 원문: [papers/CSBMInference.yaml](../papers/CSBMInference.yaml); [findings/sources/disjoint-factor-2026-11-02/METHOD.md](../findings/sources/disjoint-factor-2026-11-02/METHOD.md)
+
+### DFACT-U01 [미실행] 새로운 feature law·semantic schema·real graph·99.5% missing으로의 확장
+
+이번 실행은12 nodes·binary classes·2 Gaussian features·2 relations다. Context1/2/4는 총 label 수이며 per-class가 아니다. 3/6 observed nodes는75/50% node missing이며99.5% 조건이 아니다. Variable feature count를 표현할 수 있는 코드여도 평가는2 features만 수행했다.
+
+- 원문: [findings/sources/disjoint-factor-2026-11-02/protocol.json](../findings/sources/disjoint-factor-2026-11-02/protocol.json); [findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md](../findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)
 
 ## 실제 관측 feature 기여의 개입 분석
 

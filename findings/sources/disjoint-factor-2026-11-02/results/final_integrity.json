@@ -1,0 +1,183 @@
+{
+  "source_lock_unchanged": true,
+  "all_bank_sha256_checked": 3200,
+  "no_context_query_leak": true,
+  "coverage_and_observation_budget_checked": true,
+  "all_checkpoints_finite": true,
+  "frozen_weights_unchanged": true,
+  "sampled_probability_reexecution": [
+    {
+      "arm": "factor_pfn",
+      "seed": 11,
+      "index": 0,
+      "max_error": 0.0
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 11,
+      "index": 576,
+      "max_error": 0.0
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 11,
+      "index": 1151,
+      "max_error": 0.0
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 12,
+      "index": 0,
+      "max_error": 0.0
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 12,
+      "index": 576,
+      "max_error": 0.0
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 12,
+      "index": 1151,
+      "max_error": 0.0
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 13,
+      "index": 0,
+      "max_error": 0.0
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 13,
+      "index": 576,
+      "max_error": 0.0
+    },
+    {
+      "arm": "factor_pfn",
+      "seed": 13,
+      "index": 1151,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 11,
+      "index": 0,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 11,
+      "index": 576,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 11,
+      "index": 1151,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 12,
+      "index": 0,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 12,
+      "index": 576,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 12,
+      "index": 1151,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 13,
+      "index": 0,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 13,
+      "index": 576,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 13,
+      "index": 1151,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 11,
+      "index": 0,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 11,
+      "index": 576,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 11,
+      "index": 1151,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 12,
+      "index": 0,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 12,
+      "index": 576,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 12,
+      "index": 1151,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 13,
+      "index": 0,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 13,
+      "index": 576,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 13,
+      "index": 1151,
+      "max_error": 0.0
+    }
+  ],
+  "decision": {
+    "mechanism_gate": false,
+    "neural_accuracy_gate": true,
+    "feature_removal_gate": false,
+    "learned_potential_accuracy_increment": false,
+    "competitive_gate": false,
+    "scope": "Fresh known-family disjoint test. Fixed seeds; secondary partitions separate; no novelty claim.",
+    "matched_grid6_kl": 0.05625341157895497,
+    "factor_median_ms": 6.836900021880865,
+    "grid6_bp_median_ms": 11.873699957504869
+  }
+}

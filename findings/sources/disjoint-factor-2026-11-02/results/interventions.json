@@ -1,0 +1,365 @@
+[
+  {
+    "arm": "factor_pfn",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.06134259259259259,
+    "ci95": [
+      -0.12962962962962965,
+      0.009259259259259266
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": -0.04638696625057559,
+    "ci95": [
+      -0.276342715186136,
+      0.13433814957090862
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": 0.03200911161365479,
+    "ci95": [
+      -0.05595722982493373,
+      0.1115755849258803
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.11226851851851853,
+    "ci95": [
+      -0.2037037037037037,
+      -0.02083333333333334
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": -0.016258651162188872,
+    "ci95": [
+      -0.27033929897282855,
+      0.1867814067900194
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": 0.05984322218826909,
+    "ci95": [
+      -0.05111711431271839,
+      0.1621115837721878
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "graph_permuted",
+    "metric": "accuracy",
+    "difference": -0.21759259259259264,
+    "ci95": [
+      -0.3437789351851852,
+      -0.08796296296296297
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "graph_permuted",
+    "metric": "nll",
+    "difference": 0.36227116016892724,
+    "ci95": [
+      0.03372673865550828,
+      0.6664781221044971
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "graph_permuted",
+    "metric": "brier",
+    "difference": 0.26571397679987235,
+    "ci95": [
+      0.10770754810478167,
+      0.4229009956314174
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "feature_off",
+    "metric": "accuracy",
+    "difference": -0.06134259259259259,
+    "ci95": [
+      -0.12962962962962965,
+      0.009259259259259266
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "feature_off",
+    "metric": "nll",
+    "difference": -0.046386950674161154,
+    "ci95": [
+      -0.2763426870895942,
+      0.13433817225281572
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "feature_off",
+    "metric": "brier",
+    "difference": 0.032009127197418795,
+    "ci95": [
+      -0.05595720056805464,
+      0.11157559081617915
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "feedback_off",
+    "metric": "accuracy",
+    "difference": -0.0636574074074074,
+    "ci95": [
+      -0.13194444444444445,
+      0.006944444444444458
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "feedback_off",
+    "metric": "nll",
+    "difference": -0.03741773595982547,
+    "ci95": [
+      -0.25299293446764687,
+      0.1329851508776086
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "factor_pfn",
+    "mode": "feedback_off",
+    "metric": "brier",
+    "difference": 0.040138896260157236,
+    "ci95": [
+      -0.039805160422827814,
+      0.11259273879772436
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": -0.024305555555555563,
+    "ci95": [
+      -0.053240740740740755,
+      0.004629629629629623
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": -0.001278749534255182,
+    "ci95": [
+      -0.0059168566567310505,
+      0.0032556175598053676
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": -0.0008300659171442785,
+    "ci95": [
+      -0.005142077153473201,
+      0.003368897285839127
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": -0.015046296296296302,
+    "ci95": [
+      -0.034722222222222224,
+      0.0034722222222222155
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": -0.00020456924330675605,
+    "ci95": [
+      -0.0027841520988599,
+      0.002468452745248209
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": 3.9347569536770516e-05,
+    "ci95": [
+      -0.002288553972384569,
+      0.0025235856269000953
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "graph_permuted",
+    "metric": "accuracy",
+    "difference": -0.08564814814814815,
+    "ci95": [
+      -0.1412326388888889,
+      -0.030063657407407823
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "graph_permuted",
+    "metric": "nll",
+    "difference": 0.02828050268761669,
+    "ci95": [
+      0.010149987229180068,
+      0.04674556029731012
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "mask_pfn",
+    "mode": "graph_permuted",
+    "metric": "brier",
+    "difference": 0.027659809947791648,
+    "ci95": [
+      0.010629984464636253,
+      0.04527891897775007
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn",
+    "mode": "no_observed",
+    "metric": "accuracy",
+    "difference": 0.02777777777777778,
+    "ci95": [
+      -0.013888888888888904,
+      0.06944444444444445
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn",
+    "mode": "no_observed",
+    "metric": "nll",
+    "difference": -0.0034221757738838406,
+    "ci95": [
+      -0.012554586078970977,
+      0.005546963536648277
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn",
+    "mode": "no_observed",
+    "metric": "brier",
+    "difference": -0.0026806199632074235,
+    "ci95": [
+      -0.01118127681267336,
+      0.005785859558021316
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn",
+    "mode": "shuffled",
+    "metric": "accuracy",
+    "difference": 0.009259259259259264,
+    "ci95": [
+      -0.02314814814814815,
+      0.04398148148148149
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn",
+    "mode": "shuffled",
+    "metric": "nll",
+    "difference": 0.004568917692624029,
+    "ci95": [
+      -0.0013658446433520014,
+      0.010670581408776471
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn",
+    "mode": "shuffled",
+    "metric": "brier",
+    "difference": 0.00425702378518394,
+    "ci95": [
+      -0.001466303437933877,
+      0.009984510596847494
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn",
+    "mode": "graph_permuted",
+    "metric": "accuracy",
+    "difference": -0.07060185185185185,
+    "ci95": [
+      -0.13657407407407407,
+      -0.0011574074074074195
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn",
+    "mode": "graph_permuted",
+    "metric": "nll",
+    "difference": 0.03214465081226791,
+    "ci95": [
+      0.010157395809230965,
+      0.05504627010400735
+    ],
+    "graphs": 48
+  },
+  {
+    "arm": "pcfi_pfn",
+    "mode": "graph_permuted",
+    "metric": "brier",
+    "difference": 0.031370918678370205,
+    "ci95": [
+      0.011199904694404806,
+      0.05196415489899339
+    ],
+    "graphs": 48
+  }
+]

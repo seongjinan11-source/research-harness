@@ -1,0 +1,258 @@
+{
+  "date": "2026-11-02",
+  "scope": "Verbatim completed disjoint-factor pilot. Tensor checkpoints and per-query probabilities stay in workspace; bank manifest, checkpoint digests, reexecution and rescoring audit retained. Original native/public dependency snapshots already exist in earlier archives.",
+  "sources": [
+    {
+      "alias": "README.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\README.md",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/README.md",
+      "sha256": "90678263ab9d2d8e7b8f9634e064939c5e56ce91d65d5fb9b50072c4e85ed1a5",
+      "bytes": 2915
+    },
+    {
+      "alias": "METHOD.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\METHOD.md",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/METHOD.md",
+      "sha256": "1ff2516fd6cdbb17b12460576f88825928e72f67d3474e9a29480fa62ff0db0b",
+      "bytes": 4880
+    },
+    {
+      "alias": "REPORT_KO.md",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\REPORT_KO.md",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md",
+      "sha256": "58884c62601c4ed5b444b60780250d412b8dad117821222ac863efdee16a5a04",
+      "bytes": 6759
+    },
+    {
+      "alias": "protocol.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\protocol.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/protocol.json",
+      "sha256": "3081ff87af37c02717fc0ce1ca3b263f752855c58d8187cbe23eb64a41f21431",
+      "bytes": 5479
+    },
+    {
+      "alias": "model.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\model.py",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/model.py",
+      "sha256": "e1758db8580bf8a98992b23b905bc5dff9109583b83be8811e3a3977df25c6c2",
+      "bytes": 7818
+    },
+    {
+      "alias": "data.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\data.py",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/data.py",
+      "sha256": "ea4c78c503d1f3894eb30657130a1008ca4c698af87d0a95f8886ca4e903fdf2",
+      "bytes": 8647
+    },
+    {
+      "alias": "experiment.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\experiment.py",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/experiment.py",
+      "sha256": "18f61e55d8c7f279068a17f5be6385ee9b50983dbf9f6ad94d578106e41fc80d",
+      "bytes": 13960
+    },
+    {
+      "alias": "analyze.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\analyze.py",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/analyze.py",
+      "sha256": "fe50ec1c52ef90d649ef39822b5134f1e6e91834d23f9576c8f9ba2475e19b36",
+      "bytes": 10988
+    },
+    {
+      "alias": "benchmark.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\benchmark.py",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/benchmark.py",
+      "sha256": "9f5781122e1c31a294aba0d950529259bb087be35f4d7d7f129d9f4745a1d043",
+      "bytes": 7154
+    },
+    {
+      "alias": "audit_final.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\audit_final.py",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/audit_final.py",
+      "sha256": "5e2991614463110df9d392a04a7e7fccd4de7a01f51545d4cdf86f723ba9c67b",
+      "bytes": 3047
+    },
+    {
+      "alias": "results/preflight.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\preflight.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/preflight.json",
+      "sha256": "2fc21a614e81129fef9d1cda2c5a98857d6266ff8a5fe3b22c1f540bb6b8c861",
+      "bytes": 1654
+    },
+    {
+      "alias": "results/lock.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\lock.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/lock.json",
+      "sha256": "92bfbea5b43c7edde01c4f3eea7d4a56c4c62ba0383a3a0a35cc460152fc977f",
+      "bytes": 1187
+    },
+    {
+      "alias": "results/summary.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\summary.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/summary.json",
+      "sha256": "0d02330a7a527486a490f359ffa74859ba6e781ecbb3795775ec754043c4cbc8",
+      "bytes": 8765
+    },
+    {
+      "alias": "results/paired.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\paired.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/paired.json",
+      "sha256": "5131a707e2d83062f23eadb87bc7b141a3d7ae84b0572d8129f639d80308cce2",
+      "bytes": 6493
+    },
+    {
+      "alias": "results/interventions.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\interventions.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/interventions.json",
+      "sha256": "f4779f723b31ee33e9575762f09383f421ee4c4c240976038ada51dd3a306247",
+      "bytes": 7499
+    },
+    {
+      "alias": "results/query_without_features.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\query_without_features.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/query_without_features.json",
+      "sha256": "37f174dec8e465d3888840767c541e36c30cd00631604dbd13a4723d33e8edd9",
+      "bytes": 1357
+    },
+    {
+      "alias": "results/secondary_partitions.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\secondary_partitions.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/secondary_partitions.json",
+      "sha256": "7e9380bd99b866aabb271788bbb8d9cac31f769a3fbd55b27e85cb0512fd5207",
+      "bytes": 8742
+    },
+    {
+      "alias": "results/audit.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\audit.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/audit.json",
+      "sha256": "e00b51b9f28bd823b4187e691d837a304ddee6b79b9253efcbbfe72a82db3a53",
+      "bytes": 6849
+    },
+    {
+      "alias": "results/benchmark.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\benchmark.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/benchmark.json",
+      "sha256": "9c5a6d96ba4e3978491b2330ea4ed8288d1c79852fbc7d193f28903752cce2b3",
+      "bytes": 12882
+    },
+    {
+      "alias": "results/decision.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\decision.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/decision.json",
+      "sha256": "8174172f14f4706ceb01768e2b935bac5422459c8c9aefc3122c310f7b5a1c4d",
+      "bytes": 420
+    },
+    {
+      "alias": "results/final_integrity.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\final_integrity.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/final_integrity.json",
+      "sha256": "3498421dba1a0712964cd1c87d62eb9e8958ff4e1bd31ed083e73afaa142cee4",
+      "bytes": 3577
+    },
+    {
+      "alias": "results/completed.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\completed.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/completed.json",
+      "sha256": "8174172f14f4706ceb01768e2b935bac5422459c8c9aefc3122c310f7b5a1c4d",
+      "bytes": 420
+    },
+    {
+      "alias": "runtime/reference_parity.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\runtime\\reference_parity.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/runtime/reference_parity.json",
+      "sha256": "64762c96a4929fe9b1eb4189eeab4f4608158a27e4e33b56840589836ce48655",
+      "bytes": 122
+    },
+    {
+      "alias": "runtime/secondary_partitions.py",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\runtime\\secondary_partitions.py",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/runtime/secondary_partitions.py",
+      "sha256": "fb26b6d909b9b55090530140b790c65d9ed8b098a84e08c93116da3cb1f5e14b",
+      "bytes": 2672
+    },
+    {
+      "alias": "runtime/csbm_revisit.txt",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\runtime\\csbm_revisit.txt",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/runtime/csbm_revisit.txt",
+      "sha256": "66f6a5ba86e17ff629a9599d48428c6a8faccf020c9d6b213de21530168cc714",
+      "bytes": 17857
+    },
+    {
+      "alias": "bank/manifest.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\bank\\manifest.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/bank/manifest.json",
+      "sha256": "a1020af0cb824c55411d38f8d6f6011e21aeda8afbc37fc464b7b6b4645b6a15",
+      "bytes": 1087518
+    },
+    {
+      "alias": "references/completed.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\references\\completed.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/references/completed.json",
+      "sha256": "62ccd11c5ae52d77d6a7a80de5b47ce417a3c7b139039a3c4cf500ac884c01e9",
+      "bytes": 166
+    },
+    {
+      "alias": "results/factor_pfn_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\factor_pfn_s11\\training.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/factor_pfn_s11/training.json",
+      "sha256": "91184aa5bd9c831a77f405d7650f4038facd649a7a128656e9b2dfe643519d9e",
+      "bytes": 661
+    },
+    {
+      "alias": "results/factor_pfn_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\factor_pfn_s12\\training.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/factor_pfn_s12/training.json",
+      "sha256": "ec727edc8e9754fe6e92af0a7e115a837a9926d12c0153e81ea0b2bf3eaf710e",
+      "bytes": 661
+    },
+    {
+      "alias": "results/factor_pfn_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\factor_pfn_s13\\training.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/factor_pfn_s13/training.json",
+      "sha256": "ec70e656e22cb38fdfc954a03d47068891d59b339e81e9b3950fb9bf82da3ab2",
+      "bytes": 661
+    },
+    {
+      "alias": "results/mask_pfn_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\mask_pfn_s11\\training.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/mask_pfn_s11/training.json",
+      "sha256": "c9ab571b96252762db5b3789b9eea901e9602340c5930c8145d9fed0832be084",
+      "bytes": 665
+    },
+    {
+      "alias": "results/mask_pfn_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\mask_pfn_s12\\training.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/mask_pfn_s12/training.json",
+      "sha256": "2bcc9858fb9827c134feee06565050d6ee9fa0fa377e0292b2c3ae0b74599bfe",
+      "bytes": 666
+    },
+    {
+      "alias": "results/mask_pfn_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\mask_pfn_s13\\training.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/mask_pfn_s13/training.json",
+      "sha256": "a0e72ec1f299f71df0b918e3740ca3231b5a6f02d97f41a3e8e574d69c0bcc39",
+      "bytes": 666
+    },
+    {
+      "alias": "results/pcfi_pfn_s11/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\pcfi_pfn_s11\\training.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/pcfi_pfn_s11/training.json",
+      "sha256": "5a3dbb1cb3bab1638bd034c5454537dd5d22dc1e83792ebf67dc5a0e9d385a83",
+      "bytes": 665
+    },
+    {
+      "alias": "results/pcfi_pfn_s12/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\pcfi_pfn_s12\\training.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/pcfi_pfn_s12/training.json",
+      "sha256": "95c269c429dea3e5f83919b7b95a084194f8d84a9bf5cd4cc90a069f9c61c7e0",
+      "bytes": 665
+    },
+    {
+      "alias": "results/pcfi_pfn_s13/training.json",
+      "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\disjoint_factor_pilot\\results\\pcfi_pfn_s13\\training.json",
+      "snapshot": "findings/sources/disjoint-factor-2026-11-02/results/pcfi_pfn_s13/training.json",
+      "sha256": "21944cd996ce7d2b742263a2e8e2fdfe0b43c4d9a52cbb3f747e212187bdccae",
+      "bytes": 666
+    }
+  ]
+}

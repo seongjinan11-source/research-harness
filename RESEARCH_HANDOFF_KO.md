@@ -1,12 +1,12 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 실험 기록 기준 commit: `06d58de`.
+기준일: 2026-11-02. 최근 업데이트: 새 disjoint-factor pilot의 학습·평가·비용 검증 완료.
 
 ## 검토받고 싶은 문제
 
 우리는 **노드 피처가 심하게 결측된 새 그래프에서, target graph 재학습 없이 예측하는 GraphPFN**을 만들고 싶다. 장기적으로 다른 feature 차원과 heterogeneous schema까지 다루되, 현재 실험은 주로 작은 synthetic graph와 일부 실제 그래프에서 수행했다. 여기서 feature missing과 edge observation missing은 다른 문제다.
 
-새로운 이름이나 모듈을 늘리는 것보다, **기존 강한 예측기가 놓치는 정보를 회수하는 학습·추론 원리**를 찾고 싶다. 현재 독립적인 메인 메소드로 확정한 후보는 없다. 그렇다고 모든 시도가 무효인 것은 아니다. Signed likelihood BP, 같은 potential에서의 role update, 최근 conditional circuit의 neural baseline 대비 개선은 실제로 확인했다. 이 효과를 강한 model-based baseline보다 경쟁력 있는 방법으로 연결하지 못했다.
+새로운 이름이나 모듈을 늘리는 것보다, **기존 강한 예측기가 놓치는 정보를 회수하는 학습·추론 원리**를 찾고 싶다. 현재 독립적인 메인 메소드로 확정한 후보는 없다. 그렇다고 모든 시도가 무효인 것은 아니다. Signed likelihood BP, 같은 potential에서의 role update, conditional circuit의 neural baseline 대비 개선, 최근 disjoint-factor predictor의 정확도 개선은 실제로 확인했다. 이 효과를 강한 model-based baseline보다 경쟁력 있는 방법으로 연결하지 못했다.
 
 이번 검토는 새로운 실험을 즉시 실행하라는 요청이 아니다. 아래 사실과 실패 범위를 검토하고, 설득력 있는 후속 메소드가 있는지 독립적으로 판단해 달라.
 
@@ -14,13 +14,13 @@
 
 이 파일만 읽어도 핵심 판단은 가능하다. 세부 확인은 다음 순서가 좋다.
 
-1. [최근 circuit 보고서](findings/sources/direct-marginal-2026-11-02/REPORT_KO.md)
-2. [최근 feature-memory 보고서](findings/sources/feature-memory-2026-11-02/REPORT_KO.md)
+1. [최신 disjoint-factor 보고서](findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)와 [모델 수식](findings/sources/disjoint-factor-2026-11-02/METHOD.md)
+2. [직전 circuit 보고서](findings/sources/direct-marginal-2026-11-02/REPORT_KO.md), [feature-memory 보고서](findings/sources/feature-memory-2026-11-02/REPORT_KO.md)
 3. [누적 실패·보존·미실행 기록](out/research_log.md): 필요한 갈래만 검색한다.
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 32편, 연구 기록 118항목, 아이디어 8개가 있다. 118항목 전부가 실패가 아니다. `failure`, `preserved`, `lesson`, `untested`를 구분한다. ZIP에는 본문·구조화 기록·핵심 보고서를 담았고 대형 raw prediction, checkpoint와 모든 원문 snapshot은 넣지 않았다. 일부 `source_refs`는 전체 저장소에서 확인해야 한다.
+저장소에는 논문 33편, 연구 기록 125항목, 아이디어 8개가 있다. 125항목 전부가 실패가 아니다. `failure`, `preserved`, `lesson`, `untested`를 구분한다. 첨부용 ZIP은 버전별 snapshot이므로 최신 disjoint-factor가 포함됐는지 확인한다. 패킷에는 본문·구조화 기록·핵심 보고서를 담고 대형 raw prediction과 checkpoint는 넣지 않는다. 일부 `source_refs`는 전체 저장소에서 확인해야 한다.
 
 ## 이전 실험에서 남긴 판단
 
@@ -103,7 +103,29 @@ Context 2/clustered 50%의 보조 intervention에서 관측 feature 제거 시 a
 
 그런데 설계 고정 뒤 추가한 **known-family feature-only** 대조는 graph를 전혀 쓰지 않고도 NLL 0.605147을 얻었다. Circuit의 NLL 0.605128과의 차이는 −0.000019 [−0.013783, +0.013696]였다. Accuracy 차이 +3.251075%p의 CI [−0.142816, +6.531240]도 0을 포함했다. 동등성 검정은 아니지만 graph-specific 추가 이득을 확인한 결과도 아니다. 이 대조는 Gaussian magnitude 0.8/sd 0.6이라는 정확한 family 상수를 안다.
 
-가장 구체적으로 남은 조건은 **관측 feature가 label context 바깥에만 있는 경우**다. Primary의 사후 분할에서 circuit은 52.69%/NLL 0.69955, Grid6-BP는 64.87%/0.62460이었다. 단순 feature-only는 이 조건에서 class orientation을 알 수 없다. Graph를 이용하면 회수 가능한 정보가 있지만 현재 학습 모델이 충분히 회수하지 못한 조건이다. 사후 기술적 분석이므로 새 primary나 독립 확인으로 쓰지 않는다. Tree 표현력만의 탓으로도 확정하지 않는다.
+가장 구체적으로 남은 조건은 **관측 feature가 label context 바깥에만 있는 경우**다. Primary의 사후 분할에서 circuit은 52.69%/NLL 0.69955, Grid6-BP는 64.87%/0.62460이었다. 단순 feature-only는 이 조건에서 class orientation을 알 수 없다. Graph를 이용하면 회수 가능한 정보가 있지만 이 circuit이 충분히 회수하지 못한 조건이다. 사후 기술적 분석이므로 새 primary나 독립 확인으로 쓰지 않는다. Tree 표현력만의 탓으로도 확정하지 않는다.
+
+## 최신 disjoint factor predictor
+
+이 문제를 직접 대상으로 새96 graph bank를 만들고, node class와 feature-column 방향을 latent state로 함께 추론하는 약8천 파라미터 모델을 학습했다. 관측 cell만 factor로 연결하고, graph의 edge/nonedge factor와 finite cavity BP를 통해 context와 feature evidence를 교환한다. 같은 factor의 Bethe score로 role weights를 유도하며 별도 posterior head나 numerical completion은 없다.
+
+모든 arm은 같은2048 tasks/256 updates/3 seeds/query CE를 사용했다. Primary는 새 matched48 graphs의 disjoint 조건이며, context 총1/2/4개와 observed nodes3/6개를 평균한다. Missing은75/50%이며99.5%가 아니다. 이전 bank나 circuit의 절대 수치와 직접 비교하지 않는다.
+
+| 방법 | Accuracy % | NLL |
+|---|---:|---:|
+| Factor predictor | 65.4004 | 0.628722 |
+| Public Mask PFN | 57.0974 | 0.676368 |
+| PCFI-trained PFN | 55.2304 | 0.677401 |
+| Fixed-mode factor BP | 66.0053 | 0.621022 |
+| Grid6-BP | 65.9557 | 0.555143 |
+
+Factor−Mask accuracy+8.3030%p CI[+2.7750,+14.0753], Factor−PCFI+10.1700%p CI[+4.4253,+16.3513]은 보존한다. Neural 대비 NLL 차이 CI는0을 포함한다. Fixed factor 대비 정확도·NLL의 추가 이득은 확인하지 못했고, Grid6-BP 대비 NLL은+0.073580 [+0.019579,+0.150308] 더 높았다. Forward median6.837ms vs11.874ms이며 matched Grid6-exact KL0.056253으로 사전 품질·비용 gate는 실패했다.
+
+Context2/observed6에서 feature shuffle은−11.23%p, graph permutation은−21.76%p로 CI가0을 제외했다. 반면 no-observed−standard는−6.13%p CI[−12.96,+0.93]로 사전 feature-removal gate를 통과하지 못했다. Shuffle 민감도를 feature 추가 순효과의 확정이나 gate 통과로 바꾸지 않는다.
+
+Query 자체도 feature가 없는 사전 secondary에서는 Factor64.60%/NLL0.60005, Mask56.98%/0.67939, PCFI54.48%/0.68409였다. 두 neural 대조 대비 accuracy/NLL 개선 CI가0을 제외했다. 다만 고정 factor 대비 추가 이득은 미확인이고 이 secondary로 primary 판정을 바꾸지 않는다.
+
+**현재 판단은 정확도 성과를 보존하면서 독립 메인 메소드 확대를 보류하는 것이다.** Node class와 latent feature centroid를 함께 추론하는 원리는 이미 [CSBM의 AMP–BP](papers/CSBMInference.yaml)에 있다. 이 pilot이 그 구현을 재현하거나 이겼다는 뜻은 아니다. Unknown feature-law, 새 semantic schema, 실제 heterograph와 큰 graph는 아직 평가하지 않았다.
 
 ## 아직 실행하지 않은 범위
 
@@ -152,7 +174,7 @@ Context 2/clustered 50%의 보조 intervention에서 관측 feature 제거 시 a
 실제 실행한 결과, 보존한 개선, 미실행 제안을 구분하고, 필요하면 함께 첨부한 보고서와 findings를 확인해줘.
 
 목표는 새 그래프에서 재학습 없이 심한 node-feature missing을 처리하는 GraphPFN이야.
-최근 circuit은 학습된 neural baseline은 이겼지만, known-family Grid6보다 낮고 feature-only 대비 추가 NLL 이득도 확인하지 못했어.
+최근 disjoint-factor predictor는 Mask/PCFI PFN보다 정확도가 높았지만, 고정 factor 대비 학습의 추가 이득은 확인하지 못했고 Grid6보다 전체 NLL이 높았어.
 
 이 실패 범위를 반복하지 않는 메소드 후보를 최대 2개 제안해줘.
 후보마다 바꾸는 정보/추론 연산, 학습 목적, 가장 가까운 선행연구와의 차이,
