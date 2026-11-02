@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "particles": 4096,
+  "steps": 8,
+  "condition": "Independent4spin/2allowedrole tree,onehardcontext;untrainedproposal;notproductiondata or a scaling claim",
+  "results": {
+    "smc_gibbs1": {
+      "node_max_error": 0.009031891822814941,
+      "role_max_error": 0.002465754747390747
+    },
+    "diffusion_smc_fixed": {
+      "node_max_error": 0.009927719831466675,
+      "role_max_error": 0.005833029747009277
+    },
+    "diffusion_smc_ess": {
+      "node_max_error": 0.00753629207611084,
+      "role_max_error": 0.0068066418170928955
+    }
+  },
+  "scope": "Post-analysis numerical audit of sampler correctness after production finite-particle degradation. No training/config/source/checkpoint/primary changes.",
+  "source_sha": "275a4adf11001eed480e1b637e0fd7e5475e9473095f9d3f24f6feba19d5133b"
+}

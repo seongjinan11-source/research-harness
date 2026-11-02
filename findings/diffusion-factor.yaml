@@ -1,0 +1,108 @@
+project: Conditional diffusion and ESS-controlled SMC in frozen FactorPFN
+date: '2026-11-02'
+source: findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md
+setting: Known binary12node/2feature typed SBM;3frozen CEFactors;3new8476parameter denoisers/3072updates;96newgraphs/576disjointepisodes;primary48matchedgraphs;50/75%missing,not99.5%.
+related:
+- GraphPFN
+- CSBMInference
+entries:
+- id: DFI-F01
+  kind: failure
+  claim: 작은 conditional diffusion proposal과 동일 potential의 MH/SMC 보정이 비슷한 추론 비용의 classical SMC보다 정확한 query inference를 제공한다.
+  observation: factor_bp:accuracy71.403770%/FactorKL0.085031/Grid6KL0.091114; factor_exact:accuracy71.644896%/FactorKL0.000000/Grid6KL0.011446; smc_gibbs1:accuracy69.765487%/FactorKL0.008698/Grid6KL0.020647;
+    smc_gibbs_cost:accuracy68.853340%/FactorKL0.007171/Grid6KL0.017499; diffusion_only:accuracy65.673225%/FactorKL0.047351/Grid6KL0.060687; diffusion_smc_fixed:accuracy65.151014%/FactorKL0.079318/Grid6KL0.090732;
+    diffusion_smc_ess:accuracy64.952601%/FactorKL0.071562/Grid6KL0.085439;fixed-costSMC accuracy%p-3.702326[95CI-6.346588,-1.234258],FactorKL+0.072148[+0.060790,+0.084608].Inferencesuccess=False,classificationsuccess=False.
+  verdict: 현재 learned proposal+correction을 메인 방법으로 확대하지 않는다. 비용 대조 SMC보다 accuracy와 target-fit이 악화했고,더 저렴한1sweep SMC도 평균적으로 좋았다.
+  failure_reason: Exact frozen-model KL·accuracy 사전 gate를 통과하지 못했다. Small-state kernel validation은 통과했지만 finite-particle/short-schedule/denoiser fit/mixing/representation의
+    고유 원인은 분리하지 않았다.
+  reason_status: unknown
+  closed_scope: 기존 binary12node+2column Gaussian-factor family,frozen CEFactor3개,512task×64exactjoint draws,odd/even GNNwidth24/1024updates,64particles/8stages,reset-diffusion
+    reverse proposal+MH와고정temperature의 구현 및 자동 확대.
+  not_closed: Diffusion 전체,DPM-SNC/ReDiSC/RDSMC 원본 방법,다른 proposal/학습량,실제 graph/unseen schema,RNP objective,새 feature-law의 실패로 세지 않는다. 기존 Factor의 positive results는
+    보존한다.
+  reopen_when: 같은 잠재 state와 local factor에서 proposal이 어느 예측적으로 중요한 joint mode를 누락하는지 독립 증거를 제시하고,classical Gibbs/blocked sampler와 비용을 맞춰 이를 해결하는 연산이 있을 때.
+  comparison_floor: Ordinary1sweep/개발 latency로 정한2sweep Gibbs-SMC;original Factor BP,constant BP,exact learned-Factor,Grid6exact/BP;동일새 bank의 frozen Mask/PCFI;teacher/training/inference
+    비용.
+  recheck: 이번 final bank를 튜닝하지 않는다. 새 독립 graph/명시된 구조 family에서 finite sampler exact-target error와accuracy·NLL/Brier·role coverage·비용을 사전 분리하고 fullsupport/양방향proposal/MH
+    검사를 유지한다.
+  reopen_tags:
+  - adaptation
+  - inference-cost
+  - model-based-baseline
+  reopen_keywords:
+  - joint mode coverage
+  - amortized inference operator
+  - diffusion proposal mixing
+  tags: &id001
+  - observation-mask
+  - graph-structure-use
+  - model-based-baseline
+  - inference-cost
+  - adaptation
+  keywords: &id002
+  - conditional discrete diffusion
+  - Gibbs SMC
+  - Metropolis Hastings correction
+  - Renyi2 ESS
+  - frozen factor inference
+  - role feature label joint
+  source_refs: &id003
+  - findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md
+  - findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md
+  - findings/sources/diffusion-factor-2026-11-02/protocol.json
+  - findings/sources/diffusion-factor-2026-11-02/results/statistics.json
+  - findings/sources/diffusion-factor-2026-11-02/results/audit.json
+  - findings/sources/diffusion-factor-2026-11-02/results/benchmark.json
+  - findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json
+  evidence: 3actual denoisers/3072updates;3Factor and6public checkpoints unchanged;96newgraphs/576episodes;primary48matchedgraphs,3fixedseeds;8640sampler replays
+    exact plus6public replays;source/checkpoint audit PASS.
+  revisit_status: open
+- id: DFI-F02
+  kind: failure
+  claim: Rényi-2/ESS 기반 adaptive likelihood tempering이 같은 learned diffusion+SMC fixed schedule보다 예측 품질을 개선한다.
+  observation: Fixed FactorKL0.079318,ESS0.071562;difference-0.007756[95CI-0.019864,+0.006172].Accuracy65.151014%→64.952601%.ESSgate=False.
+  verdict: 현재.8K threshold/8stage budget의ESS controller 증분은 미입증이며 추가 tuning하지 않는다.
+  failure_reason: KL 증분 CI가0을 포함하고accuracy도 개선되지 않았다. Weight entropy/step schedule만으로 latent coverage와 predictive fit을 보장할 수 없으며 고유 원인은 미분리다.
+  reason_status: unknown
+  closed_scope: 같은64particles/8stages/학습된reverse kernel을 유지하고32-step bisection으로incremental ESS≥.8K의β를 택한뒤 마지막stageβ=1을 강제하는 controller.
+  not_closed: Rényi Neural Processes의 variational objective는 실행하지 않았다. 모든 Rényi divergence/entropy 활용,다른SMC bridge/step budget·posterior inference를 기각하지 않는다.
+  reopen_when: Weight entropy와 label-predictive joint mode error의 관계를 분리하고,같은 particle/latency budget에서 ESS 외의 필요한 정보를 이용하는 제어 연산이 생길 때.
+  comparison_floor: 동일proposal/potential의fixed schedule,ordinary Gibbs-SMC,exact frozen-model reference와accuracy를유지한다. Adaptive extra overhead를 포함한다.
+  recheck: 새graph에서fixed-ESS controller 차이를posterior fit/분류/시간으로나누어검증한다. 최종ESS상승을성공으로대체하거나RNP논문방법을실행했다고부르지않는다.
+  reopen_tags:
+  - adaptation
+  - inference-cost
+  reopen_keywords:
+  - Renyi posterior inference
+  - ESS mode coverage
+  - adaptive tempering
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 3actual denoisers/3072updates;3Factor and6public checkpoints unchanged;96newgraphs/576episodes;primary48matchedgraphs,3fixedseeds;8640sampler replays
+    exact plus6public replays;source/checkpoint audit PASS.
+  revisit_status: open
+- id: DFI-P01
+  kind: preserved
+  claim: Frozen learned Factor의local potential을 정확히 합산하면 model-based Grid6 예측에 가까워진다. 분류 accuracy headroom은 별도로 작게 관측됐다.
+  observation: FactorBP Grid6KL0.091114→exactFactor0.011446;accuracy71.403770%→71.644896%;delta%p+0.241127[95CI-0.847388,+1.320030].Same frozen8099parameters,65536-state
+    offline enumeration.
+  do_not_claim: 새 학습이나 diffusion의성과가아니다. 정확한conditional-model inference이지 참SBM posterior복원은아니며,accuracy 동등성/비열등성·일반적인headroom부재·largegraph효율성을 증명하지 않는다. Constant-exact와
+    비교하지 않았으므로학습potential의독립적인일반우위로확대하지 않는다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 3actual denoisers/3072updates;3Factor and6public checkpoints unchanged;96newgraphs/576episodes;primary48matchedgraphs,3fixedseeds;8640sampler replays
+    exact plus6public replays;source/checkpoint audit PASS.
+  revisit_status: open
+- id: DFI-L01
+  kind: lesson
+  claim: 높은final ESS·MH acceptance·고유state 수가 정확한joint posterior나높은classification을보장하지않는다. 추론primary와분류gate를분리해야한다.
+  observation: 전체576episodes에서corrected diffusion의평균finalESS 약60.6~60.9/64,acceptance 약.62~.65였지만ordinarySMC보다targetKL과accuracy가나빴다. Pure diffusion은uniformweights라ESS64가정의상나온다.Production8640samplerreplays최대오차0,독립4spin/4096particleauditmaxnodeerror<.01.
+  verdict: 계산검증통과와작은finite-budget예측성공을구분한다. 이번controller는Renyi2-ESSidentity이며RNP objective가아니다. 기존148findings/788source-paperfiles를그대로보존한다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  evidence: 3actual denoisers/3072updates;3Factor and6public checkpoints unchanged;96newgraphs/576episodes;primary48matchedgraphs,3fixedseeds;8640sampler replays
+    exact plus6public replays;source/checkpoint audit PASS.
+  revisit_status: open

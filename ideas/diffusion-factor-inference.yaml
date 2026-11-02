@@ -1,0 +1,26 @@
+id: diffusion-factor-inference
+date: '2026-11-02'
+text: 실행완료:3개 conditional discrete diffusion denoiser/3072updates를학습하고,기존Factor3개를고정해ordinaryGibbs-SMC·MH-corrected diffusion·Renyi2/ESS schedule을비교했다. Exact-target
+  inference/classification/ESS increment gate 모두False. 현재구현은확대보류하며원논문DPM-SNC/ReDiSC/RDSMC/RNP의실패로세지않는다.
+tags:
+- observation-mask
+- model-based-baseline
+- inference-cost
+- adaptation
+keywords:
+- conditional discrete diffusion
+- SMC
+- Metropolis Hastings
+- Renyi2
+- ESS
+- learned factor
+original_proposal_text: '사용자가 실행을 요청한 learned inference operator pilot: 기존 Factor의 local potentials와 role constants를 고정하고 conditional discrete diffusion proposal,
+  정확한 forward/reverse 확률의 MH 보정, ESS/Renyi-2 tempering을 일반 Gibbs-SMC와 비교한다. Exact frozen-model posterior fit과 실제 분류, 계산 비용을 구분하며 새 schema나 Renyi Neural Process objective를
+  구현했다고 주장하지 않는다.'
+status: pilot-completed
+note: findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md
+followup: findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md
+pilot_gates:
+  inference: false
+  ess_increment: false
+  classification: false

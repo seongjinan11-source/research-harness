@@ -1,0 +1,197 @@
+{
+  "status": "PASS",
+  "actual_updates": 3072,
+  "new_models": 3,
+  "replays": [
+    {
+      "seed": 11,
+      "arm": "smc_gibbs1",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 11,
+      "arm": "smc_gibbs_cost",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 11,
+      "arm": "diffusion_only",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 11,
+      "arm": "diffusion_smc_fixed",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 11,
+      "arm": "diffusion_smc_ess",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 12,
+      "arm": "smc_gibbs1",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 12,
+      "arm": "smc_gibbs_cost",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 12,
+      "arm": "diffusion_only",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 12,
+      "arm": "diffusion_smc_fixed",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 12,
+      "arm": "diffusion_smc_ess",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 13,
+      "arm": "smc_gibbs1",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 13,
+      "arm": "smc_gibbs_cost",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 13,
+      "arm": "diffusion_only",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 13,
+      "arm": "diffusion_smc_fixed",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    },
+    {
+      "seed": 13,
+      "arm": "diffusion_smc_ess",
+      "replay_max_error": 0.0,
+      "context_clamp_error": 0
+    }
+  ],
+  "replayed_episode_predictions": 8640,
+  "immutable_sources_and_frozen_checkpoints": true,
+  "bank_hashes_verified": true,
+  "context_clamps_verified": true,
+  "teacher_joint_draw_support_verified": true,
+  "diversity": {
+    "smc_gibbs1_s11": {
+      "unique_final_states_mean": 37.953125,
+      "unique_final_states_min": 1
+    },
+    "smc_gibbs_cost_s11": {
+      "unique_final_states_mean": 37.682291666666664,
+      "unique_final_states_min": 1
+    },
+    "diffusion_only_s11": {
+      "unique_final_states_mean": 52.901041666666664,
+      "unique_final_states_min": 16
+    },
+    "diffusion_smc_fixed_s11": {
+      "unique_final_states_mean": 37.90277777777778,
+      "unique_final_states_min": 1
+    },
+    "diffusion_smc_ess_s11": {
+      "unique_final_states_mean": 37.453125,
+      "unique_final_states_min": 3
+    },
+    "smc_gibbs1_s12": {
+      "unique_final_states_mean": 39.166666666666664,
+      "unique_final_states_min": 1
+    },
+    "smc_gibbs_cost_s12": {
+      "unique_final_states_mean": 38.470486111111114,
+      "unique_final_states_min": 1
+    },
+    "diffusion_only_s12": {
+      "unique_final_states_mean": 53.713541666666664,
+      "unique_final_states_min": 14
+    },
+    "diffusion_smc_fixed_s12": {
+      "unique_final_states_mean": 39.05034722222222,
+      "unique_final_states_min": 1
+    },
+    "diffusion_smc_ess_s12": {
+      "unique_final_states_mean": 38.947916666666664,
+      "unique_final_states_min": 3
+    },
+    "smc_gibbs1_s13": {
+      "unique_final_states_mean": 38.92881944444444,
+      "unique_final_states_min": 1
+    },
+    "smc_gibbs_cost_s13": {
+      "unique_final_states_mean": 38.564236111111114,
+      "unique_final_states_min": 1
+    },
+    "diffusion_only_s13": {
+      "unique_final_states_mean": 50.97569444444444,
+      "unique_final_states_min": 16
+    },
+    "diffusion_smc_fixed_s13": {
+      "unique_final_states_mean": 37.697916666666664,
+      "unique_final_states_min": 2
+    },
+    "diffusion_smc_ess_s13": {
+      "unique_final_states_mean": 37.484375,
+      "unique_final_states_min": 6
+    }
+  },
+  "public_replays": [
+    {
+      "arm": "mask_pfn",
+      "seed": 11,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 11,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 12,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 12,
+      "max_error": 0.0
+    },
+    {
+      "arm": "mask_pfn",
+      "seed": 13,
+      "max_error": 0.0
+    },
+    {
+      "arm": "pcfi_pfn",
+      "seed": 13,
+      "max_error": 0.0
+    }
+  ],
+  "analysis_sha": "dd50c8fe244fd62869427563898d6dac722349f46f13b1ac8b66d6d273c6e100"
+}

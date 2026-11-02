@@ -1,0 +1,83 @@
+{
+  "device": "NVIDIA GeForce RTX 3090",
+  "scope": "Single primary-like fresh graph/seed11;visible CPU input to CPU probabilities;include frozen factor extraction/SMC/RB or public PCFI;preload weights and reusable enumerator;exclude I/O;external GPU load not controlled. Dev cost control2sweeps was fixed before test. No latency winner claim beyond this measurement.",
+  "row": {
+    "path": "test/g0_k2_o6.npz",
+    "graph": 0,
+    "seed": 18391000,
+    "prior": "independent",
+    "case": "matched",
+    "context_total": 2,
+    "observed_nodes": 6,
+    "sha256": "51f050216fbee839beba62f357a3e7ecdb822c5ed499e53b5e2f484e6b18e6e0"
+  },
+  "methods": {
+    "smc_gibbs1": {
+      "median_ms": 33.6710000410676,
+      "p10_ms": 26.60340014845133,
+      "p90_ms": 43.058540020138025,
+      "repeats": 15
+    },
+    "smc_gibbs_cost": {
+      "median_ms": 50.43560033664107,
+      "p10_ms": 46.198519971221685,
+      "p90_ms": 55.460899882018566,
+      "repeats": 15
+    },
+    "diffusion_only": {
+      "median_ms": 19.862300250679255,
+      "p10_ms": 17.356720101088285,
+      "p90_ms": 24.20708006247878,
+      "repeats": 15
+    },
+    "diffusion_smc_fixed": {
+      "median_ms": 45.82090023905039,
+      "p10_ms": 42.613899894058704,
+      "p90_ms": 51.540520042181015,
+      "repeats": 15
+    },
+    "diffusion_smc_ess": {
+      "median_ms": 64.2724996432662,
+      "p10_ms": 57.344759814441204,
+      "p90_ms": 73.47381981089711,
+      "repeats": 15
+    },
+    "factor_bp": {
+      "median_ms": 4.7253998927772045,
+      "p10_ms": 3.922699857503176,
+      "p90_ms": 5.102740041911602,
+      "repeats": 15
+    },
+    "constant_bp": {
+      "median_ms": 3.0880002304911613,
+      "p10_ms": 2.9252600856125355,
+      "p90_ms": 4.615999758243561,
+      "repeats": 15
+    },
+    "grid6_exact": {
+      "median_ms": 10.661199688911438,
+      "p10_ms": 10.053939837962389,
+      "p90_ms": 11.515680141746998,
+      "repeats": 15
+    },
+    "grid6_bp": {
+      "median_ms": 15.669899992644787,
+      "p10_ms": 14.550060126930475,
+      "p90_ms": 18.255599960684776,
+      "repeats": 15
+    },
+    "mask_pfn": {
+      "median_ms": 44.5846002548933,
+      "p10_ms": 41.68605990707874,
+      "p90_ms": 49.30290002375841,
+      "repeats": 15
+    },
+    "pcfi_pfn": {
+      "median_ms": 52.26680031046271,
+      "p10_ms": 48.29412009567022,
+      "p90_ms": 59.16389999911189,
+      "repeats": 15
+    }
+  },
+  "source_sha": "776981e7cfdeafefacc483cdee9a39a73e168064b173cfd5aa08d89efdd4a3fb"
+}

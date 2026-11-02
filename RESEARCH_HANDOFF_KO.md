@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: 누적56편의 문헌과 J/V 관측 prior 실제 학습까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-02. 최근 업데이트: 누적56편의 문헌과 diffusion/ESS 실제 비교까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -23,7 +23,22 @@
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 56편, 연구 기록 148항목, 아이디어 9개가 있다. 35개 프로젝트 묶음이며 실패·중단44, 보존33, 교훈49, 미실행22항목이다. 148번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 56편, 연구 기록 152항목, 아이디어 10개가 있다. 36개 프로젝트 묶음이며 실패·중단46, 보존34, 교훈50, 미실행22항목이다. 152번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+
+## Diffusion proposal와 Rényi-2/ESS 실제 비교
+
+기존 Factor3개를 고정하고 conditional denoiser3개를 새로 학습했다(3,072updates). 새96graph/576disjointepisodes,primary matched48graph의6settings와3fixedseed 평균이다.12node·2feature·50/75%missing의 fixed family이며 공개 GraphPFN 본체의 diffusion 개조가 아니다.
+
+| 방법 | Accuracy % | Exact-Factor KL | Grid6 KL |
+|---|---:|---:|---:|
+| factor_bp | 71.4038 | 0.085031 | 0.091114 |
+| factor_exact | 71.6449 | 0.000000 | 0.011446 |
+| smc_gibbs_cost | 68.8533 | 0.007171 | 0.017499 |
+| diffusion_only | 65.6732 | 0.047351 | 0.060687 |
+| diffusion_smc_fixed | 65.1510 | 0.079318 | 0.090732 |
+| diffusion_smc_ess | 64.9526 | 0.071562 | 0.085439 |
+
+Diffusion+fixed−비용 대조 SMC accuracy -3.7023 [95% CI -6.3466,-1.2343]%p다. 추론·분류·ESS 증분 gate 모두 실패하여 현재 구현은 확대하지 않는다. 같은 frozen Factor를 정확히 합산하면 Grid6 KL은 크게 낮아지지만 accuracy 증가 +0.2411%p의 CI는0을 포함한다. RNP 학습 목적·DPM-SNC/ReDiSC/RDSMC 원본은 재현하지 않았으므로 해당 방법의 실패로 세지 않는다. [전체 보고서](findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md),[계산 정의](findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md),[구조화 기록](findings/diffusion-factor.yaml).
 
 ## J / V 관측 prior 실제 학습 결과
 

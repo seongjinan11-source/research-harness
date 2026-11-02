@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-02",
+  "question": "Can a context-conditioned discrete diffusion proposal improve inference in an existing frozen learned node/feature factor model, beyond ordinary SMC at comparable inference cost? Does ESS/Renyi-2 tempering add independent value?",
+  "seeds": [
+    11,
+    12,
+    13
+  ],
+  "train_tasks": 512,
+  "teacher_draws": 64,
+  "updates": 1024,
+  "batch_size": 16,
+  "width": 24,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "particles": 64,
+  "stages": 8,
+  "cess_fraction": 0.8,
+  "gibbs_cost_sweeps": 2,
+  "test_seed_start": 18391000,
+  "test_graphs_per_prior": 32,
+  "contexts": [
+    1,
+    2,
+    4
+  ],
+  "observed_nodes": [
+    3,
+    6
+  ],
+  "data": "Reuse the first512 immutable disjoint_factor_pilot train episodes, including their historical disjoint/paired-overlap mix. Fresh96 test graphs from unchanged twelve-node/two-feature typed SBM;32 per prior;matched,matched,density_low,signal_high schedule. Evaluate only disjoint coverage,6context/source settings per graph=576episodes. Primary matched48 base graphs;secondary queries without their own features and OOD. Context/source disjoint;source/query can overlap, as in the original Factor protocol. Missing50/75%, not99.5%.",
+  "target": "For each of3 unchanged CE FactorPFN checkpoints, use exactly its observed-only J_h(D),full role-dependent constants and original prior masses. Define pi(s,h|D) proportional to mass(h)*exp(.5*s'J_h*s+constant_h) with original hard context clamps and uniform binary node/feature latent base measure. This is the frozen model's normalized conditional structured distribution, not the true SBM posterior. No actual hidden orientation/helper/query label or true parameter enters this distribution. Exact65536-state enumeration is offline teacher/reference only.",
+  "learning": "One new shared permutation-equivariant odd/even GNN denoiser per frozen Factor seed. Input:all4role couplings,constants,prior,context clamps,node/helper/column types,current noisy latent spins and role,noise time. Train on64exact conditional-model joint draws per512task, random discrete diffusion time1..8, unknown-spin CE plus role CE. No actual sampled query labels, teacher query marginal loss, extra likelihood head, potential updates or checkpoint selection. Final1024update checkpoint only. All graph-specific learned weights stay fixed at deployment.",
+  "diffusion": "Known forward reset kernel with cumulative retention a_t=1-t/8, binary base.5,role base original known-family prior;context spins remain clamped. Network predicts clean-spin marginals and clean role distribution. Reverse kernel integrates analytic q(z_(t-1)|z_t,z0) against predictions. Clamp predicted probabilities with.02base mixture for full support on allowed states. Diffusion-only uses8reverse steps from original base. Every arm uses identical Rao-Blackwellized query estimates from exact single-site conditional factors;sample-frequency outputs also retained.",
+  "smc": "Targets pi_beta proportional to original base prior times exp(beta*energy).64particles,8stages;fixed beta=l/8. Reweight by exp(delta_beta*energy), systematic resampling after nonfinal stages. Diffusion+SMC uses an independence-across-variables reverse-diffusion proposal followed by MH acceptance using BOTH forward and reverse proposal probabilities and exact target ratio. Thus it is a valid pi_beta mutation kernel; no implicit density is treated as available. Ordinary SMC uses exact single-site Gibbs and conditional role updates, plus an independent-base MH global proposal per sweep. Final particles keep importance weights. No claim of exact finite-particle posterior or unbiased adaptive normalizer.",
+  "arms": [
+    "smc_gibbs1",
+    "smc_gibbs_cost",
+    "diffusion_only",
+    "diffusion_smc_fixed",
+    "diffusion_smc_ess"
+  ],
+  "ess": "Adaptive arm uses identical particles/stages/MH mutation, changes only beta increments. At each nonfinal stage, choose largest beta in[current,1] with incremental-weight ESS>=.8K by32bisection steps;stage8forces beta=1. All earlier stages resample so prior weights are uniform. H2(normalized weights)=logESS is a diagnostic/controller, not a new classification loss or guarantee of mode coverage. Report final ESS,forced final jumps,unique states,MH acceptance and branch usage.",
+  "cost": "Equal particle/stage budgets are not equal wall time. Before lock, profile same independent dev condition,select ordinary Gibbs sweep count1..16 whose median is nearest the fixed diffusion+SMC runtime. Keep both1sweep and this measured-cost control. Report cold factor extraction,proposal training/offline teacher preparation and inference separately;timing on shared RTX3090 is not isolated deployment latency. Inference scorer never enumerates states. Fixed-mode Factor BP and exact Grid6 remain strong references.",
+  "primary": "Matched48graphs,query predictive KL(exact frozen-Factor marginal||sampler marginal),averaged over all6settings and3fixed factor/denoiser seeds within each graph. Diffusion+fixed must beat diffusion-only AND cost-profiled ordinary SMC with upper95pairedCI<0. ESS arm must separately beat fixed to establish its increment. Classification gate separately requires matched accuracy advantage over cost-profiled SMC and the same old Factor BP;teacher-fit success cannot replace accuracy success. Also reevaluate unchanged public Mask/PCFI CE checkpoints,constant Factor BP,Grid6 exact/BP on the identical new bank. Do not claim new main method from approximate-inference KL alone.",
+  "statistics": "5000paired base-graph bootstrap,RNG18401000;fixed3trained seeds and fixed sampler RNG streams. No node pseudoreplication;pointwise unadjusted intervals. Report each seed,prior,context/source condition and OOD separately. No test-based changes to model,loss,particles,steps,beta threshold or primary.",
+  "checks": "Before lock:small-state target enumeration and context clamps;direct factor-product energy equivalence;analytic reverse probabilities sum1;MH detailed balance against full transition matrix on tiny binary/role model;class-global-flip and variable permutation equivariance;support and forbidden-role handling;finite gradients and actual parameter change;exact joint teacher draws never actual hidden labels. Lock sources/protocol/reference/checkpoints before final bank generation. Afterwards recompute saved metrics,source and checkpoint hashes,replay samplers,verify actual updates and immutable frozen Factor weights.",
+  "scope": "New learned inference operator around frozen FactorPFN,not a modification or reproduction of published GraphPFN/DPM-SNC/ReDiSC/RDSMC. Existing local factor representation limitations remain. Known small schema;no actual graph,unseen semantics,variable feature-law or scaling claim. Diffusion,SMC,MH and ESS adaptation are existing principles. Additional denoiser training is not free. Failure does not trigger rescue tuning."
+}

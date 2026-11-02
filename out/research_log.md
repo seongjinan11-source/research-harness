@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 35개 프로젝트 · 148개 기록 (실패·중단 44개, 보존 33개, 교훈 49개, 미실행 22개)
+총 36개 프로젝트 · 152개 기록 (실패·중단 46개, 보존 34개, 교훈 50개, 미실행 22개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -151,6 +151,49 @@ Exact-family accuracy74.348958%,no-feature70.312500%;same-query gain%p +4.036458
 J/V selected-mask equality73.44~87.50% across6cells;50%shared uniform component;independent4096draw audit on first16train graphs stored. All30 models share4012259 trainable parameters;ordinary192updates,random_cost384;actual6912updates.
 
 - 원문: [findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md](../findings/sources/decision-value-prior-2026-11-02/REPORT_KO.md); [findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md](../findings/sources/decision-value-prior-2026-11-02/METHOD_KO.md); [findings/sources/decision-value-prior-2026-11-02/protocol.json](../findings/sources/decision-value-prior-2026-11-02/protocol.json); [findings/sources/decision-value-prior-2026-11-02/results/statistics.json](../findings/sources/decision-value-prior-2026-11-02/results/statistics.json); [findings/sources/decision-value-prior-2026-11-02/results/audit.json](../findings/sources/decision-value-prior-2026-11-02/results/audit.json); [findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json](../findings/sources/decision-value-prior-2026-11-02/results/bank_audit.json); [findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json](../findings/sources/decision-value-prior-2026-11-02/runtime/scope_errata.json)
+
+## Conditional diffusion and ESS-controlled SMC in frozen FactorPFN
+
+실험 조건: Known binary12node/2feature typed SBM;3frozen CEFactors;3new8476parameter denoisers/3072updates;96newgraphs/576disjointepisodes;primary48matchedgraphs;50/75%missing,not99.5%.
+
+### DFI-F01 [실패·중단] 작은 conditional diffusion proposal과 동일 potential의 MH/SMC 보정이 비슷한 추론 비용의 classical SMC보다 정확한 query inference를 제공한다.
+
+factor_bp:accuracy71.403770%/FactorKL0.085031/Grid6KL0.091114; factor_exact:accuracy71.644896%/FactorKL0.000000/Grid6KL0.011446; smc_gibbs1:accuracy69.765487%/FactorKL0.008698/Grid6KL0.020647; smc_gibbs_cost:accuracy68.853340%/FactorKL0.007171/Grid6KL0.017499; diffusion_only:accuracy65.673225%/FactorKL0.047351/Grid6KL0.060687; diffusion_smc_fixed:accuracy65.151014%/FactorKL0.079318/Grid6KL0.090732; diffusion_smc_ess:accuracy64.952601%/FactorKL0.071562/Grid6KL0.085439;fixed-costSMC accuracy%p-3.702326[95CI-6.346588,-1.234258],FactorKL+0.072148[+0.060790,+0.084608].Inferencesuccess=False,classificationsuccess=False.
+
+- 판정: 현재 learned proposal+correction을 메인 방법으로 확대하지 않는다. 비용 대조 SMC보다 accuracy와 target-fit이 악화했고,더 저렴한1sweep SMC도 평균적으로 좋았다.
+- 원인·병목 [원인 미상]: Exact frozen-model KL·accuracy 사전 gate를 통과하지 못했다. Small-state kernel validation은 통과했지만 finite-particle/short-schedule/denoiser fit/mixing/representation의 고유 원인은 분리하지 않았다.
+- 닫은 범위: 기존 binary12node+2column Gaussian-factor family,frozen CEFactor3개,512task×64exactjoint draws,odd/even GNNwidth24/1024updates,64particles/8stages,reset-diffusion reverse proposal+MH와고정temperature의 구현 및 자동 확대.
+- 닫지 않은 것: Diffusion 전체,DPM-SNC/ReDiSC/RDSMC 원본 방법,다른 proposal/학습량,실제 graph/unseen schema,RNP objective,새 feature-law의 실패로 세지 않는다. 기존 Factor의 positive results는 보존한다.
+- 재검토 조건: 같은 잠재 state와 local factor에서 proposal이 어느 예측적으로 중요한 joint mode를 누락하는지 독립 증거를 제시하고,classical Gibbs/blocked sampler와 비용을 맞춰 이를 해결하는 연산이 있을 때.
+- 기준선: Ordinary1sweep/개발 latency로 정한2sweep Gibbs-SMC;original Factor BP,constant BP,exact learned-Factor,Grid6exact/BP;동일새 bank의 frozen Mask/PCFI;teacher/training/inference 비용.
+- 최소 재검증: 이번 final bank를 튜닝하지 않는다. 새 독립 graph/명시된 구조 family에서 finite sampler exact-target error와accuracy·NLL/Brier·role coverage·비용을 사전 분리하고 fullsupport/양방향proposal/MH 검사를 유지한다.
+- 원문: [findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md](../findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md); [findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md](../findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md); [findings/sources/diffusion-factor-2026-11-02/protocol.json](../findings/sources/diffusion-factor-2026-11-02/protocol.json); [findings/sources/diffusion-factor-2026-11-02/results/statistics.json](../findings/sources/diffusion-factor-2026-11-02/results/statistics.json); [findings/sources/diffusion-factor-2026-11-02/results/audit.json](../findings/sources/diffusion-factor-2026-11-02/results/audit.json); [findings/sources/diffusion-factor-2026-11-02/results/benchmark.json](../findings/sources/diffusion-factor-2026-11-02/results/benchmark.json); [findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json](../findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json)
+
+### DFI-F02 [실패·중단] Rényi-2/ESS 기반 adaptive likelihood tempering이 같은 learned diffusion+SMC fixed schedule보다 예측 품질을 개선한다.
+
+Fixed FactorKL0.079318,ESS0.071562;difference-0.007756[95CI-0.019864,+0.006172].Accuracy65.151014%→64.952601%.ESSgate=False.
+
+- 판정: 현재.8K threshold/8stage budget의ESS controller 증분은 미입증이며 추가 tuning하지 않는다.
+- 원인·병목 [원인 미상]: KL 증분 CI가0을 포함하고accuracy도 개선되지 않았다. Weight entropy/step schedule만으로 latent coverage와 predictive fit을 보장할 수 없으며 고유 원인은 미분리다.
+- 닫은 범위: 같은64particles/8stages/학습된reverse kernel을 유지하고32-step bisection으로incremental ESS≥.8K의β를 택한뒤 마지막stageβ=1을 강제하는 controller.
+- 닫지 않은 것: Rényi Neural Processes의 variational objective는 실행하지 않았다. 모든 Rényi divergence/entropy 활용,다른SMC bridge/step budget·posterior inference를 기각하지 않는다.
+- 재검토 조건: Weight entropy와 label-predictive joint mode error의 관계를 분리하고,같은 particle/latency budget에서 ESS 외의 필요한 정보를 이용하는 제어 연산이 생길 때.
+- 기준선: 동일proposal/potential의fixed schedule,ordinary Gibbs-SMC,exact frozen-model reference와accuracy를유지한다. Adaptive extra overhead를 포함한다.
+- 최소 재검증: 새graph에서fixed-ESS controller 차이를posterior fit/분류/시간으로나누어검증한다. 최종ESS상승을성공으로대체하거나RNP논문방법을실행했다고부르지않는다.
+- 원문: [findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md](../findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md); [findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md](../findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md); [findings/sources/diffusion-factor-2026-11-02/protocol.json](../findings/sources/diffusion-factor-2026-11-02/protocol.json); [findings/sources/diffusion-factor-2026-11-02/results/statistics.json](../findings/sources/diffusion-factor-2026-11-02/results/statistics.json); [findings/sources/diffusion-factor-2026-11-02/results/audit.json](../findings/sources/diffusion-factor-2026-11-02/results/audit.json); [findings/sources/diffusion-factor-2026-11-02/results/benchmark.json](../findings/sources/diffusion-factor-2026-11-02/results/benchmark.json); [findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json](../findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json)
+
+### DFI-P01 [보존] Frozen learned Factor의local potential을 정확히 합산하면 model-based Grid6 예측에 가까워진다. 분류 accuracy headroom은 별도로 작게 관측됐다.
+
+FactorBP Grid6KL0.091114→exactFactor0.011446;accuracy71.403770%→71.644896%;delta%p+0.241127[95CI-0.847388,+1.320030].Same frozen8099parameters,65536-state offline enumeration.
+
+- 확대 금지: 새 학습이나 diffusion의성과가아니다. 정확한conditional-model inference이지 참SBM posterior복원은아니며,accuracy 동등성/비열등성·일반적인headroom부재·largegraph효율성을 증명하지 않는다. Constant-exact와 비교하지 않았으므로학습potential의독립적인일반우위로확대하지 않는다.
+- 원문: [findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md](../findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md); [findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md](../findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md); [findings/sources/diffusion-factor-2026-11-02/protocol.json](../findings/sources/diffusion-factor-2026-11-02/protocol.json); [findings/sources/diffusion-factor-2026-11-02/results/statistics.json](../findings/sources/diffusion-factor-2026-11-02/results/statistics.json); [findings/sources/diffusion-factor-2026-11-02/results/audit.json](../findings/sources/diffusion-factor-2026-11-02/results/audit.json); [findings/sources/diffusion-factor-2026-11-02/results/benchmark.json](../findings/sources/diffusion-factor-2026-11-02/results/benchmark.json); [findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json](../findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json)
+
+### DFI-L01 [교훈] 높은final ESS·MH acceptance·고유state 수가 정확한joint posterior나높은classification을보장하지않는다. 추론primary와분류gate를분리해야한다.
+
+전체576episodes에서corrected diffusion의평균finalESS 약60.6~60.9/64,acceptance 약.62~.65였지만ordinarySMC보다targetKL과accuracy가나빴다. Pure diffusion은uniformweights라ESS64가정의상나온다.Production8640samplerreplays최대오차0,독립4spin/4096particleauditmaxnodeerror<.01.
+
+- 원문: [findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md](../findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md); [findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md](../findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md); [findings/sources/diffusion-factor-2026-11-02/protocol.json](../findings/sources/diffusion-factor-2026-11-02/protocol.json); [findings/sources/diffusion-factor-2026-11-02/results/statistics.json](../findings/sources/diffusion-factor-2026-11-02/results/statistics.json); [findings/sources/diffusion-factor-2026-11-02/results/audit.json](../findings/sources/diffusion-factor-2026-11-02/results/audit.json); [findings/sources/diffusion-factor-2026-11-02/results/benchmark.json](../findings/sources/diffusion-factor-2026-11-02/results/benchmark.json); [findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json](../findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json)
 
 ## 직접 주변화하는 graph-conditioned tree circuit
 

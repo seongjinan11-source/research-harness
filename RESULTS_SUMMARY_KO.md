@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은35개 프로젝트 묶음의148항목이다. 실패·중단44개, 보존33개, 교훈49개, 미실행22개이며 **148번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은36개 프로젝트 묶음의152항목이다. 실패·중단46개, 보존34개, 교훈50개, 미실행22개이며 **152번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,21 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## Diffusion proposal와 Rényi-2/ESS 실제 비교
+
+기존 Factor3개를 고정하고 conditional denoiser3개를 새로 학습했다(3,072updates). 새96graph/576disjointepisodes,primary matched48graph의6settings와3fixedseed 평균이다.12node·2feature·50/75%missing의 fixed family이며 공개 GraphPFN 본체의 diffusion 개조가 아니다.
+
+| 방법 | Accuracy % | Exact-Factor KL | Grid6 KL |
+|---|---:|---:|---:|
+| factor_bp | 71.4038 | 0.085031 | 0.091114 |
+| factor_exact | 71.6449 | 0.000000 | 0.011446 |
+| smc_gibbs_cost | 68.8533 | 0.007171 | 0.017499 |
+| diffusion_only | 65.6732 | 0.047351 | 0.060687 |
+| diffusion_smc_fixed | 65.1510 | 0.079318 | 0.090732 |
+| diffusion_smc_ess | 64.9526 | 0.071562 | 0.085439 |
+
+Diffusion+fixed−비용 대조 SMC accuracy -3.7023 [95% CI -6.3466,-1.2343]%p다. 추론·분류·ESS 증분 gate 모두 실패하여 현재 구현은 확대하지 않는다. 같은 frozen Factor를 정확히 합산하면 Grid6 KL은 크게 낮아지지만 accuracy 증가 +0.2411%p의 CI는0을 포함한다. RNP 학습 목적·DPM-SNC/ReDiSC/RDSMC 원본은 재현하지 않았으므로 해당 방법의 실패로 세지 않는다. [전체 보고서](findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md),[계산 정의](findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md),[구조화 기록](findings/diffusion-factor.yaml).
 
 ## J / V 관측 prior 실제 학습 결과
 

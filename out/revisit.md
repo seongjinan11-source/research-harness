@@ -82,6 +82,40 @@
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 
+## DFI-F01 — 작은 conditional diffusion proposal과 동일 potential의 MH/SMC 보정이 비슷한 추론 비용의 classical SMC보다 정확한 query inference를 제공한다.
+
+- 판정: 현재 learned proposal+correction을 메인 방법으로 확대하지 않는다. 비용 대조 SMC보다 accuracy와 target-fit이 악화했고,더 저렴한1sweep SMC도 평균적으로 좋았다.
+- 원인·병목 [원인 미상]: Exact frozen-model KL·accuracy 사전 gate를 통과하지 못했다. Small-state kernel validation은 통과했지만 finite-particle/short-schedule/denoiser fit/mixing/representation의 고유 원인은 분리하지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 같은 잠재 state와 local factor에서 proposal이 어느 예측적으로 중요한 joint mode를 누락하는지 독립 증거를 제시하고,classical Gibbs/blocked sampler와 비용을 맞춰 이를 해결하는 연산이 있을 때.
+- 먼저 이겨야 할 기준선: Ordinary1sweep/개발 latency로 정한2sweep Gibbs-SMC;original Factor BP,constant BP,exact learned-Factor,Grid6exact/BP;동일새 bank의 frozen Mask/PCFI;teacher/training/inference 비용.
+- 최소 재검증: 이번 final bank를 튜닝하지 않는다. 새 독립 graph/명시된 구조 family에서 finite sampler exact-target error와accuracy·NLL/Brier·role coverage·비용을 사전 분리하고 fullsupport/양방향proposal/MH 검사를 유지한다.
+- 닫지 않은 것: Diffusion 전체,DPM-SNC/ReDiSC/RDSMC 원본 방법,다른 proposal/학습량,실제 graph/unseen schema,RNP objective,새 feature-law의 실패로 세지 않는다. 기존 Factor의 positive results는 보존한다.
+- 원문: [findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md](../findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md); [findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md](../findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md); [findings/sources/diffusion-factor-2026-11-02/protocol.json](../findings/sources/diffusion-factor-2026-11-02/protocol.json); [findings/sources/diffusion-factor-2026-11-02/results/statistics.json](../findings/sources/diffusion-factor-2026-11-02/results/statistics.json); [findings/sources/diffusion-factor-2026-11-02/results/audit.json](../findings/sources/diffusion-factor-2026-11-02/results/audit.json); [findings/sources/diffusion-factor-2026-11-02/results/benchmark.json](../findings/sources/diffusion-factor-2026-11-02/results/benchmark.json); [findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json](../findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json)
+
+- [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: Inducing variables로 근사 추론하고 별도 early-stopping validation을 요구하지 않는다.
+- [LoGIC](https://arxiv.org/abs/2609.05955): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: Backbone을 재학습하지 않는 추론 시점 인터페이스라서, pure-tabular backbone(G2T featurization + TabPFNv2·LimiX)과 adapter backbone(GraphPFN)에 같은 방식으로 붙는다. 정식화 자체가 full-context tabular 추론, per-query retrieval, full-graph 추론을 특수한 경우로 포함하므로 기존 protocol과의 관계도 분명하다.
+- [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=adaptation, model-based-baseline; keywords=-
+  - 기록된 강점: 소수 라벨에서 evidence 기반 선택을 cross-validation과 비교한다.
+
+## DFI-F02 — Rényi-2/ESS 기반 adaptive likelihood tempering이 같은 learned diffusion+SMC fixed schedule보다 예측 품질을 개선한다.
+
+- 판정: 현재.8K threshold/8stage budget의ESS controller 증분은 미입증이며 추가 tuning하지 않는다.
+- 원인·병목 [원인 미상]: KL 증분 CI가0을 포함하고accuracy도 개선되지 않았다. Weight entropy/step schedule만으로 latent coverage와 predictive fit을 보장할 수 없으며 고유 원인은 미분리다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: Weight entropy와 label-predictive joint mode error의 관계를 분리하고,같은 particle/latency budget에서 ESS 외의 필요한 정보를 이용하는 제어 연산이 생길 때.
+- 먼저 이겨야 할 기준선: 동일proposal/potential의fixed schedule,ordinary Gibbs-SMC,exact frozen-model reference와accuracy를유지한다. Adaptive extra overhead를 포함한다.
+- 최소 재검증: 새graph에서fixed-ESS controller 차이를posterior fit/분류/시간으로나누어검증한다. 최종ESS상승을성공으로대체하거나RNP논문방법을실행했다고부르지않는다.
+- 닫지 않은 것: Rényi Neural Processes의 variational objective는 실행하지 않았다. 모든 Rényi divergence/entropy 활용,다른SMC bridge/step budget·posterior inference를 기각하지 않는다.
+- 원문: [findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md](../findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md); [findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md](../findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md); [findings/sources/diffusion-factor-2026-11-02/protocol.json](../findings/sources/diffusion-factor-2026-11-02/protocol.json); [findings/sources/diffusion-factor-2026-11-02/results/statistics.json](../findings/sources/diffusion-factor-2026-11-02/results/statistics.json); [findings/sources/diffusion-factor-2026-11-02/results/audit.json](../findings/sources/diffusion-factor-2026-11-02/results/audit.json); [findings/sources/diffusion-factor-2026-11-02/results/benchmark.json](../findings/sources/diffusion-factor-2026-11-02/results/benchmark.json); [findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json](../findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json)
+
+- [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: Inducing variables로 근사 추론하고 별도 early-stopping validation을 요구하지 않는다.
+- [LoGIC](https://arxiv.org/abs/2609.05955): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: Backbone을 재학습하지 않는 추론 시점 인터페이스라서, pure-tabular backbone(G2T featurization + TabPFNv2·LimiX)과 adapter backbone(GraphPFN)에 같은 방식으로 붙는다. 정식화 자체가 full-context tabular 추론, per-query retrieval, full-graph 추론을 특수한 경우로 포함하므로 기존 protocol과의 관계도 분명하다.
+
 ## DMARG-F01 — 현재 conditional tree circuit이 알려진 family의 강한 classical inference와 경쟁하는 메인 메소드다.
 
 - 판정: Neural-baseline gate는 성공했지만 classical 품질·비용 gate는 실패. 현재 구성의 메인 메소드 확대는 보류.
