@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-02. 최근 업데이트: 참 법칙 없는 적응 전달까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-02. 최근 업데이트: SSGP/GGP 문헌과 Gaussian 비교까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -16,14 +16,20 @@
 
 이 파일만 읽어도 핵심 판단은 가능하다. 세부 확인은 다음 순서가 좋다.
 
-1. [최신 적응 전달 비교](findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md)와 [부호 전달 진단](findings/sources/sign-transport-2026-11-02/REPORT_KO.md)과 [내부 고정 PCFI 재검증](findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md)을 먼저 확인하고, [직전 실제 PCFI 내부화 보고서](findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md)와 [계산 정의](findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md). 실제100-step PCFI를 넣은 네 모델을 학습했으며 이전 generic MLP refiner와 별개다.
+1. [최신 GP 문헌·결과 검토](findings/sources/gaussian-probit-review-2026-11-02/REVIEW_KO.md)와 [적응 전달 비교](findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md)와 [부호 전달 진단](findings/sources/sign-transport-2026-11-02/REPORT_KO.md)과 [내부 고정 PCFI 재검증](findings/sources/internal-pcfi-confirmation-2026-11-02/REPORT_KO.md)을 먼저 확인하고, [직전 실제 PCFI 내부화 보고서](findings/sources/internal-pcfi-2026-11-02/REPORT_KO.md)와 [계산 정의](findings/sources/internal-pcfi-2026-11-02/METHOD_KO.md). 실제100-step PCFI를 넣은 네 모델을 학습했으며 이전 generic MLP refiner와 별개다.
 2. [Grid6 teacher 판정](findings/sources/grid6-teacher-2026-11-02/REVIEW_KO.md), [전체 보고서](findings/sources/grid6-teacher-2026-11-02/REPORT_KO.md), [학습 수식](findings/sources/grid6-teacher-2026-11-02/METHOD.md); 직전 [disjoint-factor 보고서](findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)와 [모델 수식](findings/sources/disjoint-factor-2026-11-02/METHOD.md)
 2. [직전 circuit 보고서](findings/sources/direct-marginal-2026-11-02/REPORT_KO.md), [feature-memory 보고서](findings/sources/feature-memory-2026-11-02/REPORT_KO.md)
 3. [누적 실패·보존·미실행 기록](out/research_log.md): 필요한 갈래만 검색한다.
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 33편, 연구 기록 142항목, 아이디어 8개가 있다. 34개 프로젝트 묶음이며 실패·중단42, 보존31, 교훈47, 미실행22항목이다. 142번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v9는 참 법칙 없는 적응 전달과 직접 통계 추론까지 포함한다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 35편, 연구 기록 144항목, 아이디어 8개가 있다. 34개 프로젝트 묶음이며 실패·중단42, 보존32, 교훈48, 미실행22항목이다. 144번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v10은 SSGP/GGP 문헌과 Gaussian 추가 비교까지 포함한다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+
+## Gaussian/probit의 비교 범위와 선행연구 기록
+
+SSGP(IJCAI2007)와 GGP(NeurIPS2018)의 원문·인용·가정·강점·출처별 한계를 추가했다. 현재 Gaussian/probit는 두 논문의 재현이 아니며, 논문 코드로 실행한 대조는 아직 없다. [SSGP](papers/SSGP.yaml), [GGP](papers/GGP.yaml), [문헌과 결과 대조 보고서](findings/sources/gaussian-probit-review-2026-11-02/REVIEW_KO.md).
+
+기존 primary의 보조 paired 비교에서 직접 Gaussian/probit56.154827%는 비특권적 대조11개보다 accuracy·NLL·Brier가 좋았다. PCFI 대비accuracy +4.589585 [95% CI +2.569802, +6.587119]%p,적응 LP 대비 +3.107972 [95% CI +0.741358, +5.489381]%p다. CI는 개별95%이며 multiplicity 미보정이다. 모든 세부 조건·privileged reference·다른 family와의 승리로 넓히지 않는다. 현재 구현은 강한 고정 통계 기준선/추론 자산으로 보존하며 메인 메소드 확정은 보류한다. 기존 frozen 입력 선택기 No-Go와 직접 추론의 긍정 결과를 구분한다. 새학습0.
 
 ## 참 법칙 없는 적응 전달과 직접 통계 추론
 
@@ -284,5 +290,7 @@ Physical feature 제거는 CE와 distilled Factor 둘 다 성능을 낮췄으므
 추가로 label/feature heterophily를 분리한 sign-transport frozen 진단을 했어. Primary known-law signed−PCFI는 +5.836358 [95% CI +2.291311, +9.440175]%p였어. 같은 PCFI→PFN checkpoint에서 부호 법칙을 반영한 복원의 예측적 가치는 확인했다. 그러나 강한 직접 예측·graph-only 대조를 모두 넘는 기준은 통과하지 못해, 새 학습 모델이 필요하다는 근거로 확대하지 않는다. 참 feature-law g를 안 reference라서 새로운 학습/novelty의 성과로 부르지 말아줘.
 
 추가로 참 부호 법칙을 주지 않고 Gaussian/probit evidence로 두 PCFI 입력 후보를 가중 평균했어. Context 적응−50:50는 +0.201218 [95% CI -0.127618, +0.537932]%p로 primary를 통과하지 못했어. 같은 정보를 직접 처리한 고정 Gaussian/probit는56.154827%였고 feature-removal 대비 +2.466964 [95% CI +0.884420, +4.166715]%p였어. 새 학습은0이야. 이미 구현한 통계 추론 기능과 학습의 독립적인 필요성을 구분해 줘.
+
+SSGP/GGP도 원문 기준으로 정리했어. 현재 Gaussian/probit가 기존 primary 평균의 비특권적 대조11개를 개별95CI 기준으로 이겼지만 모든 세부조건을 이긴 것은 아니야. SSGP/GGP 자체의 재현은 아직 하지 않았고, 같은 prior로 새학습한 PFN과도 비교하지 않았어. 기존 graph-GP 원리와 우리 연산의 추가 가치를 구분해 줘.
 
 ```

@@ -1,0 +1,47 @@
+id: SSGP
+title: "Semi-supervised Gaussian Process Classifiers"
+authors: "Vikas Sindhwani, Wei Chu, S. Sathiya Keerthi"
+venue: "IJCAI 2007"
+year: 2007
+links:
+  paper: https://www.ijcai.org/Proceedings/07/Papers/171.pdf
+  author_copy: https://vikas.sindhwani.org/ssgp.pdf
+citation:
+  type: inproceedings
+  title: "Semi-supervised Gaussian Process Classifiers"
+  authors: ["Vikas Sindhwani", "Wei Chu", "S. Sathiya Keerthi"]
+  year: 2007
+  booktitle: "IJCAI-07"
+  pages: "1059--1064"
+  url: https://www.ijcai.org/Proceedings/07/Papers/171.pdf
+  verified_from:
+    - https://www.ijcai.org/Proceedings/07/Papers/171.pdf
+    - https://www.ijcai.org/Proceedings/07/Papers/486.pdf
+areas: [ml-foundations]
+problem: "라벨이 적을 때 unlabeled geometry를 이용해 확률적 분류와 모델 선택을 수행한다."
+core_idea: "Graph regularizer로 covariance를 수정하고 probit likelihood를 결합한다. EP로 posterior와 evidence를 근사하여 모델을 선택한다."
+key_assumptions:
+  - "입력 좌표의 kernel과 graph geometry가 유효하며 label conditional이 그 geometry에서 smooth하다고 가정한다."
+strengths:
+  - text: "Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다."
+    tags: [graph-structure-use, uncertainty]
+  - text: "소수 라벨에서 evidence 기반 선택을 cross-validation과 비교한다."
+    tags: [adaptation, model-based-baseline]
+limitations:
+  - text: "§2의 label posterior와 §3.2의 geometry conditioning에 Gaussian 근사를 사용한다."
+    tags: [uncertainty, amortized-inference]
+    source: self
+  - text: "§3.3의 실험은 geometry의 전체 evidence 대신 conditional evidence를 사용한다."
+    tags: [uncertainty, eval-protocol]
+    source: self
+  - text: "[analyst] 관측 feature가 사라진 노드와 context의 분리, 가변 graph 간 PFN 전이는 검증하지 않는다."
+    tags: [observation-mask, zero-shot-gap]
+    source: analyst
+builds_on: [GaussianProcesses, ManifoldRegularization]
+compared_against: [GP, LapSVM, LapRLS, NCNM, IVM, SVM, TSVM]
+open_questions:
+  - "입력 kernel 자체가 불완전한 관측으로 주어질 때도 추론을 유지할 수 있는가?"
+hooks:
+  - "ADTR-P01/P02의 Gaussian/probit 분류를 novelty로 주장하기 전에 비교할 선행 원리다."
+notes: "공식 PDF의 저자 순서·페이지·IJCAI-07 표기를 확인했다. 공식 전용 코드 링크는 확인하지 못했다. PFN이 아니며 이번 구현의 재현 대상으로 실행하지 않았다."
+added: 2026-11-02

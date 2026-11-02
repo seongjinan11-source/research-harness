@@ -45,8 +45,12 @@
 
 - [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
+- [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: 그래프와 feature를 covariance에서 결합하며 empirical kernel mean embedding으로 해석한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=amortized-inference, uncertainty; keywords=-
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
@@ -93,10 +97,14 @@
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
+- [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: 그래프와 feature를 covariance에서 결합하며 empirical kernel mean embedding으로 해석한다.
 - [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
+- [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
@@ -155,10 +163,14 @@
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
+- [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: 그래프와 feature를 covariance에서 결합하며 empirical kernel mean embedding으로 해석한다.
 - [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
+- [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
@@ -611,8 +623,12 @@
 
 - [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
+- [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: 그래프와 feature를 covariance에서 결합하며 empirical kernel mean embedding으로 해석한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 
 ## XFER-F02 — LP와 PFN 확률의 고정 혼합이 각자의 강점을 보존한다.
 
@@ -627,8 +643,12 @@
 
 - [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
+- [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: 그래프와 feature를 covariance에서 결합하며 empirical kernel mean embedding으로 해석한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=ensemble
   - 기록된 강점: Hand-crafted graph feature(Laplacian PE, PageRank, 이웃 평균 등)에 기대지 않고, 모델 안에서 adjacency-masked attention으로 message passing을 직접 학습한다. 그 결과 ICL만으로도 G2T-FM·TAG와 튜닝된 GNN보다 평균 rank가 높고, 무거운 전처리도 필요 없다.
 
@@ -647,10 +667,14 @@
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
+- [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: 그래프와 feature를 covariance에서 결합하며 empirical kernel mean embedding으로 해석한다.
 - [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
 - [MCSSL](https://arxiv.org/abs/2605.11846): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: 정보 증가에 따른 예측 갱신을 허용하면서 평균의 일관성을 제약한다.
+- [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=observation-mask, uncertainty; keywords=-
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
@@ -691,8 +715,12 @@
 
 - [CSBMInference](https://arxiv.org/abs/2306.07948): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
+- [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: 그래프와 feature를 covariance에서 결합하며 empirical kernel mean embedding으로 해석한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
+  - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 
 ## PROG-F01 — 고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.
 
@@ -755,3 +783,7 @@
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [TabImpute](https://arxiv.org/abs/2510.02625v6): 복수 태그 일치 (약한 단서); tags=amortized-inference, observation-mask; keywords=-
   - 기록된 강점: 새 table에서 fitting 없이 대치하며 row-column 정보를 cell 단위로 공유한다.
+- [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=covariance
+  - 기록된 강점: 그래프와 feature를 covariance에서 결합하며 empirical kernel mean embedding으로 해석한다.
+- [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=covariance
+  - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.

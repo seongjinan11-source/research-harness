@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은34개 프로젝트 묶음의142항목이다. 실패·중단42개, 보존31개, 교훈47개, 미실행22개이며 **142번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은34개 프로젝트 묶음의144항목이다. 실패·중단42개, 보존32개, 교훈48개, 미실행22개이며 **144번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,12 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## Gaussian/probit의 비교 범위와 선행연구 기록
+
+SSGP(IJCAI2007)와 GGP(NeurIPS2018)의 원문·인용·가정·강점·출처별 한계를 추가했다. 현재 Gaussian/probit는 두 논문의 재현이 아니며, 논문 코드로 실행한 대조는 아직 없다. [SSGP](papers/SSGP.yaml), [GGP](papers/GGP.yaml), [문헌과 결과 대조 보고서](findings/sources/gaussian-probit-review-2026-11-02/REVIEW_KO.md).
+
+기존 primary의 보조 paired 비교에서 직접 Gaussian/probit56.154827%는 비특권적 대조11개보다 accuracy·NLL·Brier가 좋았다. PCFI 대비accuracy +4.589585 [95% CI +2.569802, +6.587119]%p,적응 LP 대비 +3.107972 [95% CI +0.741358, +5.489381]%p다. CI는 개별95%이며 multiplicity 미보정이다. 모든 세부 조건·privileged reference·다른 family와의 승리로 넓히지 않는다. 현재 구현은 강한 고정 통계 기준선/추론 자산으로 보존하며 메인 메소드 확정은 보류한다. 기존 frozen 입력 선택기 No-Go와 직접 추론의 긍정 결과를 구분한다. 새학습0.
 
 ## 참 법칙 없는 적응 전달과 직접 통계 추론
 
@@ -256,7 +262,7 @@ CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teach
 
 1. 이 요약으로 전체 결과와 범위를 확인한다.
 2. [연구 인계서](RESEARCH_HANDOFF_KO.md)의 요청문으로 독립 검토를 요청한다.
-3. 필요한 수치는 연결된 보고서와 [142개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
+3. 필요한 수치는 연결된 보고서와 [144개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-02_v9.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-02_v10.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.

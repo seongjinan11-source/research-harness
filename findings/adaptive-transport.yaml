@@ -4,6 +4,8 @@ source: findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md
 setting: Known bipartite Gaussian-signal family;64 new graphs/2048episodes;all4 label-feature-law cells;sources0/1/8/full;k1/4 per class;6 frozen checkpoints;0 new models/updates.
 related:
 - GraphPFN
+- SSGP
+- GGP
 entries:
 - id: ADTR-F01
   kind: failure
@@ -104,3 +106,58 @@ entries:
   source_refs: *id001
   evidence: Fresh64 base graphs,32conditions each,3 fixed historical training seeds;5000 graph-paired bootstrap. Six frozen public GraphPFN-based checkpoints reused;0 new models/updates.
     Known bipartite sign-gauged Gaussian-signal family, primary8sources/k4 per class/all4 label-feature-law cells.
+- id: ADTR-P02
+  kind: preserved
+  claim: 기존 primary 조건의 평균에서 직접 Gaussian/probit가 비특권적 대조11개보다 accuracy·NLL·Brier에서 우세했다.
+  observation: Gaussian accuracy56.154827%,NLL0.672120,Brier0.479871. Mask PFN:accuracy%p +3.797403 [95% CI +1.555741, +6.019568]; 일반 PCFI→PFN:accuracy%p +4.589585 [95% CI
+    +2.569802, +6.587119]; 고정 parity PCFI→PFN:accuracy%p +3.949441 [95% CI +1.813129, +6.118670]; 50:50 두 복원 평균:accuracy%p +3.800061 [95% CI +1.681170, +5.912160]; Feature-only
+    적응 PCFI→PFN:accuracy%p +3.692866 [95% CI +1.652477, +5.729643]; Context 적응 PCFI→PFN:accuracy%p +3.598842 [95% CI +1.536745, +5.635105]; 양의 LP:accuracy%p +3.358392 [95%
+    CI +1.028041, +5.675842]; Signed LP:accuracy%p +3.041067 [95% CI +0.602935, +5.374370]; Context 적응 LP:accuracy%p +3.107972 [95% CI +0.741358, +5.489381]; 같은 Gaussian/probit·피처
+    제거:accuracy%p +2.466964 [95% CI +0.884420, +4.166715]; Uniform:accuracy%p +6.852143 [95% CI +4.297486, +9.340412]. 11개 개별95CI에서 accuracy하한>0,NLL/Brier상한<0.
+  do_not_claim: 기존 bank를 본 뒤 계산한 보조 비교이며 multiplicity 미보정 pointwise CI다. 새 독립 검증·사전 Gaussian primary 통과·모든 세부 cell·Grid6·SSGP/GGP 재현 대비 승리·같은 prior matched PFN 우위·메소드 novelty가
+    아니다. 32개 cell 중22개에서 비특권적 대조의 점추정이 더 높았다.
+  tags:
+  - model-based-baseline
+  - graph-structure-use
+  - observation-mask
+  - eval-protocol
+  keywords:
+  - Gaussian probit primary comparisons
+  - graph Gaussian process
+  - SSGP
+  - GGP
+  - pointwise confidence interval
+  - known family baseline
+  source_refs: &id002
+  - findings/sources/gaussian-probit-review-2026-11-02/REVIEW_KO.md
+  - findings/sources/gaussian-probit-review-2026-11-02/PRIMARY_COMPARISONS.json
+  - findings/sources/gaussian-probit-review-2026-11-02/SOURCE_VERIFICATION.json
+  - findings/sources/gaussian-probit-review-2026-11-02/papers/SSGP.yaml
+  - findings/sources/gaussian-probit-review-2026-11-02/papers/GGP.yaml
+  - findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md
+  - findings/sources/adaptive-transport-2026-11-02/protocol.json
+  - findings/sources/adaptive-transport-2026-11-02/results/statistics.json
+  - findings/sources/adaptive-transport-2026-11-02/results/cost.json
+  evidence: 기존64 base graphs/2048episodes,8sources/k4 per class/all4 laws,3 fixed historical training seeds. Graph-paired bootstrap5000. 저장 metric과 기존 primary 평균을1e-12 오차 이내로
+    재확인. 새graph/model/update0.
+- id: ADTR-L02
+  kind: lesson
+  claim: Gaussian 대조의 관측된 승리와 graph-GP 선행 원리·PFN 메소드의 기여를 구분한다.
+  observation: SSGP는 graph regularizer/probit/EP/evidence 선택, GGP는 P K(X,X) P^T/robust-max/variational ELBO를 사용한다. 현재 구현은 관측행 singular score와24 sign/amplitude 가설의 고정 Gaussian/probit
+    추론이며 두 논문의 재현이 아니다. 참 label-law LP57.135862%와 Gaussian56.154827%의 accuracy차이는 -0.981035 [95% CI -3.304919, +1.346377]%p였다.
+  interpretation: 현재 family의 성능을 보존하되, Gaussian 조건화나 graph covariance 자체를 새 기여로 주장하지 않는다. Target fitting을 수행하는 선행 GP와0-update frozen 비교의 차이를 남긴다. 현재 모델이 신경망이 아니라는 이유로 배제하지
+    않으며, 메인 메소드 확정은 아직 보류다. 임의 missing/다중class/미지schema 일반화와 SSGP/GGP 직접 재현은 미실행이다. 자동 revisit는 해결·학습 재개를 뜻하지 않는다.
+  tags:
+  - model-based-baseline
+  - zero-shot-gap
+  - eval-protocol
+  - uncertainty
+  keywords:
+  - Gaussian process novelty boundary
+  - SSGP GGP prior art
+  - main method pending
+  - not a PFN
+  - unrun reproduction
+  - no new training
+  source_refs: *id002
+  evidence: 공식 IJCAI PDF/목차,NeurIPS 원문/metadata,저자 code README와 현재 implementation을 대조했다. 선행연구와의 차별점 평가는 analyst 해석이며 미실행을 실패로 세지 않는다.
