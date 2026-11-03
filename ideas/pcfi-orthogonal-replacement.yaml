@@ -1,0 +1,32 @@
+id: pcfi-orthogonal-replacement
+date: '2026-11-03'
+status: completed-bounded-pilot-no-go
+text: PCFI의 confidence·경계값·100회·채널 보정을 유지하고 수치 공간 전파만 직교 Sheaf로 교체하면 고정 PFN에서 강한 대조보다
+  missing 분류가 좋아진다.
+tags:
+- graph-geometry
+- graph-structure-use
+- observation-mask
+- zero-shot-gap
+- eval-protocol
+keywords:
+- PCFI spatial operator replacement
+- confidence weighted graph sheaf diffusion
+- numeric feature imputation
+- fixed downstream GraphPFN
+- orthogonal edge transport
+- orthogonal node frame
+- first-coordinate readout
+note: findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md
+followup: findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md
+pilot_gates:
+  edge:
+    synthetic: false
+    real_input: false
+    negative_lp_floor: false
+    expand: false
+  node:
+    synthetic: false
+    real_input: false
+    negative_lp_floor: false
+    expand: false

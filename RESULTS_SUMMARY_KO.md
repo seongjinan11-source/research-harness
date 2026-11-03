@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은40개 프로젝트 묶음의168항목이다. 실패·중단50개, 보존38개, 교훈57개, 미실행23개이며 **168번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은41개 프로젝트 묶음의172항목이다. 실패·중단51개, 보존39개, 교훈59개, 미실행23개이며 **172번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,23 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## PCFI의 confidence 가중 공간 확산을 Sheaf로 교체
+
+2026-11-03. 원래 질문으로 돌아와 관측 숫자→confidence 가중 Sheaf 확산→결측 추정→고정 PFN을 비교했다. PCFI confidence·관측값 고정·100회·채널 보정을 유지했고,PFN은학습중에도고정했다. Scalar/Edge/Node를각3seed·1024updates로학습했다.
+
+| 방법 | Cora | CiteSeer | Texas | Wisconsin |
+|---|---:|---:|---:|---:|
+| pcfi | 50.15 | 30.92 | 27.93 | 21.56 |
+| scalar | 49.80 | 30.94 | 27.77 | 21.80 |
+| edge | 49.39 | 31.30 | 27.87 | 21.32 |
+| node | 49.81 | 31.22 | 28.18 | 22.05 |
+| native_pcfi | 52.03 | 33.87 | 33.26 | 24.44 |
+| negative_lp | 32.03 | 24.76 | 63.54 | 42.73 |
+
+edge-pcfi -0.243949%p CI[-0.5338936172534267, 0.06024526333356581]; edge-scalar +0.445559%p CI[0.09320573869989934, 0.8435048538160689]; node-pcfi -0.226362%p CI[-0.4600395720623642, 0.027437612457655285]; node-scalar +0.463146%p CI[0.11849629002030168, 0.8351718057452501]; realhetero {'edge': {'pcfi': -0.1501645027210896, 'scalar': -0.1908579766253471, 'native_pcfi': -4.260033840401222, 'negative_lp': -28.53887091289313}, 'node': {'pcfi': 0.3706869668879398, 'scalar': 0.3299934929836823, 'native_pcfi': -3.7391823707921934, 'negative_lp': -28.018019443284103}}%p; gates={'edge': {'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}, 'node': {'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}}
+
+현재 두 후보는 사전 확대 기준을 통과하지 못했다. 일부 대조의 개선이 있으면 분리해 보존하고 같은 bank의 loss/차원/예산 조정으로 구제하지 않는다. 고유원인은미상으로남기고hidden-token실험과구분한다. [전체보고서](findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md), [구조화기록](findings/pcfi-orthogonal.yaml).
 
 ## 노드 직교 frame으로 제한한 PFN
 
@@ -362,4 +379,4 @@ CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teach
 3. 필요한 수치는 연결된 보고서와 [164개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-03_v17.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-03_v18.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.

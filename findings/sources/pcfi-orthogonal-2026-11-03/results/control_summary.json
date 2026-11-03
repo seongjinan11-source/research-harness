@@ -1,0 +1,98 @@
+{
+  "Cora": {
+    "pcfi": {
+      "original": 0.5014864236251353,
+      "no_features": 0.3034403697152725,
+      "shuffle_features": 0.47332160941508056,
+      "shuffle_context": 0.13705755291716312
+    },
+    "edge": {
+      "original": 0.4796701606522448,
+      "no_features": 0.3034403697152725,
+      "shuffle_features": 0.49190435422454754,
+      "shuffle_context": 0.13745283598345617,
+      "identity_transport": 0.5015696701710531,
+      "drop_cross_stalk": 0.5007195800682711
+    },
+    "node": {
+      "original": 0.49192696041662787,
+      "no_features": 0.3034403697152725,
+      "shuffle_features": 0.4766756861353592,
+      "shuffle_context": 0.1281948755396334,
+      "identity_transport": 0.5018465787510391,
+      "drop_cross_stalk": 0.48191355849008016
+    }
+  },
+  "CiteSeer": {
+    "pcfi": {
+      "original": 0.30222318711013313,
+      "no_features": 0.24741278994136048,
+      "shuffle_features": 0.28531838053493735,
+      "shuffle_context": 0.14767654717011994
+    },
+    "edge": {
+      "original": 0.31122023964780615,
+      "no_features": 0.24741278994136048,
+      "shuffle_features": 0.2822728244013906,
+      "shuffle_context": 0.1467023971955326,
+      "identity_transport": 0.3003158416534119,
+      "drop_cross_stalk": 0.32143800908822767
+    },
+    "node": {
+      "original": 0.309019267955437,
+      "no_features": 0.24741278994136048,
+      "shuffle_features": 0.29164441765972976,
+      "shuffle_context": 0.15019577200785036,
+      "identity_transport": 0.3002251438275081,
+      "drop_cross_stalk": 0.3065686189638945
+    }
+  },
+  "texas": {
+    "pcfi": {
+      "original": 0.2871020167895168,
+      "no_features": 0.16738395313762963,
+      "shuffle_features": 0.28045651768078234,
+      "shuffle_context": 0.22388723114826056
+    },
+    "edge": {
+      "original": 0.2600090397884515,
+      "no_features": 0.16738395313762963,
+      "shuffle_features": 0.2726399444230327,
+      "shuffle_context": 0.24568811793076498,
+      "identity_transport": 0.284787201974702,
+      "drop_cross_stalk": 0.25374088159014635
+    },
+    "node": {
+      "original": 0.29344407910584386,
+      "no_features": 0.16738395313762963,
+      "shuffle_features": 0.3055606492187375,
+      "shuffle_context": 0.2542376601200131,
+      "identity_transport": 0.284787201974702,
+      "drop_cross_stalk": 0.29203223945871004
+    }
+  },
+  "wisconsin": {
+    "pcfi": {
+      "original": 0.20817106038632946,
+      "no_features": 0.28380313354656284,
+      "shuffle_features": 0.2437812146135049,
+      "shuffle_context": 0.15461191568826113
+    },
+    "edge": {
+      "original": 0.19441755898576926,
+      "no_features": 0.28380313354656284,
+      "shuffle_features": 0.22455095986385099,
+      "shuffle_context": 0.1663838395878446,
+      "identity_transport": 0.20817106038632946,
+      "drop_cross_stalk": 0.20708186820827623
+    },
+    "node": {
+      "original": 0.21150439371966281,
+      "no_features": 0.28380313354656284,
+      "shuffle_features": 0.23753726549721546,
+      "shuffle_context": 0.17979753130566645,
+      "identity_transport": 0.20817106038632946,
+      "drop_cross_stalk": 0.23076520915694884
+    }
+  }
+}

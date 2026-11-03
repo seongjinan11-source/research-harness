@@ -1,0 +1,48 @@
+{
+  "pcfi_numpy_max_abs": 2.980232238769531e-07,
+  "identity_reduction_max_abs": {
+    "scalar": 0.0,
+    "edge": 0.0,
+    "node": 0.0
+  },
+  "node_permutation_max_abs": {
+    "edge": 3.5762786865234375e-07,
+    "node": 4.172325134277344e-07
+  },
+  "no_source_exact_zero": true,
+  "node_cycle_error": 0.0,
+  "reverse_angle_error": {
+    "edge": 0.0,
+    "node": 0.0
+  },
+  "observed_clamp_exact": true,
+  "status": "PASS",
+  "smoke_discarded": [
+    {
+      "arm": "scalar",
+      "discarded_optimizer_steps": 1,
+      "loss": 0.9032123684883118,
+      "frontend_gradient_abs_sum": 22.132661640644073,
+      "pfn_unchanged": true,
+      "repeat_probability_max_abs": 0.0
+    },
+    {
+      "arm": "edge",
+      "discarded_optimizer_steps": 1,
+      "loss": 0.9117201566696167,
+      "frontend_gradient_abs_sum": 10.490331053733826,
+      "pfn_unchanged": true,
+      "repeat_probability_max_abs": 0.0
+    },
+    {
+      "arm": "node",
+      "discarded_optimizer_steps": 1,
+      "loss": 0.9063056111335754,
+      "frontend_gradient_abs_sum": 2.0923182535916567,
+      "pfn_unchanged": true,
+      "repeat_probability_max_abs": 0.0
+    }
+  ],
+  "protocol_sha256": "4d2c97049d97f4b7fa41df93eef4d9e9a952c4fe5ff5e55f574a2fa44aba2abd",
+  "all_pfn_weights_fixed": true
+}

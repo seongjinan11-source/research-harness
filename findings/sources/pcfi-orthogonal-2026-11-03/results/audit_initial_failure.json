@@ -1,0 +1,7 @@
+{
+  "status": "EXACT_GPU_IDENTITY_ASSERTION_FAILED",
+  "file": "audit.py",
+  "original_assertion": "assert torch.equal(v,v0)",
+  "scope": "GPU frontend identity=True versus kind=pcfi on same dev input. Original CPU preflight strict identity checks passed. Primary models/checkpoints/predictions remain unchanged; performance gates not altered.",
+  "next_check": "Measure original assertion error and same-kernel GPU repeat differences; retain exact-equality failure and distinguish numerical from algebraic/operator checks."
+}

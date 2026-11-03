@@ -1,0 +1,1 @@
+Snapshot of code, protocol, report, manifests, training/evaluation metrics and audits. Raw feature/extra/probability NPZs and frontend/frozenPFN checkpoints remain in the workspace. Same frozenPFN checkpoint per seed is reused by all arms. Source paths retain workspace references; not a standalone training distribution. Historical source instructions do not authorize new runs.

@@ -1,0 +1,136 @@
+{
+  "status": "PASS_WITH_NUMERICAL_VARIATION",
+  "input_files_hashed": 2068,
+  "prediction_files_hashed": 6720,
+  "new_checkpoints": 9,
+  "valid_updates": 9216,
+  "all_pfn_unchanged": true,
+  "real_updates": 0,
+  "old_train_dev_real_inputs_exact": true,
+  "fresh_test_not_duplicate_prior_banks": true,
+  "full_and_zero_source_reduction": {
+    "cases": 819,
+    "max_probability_error": 0.0
+  },
+  "kernel_rechecks": [
+    {
+      "arm": "edge",
+      "gpu_identity_reduction_max_abs": 2.384185791015625e-07,
+      "gpu_identity_bitwise_equal": false,
+      "class_rename_frontend_max_abs": 1.7881393432617188e-07
+    },
+    {
+      "arm": "node",
+      "gpu_identity_reduction_max_abs": 2.384185791015625e-07,
+      "gpu_identity_bitwise_equal": false,
+      "class_rename_frontend_max_abs": 2.384185791015625e-07
+    }
+  ],
+  "replay": [
+    {
+      "arm": "pcfi",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.0,
+      "repeat_max_abs": 0.0,
+      "saved_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "scalar",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.0,
+      "repeat_max_abs": 0.0,
+      "saved_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "edge",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.002396196126937866,
+      "repeat_max_abs": 0.002396196126937866,
+      "saved_argmax_change_fraction": 0.00819672131147541
+    },
+    {
+      "arm": "edge",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform995",
+      "saved_max_abs": 0.0,
+      "repeat_max_abs": 0.0,
+      "saved_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "edge",
+      "seed": 12,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.0,
+      "repeat_max_abs": 0.0,
+      "saved_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "edge",
+      "seed": 13,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.0,
+      "repeat_max_abs": 0.0,
+      "saved_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "node",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.0,
+      "repeat_max_abs": 0.0,
+      "saved_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "node",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform995",
+      "saved_max_abs": 0.0,
+      "repeat_max_abs": 0.0,
+      "saved_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "node",
+      "seed": 12,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.0,
+      "repeat_max_abs": 0.0,
+      "saved_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "node",
+      "seed": 13,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.0,
+      "repeat_max_abs": 0.0,
+      "saved_argmax_change_fraction": 0.0
+    }
+  ],
+  "initial_exact_gpu_assertion_failed": true,
+  "exact_gpu_equality_not_passed": true,
+  "initial_failure_record": "results/audit_initial_failure.json",
+  "identity_repeat_probe": "results/numerical_probe.json",
+  "limits": "Selectedforecastreplaysonly;0.1boundisgrosscorruptionguard,notstrictreproducibility. CIconditionalstoredpredictionsandnotallnumericvariance. ClassrenamecheckcoversfrontendnotentirefrozenPFN. PFNfreezeisolatesfrontendanddoesnotclaimjointtrainingunnecessary."
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "arm": "edge",
+    "split": "dev",
+    "graph": 0,
+    "gpu_identity_pcfi_max_abs": 2.384185791015625e-07,
+    "gpu_identity_repeats_max_abs": [
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07
+    ],
+    "cpu_identity_exact": true,
+    "cpu_gpu_identity_max_abs": 2.384185791015625e-07
+  },
+  {
+    "arm": "edge",
+    "split": "real",
+    "graph": "Cora",
+    "gpu_identity_pcfi_max_abs": 4.76837158203125e-07,
+    "gpu_identity_repeats_max_abs": [
+      4.76837158203125e-07,
+      4.76837158203125e-07,
+      3.5762786865234375e-07,
+      4.76837158203125e-07,
+      4.76837158203125e-07
+    ],
+    "cpu_identity_exact": true,
+    "cpu_gpu_identity_max_abs": 4.76837158203125e-07
+  },
+  {
+    "arm": "node",
+    "split": "dev",
+    "graph": 0,
+    "gpu_identity_pcfi_max_abs": 2.384185791015625e-07,
+    "gpu_identity_repeats_max_abs": [
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07,
+      2.384185791015625e-07
+    ],
+    "cpu_identity_exact": true,
+    "cpu_gpu_identity_max_abs": 2.384185791015625e-07
+  },
+  {
+    "arm": "node",
+    "split": "real",
+    "graph": "Cora",
+    "gpu_identity_pcfi_max_abs": 3.5762786865234375e-07,
+    "gpu_identity_repeats_max_abs": [
+      4.76837158203125e-07,
+      4.76837158203125e-07,
+      7.152557373046875e-07,
+      3.5762786865234375e-07,
+      7.152557373046875e-07
+    ],
+    "cpu_identity_exact": true,
+    "cpu_gpu_identity_max_abs": 3.5762786865234375e-07
+  }
+]

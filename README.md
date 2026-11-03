@@ -125,3 +125,20 @@ dynamic-mask +1.000059%p CI[0.3503957146611959, 1.6252314285334988]; dynamic-pcf
 node-identity +0.115674%p CI[-0.43349611351197426, 0.6758997330149052]; node-dynamic -0.020354%p CI[-0.4625205189269549, 0.4064417400329777]; node-static -0.178141%p CI[-0.7422996004065074, 0.35635222011572354]; node-pcfi100 +1.593935%p CI[0.7544764708510517, 2.4803787602259386]; realhetero-nodePCFI -3.915072%p; realhomo-nodePCFI -10.030316%p; gates={'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}
 
 현재 node-frame 구성은 확대 기준을 통과하지 못했다. 같은 bank에서 frame 차원/loss/예산을 조정해 구제하지 않는다. 경로 일관성의 수학적 성립을 실제 전이 성능으로 확대하지 않는다. [전체보고서](findings/sources/node-frame-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/node-frame-2026-11-03/METHOD_KO.md), [구조화기록](findings/node-frame.yaml).
+
+## PCFI의 confidence 가중 공간 확산을 Sheaf로 교체
+
+2026-11-03. 원래 질문으로 돌아와 관측 숫자→confidence 가중 Sheaf 확산→결측 추정→고정 PFN을 비교했다. PCFI confidence·관측값 고정·100회·채널 보정을 유지했고,PFN은학습중에도고정했다. Scalar/Edge/Node를각3seed·1024updates로학습했다.
+
+| 방법 | Cora | CiteSeer | Texas | Wisconsin |
+|---|---:|---:|---:|---:|
+| pcfi | 50.15 | 30.92 | 27.93 | 21.56 |
+| scalar | 49.80 | 30.94 | 27.77 | 21.80 |
+| edge | 49.39 | 31.30 | 27.87 | 21.32 |
+| node | 49.81 | 31.22 | 28.18 | 22.05 |
+| native_pcfi | 52.03 | 33.87 | 33.26 | 24.44 |
+| negative_lp | 32.03 | 24.76 | 63.54 | 42.73 |
+
+edge-pcfi -0.243949%p CI[-0.5338936172534267, 0.06024526333356581]; edge-scalar +0.445559%p CI[0.09320573869989934, 0.8435048538160689]; node-pcfi -0.226362%p CI[-0.4600395720623642, 0.027437612457655285]; node-scalar +0.463146%p CI[0.11849629002030168, 0.8351718057452501]; realhetero {'edge': {'pcfi': -0.1501645027210896, 'scalar': -0.1908579766253471, 'native_pcfi': -4.260033840401222, 'negative_lp': -28.53887091289313}, 'node': {'pcfi': 0.3706869668879398, 'scalar': 0.3299934929836823, 'native_pcfi': -3.7391823707921934, 'negative_lp': -28.018019443284103}}%p; gates={'edge': {'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}, 'node': {'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}}
+
+현재 두 후보는 사전 확대 기준을 통과하지 못했다. 일부 대조의 개선이 있으면 분리해 보존하고 같은 bank의 loss/차원/예산 조정으로 구제하지 않는다. 고유원인은미상으로남기고hidden-token실험과구분한다. [전체보고서](findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md), [구조화기록](findings/pcfi-orthogonal.yaml).

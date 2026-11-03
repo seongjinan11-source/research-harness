@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 40개 프로젝트 · 168개 기록 (실패·중단 50개, 보존 38개, 교훈 57개, 미실행 23개)
+총 41개 프로젝트 · 172개 기록 (실패·중단 51개, 보존 39개, 교훈 59개, 미실행 23개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1262,6 +1262,42 @@ k20 FISF/LP 50:50: ACM82.20% vs LP85.55%, IMDB42.54% vs FISF44.55%. 같은 query
 - 기준선: LP alone, PCFI/FISF+PFN alone, compute-matched fixed mixtures
 - 최소 재검증: 같은 query·context에서 within-task 오류 보완성과 독립 개발/확인 graph의 평균·worst-case utility를 함께 본다.
 - 원문: [findings/sources/graphpfn-2026-11-01/fusion.md](../findings/sources/graphpfn-2026-11-01/fusion.md)
+
+## Confidence weighted numeric Sheaf PCFI with fixed PFN
+
+실험 조건: Replace only100-stepPCFIspatialmessageswithstaticSO2transport,keepconfidence/clamp/correlationandidenticalfrozenPFN.
+
+### PCFIO-F01 [실패·중단] PCFI의 confidence·경계값·100회·채널 보정을 유지하고 수치 공간 전파만 직교 Sheaf로 교체하면 고정 PFN에서 강한 대조보다 missing 분류가 좋아진다.
+
+edge-pcfi -0.243949%p CI[-0.5338936172534267, 0.06024526333356581]; edge-scalar +0.445559%p CI[0.09320573869989934, 0.8435048538160689]; node-pcfi -0.226362%p CI[-0.4600395720623642, 0.027437612457655285]; node-scalar +0.463146%p CI[0.11849629002030168, 0.8351718057452501]; realhetero {'edge': {'pcfi': -0.1501645027210896, 'scalar': -0.1908579766253471, 'native_pcfi': -4.260033840401222, 'negative_lp': -28.53887091289313}, 'node': {'pcfi': 0.3706869668879398, 'scalar': 0.3299934929836823, 'native_pcfi': -3.7391823707921934, 'negative_lp': -28.018019443284103}}%p; gates={'edge': {'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}, 'node': {'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}}
+
+- 판정: 현재 두 후보는 사전 확대 기준을 통과하지 못했다. 일부 대조의 개선이 있으면 분리해 보존하고 같은 bank의 loss/차원/예산 조정으로 구제하지 않는다.
+- 원인·병목 [원인 미상]: 사전 PCFI/학습scalar/real pipeline floor 조건 중 일부가 충족되지 않았다. Map식별·SO2/static함수족·고정PFN적합성·RP16·prior와학습량의고유원인은분리하지않았다.
+- 닫은 범위: 현재staticSO2per-cellnumerictransport/737param/100steps/firstcoordinate/1channelcorrection/frozenPCFI-PFN/1024frontupdates/RP16/knownfamily/4realdevelopmentgraph의메인확대.
+- 닫지 않은 것: JointPFN재학습,dynamicnumericmaps,일반O(d),원본physicalfeature학습과새family/real/schema는미검증이다. 이들이해결책이라는뜻은아니다.
+- 재검토 조건: 극소관측에서transport를식별할추가정보또는현재함수족으로부족한피처관계가명확하고PCFI및같은예산scalar대조를넘는구체적연산이있을때.
+- 기준선: 같은고정PFN의원PCFI,TorchI환원,동일737parameter/예산Scalar,Edge,Node;nativePCFI,고정negativeLP;full/source0동일입력과확률점수/실제비용.
+- 최소 재검증: 새graph/family와미사용real입력을먼저고정한다. PCFI공간전파교체와hidden-token확산,추가warmup/반복수,PFN재학습을동시에바꾸지않는다. I환원/gradient/anchor/full/source0확률환원/numericalreplay와동일query개입을검증한다.
+- 원문: [findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md](../findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md); [findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md](../findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md); [findings/sources/pcfi-orthogonal-2026-11-03/protocol.json](../findings/sources/pcfi-orthogonal-2026-11-03/protocol.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/statistics.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/statistics.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/audit.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/audit.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/control_summary.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/control_summary.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/preflight.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/preflight.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/cost.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/cost.json)
+
+### PCFIO-P02 [보존] 관측 숫자 피처의 confidence 가중 graph sheaf diffusion과 원PCFI I환원을 실제로 구현하고 고정 PFN을 통해 학습했다.
+
+NumPyPCFIerror2.980232238769531e-07,Ireduction0,observedclamp0,source0output0;9fronts/9216updates/PFN0/real0;full&source0={'cases': 819, 'max_probability_error': 0.0};syntheticaccuracy={'pcfi': 45.62333474920044, 'scalar': 44.933826508592276, 'edge': 45.37938559563318, 'node': 45.396972588512696}.
+
+- 확대 금지: 직교transport의개별norm보존은평균상쇄나정확한결측복원을보장하지않는다. SO2static숫자연산이며전체PCFI/NSD/PFN의새확률모형이나일반우위가아니다.
+- 원문: [findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md](../findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md); [findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md](../findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md); [findings/sources/pcfi-orthogonal-2026-11-03/protocol.json](../findings/sources/pcfi-orthogonal-2026-11-03/protocol.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/statistics.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/statistics.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/audit.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/audit.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/control_summary.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/control_summary.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/preflight.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/preflight.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/cost.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/cost.json)
+
+### PCFIO-L01 [교훈] PCFI 확산 교체, warm100+추가100, PFN hidden-token diffusion은 서로 다른 가설이다.
+
+이번은결측0시작/100spatial/1correction/고정PFN이다. 초기수치Sheaf는warm100+추가100symmetriccontraction과공동PFN학습,최근NSD는숫자대치없이hiddenfeature/label토큰전파였다.
+
+- 원문: [findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md](../findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md); [findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md](../findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md); [findings/sources/pcfi-orthogonal-2026-11-03/protocol.json](../findings/sources/pcfi-orthogonal-2026-11-03/protocol.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/statistics.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/statistics.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/audit.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/audit.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/control_summary.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/control_summary.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/preflight.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/preflight.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/cost.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/cost.json)
+
+### PCFIO-L02 [교훈] I 초기화와 I 환원 검사, 학습할 수 있는 map 초기화는 구분한다.
+
+Scalar를(x,0)으로lift하고첫좌표만읽으면정확한I에서angle의첫미분이0이될수있다. 작은비영초기화에서모든737paramfront의실제gradient/optimizerstep을검증했다. PFN은모든학습동안고정이었다.
+
+- 원문: [findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md](../findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md); [findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md](../findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md); [findings/sources/pcfi-orthogonal-2026-11-03/protocol.json](../findings/sources/pcfi-orthogonal-2026-11-03/protocol.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/statistics.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/statistics.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/audit.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/audit.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/control_summary.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/control_summary.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/preflight.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/preflight.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/cost.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/cost.json)
 
 ## Plain relation adaptation과 CRR 제안 철회
 

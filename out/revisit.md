@@ -774,6 +774,20 @@
 - [RGaKE](https://www.nature.com/articles/s41598-026-76105-8): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=fusion
   - 기록된 강점: Global context와 multi-scale feature fusion을 결합해 4개 KG link-prediction benchmark에서 평가했다.
 
+## PCFIO-F01 — PCFI의 confidence·경계값·100회·채널 보정을 유지하고 수치 공간 전파만 직교 Sheaf로 교체하면 고정 PFN에서 강한 대조보다 missing 분류가 좋아진다.
+
+- 판정: 현재 두 후보는 사전 확대 기준을 통과하지 못했다. 일부 대조의 개선이 있으면 분리해 보존하고 같은 bank의 loss/차원/예산 조정으로 구제하지 않는다.
+- 원인·병목 [원인 미상]: 사전 PCFI/학습scalar/real pipeline floor 조건 중 일부가 충족되지 않았다. Map식별·SO2/static함수족·고정PFN적합성·RP16·prior와학습량의고유원인은분리하지않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 극소관측에서transport를식별할추가정보또는현재함수족으로부족한피처관계가명확하고PCFI및같은예산scalar대조를넘는구체적연산이있을때.
+- 먼저 이겨야 할 기준선: 같은고정PFN의원PCFI,TorchI환원,동일737parameter/예산Scalar,Edge,Node;nativePCFI,고정negativeLP;full/source0동일입력과확률점수/실제비용.
+- 최소 재검증: 새graph/family와미사용real입력을먼저고정한다. PCFI공간전파교체와hidden-token확산,추가warmup/반복수,PFN재학습을동시에바꾸지않는다. I환원/gradient/anchor/full/source0확률환원/numericalreplay와동일query개입을검증한다.
+- 닫지 않은 것: JointPFN재학습,dynamicnumericmaps,일반O(d),원본physicalfeature학습과새family/real/schema는미검증이다. 이들이해결책이라는뜻은아니다.
+- 원문: [findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md](../findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md); [findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md](../findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md); [findings/sources/pcfi-orthogonal-2026-11-03/protocol.json](../findings/sources/pcfi-orthogonal-2026-11-03/protocol.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/statistics.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/statistics.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/audit.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/audit.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/control_summary.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/control_summary.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/preflight.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/preflight.json); [findings/sources/pcfi-orthogonal-2026-11-03/results/cost.json](../findings/sources/pcfi-orthogonal-2026-11-03/results/cost.json)
+
+현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
+
+
 ## RFILL-F01 — 현재 frozen conditional Gaussian completion이 분산을 맞춘 random-fill/graph-prior null보다 안정적으로 좋은 예측을 제공한다.
 
 - 판정: 사전 random-control gate 미통과; 현재 frozen conditional의 독립 가치 미입증
