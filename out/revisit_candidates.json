@@ -2936,6 +2936,99 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "PCFIPC-F01",
+    "project": "PCFI partial-coordinate clamp pilot",
+    "claim": "부분 좌표 clamp와 동일 예산 frontend 학습으로 기존 Node 및 PCFI를 함께 넘어선다.",
+    "verdict": "현재 구현·동일 예산·개발 bank에서 두 강한 기준선에 대한 동시 우위는 확보하지 못했다. 전체 sheaf/PFN 연구를 종료하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "원인 미상. Clamp를 푼 계산의 correctness와 latent 좌표 사용만으로 예측 이득을 보장하지 않는다. 식별성·잠재 증폭·최적화·prior 부합 여부는 인과적으로 분리되지 않았다.",
+    "reopen_when": "관측 방향과 추론할 latent 성분을 식별·정규화하는 장치의 필요성이 독립적으로 입증되거나, 다른 feature 관계에서 같은 정보·예산의 강한 기준을 넘어설 근거가 생길 때.",
+    "recheck": "최소한의 관측 법칙을 먼저 고정하고 같은 초기화·예산으로 새 graph/feature family에서 관측 source가 있는 query accuracy와 NLL/Brier를 graph-paired 비교. 개발 bank 최고 arm 선택을 독립 확인으로 부르지 않는다.",
+    "comparison_floor": "PCFI/Native-PCFI+samePFN,oldfullclamp,partialfrozen,random/initialframe,smoothsignedscalar;targetoptimizer0.",
+    "source_refs": [
+      "findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/protocol.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/statistics.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/audit.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/preflight.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/source_rank_checks.json"
+    ],
+    "paper_id": "NeuralSheafDiffusion",
+    "paper_title": "Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs",
+    "paper_link": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html",
+    "matches": [
+      {
+        "strength": "양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.",
+        "tags": [
+          "graph-geometry",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      },
+      {
+        "strength": "공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.",
+        "tags": [
+          "graph-geometry",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-geometry",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "PCFIPC-F01",
+    "project": "PCFI partial-coordinate clamp pilot",
+    "claim": "부분 좌표 clamp와 동일 예산 frontend 학습으로 기존 Node 및 PCFI를 함께 넘어선다.",
+    "verdict": "현재 구현·동일 예산·개발 bank에서 두 강한 기준선에 대한 동시 우위는 확보하지 못했다. 전체 sheaf/PFN 연구를 종료하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "원인 미상. Clamp를 푼 계산의 correctness와 latent 좌표 사용만으로 예측 이득을 보장하지 않는다. 식별성·잠재 증폭·최적화·prior 부합 여부는 인과적으로 분리되지 않았다.",
+    "reopen_when": "관측 방향과 추론할 latent 성분을 식별·정규화하는 장치의 필요성이 독립적으로 입증되거나, 다른 feature 관계에서 같은 정보·예산의 강한 기준을 넘어설 근거가 생길 때.",
+    "recheck": "최소한의 관측 법칙을 먼저 고정하고 같은 초기화·예산으로 새 graph/feature family에서 관측 source가 있는 query accuracy와 NLL/Brier를 graph-paired 비교. 개발 bank 최고 arm 선택을 독립 확인으로 부르지 않는다.",
+    "comparison_floor": "PCFI/Native-PCFI+samePFN,oldfullclamp,partialfrozen,random/initialframe,smoothsignedscalar;targetoptimizer0.",
+    "source_refs": [
+      "findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/protocol.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/statistics.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/audit.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/preflight.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/source_rank_checks.json"
+    ],
+    "paper_id": "PEMix",
+    "paper_title": "When Missingness Follows the Graph: Beyond Feature Propagation for Missing Features",
+    "paper_link": "https://arxiv.org/abs/2610.18113",
+    "matches": [
+      {
+        "strength": "Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.",
+        "tags": [
+          "graph-structure-use",
+          "observation-mask"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-structure-use",
+      "observation-mask"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "RATIO-F01",
     "project": "Frozen counterfactual PFN residual",
     "claim": "Full−Neutral log probability가 LP에 더할 새로운 feature evidence다.",

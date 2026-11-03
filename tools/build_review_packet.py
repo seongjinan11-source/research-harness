@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / 'src'))
 import harness
 
 DATE = '2026-11-03'
-VERSION = 19
+VERSION = 20
 DOCUMENTS = ['RESULTS_SUMMARY_KO.md', 'RESEARCH_HANDOFF_KO.md', 'README.md']
 
 
@@ -100,7 +100,7 @@ def main():
     assert not output.exists(), 'Keep existing versioned packets unchanged; choose a new output name'
     data, counts = collect(args.version)
     manifest = {'date': DATE, 'version': args.version, 'source_commit': git('rev-parse', 'HEAD'), 'counts': counts,
-                'purpose': 'Independent review with the cumulative summary, latest Grid6 teacher results and all canonical finding sources; not a complete training environment.',
+                'purpose': 'Independent review with the cumulative summary, latest partial-coordinate confidence diffusion results and all canonical finding sources; not a complete training environment.',
                 'files': {name: {'bytes': len(blob), 'sha256': hashlib.sha256(blob).hexdigest()} for name, blob in sorted(data.items())}}
     with zipfile.ZipFile(output, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for name, blob in sorted(data.items()):

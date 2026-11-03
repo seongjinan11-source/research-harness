@@ -1,0 +1,157 @@
+{
+  "status": "PASS",
+  "post_protocol_mechanism_analysis": true,
+  "no_pfn_or_optimizer": true,
+  "checks": [
+    {
+      "trial": 0,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 4.440892098500626e-16
+    },
+    {
+      "trial": 1,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 1.3183898417423734e-16
+    },
+    {
+      "trial": 2,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 2.220446049250313e-16
+    },
+    {
+      "trial": 3,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 1.1102230246251565e-16
+    },
+    {
+      "trial": 4,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 3.3306690738754696e-16
+    },
+    {
+      "trial": 5,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 4.579669976578771e-16
+    },
+    {
+      "trial": 6,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 1.1102230246251565e-16
+    },
+    {
+      "trial": 7,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 2.220446049250313e-16
+    },
+    {
+      "trial": 8,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 7.216449660063518e-16
+    },
+    {
+      "trial": 9,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 5.551115123125783e-16
+    },
+    {
+      "trial": 10,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 1.1102230246251565e-16
+    },
+    {
+      "trial": 11,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 2.7755575615628914e-16
+    },
+    {
+      "trial": 12,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 9.43689570931383e-16
+    },
+    {
+      "trial": 13,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 4.440892098500626e-16
+    },
+    {
+      "trial": 14,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 5.828670879282072e-16
+    },
+    {
+      "trial": 15,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 1.1102230246251565e-16
+    },
+    {
+      "trial": 16,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 2.220446049250313e-16
+    },
+    {
+      "trial": 17,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 2.220446049250313e-16
+    },
+    {
+      "trial": 18,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 1.5404344466674047e-15
+    },
+    {
+      "trial": 19,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 8.326672684688674e-17
+    },
+    {
+      "trial": 20,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 1.249000902703301e-16
+    },
+    {
+      "trial": 21,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 5.551115123125783e-16
+    },
+    {
+      "trial": 22,
+      "components": 2,
+      "one_source_per_column_per_component": true,
+      "max_abs": 9.679756995950584e-16
+    },
+    {
+      "trial": 23,
+      "components": 1,
+      "one_source_per_column_per_component": true,
+      "max_abs": 2.220446049250313e-16
+    }
+  ],
+  "primary_episode_counts": {
+    "zero": 42,
+    "one": 74,
+    "two_or_more": 140
+  },
+  "scope": "Same fixed frames, at most one observed source per feature per component, zero initial second coordinate, scalar P shared across coordinates. All aligned states stay in the span of the source direction; releasing its orthogonal coordinate changes nothing. This is not equivalence between separately retrained frame networks or all multiple-source tasks."
+}

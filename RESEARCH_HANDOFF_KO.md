@@ -12,6 +12,24 @@
 
 이번 검토는 새로운 실험을 즉시 실행하라는 요청이 아니다. 아래 사실과 실패 범위를 검토하고, 설득력 있는 후속 메소드가 있는지 독립적으로 판단해 달라.
 
+## 관측 좌표만 고정하는 Confidence Sheaf PFN
+
+2026-11-03. 첫 scalar 좌표만 clamp하고 관측하지 않은 두 번째 좌표를 전파하는 변경을 비교했다. 새 frontend6개/6144update,동일 초기화·512train bank·schedule·고정PFN,새 known-family32base graph,기존4real 개발graph다.
+
+| 방법 | 개발 missing-query accuracy % | Cora % | CiteSeer % | Texas % | Wisconsin % |
+|---|---|---|---|---|---|
+| pcfi | 50.367 | 50.229 | 30.916 | 27.844 | 21.557 |
+| node | 50.350 | 49.835 | 31.223 | 28.178 | 22.048 |
+| partial_frozen | 50.362 | 49.800 | 31.514 | 26.424 | 22.388 |
+| partial_trained | 50.232 | 49.824 | 31.158 | 27.422 | 22.058 |
+| partial_initial | 50.326 | 50.181 | 30.996 | 27.858 | 21.916 |
+| partial_random | 47.927 | 38.578 | 25.320 | 26.871 | 24.034 |
+| signed_smooth | 49.946 | 49.272 | 31.045 | 28.301 | 23.378 |
+
+partial_trained_minus_node:accuracy=-0.118074%p CI[-0.410523217262834, 0.16035034795655417]; partial_trained_minus_pcfi:accuracy=-0.135065%p CI[-0.3686364602286792, 0.08342222464999093]; partial_frozen_minus_node:accuracy=+0.011438%p CI[-0.19001886361456893, 0.2091231569541227]; partial_trained_minus_partial_frozen:accuracy=-0.129512%p CI[-0.4134588441218917, 0.14871358916660818]; partial_trained_minus_partial_initial:accuracy=-0.093266%p CI[-0.314049007360701, 0.11446042683875222]; partial_trained_minus_partial_random:accuracy=+2.305651%p CI[1.137082186911021, 3.648101343936383]; partial_random_minus_full_random:accuracy=-0.340911%p CI[-0.7137906330390282, 0.017033220980164184]; partial_trained_minus_signed_smooth:accuracy=+0.286140%p CI[-0.08556479459930283, 0.6371842445063916]; signed_smooth_minus_signed:accuracy=-0.313494%p CI[-0.610699974902656, 0.00012718194105000704]; signed_smooth_minus_pcfi:accuracy=-0.421204%p CI[-0.7337652552295654, -0.09699406895156527]
+
+같은 frame에서 source가 하나뿐이면 두 clamp가 같다는 적용 범위도 확인했다. Primary는 그대로 두고 source1/source2+를 secondary로 분리했다. 전체 메소드 novelty의 성공/종료 판정으로 확대하지 않는다. [전체 보고서](findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md), [계산 정의](findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md), [구조화 기록](findings/pcfi-partial-clamp.yaml).
+
 ## Confidence Sheaf PFN 구성 요소의 개발 비교
 
 2026-11-03. Context의geometry전용개입,공간confidence×Nodeframe,직접signedscalar를비교했다. 기존과같은초기Phi·512train입력·1024update·고정PFN을유지했고새frontend9개를학습했다. 새32개knownfamily개발graph는label/feature네cell에8개씩배정하고k1/4를함께평가했다. 기존4real은개발재사용이다.
@@ -107,7 +125,7 @@ dynamic-mask +1.000059%p CI[0.3503957146611959, 1.6252314285334988]; dynamic-pcf
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 57편, 연구 기록 176항목, 아이디어 16개가 있다. 42개 프로젝트 묶음이며 실패·중단51, 보존41, 교훈61, 미실행23항목이다. 176번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v18은고정PFN앞의confidence가중Sheaf숫자대치를추가했다. v17은노드별orthogonalframe제약의비교를추가했다. v16은NSD hidden-token의동일예산학습과static/dynamic비교를추가했다. v15는 Sheaf-PCFI의synthetic-only학습·실제가중치고정pilot과NSD문헌을추가한2026-11-03 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 57편, 연구 기록 180항목, 아이디어 17개가 있다. 43개 프로젝트 묶음이며 실패·중단52, 보존42, 교훈63, 미실행23항목이다. 180번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v20은관측좌표clamppilot과직전novelty초안/심사를추가했다. v19는confidence/frame/context구성요소비교를포함한다. v18은고정PFN앞의confidence가중Sheaf숫자대치를추가했다. v17은노드별orthogonalframe제약의비교를추가했다. v16은NSD hidden-token의동일예산학습과static/dynamic비교를추가했다. v15는 Sheaf-PCFI의synthetic-only학습·실제가중치고정pilot과NSD문헌을추가한2026-11-03 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
 
 ## TSFM 공동 정보·방해 변수 frozen 비교
 

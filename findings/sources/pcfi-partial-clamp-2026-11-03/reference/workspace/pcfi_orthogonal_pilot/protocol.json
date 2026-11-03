@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-03",
+  "seeds": [
+    11,
+    12,
+    13
+  ],
+  "arms": [
+    "pcfi",
+    "scalar",
+    "edge",
+    "node"
+  ],
+  "learned_arms": [
+    "scalar",
+    "edge",
+    "node"
+  ],
+  "updates": 1024,
+  "test_graphs": 64,
+  "test_seed_start": 2039111300,
+  "primary_cases": [
+    "uniform90",
+    "uniform995",
+    "cluster90",
+    "cluster995"
+  ],
+  "test_cases": [
+    "uniform90",
+    "uniform995",
+    "cluster90",
+    "cluster995",
+    "full",
+    "sources2",
+    "sources8"
+  ],
+  "real_datasets": [
+    "Cora",
+    "CiteSeer",
+    "texas",
+    "wisconsin"
+  ],
+  "operator": "Keep original PCFI alpha=.9 distance pseudo-confidence, directed row normalization P_ij,f=A_ij*c_jf/sum_k A_ik*c_kf with selfloops, zero missing initialization,100spatialsteps,observedscalarclamp,every-step second-stalk source clamp0,one original channelcorrelation correction andfinal observedclamp (no additional output clipping beyond actual original imputer). Onlyspatialmessages change: lift[x,0],orthogonalT_ij=R(theta_j,e-theta_i,e),readfirstcoordinate. Edge restrictions from orderedobserved/context descriptors;node frames sharedacrossincidences. Mapsstaticthrough100steps. Scalarcontrol retainscos(delta) anddropscross-stalksin. Pcfi usesI. No preliminarypositivewarmup,noPFNhiddenstate diffusion,nomessageweightlearning.",
+  "geometry_inputs": "Observedvalues,absvalues,observed-neighbor mean,mask,originalconfidence,degree,contextflag,context-only20-stepLP entropy/maxmass,context-edgeclassagreement;edgecontextbeliefaffinity. Shared21->32->1MLP737params forscalar/edge/node. Nodeusesown+closed-neighbor descriptorandmeancontextaffinity;edgeusesorderedendpointpair. Nohiddenfeatures,querylabels,lawlabels,truehomophily,PFNfeedbackorimputationwarmup. Initialmaps nearI(nonzero smallweights) because exactI plusfirst-coordinate readout givesvanishing anglegradient.",
+  "pfn": "Use existing synthetic-only1024update pcfi100 checkpoint for eachseed;freezeALLdownstreamPFNparameters throughoutfrontendtrainingandevaluation. Samecheckpointinall4arms. ExistingunusedNSDcontainer staysfrozenandunused. Newtrainingonly737parameterfrontend;queryCEthroughPFN. Thisisolatesimputationspatialoperator,not jointPFNretraining orofficialfullGraphPFNpipeline. ExistingpublicRP16wrapperunchanged.",
+  "training": "Reuse original512synthetictrainepisodes andseed-specific1024updateschedule;newscalar/edge/node each3seeds,9216frontendupdates total. AdamWlr.001,16warmupcosine,weightdecay.01,gradientclip1,AMP. Pfn staysevalandfixed,fronttrain. Noauxiliaryloss/teacher/realupdates/validationlabelselection. Identityreductionandnonzerogradientmustpassbeforetraining.",
+  "evaluation": "Fresh64same-familysyntheticgraphs2039111300+i;sameinputallarms. Primarymissing-queryaccuracy averaged4masks and3fixedseedswithinbasegraph,5000graph-pairedbootstrap. Real4graphs olddevelopmentinputs,3mask/contextreplications;allarmsfreshlyevaluated includingfixedPCFI. NativePCFI,MaskandnegativeLP oldsameinputpredictionsstrongfloors. Source2/8/full/no-sourcepartitions secondary;featureandcontextinterventionsfixedqueryset. NLL/Brier,cost,numericalreplayreported.",
+  "gates": "EdgeorNodecandidate mustbeatfixedPCFIandtrainedScalarwithprimaryaccuracy95CI lower>0,homoPCFIguardCI lower>-0.02. Reportbothcandidateswithoutbest-bankselection. Realheteromean>PCFIandScalarandnativePCFI,homoPCFIharm<=.02. NegativeLPremainsstrongfloor. GeneralheterophilyclaimrequiresnegativeLPfloor. Nochoiceofcandidateorpost-testloss/budget/dimensiontuning fromthisbank.",
+  "limits": "SO2numericper-cellstatictransport,noarbitraryO(d),RP16realinput;sameknownsyntheticfamily;PFNheldfixedsofailuredoesnotexcludejointtraining. Previouswarm100+100symmetriccontraction andhidden-tokenNSDexperimentsareseparate. Orthogonalnormpreservationdoesnotpreventaveragingcancellation;channelcorrectionnotorthogonal. FrozenPCFIbaselinehasnofrontendtraining;alllearnedfrontcontrolsgetequalbudget. Newtestisnotnewgeneratorfamilyorindependentrealconfirmation."
+}

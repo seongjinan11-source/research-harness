@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-03",
+  "purpose": "Release only the unobserved second coordinate at observed scalar cells; isolate frozen inference substitution from matched-budget frontend retraining",
+  "seeds": [11, 12, 13],
+  "updates": 1024,
+  "learned_arms": ["partial_trained", "signed_smooth"],
+  "evaluation_arms": ["pcfi", "node", "partial_frozen", "partial_trained", "partial_initial", "full_random", "partial_random", "signed_smooth", "signed"],
+  "development_graphs": 32,
+  "development_seed_start": 2041111300,
+  "context_per_class": [1, 4],
+  "primary_cases": ["uniform90", "uniform995", "cluster90", "cluster995"],
+  "cases": ["uniform90", "uniform995", "cluster90", "cluster995", "full", "sources2", "sources8"],
+  "training": "Reuse the exact original 512 synthetic training inputs/extras, original Front initialization, per-seed 1024-update schedule, frozen synthetic-trained PCFI-PFN, AdamW .001/warmup16/cosine/weight_decay.01/clip1/AMP/query CE only. Two new 737-parameter arms per seed; six frontends/6144 updates. No target graph updates, extra loss, teacher or learned gate. Discard preflight one-step runs.",
+  "operators": {
+    "node": "Old trained full-clamp checkpoint, identical old index_add operator. First coordinate x and second coordinate0 are clamped at observed cells.",
+    "partial_frozen": "Reuse the old Node checkpoint, only stop clamping second coordinate0 at observed cells. No retraining.",
+    "partial_trained": "Same 737-parameter node/column SO2 frame network from original initialization. Clamp observed first coordinate only; second coordinate follows transport at all cells. Zero initial second coordinate,100 finite unrolled iterations,first-coordinate readout,original one PCFI channel correction/final observed clamp. Same P/confidence/descriptors/PFN. No convergence or unique inverse claim.",
+    "partial_initial": "Same partial operator and exact untrained initial Front for each seed. A frozen near-identity random-network control; not a broad random angle control.",
+    "full_random": "Full clamp with iid uniform[-pi,pi] fixed node/column angles from an episode/seed-specific private RNG; no label/feature-dependent angle selection.",
+    "partial_random": "Partial clamp with exactly the same deterministic random angles as full_random. No trainable frontend.",
+    "signed_smooth": "Same symmetric ordered-endpoint 737-parameter MLP as old clipped scalar; gain=tanh(atanh(.99)+(phi(i,j)+phi(j,i))/2),self gain1. Smooth bounds, original100-step scalar propagation/clamp/channel correction. Same parameter initialization but not identical initial forward function to Node. Saturation, derivatives and negative coefficients measured.",
+    "signed": "Old hard-clipped signed scalar checkpoint as reference; not newly trained."
+  },
+  "evaluation": "New 32 same-family development graphs, balanced label homo/hetero x feature smooth/rough, both context sizes and seven cases;448 episodes. Old four real development graphs/60 inputs reused without tuning. All nine arms freshly evaluated, same numeric backend and fixed PFN per seed. Primary missing-own-feature query accuracy, average masks/contexts/three fixed seeds within graph;5000 graph-paired bootstrap. NLL/Brier and nonzero-source/source2/8/full strata reported. New graph seeds are not unseen generator or independent real confirmation.",
+  "comparisons": ["partial_trained-node", "partial_trained-pcfi", "partial_frozen-node", "partial_trained-partial_frozen", "partial_trained-partial_initial", "partial_trained-partial_random", "partial_random-full_random", "partial_trained-signed_smooth", "signed_smooth-signed"],
+  "interpretation": "Test the proposed boundary change, not the novelty of frames. No bank-based choice of angle range, iterations, initialization, lambda or losses. Correctness of partial observation constraints and nonzero latent coordinates does not establish predictive value. No whole-project automatic termination. No posterior/Bayes reconstruction claim. Report numeric replay separately from graph bootstrap. All previous sources/checkpoints/results preserved."
+}

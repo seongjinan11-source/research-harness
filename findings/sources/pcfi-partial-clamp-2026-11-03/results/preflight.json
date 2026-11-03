@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "cpu_checks": {
+    "full_matches_old_max_abs": 0.0,
+    "partial_aligned_max_abs": 5.551115123125783e-16,
+    "partial_aligned_gradient_max_abs": 1.0907941216942163e-14,
+    "identity_is_pcfi_exact": true,
+    "toy_full_query": 0.7071067811865475,
+    "toy_partial_query": 1.4142135623730943,
+    "toy_observed_second_mean_abs": 0.9999999999999993,
+    "toy_note": "Analytic construction demonstrates a different function; not node-classification improvement."
+  },
+  "smoke": [
+    {
+      "arm": "partial_trained",
+      "seed": 11,
+      "loss": 0.09054707735776901,
+      "gradient_abs_sum": 5.985135106369853,
+      "discarded_updates": 1,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "signed_smooth",
+      "seed": 11,
+      "loss": 0.07351522147655487,
+      "gradient_abs_sum": 0.069443981628865,
+      "discarded_updates": 1,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "partial_trained",
+      "seed": 12,
+      "loss": 0.07170078158378601,
+      "gradient_abs_sum": 9.509052738547325,
+      "discarded_updates": 1,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "signed_smooth",
+      "seed": 12,
+      "loss": 0.07366504520177841,
+      "gradient_abs_sum": 4.27046412974596,
+      "discarded_updates": 1,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "partial_trained",
+      "seed": 13,
+      "loss": 0.08961668610572815,
+      "gradient_abs_sum": 1.4730897154659033,
+      "discarded_updates": 1,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "signed_smooth",
+      "seed": 13,
+      "loss": 0.09913989156484604,
+      "gradient_abs_sum": 0.34794046822935343,
+      "discarded_updates": 1,
+      "pfn_unchanged": true
+    }
+  ],
+  "discarded_updates": 6,
+  "old_files_preserved_baseline": 20639
+}

@@ -1,0 +1,224 @@
+{
+  "status": "PASS_WITH_MEASURED_GPU_REPLAY",
+  "old_files_preserved": 20639,
+  "input_files_hashed": 2072,
+  "new_predictions_hashed": 13716,
+  "new_frontend_models": 6,
+  "new_frontend_updates": 6144,
+  "pfn_updates": 0,
+  "real_updates": 0,
+  "same_initializations_schedules_and_fixed_pfns": true,
+  "training": [
+    {
+      "arm": "partial_trained",
+      "seed": 11,
+      "updates": 1024,
+      "seconds": 157.42611109977588,
+      "trainable_parameters": 737,
+      "initial_front_sha256": "02bf660adedab4887fbd59fdf01b0baeb12f0e41eaeb15a9887adc08a152944c",
+      "final_front_sha256": "dfd465be429ecbd4181f3cc9571e382e1ef962536de6529e30f05a70c52d1b2b",
+      "pfn_sha256": "a58e28f333c545f5e41ee5fd90afd720de1a71555341381e26b8e30a91ee77cf",
+      "schedule_sha256": "df7babd5eaf1e0af4e316355fcab5136fb58e11d25837d346a9170dfbd085328",
+      "checkpoint_sha256": "98f4e3d90406743abaec3bc09167805bd95bd5d3f3bcb70a6767bec10f501cea",
+      "pfn_updates": 0,
+      "real_updates": 0
+    },
+    {
+      "arm": "signed_smooth",
+      "seed": 11,
+      "updates": 1024,
+      "seconds": 132.33531249966472,
+      "trainable_parameters": 737,
+      "initial_front_sha256": "02bf660adedab4887fbd59fdf01b0baeb12f0e41eaeb15a9887adc08a152944c",
+      "final_front_sha256": "4313d37ce7f0ba32bab0f80b07f0987cf0156bb67d4637aa0912a6b3393aca54",
+      "pfn_sha256": "a58e28f333c545f5e41ee5fd90afd720de1a71555341381e26b8e30a91ee77cf",
+      "schedule_sha256": "df7babd5eaf1e0af4e316355fcab5136fb58e11d25837d346a9170dfbd085328",
+      "checkpoint_sha256": "f29a74363791555396b576e5ee7d834066b118781da469ab0eac204dfba47dd2",
+      "pfn_updates": 0,
+      "real_updates": 0
+    },
+    {
+      "arm": "partial_trained",
+      "seed": 12,
+      "updates": 1024,
+      "seconds": 184.73900569975376,
+      "trainable_parameters": 737,
+      "initial_front_sha256": "a1457e4e67b0e70f9205b4cc4c0cd22943aa8a7c6e6b784a64e154c3b571131f",
+      "final_front_sha256": "9e4fad2df40939ae171f3d47064f29ec9e468728d834cda3aba8b458ef715868",
+      "pfn_sha256": "d148bd52752b4880037ded360184cdfa10285f57b1c4d7770aa57ccb33df8ada",
+      "schedule_sha256": "f3e4d5f235274c0e63f11a225cf7e5006affd80b612b3a849b8838c4c1c66be0",
+      "checkpoint_sha256": "6971b4e24a35a9c99e8429aad2b7f40342d88b68158b2daaf5d3b71c5eeaf5be",
+      "pfn_updates": 0,
+      "real_updates": 0
+    },
+    {
+      "arm": "signed_smooth",
+      "seed": 12,
+      "updates": 1024,
+      "seconds": 143.37456799997017,
+      "trainable_parameters": 737,
+      "initial_front_sha256": "a1457e4e67b0e70f9205b4cc4c0cd22943aa8a7c6e6b784a64e154c3b571131f",
+      "final_front_sha256": "99ff62ee2d1e3fe7cd7ed462a4252fed1659ffb2d3bbe6180d6213b765be2a65",
+      "pfn_sha256": "d148bd52752b4880037ded360184cdfa10285f57b1c4d7770aa57ccb33df8ada",
+      "schedule_sha256": "f3e4d5f235274c0e63f11a225cf7e5006affd80b612b3a849b8838c4c1c66be0",
+      "checkpoint_sha256": "6ccb66edadbbcba2ed0943f3270973184f81dc7373001a905ed0df8ee2f8a006",
+      "pfn_updates": 0,
+      "real_updates": 0
+    },
+    {
+      "arm": "partial_trained",
+      "seed": 13,
+      "updates": 1024,
+      "seconds": 186.26086559984833,
+      "trainable_parameters": 737,
+      "initial_front_sha256": "b8e4514b552d77538257f9859c2dd46f205a2b18d538f8de89be2add52c35458",
+      "final_front_sha256": "895029f3d2c4f33ecd93eaa7317c4f7d9820e60f882b589b36833f53aa7eb473",
+      "pfn_sha256": "abb38cf4ad063fa518f26a95fad0b4b8039057dfb4195e84850faabd3ef89423",
+      "schedule_sha256": "64ff23722e8b920a5f82c2812e162c69767c48b3d55de50488773149741f4cbf",
+      "checkpoint_sha256": "ff189070ac3361a6540c7d6c6bd445a23e941f27f7f5092879e914a8a1ed6de0",
+      "pfn_updates": 0,
+      "real_updates": 0
+    },
+    {
+      "arm": "signed_smooth",
+      "seed": 13,
+      "updates": 1024,
+      "seconds": 145.46937520010397,
+      "trainable_parameters": 737,
+      "initial_front_sha256": "b8e4514b552d77538257f9859c2dd46f205a2b18d538f8de89be2add52c35458",
+      "final_front_sha256": "47c4bb76e7ea2d9acef9a29c678cda3258162cec2597e2e5cbacb8c4c6828ae1",
+      "pfn_sha256": "abb38cf4ad063fa518f26a95fad0b4b8039057dfb4195e84850faabd3ef89423",
+      "schedule_sha256": "64ff23722e8b920a5f82c2812e162c69767c48b3d55de50488773149741f4cbf",
+      "checkpoint_sha256": "307aca00c7fcf9338d6d35dadd18e7eb80796741cb090218f63a5b62b3c1042b",
+      "pfn_updates": 0,
+      "real_updates": 0
+    }
+  ],
+  "full_source0_comparisons": 2904,
+  "full_source0_probability_max_abs": 0.0,
+  "replay": [
+    {
+      "arm": "node",
+      "split": "development",
+      "graph": 2,
+      "stored_probability_max_abs": 0.0,
+      "repeat_probability_max_abs": 0.0016452670097351074,
+      "stored_argmax_change": 0.0
+    },
+    {
+      "arm": "node",
+      "split": "real",
+      "graph": "Cora",
+      "stored_probability_max_abs": 0.005493879318237305,
+      "repeat_probability_max_abs": 0.006509900093078613,
+      "stored_argmax_change": 0.001
+    },
+    {
+      "arm": "node",
+      "split": "real",
+      "graph": "texas",
+      "stored_probability_max_abs": 0.0,
+      "repeat_probability_max_abs": 0.0,
+      "stored_argmax_change": 0.0
+    },
+    {
+      "arm": "partial_frozen",
+      "split": "development",
+      "graph": 2,
+      "stored_probability_max_abs": 0.0,
+      "repeat_probability_max_abs": 0.0007977336645126343,
+      "stored_argmax_change": 0.0
+    },
+    {
+      "arm": "partial_frozen",
+      "split": "real",
+      "graph": "Cora",
+      "stored_probability_max_abs": 0.0046190619468688965,
+      "repeat_probability_max_abs": 0.006230294704437256,
+      "stored_argmax_change": 0.001
+    },
+    {
+      "arm": "partial_frozen",
+      "split": "real",
+      "graph": "texas",
+      "stored_probability_max_abs": 0.0,
+      "repeat_probability_max_abs": 0.0,
+      "stored_argmax_change": 0.0
+    },
+    {
+      "arm": "partial_trained",
+      "split": "development",
+      "graph": 2,
+      "stored_probability_max_abs": 0.0,
+      "repeat_probability_max_abs": 0.0,
+      "stored_argmax_change": 0.0
+    },
+    {
+      "arm": "partial_trained",
+      "split": "real",
+      "graph": "Cora",
+      "stored_probability_max_abs": 0.003286302089691162,
+      "repeat_probability_max_abs": 0.003510415554046631,
+      "stored_argmax_change": 0.001
+    },
+    {
+      "arm": "partial_trained",
+      "split": "real",
+      "graph": "texas",
+      "stored_probability_max_abs": 0.0020093917846679688,
+      "repeat_probability_max_abs": 0.0,
+      "stored_argmax_change": 0.0
+    },
+    {
+      "arm": "partial_random",
+      "split": "development",
+      "graph": 2,
+      "stored_probability_max_abs": 0.0,
+      "repeat_probability_max_abs": 0.0,
+      "stored_argmax_change": 0.0
+    },
+    {
+      "arm": "partial_random",
+      "split": "real",
+      "graph": "Cora",
+      "stored_probability_max_abs": 0.01269596815109253,
+      "repeat_probability_max_abs": 0.007809996604919434,
+      "stored_argmax_change": 0.005
+    },
+    {
+      "arm": "partial_random",
+      "split": "real",
+      "graph": "texas",
+      "stored_probability_max_abs": 0.0029548704624176025,
+      "repeat_probability_max_abs": 0.0,
+      "stored_argmax_change": 0.0
+    },
+    {
+      "arm": "signed_smooth",
+      "split": "development",
+      "graph": 2,
+      "stored_probability_max_abs": 0.0,
+      "repeat_probability_max_abs": 0.0,
+      "stored_argmax_change": 0.0
+    },
+    {
+      "arm": "signed_smooth",
+      "split": "real",
+      "graph": "Cora",
+      "stored_probability_max_abs": 0.006099015474319458,
+      "repeat_probability_max_abs": 0.006038665771484375,
+      "stored_argmax_change": 0.007
+    },
+    {
+      "arm": "signed_smooth",
+      "split": "real",
+      "graph": "texas",
+      "stored_probability_max_abs": 0.0,
+      "repeat_probability_max_abs": 0.0030702948570251465,
+      "stored_argmax_change": 0.0
+    }
+  ],
+  "same_frame_one_source_comparisons": 246,
+  "same_frame_one_source_probability_max_abs": 0.019274771213531494,
+  "replay_limit": "0.1 guard detects only gross corruption; measured variation is reported and not included in bootstrap CIs."
+}

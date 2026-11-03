@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은42개 프로젝트 묶음의176항목이다. 실패·중단51개, 보존41개, 교훈61개, 미실행23개이며 **176번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은43개 프로젝트 묶음의180항목이다. 실패·중단52개, 보존42개, 교훈63개, 미실행23개이며 **180번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,24 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## 관측 좌표만 고정하는 Confidence Sheaf PFN
+
+2026-11-03. 첫 scalar 좌표만 clamp하고 관측하지 않은 두 번째 좌표를 전파하는 변경을 비교했다. 새 frontend6개/6144update,동일 초기화·512train bank·schedule·고정PFN,새 known-family32base graph,기존4real 개발graph다.
+
+| 방법 | 개발 missing-query accuracy % | Cora % | CiteSeer % | Texas % | Wisconsin % |
+|---|---|---|---|---|---|
+| pcfi | 50.367 | 50.229 | 30.916 | 27.844 | 21.557 |
+| node | 50.350 | 49.835 | 31.223 | 28.178 | 22.048 |
+| partial_frozen | 50.362 | 49.800 | 31.514 | 26.424 | 22.388 |
+| partial_trained | 50.232 | 49.824 | 31.158 | 27.422 | 22.058 |
+| partial_initial | 50.326 | 50.181 | 30.996 | 27.858 | 21.916 |
+| partial_random | 47.927 | 38.578 | 25.320 | 26.871 | 24.034 |
+| signed_smooth | 49.946 | 49.272 | 31.045 | 28.301 | 23.378 |
+
+partial_trained_minus_node:accuracy=-0.118074%p CI[-0.410523217262834, 0.16035034795655417]; partial_trained_minus_pcfi:accuracy=-0.135065%p CI[-0.3686364602286792, 0.08342222464999093]; partial_frozen_minus_node:accuracy=+0.011438%p CI[-0.19001886361456893, 0.2091231569541227]; partial_trained_minus_partial_frozen:accuracy=-0.129512%p CI[-0.4134588441218917, 0.14871358916660818]; partial_trained_minus_partial_initial:accuracy=-0.093266%p CI[-0.314049007360701, 0.11446042683875222]; partial_trained_minus_partial_random:accuracy=+2.305651%p CI[1.137082186911021, 3.648101343936383]; partial_random_minus_full_random:accuracy=-0.340911%p CI[-0.7137906330390282, 0.017033220980164184]; partial_trained_minus_signed_smooth:accuracy=+0.286140%p CI[-0.08556479459930283, 0.6371842445063916]; signed_smooth_minus_signed:accuracy=-0.313494%p CI[-0.610699974902656, 0.00012718194105000704]; signed_smooth_minus_pcfi:accuracy=-0.421204%p CI[-0.7337652552295654, -0.09699406895156527]
+
+같은 frame에서 source가 하나뿐이면 두 clamp가 같다는 적용 범위도 확인했다. Primary는 그대로 두고 source1/source2+를 secondary로 분리했다. 전체 메소드 novelty의 성공/종료 판정으로 확대하지 않는다. [전체 보고서](findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md), [계산 정의](findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md), [구조화 기록](findings/pcfi-partial-clamp.yaml).
 
 ## Confidence Sheaf PFN 구성 요소의 개발 비교
 
@@ -397,4 +415,4 @@ CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teach
 3. 필요한 수치는 연결된 보고서와 [164개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-03_v19.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-03_v20.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.

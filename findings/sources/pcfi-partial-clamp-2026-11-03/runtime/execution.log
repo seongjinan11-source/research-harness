@@ -1,0 +1,165 @@
+C:\Users\seongjin\Desktop\csag_share\research\www2027\results\graph_pfn_suite_20261016\upstream\graphpfn-3b9b115490249cc777227c846babfb55f35bd8c4\src\graphpfn\_vendor\limix\model\layer.py:131: UserWarning: 1Torch was not compiled with flash attention. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\aten\src\ATen\native\transformers\cuda\sdp_utils.cpp:555.)
+  attention_outputs = torch.nn.functional.scaled_dot_product_attention(
+TRAIN partial_trained 11 128 1.0501 18.9
+TRAIN partial_trained 11 256 1.0101 37.9
+TRAIN partial_trained 11 384 1.0372 57.1
+TRAIN partial_trained 11 512 1.0576 76.5
+TRAIN partial_trained 11 640 1.0435 96.0
+TRAIN partial_trained 11 768 0.9664 115.7
+TRAIN partial_trained 11 896 1.0994 136.3
+TRAIN partial_trained 11 1024 1.0537 157.3
+TRAIN signed_smooth 11 128 1.0585 16.6
+TRAIN signed_smooth 11 256 1.0171 33.1
+TRAIN signed_smooth 11 384 1.0463 49.3
+TRAIN signed_smooth 11 512 1.0656 65.8
+TRAIN signed_smooth 11 640 1.0471 82.4
+TRAIN signed_smooth 11 768 0.9748 99.1
+TRAIN signed_smooth 11 896 1.1074 115.6
+TRAIN signed_smooth 11 1024 1.0612 132.3
+EVAL pcfi 11 development 112
+EVAL pcfi 11 development 224
+EVAL pcfi 11 development 336
+EVAL pcfi 11 development 448
+EVAL node 11 development 112
+EVAL node 11 development 224
+EVAL node 11 development 336
+EVAL node 11 development 448
+EVAL partial_frozen 11 development 112
+EVAL partial_frozen 11 development 224
+EVAL partial_frozen 11 development 336
+EVAL partial_frozen 11 development 448
+EVAL partial_trained 11 development 112
+EVAL partial_trained 11 development 224
+EVAL partial_trained 11 development 336
+EVAL partial_trained 11 development 448
+EVAL partial_initial 11 development 112
+EVAL partial_initial 11 development 224
+EVAL partial_initial 11 development 336
+EVAL partial_initial 11 development 448
+EVAL full_random 11 development 112
+EVAL full_random 11 development 224
+EVAL full_random 11 development 336
+EVAL full_random 11 development 448
+EVAL partial_random 11 development 112
+EVAL partial_random 11 development 224
+EVAL partial_random 11 development 336
+EVAL partial_random 11 development 448
+EVAL signed_smooth 11 development 112
+EVAL signed_smooth 11 development 224
+EVAL signed_smooth 11 development 336
+EVAL signed_smooth 11 development 448
+EVAL signed 11 development 112
+EVAL signed 11 development 224
+EVAL signed 11 development 336
+EVAL signed 11 development 448
+SEED COMPLETE 11
+C:\Users\seongjin\Desktop\csag_share\research\www2027\results\graph_pfn_suite_20261016\upstream\graphpfn-3b9b115490249cc777227c846babfb55f35bd8c4\src\graphpfn\_vendor\limix\model\layer.py:131: UserWarning: 1Torch was not compiled with flash attention. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\aten\src\ATen\native\transformers\cuda\sdp_utils.cpp:555.)
+  attention_outputs = torch.nn.functional.scaled_dot_product_attention(
+TRAIN partial_trained 12 128 1.0819 23.6
+TRAIN partial_trained 12 256 1.1112 46.4
+TRAIN partial_trained 12 384 1.0082 69.5
+TRAIN partial_trained 12 512 0.9747 92.7
+TRAIN partial_trained 12 640 0.9421 115.4
+TRAIN partial_trained 12 768 1.0583 138.2
+TRAIN partial_trained 12 896 1.1163 161.1
+TRAIN partial_trained 12 1024 1.0534 184.7
+TRAIN signed_smooth 12 128 1.0983 17.8
+TRAIN signed_smooth 12 256 1.1129 35.7
+TRAIN signed_smooth 12 384 1.01 53.8
+TRAIN signed_smooth 12 512 0.9836 71.5
+TRAIN signed_smooth 12 640 0.9485 89.3
+TRAIN signed_smooth 12 768 1.0707 107.6
+TRAIN signed_smooth 12 896 1.1233 125.3
+TRAIN signed_smooth 12 1024 1.0572 143.3
+EVAL pcfi 12 development 112
+EVAL pcfi 12 development 224
+EVAL pcfi 12 development 336
+EVAL pcfi 12 development 448
+EVAL node 12 development 112
+EVAL node 12 development 224
+EVAL node 12 development 336
+EVAL node 12 development 448
+EVAL partial_frozen 12 development 112
+EVAL partial_frozen 12 development 224
+EVAL partial_frozen 12 development 336
+EVAL partial_frozen 12 development 448
+EVAL partial_trained 12 development 112
+EVAL partial_trained 12 development 224
+EVAL partial_trained 12 development 336
+EVAL partial_trained 12 development 448
+EVAL partial_initial 12 development 112
+EVAL partial_initial 12 development 224
+EVAL partial_initial 12 development 336
+EVAL partial_initial 12 development 448
+EVAL full_random 12 development 112
+EVAL full_random 12 development 224
+EVAL full_random 12 development 336
+EVAL full_random 12 development 448
+EVAL partial_random 12 development 112
+EVAL partial_random 12 development 224
+EVAL partial_random 12 development 336
+EVAL partial_random 12 development 448
+EVAL signed_smooth 12 development 112
+EVAL signed_smooth 12 development 224
+EVAL signed_smooth 12 development 336
+EVAL signed_smooth 12 development 448
+EVAL signed 12 development 112
+EVAL signed 12 development 224
+EVAL signed 12 development 336
+EVAL signed 12 development 448
+SEED COMPLETE 12
+C:\Users\seongjin\Desktop\csag_share\research\www2027\results\graph_pfn_suite_20261016\upstream\graphpfn-3b9b115490249cc777227c846babfb55f35bd8c4\src\graphpfn\_vendor\limix\model\layer.py:131: UserWarning: 1Torch was not compiled with flash attention. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\aten\src\ATen\native\transformers\cuda\sdp_utils.cpp:555.)
+  attention_outputs = torch.nn.functional.scaled_dot_product_attention(
+TRAIN partial_trained 13 128 1.0551 23.4
+TRAIN partial_trained 13 256 0.9655 46.5
+TRAIN partial_trained 13 384 1.06 69.5
+TRAIN partial_trained 13 512 1.0769 93.1
+TRAIN partial_trained 13 640 1.0592 116.7
+TRAIN partial_trained 13 768 1.056 140.2
+TRAIN partial_trained 13 896 1.0172 162.8
+TRAIN partial_trained 13 1024 1.0119 186.2
+TRAIN signed_smooth 13 128 1.0507 18.2
+TRAIN signed_smooth 13 256 0.9844 37.2
+TRAIN signed_smooth 13 384 1.0625 55.8
+TRAIN signed_smooth 13 512 1.0812 73.8
+TRAIN signed_smooth 13 640 1.0682 92.2
+TRAIN signed_smooth 13 768 1.0821 109.9
+TRAIN signed_smooth 13 896 1.0231 127.7
+TRAIN signed_smooth 13 1024 1.0092 145.4
+EVAL pcfi 13 development 112
+EVAL pcfi 13 development 224
+EVAL pcfi 13 development 336
+EVAL pcfi 13 development 448
+EVAL node 13 development 112
+EVAL node 13 development 224
+EVAL node 13 development 336
+EVAL node 13 development 448
+EVAL partial_frozen 13 development 112
+EVAL partial_frozen 13 development 224
+EVAL partial_frozen 13 development 336
+EVAL partial_frozen 13 development 448
+EVAL partial_trained 13 development 112
+EVAL partial_trained 13 development 224
+EVAL partial_trained 13 development 336
+EVAL partial_trained 13 development 448
+EVAL partial_initial 13 development 112
+EVAL partial_initial 13 development 224
+EVAL partial_initial 13 development 336
+EVAL partial_initial 13 development 448
+EVAL full_random 13 development 112
+EVAL full_random 13 development 224
+EVAL full_random 13 development 336
+EVAL full_random 13 development 448
+EVAL partial_random 13 development 112
+EVAL partial_random 13 development 224
+EVAL partial_random 13 development 336
+EVAL partial_random 13 development 448
+EVAL signed_smooth 13 development 112
+EVAL signed_smooth 13 development 224
+EVAL signed_smooth 13 development 336
+EVAL signed_smooth 13 development 448
+EVAL signed 13 development 112
+EVAL signed 13 development 224
+EVAL signed 13 development 336
+EVAL signed 13 development 448
+SEED COMPLETE 13

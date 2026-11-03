@@ -788,6 +788,23 @@
 현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
 
 
+## PCFIPC-F01 — 부분 좌표 clamp와 동일 예산 frontend 학습으로 기존 Node 및 PCFI를 함께 넘어선다.
+
+- 판정: 현재 구현·동일 예산·개발 bank에서 두 강한 기준선에 대한 동시 우위는 확보하지 못했다. 전체 sheaf/PFN 연구를 종료하지 않는다.
+- 원인·병목 [원인 미상]: 원인 미상. Clamp를 푼 계산의 correctness와 latent 좌표 사용만으로 예측 이득을 보장하지 않는다. 식별성·잠재 증폭·최적화·prior 부합 여부는 인과적으로 분리되지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 관측 방향과 추론할 latent 성분을 식별·정규화하는 장치의 필요성이 독립적으로 입증되거나, 다른 feature 관계에서 같은 정보·예산의 강한 기준을 넘어설 근거가 생길 때.
+- 먼저 이겨야 할 기준선: PCFI/Native-PCFI+samePFN,oldfullclamp,partialfrozen,random/initialframe,smoothsignedscalar;targetoptimizer0.
+- 최소 재검증: 최소한의 관측 법칙을 먼저 고정하고 같은 초기화·예산으로 새 graph/feature family에서 관측 source가 있는 query accuracy와 NLL/Brier를 graph-paired 비교. 개발 bank 최고 arm 선택을 독립 확인으로 부르지 않는다.
+- 닫지 않은 것: 모든 부분관측 harmonic extension,일반 sheaf/edge/dynamic maps,다른 사전학습 family,최소노름·명시적 잠재 prior,PFN joint training 또는 실제 missing 연구 전체.
+- 원문: [findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md](../findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md); [findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md](../findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md); [findings/sources/pcfi-partial-clamp-2026-11-03/protocol.json](../findings/sources/pcfi-partial-clamp-2026-11-03/protocol.json); [findings/sources/pcfi-partial-clamp-2026-11-03/results/statistics.json](../findings/sources/pcfi-partial-clamp-2026-11-03/results/statistics.json); [findings/sources/pcfi-partial-clamp-2026-11-03/results/audit.json](../findings/sources/pcfi-partial-clamp-2026-11-03/results/audit.json); [findings/sources/pcfi-partial-clamp-2026-11-03/results/preflight.json](../findings/sources/pcfi-partial-clamp-2026-11-03/results/preflight.json); [findings/sources/pcfi-partial-clamp-2026-11-03/results/source_rank_checks.json](../findings/sources/pcfi-partial-clamp-2026-11-03/results/source_rank_checks.json)
+
+- [NeuralSheafDiffusion](https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html): 복수 태그 일치 (약한 단서); tags=graph-geometry, graph-structure-use; keywords=-
+  - 기록된 강점: 양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.
+  - 기록된 강점: 공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+
 ## RFILL-F01 — 현재 frozen conditional Gaussian completion이 분산을 맞춘 random-fill/graph-prior null보다 안정적으로 좋은 예측을 제공한다.
 
 - 판정: 사전 random-control gate 미통과; 현재 frozen conditional의 독립 가치 미입증

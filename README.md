@@ -160,3 +160,21 @@ edge-pcfi -0.243949%p CI[-0.5338936172534267, 0.06024526333356581]; edge-scalar 
 node_minus_pcfi=+0.080097%p CI[-0.1365710486064015, 0.3025558766215623]; node_minus_node_nolabel=+0.268850%p CI[0.04220929254982626, 0.5056492014098001]; node_minus_signed=+0.253150%p CI[-0.02066880686233795, 0.5310521697396225]; node_minus_node_geometry_shuffle=-0.035223%p CI[-0.12244736858557316, 0.04753142487188128]; node_uniform_minus_uniform=-0.290566%p CI[-0.5996681003332499, -0.019166541552883186]; node_minus_node_uniform=+0.538148%p CI[0.11773807913328584, 0.9685269136417165]; pcfi_minus_uniform=+0.167485%p CI[-0.28950384160141285, 0.6276919939891128]; signed_minus_pcfi=-0.173053%p CI[-0.4306325276996595, 0.10077196055861028]; node_nolabel_minus_pcfi=-0.188754%p CI[-0.36152359352041336, -0.02118026602979674]; spatial_confidence_by_node_interaction=+0.370663%p CI[0.05541017704068957, 0.6973559827760616]
 
 구성요소의효과를분리해보존하며각비교를전체프로젝트의자동종료기준으로쓰지않는다. Native-PCFI/LPfloor와수치변동을별도보고했다. StaticNode의동치두채널계산과CPUfrontend비용개선도보존한다. [전체보고서](findings/sources/pcfi-reviewer-ablation-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/pcfi-reviewer-ablation-2026-11-03/METHOD_KO.md), [구조화기록](findings/pcfi-reviewer-ablation.yaml).
+
+## 관측 좌표만 고정하는 Confidence Sheaf PFN
+
+2026-11-03. 첫 scalar 좌표만 clamp하고 관측하지 않은 두 번째 좌표를 전파하는 변경을 비교했다. 새 frontend6개/6144update,동일 초기화·512train bank·schedule·고정PFN,새 known-family32base graph,기존4real 개발graph다.
+
+| 방법 | 개발 missing-query accuracy % | Cora % | CiteSeer % | Texas % | Wisconsin % |
+|---|---|---|---|---|---|
+| pcfi | 50.367 | 50.229 | 30.916 | 27.844 | 21.557 |
+| node | 50.350 | 49.835 | 31.223 | 28.178 | 22.048 |
+| partial_frozen | 50.362 | 49.800 | 31.514 | 26.424 | 22.388 |
+| partial_trained | 50.232 | 49.824 | 31.158 | 27.422 | 22.058 |
+| partial_initial | 50.326 | 50.181 | 30.996 | 27.858 | 21.916 |
+| partial_random | 47.927 | 38.578 | 25.320 | 26.871 | 24.034 |
+| signed_smooth | 49.946 | 49.272 | 31.045 | 28.301 | 23.378 |
+
+partial_trained_minus_node:accuracy=-0.118074%p CI[-0.410523217262834, 0.16035034795655417]; partial_trained_minus_pcfi:accuracy=-0.135065%p CI[-0.3686364602286792, 0.08342222464999093]; partial_frozen_minus_node:accuracy=+0.011438%p CI[-0.19001886361456893, 0.2091231569541227]; partial_trained_minus_partial_frozen:accuracy=-0.129512%p CI[-0.4134588441218917, 0.14871358916660818]; partial_trained_minus_partial_initial:accuracy=-0.093266%p CI[-0.314049007360701, 0.11446042683875222]; partial_trained_minus_partial_random:accuracy=+2.305651%p CI[1.137082186911021, 3.648101343936383]; partial_random_minus_full_random:accuracy=-0.340911%p CI[-0.7137906330390282, 0.017033220980164184]; partial_trained_minus_signed_smooth:accuracy=+0.286140%p CI[-0.08556479459930283, 0.6371842445063916]; signed_smooth_minus_signed:accuracy=-0.313494%p CI[-0.610699974902656, 0.00012718194105000704]; signed_smooth_minus_pcfi:accuracy=-0.421204%p CI[-0.7337652552295654, -0.09699406895156527]
+
+같은 frame에서 source가 하나뿐이면 두 clamp가 같다는 적용 범위도 확인했다. Primary는 그대로 두고 source1/source2+를 secondary로 분리했다. 전체 메소드 novelty의 성공/종료 판정으로 확대하지 않는다. [전체 보고서](findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md), [계산 정의](findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md), [구조화 기록](findings/pcfi-partial-clamp.yaml).

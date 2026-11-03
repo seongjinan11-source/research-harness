@@ -1,0 +1,24 @@
+id: pcfi-partial-clamp
+date: '2026-11-03'
+status: completed-development-pilot
+text: 관측 scalar의 첫 좌표만 고정하고 두 번째 latent 좌표를 관측 노드에서도 추론하는 confidence 전파를 구현하고 기존 전체
+  clamp와 분리했다.
+tags:
+- graph-geometry
+- graph-structure-use
+- observation-mask
+- zero-shot-gap
+- eval-protocol
+keywords:
+- partial coordinate clamp
+- observation-consistent sheaf diffusion
+- rank-one observation constraint
+- learned flat node frames
+- PCFI pseudo confidence
+- frozen GraphPFN
+- latent observation direction
+- signed smooth scalar
+- tanh coefficient saturation
+- imputation boundary condition
+note: findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md
+followup: findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md

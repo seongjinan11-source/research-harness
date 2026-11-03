@@ -1,0 +1,110 @@
+project: PCFI partial-coordinate clamp pilot
+date: '2026-11-03'
+source: findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md
+setting: Same frozen PFN, task-conditioned numeric SO2 frames, scalar observation constraints, synthetic-only matched-budget training; development-only
+  evaluation.
+related:
+- NeuralSheafDiffusion
+entries:
+- id: PCFIPC-P01
+  kind: preserved
+  claim: 관측 scalar의 첫 좌표만 고정하고 두 번째 latent 좌표를 관측 노드에서도 추론하는 confidence 전파를 구현하고 기존 전체 clamp와 분리했다.
+  observation: 'partial_trained_minus_node:accuracy=-0.118074%p CI[-0.410523217262834, 0.16035034795655417]; partial_trained_minus_pcfi:accuracy=-0.135065%p
+    CI[-0.3686364602286792, 0.08342222464999093]; partial_frozen_minus_node:accuracy=+0.011438%p CI[-0.19001886361456893, 0.2091231569541227]; partial_trained_minus_partial_frozen:accuracy=-0.129512%p
+    CI[-0.4134588441218917, 0.14871358916660818]; partial_trained_minus_partial_initial:accuracy=-0.093266%p CI[-0.314049007360701, 0.11446042683875222];
+    partial_trained_minus_partial_random:accuracy=+2.305651%p CI[1.137082186911021, 3.648101343936383]; partial_random_minus_full_random:accuracy=-0.340911%p
+    CI[-0.7137906330390282, 0.017033220980164184]; partial_trained_minus_signed_smooth:accuracy=+0.286140%p CI[-0.08556479459930283, 0.6371842445063916];
+    signed_smooth_minus_signed:accuracy=-0.313494%p CI[-0.610699974902656, 0.00012718194105000704]; signed_smooth_minus_pcfi:accuracy=-0.421204%p CI[-0.7337652552295654,
+    -0.09699406895156527]; preflight={''full_matches_old_max_abs'': 0.0, ''partial_aligned_max_abs'': 5.551115123125783e-16, ''partial_aligned_gradient_max_abs'':
+    1.0907941216942163e-14, ''identity_is_pcfi_exact'': True, ''toy_full_query'': 0.7071067811865475, ''toy_partial_query'': 1.4142135623730943, ''toy_observed_second_mean_abs'':
+    0.9999999999999993, ''toy_note'': ''Analytic construction demonstrates a different function; not node-classification improvement.''}'
+  verdict: 새 연산·독립 aligned forward/gradient 동치·identity PCFI 환원·동일 예산 비교를 보존한다. 표현력 차이는 분류 성능 주장과 구분한다.
+  do_not_claim: 일반 sheaf 최초성/참 posterior 복원/독립 real 확인/모든 signed 방법 대비 우위가 아니다. 작은 분석 예제의 값 변화는 분류 개선의 증거가 아니다.
+  tags: &id001
+  - graph-geometry
+  - graph-structure-use
+  - observation-mask
+  - zero-shot-gap
+  - eval-protocol
+  keywords: &id002
+  - partial coordinate clamp
+  - observation-consistent sheaf diffusion
+  - rank-one observation constraint
+  - learned flat node frames
+  - PCFI pseudo confidence
+  - frozen GraphPFN
+  - latent observation direction
+  - signed smooth scalar
+  - tanh coefficient saturation
+  - imputation boundary condition
+  source_refs: &id003
+  - findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md
+  - findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md
+  - findings/sources/pcfi-partial-clamp-2026-11-03/protocol.json
+  - findings/sources/pcfi-partial-clamp-2026-11-03/results/statistics.json
+  - findings/sources/pcfi-partial-clamp-2026-11-03/results/audit.json
+  - findings/sources/pcfi-partial-clamp-2026-11-03/results/preflight.json
+  - findings/sources/pcfi-partial-clamp-2026-11-03/results/source_rank_checks.json
+  revisit_status: open
+  evidence: 6new737parameterfrontends/6144queryCEupdates;sameold512traininputs/initialPhi/schedule;3frozenPFNs;32newknownfamilybasegraphs8percell,k1/4,4primarymasks;4oldrealgraphs;graphpaired5000bootstrap/fixedseeds/unadjusted.
+- id: PCFIPC-F01
+  kind: failure
+  claim: 부분 좌표 clamp와 동일 예산 frontend 학습으로 기존 Node 및 PCFI를 함께 넘어선다.
+  observation: partial_trained_minus_node:accuracy=-0.118074%p CI[-0.410523217262834, 0.16035034795655417]; partial_trained_minus_pcfi:accuracy=-0.135065%p
+    CI[-0.3686364602286792, 0.08342222464999093]; partial_frozen_minus_node:accuracy=+0.011438%p CI[-0.19001886361456893, 0.2091231569541227]; partial_trained_minus_partial_frozen:accuracy=-0.129512%p
+    CI[-0.4134588441218917, 0.14871358916660818]; partial_trained_minus_partial_initial:accuracy=-0.093266%p CI[-0.314049007360701, 0.11446042683875222];
+    partial_trained_minus_partial_random:accuracy=+2.305651%p CI[1.137082186911021, 3.648101343936383]; partial_random_minus_full_random:accuracy=-0.340911%p
+    CI[-0.7137906330390282, 0.017033220980164184]; partial_trained_minus_signed_smooth:accuracy=+0.286140%p CI[-0.08556479459930283, 0.6371842445063916];
+    signed_smooth_minus_signed:accuracy=-0.313494%p CI[-0.610699974902656, 0.00012718194105000704]; signed_smooth_minus_pcfi:accuracy=-0.421204%p CI[-0.7337652552295654,
+    -0.09699406895156527]
+  verdict: 현재 구현·동일 예산·개발 bank에서 두 강한 기준선에 대한 동시 우위는 확보하지 못했다. 전체 sheaf/PFN 연구를 종료하지 않는다.
+  failure_reason: 원인 미상. Clamp를 푼 계산의 correctness와 latent 좌표 사용만으로 예측 이득을 보장하지 않는다. 식별성·잠재 증폭·최적화·prior 부합 여부는 인과적으로 분리되지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  closed_scope: 현재 SO2 static737parameter frontend,100step finite propagation,기존512traininputs/1024updates/3seeds/frozenPFN에서 PCFI와 기존 Node 대비 동시 primary
+    우위 주장.
+  not_closed: 모든 부분관측 harmonic extension,일반 sheaf/edge/dynamic maps,다른 사전학습 family,최소노름·명시적 잠재 prior,PFN joint training 또는 실제 missing 연구 전체.
+  reopen_when: 관측 방향과 추론할 latent 성분을 식별·정규화하는 장치의 필요성이 독립적으로 입증되거나, 다른 feature 관계에서 같은 정보·예산의 강한 기준을 넘어설 근거가 생길 때.
+  comparison_floor: PCFI/Native-PCFI+samePFN,oldfullclamp,partialfrozen,random/initialframe,smoothsignedscalar;targetoptimizer0.
+  recheck: 최소한의 관측 법칙을 먼저 고정하고 같은 초기화·예산으로 새 graph/feature family에서 관측 source가 있는 query accuracy와 NLL/Brier를 graph-paired 비교. 개발 bank 최고 arm 선택을 독립 확인으로
+    부르지 않는다.
+  reopen_tags: *id001
+  reopen_keywords:
+  - partial observation identifiability
+  - latent prior
+  - minimum norm harmonic extension
+  - observation directional reconstruction
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  revisit_status: open
+  evidence: 6new737parameterfrontends/6144queryCEupdates;sameold512traininputs/initialPhi/schedule;3frozenPFNs;32newknownfamilybasegraphs8percell,k1/4,4primarymasks;4oldrealgraphs;graphpaired5000bootstrap/fixedseeds/unadjusted.
+- id: PCFIPC-L01
+  kind: lesson
+  claim: 경계 연산의 frozen 변경과 그 변경에 맞춘 재학습, frame 학습과 무작위 frame 효과를 구분해야 한다.
+  observation: partial_trained_minus_node:accuracy=-0.118074%p CI[-0.410523217262834, 0.16035034795655417]; partial_trained_minus_pcfi:accuracy=-0.135065%p
+    CI[-0.3686364602286792, 0.08342222464999093]; partial_frozen_minus_node:accuracy=+0.011438%p CI[-0.19001886361456893, 0.2091231569541227]; partial_trained_minus_partial_frozen:accuracy=-0.129512%p
+    CI[-0.4134588441218917, 0.14871358916660818]; partial_trained_minus_partial_initial:accuracy=-0.093266%p CI[-0.314049007360701, 0.11446042683875222];
+    partial_trained_minus_partial_random:accuracy=+2.305651%p CI[1.137082186911021, 3.648101343936383]; partial_random_minus_full_random:accuracy=-0.340911%p
+    CI[-0.7137906330390282, 0.017033220980164184]; partial_trained_minus_signed_smooth:accuracy=+0.286140%p CI[-0.08556479459930283, 0.6371842445063916];
+    signed_smooth_minus_signed:accuracy=-0.313494%p CI[-0.610699974902656, 0.00012718194105000704]; signed_smooth_minus_pcfi:accuracy=-0.421204%p CI[-0.7337652552295654,
+    -0.09699406895156527]
+  verdict: Partial-frozen−Node는 추론 변경,Partial-trained−Partial-frozen은 동일 예산 학습 증분이다. Partial-random−Full-random은 같은 무작위 frame의 경계 효과이며 Partial-initial은
+    near-identity 초기 network 대조다. Smooth scalar도 실제 음수 사용과 saturation을 보고한다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  revisit_status: open
+  evidence: 6new737parameterfrontends/6144queryCEupdates;sameold512traininputs/initialPhi/schedule;3frozenPFNs;32newknownfamilybasegraphs8percell,k1/4,4primarymasks;4oldrealgraphs;graphpaired5000bootstrap/fixedseeds/unadjusted.
+- id: PCFIPC-L02
+  kind: lesson
+  claim: 고정된 같은 flat frame에서 연결 성분별·feature별 관측 source가 하나뿐이면 두 clamp가 같은 계산이 된다.
+  observation: '학습 구조와 primary를 고정한 뒤 추가한 기전 분석. 독립 소형24개/단일및분리성분/3column/무작위frame의 최대 출력차이=1.5404344466674047e-15; primary episode counts={''zero'': 42,
+    ''one'': 74, ''two_or_more'': 140}; measured frozen prediction max=0.019274771213531494'
+  verdict: 공통 좌표의 상태가 source 방향의 span에 남아 새 관측 성분이 생기지 않는다. Source2+ secondary도 보고하되 전체 primary를 사후 변경하지 않는다. 별도로 재학습한 frame까지 같거나 모든 multi-source에서 효과가
+    없다는 뜻은 아니다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  revisit_status: open
+  evidence: 6new737parameterfrontends/6144queryCEupdates;sameold512traininputs/initialPhi/schedule;3frozenPFNs;32newknownfamilybasegraphs8percell,k1/4,4primarymasks;4oldrealgraphs;graphpaired5000bootstrap/fixedseeds/unadjusted.
