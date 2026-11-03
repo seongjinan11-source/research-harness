@@ -1,0 +1,25 @@
+id: pcfi-reviewer-ablation
+date: '2026-11-03'
+status: completed-development-ablations
+text: 고정 PFN의 수치 Node-frame에서 context label 통계, 공간 confidence, 직접 signed scalar의 기여를
+  동일 학습 예산으로 분리했다.
+tags:
+- graph-geometry
+- graph-structure-use
+- observation-mask
+- zero-shot-gap
+- eval-protocol
+keywords:
+- confidence weighted sheaf imputation
+- geometry-only context shuffle
+- label-free node frames
+- spatial confidence factorial
+- learned signed scalar baseline
+- static flat connection
+- aligned two-channel diffusion
+- frozen downstream PFN
+- component ablation
+- scalar gain clipping
+- no negative coefficients learned
+note: findings/sources/pcfi-reviewer-ablation-2026-11-03/METHOD_KO.md
+followup: findings/sources/pcfi-reviewer-ablation-2026-11-03/REPORT_KO.md

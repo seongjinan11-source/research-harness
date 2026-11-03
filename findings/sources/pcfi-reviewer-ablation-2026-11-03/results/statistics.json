@@ -1,0 +1,1200 @@
+{
+  "development": {
+    "pcfi": {
+      "accuracy": 0.44771807564230787,
+      "nll": 1.3060620052217466,
+      "brier": 0.6405874577431345
+    },
+    "uniform": {
+      "accuracy": 0.4460432229503728,
+      "nll": 1.3073804233863762,
+      "brier": 0.6411591558428501
+    },
+    "node": {
+      "accuracy": 0.44851904120719394,
+      "nll": 1.307072838431141,
+      "brier": 0.6412450548080126
+    },
+    "node_nolabel": {
+      "accuracy": 0.44583053965511005,
+      "nll": 1.3076381649002438,
+      "brier": 0.6418348538156594
+    },
+    "node_uniform": {
+      "accuracy": 0.4431375614534104,
+      "nll": 1.3149611527401692,
+      "brier": 0.644176216444687
+    },
+    "signed": {
+      "accuracy": 0.44598754085973896,
+      "nll": 1.3213273421838274,
+      "brier": 0.6436000951626943
+    },
+    "node_geometry_shuffle": {
+      "accuracy": 0.4488712759536475,
+      "nll": 1.3074160690940115,
+      "brier": 0.6413703449674332
+    }
+  },
+  "comparisons": {
+    "node_minus_pcfi": {
+      "accuracy": {
+        "mean": 0.0008009655648860206,
+        "ci95": [
+          -0.0013657104860640152,
+          0.003025558766215623
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": 0.0010108332093939926,
+        "ci95": [
+          -0.0012235466928461282,
+          0.0033294311599510913
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": 0.0006575970648781543,
+        "ci95": [
+          -0.00046972300759226624,
+          0.0019479298054067807
+        ],
+        "graphs": 32
+      }
+    },
+    "node_minus_node_nolabel": {
+      "accuracy": {
+        "mean": 0.0026885015520839136,
+        "ci95": [
+          0.00042209292549826266,
+          0.005056492014098001
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": -0.0005653264691028222,
+        "ci95": [
+          -0.0027506760838220254,
+          0.0016185785458524423
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": -0.000589799007646716,
+        "ci95": [
+          -0.0016556272834529124,
+          0.00041747126665848304
+        ],
+        "graphs": 32
+      }
+    },
+    "node_minus_signed": {
+      "accuracy": {
+        "mean": 0.00253150034745489,
+        "ci95": [
+          -0.0002066880686233795,
+          0.005310521697396225
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": -0.014254503752686299,
+        "ci95": [
+          -0.02406213424543491,
+          -0.0057538632288972125
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": -0.0023550403546817055,
+        "ci95": [
+          -0.005408116346744161,
+          0.0010170112875726837
+        ],
+        "graphs": 32
+      }
+    },
+    "node_minus_node_geometry_shuffle": {
+      "accuracy": {
+        "mean": -0.0003522347464536002,
+        "ci95": [
+          -0.0012244736858557316,
+          0.0004753142487188128
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": -0.00034323066287052575,
+        "ci95": [
+          -0.0013850229227013824,
+          0.000707269548358087
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": -0.00012529015942059967,
+        "ci95": [
+          -0.0005759346583550844,
+          0.00033655903740634094
+        ],
+        "graphs": 32
+      }
+    },
+    "node_uniform_minus_uniform": {
+      "accuracy": {
+        "mean": -0.0029056614969623805,
+        "ci95": [
+          -0.0059966810033324994,
+          -0.00019166541552883187
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": 0.007580729353793026,
+        "ci95": [
+          0.0025675657553539404,
+          0.013174955075443476
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": 0.0030170606018369364,
+        "ci95": [
+          0.0009639721631746747,
+          0.0053393212287388084
+        ],
+        "graphs": 32
+      }
+    },
+    "node_minus_node_uniform": {
+      "accuracy": {
+        "mean": 0.005381479753783506,
+        "ci95": [
+          0.0011773807913328584,
+          0.009685269136417166
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": -0.007888314309028333,
+        "ci95": [
+          -0.014209558270544247,
+          -0.0016531135819528228
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": -0.002931161636674473,
+        "ci95": [
+          -0.005622155550373555,
+          -0.00018212382261066195
+        ],
+        "graphs": 32
+      }
+    },
+    "pcfi_minus_uniform": {
+      "accuracy": {
+        "mean": 0.0016748526919351044,
+        "ci95": [
+          -0.0028950384160141285,
+          0.006276919939891128
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": -0.0013184181646292998,
+        "ci95": [
+          -0.006813799227193816,
+          0.003971664967513021
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": -0.0005716980997156908,
+        "ci95": [
+          -0.003134092041968436,
+          0.0018662743115673707
+        ],
+        "graphs": 32
+      }
+    },
+    "signed_minus_pcfi": {
+      "accuracy": {
+        "mean": -0.0017305347825688692,
+        "ci95": [
+          -0.004306325276996595,
+          0.0010077196055861028
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": 0.015265336962080291,
+        "ci95": [
+          0.007327648338265734,
+          0.02430669637077037
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": 0.00301263741955986,
+        "ci95": [
+          7.092976276562659e-05,
+          0.005827813441005948
+        ],
+        "graphs": 32
+      }
+    },
+    "node_nolabel_minus_pcfi": {
+      "accuracy": {
+        "mean": -0.001887535987197893,
+        "ci95": [
+          -0.003615235935204134,
+          -0.0002118026602979674
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": 0.0015761596784968149,
+        "ci95": [
+          -0.0007585112673366946,
+          0.003931608948971649
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": 0.0012473960725248702,
+        "ci95": [
+          0.00011968467412391961,
+          0.0024215712529071843
+        ],
+        "graphs": 32
+      }
+    },
+    "spatial_confidence_by_node_interaction": {
+      "accuracy": {
+        "mean": 0.003706627061848401,
+        "ci95": [
+          0.0005541017704068957,
+          0.006973559827760616
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": -0.006569896144399031,
+        "ci95": [
+          -0.01276764824030159,
+          -0.001078156216566447
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": -0.002359463536958782,
+        "ci95": [
+          -0.0046440606449683775,
+          -0.00024792601556496196
+        ],
+        "graphs": 32
+      }
+    }
+  },
+  "by_context": {
+    "1": {
+      "pcfi": {
+        "accuracy": 0.3943379413824653,
+        "nll": 1.4250525916675123,
+        "brier": 0.6975391912883125
+      },
+      "uniform": {
+        "accuracy": 0.3895426832209543,
+        "nll": 1.4244743346509885,
+        "brier": 0.6977089891162421
+      },
+      "node": {
+        "accuracy": 0.39501543392150973,
+        "nll": 1.4246126426353294,
+        "brier": 0.6977681599316815
+      },
+      "node_nolabel": {
+        "accuracy": 0.39243920328961607,
+        "nll": 1.4258904877872112,
+        "brier": 0.6987974370690836
+      },
+      "node_uniform": {
+        "accuracy": 0.38504970983249737,
+        "nll": 1.4355733633586254,
+        "brier": 0.7020129111742147
+      },
+      "signed": {
+        "accuracy": 0.3932319734243643,
+        "nll": 1.4485193035877435,
+        "brier": 0.7011436470867732
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.39515868670763604,
+        "nll": 1.4246089892017164,
+        "brier": 0.6977662569806732
+      }
+    },
+    "4": {
+      "pcfi": {
+        "accuracy": 0.5010982099021505,
+        "nll": 1.1870714187759814,
+        "brier": 0.5836357241979565
+      },
+      "uniform": {
+        "accuracy": 0.5025437626797912,
+        "nll": 1.190286512121764,
+        "brier": 0.5846093225694583
+      },
+      "node": {
+        "accuracy": 0.5020226484928781,
+        "nll": 1.1895330342269526,
+        "brier": 0.5847219496843437
+      },
+      "node_nolabel": {
+        "accuracy": 0.4992218760206038,
+        "nll": 1.1893858420132764,
+        "brier": 0.5848722705622351
+      },
+      "node_uniform": {
+        "accuracy": 0.5012254130743234,
+        "nll": 1.1943489421217126,
+        "brier": 0.5863395217151596
+      },
+      "signed": {
+        "accuracy": 0.49874310829511376,
+        "nll": 1.194135380779911,
+        "brier": 0.5860565432386154
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.5025838651996589,
+        "nll": 1.1902231489863064,
+        "brier": 0.5849744329541932
+      }
+    }
+  },
+  "by_cell": {
+    "homo_smooth": {
+      "pcfi": {
+        "accuracy": 0.5567266317280744,
+        "nll": 1.183876088310267,
+        "brier": 0.5617616288392832
+      },
+      "uniform": {
+        "accuracy": 0.5479069681729659,
+        "nll": 1.1988388694973031,
+        "brier": 0.5685557827287271
+      },
+      "node": {
+        "accuracy": 0.5615421001569355,
+        "nll": 1.184114279675257,
+        "brier": 0.561360868965111
+      },
+      "node_nolabel": {
+        "accuracy": 0.5571984262022823,
+        "nll": 1.186137336782001,
+        "brier": 0.5628811991492161
+      },
+      "node_uniform": {
+        "accuracy": 0.5481671011720185,
+        "nll": 1.2034393042161369,
+        "brier": 0.5701527340573618
+      },
+      "signed": {
+        "accuracy": 0.5564167939670207,
+        "nll": 1.1938628170081282,
+        "brier": 0.5631879649101412
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.5615732338109155,
+        "nll": 1.1853779580058519,
+        "brier": 0.5619267899991491
+      }
+    },
+    "homo_rough": {
+      "pcfi": {
+        "accuracy": 0.6096079866192163,
+        "nll": 1.0808853031900159,
+        "brier": 0.5199392360178036
+      },
+      "uniform": {
+        "accuracy": 0.6074709736861971,
+        "nll": 1.080647043564003,
+        "brier": 0.5205006469935222
+      },
+      "node": {
+        "accuracy": 0.6073925277734847,
+        "nll": 1.0806173837904147,
+        "brier": 0.5205381573476623
+      },
+      "node_nolabel": {
+        "accuracy": 0.6060998885211413,
+        "nll": 1.0826723782387935,
+        "brier": 0.5216289304347911
+      },
+      "node_uniform": {
+        "accuracy": 0.5993064194326284,
+        "nll": 1.0997044936096019,
+        "brier": 0.52732064684658
+      },
+      "signed": {
+        "accuracy": 0.6053086521336948,
+        "nll": 1.0955282968207376,
+        "brier": 0.5234621671048512
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.6076816888120175,
+        "nll": 1.080990698922523,
+        "brier": 0.5208252477596927
+      }
+    },
+    "hetero_smooth": {
+      "pcfi": {
+        "accuracy": 0.33355554335013265,
+        "nll": 1.4615960669992525,
+        "brier": 0.7197122808780794
+      },
+      "uniform": {
+        "accuracy": 0.3375454455305131,
+        "nll": 1.4547240509088024,
+        "brier": 0.7160008452389462
+      },
+      "node": {
+        "accuracy": 0.33404102858663426,
+        "nll": 1.465454164596915,
+        "brier": 0.7223089792938233
+      },
+      "node_nolabel": {
+        "accuracy": 0.33266415793991533,
+        "nll": 1.463578124990564,
+        "brier": 0.7215096390662329
+      },
+      "node_uniform": {
+        "accuracy": 0.33495452407971166,
+        "nll": 1.461231579691334,
+        "brier": 0.7198591770855035
+      },
+      "signed": {
+        "accuracy": 0.3321145452407824,
+        "nll": 1.48093948614275,
+        "brier": 0.7223256852893133
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.3343712383271626,
+        "nll": 1.4654459526777732,
+        "brier": 0.7222489749908146
+      }
+    },
+    "hetero_rough": {
+      "pcfi": {
+        "accuracy": 0.29098214087180807,
+        "nll": 1.497890562387452,
+        "brier": 0.7609366852373715
+      },
+      "uniform": {
+        "accuracy": 0.2912495044118152,
+        "nll": 1.495311729575396,
+        "brier": 0.7595793484102051
+      },
+      "node": {
+        "accuracy": 0.29110050831172113,
+        "nll": 1.4981055256619766,
+        "brier": 0.760772213625454
+      },
+      "node_nolabel": {
+        "accuracy": 0.28735968595710104,
+        "nll": 1.498164819589616,
+        "brier": 0.7613196466123977
+      },
+      "node_uniform": {
+        "accuracy": 0.29012220112928316,
+        "nll": 1.495469233443604,
+        "brier": 0.759372307789303
+      },
+      "signed": {
+        "accuracy": 0.2901101720974582,
+        "nll": 1.5149787687636929,
+        "brier": 0.7654245633464717
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.2918589428644945,
+        "nll": 1.4978496667698973,
+        "brier": 0.7604803671200763
+      }
+    }
+  },
+  "by_source": {
+    "zero": {
+      "episodes_per_arm_seed": 32,
+      "scores": {
+        "pcfi": {
+          "accuracy": 0.4276921830766202,
+          "nll": 1.3415149394725205,
+          "brier": 0.6642851059311946
+        },
+        "uniform": {
+          "accuracy": 0.4276921830766202,
+          "nll": 1.3415149394725205,
+          "brier": 0.6642851059311946
+        },
+        "node": {
+          "accuracy": 0.4276921830766202,
+          "nll": 1.3415149394725205,
+          "brier": 0.6642851059311946
+        },
+        "node_nolabel": {
+          "accuracy": 0.4276921830766202,
+          "nll": 1.3415149394725205,
+          "brier": 0.6642851059311946
+        },
+        "node_uniform": {
+          "accuracy": 0.4276921830766202,
+          "nll": 1.3415149394725205,
+          "brier": 0.6642851059311946
+        },
+        "signed": {
+          "accuracy": 0.4276921830766202,
+          "nll": 1.3415149394725205,
+          "brier": 0.6642851059311946
+        },
+        "node_geometry_shuffle": {
+          "accuracy": 0.4276921830766202,
+          "nll": 1.3415149394725205,
+          "brier": 0.6642851059311946
+        }
+      }
+    },
+    "nonzero": {
+      "episodes_per_arm_seed": 224,
+      "scores": {
+        "pcfi": {
+          "accuracy": 0.4505789174374061,
+          "nll": 1.3009973003287791,
+          "brier": 0.6372020794305544
+        },
+        "uniform": {
+          "accuracy": 0.4486648000751946,
+          "nll": 1.3025040639454986,
+          "brier": 0.6378554486873724
+        },
+        "node": {
+          "accuracy": 0.4514943066544187,
+          "nll": 1.3021525382823722,
+          "brier": 0.6379536189332724
+        },
+        "node_nolabel": {
+          "accuracy": 0.4484217334520371,
+          "nll": 1.3027986256756325,
+          "brier": 0.6386276749420114
+        },
+        "node_uniform": {
+          "accuracy": 0.4453440440786661,
+          "nll": 1.3111677546355476,
+          "brier": 0.6413035179466148
+        },
+        "signed": {
+          "accuracy": 0.4486011634001846,
+          "nll": 1.318443399714014,
+          "brier": 0.6406450936243372
+        },
+        "node_geometry_shuffle": {
+          "accuracy": 0.45189686065036566,
+          "nll": 1.3025448018970816,
+          "brier": 0.6380968076868958
+        }
+      }
+    }
+  },
+  "secondary": {
+    "full": {
+      "pcfi": {
+        "accuracy": 0.9872643726417812,
+        "nll": 0.07378160094308958,
+        "brier": 0.02826076665252557
+      },
+      "uniform": {
+        "accuracy": 0.9872643726417812,
+        "nll": 0.07378160094308958,
+        "brier": 0.02826076665252557
+      },
+      "node": {
+        "accuracy": 0.9872643726417812,
+        "nll": 0.07378160094308958,
+        "brier": 0.02826076665252557
+      },
+      "node_nolabel": {
+        "accuracy": 0.9872643726417812,
+        "nll": 0.07378160094308958,
+        "brier": 0.02826076665252557
+      },
+      "node_uniform": {
+        "accuracy": 0.9872643726417812,
+        "nll": 0.07378160094308958,
+        "brier": 0.02826076665252557
+      },
+      "signed": {
+        "accuracy": 0.9872643726417812,
+        "nll": 0.07378160094308958,
+        "brier": 0.02826076665252557
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.9872643726417812,
+        "nll": 0.07378160094308958,
+        "brier": 0.02826076665252557
+      }
+    },
+    "sources2": {
+      "pcfi": {
+        "accuracy": 0.4539208982304186,
+        "nll": 1.289199663713088,
+        "brier": 0.6327253570909872
+      },
+      "uniform": {
+        "accuracy": 0.45082054346094075,
+        "nll": 1.2947285276294969,
+        "brier": 0.6344809517815575
+      },
+      "node": {
+        "accuracy": 0.4563072751660848,
+        "nll": 1.2896587243692714,
+        "brier": 0.632145029236793
+      },
+      "node_nolabel": {
+        "accuracy": 0.45676330335170046,
+        "nll": 1.2881285924988428,
+        "brier": 0.6313842212173824
+      },
+      "node_uniform": {
+        "accuracy": 0.44829513293518675,
+        "nll": 1.2982074656980247,
+        "brier": 0.6366433490297322
+      },
+      "signed": {
+        "accuracy": 0.45519554697966363,
+        "nll": 1.2884477645606516,
+        "brier": 0.6320457090172301
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.4570864673762239,
+        "nll": 1.2887714891564073,
+        "brier": 0.6317040703804637
+      }
+    },
+    "sources8": {
+      "pcfi": {
+        "accuracy": 0.4745377167464266,
+        "nll": 1.2617716676884887,
+        "brier": 0.6163378086393189
+      },
+      "uniform": {
+        "accuracy": 0.47290612675277055,
+        "nll": 1.2607252721591087,
+        "brier": 0.6159652678432127
+      },
+      "node": {
+        "accuracy": 0.4719240266186901,
+        "nll": 1.2633326156458038,
+        "brier": 0.6166747216961547
+      },
+      "node_nolabel": {
+        "accuracy": 0.4722590994474678,
+        "nll": 1.2611962506157444,
+        "brier": 0.6163092207732556
+      },
+      "node_uniform": {
+        "accuracy": 0.47101089624805764,
+        "nll": 1.263231712539924,
+        "brier": 0.6175319628068885
+      },
+      "signed": {
+        "accuracy": 0.4737984885584103,
+        "nll": 1.25745767231067,
+        "brier": 0.6143656572351911
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.4716650011132273,
+        "nll": 1.2635166461256762,
+        "brier": 0.6168631401027923
+      }
+    }
+  },
+  "real": {
+    "Cora": {
+      "pcfi": {
+        "accuracy": 0.5018777821118542,
+        "nll": 1.5313543555364764,
+        "brier": 0.6680448172138747
+      },
+      "uniform": {
+        "accuracy": 0.48952368699864324,
+        "nll": 1.5242055001885615,
+        "brier": 0.6698053441180657
+      },
+      "node": {
+        "accuracy": 0.4979966732461995,
+        "nll": 1.533792720165151,
+        "brier": 0.6691445614078787
+      },
+      "node_nolabel": {
+        "accuracy": 0.500086258729027,
+        "nll": 1.533144808388217,
+        "brier": 0.6693209897756066
+      },
+      "node_uniform": {
+        "accuracy": 0.48709125546947757,
+        "nll": 1.5261497452020862,
+        "brier": 0.6703748909045142
+      },
+      "signed": {
+        "accuracy": 0.49395878312603625,
+        "nll": 1.5392094008111412,
+        "brier": 0.6733641314576576
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.4986207226342459,
+        "nll": 1.5313441265361831,
+        "brier": 0.6684447491932084
+      },
+      "native_pcfi": {
+        "accuracy": 0.5203025296125977,
+        "nll": 1.5539548839680366,
+        "brier": 0.6586502540725784,
+        "macro_f1": 0.5197642454512135
+      },
+      "lp": {
+        "accuracy": 0.5628102435065506,
+        "nll": 1.8222586443038855,
+        "brier": 0.8113027179986391,
+        "macro_f1": 0.564802343643532
+      },
+      "negative_lp": {
+        "accuracy": 0.32025962532214236,
+        "nll": 2.2020008473269517,
+        "brier": 0.863734746206981,
+        "macro_f1": 0.31989635828235347
+      },
+      "mask_reference": {
+        "accuracy": 0.40045699530325973,
+        "nll": 1.6090678428831118,
+        "brier": 0.7233286265021106,
+        "macro_f1": 0.40043153358937217
+      }
+    },
+    "CiteSeer": {
+      "pcfi": {
+        "accuracy": 0.308523030362316,
+        "nll": 1.8758759621076777,
+        "brier": 0.8377231857001043
+      },
+      "uniform": {
+        "accuracy": 0.3241752168364171,
+        "nll": 1.8985396721294607,
+        "brier": 0.8440411013986346
+      },
+      "node": {
+        "accuracy": 0.3127513147753685,
+        "nll": 1.8689136000308848,
+        "brier": 0.836525212274526
+      },
+      "node_nolabel": {
+        "accuracy": 0.3104634373239701,
+        "nll": 1.8743401556146406,
+        "brier": 0.8375890187361203
+      },
+      "node_uniform": {
+        "accuracy": 0.3209920517365442,
+        "nll": 1.8957825829398827,
+        "brier": 0.8464212103248551
+      },
+      "signed": {
+        "accuracy": 0.305960456106513,
+        "nll": 1.8745323443648962,
+        "brier": 0.8421666491392495
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.31220842362690115,
+        "nll": 1.8683127499028176,
+        "brier": 0.836847586962643
+      },
+      "native_pcfi": {
+        "accuracy": 0.3386723641630044,
+        "nll": 2.042325852947792,
+        "brier": 0.8814801123224201,
+        "macro_f1": 0.29940918545203643
+      },
+      "lp": {
+        "accuracy": 0.3443394953587057,
+        "nll": 1.7583334661520365,
+        "brier": 0.8201410031745248,
+        "macro_f1": 0.35213059713739686
+      },
+      "negative_lp": {
+        "accuracy": 0.24756925266309734,
+        "nll": 1.8703383537437934,
+        "brier": 0.836006172486793,
+        "macro_f1": 0.2564362933111361
+      },
+      "mask_reference": {
+        "accuracy": 0.25012134480170023,
+        "nll": 1.8501907849496046,
+        "brier": 0.862260922885983,
+        "macro_f1": 0.20646637411579796
+      }
+    },
+    "texas": {
+      "pcfi": {
+        "accuracy": 0.28005460340019167,
+        "nll": 2.5385002664359053,
+        "brier": 0.9425586465288299
+      },
+      "uniform": {
+        "accuracy": 0.2905848556890224,
+        "nll": 2.543718343305978,
+        "brier": 0.9418830063322946
+      },
+      "node": {
+        "accuracy": 0.28178440249518677,
+        "nll": 2.4905790396702248,
+        "brier": 0.9353528499057295
+      },
+      "node_nolabel": {
+        "accuracy": 0.28315434697174896,
+        "nll": 2.5002235780563615,
+        "brier": 0.9406069291737545
+      },
+      "node_uniform": {
+        "accuracy": 0.26690210431019257,
+        "nll": 2.452983685501627,
+        "brier": 0.9275410446161416
+      },
+      "signed": {
+        "accuracy": 0.28294946294333556,
+        "nll": 2.533707715550299,
+        "brier": 0.9425075743062378
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.28248976472015686,
+        "nll": 2.4951095835370505,
+        "brier": 0.9369415299908417
+      },
+      "native_pcfi": {
+        "accuracy": 0.33259768792857025,
+        "nll": 2.7368145741392396,
+        "brier": 0.9620522878432999,
+        "macro_f1": 0.2010556116612193
+      },
+      "lp": {
+        "accuracy": 0.13710997929747928,
+        "nll": 1.5562458548169407,
+        "brier": 0.8036276809475772,
+        "macro_f1": 0.07404336384525727
+      },
+      "negative_lp": {
+        "accuracy": 0.6353736841788312,
+        "nll": 1.456905360241687,
+        "brier": 0.7511887771503719,
+        "macro_f1": 0.4074810562153539
+      },
+      "mask_reference": {
+        "accuracy": 0.2128154920740705,
+        "nll": 2.3592795514309,
+        "brier": 0.9705018287064185,
+        "macro_f1": 0.1462091190048357
+      }
+    },
+    "wisconsin": {
+      "pcfi": {
+        "accuracy": 0.21556672471983276,
+        "nll": 2.085978644698189,
+        "brier": 0.9462749161777153
+      },
+      "uniform": {
+        "accuracy": 0.2288810528151371,
+        "nll": 2.158798548650507,
+        "brier": 0.9500059954770685
+      },
+      "node": {
+        "accuracy": 0.2211404356857006,
+        "nll": 2.111582852235937,
+        "brier": 0.9536647136471369
+      },
+      "node_nolabel": {
+        "accuracy": 0.2275964995927449,
+        "nll": 2.0722069253775874,
+        "brier": 0.9423464199891751
+      },
+      "node_uniform": {
+        "accuracy": 0.21100834817772657,
+        "nll": 2.1456335655340846,
+        "brier": 0.9526546545090127
+      },
+      "signed": {
+        "accuracy": 0.21951163601768522,
+        "nll": 2.1629797008138754,
+        "brier": 0.9622206990793551
+      },
+      "node_geometry_shuffle": {
+        "accuracy": 0.22330559804694136,
+        "nll": 2.101401288826509,
+        "brier": 0.9492460041828905
+      },
+      "native_pcfi": {
+        "accuracy": 0.24444942200678532,
+        "nll": 2.487945637786508,
+        "brier": 1.0071652578154833,
+        "macro_f1": 0.19773815293050317
+      },
+      "lp": {
+        "accuracy": 0.265259418188079,
+        "nll": 1.6245831299147324,
+        "brier": 0.8109386881389136,
+        "macro_f1": 0.18449643487533593
+      },
+      "negative_lp": {
+        "accuracy": 0.4272501672063625,
+        "nll": 1.6446109146971217,
+        "brier": 0.7990875756080366,
+        "macro_f1": 0.28780426172841034
+      },
+      "mask_reference": {
+        "accuracy": 0.2386395913763456,
+        "nll": 1.9058684361253566,
+        "brier": 0.871046194583138,
+        "macro_f1": 0.19247223633919058
+      }
+    }
+  },
+  "geometry_shuffle_by_context": {
+    "1": {
+      "accuracy": {
+        "mean": -0.0001432527861264278,
+        "ci95": [
+          -0.00040751727914369084,
+          7.03141935309047e-05
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": 3.6534336129052936e-06,
+        "ci95": [
+          -2.2652285505414015e-05,
+          3.490826111243642e-05
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": 1.9029510083439297e-06,
+        "ci95": [
+          -1.1973752820125788e-05,
+          1.8019243963594306e-05
+        ],
+        "graphs": 32
+      }
+    },
+    "4": {
+      "accuracy": {
+        "mean": -0.0005612167067807405,
+        "ci95": [
+          -0.0023338246114171573,
+          0.0011295219587839863
+        ],
+        "graphs": 32
+      },
+      "nll": {
+        "mean": -0.0006901147593540728,
+        "ci95": [
+          -0.0027882387129229452,
+          0.0014231796484389353
+        ],
+        "graphs": 32
+      },
+      "brier": {
+        "mean": -0.00025248326984955217,
+        "ci95": [
+          -0.0011587206765227356,
+          0.0006677537991711214
+        ],
+        "graphs": 32
+      }
+    }
+  },
+  "diagnostics": {
+    "development": {
+      "pcfi": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.0,
+        "second_coordinate_mean_abs": 0.0,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      },
+      "uniform": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.0,
+        "second_coordinate_mean_abs": 0.0,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      },
+      "node": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.03558199511614172,
+        "second_coordinate_mean_abs": 0.07155934720049117,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      },
+      "node_nolabel": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.029497562964934332,
+        "second_coordinate_mean_abs": 0.041899322498162896,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      },
+      "node_uniform": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.05616988217298058,
+        "second_coordinate_mean_abs": 0.08571880916376055,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      },
+      "signed": {
+        "negative_gain_fraction": 0.0,
+        "gain_mean": 0.9790352223596225,
+        "gain_clip_positive_fraction": 0.6690907347418147,
+        "gain_abs_max": 1.0,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0
+      },
+      "node_geometry_shuffle": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.03552979173294565,
+        "second_coordinate_mean_abs": 0.07151359478969728,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      }
+    },
+    "real": {
+      "pcfi": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.0,
+        "second_coordinate_mean_abs": 0.0,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      },
+      "uniform": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.0,
+        "second_coordinate_mean_abs": 0.0,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      },
+      "node": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.027534132622854993,
+        "second_coordinate_mean_abs": 0.053051681010806026,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      },
+      "node_nolabel": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.022445878201526485,
+        "second_coordinate_mean_abs": 0.032390425512049764,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      },
+      "node_uniform": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.03748519125252238,
+        "second_coordinate_mean_abs": 0.059780770422043536,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      },
+      "signed": {
+        "negative_gain_fraction": 0.0,
+        "gain_mean": 0.9774629527495967,
+        "gain_clip_positive_fraction": 0.6692068870617933,
+        "gain_abs_max": 1.0,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0
+      },
+      "node_geometry_shuffle": {
+        "negative_cos_fraction": 0.0,
+        "mean_abs_sin": 0.027381297645560052,
+        "second_coordinate_mean_abs": 0.052811784907438174,
+        "observed_change": 0.0,
+        "spatial_steps": 100.0,
+        "channel_corrections": 1.0,
+        "warmup_spatial_steps": 0.0
+      }
+    }
+  },
+  "evaluation_hashes": {
+    "results/pcfi_s11/development_evaluation.json": "da09366d4ea8826804e2aeb330b66d777f6d032c0f5439d08dcd54bfa5606600",
+    "results/pcfi_s11/real_evaluation.json": "b55aac4d0cb701ee60115d504b5e019337062363e5c67327bbdc1675c3fedd91",
+    "results/uniform_s11/development_evaluation.json": "f70f6ce458f0f08e4c116e5c2c6a737daa53ddd130d6e8a022873487bbb238ce",
+    "results/uniform_s11/real_evaluation.json": "26bf922589a6dbbb92bc176a7cf637f3b6ef275252c70452b9d2df5b184c866f",
+    "results/node_s11/development_evaluation.json": "68d2d2e0ef177f65930242fbb65a0a7dffc0945bb005cb1f2c91b61f0ca08ccb",
+    "results/node_s11/real_evaluation.json": "c8f4d8dc7a7f030faa972676112329404409c68a308b951b1f22321a9fecddab",
+    "results/node_nolabel_s11/development_evaluation.json": "171f48be252ed98d565cf0973f2fb1fd6d6186a905e150af01c7fcc098cb584d",
+    "results/node_nolabel_s11/real_evaluation.json": "9190b8175e458f730483eae11931e68be98df3821aa5662c1ab5760098d8dca7",
+    "results/node_uniform_s11/development_evaluation.json": "f64993d1c201216892493f3fa7448140b10c72e91ef60bd4b25e93a5d8950e7b",
+    "results/node_uniform_s11/real_evaluation.json": "1c6d653cef21fb087725f6872e320263cff306af726c4ac5ddd29ab4edc2f5f1",
+    "results/signed_s11/development_evaluation.json": "1015b3cf11170c501aab4f2c135f019fdeef7a532ec165292ec908eb3bcde6a3",
+    "results/signed_s11/real_evaluation.json": "57066ed1de29c8b9431c41d57de37f2250561f6f29321d82dc8f8e8abe337c10",
+    "results/node_geometry_shuffle_s11/development_evaluation.json": "646d31b9bcddfb522aefcb20effe99a8ddb598744c92b79c3878875181048dca",
+    "results/node_geometry_shuffle_s11/real_evaluation.json": "3e953e171c8d03549023646c2be7953f155ee368cf63a906be94377277e7ec2e",
+    "results/pcfi_s12/development_evaluation.json": "691e2508cc02155f0c8ae7f16ca5a8106971afb3731cc6ea5347175ed9adffda",
+    "results/pcfi_s12/real_evaluation.json": "394d573971c3b483ea7aad0510d7d6fed6a9a7a2d7f2fc141edbb52032cbd002",
+    "results/uniform_s12/development_evaluation.json": "9c162cf68eb7a62718350d6abc4f692c28d4b01ddcc64a5900e7c590a0417468",
+    "results/uniform_s12/real_evaluation.json": "2eeba1110f1c796f9bbc5e4ff901a17b1a350178cf1ac34224fc07b40589aca9",
+    "results/node_s12/development_evaluation.json": "34a126f4477621a35bd3b509d85bd4634e99e2902fac025d4c90a0477ade3d39",
+    "results/node_s12/real_evaluation.json": "aa89f0d356e94aaa13f069293bc7758f600dec78c2a7d8e0629a141e73488e8e",
+    "results/node_nolabel_s12/development_evaluation.json": "168a9f6b08b7863de4cfad2f19a2c05d41eb4c0eda4917966058222321b7d3a8",
+    "results/node_nolabel_s12/real_evaluation.json": "105ee39e0cc7939b6fbae55515e8d4fd7b4974d33b47a755335b1bcd5aa1dce1",
+    "results/node_uniform_s12/development_evaluation.json": "0738b142adac0e52a439cf6f73f9e8da9cf0c72d38ad6cec4d62a4b8a560a11d",
+    "results/node_uniform_s12/real_evaluation.json": "ea1bde98abeaadd0581716f0696b794e303717ccbdf24e1571c05b365ea8ea36",
+    "results/signed_s12/development_evaluation.json": "8326380894563a2a811af5c69862723eaa9bf4034b83be8b8530e6c82ef0dc68",
+    "results/signed_s12/real_evaluation.json": "a7b25b513a544337a43cb6aff08feed6b1e47e18c5fad51518ea4bb70d5f4617",
+    "results/node_geometry_shuffle_s12/development_evaluation.json": "351934f5c4076f7ea5090a1e9e9ec9c82bf28abf038642d61700379e4929d58a",
+    "results/node_geometry_shuffle_s12/real_evaluation.json": "1a4ba728b460a825c1009f4f16c28f7bde650c32c7e087d3f88b678bb7f91506",
+    "results/pcfi_s13/development_evaluation.json": "392261a9bcbd4228a650d436b30de560c093d8daf3ae7709b282f05f6956a3b1",
+    "results/pcfi_s13/real_evaluation.json": "51cb0cfa0591e638503f1a53ef4458781f1634e7276c2b2184f7abec9c884127",
+    "results/uniform_s13/development_evaluation.json": "c98656c85f5b22261303f28287877d007e953eee593ecd1fba859f2f3c20da9b",
+    "results/uniform_s13/real_evaluation.json": "4da662c807db20905a688c131abd23b5b87aca4128973307c6d3298c4f894029",
+    "results/node_s13/development_evaluation.json": "9254da27bbb70da183e6592b1d924859f2b777c6c07651911a12c89fa4873b39",
+    "results/node_s13/real_evaluation.json": "87421d69066029bca9ab281f54de70ee68444fee6c941148ef0aaa56cca2a435",
+    "results/node_nolabel_s13/development_evaluation.json": "af2176210c481f065e218fdb641ae02cee3933a787fa9868afa36b9dd68a1369",
+    "results/node_nolabel_s13/real_evaluation.json": "8a33ba0355f5e5061a1575f9b2793d8b320766a8096060843265e0eb7253f606",
+    "results/node_uniform_s13/development_evaluation.json": "4bdf023aa96978afe7020ba9186ca7f7bc99e3148b05675463c799d0a1cd29ef",
+    "results/node_uniform_s13/real_evaluation.json": "66602e5e9a8cd2dfa3fe3d2d6ab7a12c7e6cbe63c90cf3371663716e822a339d",
+    "results/signed_s13/development_evaluation.json": "9e3c411360d811006b5e7dd39073f6b6c0c241133c3515147f58242265d4b29d",
+    "results/signed_s13/real_evaluation.json": "856b064440cd2dc2bb525cab51e54be0d5918a3fb364c63d2c915a0c2295cb3f",
+    "results/node_geometry_shuffle_s13/development_evaluation.json": "881f7af65bca1d617e25bed7cac6d110f25f5fb9c4c8ca1d79e60e2237ec0deb",
+    "results/node_geometry_shuffle_s13/real_evaluation.json": "ad205bb97a33a267223961983ab5edf143f9bc34a7f49b3b804661cf07f469b8"
+  },
+  "predictions": 10668,
+  "inference": "Development only; graphs are known-family new seeds. CI graph-paired/5000 draws, conditional stored predictions and three fixed training seeds; multiple contrasts unadjusted. Real floors native/LP/mask are previous identical-input caches, not newly trained arms."
+}

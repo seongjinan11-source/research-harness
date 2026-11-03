@@ -1,0 +1,85 @@
+project: Confidence Sheaf PFN reviewer ablations
+date: '2026-11-03'
+source: findings/sources/pcfi-reviewer-ablation-2026-11-03/REPORT_KO.md
+setting: Same frozen PFN, numeric missing-feature frontend components, synthetic-only matched-budget training; development-only evaluation.
+related:
+- NeuralSheafDiffusion
+entries:
+- id: PCFIRA-P01
+  kind: preserved
+  claim: 고정 PFN의 수치 Node-frame에서 context label 통계, 공간 confidence, 직접 signed scalar의 기여를 동일 학습 예산으로 분리했다.
+  observation: 'node_minus_pcfi=+0.080097%p CI[-0.1365710486064015, 0.3025558766215623]; node_minus_node_nolabel=+0.268850%p CI[0.04220929254982626, 0.5056492014098001];
+    node_minus_signed=+0.253150%p CI[-0.02066880686233795, 0.5310521697396225]; node_minus_node_geometry_shuffle=-0.035223%p CI[-0.12244736858557316, 0.04753142487188128];
+    node_uniform_minus_uniform=-0.290566%p CI[-0.5996681003332499, -0.019166541552883186]; node_minus_node_uniform=+0.538148%p CI[0.11773807913328584, 0.9685269136417165];
+    pcfi_minus_uniform=+0.167485%p CI[-0.28950384160141285, 0.6276919939891128]; signed_minus_pcfi=-0.173053%p CI[-0.4306325276996595, 0.10077196055861028];
+    node_nolabel_minus_pcfi=-0.188754%p CI[-0.36152359352041336, -0.02118026602979674]; spatial_confidence_by_node_interaction=+0.370663%p CI[0.05541017704068957,
+    0.6973559827760616]; signed diagnostics={''development'': {''negative_gain_fraction'': 0.0, ''gain_mean'': 0.9790352223596225, ''gain_clip_positive_fraction'':
+    0.6690907347418147, ''gain_abs_max'': 1.0, ''observed_change'': 0.0, ''spatial_steps'': 100.0, ''channel_corrections'': 1.0}, ''real'': {''negative_gain_fraction'':
+    0.0, ''gain_mean'': 0.9774629527495967, ''gain_clip_positive_fraction'': 0.6692068870617933, ''gain_abs_max'': 1.0, ''observed_change'': 0.0, ''spatial_steps'':
+    100.0, ''channel_corrections'': 1.0}};geometryshuffleCIincludes0;GPUstoredprobmax=0.01048809289932251;storedargmaxchangemax=0.003'
+  verdict: 구성 요소별 차이를 개발 결과로 보존하고 유효하지 않은 부품은 단순화 또는 주장 축소 대상으로 남긴다. 일부 ablation이 우수하다는 이유로 전체 메소드의 독립 검증 성공이나 종료로 바꾸지 않는다.
+  do_not_claim: Known-family새개발graph와기존real재사용이다. Scalar는음수gain0/clip약67%여서충분히최적화된signed함수족을대표한다고볼수없다. Geometryshuffle의효과가없는데label-free재학습차이만으로올바른class의미를읽었다고하지않는다.
+    양의interaction은uniformNode의손실도포함하며PCFI대비우위확인은아니다. 모든scalar방법/학습된진짜geometry/새featurelaw또는미사용real의일반화우위를뜻하지않는다.
+  tags: &id001
+  - graph-geometry
+  - graph-structure-use
+  - observation-mask
+  - zero-shot-gap
+  - eval-protocol
+  keywords: &id002
+  - confidence weighted sheaf imputation
+  - geometry-only context shuffle
+  - label-free node frames
+  - spatial confidence factorial
+  - learned signed scalar baseline
+  - static flat connection
+  - aligned two-channel diffusion
+  - frozen downstream PFN
+  - component ablation
+  - scalar gain clipping
+  - no negative coefficients learned
+  source_refs: &id003
+  - findings/sources/pcfi-reviewer-ablation-2026-11-03/REPORT_KO.md
+  - findings/sources/pcfi-reviewer-ablation-2026-11-03/METHOD_KO.md
+  - findings/sources/pcfi-reviewer-ablation-2026-11-03/protocol.json
+  - findings/sources/pcfi-reviewer-ablation-2026-11-03/results/statistics.json
+  - findings/sources/pcfi-reviewer-ablation-2026-11-03/results/audit.json
+  - findings/sources/pcfi-reviewer-ablation-2026-11-03/results/preflight.json
+  - findings/sources/pcfi-reviewer-ablation-2026-11-03/reference/workspace/pcfi_orthogonal_pilot/reviewer_development/REVIEW_KO.md
+  revisit_status: open
+  evidence: 9new737parameterfrontends/9216queryCEupdates;3oldPFNcheckpoints fixed;old512traininputs,exactsameinitialPhiandschedule;32newknownfamilydevelopmentgraphs8perfactorialcell,k1/4perclass,4primarymasks;4oldrealgraphs;5000basegraphpairedbootstrap/fixedseeds/unadjustedmultiplecontrasts.
+- id: PCFIRA-P02
+  kind: preserved
+  claim: Static Node-frame의 숫자 전파를 좌표 정렬된 두 scalar 채널의 confidence diffusion으로 동치 구현했다.
+  observation: '69forward/6parametergradient/18dense-sourcekernelchecks;maxforward=7.748603820800781e-07;gradient=1.7763568394002505e-15;frontendCPUmedians={''0'':
+    {''original_node'': 26.662050047889352, ''aligned_index_add'': 19.85189993865788, ''aligned_sparse'': 7.542549865320325}, ''Cora'': {''original_node'':
+    130.89285022579134, ''aligned_index_add'': 84.4507000874728, ''aligned_sparse'': 75.10869996622205}, ''texas'': {''original_node'': 24.7509500477463,
+    ''aligned_index_add'': 18.444949993863702, ''aligned_sparse'': 6.308950018137693}}. Prior22filesunchanged;optimizer0/PFNforward0.'
+  verdict: 같은 계산을 더 단순하게 구현한 정확한 재표현과 제한된 CPU frontend 비용 개선으로 보존한다.
+  do_not_claim: 일반edge-incidence/dynamicSheaf의동치나새정리,추가분류정확도,전체pipeline/GPU속도우위가아니다. Sparse경로는float32전이계수를재계산하므로반올림차이가있다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  revisit_status: open
+  evidence: 9new737parameterfrontends/9216queryCEupdates;3oldPFNcheckpoints fixed;old512traininputs,exactsameinitialPhiandschedule;32newknownfamilydevelopmentgraphs8perfactorialcell,k1/4perclass,4primarymasks;4oldrealgraphs;5000basegraphpairedbootstrap/fixedseeds/unadjustedmultiplecontrasts.
+- id: PCFIRA-L01
+  kind: lesson
+  claim: Geometry의 context 효과는 PFN에 들어가는 context label 효과와 분리해야 하며 k1 class-permutation 대칭을 고려해야 한다.
+  observation: 이전shuffle은frontend와PFN의label을함께바꿨다. 이번은geometry에만assignmentshuffle하고PFN에는원label을유지했다. 별도로label통계를제거한geometry를같은초기화부터학습했다. 클래스당1context일때assignmentshuffle은class이름의순열과같을수있다.
+  verdict: k1의불변성을context무효의증거로쓰지않고k4및label-free재학습을함께본다. Frozen입력개입과제거후재학습을같은실험으로부르지않는다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  revisit_status: open
+  evidence: 9new737parameterfrontends/9216queryCEupdates;3oldPFNcheckpoints fixed;old512traininputs,exactsameinitialPhiandschedule;32newknownfamilydevelopmentgraphs8perfactorialcell,k1/4perclass,4primarymasks;4oldrealgraphs;5000basegraphpairedbootstrap/fixedseeds/unadjustedmultiplecontrasts.
+- id: PCFIRA-L02
+  kind: lesson
+  claim: 공간 confidence와 Node-frame은 factorial로 분리하고 label heterophily와 feature law도 독립적으로 다룬다.
+  observation: I/Node×weighted/uniform공간전파를비교했고confidence는descriptor와채널보정에유지했다. 기존dev2graph는모두label-homo였으며새32개개발graph는label-homo/hetero×feature-smooth/rough네cell에8개씩배정했다.
+    원test/realbank를독립최종검증으로재명명하지않았다.
+  verdict: 공간가중치interaction을confidence전체효과로확대하지않고,라벨heterophily를모든numericfeature의부호반전과같게보지않는다. 한부품이효과없으면그부품의필요성을좁히고전체연구를자동중단하지않는다.
+  tags: *id001
+  keywords: *id002
+  source_refs: *id003
+  revisit_status: open
+  evidence: 9new737parameterfrontends/9216queryCEupdates;3oldPFNcheckpoints fixed;old512traininputs,exactsameinitialPhiandschedule;32newknownfamilydevelopmentgraphs8perfactorialcell,k1/4perclass,4primarymasks;4oldrealgraphs;5000basegraphpairedbootstrap/fixedseeds/unadjustedmultiplecontrasts.

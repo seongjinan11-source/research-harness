@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-03",
+  "purpose": "Development ablations of the existing numeric Node-frame imputer with an identical frozen PFN",
+  "seeds": [11, 12, 13],
+  "updates": 1024,
+  "learned_arms": ["node_nolabel", "node_uniform", "signed"],
+  "evaluation_arms": ["pcfi", "uniform", "node", "node_nolabel", "node_uniform", "signed", "node_geometry_shuffle"],
+  "development_graphs": 32,
+  "development_seed_start": 2040111300,
+  "context_per_class": [1, 4],
+  "primary_cases": ["uniform90", "uniform995", "cluster90", "cluster995"],
+  "cases": ["uniform90", "uniform995", "cluster90", "cluster995", "full", "sources2", "sources8"],
+  "training": "Reuse the exact 512 existing synthetic training inputs and per-seed 1024-update permutation schedule. Three new 737-parameter frontends per seed, same Front initialization state. AdamW lr .001, warmup16/cosine, weight_decay .01, clip1, AMP, query CE only. Same old PCFI-trained PFN fixed in eval mode throughout; PFN/real updates0. Nine discarded one-step preflight smoke runs. No post-development tuning in this run.",
+  "operators": {
+    "node": "Reuse old trained node checkpoint, original confidence and 100 spatial iterations, original one channel correction. Keep the old index_add computation throughout to isolate the ablated computation, rather than introducing the optimized backend simultaneously.",
+    "node_nolabel": "Same Node function and 737 parameters; zero descriptor and neighbor channels7:10 and class-affinity inputs. Retain context positions, graph, observed values/mask, confidence and degree. PFN receives all original context labels. Train from the same Front initialization, not from old node checkpoint.",
+    "node_uniform": "Replace only spatial P_ij,f with uniform A_ij/degree_i in Node. Preserve original confidence in geometry descriptors and channel correlation correction. Train from same initialization.",
+    "uniform": "I transport with uniform spatial weights; preserve original confidence elsewhere. No trainable frontend. Completes the spatial-confidence by Node-frame 2x2.",
+    "signed": "Same 21->32->1 shared MLP and observed/context inputs as ordered edge functions. Symmetric residual r_ij=(phi(u_i,u_j,a)+phi(u_j,u_i,a))/2, scalar gain=clamp(.99+r_ij,-1,1), self gain1. Original confidence row weights, 100 scalar iterations, observed clamp and one channel correction. Fixed .99 near-identity offset, no extra learned parameter. This permits independent signed edge coefficients without a cosine-difference or two-stalk constraint. Clipping and the distinct initial forward function are reported; negative coefficients are measured, not assumed.",
+    "node_geometry_shuffle": "Reuse old node checkpoint. Shuffle context-label assignment only when constructing geometry; pass original context labels to PFN and retain same query set. Fixed shuffle seed per graph/context setting, never selected by prediction quality. k1/class renaming symmetry is measured separately. No training."
+  },
+  "evaluation": "New 32 known-family development base graphs, 8 per label-homophily by feature-filter cell. For each base graph use both k1/k4 contexts and seven cases. Same masks across k. Same inputs in all arms. Evaluate existing real 4 development graphs/60 episodes without target training. Primary missing-own-feature-query accuracy, with NLL/Brier; average three fixed training seeds, contexts and four masks within base graph, 5000 graph-paired bootstrap. Report source0/nonzero and k strata. Repeated real graphs remain development data, not final confirmation.",
+  "comparisons": ["node_minus_node_nolabel", "node_minus_signed", "node_minus_pcfi", "node_uniform_minus_uniform", "spatial_confidence_by_node_interaction", "node_geometry_shuffle_minus_node"],
+  "interpretation": "Ablations identify necessary components and narrow claims; no automatic whole-project termination and no selecting a winning arm as independent confirmation. CIs conditional on stored forecasts and unadjusted for multiple comparisons. Include old Native-PCFI and signed LP as separately identified whole-pipeline reference floors on identical real inputs. Prior results/gates remain unchanged. No joint PFN retraining or new architecture/loss in this run."
+}

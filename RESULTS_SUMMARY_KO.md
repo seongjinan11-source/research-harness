@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은41개 프로젝트 묶음의172항목이다. 실패·중단51개, 보존39개, 교훈59개, 미실행23개이며 **172번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은42개 프로젝트 묶음의176항목이다. 실패·중단51개, 보존41개, 교훈61개, 미실행23개이며 **176번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,24 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## Confidence Sheaf PFN 구성 요소의 개발 비교
+
+2026-11-03. Context의geometry전용개입,공간confidence×Nodeframe,직접signedscalar를비교했다. 기존과같은초기Phi·512train입력·1024update·고정PFN을유지했고새frontend9개를학습했다. 새32개knownfamily개발graph는label/feature네cell에8개씩배정하고k1/4를함께평가했다. 기존4real은개발재사용이다.
+
+| 방법 | 새 개발 accuracy % | Cora % | CiteSeer % | Texas % | Wisconsin % |
+|---|---:|---:|---:|---:|---:|
+| pcfi | 44.772 | 50.188 | 30.852 | 28.005 | 21.557 |
+| uniform | 44.604 | 48.952 | 32.418 | 29.058 | 22.888 |
+| node | 44.852 | 49.800 | 31.275 | 28.178 | 22.114 |
+| node_nolabel | 44.583 | 50.009 | 31.046 | 28.315 | 22.760 |
+| node_uniform | 44.314 | 48.709 | 32.099 | 26.690 | 21.101 |
+| signed | 44.599 | 49.396 | 30.596 | 28.295 | 21.951 |
+| node_geometry_shuffle | 44.887 | 49.862 | 31.221 | 28.249 | 22.331 |
+
+node_minus_pcfi=+0.080097%p CI[-0.1365710486064015, 0.3025558766215623]; node_minus_node_nolabel=+0.268850%p CI[0.04220929254982626, 0.5056492014098001]; node_minus_signed=+0.253150%p CI[-0.02066880686233795, 0.5310521697396225]; node_minus_node_geometry_shuffle=-0.035223%p CI[-0.12244736858557316, 0.04753142487188128]; node_uniform_minus_uniform=-0.290566%p CI[-0.5996681003332499, -0.019166541552883186]; node_minus_node_uniform=+0.538148%p CI[0.11773807913328584, 0.9685269136417165]; pcfi_minus_uniform=+0.167485%p CI[-0.28950384160141285, 0.6276919939891128]; signed_minus_pcfi=-0.173053%p CI[-0.4306325276996595, 0.10077196055861028]; node_nolabel_minus_pcfi=-0.188754%p CI[-0.36152359352041336, -0.02118026602979674]; spatial_confidence_by_node_interaction=+0.370663%p CI[0.05541017704068957, 0.6973559827760616]
+
+구성요소의효과를분리해보존하며각비교를전체프로젝트의자동종료기준으로쓰지않는다. Native-PCFI/LPfloor와수치변동을별도보고했다. StaticNode의동치두채널계산과CPUfrontend비용개선도보존한다. [전체보고서](findings/sources/pcfi-reviewer-ablation-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/pcfi-reviewer-ablation-2026-11-03/METHOD_KO.md), [구조화기록](findings/pcfi-reviewer-ablation.yaml).
 
 ## PCFI의 confidence 가중 공간 확산을 Sheaf로 교체
 
@@ -379,4 +397,4 @@ CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teach
 3. 필요한 수치는 연결된 보고서와 [164개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-03_v18.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-03_v19.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.

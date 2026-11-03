@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-03",
+  "status": "review_and_equivalent_implementation_completed_ablation_training_not_started",
+  "candidate": "Existing static numeric Node-frame frontend, selected for development after existing bank review",
+  "invariants": [
+    "Synthetic-only optimizer updates; weights fixed on real graphs",
+    "Original confidence, observed boundary clamp, 100 spatial steps, one channel correction",
+    "Keep previous protocol, source locks, checkpoints, prediction files and gates unchanged",
+    "No new posterior head, auxiliary loss, or target-graph gradient updates",
+    "Ablation removes or replaces one computation at a time"
+  ],
+  "completed": {
+    "new_optimizer_updates": 0,
+    "pfn_forward_calls": 0,
+    "equivalent_aligned_backends": ["index_add_with_cached_P", "sparse_refactorization_of_P"],
+    "forward_cases": 69,
+    "parameter_gradient_cases": 6,
+    "dense_source_kernel_cases": 18,
+    "numerical_results": "results/node_alignment.json"
+  },
+  "next_order": [
+    {
+      "question": "Does context affect useful geometry independently of the classifier?",
+      "frozen_control": "Shuffle label assignment only for geometry; keep PFN labels and query set fixed",
+      "trained_control": "Geometry without context-label signal; same task exposure, initialization rule and budget",
+      "symmetry": "With one context per class, assignment shuffle may be only a class renaming and must not be treated as an informative perturbation"
+    },
+    {
+      "question": "How do spatial confidence and Node geometry interact?",
+      "design": "2x2 spatial confidence weighted/uniform and I/Node transport",
+      "hold_fixed": "Geometry descriptors and channel correction initially kept fixed to isolate spatial weighting"
+    },
+    {
+      "question": "Does orthogonal transport improve on a sufficiently strong scalar family?",
+      "design": "Train bounded signed scalar edge weights with the same visible input and budget",
+      "limits": "Current cos-only control and exact two-channel reparameterization do not answer this comparison"
+    }
+  ],
+  "development_data": {
+    "existing_dev_base_graphs": 2,
+    "existing_dev_label_modes": ["homo"],
+    "existing_dev_feature_modes": ["smooth", "rough"],
+    "required_next_design": "Use a separate development bank crossing label homophily and feature law before heterophily-based tuning; do not relabel current test or real development inputs as independent final confirmation"
+  },
+  "optional_later": "PCFI/Node by frozen/trainable PFN 2x2; joint PFN training is not required to define the method",
+  "final_evaluation": "Freeze the design first, then use new base-graph seeds and previously unused real graphs. Primary missing-query accuracy; also report NLL, Brier, source0 and numerical replay. Base-graph paired uncertainty.",
+  "interpretation": "An ineffective ablation component narrows a claim or simplifies the method; it does not automatically terminate the entire research direction. No new classification accuracy or end-to-end speed result is claimed by the equivalent CPU implementation."
+}

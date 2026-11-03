@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "smoke": [
+    {
+      "arm": "node_nolabel",
+      "seed": 11,
+      "discarded_updates": 1,
+      "gradient_abs_sum": 0.39499826170504093,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "node_uniform",
+      "seed": 11,
+      "discarded_updates": 1,
+      "gradient_abs_sum": 1.6743911169469357,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "signed",
+      "seed": 11,
+      "discarded_updates": 1,
+      "gradient_abs_sum": 74.2285087108612,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "node_nolabel",
+      "seed": 12,
+      "discarded_updates": 1,
+      "gradient_abs_sum": 4.605517029762268,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "node_uniform",
+      "seed": 12,
+      "discarded_updates": 1,
+      "gradient_abs_sum": 6.889161754399538,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "signed",
+      "seed": 12,
+      "discarded_updates": 1,
+      "gradient_abs_sum": 413.69543266296387,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "node_nolabel",
+      "seed": 13,
+      "discarded_updates": 1,
+      "gradient_abs_sum": 1.0451636500656605,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "node_uniform",
+      "seed": 13,
+      "discarded_updates": 1,
+      "gradient_abs_sum": 1.4190786490216851,
+      "pfn_unchanged": true
+    },
+    {
+      "arm": "signed",
+      "seed": 13,
+      "discarded_updates": 1,
+      "gradient_abs_sum": 54.02302169799805,
+      "pfn_unchanged": true
+    }
+  ],
+  "discarded_updates": 9,
+  "same_initial_front_states": true,
+  "same_frozen_pfn": true,
+  "uniform_rows_normalized": true,
+  "confidence_retained_outside_spatial_weights": true,
+  "geometry_label_channels_removed_only": true,
+  "query_and_pfn_context_unchanged_by_geometry_shuffle": true,
+  "k1_class_rename_descriptor_max_abs": 2.384185791015625e-07,
+  "signed_gain_bound_and_reverse_symmetry": true,
+  "old_files_preserved_baseline": 8353
+}

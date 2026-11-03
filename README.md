@@ -142,3 +142,21 @@ node-identity +0.115674%p CI[-0.43349611351197426, 0.6758997330149052]; node-dyn
 edge-pcfi -0.243949%p CI[-0.5338936172534267, 0.06024526333356581]; edge-scalar +0.445559%p CI[0.09320573869989934, 0.8435048538160689]; node-pcfi -0.226362%p CI[-0.4600395720623642, 0.027437612457655285]; node-scalar +0.463146%p CI[0.11849629002030168, 0.8351718057452501]; realhetero {'edge': {'pcfi': -0.1501645027210896, 'scalar': -0.1908579766253471, 'native_pcfi': -4.260033840401222, 'negative_lp': -28.53887091289313}, 'node': {'pcfi': 0.3706869668879398, 'scalar': 0.3299934929836823, 'native_pcfi': -3.7391823707921934, 'negative_lp': -28.018019443284103}}%p; gates={'edge': {'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}, 'node': {'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}}
 
 현재 두 후보는 사전 확대 기준을 통과하지 못했다. 일부 대조의 개선이 있으면 분리해 보존하고 같은 bank의 loss/차원/예산 조정으로 구제하지 않는다. 고유원인은미상으로남기고hidden-token실험과구분한다. [전체보고서](findings/sources/pcfi-orthogonal-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/pcfi-orthogonal-2026-11-03/METHOD_KO.md), [구조화기록](findings/pcfi-orthogonal.yaml).
+
+## Confidence Sheaf PFN 구성 요소의 개발 비교
+
+2026-11-03. Context의geometry전용개입,공간confidence×Nodeframe,직접signedscalar를비교했다. 기존과같은초기Phi·512train입력·1024update·고정PFN을유지했고새frontend9개를학습했다. 새32개knownfamily개발graph는label/feature네cell에8개씩배정하고k1/4를함께평가했다. 기존4real은개발재사용이다.
+
+| 방법 | 새 개발 accuracy % | Cora % | CiteSeer % | Texas % | Wisconsin % |
+|---|---:|---:|---:|---:|---:|
+| pcfi | 44.772 | 50.188 | 30.852 | 28.005 | 21.557 |
+| uniform | 44.604 | 48.952 | 32.418 | 29.058 | 22.888 |
+| node | 44.852 | 49.800 | 31.275 | 28.178 | 22.114 |
+| node_nolabel | 44.583 | 50.009 | 31.046 | 28.315 | 22.760 |
+| node_uniform | 44.314 | 48.709 | 32.099 | 26.690 | 21.101 |
+| signed | 44.599 | 49.396 | 30.596 | 28.295 | 21.951 |
+| node_geometry_shuffle | 44.887 | 49.862 | 31.221 | 28.249 | 22.331 |
+
+node_minus_pcfi=+0.080097%p CI[-0.1365710486064015, 0.3025558766215623]; node_minus_node_nolabel=+0.268850%p CI[0.04220929254982626, 0.5056492014098001]; node_minus_signed=+0.253150%p CI[-0.02066880686233795, 0.5310521697396225]; node_minus_node_geometry_shuffle=-0.035223%p CI[-0.12244736858557316, 0.04753142487188128]; node_uniform_minus_uniform=-0.290566%p CI[-0.5996681003332499, -0.019166541552883186]; node_minus_node_uniform=+0.538148%p CI[0.11773807913328584, 0.9685269136417165]; pcfi_minus_uniform=+0.167485%p CI[-0.28950384160141285, 0.6276919939891128]; signed_minus_pcfi=-0.173053%p CI[-0.4306325276996595, 0.10077196055861028]; node_nolabel_minus_pcfi=-0.188754%p CI[-0.36152359352041336, -0.02118026602979674]; spatial_confidence_by_node_interaction=+0.370663%p CI[0.05541017704068957, 0.6973559827760616]
+
+구성요소의효과를분리해보존하며각비교를전체프로젝트의자동종료기준으로쓰지않는다. Native-PCFI/LPfloor와수치변동을별도보고했다. StaticNode의동치두채널계산과CPUfrontend비용개선도보존한다. [전체보고서](findings/sources/pcfi-reviewer-ablation-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/pcfi-reviewer-ablation-2026-11-03/METHOD_KO.md), [구조화기록](findings/pcfi-reviewer-ablation.yaml).

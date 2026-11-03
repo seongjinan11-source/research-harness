@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-03. 최근 업데이트: 누적57편의 문헌과 confidence 가중 Sheaf-PCFI 공간 교체 pilot까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-03. 최근 업데이트: 누적57편의 문헌과 Confidence Sheaf PFN 구성 요소 비교까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -11,6 +11,24 @@
 다음 후보는 현재 함수족으로 부족한 feature–relation 의존성과 그것을 학습·전이하는 추론 연산을 설명해야 한다. 현재 Factor에도 neural potential이 있으므로 모델 전체를 고정 Gaussian factor라고 부르지 않는다. 주요 가정은 binary class/feature-column orientation과 pairwise Ising형 factor이며, 범용 feature semantics를 학습했다고 주장하지 않는다. 이미 구현한 연결 기능에 이름·head·teacher만 추가하는 제안과 구분한다.
 
 이번 검토는 새로운 실험을 즉시 실행하라는 요청이 아니다. 아래 사실과 실패 범위를 검토하고, 설득력 있는 후속 메소드가 있는지 독립적으로 판단해 달라.
+
+## Confidence Sheaf PFN 구성 요소의 개발 비교
+
+2026-11-03. Context의geometry전용개입,공간confidence×Nodeframe,직접signedscalar를비교했다. 기존과같은초기Phi·512train입력·1024update·고정PFN을유지했고새frontend9개를학습했다. 새32개knownfamily개발graph는label/feature네cell에8개씩배정하고k1/4를함께평가했다. 기존4real은개발재사용이다.
+
+| 방법 | 새 개발 accuracy % | Cora % | CiteSeer % | Texas % | Wisconsin % |
+|---|---:|---:|---:|---:|---:|
+| pcfi | 44.772 | 50.188 | 30.852 | 28.005 | 21.557 |
+| uniform | 44.604 | 48.952 | 32.418 | 29.058 | 22.888 |
+| node | 44.852 | 49.800 | 31.275 | 28.178 | 22.114 |
+| node_nolabel | 44.583 | 50.009 | 31.046 | 28.315 | 22.760 |
+| node_uniform | 44.314 | 48.709 | 32.099 | 26.690 | 21.101 |
+| signed | 44.599 | 49.396 | 30.596 | 28.295 | 21.951 |
+| node_geometry_shuffle | 44.887 | 49.862 | 31.221 | 28.249 | 22.331 |
+
+node_minus_pcfi=+0.080097%p CI[-0.1365710486064015, 0.3025558766215623]; node_minus_node_nolabel=+0.268850%p CI[0.04220929254982626, 0.5056492014098001]; node_minus_signed=+0.253150%p CI[-0.02066880686233795, 0.5310521697396225]; node_minus_node_geometry_shuffle=-0.035223%p CI[-0.12244736858557316, 0.04753142487188128]; node_uniform_minus_uniform=-0.290566%p CI[-0.5996681003332499, -0.019166541552883186]; node_minus_node_uniform=+0.538148%p CI[0.11773807913328584, 0.9685269136417165]; pcfi_minus_uniform=+0.167485%p CI[-0.28950384160141285, 0.6276919939891128]; signed_minus_pcfi=-0.173053%p CI[-0.4306325276996595, 0.10077196055861028]; node_nolabel_minus_pcfi=-0.188754%p CI[-0.36152359352041336, -0.02118026602979674]; spatial_confidence_by_node_interaction=+0.370663%p CI[0.05541017704068957, 0.6973559827760616]
+
+구성요소의효과를분리해보존하며각비교를전체프로젝트의자동종료기준으로쓰지않는다. Native-PCFI/LPfloor와수치변동을별도보고했다. StaticNode의동치두채널계산과CPUfrontend비용개선도보존한다. [전체보고서](findings/sources/pcfi-reviewer-ablation-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/pcfi-reviewer-ablation-2026-11-03/METHOD_KO.md), [구조화기록](findings/pcfi-reviewer-ablation.yaml).
 
 ## PCFI의 confidence 가중 공간 확산을 Sheaf로 교체
 
@@ -89,7 +107,7 @@ dynamic-mask +1.000059%p CI[0.3503957146611959, 1.6252314285334988]; dynamic-pcf
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 57편, 연구 기록 172항목, 아이디어 15개가 있다. 41개 프로젝트 묶음이며 실패·중단51, 보존39, 교훈59, 미실행23항목이다. 172번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v18은고정PFN앞의confidence가중Sheaf숫자대치를추가했다. v17은노드별orthogonalframe제약의비교를추가했다. v16은NSD hidden-token의동일예산학습과static/dynamic비교를추가했다. v15는 Sheaf-PCFI의synthetic-only학습·실제가중치고정pilot과NSD문헌을추가한2026-11-03 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 57편, 연구 기록 176항목, 아이디어 16개가 있다. 42개 프로젝트 묶음이며 실패·중단51, 보존41, 교훈61, 미실행23항목이다. 176번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v18은고정PFN앞의confidence가중Sheaf숫자대치를추가했다. v17은노드별orthogonalframe제약의비교를추가했다. v16은NSD hidden-token의동일예산학습과static/dynamic비교를추가했다. v15는 Sheaf-PCFI의synthetic-only학습·실제가중치고정pilot과NSD문헌을추가한2026-11-03 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
 
 ## TSFM 공동 정보·방해 변수 frozen 비교
 
