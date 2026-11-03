@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-03",
+  "arms": [
+    "mask",
+    "pcfi100",
+    "identity",
+    "static",
+    "dynamic"
+  ],
+  "seeds": [
+    11,
+    12,
+    13
+  ],
+  "updates": 1024,
+  "train_graphs": 64,
+  "test_graphs": 64,
+  "dev_graphs": 2,
+  "nodes": 128,
+  "features": 16,
+  "classes": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "layers": [
+    0,
+    3,
+    6,
+    9
+  ],
+  "train_cases": [
+    "uniform90",
+    "uniform995",
+    "cluster90",
+    "cluster995",
+    "full",
+    "uniform50",
+    "sources2",
+    "sources8"
+  ],
+  "test_cases": [
+    "uniform90",
+    "uniform995",
+    "cluster90",
+    "cluster995",
+    "full",
+    "sources2",
+    "sources8"
+  ],
+  "primary_cases": [
+    "uniform90",
+    "uniform995",
+    "cluster90",
+    "cluster995"
+  ],
+  "real_datasets": [
+    "Cora",
+    "CiteSeer",
+    "texas",
+    "wisconsin"
+  ],
+  "training": "All5arms freshly trained from same public GraphPFN initialization, same common parameter initialization, per-seed task order and1024successful query-CE updates.64graphs×8cases×2passes. Train graph raw files are preserved corrected previous synthetic graphs; original6cases visible input/context/query arrays copied exactly; PCFI cache includes original channel correction,2source-controlled cases new. Public transformer frozen; existing adapter/encoder/decoder and common TokenControl train. No real-data updates or validation-label tuning.",
+  "operator": "Hidden tokens[192] become2×96stalk/channels, no scalar completion/readback. AtPFN layers0/3/6/9 use orthogonal endpoint restrictions F_i,e=R(pi*tanh(Phi(u_i,u_j))); reverse endpoint uses samePhi with ordered inputs reversed. Node descriptor uses current feature-token mean and current label token through shared384→32projection, mask fraction, context flag, confidence and logdegree. Connection T_ij=F_i,e^T F_j,e, T_ji=T_ij^T; need not be symmetric per block. Augmented normalized weighted sheaf Laplacian withconductance.25+.75sqrt(c_i*c_j), diagonaldegree/(degree+1). Confidence=.9^shortest-source-distance, unreachable/no-source=0. Shared geometry learner across4stages, learned stage-wise2×2/96×96mixers and step(.5sigmoid,init.1), ELU residual diffusion. Staticcomputes maps once at firststage and reuses withoutdetach; dynamicrecomputes every stage; identitysameoperator/mixers withI maps.",
+  "anchors": "Observed numeric inputs never change. After eachNSDstep, fully observed feature-pair tokens and context label tokens equal their immediately pre-NSD states. Subsequent ordinary PFNlayers can update latent representations. This is a hidden-token boundary condition, not an assertion that raw observations are immutable latent coordinates across Transformerlayers.",
+  "input": "No positive warmup, no LP descriptors, no true homophily/featurelaw input. mask/identity/static/dynamic beginwith zero-filled observed values plus explicit mask and context embeddings. pcfi100 uses original CPU PCFI100+channelcorrection, samePFN. Same fixedRP16 realinterface as priorpilot, observed-only RMS/clip. Native-feature PCFI100→sameRP16 extra baseline onnewpcfi100checkpoint. Existing public singleforward andpositive/negativeLP fixedcontrols reuse identical realinputbank/probabilityhashes.",
+  "evaluation": "New synthetic graph seeds2037111300+i,64balancedlabelmode×featurefiltertasks,samegeneratorfamily; priortrainbank reused. Real4graphs and3mask/contextrepetitions reused as development-only, no new-independent-real claim. Primary missing-queryaccuracy averaged4cases×3fixedtrainseeds then pairedbootstrap5000basegraphs. Fixed-source2/8 secondary contrasts have identical masks/context/query within methods. Full-feature reference separate. Stagegeometrychange,transportcos-negativefraction,anchors,feature/context intervention,alltraining/inferencecost and numericalreplay reported.",
+  "gates": "Synthetic dynamic−pcfi100,identity,static accuracy95CI lower>0; homo dynamic−pcfi100 lowerCI>−.02. Realhetero mean dynamic>pcfi100,identity,static,nativePCFI andhomomean harm<=.02. ExistingnegativeLP remains strongfloor, no universalheterophilyclaim ifbehindit. No post-test loss/step/head rescue orbest-seedselection.",
+  "limits": "SO(2)orthogonalNSD-inspired token adapter, not official NSD fullarchitecture/training reproduction and not yetnovel. Currentmodel fixedstalk2 andRP16. Shared token-mean descriptor compresses feature information. No hiddentruth/querylabels inforward. Sameparametercontainers do not equal effectivecapacity forunusedmodules. Static/dynamicexactlymatchedtrainables;1024updates differsfromolder384pilot, so compare newlytrainedarms only. No-source inputs retained; label/graphreasoning canstill operate but creates no observedfeatureinformation. No heterogeneousgraphs."
+}

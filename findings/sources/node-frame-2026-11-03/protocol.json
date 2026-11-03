@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-03",
+  "new_arm": "node_frame",
+  "comparison_arms": ["identity", "static", "dynamic", "mask", "pcfi100"],
+  "seeds": [11, 12, 13],
+  "updates": 1024,
+  "test_graphs": 64,
+  "test_seed_start": 2038111300,
+  "test_cases": ["uniform90", "uniform995", "cluster90", "cluster995", "full", "sources2", "sources8"],
+  "primary_cases": ["uniform90", "uniform995", "cluster90", "cluster995"],
+  "real_datasets": ["Cora", "CiteSeer", "texas", "wisconsin"],
+  "operator": "Only replace the incidence-map learner of the existing dynamic SO(2) token NSD. Shared 384->32 projection and 72->32->1 Phi unchanged. For each node concatenate its 36D descriptor and its unweighted closed-neighborhood descriptor mean; predict a single SO(2) frame Q_i. Restrictions at every incidence of i equal Q_i; T_ij=Q_i^T Q_j. Recompute frames at the same four layers0/3/6/9. All other confidence conductance, degree+1 normalization, mixers, ELU, finite steps and observed-token/context anchors unchanged. Both feature and label tokens still share geometry; no simultaneous label-only change.",
+  "training": "Fresh original public initialization, exactly same named parameter count and initialization as previous dynamic arm for each seed; same 512 saved synthetic train episodes, schedule and1024successful CE updates. Same optimizer/learning-rate/AMP settings. No additional loss, teacher, PCFI warmup, real optimization or validation-label fitting. Original models/checkpoints remain immutable and are reused as comparisons.",
+  "evaluation": "New64syntheticbasegraphs of the same family; all checkpoints including existing comparisons reevaluated on identical new episodes. Old train/dev and real banks reused by reference with SHA validation. Real4graphs are development reuse, not new independent validation. Primary missing-query accuracy averaged four masks and three fixed training seeds within base graph; paired bootstrap5000 graphs. Fixed-source2/8/full/zero-source partitions and NLL/Brier secondary.",
+  "gates": "Node-frame must beat identity and dynamic on synthetic primary with each graph-paired95CI lower>0 and exceed pcfi100 point accuracy; homo node-PCFI lowerCI>-0.02. Real heterophily mean node>identity,dynamic,pcfi100,nativePCFI while homo harm versusPCFI<=0.02. Existing negativeLP is a strong comparison floor and required for universalheterophilyclaim. Report static comparison separately. No post-test architecture/loss/budget tuning.",
+  "limits": "SO(2)subset, not arbitrary O(d), no guaranteed real improvement/feature recovery. Path independence only within a fixed-frame linear operator; nonlinear finite PFN dynamics are not gauge-equivalent to ordinary PCFI. Node-wise constraint also changes map conditioning from edge endpoint pair to own+neighbor summary. Same total parameters do not imply identical function capacity. Reused checkpoint training/evaluation numerical variation must be measured and disclosed. Prior synthetic/real results are already known; new test graphs are not new generator family or unseen real graphs."
+}

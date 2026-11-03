@@ -1,6 +1,6 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-03. 최근 업데이트: 누적57편의 문헌과 NSD hidden-token PFN pilot까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-03. 최근 업데이트: 누적57편의 문헌과 노드 직교 frame PFN pilot까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
 
 ## 검토받고 싶은 문제
 
@@ -11,6 +11,23 @@
 다음 후보는 현재 함수족으로 부족한 feature–relation 의존성과 그것을 학습·전이하는 추론 연산을 설명해야 한다. 현재 Factor에도 neural potential이 있으므로 모델 전체를 고정 Gaussian factor라고 부르지 않는다. 주요 가정은 binary class/feature-column orientation과 pairwise Ising형 factor이며, 범용 feature semantics를 학습했다고 주장하지 않는다. 이미 구현한 연결 기능에 이름·head·teacher만 추가하는 제안과 구분한다.
 
 이번 검토는 새로운 실험을 즉시 실행하라는 요청이 아니다. 아래 사실과 실패 범위를 검토하고, 설득력 있는 후속 메소드가 있는지 독립적으로 판단해 달라.
+
+## 노드 직교 frame으로 제한한 PFN
+
+2026-11-03. 기존 edge별 map 대신 Q_i를 노드마다 공유하고 T_ij=Q_i^T Q_j로 제한했다. 입력·전파 위치·초기화·1,024update·train bank를 유지하고 새3개 모델만 학습했다. 비교군도 새64synthetic graph에서 다시 추론했다. 실제4graph는 기존 개발용 평가다.
+
+| 방법 | Cora | CiteSeer | Texas | Wisconsin |
+|---|---:|---:|---:|---:|
+| pcfi100 | 50.15 | 30.84 | 27.77 | 21.61 |
+| identity | 37.16 | 24.24 | 21.43 | 23.28 |
+| dynamic | 38.07 | 22.35 | 19.06 | 23.81 |
+| node_frame | 36.51 | 24.42 | 19.32 | 22.23 |
+| native_pcfi100 | 52.03 | 33.87 | 33.26 | 24.44 |
+| negative_lp | 32.03 | 24.76 | 63.54 | 42.73 |
+
+node-identity +0.115674%p CI[-0.43349611351197426, 0.6758997330149052]; node-dynamic -0.020354%p CI[-0.4625205189269549, 0.4064417400329777]; node-static -0.178141%p CI[-0.7422996004065074, 0.35635222011572354]; node-pcfi100 +1.593935%p CI[0.7544764708510517, 2.4803787602259386]; realhetero-nodePCFI -3.915072%p; realhomo-nodePCFI -10.030316%p; gates={'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}
+
+현재 node-frame 구성은 확대 기준을 통과하지 못했다. 같은 bank에서 frame 차원/loss/예산을 조정해 구제하지 않는다. 경로 일관성의 수학적 성립을 실제 전이 성능으로 확대하지 않는다. [전체보고서](findings/sources/node-frame-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/node-frame-2026-11-03/METHOD_KO.md), [구조화기록](findings/node-frame.yaml).
 
 ## Sheaf-PCFI: synthetic 학습·실제 가중치 고정 비교
 
@@ -55,7 +72,7 @@ dynamic-mask +1.000059%p CI[0.3503957146611959, 1.6252314285334988]; dynamic-pcf
 4. `findings/*.yaml`: 각 항목의 `closed_scope`, `not_closed`, `reason_status`, `comparison_floor`, `reopen_when`을 확인한다.
 5. `papers/*.yaml`: 확인한 논문의 장치·가정·한계·원문 링크가 있다. 자동 매칭은 해결 근거나 novelty 판정이 아니다.
 
-저장소에는 논문 57편, 연구 기록 164항목, 아이디어 13개가 있다. 39개 프로젝트 묶음이며 실패·중단49, 보존37, 교훈55, 미실행23항목이다. 164번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v16은NSD hidden-token의동일예산학습과static/dynamic비교를추가했다. v15는 Sheaf-PCFI의synthetic-only학습·실제가중치고정pilot과NSD문헌을추가한2026-11-03 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
+저장소에는 논문 57편, 연구 기록 168항목, 아이디어 14개가 있다. 40개 프로젝트 묶음이며 실패·중단50, 보존38, 교훈57, 미실행23항목이다. 168번의 독립 실험이라는 뜻은 아니다. 첨부용 ZIP은 버전별 snapshot이다. v17은노드별orthogonalframe제약의비교를추가했다. v16은NSD hidden-token의동일예산학습과static/dynamic비교를추가했다. v15는 Sheaf-PCFI의synthetic-only학습·실제가중치고정pilot과NSD문헌을추가한2026-11-03 snapshot이다. v14는 별도TSFM 공동정보·nuisance frozen 비교까지 포함한다. v13은 diffusion proposal·SMC·ESS의 실제 비교까지 포함한다. v12는 J/V 두 관측 prior의30-model pilot까지 포함한다. v11은56편의 누적 문헌과 관측의 분류 가치에 관한 미실행 재독 메모까지 포함한다. v10은35편과 SSGP/GGP 비교까지 담은 이전 snapshot이다. v9는 직전 참 법칙 없는 적응 전달 snapshot이다. v8은 직전 부호 전달 frozen 진단 snapshot이다. v7는 직전 내부 고정 재검증 snapshot이다. v6는 직전 내부화 학습 snapshot이다. v5는 직전 feature-law Factor snapshot이다. v4는 직전 연구 포지션 snapshot이다. v3는129항목과 Grid6 teacher 후속·실험 요약을 담은 이전 snapshot이고, v2는 disjoint-factor까지다. 대형 raw prediction과 checkpoint는 workspace에 남겨 두었다.
 
 ## TSFM 공동 정보·방해 변수 frozen 비교
 
@@ -346,6 +363,7 @@ Query 자체도 feature가 없는 사전 secondary에서는 Factor64.60%/NLL0.60
 
 ```text
 첨부한 Missing-feature GraphPFN 연구 인계서를 읽고 독립적으로 검토해줘.
+최신node-frame실험은T_ij=Q_i^T Q_j를이미학습/평가했어. 현재닫은범위와원인미상을구분하고같은제약을미실행새방법으로다시제안하지말아줘.
 최신NSDtokenpilot은warmPCFI없이hiddenrepresentation과restrictionmap을함께학습했어. 결과와닫은범위를확인하고단순tokenNSD추가를미실행새방법으로다시제안하지말아줘.
 최신 Sheaf-PCFI pilot의bounded No-Go와negativeLP floor,첫좌표직접전달계수a<0비율0,수치재현한계도함께봐줘. 단순PCFI내부화나signed허용을새아이디어로다시제안하지말아줘.
 실제 실행한 결과, 보존한 개선, 미실행 제안을 구분하고, 필요하면 함께 첨부한 보고서와 findings를 확인해줘.

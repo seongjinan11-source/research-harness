@@ -4,7 +4,7 @@
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은39개 프로젝트 묶음의164항목이다. 실패·중단49개, 보존37개, 교훈55개, 미실행23개이며 **164번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은40개 프로젝트 묶음의168항목이다. 실패·중단50개, 보존38개, 교훈57개, 미실행23개이며 **168번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
 
 ## 결과를 비교할 때 유지할 구분
 
@@ -13,6 +13,23 @@
 - 동일 bank에서 짝지은 차이로 학습·구조 효과를 판단한다. 아래 서로 다른 bank의 절대 정확도를 빼서 전후 개선으로 쓰지 않는다.
 - 최근 circuit/factor/teacher의 context1/2/4는 **총 label 수**다. 실제 graph의 k20은 **클래스당20개**다.
 - 원인 미상은 그대로 남긴다. CI가0을 포함하면 우위가 확인되지 않은 것이며, 무효·동등성·비열등성을 증명한 것은 아니다.
+
+## 노드 직교 frame으로 제한한 PFN
+
+2026-11-03. 기존 edge별 map 대신 Q_i를 노드마다 공유하고 T_ij=Q_i^T Q_j로 제한했다. 입력·전파 위치·초기화·1,024update·train bank를 유지하고 새3개 모델만 학습했다. 비교군도 새64synthetic graph에서 다시 추론했다. 실제4graph는 기존 개발용 평가다.
+
+| 방법 | Cora | CiteSeer | Texas | Wisconsin |
+|---|---:|---:|---:|---:|
+| pcfi100 | 50.15 | 30.84 | 27.77 | 21.61 |
+| identity | 37.16 | 24.24 | 21.43 | 23.28 |
+| dynamic | 38.07 | 22.35 | 19.06 | 23.81 |
+| node_frame | 36.51 | 24.42 | 19.32 | 22.23 |
+| native_pcfi100 | 52.03 | 33.87 | 33.26 | 24.44 |
+| negative_lp | 32.03 | 24.76 | 63.54 | 42.73 |
+
+node-identity +0.115674%p CI[-0.43349611351197426, 0.6758997330149052]; node-dynamic -0.020354%p CI[-0.4625205189269549, 0.4064417400329777]; node-static -0.178141%p CI[-0.7422996004065074, 0.35635222011572354]; node-pcfi100 +1.593935%p CI[0.7544764708510517, 2.4803787602259386]; realhetero-nodePCFI -3.915072%p; realhomo-nodePCFI -10.030316%p; gates={'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}
+
+현재 node-frame 구성은 확대 기준을 통과하지 못했다. 같은 bank에서 frame 차원/loss/예산을 조정해 구제하지 않는다. 경로 일관성의 수학적 성립을 실제 전이 성능으로 확대하지 않는다. [전체보고서](findings/sources/node-frame-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/node-frame-2026-11-03/METHOD_KO.md), [구조화기록](findings/node-frame.yaml).
 
 ## NSD hidden-token PFN: 관측에서 시작하는 geometry 갱신
 
@@ -345,4 +362,4 @@ CE Factor에도 이미 feature 제거 효과가 있었다. Distillation은 teach
 3. 필요한 수치는 연결된 보고서와 [164개 전체 기록](out/research_log.md), `findings/*.yaml`에서 확인한다.
 4. [최신 그래프](out/graph.html)와 [엑셀](out/research_harness.xlsx)에서 논문과 실패 병목의 검색 연결을 본다. 연결은 해결 판정이 아니다.
 
-공유용 `graphpfn_review_packet_2026-11-03_v16.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.
+공유용 `graphpfn_review_packet_2026-11-03_v17.zip`에는 이 요약, 인계서, 모든 papers/findings와 보존 source snapshots를 넣는다. Checkpoint와 raw prediction 실행 환경은 제외한다. 과거 v1/v2/v3/v4/v5/v6/v7/v8/v9/v10 ZIP은 이전 snapshot으로 유지한다. 외부 모델은 로컬 C 드라이브를 읽을 수 없으므로 ZIP이나 문서를 실제로 첨부해야 한다.

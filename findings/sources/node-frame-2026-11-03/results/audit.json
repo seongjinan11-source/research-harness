@@ -1,0 +1,90 @@
+{
+  "status": "PASS_WITH_REPLAY_VARIATION",
+  "inputs_hashed": 1034,
+  "new_prediction_files_hashed": 8484,
+  "new_test_raw_graphs": 64,
+  "old_train_dev_real_inputs_exact": true,
+  "new_test_not_duplicate_old_train_test": true,
+  "new_checkpoints": 3,
+  "valid_updates": 3072,
+  "replay": [
+    {
+      "arm": "node_frame",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.007287502288818359,
+      "repeat_max_abs": 0.015207409858703613,
+      "saved_argmax_change_fraction": 0.0,
+      "repeat_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "node_frame",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform995",
+      "saved_max_abs": 0.0019835233688354492,
+      "repeat_max_abs": 0.003598034381866455,
+      "saved_argmax_change_fraction": 0.0,
+      "repeat_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "node_frame",
+      "seed": 12,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.012976080179214478,
+      "repeat_max_abs": 0.017746776342391968,
+      "saved_argmax_change_fraction": 0.0,
+      "repeat_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "node_frame",
+      "seed": 13,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.015331447124481201,
+      "repeat_max_abs": 0.01148456335067749,
+      "saved_argmax_change_fraction": 0.008,
+      "repeat_argmax_change_fraction": 0.008
+    },
+    {
+      "arm": "dynamic",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.005996406078338623,
+      "repeat_max_abs": 0.008370369672775269,
+      "saved_argmax_change_fraction": 0.0,
+      "repeat_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "identity",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.021167665719985962,
+      "repeat_max_abs": 0.012459993362426758,
+      "saved_argmax_change_fraction": 0.0,
+      "repeat_argmax_change_fraction": 0.0
+    },
+    {
+      "arm": "pcfi100",
+      "seed": 11,
+      "split": "test",
+      "graph": 0,
+      "case": "uniform90",
+      "saved_max_abs": 0.0,
+      "repeat_max_abs": 0.0,
+      "saved_argmax_change_fraction": 0.0,
+      "repeat_argmax_change_fraction": 0.0
+    }
+  ],
+  "limits": "Only selected replays.0.1 bound is gross-corruption guard,not strict reproduction tolerance. Stored-prediction CI does not incorporate all nondeterministic inference variation. Old baselines retained their archivedrealpredictions and were reevaluated onfreshsyntheticinputs. Full-state modelparams unchanged byevaluation."
+}

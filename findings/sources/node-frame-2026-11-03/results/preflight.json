@@ -1,0 +1,49 @@
+{
+  "aligned_linear_operator_error": 4.440892098500626e-16,
+  "orthogonality_error": 1.1102230246251565e-16,
+  "triangle_cycle_error": 1.1102230246251565e-16,
+  "learned_triangle_cycle_error": 1.1102230246251565e-16,
+  "node_permutation_map_error": 1.1102230246251565e-16,
+  "shared_incidence_error": 0.0,
+  "frame_gradient_finite_difference_error": 5.010949877259918e-09,
+  "scope": "Fixed-frame linear identities, not nonlinear PFN gauge equivariance.",
+  "status": "PASS",
+  "named_initialization_matches_edge_dynamic": true,
+  "trainable_parameters": 4064599,
+  "discarded_smoke_steps": 1,
+  "smoke_loss": 1.9609092473983765,
+  "geometry_gradient_abs_sum": 15.010467255488038,
+  "repeat_probability_error": 0.004089444875717163,
+  "unused_pcfi_poison_error": 0.004473268985748291,
+  "diagnostics": {
+    "stages": [
+      {
+        "negative_cos_fraction": 0.0,
+        "anchor_change": 0.0,
+        "map_refresh_difference": 0.0,
+        "mean_abs_update": 0.00886718463152647
+      },
+      {
+        "negative_cos_fraction": 0.0,
+        "anchor_change": 0.0,
+        "map_refresh_difference": 0.11529804021120071,
+        "mean_abs_update": 0.058182720094919205
+      },
+      {
+        "negative_cos_fraction": 0.0,
+        "anchor_change": 0.0,
+        "map_refresh_difference": 0.06398314237594604,
+        "mean_abs_update": 0.07888847589492798
+      },
+      {
+        "negative_cos_fraction": 0.0,
+        "anchor_change": 0.0,
+        "map_refresh_difference": 0.16318731009960175,
+        "mean_abs_update": 0.06283295154571533
+      }
+    ],
+    "input_observed_nodes": 15,
+    "geometry_updates": 4
+  },
+  "protocol_sha256": "36e329182a39320a908020bc7e8bdb1dd8b20145def141a731b0056b904de0d6"
+}

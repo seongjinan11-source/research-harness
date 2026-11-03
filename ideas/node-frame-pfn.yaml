@@ -1,0 +1,24 @@
+id: node-frame-pfn
+date: '2026-11-03'
+status: completed-bounded-pilot-no-go
+text: 노드 frame 제약이 기존 edge별 map 및 Identity보다 missing 분류와 실제 graph 전이를 개선한다.
+tags:
+- graph-geometry
+- graph-structure-use
+- observation-mask
+- zero-shot-gap
+- eval-protocol
+keywords:
+- orthogonal node frames
+- path-independent transport
+- cycle consistency
+- flat SO2 connection
+- Tij Qi transpose Qj
+- missing feature PFN
+note: findings/sources/node-frame-2026-11-03/METHOD_KO.md
+followup: findings/sources/node-frame-2026-11-03/REPORT_KO.md
+pilot_gates:
+  synthetic: false
+  real_input: false
+  negative_lp_floor: false
+  expand: false

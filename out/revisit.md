@@ -657,6 +657,20 @@
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 구체 키워드+태그 일치 (미검증); tags=observation-mask; keywords=missingness
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
+## NFRAME-F01 — 노드 frame 제약이 기존 edge별 map 및 Identity보다 missing 분류와 실제 graph 전이를 개선한다.
+
+- 판정: 현재 node-frame 구성은 확대 기준을 통과하지 못했다. 같은 bank에서 frame 차원/loss/예산을 조정해 구제하지 않는다.
+- 원인·병목 [원인 미상]: 사전 Identity/Dynamic/PCFI 및 real floor 조건 중 일부가 충족되지 않았다. Frame 식별·표현력·공유token geometry·RP16·prior/학습량의 고유 원인은 분리하지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 현재node-frame제약에서손실되는정보또는극소관측에서frame을식별할추가정보를구체적으로제공하는추론연산이있을때.
+- 먼저 이겨야 할 기준선: 동일초기화/학습순서/예산의Identity/edgeStatic/edgeDynamic/Mask/PCFI,nativePCFI,negativeLP. 동일query피처제거/셔플과NLL/Brier,실제end-to-end비용.
+- 최소 재검증: 새graph/family와미사용real입력을먼저고정한다. Architecture나적용위치를동시에바꾸지말고node-frame독립증분,source0/2/8,feature/context개입,cycle/gradient/anchor,numericalreplay를검증한다.
+- 닫지 않은 것: 원본feature공간,feature/label별독립frame,다른O(d)함수족,새prior/real/schema에대한효과는미검증이다. 이들이해결책이라는뜻은아니다.
+- 원문: [findings/sources/node-frame-2026-11-03/REPORT_KO.md](../findings/sources/node-frame-2026-11-03/REPORT_KO.md); [findings/sources/node-frame-2026-11-03/METHOD_KO.md](../findings/sources/node-frame-2026-11-03/METHOD_KO.md); [findings/sources/node-frame-2026-11-03/protocol.json](../findings/sources/node-frame-2026-11-03/protocol.json); [findings/sources/node-frame-2026-11-03/results/statistics.json](../findings/sources/node-frame-2026-11-03/results/statistics.json); [findings/sources/node-frame-2026-11-03/results/audit.json](../findings/sources/node-frame-2026-11-03/results/audit.json); [findings/sources/node-frame-2026-11-03/results/control_summary.json](../findings/sources/node-frame-2026-11-03/results/control_summary.json); [findings/sources/node-frame-2026-11-03/results/preflight.json](../findings/sources/node-frame-2026-11-03/results/preflight.json); [findings/sources/node-frame-2026-11-03/results/cost.json](../findings/sources/node-frame-2026-11-03/results/cost.json)
+
+현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
+
+
 ## NSDT-F01 — 현재 token에서 geometry를 갱신하는 PFN이 PCFI/identity/static보다 missing 분류가 좋고 실제 heterophily의 강한 floor와 경쟁한다.
 
 - 판정: 현재 SO2 token adapter는 사전 gate를 통과하지 못했으며 자동 확대나 추가 loss/head/budget 구제를 하지 않는다.

@@ -108,3 +108,20 @@ Synthetic sheaf−PCFI +0.132%p CI[-0.585,+0.968],heterophily실제평균−0.39
 dynamic-mask +1.000059%p CI[0.3503957146611959, 1.6252314285334988]; dynamic-pcfi100 +1.872436%p CI[0.9591497270029059, 2.839915974434959]; dynamic-identity -0.083220%p CI[-0.563776244897672, 0.40735070413055496]; dynamic-static +0.220777%p CI[-0.2799861039889716, 0.7513131305974036]; realhetero {'mask': -1.1361620621828605, 'pcfi100': -3.2524593752169872, 'identity': -0.9208122226674054, 'static': -0.619619386241721, 'native_pcfi100': -7.415763386429836, 'negative_lp': -31.694600458921744}%p; gates={'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'mask_floor': True, 'expand': False}
 
 현재pilot은확대기준미통과다. 이특정SO2adapter의범위로보존하고모든NSD를기각하지않는다. Numericreplay상태는PASS_WITH_REPLAY_VARIATION이며초기화·taskorder·고정가중치와정보경계를검사했다. [전체보고서](findings/sources/nsd-token-2026-11-03/REPORT_KO.md),[계산정의](findings/sources/nsd-token-2026-11-03/METHOD_KO.md),[구조화기록](findings/nsd-token.yaml).
+
+## 노드 직교 frame으로 제한한 PFN
+
+2026-11-03. 기존 edge별 map 대신 Q_i를 노드마다 공유하고 T_ij=Q_i^T Q_j로 제한했다. 입력·전파 위치·초기화·1,024update·train bank를 유지하고 새3개 모델만 학습했다. 비교군도 새64synthetic graph에서 다시 추론했다. 실제4graph는 기존 개발용 평가다.
+
+| 방법 | Cora | CiteSeer | Texas | Wisconsin |
+|---|---:|---:|---:|---:|
+| pcfi100 | 50.15 | 30.84 | 27.77 | 21.61 |
+| identity | 37.16 | 24.24 | 21.43 | 23.28 |
+| dynamic | 38.07 | 22.35 | 19.06 | 23.81 |
+| node_frame | 36.51 | 24.42 | 19.32 | 22.23 |
+| native_pcfi100 | 52.03 | 33.87 | 33.26 | 24.44 |
+| negative_lp | 32.03 | 24.76 | 63.54 | 42.73 |
+
+node-identity +0.115674%p CI[-0.43349611351197426, 0.6758997330149052]; node-dynamic -0.020354%p CI[-0.4625205189269549, 0.4064417400329777]; node-static -0.178141%p CI[-0.7422996004065074, 0.35635222011572354]; node-pcfi100 +1.593935%p CI[0.7544764708510517, 2.4803787602259386]; realhetero-nodePCFI -3.915072%p; realhomo-nodePCFI -10.030316%p; gates={'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}
+
+현재 node-frame 구성은 확대 기준을 통과하지 못했다. 같은 bank에서 frame 차원/loss/예산을 조정해 구제하지 않는다. 경로 일관성의 수학적 성립을 실제 전이 성능으로 확대하지 않는다. [전체보고서](findings/sources/node-frame-2026-11-03/REPORT_KO.md), [계산정의](findings/sources/node-frame-2026-11-03/METHOD_KO.md), [구조화기록](findings/node-frame.yaml).

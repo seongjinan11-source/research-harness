@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 39개 프로젝트 · 164개 기록 (실패·중단 49개, 보존 37개, 교훈 55개, 미실행 23개)
+총 40개 프로젝트 · 168개 기록 (실패·중단 50개, 보존 38개, 교훈 57개, 미실행 23개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1117,6 +1117,42 @@ B4imp는 255/500 update에서 중단, 저장 checkpoint는 update 200. Ours-Imp�
 No-missing accuracy 약72.9%, majority 약62%, MCAR 80% 손실 약3.5%p. 약한 입력 경로와의 비교만으로 새 prior의 가치를 주장하지 않는다.
 
 - 원문: [findings/sources/graphpfn-2026-11-01/missing_closure.md](../findings/sources/graphpfn-2026-11-01/missing_closure.md)
+
+## Orthogonal node-frame GraphPFN
+
+실험 조건: Synthetic-only training,realweightsfrozen;replaceedge-incidencemapswithsinglenodeSO2framesinexistingtokenNSD.
+
+### NFRAME-F01 [실패·중단] 노드 frame 제약이 기존 edge별 map 및 Identity보다 missing 분류와 실제 graph 전이를 개선한다.
+
+node-identity +0.115674%p CI[-0.43349611351197426, 0.6758997330149052]; node-dynamic -0.020354%p CI[-0.4625205189269549, 0.4064417400329777]; node-static -0.178141%p CI[-0.7422996004065074, 0.35635222011572354]; node-pcfi100 +1.593935%p CI[0.7544764708510517, 2.4803787602259386]; realhetero-nodePCFI -3.915072%p; realhomo-nodePCFI -10.030316%p; gates={'synthetic': False, 'real_input': False, 'negative_lp_floor': False, 'expand': False}
+
+- 판정: 현재 node-frame 구성은 확대 기준을 통과하지 못했다. 같은 bank에서 frame 차원/loss/예산을 조정해 구제하지 않는다.
+- 원인·병목 [원인 미상]: 사전 Identity/Dynamic/PCFI 및 real floor 조건 중 일부가 충족되지 않았다. Frame 식별·표현력·공유token geometry·RP16·prior/학습량의 고유 원인은 분리하지 않았다.
+- 닫은 범위: 현재공유SO2nodeframe/4interleavedstages/RP16/1024updates/knownsyntheticprior/4realdevelopmentgraphs에서메인방법으로확대하는가설.
+- 닫지 않은 것: 원본feature공간,feature/label별독립frame,다른O(d)함수족,새prior/real/schema에대한효과는미검증이다. 이들이해결책이라는뜻은아니다.
+- 재검토 조건: 현재node-frame제약에서손실되는정보또는극소관측에서frame을식별할추가정보를구체적으로제공하는추론연산이있을때.
+- 기준선: 동일초기화/학습순서/예산의Identity/edgeStatic/edgeDynamic/Mask/PCFI,nativePCFI,negativeLP. 동일query피처제거/셔플과NLL/Brier,실제end-to-end비용.
+- 최소 재검증: 새graph/family와미사용real입력을먼저고정한다. Architecture나적용위치를동시에바꾸지말고node-frame독립증분,source0/2/8,feature/context개입,cycle/gradient/anchor,numericalreplay를검증한다.
+- 원문: [findings/sources/node-frame-2026-11-03/REPORT_KO.md](../findings/sources/node-frame-2026-11-03/REPORT_KO.md); [findings/sources/node-frame-2026-11-03/METHOD_KO.md](../findings/sources/node-frame-2026-11-03/METHOD_KO.md); [findings/sources/node-frame-2026-11-03/protocol.json](../findings/sources/node-frame-2026-11-03/protocol.json); [findings/sources/node-frame-2026-11-03/results/statistics.json](../findings/sources/node-frame-2026-11-03/results/statistics.json); [findings/sources/node-frame-2026-11-03/results/audit.json](../findings/sources/node-frame-2026-11-03/results/audit.json); [findings/sources/node-frame-2026-11-03/results/control_summary.json](../findings/sources/node-frame-2026-11-03/results/control_summary.json); [findings/sources/node-frame-2026-11-03/results/preflight.json](../findings/sources/node-frame-2026-11-03/results/preflight.json); [findings/sources/node-frame-2026-11-03/results/cost.json](../findings/sources/node-frame-2026-11-03/results/cost.json)
+
+### NFRAME-P02 [보존] 노드별 공유 SO2 frame과 경로 독립적 연산을 실제 PFN에 구현하고 synthetic-only 학습했다.
+
+3072validupdates;real0;namedinitialization/trainables4064599/schedulematched;linearalignmenterror4.440892098500626e-16,learnedcycleerror1.1102230246251565e-16,incidencesharingerror0.0,gradientFD5.010949877259918e-09;syntheticaccuracy={'node_frame': 54.59917639950721, 'identity': 54.48350194055004, 'static': 54.77731776612842, 'dynamic': 54.619530593942024, 'mask': 53.8731591093743, 'pcfi100': 53.0052415202763}.
+
+- 확대 금지: 직교변환은개별norm보존만보장하며이웃평균상쇄/미관측frame식별/비선형PFNgaugeequivariance를보장하지않는다. 기존NSD이론의새발명도아니다.
+- 원문: [findings/sources/node-frame-2026-11-03/REPORT_KO.md](../findings/sources/node-frame-2026-11-03/REPORT_KO.md); [findings/sources/node-frame-2026-11-03/METHOD_KO.md](../findings/sources/node-frame-2026-11-03/METHOD_KO.md); [findings/sources/node-frame-2026-11-03/protocol.json](../findings/sources/node-frame-2026-11-03/protocol.json); [findings/sources/node-frame-2026-11-03/results/statistics.json](../findings/sources/node-frame-2026-11-03/results/statistics.json); [findings/sources/node-frame-2026-11-03/results/audit.json](../findings/sources/node-frame-2026-11-03/results/audit.json); [findings/sources/node-frame-2026-11-03/results/control_summary.json](../findings/sources/node-frame-2026-11-03/results/control_summary.json); [findings/sources/node-frame-2026-11-03/results/preflight.json](../findings/sources/node-frame-2026-11-03/results/preflight.json); [findings/sources/node-frame-2026-11-03/results/cost.json](../findings/sources/node-frame-2026-11-03/results/cost.json)
+
+### NFRAME-L01 [교훈] 새 synthetic graph에서는 재사용 비교군도 동일 입력으로 다시 평가하고 real 개발 bank 재사용은 구분한다.
+
+신규합성64basegraph/6arms×3seed,real4graph는기존입력과비교군확률재사용. Audit=PASS_WITH_REPLAY_VARIATION,replaymax=0.021167665719985962.
+
+- 원문: [findings/sources/node-frame-2026-11-03/REPORT_KO.md](../findings/sources/node-frame-2026-11-03/REPORT_KO.md); [findings/sources/node-frame-2026-11-03/METHOD_KO.md](../findings/sources/node-frame-2026-11-03/METHOD_KO.md); [findings/sources/node-frame-2026-11-03/protocol.json](../findings/sources/node-frame-2026-11-03/protocol.json); [findings/sources/node-frame-2026-11-03/results/statistics.json](../findings/sources/node-frame-2026-11-03/results/statistics.json); [findings/sources/node-frame-2026-11-03/results/audit.json](../findings/sources/node-frame-2026-11-03/results/audit.json); [findings/sources/node-frame-2026-11-03/results/control_summary.json](../findings/sources/node-frame-2026-11-03/results/control_summary.json); [findings/sources/node-frame-2026-11-03/results/preflight.json](../findings/sources/node-frame-2026-11-03/results/preflight.json); [findings/sources/node-frame-2026-11-03/results/cost.json](../findings/sources/node-frame-2026-11-03/results/cost.json)
+
+### NFRAME-L02 [교훈] 동일 파라미터 수의 node/edge map도 conditioning과 표현 가능한 전달 구조가 다르다.
+
+Node는own+closed-neighborhoodmean descriptor,Edge는두endpoint descriptor를동일Phi에넣는다. Node모델은순환변환곱I를강제한다. PCFI입력추가/라벨전용diffusion은함께바꾸지않았다.
+
+- 원문: [findings/sources/node-frame-2026-11-03/REPORT_KO.md](../findings/sources/node-frame-2026-11-03/REPORT_KO.md); [findings/sources/node-frame-2026-11-03/METHOD_KO.md](../findings/sources/node-frame-2026-11-03/METHOD_KO.md); [findings/sources/node-frame-2026-11-03/protocol.json](../findings/sources/node-frame-2026-11-03/protocol.json); [findings/sources/node-frame-2026-11-03/results/statistics.json](../findings/sources/node-frame-2026-11-03/results/statistics.json); [findings/sources/node-frame-2026-11-03/results/audit.json](../findings/sources/node-frame-2026-11-03/results/audit.json); [findings/sources/node-frame-2026-11-03/results/control_summary.json](../findings/sources/node-frame-2026-11-03/results/control_summary.json); [findings/sources/node-frame-2026-11-03/results/preflight.json](../findings/sources/node-frame-2026-11-03/results/preflight.json); [findings/sources/node-frame-2026-11-03/results/cost.json](../findings/sources/node-frame-2026-11-03/results/cost.json)
 
 ## Interleaved NSD hidden-token GraphPFN
 

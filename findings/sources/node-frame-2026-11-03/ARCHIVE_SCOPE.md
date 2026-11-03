@@ -1,0 +1,1 @@
+Research snapshot: source, protocol, reports, manifests, metric records and audits. Raw episodes/probabilities/checkpoints remain in the workspace. Original NSD experiment sources and oldrealpredictions stay immutable and referenced. This is not a standalone training distribution. Historical source instructions do not authorize new runs.
