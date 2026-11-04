@@ -144,6 +144,22 @@
 - [NodePFN](https://arxiv.org/abs/2604.19028): 복수 태그 일치 (약한 단서); tags=graph-structure-use, prior-mismatch; keywords=-
   - 기록된 강점: cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
 
+## FP01-F01 — 투영 노출과 관측 통계 기반 class-specific centroid Factor가 기존 projected Factor와 전역 centroid Factor를 모두 안정적으로 능가하고 추가 피처 효용을 회복한다.
+
+- 판정: 현재 operator·budget의 메인 missing-feature 방법 확장은 중단한다. C_global 대비 적응 효과와 일부 피처 손상 완화는 별도로 보존한다.
+- 원인·병목 [원인 미상]: 기존 mean-family 제약을 넓히고 투영 노출을 맞추는 것만으로 사전 전체 기준과 안정적 추가 피처 효용을 달성하지 못했다. Prior mismatch·유한 grid/BP·고정 graph core·학습량의 기여도를 분리하지 않아 고유 원인은 미상이다.
+- 반증·배제한 설명: A/B는 같은 초기화·원래512 task·노출 순서·graph/context/mask/query와256updates를 사용했다. C 계열도 같은 base tasks·budget·고정 graph checkpoint와 공통 role weights를 사용했다.; 12fits3072updates/6144노출과 새18504예측 및 기존375baseline의 입력·정답·bank·checkpoint·source 해시와 저장확률 재채점을 감사했다. Audit PASS와 scientific gate=False는 별개다.; Git metadata만 캐시한 실행 래퍼는 모델 연산·identity·해시 검증을 바꾸지 않았다. 중단된1개 orphan NPZ를 보존했고 재생성 확률은 기존 orphan과 일치했다. 첫 replay 최대확률오차5.96046e-8,최종none차이0/singleton차이3.57628e-7이다.
+- 재검토 조건: 현재 공통 graph-only 예측보다 실제 feature evidence가 유용해지는 구체적 추론 변경과 이를 검증할 독립 조건이 생길 때. Prior 수학적 mismatch만 지적하거나 새 head를 붙였다는 이유로 재개하지 않는다.
+- 먼저 이겨야 할 기준선: 동일 정보·노출·고정 graph의 A/B/C_global/C 및 graph-only, 적절한 고정·통계적 centroid 추론기, 실제 PCFI/FISF+공개 GraphPFN과 LP. 같은family 소형 exact reference는 계산 가능할 때 사용하고 큰 multiclass에 binary Grid6를 그대로 비교하지 않는다.
+- 최소 재검증: 별도 cycle/branch에 변경 연산과 새 final bank를 먼저 고정한다. Own-feature-missing query의 accuracy·NLL/Brier·관측−none/shuffle·minority metrics를 함께 보고 full/edge를 graph별로 선택하지 않는다. 실제 development 재사용은 독립 holdout으로 부르지 않는다.
+- 닫지 않은 것: C−C_global의 확인된 부분 효과, 기존 Factor의 disjoint 연결 연산, 다른 feature law·covariance model·추론 연산·더 큰 사전 고정 budget·새 실데이터에서의 효과는 기각하지 않는다. 모든 Gaussian/centroid/BP나 PCFI 경쟁 가능성을 닫지 않는다.
+- 원문: [findings/sources/fp01-projection-2026-11-04/DECISION_KO.md](../findings/sources/fp01-projection-2026-11-04/DECISION_KO.md); [findings/sources/fp01-projection-2026-11-04/results/summary.json](../findings/sources/fp01-projection-2026-11-04/results/summary.json); [findings/sources/fp01-projection-2026-11-04/results/paired.json](../findings/sources/fp01-projection-2026-11-04/results/paired.json); [findings/sources/fp01-projection-2026-11-04/results/audit.json](../findings/sources/fp01-projection-2026-11-04/results/audit.json); [findings/sources/fp01-projection-2026-11-04/RESPONSE_RESULTS.md](../findings/sources/fp01-projection-2026-11-04/RESPONSE_RESULTS.md)
+
+- [GSPN](https://arxiv.org/abs/2305.10544): 복수 태그 일치 (약한 단서); tags=differentiable-reasoning, observation-mask; keywords=-
+  - 기록된 강점: 숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+
 ## FEAT-F01 — IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.
 
 - 판정: 해당 feature-reliability 동기 약화

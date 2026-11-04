@@ -1,0 +1,59 @@
+project: FP01 projection-exposed centroid Factor
+date: '2026-11-04'
+source: findings/sources/fp01-projection-2026-11-04/DECISION_KO.md
+setting: 기존512 합성base tasks의 raw/RP를 대응시켜 A기존Factor·B투영학습·C_global유한centroid·C적응centroid를 각3seed256updates로 비교했다. Graph core와 graph-only role weights는 공통 고정, 실제 그래프 업데이트0이다. Synthetic final은48base graph의 동일family 새seed이고 실제5graph는 재사용development다.
+related: [GraphPFN, CSBMInference]
+entries:
+  - id: FP01-F01
+    kind: failure
+    claim: 투영 노출과 관측 통계 기반 class-specific centroid Factor가 기존 projected Factor와 전역 centroid Factor를 모두 안정적으로 능가하고 추가 피처 효용을 회복한다.
+    observation: "Synthetic primary full/projected,50/75/90/95%,source>=2에서 A52.817%,B52.800%,C_global52.565%,C53.752%. C−B +0.952%p,97.5%CI[−0.585,+2.696]로 CI하한 및1%p요건 미통과. C−global +1.187%p CI[+0.213,+2.446]는 통과. C−none +0.579%p,보조95%CI[−0.855,+1.929]. NLL C−B−0.02935/C−global−0.02400. 전체 adaptive gate=False. Secondary edge NLL은 C가 B보다 약+0.465,global보다+0.209nats 악화."
+    verdict: 현재 operator·budget의 메인 missing-feature 방법 확장은 중단한다. C_global 대비 적응 효과와 일부 피처 손상 완화는 별도로 보존한다.
+    failure_reason: 기존 mean-family 제약을 넓히고 투영 노출을 맞추는 것만으로 사전 전체 기준과 안정적 추가 피처 효용을 달성하지 못했다. Prior mismatch·유한 grid/BP·고정 graph core·학습량의 기여도를 분리하지 않아 고유 원인은 미상이다.
+    reason_status: unknown
+    excluded_explanations:
+      - A/B는 같은 초기화·원래512 task·노출 순서·graph/context/mask/query와256updates를 사용했다. C 계열도 같은 base tasks·budget·고정 graph checkpoint와 공통 role weights를 사용했다.
+      - 12fits3072updates/6144노출과 새18504예측 및 기존375baseline의 입력·정답·bank·checkpoint·source 해시와 저장확률 재채점을 감사했다. Audit PASS와 scientific gate=False는 별개다.
+      - Git metadata만 캐시한 실행 래퍼는 모델 연산·identity·해시 검증을 바꾸지 않았다. 중단된1개 orphan NPZ를 보존했고 재생성 확률은 기존 orphan과 일치했다. 첫 replay 최대확률오차5.96046e-8,최종none차이0/singleton차이3.57628e-7이다.
+    closed_scope: 원래 multiclass prior·고정 graph-only role mixture·41-state centroid·BP24/damping.5·512노출/256updates에서 C의 사전 co-primary 확대 가설. 같은 최종 bank를 새 loss·temperature·grid·학습량으로 구제하는 탐색은 하지 않는다.
+    not_closed: C−C_global의 확인된 부분 효과, 기존 Factor의 disjoint 연결 연산, 다른 feature law·covariance model·추론 연산·더 큰 사전 고정 budget·새 실데이터에서의 효과는 기각하지 않는다. 모든 Gaussian/centroid/BP나 PCFI 경쟁 가능성을 닫지 않는다.
+    reopen_when: 현재 공통 graph-only 예측보다 실제 feature evidence가 유용해지는 구체적 추론 변경과 이를 검증할 독립 조건이 생길 때. Prior 수학적 mismatch만 지적하거나 새 head를 붙였다는 이유로 재개하지 않는다.
+    comparison_floor: 동일 정보·노출·고정 graph의 A/B/C_global/C 및 graph-only, 적절한 고정·통계적 centroid 추론기, 실제 PCFI/FISF+공개 GraphPFN과 LP. 같은family 소형 exact reference는 계산 가능할 때 사용하고 큰 multiclass에 binary Grid6를 그대로 비교하지 않는다.
+    recheck: 별도 cycle/branch에 변경 연산과 새 final bank를 먼저 고정한다. Own-feature-missing query의 accuracy·NLL/Brier·관측−none/shuffle·minority metrics를 함께 보고 full/edge를 graph별로 선택하지 않는다. 실제 development 재사용은 독립 holdout으로 부르지 않는다.
+    tags: [observation-mask, graph-structure-use, amortized-inference, eval-protocol]
+    keywords: [FP01, projection closure, class-specific centroid, projected feature factor, disjoint evidence, finite grid BP, adaptive encoder, synthetic prior mismatch]
+    reopen_tags: [observation-mask, graph-structure-use, differentiable-reasoning]
+    reopen_keywords: [predictive feature evidence, correlated class centroid, continuous latent inference, BP approximation, structured missing feature inference]
+    source_refs:
+      - findings/sources/fp01-projection-2026-11-04/DECISION_KO.md
+      - findings/sources/fp01-projection-2026-11-04/results/summary.json
+      - findings/sources/fp01-projection-2026-11-04/results/paired.json
+      - findings/sources/fp01-projection-2026-11-04/results/audit.json
+      - findings/sources/fp01-projection-2026-11-04/RESPONSE_RESULTS.md
+    evidence: 3개 독립 계획 리뷰·수치 검사 후 source/statistics lock. 최종48base graph의12개 N×class strata 내5000 paired bootstrap, 고정3training seed의 metric 평균. 2개 co-primary accuracy에 각각97.5%CI를 사용했고 실제 그래프에는 독립 CI를 부여하지 않았다.
+    revisit_status: open
+  - id: FP01-P01
+    kind: preserved
+    claim: 동일 centroid 추론에서 관측 통계 기반 shared encoder는 전역3계수보다 합성 주평가의 accuracy와 확률 점수를 개선했다.
+    observation: "C_global52.565%→C53.752%,+1.187%p,97.5%CI[+0.213,+2.446]. NLL0.99801→0.97400. 이는 전체 gate 중 한 비교의 성공이며 C−B +0.952%p CI[−0.585,+2.696] 미통과를 대체하지 않는다."
+    do_not_claim: Adaptive encoder의 모든 효과를 부정하지 않지만, B 대비 확실한 우위·안정적 추가 feature utility·unseen schema·독립 real 일반화·정확한 연속 Bayes·Gaussian centroid와 BP 결합의 신규성을 주장하지 않는다. Graph-only role weights는 feature에 고정되어 feature-conditioned joint posterior를 학습한 결과도 아니다.
+    tags: [amortized-inference, observation-mask, eval-protocol]
+    keywords: [centroid adaptive versus global, partial positive effect, finite-grid conditional predictor, prediction-sensitive comparison]
+    source_refs:
+      - findings/sources/fp01-projection-2026-11-04/DECISION_KO.md
+      - findings/sources/fp01-projection-2026-11-04/results/paired.json
+      - findings/sources/fp01-projection-2026-11-04/RESULT_METHOD.md
+    evidence: 동일base tasks·seed·graph·context·mask와 고정q를 사용한 사전 비교다. 수치와 해석을 원문snapshot으로 보존한다.
+  - id: FP01-L01
+    kind: lesson
+    claim: 기존 mean family가 일반 투영에 닫히지 않는 사실과 그것을 넓히면 실제 피처 효용이 회복된다는 가설은 다르다.
+    observation: "K>=3의 one-preferred/equal-other mean family는 일반RP를 보존하지 않는다. 그러나 projected task 노출만 바꾼 B−A는 primary−0.017%p였다. Full real95%에서 C−none은 Cora−0.024/CiteSeer+0.003/PubMed−0.440/CS0.000/Physics+0.205%p. Cora/CiteSeer의 B 대비95% feature utility 개선은 주로 기존 손상을 줄인 형태이며 안정적 추가 정보 활용은 미입증이다."
+    interpretation: 구조 개선으로 이미 얻은 성능·피처 손상 감소·새로운 피처 정보 활용을 구분한다. 일반RP는 평균 형태뿐 아니라 covariance·rank/SNR·clipping도 바꾸므로 이번 비교로 고유 원인을 확정하지 않는다. Public PCFI-PFN보다 높은 accuracy만으로 feature inference 성공을 선언하지 않는다.
+    tags: [observation-mask, graph-structure-use, eval-protocol]
+    keywords: [projection closure versus causal repair, feature harm reduction, graph-only reference, observed minus none, real development, no independent holdout]
+    source_refs:
+      - findings/sources/fp01-projection-2026-11-04/PLAN_v2.md
+      - findings/sources/fp01-projection-2026-11-04/PRIOR_ART_SCOPE.md
+      - findings/sources/fp01-projection-2026-11-04/DECISION_KO.md
+      - findings/sources/fp01-projection-2026-11-04/results/paired.json
+    evidence: 행렬 투영에 대한 함수족 비폐쇄성, actual saved probability의 full/edge·none/shuffle 분리 재채점. RP16은 nativeD→16 실데이터 변환의 완전한 재현이 아닌 square16→16 surrogate다.

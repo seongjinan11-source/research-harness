@@ -1,6 +1,8 @@
 # Missing-feature GraphPFN 연구 인계서
 
-기준일: 2026-11-03. 최근 업데이트: 누적57편의 문헌과 Confidence Sheaf PFN 구성 요소 비교까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+기준일: 2026-11-04. 최근 업데이트: 누적57편의 문헌, Confidence Sheaf 구성 요소 비교, FP01 multiclass centroid Factor의 학습·평가·세 리뷰까지 포함한 [실험 결과 요약](RESULTS_SUMMARY_KO.md)과 공유 자료 정리.
+
+최신 FP01은 전체 성공 기준을 통과하지 못했지만 C_global 대비 C의 합성 accuracy+1.187%p와 NLL 감소를 보존한다. B 대비+0.952%p의97.5%CI는0을 포함하며, 실제 피처 추가 효용은 대부분 작거나 불안정하다. [최신 판정과 실패 범위](findings/sources/fp01-projection-2026-11-04/DECISION_KO.md)를 먼저 읽는다. 아래의 초기 binary Factor 설명을 이번 multiclass finite-centroid 구현과 혼동하지 않는다. 현재 연구에서 아직 확보하지 못한 것은 강한 graph-only/통계 추론보다 유용한 feature evidence의 일관된 회수다.
 
 ## 검토받고 싶은 문제
 

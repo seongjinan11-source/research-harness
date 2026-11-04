@@ -1986,6 +1986,86 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "FP01-F01",
+    "project": "FP01 projection-exposed centroid Factor",
+    "claim": "투영 노출과 관측 통계 기반 class-specific centroid Factor가 기존 projected Factor와 전역 centroid Factor를 모두 안정적으로 능가하고 추가 피처 효용을 회복한다.",
+    "verdict": "현재 operator·budget의 메인 missing-feature 방법 확장은 중단한다. C_global 대비 적응 효과와 일부 피처 손상 완화는 별도로 보존한다.",
+    "reason_status": "unknown",
+    "failure_reason": "기존 mean-family 제약을 넓히고 투영 노출을 맞추는 것만으로 사전 전체 기준과 안정적 추가 피처 효용을 달성하지 못했다. Prior mismatch·유한 grid/BP·고정 graph core·학습량의 기여도를 분리하지 않아 고유 원인은 미상이다.",
+    "reopen_when": "현재 공통 graph-only 예측보다 실제 feature evidence가 유용해지는 구체적 추론 변경과 이를 검증할 독립 조건이 생길 때. Prior 수학적 mismatch만 지적하거나 새 head를 붙였다는 이유로 재개하지 않는다.",
+    "recheck": "별도 cycle/branch에 변경 연산과 새 final bank를 먼저 고정한다. Own-feature-missing query의 accuracy·NLL/Brier·관측−none/shuffle·minority metrics를 함께 보고 full/edge를 graph별로 선택하지 않는다. 실제 development 재사용은 독립 holdout으로 부르지 않는다.",
+    "comparison_floor": "동일 정보·노출·고정 graph의 A/B/C_global/C 및 graph-only, 적절한 고정·통계적 centroid 추론기, 실제 PCFI/FISF+공개 GraphPFN과 LP. 같은family 소형 exact reference는 계산 가능할 때 사용하고 큰 multiclass에 binary Grid6를 그대로 비교하지 않는다.",
+    "source_refs": [
+      "findings/sources/fp01-projection-2026-11-04/DECISION_KO.md",
+      "findings/sources/fp01-projection-2026-11-04/results/summary.json",
+      "findings/sources/fp01-projection-2026-11-04/results/paired.json",
+      "findings/sources/fp01-projection-2026-11-04/results/audit.json",
+      "findings/sources/fp01-projection-2026-11-04/RESPONSE_RESULTS.md"
+    ],
+    "paper_id": "GSPN",
+    "paper_title": "Tractable Probabilistic Graph Representation Learning with Graph-Induced Sum-Product Networks",
+    "paper_link": "https://arxiv.org/abs/2305.10544",
+    "matches": [
+      {
+        "strength": "숫자 대치나 여러 completion forward 없이 모델 내 partial-evidence 추론을 제공한다.",
+        "tags": [
+          "differentiable-reasoning",
+          "observation-mask"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "differentiable-reasoning",
+      "observation-mask"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "FP01-F01",
+    "project": "FP01 projection-exposed centroid Factor",
+    "claim": "투영 노출과 관측 통계 기반 class-specific centroid Factor가 기존 projected Factor와 전역 centroid Factor를 모두 안정적으로 능가하고 추가 피처 효용을 회복한다.",
+    "verdict": "현재 operator·budget의 메인 missing-feature 방법 확장은 중단한다. C_global 대비 적응 효과와 일부 피처 손상 완화는 별도로 보존한다.",
+    "reason_status": "unknown",
+    "failure_reason": "기존 mean-family 제약을 넓히고 투영 노출을 맞추는 것만으로 사전 전체 기준과 안정적 추가 피처 효용을 달성하지 못했다. Prior mismatch·유한 grid/BP·고정 graph core·학습량의 기여도를 분리하지 않아 고유 원인은 미상이다.",
+    "reopen_when": "현재 공통 graph-only 예측보다 실제 feature evidence가 유용해지는 구체적 추론 변경과 이를 검증할 독립 조건이 생길 때. Prior 수학적 mismatch만 지적하거나 새 head를 붙였다는 이유로 재개하지 않는다.",
+    "recheck": "별도 cycle/branch에 변경 연산과 새 final bank를 먼저 고정한다. Own-feature-missing query의 accuracy·NLL/Brier·관측−none/shuffle·minority metrics를 함께 보고 full/edge를 graph별로 선택하지 않는다. 실제 development 재사용은 독립 holdout으로 부르지 않는다.",
+    "comparison_floor": "동일 정보·노출·고정 graph의 A/B/C_global/C 및 graph-only, 적절한 고정·통계적 centroid 추론기, 실제 PCFI/FISF+공개 GraphPFN과 LP. 같은family 소형 exact reference는 계산 가능할 때 사용하고 큰 multiclass에 binary Grid6를 그대로 비교하지 않는다.",
+    "source_refs": [
+      "findings/sources/fp01-projection-2026-11-04/DECISION_KO.md",
+      "findings/sources/fp01-projection-2026-11-04/results/summary.json",
+      "findings/sources/fp01-projection-2026-11-04/results/paired.json",
+      "findings/sources/fp01-projection-2026-11-04/results/audit.json",
+      "findings/sources/fp01-projection-2026-11-04/RESPONSE_RESULTS.md"
+    ],
+    "paper_id": "PEMix",
+    "paper_title": "When Missingness Follows the Graph: Beyond Feature Propagation for Missing Features",
+    "paper_link": "https://arxiv.org/abs/2610.18113",
+    "matches": [
+      {
+        "strength": "Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.",
+        "tags": [
+          "graph-structure-use",
+          "observation-mask"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-structure-use",
+      "observation-mask"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "G6T-F01",
     "project": "Exact Grid6 teacher for disjoint-feature PFN",
     "claim": "기존 생성 prior의 exact Grid6 predictive를 가르치면 현재 공개 Mask GraphPFN이 teacher 추론을 더 잘 압축한다.",

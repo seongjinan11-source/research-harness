@@ -1,10 +1,14 @@
 # Missing feature GraphPFN 실험 결과 정리
 
-기준일은2026-11-03다. 목표는 **새 그래프에서 가중치를 다시 학습하지 않고, 불완전한 node feature와 context labels로 분류하는 PFN**이다. Heterogeneous schema로의 확장은 장기 목표다.
+기준일은2026-11-04다. 목표는 **새 그래프에서 가중치를 다시 학습하지 않고, 불완전한 node feature와 context labels로 분류하는 PFN**이다. Heterogeneous schema로의 확장은 장기 목표다.
 
 **불완전한 관측값과 떨어진 context label을 연결하는 추론 구조는 확보했다. 그 구조를 학습하는 것이 강한 통계 모형보다 언제 유리한지는 아직 입증해야 한다.** Signed likelihood BP, 같은 potential의 자기 role-update, circuit의 neural 대조 대비 개선, Factor의 teacher 분포 근사 개선은 보존한다. 현재 독립적인 메인 메소드로 확정한 후보는 없으며, 이를 실제 분류·품질과 비용·graph/schema 전이의 이점으로 연결하는 것이 남은 문제다.
 
-기록은43개 프로젝트 묶음의180항목이다. 실패·중단52개, 보존42개, 교훈63개, 미실행23개이며 **180번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+기록은44개 프로젝트 묶음의183항목이다. 실패·중단53개, 보존43개, 교훈64개, 미실행23개이며 **183번의 독립 실험을 했다는 뜻은 아니다.** 상세 관찰과 재개 조건은 [전체 기록](out/research_log.md), 다른 연구자에게 전달할 설명은 [연구 인계서](RESEARCH_HANDOFF_KO.md)에 있다.
+
+## FP01: 투영 노출과 multiclass centroid Factor
+
+2026-11-04. 기존 graph core와 graph-only role weights를 고정하고 A기존/B투영학습/C_global전역centroid/C적응centroid를 각3seed·256updates로 학습했다. 새48base graph의 same-family primary에서 C−B +0.952%p,97.5%CI[−0.585,+2.696]로 전체gate는 미통과다. **C−C_global +1.187%p CI[+0.213,+2.446] 및 NLL 감소는 부분 성과로 보존**한다. C의 observed−none +0.579%p는95%CI[−0.855,+1.929]다. Real5graph는 재사용development이며 관측 피처의 안정적 추가 효용은 미확인이다. 코드는 별도 방법 브랜치에, 큰 파일은 경로·해시로 보존했다. [최종 판정](findings/sources/fp01-projection-2026-11-04/DECISION_KO.md), [세 리뷰 답변](findings/sources/fp01-projection-2026-11-04/RESPONSE_RESULTS.md), [구조화 기록](findings/factor-projection.yaml).
 
 ## 결과를 비교할 때 유지할 구분
 

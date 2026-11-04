@@ -1,0 +1,279 @@
+{
+  "status": "PASS",
+  "scope": "pre-lock numerical checks; no optimizer updates or final predictions",
+  "optimizer_updates": 0,
+  "final_bank_used": false,
+  "tested_sources": {
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\operators.py": "a557f75fff95f290c874d6df7828f195b229795b1c7c0c68d03badeebe6699c1",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\checks.py": "3ab2a13a143ca2bb56795590cafba693c1566dde87f9973b72952ffc6286637e",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\common.py": "51743b9242e7011032fa2158c4db1a238a6f35db8dfb7fc18c99d58f2874f084"
+  },
+  "tree_message_errors": {
+    "matrix_node_K2R3": 0.0,
+    "matrix_centroid_K2R3": 1.1102230246251565e-16,
+    "matrix_node_K3R5": 1.1102230246251565e-16,
+    "matrix_centroid_K3R5": 0.0,
+    "heterogeneous_tree_node": 1.5543122344752192e-15,
+    "heterogeneous_tree_centroid": 1.1102230246251565e-15,
+    "tree_partition_constants_prior": 1.3322676295501878e-15,
+    "tree_role_with_graph_baseline": 1.1102230246251565e-16,
+    "tree_pair_active_residual": 5.551115123125783e-17,
+    "tree_pair_centroid_residual": 1.1102230246251565e-16
+  },
+  "loopy_grid_diagnostics": [
+    {
+      "classes": 2,
+      "grid": 3,
+      "nodes": 3,
+      "sources": 2,
+      "context_source_overlap": false,
+      "node_abs_error": 0.00022357294877850542,
+      "centroid_abs_error": 0.0031120947375858493,
+      "pair_active_residual": 1.701965635092506e-08,
+      "pair_centroid_residual": 3.238030099605993e-07,
+      "exact_logz": [
+        -1.6968887459673299,
+        -0.736217570816269,
+        0.4143065470953335
+      ],
+      "scope": "finite grid loopy approximation, not an equality assertion"
+    },
+    {
+      "classes": 3,
+      "grid": 3,
+      "nodes": 3,
+      "sources": 2,
+      "context_source_overlap": false,
+      "node_abs_error": 0.00017064925253262864,
+      "centroid_abs_error": 0.002561940405503907,
+      "pair_active_residual": 1.309506475477562e-08,
+      "pair_centroid_residual": 3.4579089636110893e-07,
+      "exact_logz": [
+        -0.6327416626891856,
+        -0.010546427577644924,
+        0.8299473809832598
+      ],
+      "scope": "finite grid loopy approximation, not an equality assertion"
+    },
+    {
+      "classes": 3,
+      "grid": 5,
+      "nodes": 3,
+      "sources": 2,
+      "context_source_overlap": false,
+      "node_abs_error": 0.008479826794153822,
+      "centroid_abs_error": 0.015305661474080745,
+      "pair_active_residual": 7.772650810755621e-07,
+      "pair_centroid_residual": 8.915965382383373e-07,
+      "exact_logz": [
+        -0.6323781331898012,
+        -0.03754895600122589,
+        0.7572058540768433
+      ],
+      "scope": "finite grid loopy approximation, not an equality assertion"
+    }
+  ],
+  "continuous_quadrature_diagnostics": {
+    "scope": "diagnostic only; finite-grid model does not claim continuous fidelity",
+    "records": [
+      {
+        "sources": 1,
+        "grid": 11,
+        "analytic_logz": -1.2401940723822709,
+        "grid_logz": -1.234792820660284,
+        "logz_error": 0.0054012517219867995,
+        "posterior_mean_error": 0.007808339195941039,
+        "posterior_variance_error": -0.008983935065108611
+      },
+      {
+        "sources": 1,
+        "grid": 41,
+        "analytic_logz": -1.2401940723822709,
+        "grid_logz": -1.2401940741397277,
+        "logz_error": -1.7574568467182416e-09,
+        "posterior_mean_error": 6.865573554115656e-09,
+        "posterior_variance_error": 1.1895844642673126e-08
+      },
+      {
+        "sources": 5,
+        "grid": 11,
+        "analytic_logz": -4.1011017166267765,
+        "grid_logz": -4.031039331178737,
+        "logz_error": 0.07006238544803978,
+        "posterior_mean_error": -0.15290233558230099,
+        "posterior_variance_error": -0.02826781821862421
+      },
+      {
+        "sources": 5,
+        "grid": 41,
+        "analytic_logz": -4.1011017166267765,
+        "grid_logz": -4.113977208241439,
+        "logz_error": -0.012875491614662948,
+        "posterior_mean_error": -0.003939332989277275,
+        "posterior_variance_error": 0.004869416095936392
+      },
+      {
+        "sources": 20,
+        "grid": 11,
+        "analytic_logz": -21.813759545369074,
+        "grid_logz": -25.49573279716822,
+        "logz_error": -3.681973251799146,
+        "posterior_mean_error": 0.30205606179748273,
+        "posterior_variance_error": -0.004946371387742779
+      },
+      {
+        "sources": 20,
+        "grid": 41,
+        "analytic_logz": -21.813759545369074,
+        "grid_logz": -21.46346194467326,
+        "logz_error": 0.3502976006958143,
+        "posterior_mean_error": -0.043005344972865345,
+        "posterior_variance_error": -0.00955158965617197
+      },
+      {
+        "sources": 100,
+        "grid": 11,
+        "analytic_logz": -67.92936118443139,
+        "grid_logz": -78.38145115641761,
+        "logz_error": -10.452089971986226,
+        "posterior_mean_error": 0.2232494829095525,
+        "posterior_variance_error": -0.0020186129823605
+      },
+      {
+        "sources": 100,
+        "grid": 41,
+        "analytic_logz": -67.92936118443139,
+        "grid_logz": -70.84850767715666,
+        "logz_error": -2.9191464927252753,
+        "posterior_mean_error": -0.12962969963216198,
+        "posterior_variance_error": -0.002018159719473516
+      }
+    ]
+  },
+  "model_errors": {
+    "centroid_initial_match": 0.0,
+    "old_operator_parity": 0.0,
+    "A_clamp": 0.0,
+    "A_hidden_poison": 0.0,
+    "A_column_permutation": 5.551115123125783e-17,
+    "A_node_source_order_permutation": 5.551115123125783e-17,
+    "A_class_permutation": 5.551115123125783e-17,
+    "A_none": 0.0,
+    "A_singleton": 5.551115123125783e-17,
+    "B_clamp": 0.0,
+    "B_hidden_poison": 0.0,
+    "B_column_permutation": 5.551115123125783e-17,
+    "B_node_source_order_permutation": 5.551115123125783e-17,
+    "B_class_permutation": 5.551115123125783e-17,
+    "B_none": 0.0,
+    "B_singleton": 5.551115123125783e-17,
+    "C_global_clamp": 0.0,
+    "C_global_hidden_poison": 0.0,
+    "C_global_column_permutation": 1.6653345369377348e-16,
+    "C_global_node_source_order_permutation": 1.1102230246251565e-16,
+    "C_global_class_permutation": 1.1102230246251565e-16,
+    "C_global_none": 0.0,
+    "C_global_singleton": 5.551115123125783e-17,
+    "C_clamp": 0.0,
+    "C_hidden_poison": 0.0,
+    "C_column_permutation": 1.1102230246251565e-16,
+    "C_node_source_order_permutation": 1.1102230246251565e-16,
+    "C_class_permutation": 1.1102230246251565e-16,
+    "C_none": 0.0,
+    "C_singleton": 5.551115123125783e-17,
+    "centroid_lowlevel_none": 0.0,
+    "isolated_centroid_prior": 1.1102230246251565e-16
+  },
+  "gradients": {
+    "A": {
+      "absolute_sum": 0.02145107037830944,
+      "query_feature_missing": true,
+      "source_grad_crosses_graph": true,
+      "parameter_count": 721
+    },
+    "B": {
+      "absolute_sum": 0.02145107037830944,
+      "query_feature_missing": true,
+      "source_grad_crosses_graph": true,
+      "parameter_count": 721
+    },
+    "C_global": {
+      "absolute_sum": 0.006247960139550015,
+      "query_feature_missing": true,
+      "source_grad_crosses_graph": true,
+      "parameter_count": 3
+    },
+    "C": {
+      "absolute_sum": 0.03412500326040505,
+      "query_feature_missing": true,
+      "source_grad_crosses_graph": true,
+      "parameter_count": 751
+    }
+  },
+  "directional_gradient": {
+    "autograd": -0.00014064569962904812,
+    "central_difference": -0.00014064570619254368,
+    "abs_error": 6.563495569527483e-12
+  },
+  "frozen_graph": {
+    "status": "PASS",
+    "digest": "c08f8719c4e2bf813f9bb9c66b354ea6ee2a8df086058d61df604ebb811336b6",
+    "panels": {
+      "full": {
+        "p0_error": 0.0,
+        "lanes": 3,
+        "active_roles": [
+          0,
+          1,
+          2
+        ]
+      },
+      "edge": {
+        "p0_error": 0.0,
+        "lanes": 3,
+        "active_roles": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "real_gradient_updates": 0
+  },
+  "resource": {
+    "status": "PASS",
+    "records": {
+      "train_shape_forward_backward": {
+        "seconds": 0.1974043999798596,
+        "peak_mib": 469.1396484375,
+        "nodes": 128,
+        "classes": 7,
+        "source_nodes": 64,
+        "lanes": 3,
+        "grid": 41,
+        "backward": true
+      },
+      "large_C15_source100": {
+        "seconds": 0.26014239992946386,
+        "peak_mib": 785.88330078125,
+        "nodes": 2000,
+        "classes": 15,
+        "source_nodes": 100,
+        "lanes": 1,
+        "grid": 41,
+        "backward": false
+      },
+      "reused_CiteSeer95_inference": {
+        "seconds": 0.27821230003610253,
+        "peak_mib": 919.4189453125,
+        "nodes": 3327,
+        "classes": 6,
+        "source_nodes": 166,
+        "lanes": 1,
+        "grid": 41,
+        "backward": false,
+        "exact_zero_role_pruning_p0_error": 4.76837158203125e-07
+      }
+    }
+  }
+}

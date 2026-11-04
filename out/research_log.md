@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 43개 프로젝트 · 180개 기록 (실패·중단 52개, 보존 42개, 교훈 63개, 미실행 23개)
+총 44개 프로젝트 · 183개 기록 (실패·중단 53개, 보존 43개, 교훈 64개, 미실행 23개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -306,6 +306,36 @@ CSBMInference는 latent community와 Gaussian feature centroid에 대한 AMP–B
 이번 실행은12 nodes·binary classes·2 Gaussian features·2 relations다. Context1/2/4는 총 label 수이며 per-class가 아니다. 3/6 observed nodes는75/50% node missing이며99.5% 조건이 아니다. Variable feature count를 표현할 수 있는 코드여도 평가는2 features만 수행했다.
 
 - 원문: [findings/sources/disjoint-factor-2026-11-02/protocol.json](../findings/sources/disjoint-factor-2026-11-02/protocol.json); [findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md](../findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)
+
+## FP01 projection-exposed centroid Factor
+
+실험 조건: 기존512 합성base tasks의 raw/RP를 대응시켜 A기존Factor·B투영학습·C_global유한centroid·C적응centroid를 각3seed256updates로 비교했다. Graph core와 graph-only role weights는 공통 고정, 실제 그래프 업데이트0이다. Synthetic final은48base graph의 동일family 새seed이고 실제5graph는 재사용development다.
+
+### FP01-F01 [실패·중단] 투영 노출과 관측 통계 기반 class-specific centroid Factor가 기존 projected Factor와 전역 centroid Factor를 모두 안정적으로 능가하고 추가 피처 효용을 회복한다.
+
+Synthetic primary full/projected,50/75/90/95%,source>=2에서 A52.817%,B52.800%,C_global52.565%,C53.752%. C−B +0.952%p,97.5%CI[−0.585,+2.696]로 CI하한 및1%p요건 미통과. C−global +1.187%p CI[+0.213,+2.446]는 통과. C−none +0.579%p,보조95%CI[−0.855,+1.929]. NLL C−B−0.02935/C−global−0.02400. 전체 adaptive gate=False. Secondary edge NLL은 C가 B보다 약+0.465,global보다+0.209nats 악화.
+
+- 판정: 현재 operator·budget의 메인 missing-feature 방법 확장은 중단한다. C_global 대비 적응 효과와 일부 피처 손상 완화는 별도로 보존한다.
+- 원인·병목 [원인 미상]: 기존 mean-family 제약을 넓히고 투영 노출을 맞추는 것만으로 사전 전체 기준과 안정적 추가 피처 효용을 달성하지 못했다. Prior mismatch·유한 grid/BP·고정 graph core·학습량의 기여도를 분리하지 않아 고유 원인은 미상이다.
+- 닫은 범위: 원래 multiclass prior·고정 graph-only role mixture·41-state centroid·BP24/damping.5·512노출/256updates에서 C의 사전 co-primary 확대 가설. 같은 최종 bank를 새 loss·temperature·grid·학습량으로 구제하는 탐색은 하지 않는다.
+- 닫지 않은 것: C−C_global의 확인된 부분 효과, 기존 Factor의 disjoint 연결 연산, 다른 feature law·covariance model·추론 연산·더 큰 사전 고정 budget·새 실데이터에서의 효과는 기각하지 않는다. 모든 Gaussian/centroid/BP나 PCFI 경쟁 가능성을 닫지 않는다.
+- 재검토 조건: 현재 공통 graph-only 예측보다 실제 feature evidence가 유용해지는 구체적 추론 변경과 이를 검증할 독립 조건이 생길 때. Prior 수학적 mismatch만 지적하거나 새 head를 붙였다는 이유로 재개하지 않는다.
+- 기준선: 동일 정보·노출·고정 graph의 A/B/C_global/C 및 graph-only, 적절한 고정·통계적 centroid 추론기, 실제 PCFI/FISF+공개 GraphPFN과 LP. 같은family 소형 exact reference는 계산 가능할 때 사용하고 큰 multiclass에 binary Grid6를 그대로 비교하지 않는다.
+- 최소 재검증: 별도 cycle/branch에 변경 연산과 새 final bank를 먼저 고정한다. Own-feature-missing query의 accuracy·NLL/Brier·관측−none/shuffle·minority metrics를 함께 보고 full/edge를 graph별로 선택하지 않는다. 실제 development 재사용은 독립 holdout으로 부르지 않는다.
+- 원문: [findings/sources/fp01-projection-2026-11-04/DECISION_KO.md](../findings/sources/fp01-projection-2026-11-04/DECISION_KO.md); [findings/sources/fp01-projection-2026-11-04/results/summary.json](../findings/sources/fp01-projection-2026-11-04/results/summary.json); [findings/sources/fp01-projection-2026-11-04/results/paired.json](../findings/sources/fp01-projection-2026-11-04/results/paired.json); [findings/sources/fp01-projection-2026-11-04/results/audit.json](../findings/sources/fp01-projection-2026-11-04/results/audit.json); [findings/sources/fp01-projection-2026-11-04/RESPONSE_RESULTS.md](../findings/sources/fp01-projection-2026-11-04/RESPONSE_RESULTS.md)
+
+### FP01-P01 [보존] 동일 centroid 추론에서 관측 통계 기반 shared encoder는 전역3계수보다 합성 주평가의 accuracy와 확률 점수를 개선했다.
+
+C_global52.565%→C53.752%,+1.187%p,97.5%CI[+0.213,+2.446]. NLL0.99801→0.97400. 이는 전체 gate 중 한 비교의 성공이며 C−B +0.952%p CI[−0.585,+2.696] 미통과를 대체하지 않는다.
+
+- 확대 금지: Adaptive encoder의 모든 효과를 부정하지 않지만, B 대비 확실한 우위·안정적 추가 feature utility·unseen schema·독립 real 일반화·정확한 연속 Bayes·Gaussian centroid와 BP 결합의 신규성을 주장하지 않는다. Graph-only role weights는 feature에 고정되어 feature-conditioned joint posterior를 학습한 결과도 아니다.
+- 원문: [findings/sources/fp01-projection-2026-11-04/DECISION_KO.md](../findings/sources/fp01-projection-2026-11-04/DECISION_KO.md); [findings/sources/fp01-projection-2026-11-04/results/paired.json](../findings/sources/fp01-projection-2026-11-04/results/paired.json); [findings/sources/fp01-projection-2026-11-04/RESULT_METHOD.md](../findings/sources/fp01-projection-2026-11-04/RESULT_METHOD.md)
+
+### FP01-L01 [교훈] 기존 mean family가 일반 투영에 닫히지 않는 사실과 그것을 넓히면 실제 피처 효용이 회복된다는 가설은 다르다.
+
+K>=3의 one-preferred/equal-other mean family는 일반RP를 보존하지 않는다. 그러나 projected task 노출만 바꾼 B−A는 primary−0.017%p였다. Full real95%에서 C−none은 Cora−0.024/CiteSeer+0.003/PubMed−0.440/CS0.000/Physics+0.205%p. Cora/CiteSeer의 B 대비95% feature utility 개선은 주로 기존 손상을 줄인 형태이며 안정적 추가 정보 활용은 미입증이다.
+
+- 원문: [findings/sources/fp01-projection-2026-11-04/PLAN_v2.md](../findings/sources/fp01-projection-2026-11-04/PLAN_v2.md); [findings/sources/fp01-projection-2026-11-04/PRIOR_ART_SCOPE.md](../findings/sources/fp01-projection-2026-11-04/PRIOR_ART_SCOPE.md); [findings/sources/fp01-projection-2026-11-04/DECISION_KO.md](../findings/sources/fp01-projection-2026-11-04/DECISION_KO.md); [findings/sources/fp01-projection-2026-11-04/results/paired.json](../findings/sources/fp01-projection-2026-11-04/results/paired.json)
 
 ## 실제 관측 feature 기여의 개입 분석
 

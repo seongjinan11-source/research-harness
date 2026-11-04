@@ -1,0 +1,9 @@
+# Evaluation-only metadata cache amendment
+
+The predictor, banks, checkpoints, protocol, statistics, and locked source files remain unchanged. All twelve fits completed before this amendment. Initial evaluation used the frozen runner directly, with seed11/12/13 queued in a single sequential PowerShell loop. Per-prediction launches of two Git subprocesses introduced substantial metadata overhead.
+
+All three operational reviews allow caching only descriptive `_git_state`; they differ on GPU concurrency. Root chooses concurrency1, with no parallel seed workers. Before resuming, the original Python child is stopped and its owning PowerShell loop is awaited to completion, preventing queued seed12/13 launches from racing a new worker. The original log and failed operational exit are preserved.
+
+`evaluate_cached_metadata.py` imports the unchanged runner by explicit path and replaces only `_git_state` with a process-start snapshot. It uses the original strict `resume=True` path, retaining complete predictions and verifying all identities/hashes. Any interruption-created unpaired NPZ/JSON is moved byte-for-byte into a timestamped quarantine with source path/hash; no missing sidecar is fabricated. Every run records wrapper/runner/lock hashes and start/end Git state. The first resumed seed additionally replays one completed nondegenerate C row to scratch memory and verifies probabilities and identities before evaluating further.
+
+This is an execution amendment, not a new scientific arm or a post-lock method repair. Descriptive Git fields in new prediction sidecars mean evaluation-start state. Original successful per-prediction inference timings remain unchanged; repeated resume/operational overhead is separately recorded, and wall-clock changes from metadata caching are not a model speedup claim. Keep the original source lock; do not add this wrapper retroactively to fit identities.

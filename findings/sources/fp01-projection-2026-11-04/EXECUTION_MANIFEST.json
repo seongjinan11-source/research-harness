@@ -1,0 +1,85 @@
+{
+  "cycle": "FP01",
+  "scope": "Operational metadata cache only; frozen scientific source lock unchanged",
+  "gpu_concurrency": 1,
+  "interrupted_original_attempt": {
+    "owning_session": 10987,
+    "exit_code": 1,
+    "reason": "Root intentionally stopped Python child74356 to replace per-record Git subprocess metadata with a cached descriptive snapshot",
+    "log_path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\eval_s11.log",
+    "log_sha256": "e2dcb8fa87e4ae5bb2af1cb92c27054934e4169c02438991bb8e443236f00455",
+    "process_record": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\evaluation_interrupted_process.json",
+    "process_record_sha256": "73b18d7d7c06fd50054ee374d594f981c93a7141b363544947174650719d9bc3"
+  },
+  "completed_sequential_cached_runs": [
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\runtime\\metadata_cache\\20261104_135107_s11\\finished.json",
+      "sha256": "702a0008373aeb8e6310cb5ae09337ff2222d8fb02abf5e320235c87840f4715",
+      "seed": 11,
+      "started": 1793767867.0871503,
+      "finished": 1793768048.8521316,
+      "seconds": 181.76498126983643,
+      "git_start": {
+        "branch": "research/fp01-projection-centroid",
+        "commit": "66d0c9e46dd0d92b07981187acb0d7b3914749aa"
+      },
+      "git_end": {
+        "branch": "research/fp01-projection-centroid",
+        "commit": "66d0c9e46dd0d92b07981187acb0d7b3914749aa"
+      },
+      "orphans": [
+        {
+          "original": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\synthetic\\edge\\FP01_final_0041_41__raw_99_fb26c9971bd81722e5a6.npz",
+          "preserved": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\runtime\\metadata_cache\\20261104_135107_s11\\orphans\\results\\C_global_s11\\predictions\\synthetic\\edge\\FP01_final_0041_41__raw_99_fb26c9971bd81722e5a6.npz",
+          "sha256": "43d65b8506a2549d8f40496877429deccc496e55059466afff94151345d10183",
+          "reason": "Unpaired artifact after explicit operational worker interruption"
+        }
+      ],
+      "replay": {
+        "metadata": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_s11\\predictions\\synthetic\\full\\FP01_final_0000_0__orthogonal_75_1fe085fe6c0be52cd93a.json",
+        "prediction_sha256": "4f236c02006056344ade865edafd7e05e303672625636e639e9f2a82107c6b6b",
+        "max_probability_error": 5.960464477539063e-08
+      }
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\runtime\\metadata_cache\\20261104_135431_s12\\finished.json",
+      "sha256": "15511d4af8ee97885d0e04aa3ec0f8c04d6adaa385a2f7c3940d4678cd3a1317",
+      "seed": 12,
+      "started": 1793768071.2556083,
+      "finished": 1793768329.0184355,
+      "seconds": 257.76282715797424,
+      "git_start": {
+        "branch": "research/fp01-projection-centroid",
+        "commit": "66d0c9e46dd0d92b07981187acb0d7b3914749aa"
+      },
+      "git_end": {
+        "branch": "research/fp01-projection-centroid",
+        "commit": "66d0c9e46dd0d92b07981187acb0d7b3914749aa"
+      },
+      "orphans": [],
+      "replay": null
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\runtime\\metadata_cache\\20261104_135855_s13\\finished.json",
+      "sha256": "2bdf5997b61c6ec80cd34765ea7988a72f6585ac6fdb903652f7df36f1ce9c68",
+      "seed": 13,
+      "started": 1793768335.4704845,
+      "finished": 1793768592.283637,
+      "seconds": 256.813152551651,
+      "git_start": {
+        "branch": "research/fp01-projection-centroid",
+        "commit": "66d0c9e46dd0d92b07981187acb0d7b3914749aa"
+      },
+      "git_end": {
+        "branch": "research/fp01-projection-centroid",
+        "commit": "66d0c9e46dd0d92b07981187acb0d7b3914749aa"
+      },
+      "orphans": [],
+      "replay": null
+    }
+  ],
+  "wrapper_sha256": "860568dee7eab00b7825b5b8e88c3e418008c50c9410cebc46a51888d4c89c8d",
+  "inference_replay_count": 1,
+  "unpaired_prediction_quarantined_and_regenerated": 1,
+  "cost_scope": "Cached-run worker wall time includes strict resume hashing/re-encoding and one replay. Original interrupted attempt additionally consumed compute. Per-prediction analysis timings omit repeated graph encodes and operational overhead. No model latency/speedup claim."
+}

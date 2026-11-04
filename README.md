@@ -25,6 +25,8 @@ python src/harness.py check \
 ```
 
 ## 내 연구 기록 (`findings/`)
+2026-11-04 [FP01 projection/centroid Factor 결과](findings/sources/fp01-projection-2026-11-04/DECISION_KO.md)를 추가했다. 사전 전체gate 미통과와 C_global 대비 적응 효과+1.187%p를 분리 보존하며, [세 독립 결과 리뷰 답변](findings/sources/fp01-projection-2026-11-04/RESPONSE_RESULTS.md)과 코드·작은 결과32개 원문 snapshot을 연결한다. 큰 bank/checkpoint/prediction은 복제하지 않고 원본 해시 manifest를 유지한다.
+
 전체 결과를 다시 볼 때는 [실험 결과 요약](RESULTS_SUMMARY_KO.md)을 먼저 읽는다.
 실데이터, 최근 여섯 학습 실험과 내부 고정 PCFI 재검증·부호 전달 frozen 진단·참 법칙 없는 적응 전달 비교, 이전 시도·중단 범위를 구분했다.
 SSGP·GGP 선행연구와 직접 Gaussian/probit의 추가 비교·메소드 판정도 기록했다.
