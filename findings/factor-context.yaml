@@ -1,0 +1,59 @@
+project: FP03 context-scored relational contrast family
+date: '2026-11-04'
+source: findings/sources/fp03-context-2026-11-04/DECISION_KO.md
+setting: 기존 실제5graph rep0와frozen seed11의 none/95% 결측10episode를 재사용한 개발검사다.15candidate의285 balanced calibration 및150 final branch를 계산했으며 새 신경학습은0회다. Singleton-label은경계검사이며 실제context는대체로class당4개다. 목표는missing-feature PFN이다.
+related: [GraphPFN, CSBMInference]
+entries:
+  - id: FP03-F01
+    kind: failure
+    claim: Context의 balanced held-label score로 고정15개 관계함수를 가중하면 강한 fixed-edge 기준선을 보존하면서 nonedge 손해를 해결한다.
+    observation: None accuracy평균 adaptive60.910%,fixed-edge62.523%,inherited-edge63.750%,inherited-full55.691%다. Adaptive는5개graph 모두fixed-edge보다낮고10개사전gate중5개실패다.95−none feature accuracy효과는평균−0.107%p다. 감사PASS와성능gate FAIL을분리한다.
+    verdict: 현재 scalar edge/rank-one nonedge/MF15family 및 unit mean-score weighting의 확대를중단한다. 같은개발bank에서temperature/grid를조정해구제하지않는다.
+    failure_reason: 좋은고정예측기의accuracy와추가feature효용을보존하지못했다. 기존learned pair-specific fullBP가후보family에없으며potential과inference가동시에변했다. Calibration coverage/score목적과final query분포도다르다. 이들기여의고유원인은분리하지못했다.
+    reason_status: unknown
+    excluded_explanations:
+      - 독립NumPy/CPU/CUDA oracle,누출·순열·fold·self-exclusion과저장248개hash/120개score재구성을통과했다.
+      - Individual LOO의class-count cue를사전balanced classwise holdout으로제거했고CS extras13개도calibration에서숨겼다.
+      - Uniformprior대비큰개선은보존하지만약한baseline만이긴것으로강한fixed-edge실패를대체하지않는다.
+    closed_scope: 현재10개재사용development episode와15candidate/BP24/unit mean-score mixture에서의성공및이를근거로한새neural확대.
+    not_closed: Context adaptation일반, inheritedfull/edge의실제연산,missing-feature PFN전체,모든nonedge활용과학습된관측factor를기각하지않는다.
+    reopen_when: 기존유용했던conditional predictor를정확히포함하거나관측feature의추가효용을회수하는구체연산을제시하고강한기준선과독립평가를잠글수있을때.
+    comparison_floor: 실제inherited-full/edge,고정edge,uniformprior/MAP,LP harmonic/restart,publicGraphPFN및PCFI/FISF+PFN; accuracy와NLL/Brier/feature제거를함께유지한다.
+    recheck: 새cycle에서정보·추론·예산변경을분리하고3review/수치검사뒤새graph bank를사용한다.현재1rep/1seed로독립CI나범용실패를주장하지않는다.
+    tags: [graph-structure-use, observation-mask, eval-protocol, prior-mismatch]
+    keywords: [FP03, context calibration, scalar Potts, rank one nonedge, mean field, candidate containment, feature utility]
+    reopen_tags: [graph-structure-use, observation-mask, prior-mismatch]
+    reopen_keywords: [matched endpoint, learned conditional operator, native observed cells, actual feature gain]
+    source_refs:
+      - findings/sources/fp03-context-2026-11-04/results/REPORT_KO.md
+      - findings/sources/fp03-context-2026-11-04/results/audit.json
+      - findings/sources/fp03-context-2026-11-04/DECISION_KO.md
+  - id: FP03-P01
+    kind: preserved
+    claim: 동일 candidate 확률에서 context로 계산한 가중치는 uniform prior보다 유용했다.
+    observation: None accuracy adaptive60.910% 대uniformprior35.269%로+25.641%p다. MeanNLL은fixed-edge1.62348에서adaptive1.33772로낮아졌지만Brier와accuracy는악화했고NLL이득은균일하지않다.
+    do_not_claim: 강한fixed-edge/LP우위,일반calibration해결,참homophily posterior,stablefeatureutility나새PFN학습성과가아니다.1rep/1seed개발효과를독립통계검증으로확대하지않는다.
+    tags: [graph-structure-use, eval-protocol, uncertainty]
+    keywords: [predictive weighting, weak prior improvement, accuracy versus NLL, mean score]
+    source_refs:
+      - findings/sources/fp03-context-2026-11-04/results/REPORT_KO.md
+      - findings/sources/fp03-context-2026-11-04/RESULT_METHOD.md
+  - id: FP03-L01
+    kind: lesson
+    claim: Best-single candidate는convex mixture의상한이아니고,실제parent함수가후보군에포함되는지별도로확인해야한다.
+    observation: CiteSeer bestsingle41.834% 대oldfull52.898%는coverage경고지만모든mixture상한을증명하지않는다.실제PubMed adaptive NLL1.07710은best-single1.09861보다낮다. Oldfull의learned pair-specificJ와denseBP는새scalar/rank-oneJ와MF로표현되는endpoint가아니다.
+    interpretation: 가중치오차와새potential/근사변경을동일한원인으로설명하지않는다.동일operator의실제endpoints를보존한통제가필요하다.
+    tags: [eval-protocol, graph-structure-use, uncertainty]
+    keywords: [mixture bound, best single, operator containment, prediction sensitivity, paired inference]
+    source_refs:
+      - findings/sources/fp03-context-2026-11-04/RESULT_INFERENCE.md
+      - findings/sources/fp03-context-2026-11-04/RESULT_EXPERIMENTS.md
+  - id: FP03-U01
+    kind: untested
+    claim: 실제inherited-full/edge operators를정확한두anchor로유지한context weighting
+    observation: 세결과리뷰의후속제안이며미실행이다.사용자steering은별도end-to-end observed-cell PFN실험으로전환했다.이두anchor진단의성공·실패를아직주장하지않는다.
+    tags: [graph-structure-use, eval-protocol, observation-mask]
+    keywords: [matched endpoints, no new fit, balanced context weighting, unexecuted]
+    source_refs:
+      - findings/sources/fp03-context-2026-11-04/RESULT_METHOD.md
+      - findings/sources/fp03-context-2026-11-04/DECISION_KO.md

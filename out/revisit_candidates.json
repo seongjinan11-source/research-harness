@@ -2106,6 +2106,82 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "FP03-F01",
+    "project": "FP03 context-scored relational contrast family",
+    "claim": "Context의 balanced held-label score로 고정15개 관계함수를 가중하면 강한 fixed-edge 기준선을 보존하면서 nonedge 손해를 해결한다.",
+    "verdict": "현재 scalar edge/rank-one nonedge/MF15family 및 unit mean-score weighting의 확대를중단한다. 같은개발bank에서temperature/grid를조정해구제하지않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "좋은고정예측기의accuracy와추가feature효용을보존하지못했다. 기존learned pair-specific fullBP가후보family에없으며potential과inference가동시에변했다. Calibration coverage/score목적과final query분포도다르다. 이들기여의고유원인은분리하지못했다.",
+    "reopen_when": "기존유용했던conditional predictor를정확히포함하거나관측feature의추가효용을회수하는구체연산을제시하고강한기준선과독립평가를잠글수있을때.",
+    "recheck": "새cycle에서정보·추론·예산변경을분리하고3review/수치검사뒤새graph bank를사용한다.현재1rep/1seed로독립CI나범용실패를주장하지않는다.",
+    "comparison_floor": "실제inherited-full/edge,고정edge,uniformprior/MAP,LP harmonic/restart,publicGraphPFN및PCFI/FISF+PFN; accuracy와NLL/Brier/feature제거를함께유지한다.",
+    "source_refs": [
+      "findings/sources/fp03-context-2026-11-04/results/REPORT_KO.md",
+      "findings/sources/fp03-context-2026-11-04/results/audit.json",
+      "findings/sources/fp03-context-2026-11-04/DECISION_KO.md"
+    ],
+    "paper_id": "NodePFN",
+    "paper_title": "Learning Posterior Predictive Distributions for Node Classification from Synthetic Graph Priors",
+    "paper_link": "https://arxiv.org/abs/2604.19028",
+    "matches": [
+      {
+        "strength": "cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.",
+        "tags": [
+          "graph-structure-use",
+          "prior-mismatch"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-structure-use",
+      "prior-mismatch"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "FP03-F01",
+    "project": "FP03 context-scored relational contrast family",
+    "claim": "Context의 balanced held-label score로 고정15개 관계함수를 가중하면 강한 fixed-edge 기준선을 보존하면서 nonedge 손해를 해결한다.",
+    "verdict": "현재 scalar edge/rank-one nonedge/MF15family 및 unit mean-score weighting의 확대를중단한다. 같은개발bank에서temperature/grid를조정해구제하지않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "좋은고정예측기의accuracy와추가feature효용을보존하지못했다. 기존learned pair-specific fullBP가후보family에없으며potential과inference가동시에변했다. Calibration coverage/score목적과final query분포도다르다. 이들기여의고유원인은분리하지못했다.",
+    "reopen_when": "기존유용했던conditional predictor를정확히포함하거나관측feature의추가효용을회수하는구체연산을제시하고강한기준선과독립평가를잠글수있을때.",
+    "recheck": "새cycle에서정보·추론·예산변경을분리하고3review/수치검사뒤새graph bank를사용한다.현재1rep/1seed로독립CI나범용실패를주장하지않는다.",
+    "comparison_floor": "실제inherited-full/edge,고정edge,uniformprior/MAP,LP harmonic/restart,publicGraphPFN및PCFI/FISF+PFN; accuracy와NLL/Brier/feature제거를함께유지한다.",
+    "source_refs": [
+      "findings/sources/fp03-context-2026-11-04/results/REPORT_KO.md",
+      "findings/sources/fp03-context-2026-11-04/results/audit.json",
+      "findings/sources/fp03-context-2026-11-04/DECISION_KO.md"
+    ],
+    "paper_id": "PEMix",
+    "paper_title": "When Missingness Follows the Graph: Beyond Feature Propagation for Missing Features",
+    "paper_link": "https://arxiv.org/abs/2610.18113",
+    "matches": [
+      {
+        "strength": "Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.",
+        "tags": [
+          "graph-structure-use",
+          "observation-mask"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "graph-structure-use",
+      "observation-mask"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "G6T-F01",
     "project": "Exact Grid6 teacher for disjoint-feature PFN",
     "claim": "기존 생성 prior의 exact Grid6 predictive를 가르치면 현재 공개 Mask GraphPFN이 teacher 추론을 더 잘 압축한다.",

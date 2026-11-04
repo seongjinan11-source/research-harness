@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 45개 프로젝트 · 186개 기록 (실패·중단 54개, 보존 43개, 교훈 65개, 미실행 24개)
+총 46개 프로젝트 · 190개 기록 (실패·중단 55개, 보존 44개, 교훈 66개, 미실행 25개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -306,6 +306,42 @@ CSBMInference는 latent community와 Gaussian feature centroid에 대한 AMP–B
 이번 실행은12 nodes·binary classes·2 Gaussian features·2 relations다. Context1/2/4는 총 label 수이며 per-class가 아니다. 3/6 observed nodes는75/50% node missing이며99.5% 조건이 아니다. Variable feature count를 표현할 수 있는 코드여도 평가는2 features만 수행했다.
 
 - 원문: [findings/sources/disjoint-factor-2026-11-02/protocol.json](../findings/sources/disjoint-factor-2026-11-02/protocol.json); [findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md](../findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)
+
+## FP03 context-scored relational contrast family
+
+실험 조건: 기존 실제5graph rep0와frozen seed11의 none/95% 결측10episode를 재사용한 개발검사다.15candidate의285 balanced calibration 및150 final branch를 계산했으며 새 신경학습은0회다. Singleton-label은경계검사이며 실제context는대체로class당4개다. 목표는missing-feature PFN이다.
+
+### FP03-F01 [실패·중단] Context의 balanced held-label score로 고정15개 관계함수를 가중하면 강한 fixed-edge 기준선을 보존하면서 nonedge 손해를 해결한다.
+
+None accuracy평균 adaptive60.910%,fixed-edge62.523%,inherited-edge63.750%,inherited-full55.691%다. Adaptive는5개graph 모두fixed-edge보다낮고10개사전gate중5개실패다.95−none feature accuracy효과는평균−0.107%p다. 감사PASS와성능gate FAIL을분리한다.
+
+- 판정: 현재 scalar edge/rank-one nonedge/MF15family 및 unit mean-score weighting의 확대를중단한다. 같은개발bank에서temperature/grid를조정해구제하지않는다.
+- 원인·병목 [원인 미상]: 좋은고정예측기의accuracy와추가feature효용을보존하지못했다. 기존learned pair-specific fullBP가후보family에없으며potential과inference가동시에변했다. Calibration coverage/score목적과final query분포도다르다. 이들기여의고유원인은분리하지못했다.
+- 닫은 범위: 현재10개재사용development episode와15candidate/BP24/unit mean-score mixture에서의성공및이를근거로한새neural확대.
+- 닫지 않은 것: Context adaptation일반, inheritedfull/edge의실제연산,missing-feature PFN전체,모든nonedge활용과학습된관측factor를기각하지않는다.
+- 재검토 조건: 기존유용했던conditional predictor를정확히포함하거나관측feature의추가효용을회수하는구체연산을제시하고강한기준선과독립평가를잠글수있을때.
+- 기준선: 실제inherited-full/edge,고정edge,uniformprior/MAP,LP harmonic/restart,publicGraphPFN및PCFI/FISF+PFN; accuracy와NLL/Brier/feature제거를함께유지한다.
+- 최소 재검증: 새cycle에서정보·추론·예산변경을분리하고3review/수치검사뒤새graph bank를사용한다.현재1rep/1seed로독립CI나범용실패를주장하지않는다.
+- 원문: [findings/sources/fp03-context-2026-11-04/results/REPORT_KO.md](../findings/sources/fp03-context-2026-11-04/results/REPORT_KO.md); [findings/sources/fp03-context-2026-11-04/results/audit.json](../findings/sources/fp03-context-2026-11-04/results/audit.json); [findings/sources/fp03-context-2026-11-04/DECISION_KO.md](../findings/sources/fp03-context-2026-11-04/DECISION_KO.md)
+
+### FP03-P01 [보존] 동일 candidate 확률에서 context로 계산한 가중치는 uniform prior보다 유용했다.
+
+None accuracy adaptive60.910% 대uniformprior35.269%로+25.641%p다. MeanNLL은fixed-edge1.62348에서adaptive1.33772로낮아졌지만Brier와accuracy는악화했고NLL이득은균일하지않다.
+
+- 확대 금지: 강한fixed-edge/LP우위,일반calibration해결,참homophily posterior,stablefeatureutility나새PFN학습성과가아니다.1rep/1seed개발효과를독립통계검증으로확대하지않는다.
+- 원문: [findings/sources/fp03-context-2026-11-04/results/REPORT_KO.md](../findings/sources/fp03-context-2026-11-04/results/REPORT_KO.md); [findings/sources/fp03-context-2026-11-04/RESULT_METHOD.md](../findings/sources/fp03-context-2026-11-04/RESULT_METHOD.md)
+
+### FP03-L01 [교훈] Best-single candidate는convex mixture의상한이아니고,실제parent함수가후보군에포함되는지별도로확인해야한다.
+
+CiteSeer bestsingle41.834% 대oldfull52.898%는coverage경고지만모든mixture상한을증명하지않는다.실제PubMed adaptive NLL1.07710은best-single1.09861보다낮다. Oldfull의learned pair-specificJ와denseBP는새scalar/rank-oneJ와MF로표현되는endpoint가아니다.
+
+- 원문: [findings/sources/fp03-context-2026-11-04/RESULT_INFERENCE.md](../findings/sources/fp03-context-2026-11-04/RESULT_INFERENCE.md); [findings/sources/fp03-context-2026-11-04/RESULT_EXPERIMENTS.md](../findings/sources/fp03-context-2026-11-04/RESULT_EXPERIMENTS.md)
+
+### FP03-U01 [미실행] 실제inherited-full/edge operators를정확한두anchor로유지한context weighting
+
+세결과리뷰의후속제안이며미실행이다.사용자steering은별도end-to-end observed-cell PFN실험으로전환했다.이두anchor진단의성공·실패를아직주장하지않는다.
+
+- 원문: [findings/sources/fp03-context-2026-11-04/RESULT_METHOD.md](../findings/sources/fp03-context-2026-11-04/RESULT_METHOD.md); [findings/sources/fp03-context-2026-11-04/DECISION_KO.md](../findings/sources/fp03-context-2026-11-04/DECISION_KO.md)
 
 ## FP02 joint graph nuisance inference
 

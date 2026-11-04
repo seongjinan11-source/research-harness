@@ -1,0 +1,68 @@
+{
+  "new_neural_fits": 0,
+  "optimizer_updates": 0,
+  "target_gradient_updates": 0,
+  "logical_calibration_branches": 285,
+  "logical_final_branches": 150,
+  "held_probability_vectors": 1890,
+  "derived_controls": 50,
+  "reused_references": 70,
+  "calibration_seconds": {
+    "Cora": 0.25069820042699575,
+    "CiteSeer": 0.09762959973886609,
+    "PubMed": 0.10160759976133704,
+    "CoauthorCS": 0.113020199816674,
+    "CoauthorPhysics": 0.1670295000076294
+  },
+  "calibration_setup_seconds": 0.041114700492471457,
+  "calibration_score_seconds": 0.006782400421798229,
+  "final_seconds": {
+    "Cora_r0_none": 0.034748099744319916,
+    "Cora_r0_95": 0.11284710001200438,
+    "CiteSeer_r0_none": 0.03713009972125292,
+    "CiteSeer_r0_95": 0.10991000011563301,
+    "PubMed_r0_none": 0.0273263999260962,
+    "PubMed_r0_95": 0.05589079996570945,
+    "CoauthorCS_r0_none": 0.029276599641889334,
+    "CoauthorCS_r0_95": 0.1359584997408092,
+    "CoauthorPhysics_r0_none": 0.03565469989553094,
+    "CoauthorPhysics_r0_95": 0.07536400016397238
+  },
+  "final_preparation_seconds": 0.03037470066919923,
+  "final_aggregation_seconds": 0.005122300237417221,
+  "row_read_seconds": 0.02357819862663746,
+  "peak_mib": 399.53125,
+  "incremental_peak_mib": 394.1123046875,
+  "prepare_seconds": 0.8898990000598133,
+  "attempts": [
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\attempts\\1793774671150583500.json",
+      "sha256": "dd64b04d0f8a1aa62ebfdc3651caf822baf3cf26a3ab46047e6000e0098b3d9d",
+      "status": "COMPLETE",
+      "token": "1793774671150583500",
+      "git": {
+        "branch": "research/fp03-context-contrast",
+        "commit": "5d126fa3dd48fab8267c686063c2e61c5b5b7bc4"
+      },
+      "wall_seconds": 3.8907726001925766,
+      "validation_seconds": 1.4097495996393263,
+      "model_load_seconds": 0.18321239994838834,
+      "new_calibration_branches": 285,
+      "new_final_branches": 150,
+      "verified_final_episodes": 10,
+      "source_lock_sha256": "e7af4175bab33bc0ef47dfd05314fd0531ab63f318d1e8c1ab4f3b431fbffb17",
+      "optimizer_updates": 0
+    }
+  ],
+  "attempts_wall_seconds": 3.8907726001925766,
+  "pre_run_validation_seconds": 1.4097495996393263,
+  "audit_rescore_seconds": 1.882731799967587,
+  "failed_attempts": 0,
+  "device": "cuda",
+  "dtype": "float32",
+  "workers": 1,
+  "chunk": 16,
+  "inherited_training_and_reference_cost": "not zero; historical lineage in lock",
+  "timing_scope": "calibration/final include CPU branch construction, H2D branch inputs and D2H predictions; table preparation/model load/wall separately recorded",
+  "abrupt_interruptions": "unlogged failure cost is not inferred zero; partial pairs are never overwritten"
+}

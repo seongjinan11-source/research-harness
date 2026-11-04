@@ -144,6 +144,22 @@
 - [NodePFN](https://arxiv.org/abs/2604.19028): 복수 태그 일치 (약한 단서); tags=graph-structure-use, prior-mismatch; keywords=-
   - 기록된 강점: cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
 
+## FP03-F01 — Context의 balanced held-label score로 고정15개 관계함수를 가중하면 강한 fixed-edge 기준선을 보존하면서 nonedge 손해를 해결한다.
+
+- 판정: 현재 scalar edge/rank-one nonedge/MF15family 및 unit mean-score weighting의 확대를중단한다. 같은개발bank에서temperature/grid를조정해구제하지않는다.
+- 원인·병목 [원인 미상]: 좋은고정예측기의accuracy와추가feature효용을보존하지못했다. 기존learned pair-specific fullBP가후보family에없으며potential과inference가동시에변했다. Calibration coverage/score목적과final query분포도다르다. 이들기여의고유원인은분리하지못했다.
+- 반증·배제한 설명: 독립NumPy/CPU/CUDA oracle,누출·순열·fold·self-exclusion과저장248개hash/120개score재구성을통과했다.; Individual LOO의class-count cue를사전balanced classwise holdout으로제거했고CS extras13개도calibration에서숨겼다.; Uniformprior대비큰개선은보존하지만약한baseline만이긴것으로강한fixed-edge실패를대체하지않는다.
+- 재검토 조건: 기존유용했던conditional predictor를정확히포함하거나관측feature의추가효용을회수하는구체연산을제시하고강한기준선과독립평가를잠글수있을때.
+- 먼저 이겨야 할 기준선: 실제inherited-full/edge,고정edge,uniformprior/MAP,LP harmonic/restart,publicGraphPFN및PCFI/FISF+PFN; accuracy와NLL/Brier/feature제거를함께유지한다.
+- 최소 재검증: 새cycle에서정보·추론·예산변경을분리하고3review/수치검사뒤새graph bank를사용한다.현재1rep/1seed로독립CI나범용실패를주장하지않는다.
+- 닫지 않은 것: Context adaptation일반, inheritedfull/edge의실제연산,missing-feature PFN전체,모든nonedge활용과학습된관측factor를기각하지않는다.
+- 원문: [findings/sources/fp03-context-2026-11-04/results/REPORT_KO.md](../findings/sources/fp03-context-2026-11-04/results/REPORT_KO.md); [findings/sources/fp03-context-2026-11-04/results/audit.json](../findings/sources/fp03-context-2026-11-04/results/audit.json); [findings/sources/fp03-context-2026-11-04/DECISION_KO.md](../findings/sources/fp03-context-2026-11-04/DECISION_KO.md)
+
+- [NodePFN](https://arxiv.org/abs/2604.19028): 복수 태그 일치 (약한 단서); tags=graph-structure-use, prior-mismatch; keywords=-
+  - 기록된 강점: cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+
 ## FP02-F01 — 차수 propensity, 클래스 비율과 class-pair affinity를 동일 관측에서 갱신하면 기존 nonedge 손해를 복구하면서 CiteSeer 성능을 보존한다.
 
 - 판정: 현재 Poisson working score·초기화·3회Gamma갱신/24stepBP의 Stage1신경망학습 확대를 중단한다. 이 개발bank에서 damping/횟수/affinity를 바꾸어 구제하지 않는다.

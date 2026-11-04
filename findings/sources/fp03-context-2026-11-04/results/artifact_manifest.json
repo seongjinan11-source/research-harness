@@ -1,0 +1,1510 @@
+{
+  "status": "COMPLETE",
+  "cycle": "FP03",
+  "source_lock_sha256": "e7af4175bab33bc0ef47dfd05314fd0531ab63f318d1e8c1ab4f3b431fbffb17",
+  "primary_development_gate_passed": false,
+  "counts": {
+    "episodes": 10,
+    "graphs": 5,
+    "original_contexts": 139,
+    "calibration_points": 126,
+    "calibration_folds": 19,
+    "calibration_branch_forwards": 285,
+    "final_branch_forwards": 150,
+    "derived_prediction_records": 50,
+    "reference_records": 70,
+    "aggregate_scored_records": 120
+  },
+  "files": [
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\ANALYSIS_SPEC.md",
+      "sha256": "2819b3a1ef779dd8c127d3e189a0195955ea9bac35c8c46f2e56da7d2f36b743",
+      "bytes": 593,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\IMPLEMENTATION_CHECKS.md",
+      "sha256": "ce9d9664a33a862f2b3a765899e1dbbcff5f479a62d2b5c25b4f7cc785e06585",
+      "bytes": 5609,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\IMPLEMENTATION_INFERENCE.md",
+      "sha256": "0ff454257ed0ec6b68dbdc1a63f31f9b5fad97ab316038c244c91260eb8461ab",
+      "bytes": 10866,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\IMPLEMENTATION_RUNNER.md",
+      "sha256": "c36436ae84cd3ee562cde730af37979f355679ba8e82b2aa3de225b2cba685f1",
+      "bytes": 11299,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\PLAN_v1.md",
+      "sha256": "81a432291c7eb98128bfd73374c4ff6e63fdf15f179cb59085f4d10b04dd5929",
+      "bytes": 7437,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\PLAN_v2.md",
+      "sha256": "4e699aca4e36ad67f47ed46be79c83ec8e08ad97f5226069156537f7b26f40a8",
+      "bytes": 6323,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\PRIOR_ART_SCOPE.md",
+      "sha256": "dd4dc6e833041db659c3df94710f0246176f2d8dcf026cbacefede8b59adabbe",
+      "bytes": 2353,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\RESPONSE_v1.md",
+      "sha256": "bebae7b3fa47ff393ea228f1b2c0dea6f148782cfc8fe55b68f63c5a638c6dc3",
+      "bytes": 1674,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\REVIEW_EXPERIMENTS_v1.md",
+      "sha256": "23fe910a8efb2a6af0a29607385debfb02968797861bb7d0240fdf0b8a4df84f",
+      "bytes": 16225,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\REVIEW_INFERENCE_v1.md",
+      "sha256": "123453e3dc1ceec135d147ed61ed39b09280b909ec21ee6ae16b97bdbfc18798",
+      "bytes": 13224,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\REVIEW_METHOD_v1.md",
+      "sha256": "20d53811e91101df4aa74c2f622748ec412a51242425ba37bcaa07cccdfabbf8",
+      "bytes": 14799,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\bank\\dev_manifest.json",
+      "sha256": "e6fae744c7e565e275ec23e9e7da7ed8f58a76268ba807782b50efe006f2fcbe",
+      "bytes": 98530,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\checks.py",
+      "sha256": "f8af6dca9f45daf625fe18963032942c109f55c9c2707a649f2c0c29a2141f4d",
+      "bytes": 33874,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\operators.py",
+      "sha256": "7ba1e3f7b7b73751628beb2ac66f2fc4fb263003563b0823ac33a8934d794367",
+      "bytes": 20142,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\protocol.json",
+      "sha256": "ef3fe174938c63a593725af050e8f2872393212afa2c16da631366dc684debab",
+      "bytes": 2622,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\REPORT_KO.md",
+      "sha256": "85f59f59204ae216afa7deabf3a470acbcf86331f52ea7dc1b857a04c8136fef",
+      "bytes": 14308,
+      "role": "report_or_provenance"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\attempts\\1793774671150583500.json",
+      "sha256": "dd64b04d0f8a1aa62ebfdc3651caf822baf3cf26a3ab46047e6000e0098b3d9d",
+      "bytes": 524,
+      "role": "execution_attempt"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\audit.json",
+      "sha256": "c6e11b5c9e1e75cd6b2e84def8afc2be6415146f4e2ca65c69a81d4574015518",
+      "bytes": 1260,
+      "role": "report_or_provenance"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\budget.json",
+      "sha256": "5354dd08567d76c92dc2d95fc5958c825a2b516058c075cdafe1baacc0081902",
+      "bytes": 2715,
+      "role": "report_or_provenance"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\calibration\\CiteSeer.json",
+      "sha256": "23cd97ad588a52e3e4fdb292d4481f0397f57c1206812d34efee7df2fb993b99",
+      "bytes": 7354,
+      "role": "calibration_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\calibration\\CiteSeer.npz",
+      "sha256": "39f27f52ae728a22ede5d8dd0d731fb0adb90b741487d967f519d54cc47614c9",
+      "bytes": 8941,
+      "role": "calibration_probability_arrays"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\calibration\\CoauthorCS.json",
+      "sha256": "9b28d9b7f691ce3126f2a8c9356ca9921aeb908c572f73fed2176c9dd6c18d05",
+      "bytes": 9994,
+      "role": "calibration_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\calibration\\CoauthorCS.npz",
+      "sha256": "8867e9ab6ac2c4dda49db8fa82709e5d31161114423cac19ac6fa9974e6df8c0",
+      "bytes": 30798,
+      "role": "calibration_probability_arrays"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\calibration\\CoauthorPhysics.json",
+      "sha256": "eab419571f4bedd6cd95e079f1fc214973ae2cc1655647610f4e3ce0640182ec",
+      "bytes": 6830,
+      "role": "calibration_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\calibration\\CoauthorPhysics.npz",
+      "sha256": "f4623f2c37c3a056100073e86c613e31982c4e9c27e0c8f38d0ecf10c842ac1a",
+      "bytes": 7142,
+      "role": "calibration_probability_arrays"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\calibration\\Cora.json",
+      "sha256": "3abd857f9d32600dd7ccd14653660d7349c63fb88acc50a824f2f36fe779bc39",
+      "bytes": 8039,
+      "role": "calibration_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\calibration\\Cora.npz",
+      "sha256": "2d78ec2ce3ea9c0762efa94be4b79ab02c9bd54e166a7a14c3c3fa8de89af533",
+      "bytes": 11531,
+      "role": "calibration_probability_arrays"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\calibration\\PubMed.json",
+      "sha256": "ed709c16c1d3004e266478b07771f6d7a2607b65ef8d758a7af13c384e6e61e7",
+      "bytes": 5406,
+      "role": "calibration_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\calibration\\PubMed.npz",
+      "sha256": "a5c0494efddf46939fd5f55e9829f8825069951776ade82804a2e0fc7ec4f0d8",
+      "bytes": 4105,
+      "role": "calibration_probability_arrays"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\checks.json",
+      "sha256": "024c5c6e6ea2305f4f4cb6c1068e08faa2a01ad2a8dd37805b5b0df3a456d063",
+      "bytes": 12255,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\evaluation.json",
+      "sha256": "f17b025a1ad2e5aac14347a1c390deb67b29f698e4cf9fe1553cfc6a66fe9e89",
+      "bytes": 7794,
+      "role": "report_or_provenance"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\lock.json",
+      "sha256": "e7af4175bab33bc0ef47dfd05314fd0531ab63f318d1e8c1ab4f3b431fbffb17",
+      "bytes": 42306,
+      "role": "report_or_provenance"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CiteSeer_r0_95.json",
+      "sha256": "9c36db56ce8b82addd3dc54ecae911ce8db8c756ac9376b296755d744e139577",
+      "bytes": 3414,
+      "role": "final_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CiteSeer_r0_95.npz",
+      "sha256": "78d012dc417e73716a37445401b658054bb850e5756ccd92bdb984fdd46431fc",
+      "bytes": 264303,
+      "role": "final_candidate_and_control_probabilities"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CiteSeer_r0_none.json",
+      "sha256": "126d5edd1d29657a4d62ac861e6bd7a3ff3c766d9155831c18778a97d9cfe8f5",
+      "bytes": 3414,
+      "role": "final_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CiteSeer_r0_none.npz",
+      "sha256": "7ba1fc6e635e6c37ae3fac20815d3253ab3853796287d19648d9fe44024a79a8",
+      "bytes": 242538,
+      "role": "final_candidate_and_control_probabilities"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CoauthorCS_r0_95.json",
+      "sha256": "651bb099ed33c5b5b75aa076c8b2c8f601f682f249d150d4d7609d7507540106",
+      "bytes": 3438,
+      "role": "final_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CoauthorCS_r0_95.npz",
+      "sha256": "5e228cbbb57885f22352211d219db2b08aefeb5128eed4408c95d245cd209fcf",
+      "bytes": 1297780,
+      "role": "final_candidate_and_control_probabilities"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CoauthorCS_r0_none.json",
+      "sha256": "ba323d1cd736f9765a456d8ee7deeba697831680baa71aa47ec139d1f4500cec",
+      "bytes": 3457,
+      "role": "final_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CoauthorCS_r0_none.npz",
+      "sha256": "f8c2d61764a6a3da2bda0cbfb879d78e233577952dad75ff260272f8be065c24",
+      "bytes": 1258354,
+      "role": "final_candidate_and_control_probabilities"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CoauthorPhysics_r0_95.json",
+      "sha256": "a21a391fa7a1130e04dafae1d113fcfaf71104e08f3e30c0a72eb8787c43ac81",
+      "bytes": 3470,
+      "role": "final_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CoauthorPhysics_r0_95.npz",
+      "sha256": "33eceb8b53eec1efa50d300ff2eb8c42fa4b9a87ea46e2136b51105c10e33030",
+      "bytes": 430158,
+      "role": "final_candidate_and_control_probabilities"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CoauthorPhysics_r0_none.json",
+      "sha256": "2377925adf6dafd2379f0237e6a62f72b79b1d4bff47b0ead28f6951a90ac4be",
+      "bytes": 3473,
+      "role": "final_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\CoauthorPhysics_r0_none.npz",
+      "sha256": "8a3c931cccfb3b235ba2001d8ce2584e926629a033dd208c798ea6c380c59605",
+      "bytes": 416589,
+      "role": "final_candidate_and_control_probabilities"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\Cora_r0_95.json",
+      "sha256": "c9bdfdc1d396e1c7bcb50edd9152f4911bfe433d0dc22d8605ce452566edff8b",
+      "bytes": 3415,
+      "role": "final_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\Cora_r0_95.npz",
+      "sha256": "0411085a1195238db6708bf440de434255a3ba28909a78d3048a7b0bf4c29c99",
+      "bytes": 384912,
+      "role": "final_candidate_and_control_probabilities"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\Cora_r0_none.json",
+      "sha256": "dc6017e18d1f7a1dc19343151b920920bdaacb996f87591a2405f4b04c8ff81b",
+      "bytes": 3412,
+      "role": "final_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\Cora_r0_none.npz",
+      "sha256": "e5d06477bd3f84b16de9e2a69a67833c1e4d7cfb0fcf9b35f43d9b5a88b11c2e",
+      "bytes": 374900,
+      "role": "final_candidate_and_control_probabilities"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\PubMed_r0_95.json",
+      "sha256": "7146e9394e0118ae14574ef66a2cada498ea8aaa0dbbf09f2f0a3cbf1d6bf550",
+      "bytes": 3422,
+      "role": "final_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\PubMed_r0_95.npz",
+      "sha256": "56e28013d502bd51b4cd81bdb3660c55be3a9185176d97e6495dd504dcb2bc57",
+      "bytes": 229107,
+      "role": "final_candidate_and_control_probabilities"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\PubMed_r0_none.json",
+      "sha256": "ab96050122476ef42eb2a578d62cb9286085bd2c2255029540740a60cdc956bb",
+      "bytes": 3427,
+      "role": "final_metadata"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\predictions\\PubMed_r0_none.npz",
+      "sha256": "4e893f6c028e2057e2140c9ce4faf852eed3ba7485bf5eef691e1046e2b7dafd",
+      "bytes": 224190,
+      "role": "final_candidate_and_control_probabilities"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\results\\summary.json",
+      "sha256": "cbd9da8d6465d273cf16871fbc66a560aa61dd2b3ed39a949f8d60a750f538c3",
+      "bytes": 263234,
+      "role": "report_or_provenance"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_context_cycle\\run.py",
+      "sha256": "8a19b06757b72dd0dfe84c325c25d442a86e5585f602097505786e5b2155c77f",
+      "bytes": 55258,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\protocol.json",
+      "sha256": "4ac4c089ea054c16a2ab50f95224b41b91cfd4fa77cd013590e0f4fa54177fe0",
+      "bytes": 4123,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\lock.json",
+      "sha256": "aa5a252a79b0206c90df480c921399d3bed0d35d6a5cfc2d11336a999806e192",
+      "bytes": 948,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_95_fisf_public_graphpfn.json",
+      "sha256": "a4b07ec1d952031285a60580bda8a9c317f005a4e05f852b3cb6bcb03397d137",
+      "bytes": 909,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_95_fisf_public_graphpfn.npz",
+      "sha256": "8df3ac072de3e0d79eaa233aaac7e56a78c9edc294f134aaf98d6b5f3b751cb1",
+      "bytes": 23017,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_95_lp_harmonic.json",
+      "sha256": "45ff5bdb7ea0789b7a318243e2862c536cda1d0d924e61daa935a3f7a4328bf7",
+      "bytes": 818,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_95_lp_harmonic.npz",
+      "sha256": "ddde0aeac7d984a0dcfcdf6190bd5dc43bf88ff3aff40feaa4ba172ddefeebd4",
+      "bytes": 25159,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_95_lp_restart.json",
+      "sha256": "f6c4ee869bec58dd46b01b71cc3ddf566de2536ae7dae0ebf079b6bc673895ca",
+      "bytes": 816,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_95_lp_restart.npz",
+      "sha256": "75a8df67f15e525edb9efde7f29016f6956e5619ce4a07568a6729a75f5bd9de",
+      "bytes": 29983,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_95_pcfi_public_graphpfn.json",
+      "sha256": "382aa3162e64965b8c90625b3d11c64619d2f2dfa024ac382df89c1b915b014c",
+      "bytes": 909,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_95_pcfi_public_graphpfn.npz",
+      "sha256": "e792691f09c4877c92e8ada498e98886b656115001d239b131f8cb5cb67a948c",
+      "bytes": 22817,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_95_public_graphpfn.json",
+      "sha256": "4ef194322bd02daa20420fd0fd1d63c65e263f71169c774cd3bdc9d88c583e97",
+      "bytes": 894,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_95_public_graphpfn.npz",
+      "sha256": "5994288c4312b5bc64bf5ad3c4c0186ed1cfe5d59c6a84c06fedf4b9e5a36978",
+      "bytes": 23296,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_none_fisf_public_graphpfn.json",
+      "sha256": "cc2d7fabf261db87272f26414b72afdd04de7a5925a670e1b59d64c66e6c8314",
+      "bytes": 915,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_none_fisf_public_graphpfn.npz",
+      "sha256": "dffb3ca34a8fad55ea8268f015b77b604549ec3235f4fa63e11fc4362ecbc2f4",
+      "bytes": 23007,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_none_lp_harmonic.json",
+      "sha256": "9c5b56468cf29ca2fe2688cee817bd2bfd9d6cb9210ac0994acc7028afff0059",
+      "bytes": 822,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_none_lp_harmonic.npz",
+      "sha256": "ddde0aeac7d984a0dcfcdf6190bd5dc43bf88ff3aff40feaa4ba172ddefeebd4",
+      "bytes": 25159,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_none_lp_restart.json",
+      "sha256": "5b0a76e02f308d393efa29018f13cf638de8190c887d012ea7f3f777416378d7",
+      "bytes": 820,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_none_lp_restart.npz",
+      "sha256": "75a8df67f15e525edb9efde7f29016f6956e5619ce4a07568a6729a75f5bd9de",
+      "bytes": 29983,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_none_pcfi_public_graphpfn.json",
+      "sha256": "986e070afa29622c7add77fb4d038993ddf47aaed3edebef3a5433701dcb7936",
+      "bytes": 915,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_none_pcfi_public_graphpfn.npz",
+      "sha256": "0cc59da1c620e37716e4448e7c4b79f4a8635eabb58d8e24467dba4bb379c227",
+      "bytes": 22889,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_none_public_graphpfn.json",
+      "sha256": "628c6efe7edb7f7ab3d3ffb17ec4ae918b6c4a9e178721b274bf5286d575c4f6",
+      "bytes": 900,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CiteSeer_r0_none_public_graphpfn.npz",
+      "sha256": "0cc59da1c620e37716e4448e7c4b79f4a8635eabb58d8e24467dba4bb379c227",
+      "bytes": 22889,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_95_fisf_public_graphpfn.json",
+      "sha256": "faf6c1309dc8101a7750ae7c0d009900ce85083ef6f0d2e2d51249ef78693d67",
+      "bytes": 906,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_95_fisf_public_graphpfn.npz",
+      "sha256": "0e57ae2b28640adbbd5fc220661ee6f95535134a476dc84acb1896508d06432c",
+      "bytes": 89430,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_95_lp_harmonic.json",
+      "sha256": "510a064a4017078ef99ede111820a91aabf5d46d6d5431e434d06d8119538155",
+      "bytes": 809,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_95_lp_harmonic.npz",
+      "sha256": "776a0f1f3c66e2c9c5af5322531c001801bc29bb369f68516e22a277506ce555",
+      "bytes": 158704,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_95_lp_restart.json",
+      "sha256": "366cad5cb9dbe803bb6e4fc7f7da06f66def83ab5ecd34767535eb7bfe8dac71",
+      "bytes": 807,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_95_lp_restart.npz",
+      "sha256": "a85b20fbaf3dcee6eaafbc5b28040741fff19adb58c6c5ff5a0f0955949bc59e",
+      "bytes": 169532,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_95_pcfi_public_graphpfn.json",
+      "sha256": "c0fd2215c545dfd30449f7244f27877ef63e3e4f824285dcce2eee67a4e2db39",
+      "bytes": 906,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_95_pcfi_public_graphpfn.npz",
+      "sha256": "206139479ca47174109a1cbfa28cb99176de6fb63f62473c3da32afd3b4247d1",
+      "bytes": 91095,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_95_public_graphpfn.json",
+      "sha256": "43ad801b2d7b481aec825e1f7b306dbca885d46e680276f7d84f9b09182fedba",
+      "bytes": 891,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_95_public_graphpfn.npz",
+      "sha256": "58be69809a57c4b81187e593d75b4f6d8ad281388e11564b19acb875ece85e71",
+      "bytes": 91648,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_none_fisf_public_graphpfn.json",
+      "sha256": "0260f4f0e89740a8674e914060e40f4ad20c104e9df53e75ceba0e4242617c5c",
+      "bytes": 912,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_none_fisf_public_graphpfn.npz",
+      "sha256": "bf68af0de9db927207c4f24536aa9709ee7c25c17517867371d1b72ef2113f05",
+      "bytes": 89961,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_none_lp_harmonic.json",
+      "sha256": "ea72b57ec1dc1a87934a91fe20b2572ec9019ce5922ced39c42f14ec2314cbeb",
+      "bytes": 813,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_none_lp_harmonic.npz",
+      "sha256": "776a0f1f3c66e2c9c5af5322531c001801bc29bb369f68516e22a277506ce555",
+      "bytes": 158704,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_none_lp_restart.json",
+      "sha256": "3b1a84b15854cba5ff2c7900d6d01113fcaa0e989462d461b881322fa93a9140",
+      "bytes": 811,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_none_lp_restart.npz",
+      "sha256": "a85b20fbaf3dcee6eaafbc5b28040741fff19adb58c6c5ff5a0f0955949bc59e",
+      "bytes": 169532,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_none_pcfi_public_graphpfn.json",
+      "sha256": "e947c4a538b740ee1e78e01ab677399e0f0bba7a5a84182946caccd91d74b14d",
+      "bytes": 912,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_none_pcfi_public_graphpfn.npz",
+      "sha256": "8364d619a8333b03b912ddb7ef79c4e622cc875e637eca78088b5e7a8dfb1eaf",
+      "bytes": 92099,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_none_public_graphpfn.json",
+      "sha256": "8db9930a136d53261783022f11541212f817805a287b6fe70795c170813408c6",
+      "bytes": 897,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorCS_r0_none_public_graphpfn.npz",
+      "sha256": "8364d619a8333b03b912ddb7ef79c4e622cc875e637eca78088b5e7a8dfb1eaf",
+      "bytes": 92099,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_95_fisf_public_graphpfn.json",
+      "sha256": "e70f5d2fe489f06660d22fdb6b6526daa4facff534e2b7974a13d7214600e18f",
+      "bytes": 925,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_95_fisf_public_graphpfn.npz",
+      "sha256": "057659f0eca230329f437a9a799ab9bd1c9c23ded67965e1fcbb734553deb598",
+      "bytes": 31403,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_95_lp_harmonic.json",
+      "sha256": "1aa0ff0ac23c471d118843cf94f8db3fa951cdae2df5252699e7fcd59180ae85",
+      "bytes": 822,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_95_lp_harmonic.npz",
+      "sha256": "de9f26d0c423efd494cbcfab0042d3db2d2fcac5d26ae48317d5c7dc6cf200fb",
+      "bytes": 57011,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_95_lp_restart.json",
+      "sha256": "be43da37208048dac2f92bd324c393c67042c1767f1bc7fbfe280ddaf43abad6",
+      "bytes": 820,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_95_lp_restart.npz",
+      "sha256": "d1a3288390e41b3f282df69d1ed1f3c1a041eb4ba254de6948668c023913d9cd",
+      "bytes": 56310,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_95_pcfi_public_graphpfn.json",
+      "sha256": "9b3a48f9ce6238a032261544f6842c43691361376f4c4974ce020faa3b6cfbf1",
+      "bytes": 925,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_95_pcfi_public_graphpfn.npz",
+      "sha256": "43c6ffc9462bd06f684f641963beaf29fcd3c4683ad7b8710d46898b2fda51ac",
+      "bytes": 31455,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_95_public_graphpfn.json",
+      "sha256": "55b55510b5a1b3fc33b056d95cb68f1ab559ddd34e7031d2bc251295f5a44984",
+      "bytes": 910,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_95_public_graphpfn.npz",
+      "sha256": "bec42444b7ef46fcdc6c46af79521d207ee2695c74ef51a5e370a86ab0b3b880",
+      "bytes": 30409,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_none_fisf_public_graphpfn.json",
+      "sha256": "993af0a2dcf67bf8bb8f50a86a45f6bd3b3973d0c269984739a61953727b813a",
+      "bytes": 931,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_none_fisf_public_graphpfn.npz",
+      "sha256": "133959bdd3ba798fd6d6066b142450ddb80fc0a35cad433138304158af8c494a",
+      "bytes": 31789,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_none_lp_harmonic.json",
+      "sha256": "f41b5e88154f8ff74cf6c77e49d39a5c3864485889e645bcfeeea63d4feb4c7b",
+      "bytes": 826,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_none_lp_harmonic.npz",
+      "sha256": "de9f26d0c423efd494cbcfab0042d3db2d2fcac5d26ae48317d5c7dc6cf200fb",
+      "bytes": 57011,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_none_lp_restart.json",
+      "sha256": "6f2cdc8aa1c049f1bf80f0dddc86e88b3159b85b52cea0edf9b46ce6bd07cf54",
+      "bytes": 824,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_none_lp_restart.npz",
+      "sha256": "d1a3288390e41b3f282df69d1ed1f3c1a041eb4ba254de6948668c023913d9cd",
+      "bytes": 56310,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_none_pcfi_public_graphpfn.json",
+      "sha256": "cb7ca1efdc971be1c17ff81726b567a6f3a350da06df2412d78168f792ff7720",
+      "bytes": 931,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_none_pcfi_public_graphpfn.npz",
+      "sha256": "26fe47e2b00f8ace6e62a180a0f013524dd517c79b41ddb41018058d8c18f9eb",
+      "bytes": 30405,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_none_public_graphpfn.json",
+      "sha256": "e902b53b4199a4a345a5c8936fc240e3f3a7fa7d837cdd361abc81c013d7dfa7",
+      "bytes": 916,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\CoauthorPhysics_r0_none_public_graphpfn.npz",
+      "sha256": "26fe47e2b00f8ace6e62a180a0f013524dd517c79b41ddb41018058d8c18f9eb",
+      "bytes": 30405,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_95_fisf_public_graphpfn.json",
+      "sha256": "706469cee5b13694e2010450977f5931e443c27253194d48adc8c4fc6d5562a9",
+      "bytes": 893,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_95_fisf_public_graphpfn.npz",
+      "sha256": "05947e82fbf50f20c4a52272aae8fec83b476b2577e8a5b6d504810af764acf6",
+      "bytes": 27486,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_95_lp_harmonic.json",
+      "sha256": "383af2e1ded85e533d41543cffb4d7865b5daa6bc288d6b0de165eda1f928e0d",
+      "bytes": 804,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_95_lp_harmonic.npz",
+      "sha256": "91a7f001ab1f731bd9c9ea413b0c33a889818d26cc9fa73a9bf310b627519887",
+      "bytes": 44681,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_95_lp_restart.json",
+      "sha256": "442e033f592fdb2980dd0f9c4048ef29de5c917a8260784e618c9ae4264b6cc3",
+      "bytes": 802,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_95_lp_restart.npz",
+      "sha256": "488960b8efb000087c704ba825f1a4e01be5f7d303492deb305d611ac8467140",
+      "bytes": 46919,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_95_pcfi_public_graphpfn.json",
+      "sha256": "13920c23640bbe5d9409e9eb07009b011882ac176cde3ee2bb0bccc737766996",
+      "bytes": 893,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_95_pcfi_public_graphpfn.npz",
+      "sha256": "e6c52a0eaef07a987561f2649e11be0d5769cb975ce2d870b1a5ff4e81d6e8c6",
+      "bytes": 27277,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_95_public_graphpfn.json",
+      "sha256": "4324a6fb63af37af98d0ebe312218f71af6f8442d8ed253659fcf894c2b4f7a4",
+      "bytes": 878,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_95_public_graphpfn.npz",
+      "sha256": "7ff66834b940648764130c8ccf6d0617b583b131d24f88d7c813d67580f9e840",
+      "bytes": 26591,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_none_fisf_public_graphpfn.json",
+      "sha256": "2b7f861bc0168daca971fb684e17e8b6545704a609af5c8a927bab5a338dafce",
+      "bytes": 899,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_none_fisf_public_graphpfn.npz",
+      "sha256": "9f42216c497572e495d1b70b3bccb7a612700f95e17d6ee076453a051956bec9",
+      "bytes": 27397,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_none_lp_harmonic.json",
+      "sha256": "ad7ba560afd51bb35050dc701907b6708ee99cbc3baa4f52af955cc034b144f3",
+      "bytes": 808,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_none_lp_harmonic.npz",
+      "sha256": "91a7f001ab1f731bd9c9ea413b0c33a889818d26cc9fa73a9bf310b627519887",
+      "bytes": 44681,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_none_lp_restart.json",
+      "sha256": "e93b84066c802d80ac12b7faf68dc6b56bd347cb5dc1476131b208dc929be46d",
+      "bytes": 806,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_none_lp_restart.npz",
+      "sha256": "488960b8efb000087c704ba825f1a4e01be5f7d303492deb305d611ac8467140",
+      "bytes": 46919,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_none_pcfi_public_graphpfn.json",
+      "sha256": "83861b9ef59e63673233084767ff5c79a11a1a16c143bbf30ad9225a228d7bcf",
+      "bytes": 899,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_none_pcfi_public_graphpfn.npz",
+      "sha256": "94fbc1bc8213e60caa08ac4d969a7d82d4c889c60218cf529835383a7feb873f",
+      "bytes": 26501,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_none_public_graphpfn.json",
+      "sha256": "c2604946695a597c92b1639c4fe1bdb6ddcd33fd2a02ad1fd8a9679333b54bce",
+      "bytes": 884,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\Cora_r0_none_public_graphpfn.npz",
+      "sha256": "94fbc1bc8213e60caa08ac4d969a7d82d4c889c60218cf529835383a7feb873f",
+      "bytes": 26501,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_95_fisf_public_graphpfn.json",
+      "sha256": "96f9c2a961b424ab97fa7ca98e9d110e5168d1595c69ea9482e860486c62716f",
+      "bytes": 888,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_95_fisf_public_graphpfn.npz",
+      "sha256": "a1b0c335ad9bb177c78f79b58f4c7bc5c0b4b70f581e202ecdb5ff40817968e3",
+      "bytes": 19810,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_95_lp_harmonic.json",
+      "sha256": "613fcc6567c6bfc7a1f11cc2b6abf92b65b3968b97573ad397d52092ecc7b544",
+      "bytes": 794,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_95_lp_harmonic.npz",
+      "sha256": "7b908bd8889d29edb3380fbd5139f9502247201f397b4301e356cad0910e126a",
+      "bytes": 28761,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_95_lp_restart.json",
+      "sha256": "ad5372720f04c17713a084551820a70102b63cdba4656567c3173709b971336a",
+      "bytes": 792,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_95_lp_restart.npz",
+      "sha256": "20820c6d023d48f17ae4d76b0368508d4a6fd296f542b887025d2732837f30ff",
+      "bytes": 30134,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_95_pcfi_public_graphpfn.json",
+      "sha256": "977f397fe84796cdd135fcf684bc1f61c847ac387e9827f4542c981f3b97d34a",
+      "bytes": 888,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_95_pcfi_public_graphpfn.npz",
+      "sha256": "47bec89988a572a81716138ecdc95c0a04efa6fd9d3815c241f354f93788801f",
+      "bytes": 19710,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_95_public_graphpfn.json",
+      "sha256": "0970148bdc55b85bd6851922a7b33245b6e77032d4a7f140f336f15e8a9de95e",
+      "bytes": 873,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_95_public_graphpfn.npz",
+      "sha256": "488bf6c72e9c0c1f99f47f14c80bde2f5c6cadd4e79a65a86909599785ad380f",
+      "bytes": 19605,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_none_fisf_public_graphpfn.json",
+      "sha256": "ac86fe56cadb00198f2799bcec80a6c66f08c28e32d45e46f3e2e223c09525fe",
+      "bytes": 894,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_none_fisf_public_graphpfn.npz",
+      "sha256": "3ba1e0c61c82ae0400f49c5a2c0fee45385fd17a7d9787e5e0ce9673154a46e3",
+      "bytes": 19962,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_none_lp_harmonic.json",
+      "sha256": "32ae3ecc16fd3f173576bb9da68d84985987fb449b313dd109868c4ecbe9f96c",
+      "bytes": 798,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_none_lp_harmonic.npz",
+      "sha256": "7b908bd8889d29edb3380fbd5139f9502247201f397b4301e356cad0910e126a",
+      "bytes": 28761,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_none_lp_restart.json",
+      "sha256": "089b4587d29f76540f4dd8a0615e496bf665658bd5d3f0b1bbd36efa9b6a5833",
+      "bytes": 796,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_none_lp_restart.npz",
+      "sha256": "20820c6d023d48f17ae4d76b0368508d4a6fd296f542b887025d2732837f30ff",
+      "bytes": 30134,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_none_pcfi_public_graphpfn.json",
+      "sha256": "537fd7321a527858e079eca765ffab0a7bd68cb81f8cf406d2343d38757a9a0f",
+      "bytes": 894,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_none_pcfi_public_graphpfn.npz",
+      "sha256": "488bf6c72e9c0c1f99f47f14c80bde2f5c6cadd4e79a65a86909599785ad380f",
+      "bytes": 19605,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_none_public_graphpfn.json",
+      "sha256": "877d568741bc76ec16bdb71e9e8f5b9b052088fc6eb12b67d79db578ba24c5c3",
+      "bytes": 879,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\results\\predictions\\PubMed_r0_none_public_graphpfn.npz",
+      "sha256": "488bf6c72e9c0c1f99f47f14c80bde2f5c6cadd4e79a65a86909599785ad380f",
+      "bytes": 19605,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_edge_only_benchmark\\run.py",
+      "sha256": "5188902a2ad6496c16f26c281f84257204f944b3f29aab80481d814df03a5aa6",
+      "bytes": 15707,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_homophily_benchmark\\bank\\CoauthorCS_r0_95.npz",
+      "sha256": "c016d72c7462c9bd7858e603bad7dbd38f5d5a83376de218922f027500c900af",
+      "bytes": 150821,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_homophily_benchmark\\bank\\CoauthorCS_r0_none.npz",
+      "sha256": "486ad086b81e145c147c9b9e5a41c76b3793a99cf6ec4bbdb841add94ec39573",
+      "bytes": 123491,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_homophily_benchmark\\bank\\CoauthorPhysics_r0_95.npz",
+      "sha256": "2b2115384fb3d3c22b8b7dcccf5c2d34000e754d91ba0c4395e71606b984e2fb",
+      "bytes": 170741,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_homophily_benchmark\\bank\\CoauthorPhysics_r0_none.npz",
+      "sha256": "41907658956536705baeb7bd10a5e23ee6d9cc3d79b81a99310cd01c30ecff04",
+      "bytes": 150016,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_homophily_benchmark\\bank\\PubMed_r0_95.npz",
+      "sha256": "1bd550870a89d3a5c2c5ae857bbe7b6d798500a06ea7a599f6de753fa7402c06",
+      "bytes": 79151,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_homophily_benchmark\\bank\\PubMed_r0_none.npz",
+      "sha256": "2e210b0c69f3333492b4278fcd4d2361eb6e2894eb8dca189e8d7325f4e216aa",
+      "bytes": 41404,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_homophily_benchmark\\bank\\manifest.json",
+      "sha256": "09132e20446bb865142874e9384ad71e5fff215b7f79d349c5e6306709d0c7ce",
+      "bytes": 25194,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_homophily_benchmark\\results\\lock.json",
+      "sha256": "d9661c4d1f5c85a4819c14ccf03d88de98e2c7c4f6a45d17767a31dcde408889",
+      "bytes": 3852,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\IMPLEMENTATION_CHECKS.md",
+      "sha256": "02af1dbc8e7a46667a6dca9834c51d74b7be21bc4dcdae64fdc106a98e9b462b",
+      "bytes": 5515,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\IMPLEMENTATION_INFERENCE.md",
+      "sha256": "ac432fae4ea43e7418ee2dc94eea85277f4aae8c77da0e5f99a2ed55c5363eba",
+      "bytes": 10173,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\IMPLEMENTATION_RUNNER.md",
+      "sha256": "68670c8dfe05cf1eb459c64efe76976a4bcff74a022aa3d5f7a32037e1734d6e",
+      "bytes": 9377,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\PLAN_v2.md",
+      "sha256": "902b05035d50268a5b46dddfd51fff823e96f8a431e8dbfaad91d8a8b693c4dd",
+      "bytes": 7629,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\RESPONSE_v1.md",
+      "sha256": "49a5f7060a2c7997b1e9829e0390257c9df367a856ce4157ae6ab1039c2722fb",
+      "bytes": 1535,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\REVIEW_EXPERIMENTS_v1.md",
+      "sha256": "77767c961ac5e6cdb08e36f22d790f41113f43bb7b0e4a9ff0d98f74de959e72",
+      "bytes": 23813,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\REVIEW_INFERENCE_v1.md",
+      "sha256": "fef39f8de649599827ce7f74a2fb525d869a848ba2344db917944e7e16452d63",
+      "bytes": 22920,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\REVIEW_METHOD_v1.md",
+      "sha256": "2178c6d71c7e397c6e3e5031f8538be3eb29708046b833accc88891788187ebc",
+      "bytes": 24571,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\bank\\dev_manifest.json",
+      "sha256": "2076f9dfe996a45fe40f926b55cbf175a6999e4e498b7de95420f8f36b8a3208",
+      "bytes": 61687,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\checks.py",
+      "sha256": "f7fdee1ba5e6581fbf25d216a80d6b15e256fdbdc3ae2367cd5cedc9469091c7",
+      "bytes": 33101,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\operators.py",
+      "sha256": "2baf72cd02f329450bddd89fbf70e5a6df473e90b900aad08685a5d3bbefbf1a",
+      "bytes": 19824,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\protocol.json",
+      "sha256": "49216abb1b3b1d397e64b1917b95100aa3fd27da6927699d0ebc4127e1ea2805",
+      "bytes": 2612,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\results\\checks.json",
+      "sha256": "25aae434d3d5e68dc9493c55ce76b3f2879da6cfc2f78bce5eb26efcb3717a4a",
+      "bytes": 20622,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\results\\lock.json",
+      "sha256": "a95965f73010f8225b9f66138a426829c0e5ce7d46ba4698a1249a7782a40fda",
+      "bytes": 39429,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\run.py",
+      "sha256": "14335a45f0a5f941f45f4799a5a2bf29d513639fd2ce6b05a28431a4645ef60d",
+      "bytes": 44958,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\DECISION_KO.md",
+      "sha256": "31a0dce3c8a3391f1e95bf5978d23c43359902500c5660e8997c73e681c049a7",
+      "bytes": 6248,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\IMPLEMENTATION_API.md",
+      "sha256": "7f8830b00d7d3332597dacbd8a8a1d284d15732b6624ac20fe04205a662787cf",
+      "bytes": 6496,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\IMPLEMENTATION_NOTES.md",
+      "sha256": "904a4a8f37be2f971eb9f03fdff3a9dd032e8cd9d15ca5ddeb3858a096b8a651",
+      "bytes": 806,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\PLAN_v2.md",
+      "sha256": "007c4634d2b74fca2bfaece334087a0d1a38777ba1714b19dbc71717b57363a4",
+      "bytes": 7523,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\analysis.py",
+      "sha256": "a0202f36b67c85009428d06b821a7c7ffbdede301d4b1849f257b5dac8b7c897",
+      "bytes": 51680,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\bank.py",
+      "sha256": "9368481d18948a9b1d8a9af7063d13247afb9994bb0bc49c3ea951d290aea9a6",
+      "bytes": 19150,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\bank\\dev_manifest.json",
+      "sha256": "388835999c7c2498adc025e9f1130694ba8ee3dad62be177cca7c48344642500",
+      "bytes": 291967,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\bank\\train_manifest.json",
+      "sha256": "bef58e3753c5e732119e7b720a0a989440b129cf7919322f81cc9aafc9c86ae0",
+      "bytes": 2396993,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\checks.py",
+      "sha256": "3ab2a13a143ca2bb56795590cafba693c1566dde87f9973b72952ffc6286637e",
+      "bytes": 22214,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\common.py",
+      "sha256": "51743b9242e7011032fa2158c4db1a238a6f35db8dfb7fc18c99d58f2874f084",
+      "bytes": 6099,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\experiment.py",
+      "sha256": "ef5ae5e7e04e99d0017daa5423a67ab45c02eee61b3fda7795f68445607c773c",
+      "bytes": 31592,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\operators.py",
+      "sha256": "a557f75fff95f290c874d6df7828f195b229795b1c7c0c68d03badeebe6699c1",
+      "bytes": 13522,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\protocol.json",
+      "sha256": "07ff3079ecbea3997fafdbd13658b401674a4725ebc347e875d60214afc877f5",
+      "bytes": 6327,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\checkpoint.pt",
+      "sha256": "b18a734c973b0b742b5f121fd8dc78566cfcb7beb4b931e876021727db9d3d8a",
+      "bytes": 79124,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\evaluation_real.json",
+      "sha256": "dd5e81b934ac4c6e2f763167ea3bb2a40d4893e87d21e1cb8583306e93285e38",
+      "bytes": 89940,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CiteSeer__0__95_0cbbc53046e7cc913d38.json",
+      "sha256": "2a6b146b820363144af0e821eaff6e461c1de5418b278b4230bb8a8aca33733e",
+      "bytes": 3764,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CiteSeer__0__95_0cbbc53046e7cc913d38.npz",
+      "sha256": "c3b89c682e3552ac983b8eb0f6a874aa8ca9a659b5118b6d599abd5beb40cae5",
+      "bytes": 17368,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CiteSeer__0__none_24ba073b9e52fd38bbc4.json",
+      "sha256": "72388910706e168732c69946689c72c05b1aed94aef6e55348485f4b3900fdde",
+      "bytes": 3770,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CiteSeer__0__none_24ba073b9e52fd38bbc4.npz",
+      "sha256": "ab370fa35291cfcd8e5afa8b79f5b5e2f42dca804d783d1d764b8f06221fa7fc",
+      "bytes": 14900,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CoauthorCS__0__95_dc6280afaa9e2d372b9e.json",
+      "sha256": "beb773db67bf99914c93085c35ca5e9caa0f435780a7c73a5a9327a0d2f6cce7",
+      "bytes": 3757,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CoauthorCS__0__95_dc6280afaa9e2d372b9e.npz",
+      "sha256": "503315e715628035b43a0deeada99e87cf819ba28dc9df876d4dcaa31f23dca2",
+      "bytes": 44414,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CoauthorCS__0__none_58f39ac564a51003a546.json",
+      "sha256": "bba2c397ccd4c7f020a5159a66fb0c0be3221b0ec73c5f684fae88f66df2b388",
+      "bytes": 3762,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CoauthorCS__0__none_58f39ac564a51003a546.npz",
+      "sha256": "4d1410b0acc6e61c1387057cc9614029bc0052aacfd42ec4353641c8ebfa63fa",
+      "bytes": 37515,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CoauthorPhysics__0__95_7f7b0a0f6516ccd561da.json",
+      "sha256": "37082ffde5d68cd5c6e71f211e5d84c54d787c6a05d61dd1dbd18df73fde7153",
+      "bytes": 3795,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CoauthorPhysics__0__95_7f7b0a0f6516ccd561da.npz",
+      "sha256": "d23fa9cd793691d91023fcb2be3437366392b2b1ae6753dae15af7fda530e697",
+      "bytes": 22987,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CoauthorPhysics__0__none_944a505afc0b672aec05.json",
+      "sha256": "80541dcbe4b3d3e477058ccfcb0c5622c2d3ffe87fc0d94db99714d5bd8609e7",
+      "bytes": 3801,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\CoauthorPhysics__0__none_944a505afc0b672aec05.npz",
+      "sha256": "7531b1fa9f593de4d269cbe2f40555c36b9b54e1e0a426db2da6a4f04c87b106",
+      "bytes": 21019,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\Cora__0__95_b587b83236aaa3f6c5ad.json",
+      "sha256": "fe8910e2d2f7ceed932e93f5cb0b0b139fe85f968722fba7eaf02d1b96f20cff",
+      "bytes": 3735,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\Cora__0__95_b587b83236aaa3f6c5ad.npz",
+      "sha256": "dec179e804c71c1b6858ef0f17e3a44a75ce5ec2182e49416e2223431831d0af",
+      "bytes": 23531,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\Cora__0__none_14b48b33fe9d2983ef82.json",
+      "sha256": "c021073b9386e21708f8ef07749fb1c8e200b578d7bf61ec0836faba7b703a06",
+      "bytes": 3740,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\Cora__0__none_14b48b33fe9d2983ef82.npz",
+      "sha256": "e1c2d3113dcb153e9f62ac5d48445bdcd6b7c3c306ff5487b797eefbe5fe0b57",
+      "bytes": 21734,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\PubMed__0__95_2f040078b78ad0fc27de.json",
+      "sha256": "fceada6b38fc213811b987681cc73d2dc155da3702cdf37e1d1aab31817c25b9",
+      "bytes": 3720,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\PubMed__0__95_2f040078b78ad0fc27de.npz",
+      "sha256": "223296963c76ed45e994bc4dac1fc99f25ed8f693f626561a5ccb129af560262",
+      "bytes": 17182,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\PubMed__0__none_975b5dfd92123d54ed5a.json",
+      "sha256": "3294eccc2b380a57d199fb1b2e5e92851daaa6fa19487ec44d974efb3ae32f45",
+      "bytes": 3727,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\edge\\PubMed__0__none_975b5dfd92123d54ed5a.npz",
+      "sha256": "79b4346f360e26dd1052c7058e08a609b1be6258ea8c826829c1169cf60d457a",
+      "bytes": 17084,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CiteSeer__0__95_0cbbc53046e7cc913d38.json",
+      "sha256": "4045179702bc11bc00cae731e11e05c1337faad1a241dac8986d3e149fa550d1",
+      "bytes": 3766,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CiteSeer__0__95_0cbbc53046e7cc913d38.npz",
+      "sha256": "794bba325f49df27e225c7dde747aae652c2e9ceb7317e89b97d1978fb3ddc70",
+      "bytes": 20026,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CiteSeer__0__none_24ba073b9e52fd38bbc4.json",
+      "sha256": "4f178b4a4b3007a8c4530d53dcdd13bf37ef49397e9769dc9774907498ba7d4a",
+      "bytes": 3770,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CiteSeer__0__none_24ba073b9e52fd38bbc4.npz",
+      "sha256": "8589d32d309ff6f55a440131cb001d187cf5029f252127dee04e65bc4eb26c3d",
+      "bytes": 19925,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CoauthorCS__0__95_dc6280afaa9e2d372b9e.json",
+      "sha256": "5435883d80fe68e3f61fc3846b0d1c3f3a92d30cd3117a2b54c4f88c7f1341ca",
+      "bytes": 3752,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CoauthorCS__0__95_dc6280afaa9e2d372b9e.npz",
+      "sha256": "77fed779c0726dd6bd30681a3a7ed2de1858e9c63ef9bb4e6031f83fc781631f",
+      "bytes": 90483,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CoauthorCS__0__none_58f39ac564a51003a546.json",
+      "sha256": "efb18176a92c8ca7d9ef53f1981b9cda66ea5141eae92b50e9c0494f65f1e5f2",
+      "bytes": 3762,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CoauthorCS__0__none_58f39ac564a51003a546.npz",
+      "sha256": "952dfa21b5f0dba83ad2b9374d2eaef12bea57fc34ddb91ef717b159b19b4a06",
+      "bytes": 90659,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CoauthorPhysics__0__95_7f7b0a0f6516ccd561da.json",
+      "sha256": "661bb372979a7d15ee1192c58f266c921084126afbd99c682422c18b3c4c863b",
+      "bytes": 3791,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CoauthorPhysics__0__95_7f7b0a0f6516ccd561da.npz",
+      "sha256": "080680723104fe9c1220b97838b7af8fd8eea83ac2d1bf0575faf7a4c2bc29f5",
+      "bytes": 31285,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CoauthorPhysics__0__none_944a505afc0b672aec05.json",
+      "sha256": "df6b2e850517585bbb640c0c56fd78706f2d94ccea7fd0bda01e2bf2c99e4e80",
+      "bytes": 3801,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\CoauthorPhysics__0__none_944a505afc0b672aec05.npz",
+      "sha256": "8ec7b8b7475b2abcd2e32a5fb6d3a4795cbd921b14b5a5473962365ae9bc487f",
+      "bytes": 31295,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\Cora__0__95_b587b83236aaa3f6c5ad.json",
+      "sha256": "83cf30f75c0be08effc6e110175b6e5ae14271f0ffdd6343a1196821b4551d99",
+      "bytes": 3737,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\Cora__0__95_b587b83236aaa3f6c5ad.npz",
+      "sha256": "c3f8d104a7660bfd615f0bcc002d3587437772d7cf1399bb2528523d242e4688",
+      "bytes": 26697,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\Cora__0__none_14b48b33fe9d2983ef82.json",
+      "sha256": "4c99ac560e597910ead67f97f3f3210a62ec09f99486cf2f9502adfdfdc11832",
+      "bytes": 3740,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\Cora__0__none_14b48b33fe9d2983ef82.npz",
+      "sha256": "4cc92e5d7df1fa50d83f3d778789bbae0811acdbe5c7cbef9e76ededa0af7d9a",
+      "bytes": 26720,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\PubMed__0__95_2f040078b78ad0fc27de.json",
+      "sha256": "68d41e4b8d84bb02e961697e33cf628b8a3c58097af5ab89a7c52105628d5487",
+      "bytes": 3717,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\PubMed__0__95_2f040078b78ad0fc27de.npz",
+      "sha256": "27176803464ab632978ec353192001e25536c5a815d4b5499033ca7f065e680d",
+      "bytes": 17868,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\PubMed__0__none_975b5dfd92123d54ed5a.json",
+      "sha256": "3ed2ebaf1ff1deae1db6df54e617ea244e1573fe3f4864455954e0b05850811d",
+      "bytes": 3723,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\predictions\\real\\full\\PubMed__0__none_975b5dfd92123d54ed5a.npz",
+      "sha256": "f09cb31c76860f6c629589f9e5d8c86c3cdffdb25e431023a8e79616d3c3fd94",
+      "bytes": 17822,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\C_global_s11\\training.json",
+      "sha256": "70296b5352ed048ffb31375f93fbc1a7ae97cf381db9255723155e19c590cd6a",
+      "bytes": 145496,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\checks.json",
+      "sha256": "f9d1c3c53c40869d17f6e512c51e18e0fd9a9f4aedcc89667fd35ad3aa9c2b22",
+      "bytes": 9227,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_projection_cycle\\results\\lock.json",
+      "sha256": "50dd637bf4c193838757dbbad730a37299a4a3b18f4592cef8eb59b33dfbb605",
+      "bytes": 3856,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_real_graph_pilot\\bank\\manifest.json",
+      "sha256": "84ffeefd88396d9d829435197f3be845b8adf51400687a1da7ea350351996c71",
+      "bytes": 174523,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_real_graph_pilot\\bank\\real\\CiteSeer_0_95.npz",
+      "sha256": "edc1e5e03d04a13e66f46c68c930549d7bd51e50b78f2e0924e0ed70a3abd248",
+      "bytes": 305244,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_real_graph_pilot\\bank\\real\\CiteSeer_0_none.npz",
+      "sha256": "6e36c25504432849815868bdced2af7ef1cacdca218f819881c8b7c15f1678ed",
+      "bytes": 31098,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_real_graph_pilot\\bank\\real\\Cora_0_95.npz",
+      "sha256": "e4ef528eedbbc78019f788979dbc9e7a18b61b2c2b566c145ea65c93b57e2cbb",
+      "bytes": 328931,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_real_graph_pilot\\bank\\real\\Cora_0_none.npz",
+      "sha256": "03a61313d70592cab09dc9968dcd896e450030243b103f4789cfec8b630cb24b",
+      "bytes": 32508,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_real_graph_pilot\\results\\all_records.json",
+      "sha256": "137afd8ee515e7e4ec549fd35b671cfea72cbf41797852fe076565c747ba72a3",
+      "bytes": 905939,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_real_graph_pilot\\results\\factor_s11\\checkpoint.pt",
+      "sha256": "b1e9ff9230aa7e9a62e88d8619915b8fe51261615afb86d8bdf1e4bcc566ffb2",
+      "bytes": 39458,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_real_graph_pilot\\results\\factor_s12\\checkpoint.pt",
+      "sha256": "9200e6cb01062308156f64cfb8a41e1e840f9b4ba86604e0a0fd8fb18413cc7a",
+      "bytes": 39458,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_real_graph_pilot\\results\\factor_s13\\checkpoint.pt",
+      "sha256": "db7f374567044d6d61b79194ad18503133870fc29698a201faa41c902ff6244d",
+      "bytes": 39458,
+      "role": "locked_lineage"
+    },
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_transfer_diagnostics_20261104\\replication.json",
+      "sha256": "fec030143576463b069af181eb5f4d3ba1189446b4f7e52475e077d7ce938692",
+      "bytes": 66726,
+      "role": "locked_lineage"
+    }
+  ],
+  "self_hash": "excluded to avoid circular digest",
+  "independent_real_validation": false
+}

@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "source_lock_sha256": "e7af4175bab33bc0ef47dfd05314fd0531ab63f318d1e8c1ab4f3b431fbffb17",
+  "manifest_sha256": "e6fae744c7e565e275ec23e9e7da7ed8f58a76268ba807782b50efe006f2fcbe",
+  "checks_sha256": "024c5c6e6ea2305f4f4cb6c1068e08faa2a01ad2a8dd37805b5b0df3a456d063",
+  "expected": {
+    "episodes": 10,
+    "graphs": 5,
+    "original_contexts": 139,
+    "calibration_points": 126,
+    "calibration_folds": 19,
+    "calibration_branch_forwards": 285,
+    "final_branch_forwards": 150,
+    "derived_prediction_records": 50,
+    "reference_records": 70,
+    "aggregate_scored_records": 120
+  },
+  "independent_numpy_split_and_score_and_mixtures": true,
+  "max_score_reconstruction_error": 3.552713678800501e-15,
+  "max_weight_reconstruction_error": 1.6653345369377348e-16,
+  "max_control_reconstruction_error": 2.9802322387695312e-08,
+  "bit_identical_none95_weights": true,
+  "all_inputs_query_truth_context_and_hashes_verified": true,
+  "query_own_features_missing": true,
+  "optimizer_updates": 0,
+  "target_gradient_updates": 0,
+  "statistical_parameter_fitting": false,
+  "predictive_context_weighting": true,
+  "performance_gate_distinct_from_audit": true,
+  "family_oracle_is_diagnostic_only": true,
+  "independent_real_ci": false
+}
