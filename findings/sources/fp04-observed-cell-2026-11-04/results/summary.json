@@ -1,0 +1,1986 @@
+{
+  "cycle": "FP04",
+  "gate": "FAIL",
+  "gates": {
+    "observed_minus_mask": {
+      "n_graphs": 96,
+      "n_strata": 12,
+      "mean": 0.004231770833333332,
+      "ci": [
+        -0.0029296874999999974,
+        0.01134033203124998
+      ],
+      "confidence": 0.975,
+      "unit": "base graph; fixed seeds/settings averaged first; resample within strata",
+      "verdict": "FAIL"
+    },
+    "observed_minus_pcfi": {
+      "n_graphs": 96,
+      "n_strata": 12,
+      "mean": 0.004231770833333333,
+      "ci": [
+        -0.002712673611111111,
+        0.011176215277777778
+      ],
+      "confidence": 0.975,
+      "unit": "base graph; fixed seeds/settings averaged first; resample within strata",
+      "verdict": "FAIL"
+    },
+    "observed_minus_none": {
+      "n_graphs": 48,
+      "n_strata": 12,
+      "mean": 0.0004340277777777777,
+      "ci": [
+        -0.006293402777777777,
+        0.006293402777777778
+      ],
+      "confidence": 0.975,
+      "unit": "base graph; fixed seeds/settings averaged first; resample within strata",
+      "verdict": "FAIL"
+    },
+    "observed_minus_shuffle": {
+      "n_graphs": 48,
+      "n_strata": 12,
+      "mean": -0.0032552083333333335,
+      "ci": [
+        -0.008246527777777778,
+        0.0008680555555555555
+      ],
+      "confidence": 0.975,
+      "unit": "base graph; fixed seeds/settings averaged first; resample within strata",
+      "verdict": "FAIL"
+    }
+  },
+  "primary": [
+    {
+      "arm": "observed",
+      "accuracy": 0.4825303819444445,
+      "balanced_accuracy": 0.46998845820460405,
+      "macro_f1": 0.4178466148917089,
+      "nll": 1.0214231719481908,
+      "brier": 0.6134999010550781
+    },
+    {
+      "arm": "mask",
+      "accuracy": 0.47829861111111116,
+      "balanced_accuracy": 0.46541594095847566,
+      "macro_f1": 0.4105138866867053,
+      "nll": 1.0235937496850962,
+      "brier": 0.6150984359918829
+    },
+    {
+      "arm": "pcfi",
+      "accuracy": 0.47829861111111116,
+      "balanced_accuracy": 0.465490251774974,
+      "macro_f1": 0.41074511861909757,
+      "nll": 1.0235907039253904,
+      "brier": 0.6151056643177863
+    }
+  ],
+  "breakdown": [
+    {
+      "axis": "family",
+      "group": "centroid",
+      "arm": "observed",
+      "n_graphs": 48,
+      "accuracy": 0.5868055555555555,
+      "balanced_accuracy": 0.5637935752519087,
+      "macro_f1": 0.5306336817266617,
+      "nll": 0.9827875787670378,
+      "brier": 0.587818258515147
+    },
+    {
+      "axis": "family",
+      "group": "centroid",
+      "arm": "mask",
+      "n_graphs": 48,
+      "accuracy": 0.5811631944444445,
+      "balanced_accuracy": 0.5570888377311989,
+      "macro_f1": 0.5200182177694234,
+      "nll": 0.9878209340400081,
+      "brier": 0.5913302162932197
+    },
+    {
+      "axis": "family",
+      "group": "centroid",
+      "arm": "pcfi",
+      "n_graphs": 48,
+      "accuracy": 0.5813802083333334,
+      "balanced_accuracy": 0.5573781895830506,
+      "macro_f1": 0.5201444362755762,
+      "nll": 0.9878458604030267,
+      "brier": 0.5913593722418161
+    },
+    {
+      "axis": "family",
+      "group": "field",
+      "arm": "observed",
+      "n_graphs": 48,
+      "accuracy": 0.3782552083333333,
+      "balanced_accuracy": 0.37618334115729946,
+      "macro_f1": 0.3050595480567561,
+      "nll": 1.0600587651293438,
+      "brier": 0.6391815435950091
+    },
+    {
+      "axis": "family",
+      "group": "field",
+      "arm": "mask",
+      "n_graphs": 48,
+      "accuracy": 0.37543402777777773,
+      "balanced_accuracy": 0.37374304418575255,
+      "macro_f1": 0.30100955560398707,
+      "nll": 1.0593665653301845,
+      "brier": 0.6388666556905461
+    },
+    {
+      "axis": "family",
+      "group": "field",
+      "arm": "pcfi",
+      "n_graphs": 48,
+      "accuracy": 0.3752170138888889,
+      "balanced_accuracy": 0.3736023139668973,
+      "macro_f1": 0.3013458009626191,
+      "nll": 1.059335547447754,
+      "brier": 0.6388519563937568
+    },
+    {
+      "axis": "shape",
+      "group": "heldout",
+      "arm": "observed",
+      "n_graphs": 48,
+      "accuracy": 0.5125868055555555,
+      "balanced_accuracy": 0.5197777771996521,
+      "macro_f1": 0.4566931841337709,
+      "nll": 1.0168369116618012,
+      "brier": 0.6097117231636197
+    },
+    {
+      "axis": "shape",
+      "group": "heldout",
+      "arm": "mask",
+      "n_graphs": 48,
+      "accuracy": 0.505859375,
+      "balanced_accuracy": 0.5077154423508591,
+      "macro_f1": 0.4452876911211705,
+      "nll": 1.0192894945219144,
+      "brier": 0.6115386839348443
+    },
+    {
+      "axis": "shape",
+      "group": "heldout",
+      "arm": "pcfi",
+      "n_graphs": 48,
+      "accuracy": 0.506076388888889,
+      "balanced_accuracy": 0.5078206612060779,
+      "macro_f1": 0.4453979247086519,
+      "nll": 1.0193190902461549,
+      "brier": 0.6115742188991588
+    },
+    {
+      "axis": "shape",
+      "group": "matched",
+      "arm": "observed",
+      "n_graphs": 48,
+      "accuracy": 0.4524739583333333,
+      "balanced_accuracy": 0.4201991392095559,
+      "macro_f1": 0.3790000456496468,
+      "nll": 1.0260094322345803,
+      "brier": 0.6172880789465367
+    },
+    {
+      "axis": "shape",
+      "group": "matched",
+      "arm": "mask",
+      "n_graphs": 48,
+      "accuracy": 0.45073784722222227,
+      "balanced_accuracy": 0.4231164395660924,
+      "macro_f1": 0.3757400822522399,
+      "nll": 1.0278980048482784,
+      "brier": 0.6186581880489214
+    },
+    {
+      "axis": "shape",
+      "group": "matched",
+      "arm": "pcfi",
+      "n_graphs": 48,
+      "accuracy": 0.4505208333333333,
+      "balanced_accuracy": 0.4231598423438701,
+      "macro_f1": 0.3760923125295433,
+      "nll": 1.0278623176046258,
+      "brier": 0.6186371097364141
+    }
+  ],
+  "real": [
+    {
+      "graph": "Cora",
+      "mode": "95",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.5287590385638615,
+      "balanced_accuracy": 0.5690315046033799,
+      "macro_f1": 0.5303017758116807,
+      "nll": 1.870916905578313,
+      "brier": 0.829019861070193,
+      "accuracy_min": 0.5179704016913319,
+      "accuracy_max": 0.5439330543933054
+    },
+    {
+      "graph": "Cora",
+      "mode": "95",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.4781931701962994,
+      "balanced_accuracy": 0.5150894815403446,
+      "macro_f1": 0.49968953057929355,
+      "nll": 1.8794293258187684,
+      "brier": 0.8320939530383602,
+      "accuracy_min": 0.39429175475687106,
+      "accuracy_max": 0.5784518828451883
+    },
+    {
+      "graph": "Cora",
+      "mode": "95",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.4792448414196557,
+      "balanced_accuracy": 0.5163266554221689,
+      "macro_f1": 0.5008501154939929,
+      "nll": 1.8791250669369686,
+      "brier": 0.8319897917391019,
+      "accuracy_min": 0.39429175475687106,
+      "accuracy_max": 0.5784518828451883
+    },
+    {
+      "graph": "Cora",
+      "mode": "99",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.5281845533290273,
+      "balanced_accuracy": 0.5689889296770977,
+      "macro_f1": 0.5303352740727503,
+      "nll": 1.8708199780999568,
+      "brier": 0.8289897633002101,
+      "accuracy_min": 0.5194123819517313,
+      "accuracy_max": 0.5387029288702929
+    },
+    {
+      "graph": "Cora",
+      "mode": "99",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.4821675360477713,
+      "balanced_accuracy": 0.519292768073917,
+      "macro_f1": 0.5032979166663831,
+      "nll": 1.877414326340638,
+      "brier": 0.831336576534407,
+      "accuracy_min": 0.3964059196617336,
+      "accuracy_max": 0.5784518828451883
+    },
+    {
+      "graph": "Cora",
+      "mode": "99",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.4827522159072017,
+      "balanced_accuracy": 0.5197527055827558,
+      "macro_f1": 0.5035876700751984,
+      "nll": 1.877081057706475,
+      "brier": 0.831216882293917,
+      "accuracy_min": 0.3964059196617336,
+      "accuracy_max": 0.5784518828451883
+    },
+    {
+      "graph": "Cora",
+      "mode": "995",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.5292374531465867,
+      "balanced_accuracy": 0.5699683350831133,
+      "macro_f1": 0.5310418799853907,
+      "nll": 1.8708087168620855,
+      "brier": 0.8289861757340844,
+      "accuracy_min": 0.5246589716684156,
+      "accuracy_max": 0.5366108786610879
+    },
+    {
+      "graph": "Cora",
+      "mode": "995",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.4848575186900583,
+      "balanced_accuracy": 0.5216336541091433,
+      "macro_f1": 0.5052585919912271,
+      "nll": 1.8765875127125373,
+      "brier": 0.8310218848448623,
+      "accuracy_min": 0.3974630021141649,
+      "accuracy_max": 0.5784518828451883
+    },
+    {
+      "graph": "Cora",
+      "mode": "995",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.48544060408431494,
+      "balanced_accuracy": 0.5222336697791187,
+      "macro_f1": 0.5057692019435568,
+      "nll": 1.8762503623234652,
+      "brier": 0.830898585710384,
+      "accuracy_min": 0.3974630021141649,
+      "accuracy_max": 0.5784518828451883
+    },
+    {
+      "graph": "Cora",
+      "mode": "none",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.5292349688852754,
+      "balanced_accuracy": 0.568870647638186,
+      "macro_f1": 0.5316987883550506,
+      "nll": 1.8708398493649032,
+      "brier": 0.8290061196810922,
+      "accuracy_min": 0.5243128964059197,
+      "accuracy_max": 0.5355648535564853
+    },
+    {
+      "graph": "Cora",
+      "mode": "none",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.48999361073258807,
+      "balanced_accuracy": 0.52731022161117,
+      "macro_f1": 0.5097763065327532,
+      "nll": 1.8731827829396057,
+      "brier": 0.8297139276999039,
+      "accuracy_min": 0.3974630021141649,
+      "accuracy_max": 0.5784518828451883
+    },
+    {
+      "graph": "Cora",
+      "mode": "none",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.49022592977454127,
+      "balanced_accuracy": 0.5277105633506944,
+      "macro_f1": 0.5099707329387037,
+      "nll": 1.8728915976691611,
+      "brier": 0.8295987595431922,
+      "accuracy_min": 0.3974630021141649,
+      "accuracy_max": 0.5784518828451883
+    },
+    {
+      "graph": "Cora",
+      "mode": "shuffle95",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.5292245664439056,
+      "balanced_accuracy": 0.5692173783722473,
+      "macro_f1": 0.5308442845312591,
+      "nll": 1.8709155535653865,
+      "brier": 0.8290188946822715,
+      "accuracy_min": 0.5158562367864693,
+      "accuracy_max": 0.5407949790794979
+    },
+    {
+      "graph": "Cora",
+      "mode": "shuffle95",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.4781931701962994,
+      "balanced_accuracy": 0.5150894815403446,
+      "macro_f1": 0.4996916083459062,
+      "nll": 1.879429385947321,
+      "brier": 0.83209373815914,
+      "accuracy_min": 0.39429175475687106,
+      "accuracy_max": 0.5784518828451883
+    },
+    {
+      "graph": "Cora",
+      "mode": "shuffle95",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.47912861640803317,
+      "balanced_accuracy": 0.5160621051576187,
+      "macro_f1": 0.5006803313800421,
+      "nll": 1.8791250933946984,
+      "brier": 0.8319900848843997,
+      "accuracy_min": 0.39429175475687106,
+      "accuracy_max": 0.5784518828451883
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.29976892339208755,
+      "balanced_accuracy": 0.3405373703905274,
+      "macro_f1": 0.30351584916174856,
+      "nll": 1.7666008516556377,
+      "brier": 0.822584338565813,
+      "accuracy_min": 0.24607329842931938,
+      "accuracy_max": 0.3386243386243386
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.25839817448509983,
+      "balanced_accuracy": 0.2821255101725242,
+      "macro_f1": 0.23629660082718956,
+      "nll": 1.7696702178466956,
+      "brier": 0.8238416298986627,
+      "accuracy_min": 0.2261780104712042,
+      "accuracy_max": 0.30242360379346683
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.25828158776272925,
+      "balanced_accuracy": 0.28201840231507636,
+      "macro_f1": 0.2361632033770924,
+      "nll": 1.7695691189816298,
+      "brier": 0.8237993350347375,
+      "accuracy_min": 0.2261780104712042,
+      "accuracy_max": 0.3013698630136986
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "99",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.29589726224756147,
+      "balanced_accuracy": 0.3447500075313098,
+      "macro_f1": 0.30498925557124934,
+      "nll": 1.7666758931693936,
+      "brier": 0.8226171165420789,
+      "accuracy_min": 0.24397905759162303,
+      "accuracy_max": 0.32349841938883034
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "99",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.2610906187069455,
+      "balanced_accuracy": 0.2846803997720208,
+      "macro_f1": 0.23981109796674593,
+      "nll": 1.7689435396157387,
+      "brier": 0.8235347983505457,
+      "accuracy_min": 0.2261780104712042,
+      "accuracy_max": 0.30158730158730157
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "99",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.2614430968156852,
+      "balanced_accuracy": 0.2850030767637839,
+      "macro_f1": 0.24034921888533362,
+      "nll": 1.7688374696381328,
+      "brier": 0.8234899076067388,
+      "accuracy_min": 0.2261780104712042,
+      "accuracy_max": 0.30264550264550266
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.2964859184563218,
+      "balanced_accuracy": 0.3467169669070253,
+      "macro_f1": 0.3057943902557955,
+      "nll": 1.7666760834937254,
+      "brier": 0.8226179885879847,
+      "accuracy_min": 0.24712041884816754,
+      "accuracy_max": 0.3256059009483667
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.26179335256928954,
+      "balanced_accuracy": 0.2853750189115364,
+      "macro_f1": 0.2409475843873697,
+      "nll": 1.7686476576573797,
+      "brier": 0.8234088847442563,
+      "accuracy_min": 0.2261780104712042,
+      "accuracy_max": 0.30052910052910053
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.2629622244482748,
+      "balanced_accuracy": 0.28661144277441164,
+      "macro_f1": 0.2423980566868391,
+      "nll": 1.7685395157525392,
+      "brier": 0.8233630576784516,
+      "accuracy_min": 0.2261780104712042,
+      "accuracy_max": 0.30052910052910053
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.3011882364022427,
+      "balanced_accuracy": 0.34980753822799887,
+      "macro_f1": 0.31042982003335645,
+      "nll": 1.7666738526331291,
+      "brier": 0.8226172970109138,
+      "accuracy_min": 0.2450261780104712,
+      "accuracy_max": 0.33650793650793653
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.2656566354479286,
+      "balanced_accuracy": 0.28917280636682313,
+      "macro_f1": 0.24568868471435548,
+      "nll": 1.7673809345383307,
+      "brier": 0.8228597085797918,
+      "accuracy_min": 0.2261780104712042,
+      "accuracy_max": 0.30052910052910053
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.2660064111832024,
+      "balanced_accuracy": 0.2895068755480864,
+      "macro_f1": 0.24608398254553102,
+      "nll": 1.7672899406422127,
+      "brier": 0.8228183887312377,
+      "accuracy_min": 0.2261780104712042,
+      "accuracy_max": 0.30052910052910053
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "shuffle95",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.3000110018255324,
+      "balanced_accuracy": 0.3421019692520434,
+      "macro_f1": 0.3030530611361686,
+      "nll": 1.7665998631998994,
+      "brier": 0.8225838584084078,
+      "accuracy_min": 0.24921465968586387,
+      "accuracy_max": 0.3502645502645503
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "shuffle95",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.2582810921762367,
+      "balanced_accuracy": 0.2820165777106506,
+      "macro_f1": 0.23620130216578616,
+      "nll": 1.7696697451185268,
+      "brier": 0.8238414171908419,
+      "accuracy_min": 0.2261780104712042,
+      "accuracy_max": 0.3013698630136986
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "shuffle95",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.25828158776272925,
+      "balanced_accuracy": 0.28201840231507636,
+      "macro_f1": 0.2361632033770924,
+      "nll": 1.7695674003666422,
+      "brier": 0.8237991107843312,
+      "accuracy_min": 0.2261780104712042,
+      "accuracy_max": 0.3013698630136986
+    },
+    {
+      "graph": "PubMed",
+      "mode": "95",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.6400183418653076,
+      "balanced_accuracy": 0.6201617441468271,
+      "macro_f1": 0.5886328861220789,
+      "nll": 1.0709494226102352,
+      "brier": 0.6474419567242568,
+      "accuracy_min": 0.5621301775147929,
+      "accuracy_max": 0.6912928759894459
+    },
+    {
+      "graph": "PubMed",
+      "mode": "95",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.5533106238065307,
+      "balanced_accuracy": 0.5436389516653669,
+      "macro_f1": 0.5107916052424876,
+      "nll": 1.0726183211799871,
+      "brier": 0.6486392485847151,
+      "accuracy_min": 0.45910290237467016,
+      "accuracy_max": 0.66688654353562
+    },
+    {
+      "graph": "PubMed",
+      "mode": "95",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.5509686436213737,
+      "balanced_accuracy": 0.5416914023613475,
+      "macro_f1": 0.5087130219736271,
+      "nll": 1.0725469243741457,
+      "brier": 0.6485874175816166,
+      "accuracy_min": 0.4577836411609499,
+      "accuracy_max": 0.6602902374670184
+    },
+    {
+      "graph": "PubMed",
+      "mode": "99",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.6402326772396456,
+      "balanced_accuracy": 0.6254606598763731,
+      "macro_f1": 0.5917267468508828,
+      "nll": 1.0709719931504247,
+      "brier": 0.6474576439841793,
+      "accuracy_min": 0.5654174884944115,
+      "accuracy_max": 0.6820580474934037
+    },
+    {
+      "graph": "PubMed",
+      "mode": "99",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.5542631826374468,
+      "balanced_accuracy": 0.54345572879256,
+      "macro_f1": 0.5111507452378184,
+      "nll": 1.0719023339916633,
+      "brier": 0.6481256557602442,
+      "accuracy_min": 0.45844327176781,
+      "accuracy_max": 0.6635883905013192
+    },
+    {
+      "graph": "PubMed",
+      "mode": "99",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.5525820377318922,
+      "balanced_accuracy": 0.5426427144827415,
+      "macro_f1": 0.5097771469236291,
+      "nll": 1.0718724309809675,
+      "brier": 0.6481036573432525,
+      "accuracy_min": 0.45844327176781,
+      "accuracy_max": 0.658311345646438
+    },
+    {
+      "graph": "PubMed",
+      "mode": "995",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.6412537096692431,
+      "balanced_accuracy": 0.6244571681023374,
+      "macro_f1": 0.5918106565706843,
+      "nll": 1.0709678328305634,
+      "brier": 0.6474546772045522,
+      "accuracy_min": 0.5785667324128863,
+      "accuracy_max": 0.6846965699208444
+    },
+    {
+      "graph": "PubMed",
+      "mode": "995",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.5553625669822139,
+      "balanced_accuracy": 0.5438787715407541,
+      "macro_f1": 0.5120603431894637,
+      "nll": 1.0716131513420548,
+      "brier": 0.6479169618127627,
+      "accuracy_min": 0.46108179419525064,
+      "accuracy_max": 0.6616094986807388
+    },
+    {
+      "graph": "PubMed",
+      "mode": "995",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.5552895156271113,
+      "balanced_accuracy": 0.5446809834089307,
+      "macro_f1": 0.5122969431583957,
+      "nll": 1.0716096918292455,
+      "brier": 0.6479139971592957,
+      "accuracy_min": 0.46108179419525064,
+      "accuracy_max": 0.6602902374670184
+    },
+    {
+      "graph": "PubMed",
+      "mode": "none",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.6426440947616782,
+      "balanced_accuracy": 0.6277156769250057,
+      "macro_f1": 0.5933066366364533,
+      "nll": 1.0709661856942283,
+      "brier": 0.647453509551405,
+      "accuracy_min": 0.57922419460881,
+      "accuracy_max": 0.691952506596306
+    },
+    {
+      "graph": "PubMed",
+      "mode": "none",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.5618074697805433,
+      "balanced_accuracy": 0.5504839698991801,
+      "macro_f1": 0.5184732008874668,
+      "nll": 1.071383565413872,
+      "brier": 0.6477444693356207,
+      "accuracy_min": 0.4762532981530343,
+      "accuracy_max": 0.6609498680738787
+    },
+    {
+      "graph": "PubMed",
+      "mode": "none",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.5621736902942506,
+      "balanced_accuracy": 0.5507786025111019,
+      "macro_f1": 0.5188046435937151,
+      "nll": 1.0714291124334236,
+      "brier": 0.6477765221666962,
+      "accuracy_min": 0.4762532981530343,
+      "accuracy_max": 0.6609498680738787
+    },
+    {
+      "graph": "PubMed",
+      "mode": "shuffle95",
+      "arm": "observed",
+      "n_records": 9,
+      "accuracy": 0.6402324363050972,
+      "balanced_accuracy": 0.6202248101210449,
+      "macro_f1": 0.5882078388514371,
+      "nll": 1.0709494908886121,
+      "brier": 0.6474418860575426,
+      "accuracy_min": 0.5654174884944115,
+      "accuracy_max": 0.6866754617414248
+    },
+    {
+      "graph": "PubMed",
+      "mode": "shuffle95",
+      "arm": "mask",
+      "n_records": 9,
+      "accuracy": 0.5533106238065307,
+      "balanced_accuracy": 0.5436389516653669,
+      "macro_f1": 0.5107916052424876,
+      "nll": 1.0726182721754776,
+      "brier": 0.6486391319049639,
+      "accuracy_min": 0.45910290237467016,
+      "accuracy_max": 0.66688654353562
+    },
+    {
+      "graph": "PubMed",
+      "mode": "shuffle95",
+      "arm": "pcfi",
+      "n_records": 9,
+      "accuracy": 0.5522114803963123,
+      "balanced_accuracy": 0.5427606776782925,
+      "macro_f1": 0.5098455541199446,
+      "nll": 1.072572220803904,
+      "brier": 0.6486055906737298,
+      "accuracy_min": 0.4577836411609499,
+      "accuracy_max": 0.662269129287599
+    }
+  ],
+  "external": [
+    {
+      "graph": "Cora",
+      "mode": "95",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5434738724021447,
+      "balanced_accuracy": 0.5941870111651927,
+      "macro_f1": 0.5467695671222522,
+      "nll": 1.320782618507515,
+      "brier": 0.5985429438694703,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "95",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.3824621778447705,
+      "balanced_accuracy": 0.4228691370670495,
+      "macro_f1": 0.3797767077928718,
+      "nll": 1.5769167383654732,
+      "brier": 0.718321605264482,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "95",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.5905617486346507,
+      "balanced_accuracy": 0.6328640851536645,
+      "macro_f1": 0.5987699914016728,
+      "nll": 1.8061304215415863,
+      "brier": 0.8060642090283028,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "95",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5479645293771694,
+      "balanced_accuracy": 0.590906093595754,
+      "macro_f1": 0.5432853065625523,
+      "nll": 1.348724054638924,
+      "brier": 0.6023558283591989,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "95",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.17022814519417281,
+      "balanced_accuracy": 0.22985196685174816,
+      "macro_f1": 0.15225833508718875,
+      "nll": 2.1431779563283357,
+      "brier": 0.8891366148193471,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "99",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5519502209849833,
+      "balanced_accuracy": 0.6031336652112265,
+      "macro_f1": 0.5586998335855476,
+      "nll": 1.3898178857706547,
+      "brier": 0.6148442552071088,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "99",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.3824621778447705,
+      "balanced_accuracy": 0.4228691370670495,
+      "macro_f1": 0.3797767077928718,
+      "nll": 1.5769167383654732,
+      "brier": 0.718321605264482,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "99",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.5905617486346507,
+      "balanced_accuracy": 0.6328640851536645,
+      "macro_f1": 0.5987699914016728,
+      "nll": 1.8061304215415863,
+      "brier": 0.8060642090283028,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "99",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5221918487951472,
+      "balanced_accuracy": 0.5872805801092065,
+      "macro_f1": 0.521159110543673,
+      "nll": 1.4356801120388127,
+      "brier": 0.6336669958276193,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "99",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.2869195577334382,
+      "balanced_accuracy": 0.3539414791437165,
+      "macro_f1": 0.2918101823381069,
+      "nll": 1.9848365045650869,
+      "brier": 0.8474153828039487,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "995",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.56901788517464,
+      "balanced_accuracy": 0.6213845840034243,
+      "macro_f1": 0.570304818824113,
+      "nll": 1.3584150512792785,
+      "brier": 0.6025424796056963,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "995",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.3824621778447705,
+      "balanced_accuracy": 0.4228691370670495,
+      "macro_f1": 0.3797767077928718,
+      "nll": 1.5769167383654732,
+      "brier": 0.718321605264482,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "995",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.5905617486346507,
+      "balanced_accuracy": 0.6328640851536645,
+      "macro_f1": 0.5987699914016728,
+      "nll": 1.8061304215415863,
+      "brier": 0.8060642090283028,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "995",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5167811067745681,
+      "balanced_accuracy": 0.5806326603441945,
+      "macro_f1": 0.5162319402622509,
+      "nll": 1.4213618764076232,
+      "brier": 0.6247607947386142,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "995",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.21293970493126588,
+      "balanced_accuracy": 0.2551704394495094,
+      "macro_f1": 0.19106964375800428,
+      "nll": 2.083821608770272,
+      "brier": 0.8755034889912171,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "none",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5999483037468409,
+      "balanced_accuracy": 0.643099493426296,
+      "macro_f1": 0.6050138955347829,
+      "nll": 1.3490180991335963,
+      "brier": 0.5997077004809374,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "none",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.3824621778447705,
+      "balanced_accuracy": 0.4228691370670495,
+      "macro_f1": 0.3797767077928718,
+      "nll": 1.5769167383654732,
+      "brier": 0.718321605264482,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "none",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.5905617486346507,
+      "balanced_accuracy": 0.6328640851536645,
+      "macro_f1": 0.5987699914016728,
+      "nll": 1.8061304215415863,
+      "brier": 0.8060642090283028,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "none",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.37750666053018284,
+      "balanced_accuracy": 0.41238705042906565,
+      "macro_f1": 0.3800188788425663,
+      "nll": 1.7927069048792543,
+      "brier": 0.8025483267973809,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "none",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.37750666053018284,
+      "balanced_accuracy": 0.41238705042906565,
+      "macro_f1": 0.3800188788425663,
+      "nll": 1.7927069048792543,
+      "brier": 0.8025483267973809,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "shuffle95",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5718937114478161,
+      "balanced_accuracy": 0.6150646332495276,
+      "macro_f1": 0.569334339006785,
+      "nll": 1.3012406753488903,
+      "brier": 0.5939146843800667,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "shuffle95",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.3824621778447705,
+      "balanced_accuracy": 0.4228691370670495,
+      "macro_f1": 0.3797767077928718,
+      "nll": 1.5769167383654732,
+      "brier": 0.718321605264482,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "shuffle95",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.5905617486346507,
+      "balanced_accuracy": 0.6328640851536645,
+      "macro_f1": 0.5987699914016728,
+      "nll": 1.8061304215415863,
+      "brier": 0.8060642090283028,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "shuffle95",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5400832772761767,
+      "balanced_accuracy": 0.5945771128114771,
+      "macro_f1": 0.5394765225053519,
+      "nll": 1.3536373509199517,
+      "brier": 0.6113930986449535,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "Cora",
+      "mode": "shuffle95",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.2006172116416102,
+      "balanced_accuracy": 0.26107788216912114,
+      "macro_f1": 0.18051502712372045,
+      "nll": 2.095368557005377,
+      "brier": 0.881900721863396,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.34188514465834025,
+      "balanced_accuracy": 0.34151260214974316,
+      "macro_f1": 0.32154387116401967,
+      "nll": 1.7316155648979847,
+      "brier": 0.7968993663425096,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.34228138746535075,
+      "balanced_accuracy": 0.3766336398224955,
+      "macro_f1": 0.29450199714539554,
+      "nll": 1.6267008404221734,
+      "brier": 0.7411814737136383,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.384103120080552,
+      "balanced_accuracy": 0.41964332493162715,
+      "macro_f1": 0.3768647775987555,
+      "nll": 1.7503888703767005,
+      "brier": 0.816681038898928,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.34078046096024056,
+      "balanced_accuracy": 0.3433969880758329,
+      "macro_f1": 0.32081568807605726,
+      "nll": 1.7445845601763432,
+      "brier": 0.8033584838328748,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.14613657814308081,
+      "balanced_accuracy": 0.18522957857617142,
+      "macro_f1": 0.11246064387098191,
+      "nll": 1.8776684929825278,
+      "brier": 0.8636975638783922,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "99",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.34602229031930914,
+      "balanced_accuracy": 0.3367096297603221,
+      "macro_f1": 0.322145670826659,
+      "nll": 1.7358354680457213,
+      "brier": 0.7956132677491734,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "99",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.34228138746535075,
+      "balanced_accuracy": 0.3766336398224955,
+      "macro_f1": 0.29450199714539554,
+      "nll": 1.6267008404221734,
+      "brier": 0.7411814737136383,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "99",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.384103120080552,
+      "balanced_accuracy": 0.41964332493162715,
+      "macro_f1": 0.3768647775987555,
+      "nll": 1.7503888703767005,
+      "brier": 0.816681038898928,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "99",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.3263556422274058,
+      "balanced_accuracy": 0.3338258399406589,
+      "macro_f1": 0.31945990330171764,
+      "nll": 1.7358519241773507,
+      "brier": 0.79095868611042,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "99",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.26683451480601783,
+      "balanced_accuracy": 0.26091839171449954,
+      "macro_f1": 0.2314928019851162,
+      "nll": 1.7598373158408693,
+      "brier": 0.8219247587206958,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.29498045188594807,
+      "balanced_accuracy": 0.2926747411434334,
+      "macro_f1": 0.27279398245106573,
+      "nll": 1.727052208043103,
+      "brier": 0.8026107915743564,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.34228138746535075,
+      "balanced_accuracy": 0.3766336398224955,
+      "macro_f1": 0.29450199714539554,
+      "nll": 1.6267008404221734,
+      "brier": 0.7411814737136383,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.384103120080552,
+      "balanced_accuracy": 0.41964332493162715,
+      "macro_f1": 0.3768647775987555,
+      "nll": 1.7503888703767005,
+      "brier": 0.816681038898928,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.3907362566235597,
+      "balanced_accuracy": 0.38355097524277615,
+      "macro_f1": 0.34703211162519515,
+      "nll": 1.663053026392675,
+      "brier": 0.7807827227585556,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.16092425765140866,
+      "balanced_accuracy": 0.2004985763398078,
+      "macro_f1": 0.11409321459174415,
+      "nll": 1.8929831843190346,
+      "brier": 0.8522891960513386,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.3192237640443431,
+      "balanced_accuracy": 0.3194715304622035,
+      "macro_f1": 0.2989511973458941,
+      "nll": 1.7208765468393035,
+      "brier": 0.8012630940653392,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.34228138746535075,
+      "balanced_accuracy": 0.3766336398224955,
+      "macro_f1": 0.29450199714539554,
+      "nll": 1.6267008404221734,
+      "brier": 0.7411814737136383,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.384103120080552,
+      "balanced_accuracy": 0.41964332493162715,
+      "macro_f1": 0.3768647775987555,
+      "nll": 1.7503888703767005,
+      "brier": 0.816681038898928,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.25493132771815025,
+      "balanced_accuracy": 0.23651129187557599,
+      "macro_f1": 0.22644683418057765,
+      "nll": 1.7555738235182872,
+      "brier": 0.8184990519128315,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.25493132771815025,
+      "balanced_accuracy": 0.23651129187557599,
+      "macro_f1": 0.22644683418057765,
+      "nll": 1.7555738235182872,
+      "brier": 0.8184990519128315,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "shuffle95",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.3530395615312778,
+      "balanced_accuracy": 0.3464263964991999,
+      "macro_f1": 0.32954229135105023,
+      "nll": 1.7572430778582155,
+      "brier": 0.8008608488389638,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "shuffle95",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.34228138746535075,
+      "balanced_accuracy": 0.3766336398224955,
+      "macro_f1": 0.29450199714539554,
+      "nll": 1.6267008404221734,
+      "brier": 0.7411814737136383,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "shuffle95",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.384103120080552,
+      "balanced_accuracy": 0.41964332493162715,
+      "macro_f1": 0.3768647775987555,
+      "nll": 1.7503888703767005,
+      "brier": 0.816681038898928,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "shuffle95",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.3545430217547649,
+      "balanced_accuracy": 0.3558446012825023,
+      "macro_f1": 0.33055002751022394,
+      "nll": 1.7462031093820167,
+      "brier": 0.8045959087084791,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "shuffle95",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.1286313747524869,
+      "balanced_accuracy": 0.17783517303664922,
+      "macro_f1": 0.09721907651250665,
+      "nll": 1.9156081654923927,
+      "brier": 0.8751589247692878,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "95",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.560912108811439,
+      "balanced_accuracy": 0.5526276191751072,
+      "macro_f1": 0.5077913556487703,
+      "nll": 0.9863896904596355,
+      "brier": 0.5867188319939914,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "95",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.5124783375747451,
+      "balanced_accuracy": 0.44037179783789976,
+      "macro_f1": 0.384057592682012,
+      "nll": 0.8724442572038326,
+      "brier": 0.5071315898015525,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "95",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.7368997621686885,
+      "balanced_accuracy": 0.6619589034419636,
+      "macro_f1": 0.6533688343127423,
+      "nll": 1.0718693564329587,
+      "brier": 0.6484092283988931,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "95",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5588847891466118,
+      "balanced_accuracy": 0.542513677987491,
+      "macro_f1": 0.5049798954049488,
+      "nll": 1.012690302988171,
+      "brier": 0.6026787856930906,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "95",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.4062857607103599,
+      "balanced_accuracy": 0.46417553554125407,
+      "macro_f1": 0.39368222794142443,
+      "nll": 1.0702104367482668,
+      "brier": 0.6471361490741244,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "99",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5526153348864938,
+      "balanced_accuracy": 0.5762472308672972,
+      "macro_f1": 0.5268537880225904,
+      "nll": 0.9643940553228517,
+      "brier": 0.5732603539403249,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "99",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.5124783375747451,
+      "balanced_accuracy": 0.44037179783789976,
+      "macro_f1": 0.384057592682012,
+      "nll": 0.8724442572038326,
+      "brier": 0.5071315898015525,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "99",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.7368997621686885,
+      "balanced_accuracy": 0.6619589034419636,
+      "macro_f1": 0.6533688343127423,
+      "nll": 1.0718693564329587,
+      "brier": 0.6484092283988931,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "99",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.6232096876505239,
+      "balanced_accuracy": 0.6046273032077458,
+      "macro_f1": 0.575264560291603,
+      "nll": 0.965691788081425,
+      "brier": 0.5726681159788084,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "99",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.4062857607103599,
+      "balanced_accuracy": 0.46417553554125407,
+      "macro_f1": 0.39368222794142443,
+      "nll": 1.0702104367482668,
+      "brier": 0.6471361490741244,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "995",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.6026352264428173,
+      "balanced_accuracy": 0.5912599956990169,
+      "macro_f1": 0.5498995060249848,
+      "nll": 0.9530071978916843,
+      "brier": 0.5656442034590841,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "995",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.5124783375747451,
+      "balanced_accuracy": 0.44037179783789976,
+      "macro_f1": 0.384057592682012,
+      "nll": 0.8724442572038326,
+      "brier": 0.5071315898015525,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "995",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.7368997621686885,
+      "balanced_accuracy": 0.6619589034419636,
+      "macro_f1": 0.6533688343127423,
+      "nll": 1.0718693564329587,
+      "brier": 0.6484092283988931,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "995",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.6428408901008861,
+      "balanced_accuracy": 0.6140990295504437,
+      "macro_f1": 0.5827341429860738,
+      "nll": 0.9693065825075736,
+      "brier": 0.5759702616435022,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "995",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.4062857607103599,
+      "balanced_accuracy": 0.46417553554125407,
+      "macro_f1": 0.39368222794142443,
+      "nll": 1.0702104367482668,
+      "brier": 0.6471361490741244,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "none",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5609113860077936,
+      "balanced_accuracy": 0.5610085377790579,
+      "macro_f1": 0.5104755854469826,
+      "nll": 0.9653359801422114,
+      "brier": 0.5751997322392188,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "none",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.5124783375747451,
+      "balanced_accuracy": 0.44037179783789976,
+      "macro_f1": 0.384057592682012,
+      "nll": 0.8724442572038326,
+      "brier": 0.5071315898015525,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "none",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.7368997621686885,
+      "balanced_accuracy": 0.6619589034419636,
+      "macro_f1": 0.6533688343127423,
+      "nll": 1.0718693564329587,
+      "brier": 0.6484092283988931,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "none",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.4062857607103599,
+      "balanced_accuracy": 0.46417553554125407,
+      "macro_f1": 0.39368222794142443,
+      "nll": 1.0702104367482668,
+      "brier": 0.6471361490741244,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "none",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.4062857607103599,
+      "balanced_accuracy": 0.46417553554125407,
+      "macro_f1": 0.39368222794142443,
+      "nll": 1.0702104367482668,
+      "brier": 0.6471361490741244,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "shuffle95",
+      "arm": "fisf_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5398364555559604,
+      "balanced_accuracy": 0.5458255341568067,
+      "macro_f1": 0.5000658467276451,
+      "nll": 0.9862925003464481,
+      "brier": 0.5870811274703583,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "shuffle95",
+      "arm": "lp_harmonic",
+      "n_records": 3,
+      "accuracy": 0.5124783375747451,
+      "balanced_accuracy": 0.44037179783789976,
+      "macro_f1": 0.384057592682012,
+      "nll": 0.8724442572038326,
+      "brier": 0.5071315898015525,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "shuffle95",
+      "arm": "lp_restart",
+      "n_records": 3,
+      "accuracy": 0.7368997621686885,
+      "balanced_accuracy": 0.6619589034419636,
+      "macro_f1": 0.6533688343127423,
+      "nll": 1.0718693564329587,
+      "brier": 0.6484092283988931,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "shuffle95",
+      "arm": "pcfi_public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.5422037820556188,
+      "balanced_accuracy": 0.5504300313288164,
+      "macro_f1": 0.5002041894524213,
+      "nll": 1.0147994892533303,
+      "brier": 0.6037688837658141,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    },
+    {
+      "graph": "PubMed",
+      "mode": "shuffle95",
+      "arm": "public_graphpfn",
+      "n_records": 3,
+      "accuracy": 0.4062857607103599,
+      "balanced_accuracy": 0.46417553554125407,
+      "macro_f1": 0.39368222794142443,
+      "nll": 1.0702104367482668,
+      "brier": 0.6471361490741244,
+      "scope": "fixed pretrained/reference model,3 context repetitions; different preprocessing/budget"
+    }
+  ],
+  "support_0_1_2plus": {
+    "node95": {
+      "2": 96
+    },
+    "node995": {
+      "2": 49,
+      "0": 22,
+      "1": 25
+    }
+  },
+  "support_metrics": [
+    {
+      "source_bucket": "0",
+      "arm": "observed",
+      "graph_rate_cases": 22,
+      "scope": "descriptive case-weighted within source bucket; not primary graph-weighted estimator",
+      "accuracy": 0.48011363636363635,
+      "balanced_accuracy": 0.43629669993306364,
+      "macro_f1": 0.3829945361663811,
+      "nll": 1.008797256350205,
+      "brier": 0.6146456656327276
+    },
+    {
+      "source_bucket": "0",
+      "arm": "mask",
+      "graph_rate_cases": 22,
+      "scope": "descriptive case-weighted within source bucket; not primary graph-weighted estimator",
+      "accuracy": 0.4744318181818182,
+      "balanced_accuracy": 0.4223197257288166,
+      "macro_f1": 0.3780972128181008,
+      "nll": 1.0085014022765626,
+      "brier": 0.6145320865696973
+    },
+    {
+      "source_bucket": "0",
+      "arm": "pcfi",
+      "graph_rate_cases": 22,
+      "scope": "descriptive case-weighted within source bucket; not primary graph-weighted estimator",
+      "accuracy": 0.4753787878787879,
+      "balanced_accuracy": 0.4227788625515898,
+      "macro_f1": 0.37866030713119514,
+      "nll": 1.0085053858843214,
+      "brier": 0.6145391736273877
+    },
+    {
+      "source_bucket": "1",
+      "arm": "observed",
+      "graph_rate_cases": 25,
+      "scope": "descriptive case-weighted within source bucket; not primary graph-weighted estimator",
+      "accuracy": 0.4658333333333333,
+      "balanced_accuracy": 0.470843721093721,
+      "macro_f1": 0.4103608459919089,
+      "nll": 1.0750019922488556,
+      "brier": 0.6353501870458835
+    },
+    {
+      "source_bucket": "1",
+      "arm": "mask",
+      "graph_rate_cases": 25,
+      "scope": "descriptive case-weighted within source bucket; not primary graph-weighted estimator",
+      "accuracy": 0.45666666666666667,
+      "balanced_accuracy": 0.47091679616679605,
+      "macro_f1": 0.39756394236425197,
+      "nll": 1.0762762947356537,
+      "brier": 0.6361877423377278
+    },
+    {
+      "source_bucket": "1",
+      "arm": "pcfi",
+      "graph_rate_cases": 25,
+      "scope": "descriptive case-weighted within source bucket; not primary graph-weighted estimator",
+      "accuracy": 0.45666666666666667,
+      "balanced_accuracy": 0.47091679616679605,
+      "macro_f1": 0.39756394236425197,
+      "nll": 1.076267176672335,
+      "brier": 0.6361867338202479
+    },
+    {
+      "source_bucket": "2plus",
+      "arm": "observed",
+      "graph_rate_cases": 145,
+      "scope": "descriptive case-weighted within source bucket; not primary graph-weighted estimator",
+      "accuracy": 0.4857758620689655,
+      "balanced_accuracy": 0.474952852064921,
+      "macro_f1": 0.4244251663017241,
+      "nll": 1.0141011004698395,
+      "brier": 0.6095587702241924
+    },
+    {
+      "source_bucket": "2plus",
+      "arm": "mask",
+      "graph_rate_cases": 145,
+      "scope": "descriptive case-weighted within source bucket; not primary graph-weighted estimator",
+      "accuracy": 0.48261494252873566,
+      "balanced_accuracy": 0.47100625375050664,
+      "macro_f1": 0.41766502760512336,
+      "nll": 1.016800425662502,
+      "brier": 0.6115482775687241
+    },
+    {
+      "source_bucket": "2plus",
+      "arm": "pcfi",
+      "graph_rate_cases": 145,
+      "scope": "descriptive case-weighted within source bucket; not primary graph-weighted estimator",
+      "accuracy": 0.48247126436781607,
+      "balanced_accuracy": 0.4710349893826905,
+      "macro_f1": 0.4178857755784424,
+      "nll": 1.0167973603269758,
+      "brier": 0.6115569474738362
+    }
+  ],
+  "utility": {
+    "planned_disjoint_graphs": 48,
+    "eligible_graphs": 48,
+    "eligible_cases": 68,
+    "rates_by_base": {
+      "final_0001": [
+        "node95"
+      ],
+      "final_0003": [
+        "node95",
+        "node995"
+      ],
+      "final_0005": [
+        "node95"
+      ],
+      "final_0007": [
+        "node95",
+        "node995"
+      ],
+      "final_0009": [
+        "node95"
+      ],
+      "final_0011": [
+        "node95"
+      ],
+      "final_0013": [
+        "node95"
+      ],
+      "final_0015": [
+        "node95"
+      ],
+      "final_0017": [
+        "node95",
+        "node995"
+      ],
+      "final_0019": [
+        "node95"
+      ],
+      "final_0021": [
+        "node95"
+      ],
+      "final_0023": [
+        "node95"
+      ],
+      "final_0025": [
+        "node95"
+      ],
+      "final_0027": [
+        "node95"
+      ],
+      "final_0029": [
+        "node95",
+        "node995"
+      ],
+      "final_0031": [
+        "node95",
+        "node995"
+      ],
+      "final_0033": [
+        "node95"
+      ],
+      "final_0035": [
+        "node95"
+      ],
+      "final_0037": [
+        "node95"
+      ],
+      "final_0039": [
+        "node95"
+      ],
+      "final_0041": [
+        "node95",
+        "node995"
+      ],
+      "final_0043": [
+        "node95",
+        "node995"
+      ],
+      "final_0045": [
+        "node95",
+        "node995"
+      ],
+      "final_0047": [
+        "node95"
+      ],
+      "final_0049": [
+        "node95"
+      ],
+      "final_0051": [
+        "node95",
+        "node995"
+      ],
+      "final_0053": [
+        "node95",
+        "node995"
+      ],
+      "final_0055": [
+        "node95",
+        "node995"
+      ],
+      "final_0057": [
+        "node95"
+      ],
+      "final_0059": [
+        "node95"
+      ],
+      "final_0061": [
+        "node95",
+        "node995"
+      ],
+      "final_0063": [
+        "node95"
+      ],
+      "final_0065": [
+        "node95"
+      ],
+      "final_0067": [
+        "node95"
+      ],
+      "final_0069": [
+        "node95",
+        "node995"
+      ],
+      "final_0071": [
+        "node95",
+        "node995"
+      ],
+      "final_0073": [
+        "node95"
+      ],
+      "final_0075": [
+        "node95"
+      ],
+      "final_0077": [
+        "node95",
+        "node995"
+      ],
+      "final_0079": [
+        "node95"
+      ],
+      "final_0081": [
+        "node95",
+        "node995"
+      ],
+      "final_0083": [
+        "node95",
+        "node995"
+      ],
+      "final_0085": [
+        "node95",
+        "node995"
+      ],
+      "final_0087": [
+        "node95"
+      ],
+      "final_0089": [
+        "node95",
+        "node995"
+      ],
+      "final_0091": [
+        "node95"
+      ],
+      "final_0093": [
+        "node95",
+        "node995"
+      ],
+      "final_0095": [
+        "node95"
+      ]
+    }
+  },
+  "scope": "96 fresh synthetic base graphs; reused real development, 3 train seeds/3 context repetitions; no target updates"
+}

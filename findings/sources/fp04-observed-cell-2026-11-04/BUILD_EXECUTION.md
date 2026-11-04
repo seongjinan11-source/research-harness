@@ -1,0 +1,7 @@
+# FP04 preparation provenance
+
+Train/dev preparation began from the frozen `source_snapshots/synthetic_builder_v1.py`, copied byte-for-byte from data.py after its synthetic API was complete and while native-real preparation was being added separately. The snapshot is imported under a unique module name; only ROOT/WORK globals point to the actual workspace destinations. Generator parameters and code are not modified by the wrapper. The snapshot's actual source hash is therefore available for replay even if the completed data.py later contains additional real/reference functions.
+
+Training and performance scoring have not been used to choose any generator values. Before final generation/source lock, compare the synthetic helper ASTs between the snapshot and completed data.py. Both files are included in the lock. The training384/dev12 base draws and all masks are preserved with hashes, including source0/1 cases. PCFI uses CPU preprocessing, which may run while independent code checks are completed; it does not run a GPU training worker.
+
+The first independent check attempt failed because its bridge symmetry assertion incorrectly included context nodes with different class seed embeddings. REPAIR_CHECKS_001 records the preserved failure and the correction to unknown nodes. The model was not changed to satisfy that mistaken assertion. The later common bounded-value representation change was fixed prelock, before any learned performance observation, and applies to every arm while keeping raw PCFI caches intact.

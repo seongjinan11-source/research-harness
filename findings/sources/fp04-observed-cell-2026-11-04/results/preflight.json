@@ -1,0 +1,163 @@
+{
+  "status": "PASS",
+  "discarded": [
+    {
+      "arm": "observed",
+      "discarded_updates": 3,
+      "losses": [
+        0.6940220594406128,
+        0.6938154697418213,
+        0.6936120986938477
+      ],
+      "parameters": 19748,
+      "final": "e3e1a18c88078a36a6f7ea3f3aba801686af0c085c43f9b7ed6ec539d648e8fb"
+    },
+    {
+      "arm": "mask",
+      "discarded_updates": 3,
+      "losses": [
+        0.6940276026725769,
+        0.6938173174858093,
+        0.6936103701591492
+      ],
+      "parameters": 19748,
+      "final": "390660114bfba063f4541918dfee2706f98c75dc0077b06849ecfbdfa2c7bf24"
+    },
+    {
+      "arm": "pcfi",
+      "discarded_updates": 3,
+      "losses": [
+        0.6940275430679321,
+        0.6938170790672302,
+        0.6936098337173462
+      ],
+      "parameters": 19748,
+      "final": "3b18f47180a5f3b89875d5cce981188eced37c27cca1c99294abac50ce785eee"
+    }
+  ],
+  "same_initialization": true,
+  "resource": [
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "observed",
+      "nodes": 3327,
+      "features": 3703,
+      "seconds": 0.20511569967493415,
+      "peak_mib": 263.81640625,
+      "input_path": "bank/real/CiteSeer_r0_95_standard.npz",
+      "input_sha256": "47ce72d4e9b0d482893e10a5b4c0cf00b4d57dd31ae8a5f3927219d8efd4fae0",
+      "scope": "one cold native forward, no query metrics inspected"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "mask",
+      "nodes": 3327,
+      "features": 3703,
+      "seconds": 0.1342659997753799,
+      "peak_mib": 569.67626953125,
+      "input_path": "bank/real/CiteSeer_r0_95_standard.npz",
+      "input_sha256": "47ce72d4e9b0d482893e10a5b4c0cf00b4d57dd31ae8a5f3927219d8efd4fae0",
+      "scope": "one cold native forward, no query metrics inspected"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "95",
+      "arm": "pcfi",
+      "nodes": 3327,
+      "features": 3703,
+      "seconds": 0.14460569992661476,
+      "peak_mib": 616.67333984375,
+      "input_path": "bank/real/CiteSeer_r0_95_standard.npz",
+      "input_sha256": "47ce72d4e9b0d482893e10a5b4c0cf00b4d57dd31ae8a5f3927219d8efd4fae0",
+      "scope": "one cold native forward, no query metrics inspected"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "observed",
+      "nodes": 3327,
+      "features": 3703,
+      "seconds": 0.18331809993833303,
+      "peak_mib": 263.814453125,
+      "input_path": "bank/real/CiteSeer_r0_995_standard.npz",
+      "input_sha256": "dc116b2219766ad7cc631ae7061607a92f3a45e8a5d8e27c1a7f550ce198f22c",
+      "scope": "one cold native forward, no query metrics inspected"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "mask",
+      "nodes": 3327,
+      "features": 3703,
+      "seconds": 0.12621770007535815,
+      "peak_mib": 569.67626953125,
+      "input_path": "bank/real/CiteSeer_r0_995_standard.npz",
+      "input_sha256": "dc116b2219766ad7cc631ae7061607a92f3a45e8a5d8e27c1a7f550ce198f22c",
+      "scope": "one cold native forward, no query metrics inspected"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "995",
+      "arm": "pcfi",
+      "nodes": 3327,
+      "features": 3703,
+      "seconds": 0.12197380000725389,
+      "peak_mib": 616.67333984375,
+      "input_path": "bank/real/CiteSeer_r0_995_standard.npz",
+      "input_sha256": "dc116b2219766ad7cc631ae7061607a92f3a45e8a5d8e27c1a7f550ce198f22c",
+      "scope": "one cold native forward, no query metrics inspected"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "observed",
+      "nodes": 3327,
+      "features": 3703,
+      "seconds": 0.15429920004680753,
+      "peak_mib": 263.814453125,
+      "input_path": "bank/real/CiteSeer_r0_none_standard.npz",
+      "input_sha256": "b8f04727d8f1483acfc5ce93207b57de0da8480d3e84bf34a6ec463ffb672a04",
+      "scope": "one cold native forward, no query metrics inspected"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "mask",
+      "nodes": 3327,
+      "features": 3703,
+      "seconds": 0.15247910004109144,
+      "peak_mib": 569.67626953125,
+      "input_path": "bank/real/CiteSeer_r0_none_standard.npz",
+      "input_sha256": "b8f04727d8f1483acfc5ce93207b57de0da8480d3e84bf34a6ec463ffb672a04",
+      "scope": "one cold native forward, no query metrics inspected"
+    },
+    {
+      "graph": "CiteSeer",
+      "mode": "none",
+      "arm": "pcfi",
+      "nodes": 3327,
+      "features": 3703,
+      "seconds": 0.12689720001071692,
+      "peak_mib": 616.67333984375,
+      "input_path": "bank/real/CiteSeer_r0_none_standard.npz",
+      "input_sha256": "b8f04727d8f1483acfc5ce93207b57de0da8480d3e84bf34a6ec463ffb672a04",
+      "scope": "one cold native forward, no query metrics inspected"
+    }
+  ],
+  "sources": {
+    "fisf_graphpfn/imputation.py": "4795646fe09ca695726e0b001c451be46cb07c33163b48edb7527b78b343b522",
+    "observed_cell_cycle/analyze.py": "92dbd58ca73a7272f07d4162b4f0b764fab06ca4c2734966ed7a06626b79fecb",
+    "observed_cell_cycle/checks.py": "119b224eb3a82150453b817dc69632d9319bbcf8b0d81517cc0a7648780b639c",
+    "observed_cell_cycle/data.py": "36f4967b3053c00d5647c764695f8da7dcf8ed132b6c282b456c9a67b3fa5b74",
+    "observed_cell_cycle/model.py": "112cfdbd73c115c9bccbb64fe99ee73897dd8c266a0c0b1ff5e786c3f58854ac",
+    "observed_cell_cycle/PLAN_v2.md": "ceee05eb22afd4f9ad6c8e1684ed16a8068ae0130a7336c5e9a61d1c856233d8",
+    "observed_cell_cycle/protocol.json": "1f302d384aefae7036dfe001442c5f2822a1ec88cea1dd7a20e7eb4684a72665",
+    "observed_cell_cycle/run.py": "34b418f33ad7658ea60c8ea3fa291faeb98b565387b0ad1103ad7b7a228894ec",
+    "observed_cell_cycle/source_snapshots/full_builder_v2.py": "36f4967b3053c00d5647c764695f8da7dcf8ed132b6c282b456c9a67b3fa5b74",
+    "observed_cell_cycle/source_snapshots/synthetic_builder_v1.py": "0a9f750365893b1dc50eff2e490c86d483b30984f1bd0086b46acc30e8295984",
+    "observed_cell_cycle/util.py": "dcce80db8c79504bb0f02a9c8ee614da42988e7da47dedf07143e3c3a03ab197"
+  },
+  "discarded_total_updates": 9
+}

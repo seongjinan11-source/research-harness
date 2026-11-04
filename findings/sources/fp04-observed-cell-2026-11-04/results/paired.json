@@ -1,0 +1,50 @@
+{
+  "observed_minus_mask": {
+    "n_graphs": 96,
+    "n_strata": 12,
+    "mean": 0.004231770833333332,
+    "ci": [
+      -0.0029296874999999974,
+      0.01134033203124998
+    ],
+    "confidence": 0.975,
+    "unit": "base graph; fixed seeds/settings averaged first; resample within strata",
+    "verdict": "FAIL"
+  },
+  "observed_minus_pcfi": {
+    "n_graphs": 96,
+    "n_strata": 12,
+    "mean": 0.004231770833333333,
+    "ci": [
+      -0.002712673611111111,
+      0.011176215277777778
+    ],
+    "confidence": 0.975,
+    "unit": "base graph; fixed seeds/settings averaged first; resample within strata",
+    "verdict": "FAIL"
+  },
+  "observed_minus_none": {
+    "n_graphs": 48,
+    "n_strata": 12,
+    "mean": 0.0004340277777777777,
+    "ci": [
+      -0.006293402777777777,
+      0.006293402777777778
+    ],
+    "confidence": 0.975,
+    "unit": "base graph; fixed seeds/settings averaged first; resample within strata",
+    "verdict": "FAIL"
+  },
+  "observed_minus_shuffle": {
+    "n_graphs": 48,
+    "n_strata": 12,
+    "mean": -0.0032552083333333335,
+    "ci": [
+      -0.008246527777777778,
+      0.0008680555555555555
+    ],
+    "confidence": 0.975,
+    "unit": "base graph; fixed seeds/settings averaged first; resample within strata",
+    "verdict": "FAIL"
+  }
+}

@@ -1,0 +1,45 @@
+id: MA-PFN
+title: "Missingness-Aware Prior-Data Fitted Network for Irregular Clinical Time-Series"
+authors: "Hadi Mehdizavareh, Gabriele Santangelo, Giovanna Nicora, Pietro Bosoni, Simon Lebech Cichosz, Arianna Dagliati, Arijit Khan, Riccardo Bellazzi"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2611.01851v1
+citation:
+  type: misc
+  title: "Missingness-Aware Prior-Data Fitted Network for Irregular Clinical Time-Series"
+  authors: ["Hadi Mehdizavareh", "Gabriele Santangelo", "Giovanna Nicora", "Pietro Bosoni", "Simon Lebech Cichosz", "Arianna Dagliati", "Arijit Khan", "Riccardo Bellazzi"]
+  year: 2026
+  arxiv: "2611.01851"
+  url: https://arxiv.org/abs/2611.01851v1
+  verified_from: [https://arxiv.org/abs/2611.01851v1, https://arxiv.org/html/2611.01851v1]
+areas: [pfn, tsfm, mvts]
+problem: "의료 시계열에서는 측정 시점과 결측 패턴 자체가 환자 상태 및 진료 관행과 연결되며, 다른 병원으로 전이할 때 그 관계가 바뀔 수 있다."
+core_idea: "Source MIMIC-III에서 검사값과 관측 mask의 joint diffusion prior를 학습한다. 생성한 trajectory를 context-query 과제로 변환해 Gaussian NLL로 PFN predictor를 학습하고, 실제 새 admission에서는 diffusion 없이 한 번의 forward로 요청된 검사값을 예측한다."
+key_assumptions:
+  - "Source와 target에서 동일한13개 검사 항목을 사용하고, source에서 추정한 변환과 정규화를 적용한다."
+  - "생성 prior의 합성 과제가 실제 값과 관측 과정의 예측에 충분히 맞아야 한다. 무가정 MNAR 식별을 보장하는 방법은 아니다."
+strengths:
+  - text: "값과 mask의 생성 과제를 함께 학습하는 단계와 실제 조건부 예측 단계를 분리하며, target에서 재학습이나 diffusion sampling을 요구하지 않는다."
+    tags: [observation-mask, pretraining-data, amortized-inference, inference-cost]
+  - text: "동일한 context-query predictor로 imputation과 forecasting을 다루고, MIMIC-III 내부 및 eICU 외부 평가를 보고한다."
+    tags: [task-coverage, distribution-shift, uncertainty]
+limitations:
+  - text: "13개 공통 검사 변수와 하나의 외부 데이터베이스에 한정되어, 다른 변수 공간이나 더 넓은 의료기관 분포의 일반화는 미확인이다."
+    tags: [feature-heterogeneity, distribution-shift, eval-protocol]
+    source: self
+  - text: "자연적으로 결측된 값에는 정답이 없어 원래 관측된 값을 가리는 방식으로 imputation을 평가한다. 실제 자연 결측값에 대한 정확성을 직접 확인한 것은 아니다."
+    tags: [observation-mask, eval-protocol]
+    source: self
+  - text: "[analyst] Graph node classification이나 피처와 label context가 서로 다른 노드에 있는 조건을 실험한 연구가 아니다."
+    tags: [graph-structure-use, zero-shot-gap]
+    source: analyst
+builds_on: [TabPFN, DiffusionModels]
+compared_against: [GRU-D, GraFITi, CSDI, APN, TabPFN]
+open_questions:
+  - "관측 과정이 이동할 때 source에서 배운 값-mask coupling의 이득이 언제 유지되는가?"
+  - "가변 column 의미와 그래프 관계가 있는 입력에서도 학습한 task prior의 이득을 얻을 수 있는가?"
+hooks:
+  - "FP04의 직접 관측 입력 학습과 관련되지만, diffusion prior나 mask-aware PFN 자체를 새 기여라고 부를 근거는 아니다. 기존 failure의 해결 증거로 자동 해석하지 않는다."
+notes: "2026-11-01 제출된 v1 preprint의 공식 초록과 본문 §4, §5 및 Appendix F를 확인했다. 분류 전 전체 행렬을 completion하는 모델이 아니라 query 값 예측 자체를 amortize한다. 저자의 실험 보고와 우리의 독립 재현을 구분한다."
+added: 2026-11-04

@@ -1,0 +1,21 @@
+{
+  "cycle": "FP04",
+  "version": 2,
+  "arms": ["observed", "mask", "pcfi"],
+  "seeds": [11, 12, 13],
+  "model": {"width": 32, "rank": 4, "rounds": 4, "residual": 0.25, "feature_chunk": 256, "class_chunk": 1, "dtype": "float32", "dynamic_global_pool": false, "represented_value_clip": 10},
+  "train": {"graphs": 384, "nodes": [128, 256, 512], "features": [4, 8, 16], "classes": [2, 3, 4], "updates": 768, "batch": 4, "learning_rate": 0.0003, "warmup": 32, "weight_decay": 0.01, "gradient_clip": 1.0, "start_seed": 47041000, "schedule_seed": 47049000},
+  "dev": {"graphs": 12, "start_seed": 47051000, "smoke_updates": 3},
+  "final": {"graphs": 96, "shapes": [[256, 8], [384, 12]], "classes": [2, 3, 4], "families": ["centroid", "field"], "repetitions": 8, "start_seed": 47061000},
+  "context_per_class": [1, 2, 4],
+  "queries": 16,
+  "settings": ["full", "node90", "node95", "node995", "cell95", "cell995", "none"],
+  "primary_settings": ["node95", "node995"],
+  "primary_interventions": ["standard", "none", "shuffle"],
+  "statistics": {"bootstrap": 5000, "seed": 47069000, "ci": 0.975, "unit": "base graph; average fixed train seeds and declared settings before resampling", "utility": "disjoint, source>=2 cases averaged within graph; report eligible counts; empty=undefined"},
+  "pcfi": {"iterations": 100, "alpha": 0.9, "implementation": "fisf_graphpfn/imputation.py", "observed_clamp": true, "rng_isolation": true},
+  "real": {"graphs": ["Cora", "CiteSeer", "PubMed"], "repetitions": [0, 1, 2], "modes": ["95", "99", "995", "none", "shuffle95"], "native_features": true, "reference_roots": ["factor_external_benchmark", "factor_homophily_benchmark"], "scope": "reused development graphs; no target weight updates"},
+  "generator": "Exact PLAN_v2 sections; task-shared rule; no rejection; Bernoulli nested availability excludes query and optionally context; observed-only RMS scale; independent train/dev/final seeds",
+  "gates": {"primary_observed_minus_mask": "accuracy CI lower>0", "primary_observed_minus_pcfi": "accuracy CI lower>0", "utility_observed_minus_none": "accuracy CI lower>0", "utility_observed_minus_shuffle": "accuracy CI lower>0"},
+  "execution": {"device": "cuda", "workers": 1, "target_optimizer_updates": 0, "last_checkpoint": true, "total_fits": 9, "total_updates": 6912, "total_task_exposures": 27648, "tf32": false, "post_gate_tuning": false}
+}

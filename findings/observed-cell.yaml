@@ -1,0 +1,61 @@
+project: FP04 fully trainable observed-cell PFN
+date: '2026-11-04'
+source: findings/sources/fp04-observed-cell-2026-11-04/DECISION_KO.md
+setting: '무작위 초기화한 19,748-parameter/rank4/4-round predictor의 observed, mask, PCFI 세 arm을 각각 3 seed로 학습했다. 총 9 fits/6,912 updates/27,648 presentations이며 target update는 0회다. 두 합성 family의 새 96 base graphs에서 95/99.5% whole-node missing을 평가했다. 모든 query는 항상 feature-free다. Cora/CiteSeer 전체와 PubMed 2,000-node induced graph는 재사용한 실제 개발 평가다.'
+related: [GraphPFN, MA-PFN]
+entries:
+  - id: FP04-F01
+    kind: failure
+    claim: '불완전 관측 cell을 직접 처리하도록 모든 encoder와 graph/column 추론을 학습하면, 동일 예산의 Mask 및 PCFI 입력보다 높고 실제 관측값도 유용하게 활용하는 PFN이 된다.'
+    observation: 'Primary accuracy는 Observed 48.253%, Mask/PCFI 각각 47.830%다. Observed 차이는 두 arm 대비 모두 +0.423%p지만 사전 97.5% CI는 각각 [-0.293,+1.134], [-0.271,+1.118]%p다. 분리된 context/source의 utility 48 graphs/68 cases에서 none 대비 +0.043%p, shuffle 대비 -0.326%p이며 두 CI도 0을 포함한다. 사전 네 gate 모두 FAIL이다. 8,181개 새 예측과 225개 외부 기준선의 감사는 PASS다.'
+    verdict: '현재 구조와 잠근 예산의 확대를 중단한다. 같은 평가 bank에서 rank/round/loss/temperature 변경으로 구제하지 않는다.'
+    failure_reason: '고정된 비교에서 확실한 정확도 우위와 관측값의 유익한 추가 효과를 입증하지 못했다. 작은 value basis와 평균 압축, 짧은 전달 범위, prior mismatch, 학습 support 및 최적화 예산의 기여는 분리하지 못했다.'
+    reason_status: unknown
+    excluded_explanations:
+      - '모든 19,748 parameters가 trainable이며, 같은 seed의 세 arm은 초기화와 task schedule이 일치한다. Frozen public checkpoint의 입력만 바꾼 실험이 아니다.'
+      - '독립 loop/NumPy oracle, forward/gradient, sparse-dense 및 chunk/permutation/poison/self-label 검사와 저장 산출물 전수 재채점을 통과했다. 새 구현 결함은 발견하지 못했다.'
+      - 'Primary에 source0/1을 포함했고, utility는 예정된 48 disjoint graphs가 모두 남았다. Empty subset을 FAIL로 오인한 결과가 아니다.'
+    closed_scope: 'Width32/rank4/shared4round, 두 합성 family, 768 updates/fit 및 현재 native real 개발 패널에서 성공한 missing-feature 분류법이라는 주장.'
+    not_closed: 'Observed-set PFN 전체, 자유로운 sparse Transformer attention, 더 일반적인 graph prior, 이전 CE Factor의 과거 성과나 PCFI 전체를 기각하지 않는다.'
+    reopen_when: '현재 없는 feature utility가 생길 구체적인 추론 또는 훈련 support 변경을 제시하고, 쉬운 관측-query 조건의 학습 가능성과 feature-free 전이를 분리해 독립 bank에서 검증할 수 있을 때.'
+    comparison_floor: '같은 초기화/일정의 Mask 및 실제 PCFI 입력 arm, 강한 LP, 공개 GraphPFN, PCFI/FISF+공개 PFN을 유지하고 none/shuffle를 포함한다. 외부 모델의 전처리·예산 차이를 명시한다.'
+    recheck: '새 cycle에서 세 관점 검토와 수치 검사를 먼저 하고 새 평가 bank를 잠근다. 현재 두 합성 family/실제 세 graph를 보고 설계한 뒤 이를 독립 검증으로 다시 부르지 않는다.'
+    tags: [observation-mask, graph-structure-use, prior-mismatch, eval-protocol]
+    keywords: [FP04, observed cell, native feature, end to end PFN, feature utility, absent query, fixed budget]
+    reopen_tags: [observation-mask, graph-structure-use, pretraining-data]
+    reopen_keywords: [observed query trainability, mixed query availability, feature-free transfer, nonlocal evidence]
+    source_refs:
+      - findings/sources/fp04-observed-cell-2026-11-04/DECISION_KO.md
+      - findings/sources/fp04-observed-cell-2026-11-04/results/paired.json
+      - findings/sources/fp04-observed-cell-2026-11-04/results/audit.json
+  - id: FP04-P01
+    kind: preserved
+    claim: '관측-cell에서 graph와 공유 feature-column을 거치는 계산을 실제로 함께 학습하고 native 전체 column으로 실행했다.'
+    observation: '독립 balanced bridge에서 context→graph→source→column→다른 source→query의 class-contrast derivative가 존재하며, column 경로 제거 시 0이다. 실제 Cora/CiteSeer/PubMed의 95% accuracy는 Observed 52.876/29.977/64.002%로 자체 Mask/PCFI arm보다 높았다. 그러나 none은 52.923/30.119/64.264%여서 피처 제거 시 성능이 유지된다. 공개 PCFI보다 PubMed 95%에서 높은 점 추정과 전체 primary의 작은 양의 차이는 보존한다.'
+    do_not_claim: '경로 구현이나 arm 우위가 실제 feature semantics의 학습을 증명하지 않는다. LP 대비 우위, 범용 missing-feature PFN 성공, 완전한 sparse attention 또는 Bayesian posterior를 학습한 결과가 아니다. Target update는 없지만 실제 graph는 재사용 개발 데이터다.'
+    tags: [graph-structure-use, feature-heterogeneity, eval-protocol]
+    keywords: [verified bridge, native columns, trained scalar basis, no frozen encoder, graph only contribution]
+    source_refs:
+      - findings/sources/fp04-observed-cell-2026-11-04/results/checks.json
+      - findings/sources/fp04-observed-cell-2026-11-04/results/REPORT_KO.md
+      - findings/sources/fp04-observed-cell-2026-11-04/RESULT_METHOD.md
+  - id: FP04-L01
+    kind: lesson
+    claim: '경로의 존재, 확률적 class contrast, argmax 정확도 및 feature utility를 각각 검증해야 한다. Full이라는 mask 이름도 실제 query 관측 상태를 확인해야 한다.'
+    observation: '현재 full은 nonquery-visible이고 query16은 계속 missing이다. 완전 M=1 수치 parity는 완전-query 학습 검사가 아니다. Observed-none에서는 column 입력이 사라지고 4-round보다 먼 query는 균형 context 아래 수학적으로 class 대칭이다. 저장된 CiteSeer 95% 예측은 record별 top2 margin 중앙값의 9-record 평균이 약 6e-8이고 margin<1e-5 비율의 record 평균이 65.64%였다. 작은 확률 변화가 argmax를 바꾸므로 관측값 변화에 따른 accuracy 차이만으로 정보 활용을 단정할 수 없다.'
+    interpretation: '4-round 전달 범위와 query-observation support 부재는 확인된 모델/프로토콜 제한이다. 이들이 실패 전체를 일으켰다는 인과 설명은 미확정이다. FP32 반올림과 양립하는 동률을 새 버그로 확정하거나 사후 tie 규칙으로 성능 gate를 바꾸지 않는다.'
+    tags: [graph-structure-use, observation-mask, eval-protocol, uncertainty]
+    keywords: [receptive field, class symmetry, numerical near tie, feature utility, full nonquery, gradient versus usefulness]
+    source_refs:
+      - findings/sources/fp04-observed-cell-2026-11-04/RESULT_INFERENCE.md
+      - findings/sources/fp04-observed-cell-2026-11-04/RESULT_EXPERIMENTS.md
+      - findings/sources/fp04-observed-cell-2026-11-04/RESULT_METHOD.md
+  - id: FP04-U01
+    kind: untested
+    claim: '동일 encoder의 관측-query 학습 가능성을 먼저 확인하고, query 관측 유무가 섞인 훈련이 feature-free query로 유용한 feature 추론을 전이시키는지 검사한다.'
+    observation: '세 결과 리뷰 이후 남긴 다음 질문이다. 이번 주기에는 해당 학습이나 새 GPU 실행을 하지 않았다. 현재 실패의 확정 원인 또는 이미 성공한 새 방법으로 세지 않는다.'
+    tags: [pretraining-data, observation-mask, graph-structure-use, eval-protocol]
+    keywords: [complete query, trainability before transfer, curriculum, mixed availability, no new fit, unexecuted]
+    source_refs:
+      - findings/sources/fp04-observed-cell-2026-11-04/DECISION_KO.md
+      - findings/sources/fp04-observed-cell-2026-11-04/RESULT_METHOD.md
