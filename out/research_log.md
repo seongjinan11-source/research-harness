@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 44개 프로젝트 · 183개 기록 (실패·중단 53개, 보존 43개, 교훈 64개, 미실행 23개)
+총 45개 프로젝트 · 186개 기록 (실패·중단 54개, 보존 43개, 교훈 65개, 미실행 24개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -306,6 +306,35 @@ CSBMInference는 latent community와 Gaussian feature centroid에 대한 AMP–B
 이번 실행은12 nodes·binary classes·2 Gaussian features·2 relations다. Context1/2/4는 총 label 수이며 per-class가 아니다. 3/6 observed nodes는75/50% node missing이며99.5% 조건이 아니다. Variable feature count를 표현할 수 있는 코드여도 평가는2 features만 수행했다.
 
 - 원문: [findings/sources/disjoint-factor-2026-11-02/protocol.json](../findings/sources/disjoint-factor-2026-11-02/protocol.json); [findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md](../findings/sources/disjoint-factor-2026-11-02/REPORT_KO.md)
+
+## FP02 joint graph nuisance inference
+
+실험 조건: 기존 실제5graph rep0/seed11의 none 및95% 결측10episode를 재사용한 development다. 새 Poisson fixed/SBM update/DC update30예측과 기존70비교를 재채점했다. Frozen C_global 관측factor와24step추론을 공유하며 신경망학습 및 target optimizer는0회다.
+
+### FP02-F01 [실패·중단] 차수 propensity, 클래스 비율과 class-pair affinity를 동일 관측에서 갱신하면 기존 nonedge 손해를 복구하면서 CiteSeer 성능을 보존한다.
+
+None 다섯graph 평균 accuracy는 fixed47.226%,SBM42.150%,DC43.805%,oldfull55.691%,oldedge63.750%,LP restart66.319%다. Physics DC20.290% 대 oldfull48.551%/oldedge88.801%; CiteSeer DC35.090% 대 oldfull52.898%. DC와SBM 사전7개 조건 모두FAIL. DC95−none accuracy 평균+0.245%p로 피처 추가 효용도 확립하지 못했다. AuditPASS와 성능gate실패를 분리한다.
+
+- 판정: 현재 Poisson working score·초기화·3회Gamma갱신/24stepBP의 Stage1신경망학습 확대를 중단한다. 이 개발bank에서 damping/횟수/affinity를 바꾸어 구제하지 않는다.
+- 원인·병목 [원인 미상]: 같은 데이터의 반복중복 가산이나 기본 수치오류는 독립검사에서 발견되지 않았고, prior+current sufficient statistics 갱신도 실패했다. Physics의 큰 클래스 소실은 첫 nuisance갱신 전에 이미 발생하며 갱신으로 회복되지 않았다. Label=단일graph community 가정·초기화·loopy BP·Poisson misspecification의 고유 기여는 분리하지 못했다.
+- 닫은 범위: FP02 PLAN_v2와protocol의 고정10개development episode에 대한 현재3연산의 Stage1확대. 동일 최종결과를 본 뒤 graph마다 full/edge/DC를 골라 성공으로 보고하지 않는다.
+- 닫지 않은 것: 기존 Factor의 disjoint label-feature 연결, oldedge의 실측성능, 적절한 조건부graph prior, 다른학습된관측factor, homophily 적응 및 DCSBM 일반은 기각하지 않는다.
+- 재검토 조건: 현재의 graph-likelihood 또는 초기화/근사 중 어떤 연산을 바꾸는지 명확히 정의하고, 큰 클래스 분할을 피하면서 독립조건에서 기존oldedge와LP를 넘을 구체적 근거가 있을 때.
+- 기준선: 동일 관측/context/query의 oldfull,oldedge,Poisson fixed,SBM/DC 갱신,LP harmonic/restart,public PFN 및PCFI/FISF+PFN. Population·minority·NLL/Brier와피처제거 대조를 유지한다.
+- 최소 재검증: 별도cycle에서3독립리뷰와 수치검사 후 새training/final bank를 고정한다. 재사용실제5graph는development이며 노드bootstrap 또는 모델seed를 독립graph로 세지 않는다.
+- 원문: [findings/sources/fp02-nuisance-2026-11-04/PLAN_v2.md](../findings/sources/fp02-nuisance-2026-11-04/PLAN_v2.md); [findings/sources/fp02-nuisance-2026-11-04/results/REPORT_KO.md](../findings/sources/fp02-nuisance-2026-11-04/results/REPORT_KO.md); [findings/sources/fp02-nuisance-2026-11-04/results/summary.json](../findings/sources/fp02-nuisance-2026-11-04/results/summary.json); [findings/sources/fp02-nuisance-2026-11-04/results/audit.json](../findings/sources/fp02-nuisance-2026-11-04/results/audit.json); [findings/sources/fp02-nuisance-2026-11-04/DECISION_KO.md](../findings/sources/fp02-nuisance-2026-11-04/DECISION_KO.md)
+
+### FP02-L01 [교훈] Homophily와 nonedge 삭제의 효용은 같은 변수가 아니며 극소 context의 raw homophily를 참값처럼 사용하면 안 된다.
+
+Physics 개발부분graph의 사후 전체label homophily는0.9581710258이지만 oldfull48.551%에서oldedge88.801%로 개선된다. Context만 읽는 독립계산에서 Cora28labels/3edges(3same),CiteSeer24/0,PubMed12/1(0same),CS55/2(2same),Physics20/2(2same)다. 전체label homophily는 사후진단이며 모델입력이 아니다.
+
+- 원문: [findings/sources/fp02-nuisance-2026-11-04/context_support.py](../findings/sources/fp02-nuisance-2026-11-04/context_support.py); [findings/sources/fp02-nuisance-2026-11-04/results/context_support.json](../findings/sources/fp02-nuisance-2026-11-04/results/context_support.json); [findings/sources/fp02-nuisance-2026-11-04/RESULT_EXPERIMENTS.md](../findings/sources/fp02-nuisance-2026-11-04/RESULT_EXPERIMENTS.md); [findings/sources/fp02-nuisance-2026-11-04/RESULT_INFERENCE.md](../findings/sources/fp02-nuisance-2026-11-04/RESULT_INFERENCE.md)
+
+### FP02-U01 [미실행] Context에서 관계 compatibility를 추정하고 graph-conditioned label-field와 관측 feature factor의 공동 추론에 사용한다.
+
+제안만 했으며 미구현·미학습이다. Graph를 label partition에서 생성하는 likelihood 대신 기존 graph 위의 조건부 label field를 학습하는 후보이다. Context에서 edge 방향·강도를 추정할 때도 support·불확실성·class permutation과 pseudo-query의 self-label LOO 누출을 검사해야 한다.
+
+- 원문: [findings/sources/fp02-nuisance-2026-11-04/RESULT_METHOD.md](../findings/sources/fp02-nuisance-2026-11-04/RESULT_METHOD.md)
 
 ## FP01 projection-exposed centroid Factor
 

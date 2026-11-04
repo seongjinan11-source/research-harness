@@ -1,0 +1,20 @@
+{
+  "cycle": "FP02-Stage0",
+  "version": 2,
+  "plan": "PLAN_v2.md",
+  "role": "reused real development feasibility; no independent holdout claim",
+  "graphs": ["Cora", "CiteSeer", "PubMed", "CoauthorCS", "CoauthorPhysics"],
+  "seed": 11,
+  "repetition": 0,
+  "modes": ["none", "95"],
+  "arms": ["poisson_fixed", "sbm_update", "dc_update"],
+  "legacy_arms": ["old_full", "old_edge"],
+  "external_arms": ["lp_harmonic", "lp_restart", "public_graphpfn", "pcfi_public_graphpfn", "fisf_public_graphpfn"],
+  "expected": {"development_rows": 10, "new_predictions": 30, "reused_references": 70},
+  "feature": {"arm": "C_global", "seed": 11, "grid_points": 41, "coefficients": 3, "frozen": true, "likelihood": "literal Normal table using unchanged FP01 hyperparameters and normalized Gauss-Hermite masses"},
+  "operator": {"iterations": 24, "damping": 0.5, "block": 6, "nuisance_updates": 3, "nuisance_damping": 0.5, "affinity_shape": 5.0, "eta": 0.6, "theta_shape": 1.0, "theta_rate": 1.0, "population_alpha": 1.0, "population_unary": "Elogpi", "density_offset": "mean observed degree/(N-1)", "dtype": "float32"},
+  "execution": {"device": "cuda", "workers": 1, "optimizer_updates": 0, "target_gradient_updates": 0, "training_fits": 0, "git_snapshot": "once per run; descriptive metadata outside prediction identity", "resume": "verify exact identity/hash/arrays; partial NPZ-sidecar pairs are errors"},
+  "gate": {"mode": "none", "equal_graph_weight": true, "physics_gain_old_full": 0.20, "cs_gain_old_full": 0.05, "citeseer_accuracy_floor_old_full": -0.01, "citeseer_nll_ceiling_old_full": 0.05, "mean_balanced_accuracy_floor_old_full": 0.0, "mean_balanced_accuracy_floor_old_edge": 0.0, "mean_nll_ceiling_old_edge": 0.05, "primary_arm": "dc_update", "also_report": "sbm_update; cannot rescue failed dc_update gate"},
+  "statistics": {"metrics": ["accuracy", "balanced_accuracy", "macro_f1", "nll", "brier"], "probability_clip_for_scoring": 1e-8, "nll_units": "nats", "confidence_intervals": false, "feature_effect": "95-minus-none for each graph and equal-five-graph mean; joint nuisance inference effect, no alignment claim", "main_method_success": false},
+  "integrity": {"manifest": "bank/dev_manifest.json", "checks": "results/checks.json", "source_lock": "results/lock.json", "required_reviews": ["REVIEW_METHOD_v1.md", "REVIEW_INFERENCE_v1.md", "REVIEW_EXPERIMENTS_v1.md"], "historical_inputs_read_only": true, "query_own_features_missing": true, "homophilic_role_id": 2, "homophilic_tolerance": 1e-6, "bank": "references exact historical row files; no rewriting or copying bank arrays", "final_bank": false}
+}

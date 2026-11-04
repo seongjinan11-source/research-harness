@@ -1,0 +1,53 @@
+project: FP02 joint graph nuisance inference
+date: '2026-11-04'
+source: findings/sources/fp02-nuisance-2026-11-04/DECISION_KO.md
+setting: 기존 실제5graph rep0/seed11의 none 및95% 결측10episode를 재사용한 development다. 새 Poisson fixed/SBM update/DC update30예측과 기존70비교를 재채점했다. Frozen C_global 관측factor와24step추론을 공유하며 신경망학습 및 target optimizer는0회다.
+related: [GraphPFN, CSBMInference, SSGP, GGP]
+entries:
+  - id: FP02-F01
+    kind: failure
+    claim: 차수 propensity, 클래스 비율과 class-pair affinity를 동일 관측에서 갱신하면 기존 nonedge 손해를 복구하면서 CiteSeer 성능을 보존한다.
+    observation: "None 다섯graph 평균 accuracy는 fixed47.226%,SBM42.150%,DC43.805%,oldfull55.691%,oldedge63.750%,LP restart66.319%다. Physics DC20.290% 대 oldfull48.551%/oldedge88.801%; CiteSeer DC35.090% 대 oldfull52.898%. DC와SBM 사전7개 조건 모두FAIL. DC95−none accuracy 평균+0.245%p로 피처 추가 효용도 확립하지 못했다. AuditPASS와 성능gate실패를 분리한다."
+    verdict: 현재 Poisson working score·초기화·3회Gamma갱신/24stepBP의 Stage1신경망학습 확대를 중단한다. 이 개발bank에서 damping/횟수/affinity를 바꾸어 구제하지 않는다.
+    failure_reason: 같은 데이터의 반복중복 가산이나 기본 수치오류는 독립검사에서 발견되지 않았고, prior+current sufficient statistics 갱신도 실패했다. Physics의 큰 클래스 소실은 첫 nuisance갱신 전에 이미 발생하며 갱신으로 회복되지 않았다. Label=단일graph community 가정·초기화·loopy BP·Poisson misspecification의 고유 기여는 분리하지 못했다.
+    reason_status: unknown
+    excluded_explanations:
+      - 독립 CPU/tinyCUDA tree oracle, Gamma moments와edge/nonedge count/exposure, hidden poison, context clamp, permutation, gradient, source0/1, 빈graph 검사가PASS다. Sparse nonedge mean-field는 dense추론과 차이가 있으며 이를 정확Bayes라고 부르지 않는다.
+      - 저장100예측의 입력·query·truth·context·hash가 동일하고 독립재채점 및 source audit를 수행했다. None에서도 실패하므로 피처압축만으로 이 결과전체를 설명할 수 없다.
+      - Physics fixedPoisson도 악화하여 hub pair의Poisson포화만으로 전체실패를 설명할 수 없다. 이를 전체DC-SBM의 불가능성으로 확대하지 않는다.
+    closed_scope: FP02 PLAN_v2와protocol의 고정10개development episode에 대한 현재3연산의 Stage1확대. 동일 최종결과를 본 뒤 graph마다 full/edge/DC를 골라 성공으로 보고하지 않는다.
+    not_closed: 기존 Factor의 disjoint label-feature 연결, oldedge의 실측성능, 적절한 조건부graph prior, 다른학습된관측factor, homophily 적응 및 DCSBM 일반은 기각하지 않는다.
+    reopen_when: 현재의 graph-likelihood 또는 초기화/근사 중 어떤 연산을 바꾸는지 명확히 정의하고, 큰 클래스 분할을 피하면서 독립조건에서 기존oldedge와LP를 넘을 구체적 근거가 있을 때.
+    comparison_floor: 동일 관측/context/query의 oldfull,oldedge,Poisson fixed,SBM/DC 갱신,LP harmonic/restart,public PFN 및PCFI/FISF+PFN. Population·minority·NLL/Brier와피처제거 대조를 유지한다.
+    recheck: 별도cycle에서3독립리뷰와 수치검사 후 새training/final bank를 고정한다. 재사용실제5graph는development이며 노드bootstrap 또는 모델seed를 독립graph로 세지 않는다.
+    tags: [graph-structure-use, prior-mismatch, label-imbalance, eval-protocol]
+    keywords: [FP02, degree correction, Gamma propensity, population collapse, Poisson BP, nonedge evidence, affinity update, conditional graph prior]
+    reopen_tags: [graph-structure-use, prior-mismatch, differentiable-reasoning]
+    reopen_keywords: [conditional label field, semantic community mismatch, normalized diffusion, context compatibility, predictive feature utility]
+    source_refs:
+      - findings/sources/fp02-nuisance-2026-11-04/PLAN_v2.md
+      - findings/sources/fp02-nuisance-2026-11-04/results/REPORT_KO.md
+      - findings/sources/fp02-nuisance-2026-11-04/results/summary.json
+      - findings/sources/fp02-nuisance-2026-11-04/results/audit.json
+      - findings/sources/fp02-nuisance-2026-11-04/DECISION_KO.md
+  - id: FP02-L01
+    kind: lesson
+    claim: Homophily와 nonedge 삭제의 효용은 같은 변수가 아니며 극소 context의 raw homophily를 참값처럼 사용하면 안 된다.
+    observation: Physics 개발부분graph의 사후 전체label homophily는0.9581710258이지만 oldfull48.551%에서oldedge88.801%로 개선된다. Context만 읽는 독립계산에서 Cora28labels/3edges(3same),CiteSeer24/0,PubMed12/1(0same),CS55/2(2same),Physics20/2(2same)다. 전체label homophily는 사후진단이며 모델입력이 아니다.
+    interpretation: Bernoulli SBM에서 homophily이면 edge LLR은양수/nonedge LLR은음수이고 heterophily이면 반대다. 두 경우 모두 올바른 관측 likelihood라면 nonedge가 정보일 수 있다. 삭제의 이득은 해당 추론기의 misspecification과 근사 등을 포함하며 h하나로 판정되지 않는다. Class-balanced context의 표본편향과 표본수 부족도 별도로 처리해야 한다.
+    tags: [graph-structure-use, observation-mask, label-imbalance, eval-protocol]
+    keywords: [homophily versus nonedge informativeness, context-only support, balanced context, edge likelihood ratio, identifiability, few labels]
+    source_refs:
+      - findings/sources/fp02-nuisance-2026-11-04/context_support.py
+      - findings/sources/fp02-nuisance-2026-11-04/results/context_support.json
+      - findings/sources/fp02-nuisance-2026-11-04/RESULT_EXPERIMENTS.md
+      - findings/sources/fp02-nuisance-2026-11-04/RESULT_INFERENCE.md
+  - id: FP02-U01
+    kind: untested
+    claim: Context에서 관계 compatibility를 추정하고 graph-conditioned label-field와 관측 feature factor의 공동 추론에 사용한다.
+    observation: 제안만 했으며 미구현·미학습이다. Graph를 label partition에서 생성하는 likelihood 대신 기존 graph 위의 조건부 label field를 학습하는 후보이다. Context에서 edge 방향·강도를 추정할 때도 support·불확실성·class permutation과 pseudo-query의 self-label LOO 누출을 검사해야 한다.
+    verdict: 미실행 후보로 보존하며 성공이나 학습 실패로 세지 않는다. Gaussian-field SSL,CLP/CPGNN,learned diffusion과 겹치는 원리 자체는 novelty가 아니다.
+    tags: [graph-structure-use, prior-mismatch, observation-mask, amortized-inference]
+    keywords: [conditional graph label field, context adaptive compatibility, missing feature factor, uncertainty, not implemented]
+    source_refs:
+      - findings/sources/fp02-nuisance-2026-11-04/RESULT_METHOD.md

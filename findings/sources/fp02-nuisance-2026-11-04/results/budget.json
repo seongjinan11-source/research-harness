@@ -1,0 +1,42 @@
+{
+  "new_training_fits": 0,
+  "optimizer_updates": 0,
+  "target_gradient_updates": 0,
+  "new_inference_calls": 30,
+  "reused_inference_arrays": 70,
+  "single_worker": true,
+  "prediction_seconds": {
+    "poisson_fixed": 0.8980778995901346,
+    "sbm_update": 0.5456572994589806,
+    "dc_update": 0.5241216998547316
+  },
+  "shared_feature_table_seconds": 0.0958075006492436,
+  "shared_row_read_seconds": 0.02544469991698861,
+  "preparation_seconds": 0.32818400021642447,
+  "peak_mib": 52.404296875,
+  "incremental_peak_mib": 38.75634765625,
+  "attempts": [
+    {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\factor_nuisance_cycle\\results\\attempts\\1793772133011938200.json",
+      "sha256": "2986df7d4e61982ee04dca00c22e8e192defd96471861f6d8a6547bc9b31e0fb",
+      "status": "COMPLETE",
+      "token": "1793772133011938200",
+      "git": {
+        "branch": "research/fp02-nuisance-conditioned",
+        "commit": "46d83ed3fa03290f80caf60a6e62cf31571d415b"
+      },
+      "wall_seconds": 5.3737682001665235,
+      "pre_run_validation_seconds": 0.42625200003385544,
+      "model_load_seconds": 0.19110010005533695,
+      "verified_predictions": 30,
+      "source_lock_sha256": "a95965f73010f8225b9f66138a426829c0e5ce7d46ba4698a1249a7782a40fda",
+      "optimizer_updates": 0
+    }
+  ],
+  "attempt_wall_seconds": 5.3737682001665235,
+  "pre_run_validation_seconds": 0.42625200003385544,
+  "audit_rescore_seconds": 1.1149959000758827,
+  "failed_attempts": 0,
+  "timing_scope": "single CUDA worker; cold model/table/read costs separate; historical training/reference costs inherited, not zero",
+  "interrupted_attempts_without_log": "not inferred zero; preserve operational logs separately"
+}

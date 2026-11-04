@@ -144,6 +144,20 @@
 - [NodePFN](https://arxiv.org/abs/2604.19028): 복수 태그 일치 (약한 단서); tags=graph-structure-use, prior-mismatch; keywords=-
   - 기록된 강점: cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
 
+## FP02-F01 — 차수 propensity, 클래스 비율과 class-pair affinity를 동일 관측에서 갱신하면 기존 nonedge 손해를 복구하면서 CiteSeer 성능을 보존한다.
+
+- 판정: 현재 Poisson working score·초기화·3회Gamma갱신/24stepBP의 Stage1신경망학습 확대를 중단한다. 이 개발bank에서 damping/횟수/affinity를 바꾸어 구제하지 않는다.
+- 원인·병목 [원인 미상]: 같은 데이터의 반복중복 가산이나 기본 수치오류는 독립검사에서 발견되지 않았고, prior+current sufficient statistics 갱신도 실패했다. Physics의 큰 클래스 소실은 첫 nuisance갱신 전에 이미 발생하며 갱신으로 회복되지 않았다. Label=단일graph community 가정·초기화·loopy BP·Poisson misspecification의 고유 기여는 분리하지 못했다.
+- 반증·배제한 설명: 독립 CPU/tinyCUDA tree oracle, Gamma moments와edge/nonedge count/exposure, hidden poison, context clamp, permutation, gradient, source0/1, 빈graph 검사가PASS다. Sparse nonedge mean-field는 dense추론과 차이가 있으며 이를 정확Bayes라고 부르지 않는다.; 저장100예측의 입력·query·truth·context·hash가 동일하고 독립재채점 및 source audit를 수행했다. None에서도 실패하므로 피처압축만으로 이 결과전체를 설명할 수 없다.; Physics fixedPoisson도 악화하여 hub pair의Poisson포화만으로 전체실패를 설명할 수 없다. 이를 전체DC-SBM의 불가능성으로 확대하지 않는다.
+- 재검토 조건: 현재의 graph-likelihood 또는 초기화/근사 중 어떤 연산을 바꾸는지 명확히 정의하고, 큰 클래스 분할을 피하면서 독립조건에서 기존oldedge와LP를 넘을 구체적 근거가 있을 때.
+- 먼저 이겨야 할 기준선: 동일 관측/context/query의 oldfull,oldedge,Poisson fixed,SBM/DC 갱신,LP harmonic/restart,public PFN 및PCFI/FISF+PFN. Population·minority·NLL/Brier와피처제거 대조를 유지한다.
+- 최소 재검증: 별도cycle에서3독립리뷰와 수치검사 후 새training/final bank를 고정한다. 재사용실제5graph는development이며 노드bootstrap 또는 모델seed를 독립graph로 세지 않는다.
+- 닫지 않은 것: 기존 Factor의 disjoint label-feature 연결, oldedge의 실측성능, 적절한 조건부graph prior, 다른학습된관측factor, homophily 적응 및 DCSBM 일반은 기각하지 않는다.
+- 원문: [findings/sources/fp02-nuisance-2026-11-04/PLAN_v2.md](../findings/sources/fp02-nuisance-2026-11-04/PLAN_v2.md); [findings/sources/fp02-nuisance-2026-11-04/results/REPORT_KO.md](../findings/sources/fp02-nuisance-2026-11-04/results/REPORT_KO.md); [findings/sources/fp02-nuisance-2026-11-04/results/summary.json](../findings/sources/fp02-nuisance-2026-11-04/results/summary.json); [findings/sources/fp02-nuisance-2026-11-04/results/audit.json](../findings/sources/fp02-nuisance-2026-11-04/results/audit.json); [findings/sources/fp02-nuisance-2026-11-04/DECISION_KO.md](../findings/sources/fp02-nuisance-2026-11-04/DECISION_KO.md)
+
+- [NodePFN](https://arxiv.org/abs/2604.19028): 복수 태그 일치 (약한 단서); tags=graph-structure-use, prior-mismatch; keywords=-
+  - 기록된 강점: cSBM의 homophily를 넓게 샘플링해 heterophily 쪽도 prior에 넣었다. 그 결과 heterophilous 그룹 평균에서 GCN보다 6%p 이상 높았다.
+
 ## FP01-F01 — 투영 노출과 관측 통계 기반 class-specific centroid Factor가 기존 projected Factor와 전역 centroid Factor를 모두 안정적으로 능가하고 추가 피처 효용을 회복한다.
 
 - 판정: 현재 operator·budget의 메인 missing-feature 방법 확장은 중단한다. C_global 대비 적응 효과와 일부 피처 손상 완화는 별도로 보존한다.
