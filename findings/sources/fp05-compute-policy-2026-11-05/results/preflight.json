@@ -1,0 +1,788 @@
+{
+  "status": "PASS",
+  "discarded_task_groups": 8,
+  "discarded_logical_trace_slots": 64,
+  "initial_digests": {
+    "fixed": "b83dee5cd0f42636ea27693b32c5190a1eec8e5bc3897b4b09fbc46d20a5a897",
+    "uniform": "b83dee5cd0f42636ea27693b32c5190a1eec8e5bc3897b4b09fbc46d20a5a897",
+    "direct": "b83dee5cd0f42636ea27693b32c5190a1eec8e5bc3897b4b09fbc46d20a5a897",
+    "group_pg": "b83dee5cd0f42636ea27693b32c5190a1eec8e5bc3897b4b09fbc46d20a5a897"
+  },
+  "discarded_trials": [
+    {
+      "arm": "fixed",
+      "update": 1,
+      "input_sha256": "e5a6c2a85313bc0211ff7656c30c65858034b15be3e0f78c80d722cd99aab835",
+      "records": [
+        {
+          "ce": 0.9874802231788635,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        }
+      ],
+      "actor": null,
+      "mean_ce": 0.9874802231788635,
+      "expected_ce": null,
+      "theta_grad_norm": 4.027007102966309,
+      "phi_grad_norm": 0.0,
+      "reward_sd": null,
+      "zero_advantage": null,
+      "unique_traces": 1,
+      "actual_forwards": 1,
+      "transformer_backwards": 1,
+      "logical_trace_slots": 8,
+      "extra_adapter_pairs": 0,
+      "seconds": 0.7740143998526037,
+      "retries": [],
+      "entropy_estimate": null
+    },
+    {
+      "arm": "fixed",
+      "update": 2,
+      "input_sha256": "0bd45b42ae1fd45238f0155ce985f71de33f2c2b2a7a644881d157381ef63629",
+      "records": [
+        {
+          "ce": 0.8908582925796509,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        }
+      ],
+      "actor": null,
+      "mean_ce": 0.8908582925796509,
+      "expected_ce": null,
+      "theta_grad_norm": 3.355159044265747,
+      "phi_grad_norm": 0.0,
+      "reward_sd": null,
+      "zero_advantage": null,
+      "unique_traces": 1,
+      "actual_forwards": 1,
+      "transformer_backwards": 1,
+      "logical_trace_slots": 8,
+      "extra_adapter_pairs": 0,
+      "seconds": 0.3514323001727462,
+      "retries": [],
+      "entropy_estimate": null,
+      "peak_mib": 198.55126953125,
+      "model_parameters_changed": true
+    },
+    {
+      "arm": "uniform",
+      "update": 1,
+      "input_sha256": "e5a6c2a85313bc0211ff7656c30c65858034b15be3e0f78c80d722cd99aab835",
+      "records": [
+        {
+          "ce": 1.0037939548492432,
+          "trace": [
+            1,
+            1,
+            0
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.168245553970337,
+          "trace": [
+            1,
+            0,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.1784212589263916,
+          "trace": [
+            0,
+            1,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.1784212589263916,
+          "trace": [
+            0,
+            1,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.1784212589263916,
+          "trace": [
+            0,
+            1,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.2042498588562012,
+          "trace": [
+            1,
+            1,
+            1
+          ],
+          "cost": 3,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.9946916699409485,
+          "trace": [
+            0,
+            1,
+            0
+          ],
+          "cost": 1,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.9874802231788635,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        }
+      ],
+      "actor": null,
+      "mean_ce": 1.111715629696846,
+      "expected_ce": null,
+      "theta_grad_norm": 5.3979620933532715,
+      "phi_grad_norm": 0.0,
+      "reward_sd": null,
+      "zero_advantage": null,
+      "unique_traces": 6,
+      "actual_forwards": 8,
+      "transformer_backwards": 8,
+      "logical_trace_slots": 8,
+      "extra_adapter_pairs": 14,
+      "seconds": 2.424939099699259,
+      "retries": [],
+      "entropy_estimate": null
+    },
+    {
+      "arm": "uniform",
+      "update": 2,
+      "input_sha256": "0bd45b42ae1fd45238f0155ce985f71de33f2c2b2a7a644881d157381ef63629",
+      "records": [
+        {
+          "ce": 1.1588796377182007,
+          "trace": [
+            1,
+            0,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.8912748098373413,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.1113697290420532,
+          "trace": [
+            0,
+            0,
+            1
+          ],
+          "cost": 1,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.9191374778747559,
+          "trace": [
+            1,
+            0,
+            0
+          ],
+          "cost": 1,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.9106045365333557,
+          "trace": [
+            1,
+            1,
+            0
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.1588796377182007,
+          "trace": [
+            1,
+            0,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.8912748098373413,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.0563045740127563,
+          "trace": [
+            0,
+            1,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        }
+      ],
+      "actor": null,
+      "mean_ce": 1.0122156515717506,
+      "expected_ce": null,
+      "theta_grad_norm": 4.204118251800537,
+      "phi_grad_norm": 0.0,
+      "reward_sd": null,
+      "zero_advantage": null,
+      "unique_traces": 6,
+      "actual_forwards": 8,
+      "transformer_backwards": 8,
+      "logical_trace_slots": 8,
+      "extra_adapter_pairs": 10,
+      "seconds": 2.428433299995959,
+      "retries": [],
+      "entropy_estimate": null,
+      "peak_mib": 216.35009765625,
+      "model_parameters_changed": true
+    },
+    {
+      "arm": "direct",
+      "update": 1,
+      "input_sha256": "e5a6c2a85313bc0211ff7656c30c65858034b15be3e0f78c80d722cd99aab835",
+      "records": [
+        {
+          "ce": 0.9874802231788635,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.236473560333252,
+          "trace": [
+            0,
+            0,
+            1
+          ],
+          "cost": 1,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.9946916699409485,
+          "trace": [
+            0,
+            1,
+            0
+          ],
+          "cost": 1,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.1784212589263916,
+          "trace": [
+            0,
+            1,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.9252215027809143,
+          "trace": [
+            1,
+            0,
+            0
+          ],
+          "cost": 1,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.168245553970337,
+          "trace": [
+            1,
+            0,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.0037939548492432,
+          "trace": [
+            1,
+            1,
+            0
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.2042498588562012,
+          "trace": [
+            1,
+            1,
+            1
+          ],
+          "cost": 3,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        }
+      ],
+      "actor": 1.1023221015930176,
+      "mean_ce": 1.087322197854519,
+      "expected_ce": 1.0873221330450655,
+      "theta_grad_norm": 4.881378173828125,
+      "phi_grad_norm": 0.22909842431545258,
+      "reward_sd": null,
+      "zero_advantage": null,
+      "unique_traces": 8,
+      "actual_forwards": 8,
+      "transformer_backwards": 8,
+      "logical_trace_slots": 8,
+      "extra_adapter_pairs": 12,
+      "seconds": 2.3403073996305466,
+      "retries": [],
+      "entropy_estimate": 2.0794414773401044
+    },
+    {
+      "arm": "direct",
+      "update": 2,
+      "input_sha256": "0bd45b42ae1fd45238f0155ce985f71de33f2c2b2a7a644881d157381ef63629",
+      "records": [
+        {
+          "ce": 0.8908635973930359,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.0777499675750732,
+          "probability": 0.12521162629127502
+        },
+        {
+          "ce": 1.111379623413086,
+          "trace": [
+            0,
+            0,
+            1
+          ],
+          "cost": 1,
+          "logp": -2.0789260864257812,
+          "probability": 0.1250644475221634
+        },
+        {
+          "ce": 0.8548681139945984,
+          "trace": [
+            0,
+            1,
+            0
+          ],
+          "cost": 1,
+          "logp": -2.078793525695801,
+          "probability": 0.12508103251457214
+        },
+        {
+          "ce": 1.0555429458618164,
+          "trace": [
+            0,
+            1,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079974412918091,
+          "probability": 0.12493341416120529
+        },
+        {
+          "ce": 0.9187522530555725,
+          "trace": [
+            1,
+            0,
+            0
+          ],
+          "cost": 1,
+          "logp": -2.078917980194092,
+          "probability": 0.12506546080112457
+        },
+        {
+          "ce": 1.1582822799682617,
+          "trace": [
+            1,
+            0,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.0800836086273193,
+          "probability": 0.12491976469755173
+        },
+        {
+          "ce": 0.9111042022705078,
+          "trace": [
+            1,
+            1,
+            0
+          ],
+          "cost": 2,
+          "logp": -2.079958915710449,
+          "probability": 0.1249353438615799
+        },
+        {
+          "ce": 1.137312412261963,
+          "trace": [
+            1,
+            1,
+            1
+          ],
+          "cost": 3,
+          "logp": -2.08113169670105,
+          "probability": 0.12478891015052795
+        }
+      ],
+      "actor": 1.0196820497512817,
+      "mean_ce": 1.0047631785273552,
+      "expected_ce": 1.0046905457940278,
+      "theta_grad_norm": 4.321086883544922,
+      "phi_grad_norm": 0.2689877152442932,
+      "reward_sd": null,
+      "zero_advantage": null,
+      "unique_traces": 8,
+      "actual_forwards": 8,
+      "transformer_backwards": 8,
+      "logical_trace_slots": 8,
+      "extra_adapter_pairs": 12,
+      "seconds": 2.4700386002659798,
+      "retries": [],
+      "entropy_estimate": 2.0794410640753123,
+      "peak_mib": 218.93359375,
+      "model_parameters_changed": true
+    },
+    {
+      "arm": "group_pg",
+      "update": 1,
+      "input_sha256": "e5a6c2a85313bc0211ff7656c30c65858034b15be3e0f78c80d722cd99aab835",
+      "records": [
+        {
+          "ce": 0.9874802231788635,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.9946916699409485,
+          "trace": [
+            0,
+            1,
+            0
+          ],
+          "cost": 1,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.9874802231788635,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.1784212589263916,
+          "trace": [
+            0,
+            1,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.2042498588562012,
+          "trace": [
+            1,
+            1,
+            1
+          ],
+          "cost": 3,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.2042498588562012,
+          "trace": [
+            1,
+            1,
+            1
+          ],
+          "cost": 3,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 1.236473560333252,
+          "trace": [
+            0,
+            0,
+            1
+          ],
+          "cost": 1,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        },
+        {
+          "ce": 0.9874802231788635,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.079441547393799,
+          "probability": 0.1249999925494194
+        }
+      ],
+      "actor": 1.430511474609375e-06,
+      "mean_ce": 1.0975658595561981,
+      "expected_ce": null,
+      "theta_grad_norm": 4.971994400024414,
+      "phi_grad_norm": 3.7469005584716797,
+      "reward_sd": 0.11908111721277237,
+      "zero_advantage": false,
+      "unique_traces": 5,
+      "actual_forwards": 8,
+      "transformer_backwards": 8,
+      "logical_trace_slots": 8,
+      "extra_adapter_pairs": 10,
+      "seconds": 2.3404941000044346,
+      "retries": [],
+      "entropy_estimate": null
+    },
+    {
+      "arm": "group_pg",
+      "update": 2,
+      "input_sha256": "0bd45b42ae1fd45238f0155ce985f71de33f2c2b2a7a644881d157381ef63629",
+      "records": [
+        {
+          "ce": 1.13615083694458,
+          "trace": [
+            1,
+            1,
+            1
+          ],
+          "cost": 3,
+          "logp": -2.0812129974365234,
+          "probability": 0.12477876245975494
+        },
+        {
+          "ce": 1.1579320430755615,
+          "trace": [
+            1,
+            0,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.080120325088501,
+          "probability": 0.12491518259048462
+        },
+        {
+          "ce": 0.8911382555961609,
+          "trace": [
+            0,
+            0,
+            0
+          ],
+          "cost": 0,
+          "logp": -2.0776686668395996,
+          "probability": 0.12522180378437042
+        },
+        {
+          "ce": 0.9099183082580566,
+          "trace": [
+            1,
+            1,
+            0
+          ],
+          "cost": 2,
+          "logp": -2.0799901485443115,
+          "probability": 0.1249314397573471
+        },
+        {
+          "ce": 1.1115162372589111,
+          "trace": [
+            0,
+            0,
+            1
+          ],
+          "cost": 1,
+          "logp": -2.078895330429077,
+          "probability": 0.1250682920217514
+        },
+        {
+          "ce": 1.13615083694458,
+          "trace": [
+            1,
+            1,
+            1
+          ],
+          "cost": 3,
+          "logp": -2.0812129974365234,
+          "probability": 0.12477876245975494
+        },
+        {
+          "ce": 1.1579320430755615,
+          "trace": [
+            1,
+            0,
+            1
+          ],
+          "cost": 2,
+          "logp": -2.080120325088501,
+          "probability": 0.12491518259048462
+        },
+        {
+          "ce": 1.13615083694458,
+          "trace": [
+            1,
+            1,
+            1
+          ],
+          "cost": 3,
+          "logp": -2.0812129974365234,
+          "probability": 0.12477876245975494
+        }
+      ],
+      "actor": -0.0008168816566467285,
+      "mean_ce": 1.079611174762249,
+      "expected_ce": null,
+      "theta_grad_norm": 5.07097053527832,
+      "phi_grad_norm": 2.5884108543395996,
+      "reward_sd": 0.11084187775850296,
+      "zero_advantage": false,
+      "unique_traces": 5,
+      "actual_forwards": 8,
+      "transformer_backwards": 8,
+      "logical_trace_slots": 8,
+      "extra_adapter_pairs": 16,
+      "seconds": 2.459840400144458,
+      "retries": [],
+      "entropy_estimate": null,
+      "peak_mib": 218.92724609375,
+      "model_parameters_changed": true
+    }
+  ],
+  "resources": [
+    {
+      "arm": "fixed",
+      "nodes": 3327,
+      "features": 16,
+      "queries": 949,
+      "actual_forwards": 1,
+      "seconds": 0.31629309989511967,
+      "total_peak_mib": 488.59765625,
+      "additional_peak_mib": 395.6787109375,
+      "finite_probability": true,
+      "scores_inspected": false
+    },
+    {
+      "arm": "uniform",
+      "nodes": 3327,
+      "features": 16,
+      "queries": 949,
+      "actual_forwards": 8,
+      "seconds": 0.9565937002189457,
+      "total_peak_mib": 488.9423828125,
+      "additional_peak_mib": 396.021484375,
+      "finite_probability": true,
+      "scores_inspected": false
+    },
+    {
+      "arm": "group_pg",
+      "nodes": 3327,
+      "features": 16,
+      "queries": 949,
+      "actual_forwards": 1,
+      "seconds": 0.11617070017382503,
+      "total_peak_mib": 488.9189453125,
+      "additional_peak_mib": 395.998046875,
+      "finite_probability": true,
+      "scores_inspected": false
+    }
+  ],
+  "final_bank_used": false,
+  "real_test_scores_inspected": false,
+  "notes": "Partial internal timers only; cold samples, no latency superiority claim"
+}

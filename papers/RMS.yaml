@@ -1,0 +1,70 @@
+id: RMS
+title: "Automatic Meta-Path Discovery for Effective Graph-Based Recommendation"
+authors: "Wentao Ning, Reynold Cheng, Jiajun Shen, Nur Al Hasan Haldar, Ben Kao, Xiao Yan, Nan Huo, Wai Kit Lam, Tian Li, Bo Tang"
+venue: "CIKM 2022 (원문·공저자 기관 서지 확인; citation은 보수적 arXiv 유지)"
+year: 2022
+links:
+  paper: https://arxiv.org/abs/2112.12845
+  fulltext: https://arxiv.org/html/2112.12845v5
+  publication: https://doi.org/10.1145/3511808.3557244
+  code: https://github.com/Stevenn9981/RMS-HRec
+citation:
+  type: misc
+  title: "Automatic Meta-Path Discovery for Effective Graph-Based Recommendation"
+  authors: ["Wentao Ning", "Reynold Cheng", "Jiajun Shen", "Nur Al Hasan Haldar", "Ben Kao", "Xiao Yan", "Nan Huo", "Wai Kit Lam", "Tian Li", "Bo Tang"]
+  year: 2022
+  arxiv: "2112.12845"
+  url: https://arxiv.org/abs/2112.12845
+  verified_from:
+    - https://arxiv.org/abs/2112.12845
+    - https://arxiv.org/html/2112.12845v5
+    - https://research-repository.uwa.edu.au/en/publications/automatic-meta-path-discovery-for-effective-graph-based-recommend/
+review:
+  status: full_text_checked
+  checked_on: '2026-11-05'
+  checked_sections: ["Sections 1-7"]
+  full_text_checked: true
+areas: [heterogeneous-graphs, graph-learning]
+problem: "Recommender마다 유효한 meta-path set이 달라 수동 선택하기 어려운 문제를 다룬다."
+core_idea: "Relation-count state와 DQN으로 relation 또는 STOP을 선택한다. Recommender 형식에 맞춰 path set을 확장하고, 짧은 학습 후 validation NDCG@10 개선을 reward로 사용한다."
+key_assumptions:
+  - "알려진 HIN relation vocabulary와 downstream validation reward가 필요하다."
+  - "짧은 recommender 학습의 성능 순위가 수렴 후 순위를 근사한다고 본다."
+strengths:
+  - text: "Downstream reward로 meta-path set을 구성하는 직접적인 RL 선행이다."
+    tags: [meta-paths, heterogeneous-semantics]
+  - text: "Early-stopping reward 근사로 탐색 비용을 줄인다."
+    tags: [inference-cost]
+limitations:
+  - text: "Early-stopping 성능과 최종 성능의 상관이 불완전해 accuracy penalty와 비최적 선택이 가능하다고 인정한다."
+    tags: [inference-cost, eval-protocol]
+    source: self
+    evidence:
+      url: https://arxiv.org/html/2112.12845v5
+      section: "Section 3.3, Early Stopping Approximation"
+  - text: "Meta-path의 효과에 덜 민감한 recommender에서는 선택으로 얻는 개선도 작다고 논의한다."
+    tags: [meta-paths, task-coverage]
+    source: self
+    evidence:
+      url: https://arxiv.org/html/2112.12845v5
+      section: "Section 5.2, Effectiveness of RMS, MCRec 논의"
+  - text: "[analyst] Relation-count state는 순서가 다른 path sets를 구별하지 못할 수 있어 Markov-sufficient state라는 보장은 없다."
+    tags: [meta-paths, theory-gap]
+    source: analyst
+    evidence:
+      url: https://arxiv.org/html/2112.12845v5
+      section: "Section 3.2 state 식에 대한 분석"
+  - text: "[analyst] Recommendation 실험은 missing-feature node classification이나 RL-backbone PFN 전이를 검증하지 않는다."
+    tags: [observation-mask, task-coverage, distribution-shift]
+    source: analyst
+    evidence:
+      url: https://arxiv.org/html/2112.12845v5
+      section: "Section 5.1에 근거한 평가 범위 판단"
+builds_on: [DQN, GAT, BPR, MatrixFactorization]
+compared_against: [RandomMetaPathSelection, GreedyMetaPathSelection, MPDRL, HERec, MCRec, BPR, NCF, CFKG, CKE, GEMS, KGAT]
+open_questions:
+  - "다른 recommender에서 early-stopping reward 순위가 얼마나 유지되는지는 확정되지 않았다."
+hooks:
+  - "Meta-path RL 선택 자체의 novelty를 제한한다. FP05의 homogeneous compute 선택과 heterogeneous schema transfer를 구분하는 기록이다."
+notes: "arXiv v5를 읽었다. 저자 순서는 v5와 UWA 공식 서지 기준이다. 원문·기관 서지는 CIKM 2022 게재를 명시하지만 ACM DL은 403이고 학회 사이트를 직접 읽지 못했다. CLAUDE의 엄격한 citation 규칙에 따라 misc/arXiv를 유지하며 publisher·booktitle·pages는 생략했다. Code URL은 논문 기재 주소이나 직접 열기에서 404여서 재현을 주장하지 않는다."
+added: '2026-11-05'

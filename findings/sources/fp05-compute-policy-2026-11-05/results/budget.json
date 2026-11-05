@@ -1,0 +1,1298 @@
+{
+  "fits": 12,
+  "optimizer_groups": 1536,
+  "logical_trace_slots": 12288,
+  "train_seconds": 2811.497653398663,
+  "fits_metadata": [
+    {
+      "arm": "fixed",
+      "seed": 11,
+      "initial_digest": "2bcc5b38c4460a4c05c071238f6284894d850e3f3fd99d5b5929e17d1cbf7d7a",
+      "final_digest": "53ea3ad120f56bc71271285bb5df403aaccd47cc789acaec365cd92e35f690ab",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "4befba8eec269a9a3521a7a03424dfb7b7c542023afc6b70a1bf00b85f34c2f8",
+      "schedule_sha256": "f1e999534aba030369f8704664730a160c54c5a35f52b88d6c5a5e8bcd38d2d6",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 125,
+      "unique_bases": 107,
+      "trainable_parameters": 3564288,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 24,
+          "observed_queries": 384,
+          "missing_queries": 0
+        },
+        "node95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node995/natural": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster995/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "cluster95/disjoint": {
+          "groups": 6,
+          "observed_queries": 0,
+          "missing_queries": 96
+        },
+        "cluster95/natural": {
+          "groups": 7,
+          "observed_queries": 12,
+          "missing_queries": 100
+        },
+        "node995/disjoint": {
+          "groups": 6,
+          "observed_queries": 0,
+          "missing_queries": 96
+        },
+        "cell95/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "full/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "cell95/natural": {
+          "groups": 6,
+          "observed_queries": 39,
+          "missing_queries": 57
+        },
+        "node95/natural": {
+          "groups": 8,
+          "observed_queries": 5,
+          "missing_queries": 123
+        },
+        "cluster995/natural": {
+          "groups": 8,
+          "observed_queries": 1,
+          "missing_queries": 127
+        },
+        "node90/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node90/natural": {
+          "groups": 11,
+          "observed_queries": 19,
+          "missing_queries": 157
+        }
+      },
+      "target_updates": 0,
+      "seconds": 36.54289929987863,
+      "peak_mib": 221.66796875
+    },
+    {
+      "arm": "fixed",
+      "seed": 12,
+      "initial_digest": "c62d87d817553e09d2e8f949653ecb7680915886d2ad50e12be42d62698339a6",
+      "final_digest": "be352514aae77c0602e6ba3ac9c4540b444809f1f908725fbc437ce03cf9e56d",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "eb56f17cbbf68df73dbf7ae8742dfafbe05bbc92562e0a9307ac00df51c8919b",
+      "schedule_sha256": "cda698ac251a931ec53f87c4295f5a7bd68f1f1a2368a886f207493c6e9917da",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 124,
+      "unique_bases": 101,
+      "trainable_parameters": 3564288,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 29,
+          "observed_queries": 459,
+          "missing_queries": 0
+        },
+        "node995/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node90/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "cell95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "full/disjoint": {
+          "groups": 4,
+          "observed_queries": 0,
+          "missing_queries": 64
+        },
+        "cluster995/disjoint": {
+          "groups": 12,
+          "observed_queries": 0,
+          "missing_queries": 192
+        },
+        "cluster95/natural": {
+          "groups": 9,
+          "observed_queries": 10,
+          "missing_queries": 134
+        },
+        "cell95/natural": {
+          "groups": 5,
+          "observed_queries": 30,
+          "missing_queries": 50
+        },
+        "node90/natural": {
+          "groups": 8,
+          "observed_queries": 16,
+          "missing_queries": 112
+        },
+        "node95/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node95/natural": {
+          "groups": 2,
+          "observed_queries": 1,
+          "missing_queries": 31
+        },
+        "cluster95/disjoint": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster995/natural": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node995/natural": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        }
+      },
+      "target_updates": 0,
+      "seconds": 40.62429040018469,
+      "peak_mib": 222.501953125
+    },
+    {
+      "arm": "fixed",
+      "seed": 13,
+      "initial_digest": "21973da6c86588f22c045e7f7eb7b9c1efb7ddb0ed8a4fae45af418b48b88a8c",
+      "final_digest": "2a6d158ef5e41242d4dd564143a5403d1f4fa765d9ba693b2c12d20e78cdbaea",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "6766b51d91fed3a8924bcdefa077d963f983fc3502a3d78c3b4a4089d3f42c91",
+      "schedule_sha256": "9c7d2a6c8fe3322b3f12ac9ad02cb1be22eafeef1499bab7a1438161e9d62e1a",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 124,
+      "unique_bases": 101,
+      "trainable_parameters": 3564288,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 22,
+          "observed_queries": 347,
+          "missing_queries": 0
+        },
+        "node90/disjoint": {
+          "groups": 11,
+          "observed_queries": 0,
+          "missing_queries": 176
+        },
+        "full/disjoint": {
+          "groups": 11,
+          "observed_queries": 0,
+          "missing_queries": 176
+        },
+        "node995/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "cluster995/disjoint": {
+          "groups": 12,
+          "observed_queries": 0,
+          "missing_queries": 192
+        },
+        "cluster95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node995/natural": {
+          "groups": 3,
+          "observed_queries": 0,
+          "missing_queries": 48
+        },
+        "cell95/natural": {
+          "groups": 8,
+          "observed_queries": 53,
+          "missing_queries": 75
+        },
+        "cell95/disjoint": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster95/natural": {
+          "groups": 9,
+          "observed_queries": 11,
+          "missing_queries": 133
+        },
+        "node95/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "node90/natural": {
+          "groups": 5,
+          "observed_queries": 8,
+          "missing_queries": 72
+        },
+        "cluster995/natural": {
+          "groups": 5,
+          "observed_queries": 0,
+          "missing_queries": 80
+        },
+        "node95/natural": {
+          "groups": 8,
+          "observed_queries": 4,
+          "missing_queries": 124
+        }
+      },
+      "target_updates": 0,
+      "seconds": 38.613828599918634,
+      "peak_mib": 223.55712890625
+    },
+    {
+      "arm": "uniform",
+      "seed": 11,
+      "initial_digest": "2bcc5b38c4460a4c05c071238f6284894d850e3f3fd99d5b5929e17d1cbf7d7a",
+      "final_digest": "0fcbeeb90bb2ee27ff15d519fa9c6de19581489cb923155684dfb8ac8bfcb4ff",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "18621a71b201857e94482e67cfffd7d4aef163554c7342b0aaf292685e859ebb",
+      "schedule_sha256": "f1e999534aba030369f8704664730a160c54c5a35f52b88d6c5a5e8bcd38d2d6",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 125,
+      "unique_bases": 107,
+      "trainable_parameters": 3564288,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 24,
+          "observed_queries": 384,
+          "missing_queries": 0
+        },
+        "node95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node995/natural": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster995/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "cluster95/disjoint": {
+          "groups": 6,
+          "observed_queries": 0,
+          "missing_queries": 96
+        },
+        "cluster95/natural": {
+          "groups": 7,
+          "observed_queries": 12,
+          "missing_queries": 100
+        },
+        "node995/disjoint": {
+          "groups": 6,
+          "observed_queries": 0,
+          "missing_queries": 96
+        },
+        "cell95/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "full/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "cell95/natural": {
+          "groups": 6,
+          "observed_queries": 39,
+          "missing_queries": 57
+        },
+        "node95/natural": {
+          "groups": 8,
+          "observed_queries": 5,
+          "missing_queries": 123
+        },
+        "cluster995/natural": {
+          "groups": 8,
+          "observed_queries": 1,
+          "missing_queries": 127
+        },
+        "node90/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node90/natural": {
+          "groups": 11,
+          "observed_queries": 19,
+          "missing_queries": 157
+        }
+      },
+      "target_updates": 0,
+      "seconds": 298.7120030997321,
+      "peak_mib": 243.3125
+    },
+    {
+      "arm": "uniform",
+      "seed": 12,
+      "initial_digest": "c62d87d817553e09d2e8f949653ecb7680915886d2ad50e12be42d62698339a6",
+      "final_digest": "79ca14a547efaedf84241e3257c8a46bcf45b37a894332065eaea29362f36540",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "86cd7af2264d640b51c0adb36d4852f5b9c84642584c53994fd63fd27771650c",
+      "schedule_sha256": "cda698ac251a931ec53f87c4295f5a7bd68f1f1a2368a886f207493c6e9917da",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 124,
+      "unique_bases": 101,
+      "trainable_parameters": 3564288,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 29,
+          "observed_queries": 459,
+          "missing_queries": 0
+        },
+        "node995/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node90/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "cell95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "full/disjoint": {
+          "groups": 4,
+          "observed_queries": 0,
+          "missing_queries": 64
+        },
+        "cluster995/disjoint": {
+          "groups": 12,
+          "observed_queries": 0,
+          "missing_queries": 192
+        },
+        "cluster95/natural": {
+          "groups": 9,
+          "observed_queries": 10,
+          "missing_queries": 134
+        },
+        "cell95/natural": {
+          "groups": 5,
+          "observed_queries": 30,
+          "missing_queries": 50
+        },
+        "node90/natural": {
+          "groups": 8,
+          "observed_queries": 16,
+          "missing_queries": 112
+        },
+        "node95/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node95/natural": {
+          "groups": 2,
+          "observed_queries": 1,
+          "missing_queries": 31
+        },
+        "cluster95/disjoint": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster995/natural": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node995/natural": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        }
+      },
+      "target_updates": 0,
+      "seconds": 304.6838148999959,
+      "peak_mib": 243.45703125
+    },
+    {
+      "arm": "uniform",
+      "seed": 13,
+      "initial_digest": "21973da6c86588f22c045e7f7eb7b9c1efb7ddb0ed8a4fae45af418b48b88a8c",
+      "final_digest": "e237a740e1bd17a70901a962aaf1c749f273ab7882fdde8fb46a2e71aada60be",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "eeb4527d43e4c6487ebfce0180b0a2cfd989d96e2006a16ba6aead1f306a0a9d",
+      "schedule_sha256": "9c7d2a6c8fe3322b3f12ac9ad02cb1be22eafeef1499bab7a1438161e9d62e1a",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 124,
+      "unique_bases": 101,
+      "trainable_parameters": 3564288,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 22,
+          "observed_queries": 347,
+          "missing_queries": 0
+        },
+        "node90/disjoint": {
+          "groups": 11,
+          "observed_queries": 0,
+          "missing_queries": 176
+        },
+        "full/disjoint": {
+          "groups": 11,
+          "observed_queries": 0,
+          "missing_queries": 176
+        },
+        "node995/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "cluster995/disjoint": {
+          "groups": 12,
+          "observed_queries": 0,
+          "missing_queries": 192
+        },
+        "cluster95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node995/natural": {
+          "groups": 3,
+          "observed_queries": 0,
+          "missing_queries": 48
+        },
+        "cell95/natural": {
+          "groups": 8,
+          "observed_queries": 53,
+          "missing_queries": 75
+        },
+        "cell95/disjoint": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster95/natural": {
+          "groups": 9,
+          "observed_queries": 11,
+          "missing_queries": 133
+        },
+        "node95/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "node90/natural": {
+          "groups": 5,
+          "observed_queries": 8,
+          "missing_queries": 72
+        },
+        "cluster995/natural": {
+          "groups": 5,
+          "observed_queries": 0,
+          "missing_queries": 80
+        },
+        "node95/natural": {
+          "groups": 8,
+          "observed_queries": 4,
+          "missing_queries": 124
+        }
+      },
+      "target_updates": 0,
+      "seconds": 295.8834563996643,
+      "peak_mib": 244.78955078125
+    },
+    {
+      "arm": "direct",
+      "seed": 11,
+      "initial_digest": "2bcc5b38c4460a4c05c071238f6284894d850e3f3fd99d5b5929e17d1cbf7d7a",
+      "final_digest": "eeeae7d31538890313a9932ac8b47459fea4608cdc2bb55902488fdc2b7fa0b2",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "d9b8c1b9049486dd9d48b999f5d443710707ceecb01fbd2560646b3cc04c439a",
+      "schedule_sha256": "f1e999534aba030369f8704664730a160c54c5a35f52b88d6c5a5e8bcd38d2d6",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 125,
+      "unique_bases": 107,
+      "trainable_parameters": 3564801,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 24,
+          "observed_queries": 384,
+          "missing_queries": 0
+        },
+        "node95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node995/natural": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster995/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "cluster95/disjoint": {
+          "groups": 6,
+          "observed_queries": 0,
+          "missing_queries": 96
+        },
+        "cluster95/natural": {
+          "groups": 7,
+          "observed_queries": 12,
+          "missing_queries": 100
+        },
+        "node995/disjoint": {
+          "groups": 6,
+          "observed_queries": 0,
+          "missing_queries": 96
+        },
+        "cell95/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "full/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "cell95/natural": {
+          "groups": 6,
+          "observed_queries": 39,
+          "missing_queries": 57
+        },
+        "node95/natural": {
+          "groups": 8,
+          "observed_queries": 5,
+          "missing_queries": 123
+        },
+        "cluster995/natural": {
+          "groups": 8,
+          "observed_queries": 1,
+          "missing_queries": 127
+        },
+        "node90/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node90/natural": {
+          "groups": 11,
+          "observed_queries": 19,
+          "missing_queries": 157
+        }
+      },
+      "target_updates": 0,
+      "seconds": 302.5301855998114,
+      "peak_mib": 243.3642578125
+    },
+    {
+      "arm": "direct",
+      "seed": 12,
+      "initial_digest": "c62d87d817553e09d2e8f949653ecb7680915886d2ad50e12be42d62698339a6",
+      "final_digest": "b8cbe34c52bb50f1d1b2d9ffcf2ddcb0a8916f78e87b207cc1d51a5f24a7403b",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "b8d73c8dce90491e676631dbc9c9e0bcf9b926c0e680a808b815465942a88f81",
+      "schedule_sha256": "cda698ac251a931ec53f87c4295f5a7bd68f1f1a2368a886f207493c6e9917da",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 124,
+      "unique_bases": 101,
+      "trainable_parameters": 3564801,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 29,
+          "observed_queries": 459,
+          "missing_queries": 0
+        },
+        "node995/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node90/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "cell95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "full/disjoint": {
+          "groups": 4,
+          "observed_queries": 0,
+          "missing_queries": 64
+        },
+        "cluster995/disjoint": {
+          "groups": 12,
+          "observed_queries": 0,
+          "missing_queries": 192
+        },
+        "cluster95/natural": {
+          "groups": 9,
+          "observed_queries": 10,
+          "missing_queries": 134
+        },
+        "cell95/natural": {
+          "groups": 5,
+          "observed_queries": 30,
+          "missing_queries": 50
+        },
+        "node90/natural": {
+          "groups": 8,
+          "observed_queries": 16,
+          "missing_queries": 112
+        },
+        "node95/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node95/natural": {
+          "groups": 2,
+          "observed_queries": 1,
+          "missing_queries": 31
+        },
+        "cluster95/disjoint": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster995/natural": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node995/natural": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        }
+      },
+      "target_updates": 0,
+      "seconds": 294.6636489997618,
+      "peak_mib": 243.5087890625
+    },
+    {
+      "arm": "direct",
+      "seed": 13,
+      "initial_digest": "21973da6c86588f22c045e7f7eb7b9c1efb7ddb0ed8a4fae45af418b48b88a8c",
+      "final_digest": "f0147a85ea59201960591975dad8f0da75ffeea5c81cd8f8922bff2178de5694",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "6ec68c094b1543c2872c25959ec17c98192cd0376b15b21556c52c4f297a7a45",
+      "schedule_sha256": "9c7d2a6c8fe3322b3f12ac9ad02cb1be22eafeef1499bab7a1438161e9d62e1a",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 124,
+      "unique_bases": 101,
+      "trainable_parameters": 3564801,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 22,
+          "observed_queries": 347,
+          "missing_queries": 0
+        },
+        "node90/disjoint": {
+          "groups": 11,
+          "observed_queries": 0,
+          "missing_queries": 176
+        },
+        "full/disjoint": {
+          "groups": 11,
+          "observed_queries": 0,
+          "missing_queries": 176
+        },
+        "node995/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "cluster995/disjoint": {
+          "groups": 12,
+          "observed_queries": 0,
+          "missing_queries": 192
+        },
+        "cluster95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node995/natural": {
+          "groups": 3,
+          "observed_queries": 0,
+          "missing_queries": 48
+        },
+        "cell95/natural": {
+          "groups": 8,
+          "observed_queries": 53,
+          "missing_queries": 75
+        },
+        "cell95/disjoint": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster95/natural": {
+          "groups": 9,
+          "observed_queries": 11,
+          "missing_queries": 133
+        },
+        "node95/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "node90/natural": {
+          "groups": 5,
+          "observed_queries": 8,
+          "missing_queries": 72
+        },
+        "cluster995/natural": {
+          "groups": 5,
+          "observed_queries": 0,
+          "missing_queries": 80
+        },
+        "node95/natural": {
+          "groups": 8,
+          "observed_queries": 4,
+          "missing_queries": 124
+        }
+      },
+      "target_updates": 0,
+      "seconds": 294.61512380000204,
+      "peak_mib": 245.37255859375
+    },
+    {
+      "arm": "group_pg",
+      "seed": 11,
+      "initial_digest": "2bcc5b38c4460a4c05c071238f6284894d850e3f3fd99d5b5929e17d1cbf7d7a",
+      "final_digest": "11989d7be4141dfcedaceb638099156ec8567cb64edc45dfa73eb00b3d094c1f",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "c9fcd2586addc19601eb313cdba51259faf198f2faa1bf15c624cf98e9b9f521",
+      "schedule_sha256": "f1e999534aba030369f8704664730a160c54c5a35f52b88d6c5a5e8bcd38d2d6",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 125,
+      "unique_bases": 107,
+      "trainable_parameters": 3564801,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 24,
+          "observed_queries": 384,
+          "missing_queries": 0
+        },
+        "node95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node995/natural": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster995/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "cluster95/disjoint": {
+          "groups": 6,
+          "observed_queries": 0,
+          "missing_queries": 96
+        },
+        "cluster95/natural": {
+          "groups": 7,
+          "observed_queries": 12,
+          "missing_queries": 100
+        },
+        "node995/disjoint": {
+          "groups": 6,
+          "observed_queries": 0,
+          "missing_queries": 96
+        },
+        "cell95/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "full/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "cell95/natural": {
+          "groups": 6,
+          "observed_queries": 39,
+          "missing_queries": 57
+        },
+        "node95/natural": {
+          "groups": 8,
+          "observed_queries": 5,
+          "missing_queries": 123
+        },
+        "cluster995/natural": {
+          "groups": 8,
+          "observed_queries": 1,
+          "missing_queries": 127
+        },
+        "node90/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node90/natural": {
+          "groups": 11,
+          "observed_queries": 19,
+          "missing_queries": 157
+        }
+      },
+      "target_updates": 0,
+      "seconds": 308.5434874999337,
+      "peak_mib": 243.35400390625
+    },
+    {
+      "arm": "group_pg",
+      "seed": 12,
+      "initial_digest": "c62d87d817553e09d2e8f949653ecb7680915886d2ad50e12be42d62698339a6",
+      "final_digest": "4bfddb8b24b0e753f36fd4ab7178a607e714b5feff425bb2e0df493e8428731f",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "363e09150bdb5755f939c2bac041fe8933f0fca2e695d8f4650874a49187ba0f",
+      "schedule_sha256": "cda698ac251a931ec53f87c4295f5a7bd68f1f1a2368a886f207493c6e9917da",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 124,
+      "unique_bases": 101,
+      "trainable_parameters": 3564801,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 29,
+          "observed_queries": 459,
+          "missing_queries": 0
+        },
+        "node995/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node90/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "cell95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "full/disjoint": {
+          "groups": 4,
+          "observed_queries": 0,
+          "missing_queries": 64
+        },
+        "cluster995/disjoint": {
+          "groups": 12,
+          "observed_queries": 0,
+          "missing_queries": 192
+        },
+        "cluster95/natural": {
+          "groups": 9,
+          "observed_queries": 10,
+          "missing_queries": 134
+        },
+        "cell95/natural": {
+          "groups": 5,
+          "observed_queries": 30,
+          "missing_queries": 50
+        },
+        "node90/natural": {
+          "groups": 8,
+          "observed_queries": 16,
+          "missing_queries": 112
+        },
+        "node95/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node95/natural": {
+          "groups": 2,
+          "observed_queries": 1,
+          "missing_queries": 31
+        },
+        "cluster95/disjoint": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster995/natural": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "node995/natural": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        }
+      },
+      "target_updates": 0,
+      "seconds": 298.66787909995764,
+      "peak_mib": 243.01611328125
+    },
+    {
+      "arm": "group_pg",
+      "seed": 13,
+      "initial_digest": "21973da6c86588f22c045e7f7eb7b9c1efb7ddb0ed8a4fae45af418b48b88a8c",
+      "final_digest": "ab8d501d511b3b68feb8dc94f3fabfa2740a5c5896c2f51e1a9b8da5afced34f",
+      "frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+      "frozen_unchanged": true,
+      "checkpoint_sha256": "cc36896f1cd5d1c444a173f0a1f2f925926518b96332b07a17c630b24f628a21",
+      "schedule_sha256": "9c7d2a6c8fe3322b3f12ac9ad02cb1be22eafeef1499bab7a1438161e9d62e1a",
+      "updates": 128,
+      "task_groups": 128,
+      "logical_trace_slots": 1024,
+      "unique_episodes": 124,
+      "unique_bases": 101,
+      "trainable_parameters": 3564801,
+      "adapter_parameters": 3564288,
+      "policy_parameters": 513,
+      "query_exposures": {
+        "full/natural": {
+          "groups": 22,
+          "observed_queries": 347,
+          "missing_queries": 0
+        },
+        "node90/disjoint": {
+          "groups": 11,
+          "observed_queries": 0,
+          "missing_queries": 176
+        },
+        "full/disjoint": {
+          "groups": 11,
+          "observed_queries": 0,
+          "missing_queries": 176
+        },
+        "node995/disjoint": {
+          "groups": 8,
+          "observed_queries": 0,
+          "missing_queries": 128
+        },
+        "cluster995/disjoint": {
+          "groups": 12,
+          "observed_queries": 0,
+          "missing_queries": 192
+        },
+        "cluster95/disjoint": {
+          "groups": 10,
+          "observed_queries": 0,
+          "missing_queries": 160
+        },
+        "node995/natural": {
+          "groups": 3,
+          "observed_queries": 0,
+          "missing_queries": 48
+        },
+        "cell95/natural": {
+          "groups": 8,
+          "observed_queries": 53,
+          "missing_queries": 75
+        },
+        "cell95/disjoint": {
+          "groups": 7,
+          "observed_queries": 0,
+          "missing_queries": 112
+        },
+        "cluster95/natural": {
+          "groups": 9,
+          "observed_queries": 11,
+          "missing_queries": 133
+        },
+        "node95/disjoint": {
+          "groups": 9,
+          "observed_queries": 0,
+          "missing_queries": 144
+        },
+        "node90/natural": {
+          "groups": 5,
+          "observed_queries": 8,
+          "missing_queries": 72
+        },
+        "cluster995/natural": {
+          "groups": 5,
+          "observed_queries": 0,
+          "missing_queries": 80
+        },
+        "node95/natural": {
+          "groups": 8,
+          "observed_queries": 4,
+          "missing_queries": 124
+        }
+      },
+      "target_updates": 0,
+      "seconds": 297.417035699822,
+      "peak_mib": 243.8212890625
+    }
+  ],
+  "eval_seconds": 3690.869727499783,
+  "evaluations": [
+    {
+      "arm": "fixed",
+      "seed": 11,
+      "split": "final",
+      "seconds": 93.79391540028155,
+      "peak_mib": 122.169921875
+    },
+    {
+      "arm": "fixed",
+      "seed": 11,
+      "split": "real",
+      "seconds": 6.404221500270069,
+      "peak_mib": 480.47265625
+    },
+    {
+      "arm": "fixed",
+      "seed": 12,
+      "split": "final",
+      "seconds": 94.91928189992905,
+      "peak_mib": 122.169921875
+    },
+    {
+      "arm": "fixed",
+      "seed": 12,
+      "split": "real",
+      "seconds": 6.361355599947274,
+      "peak_mib": 480.47265625
+    },
+    {
+      "arm": "fixed",
+      "seed": 13,
+      "split": "final",
+      "seconds": 95.06994169997051,
+      "peak_mib": 122.169921875
+    },
+    {
+      "arm": "fixed",
+      "seed": 13,
+      "split": "real",
+      "seconds": 6.292159100063145,
+      "peak_mib": 480.47265625
+    },
+    {
+      "arm": "uniform",
+      "seed": 11,
+      "split": "final",
+      "seconds": 602.9675210001878,
+      "peak_mib": 122.171875
+    },
+    {
+      "arm": "uniform",
+      "seed": 11,
+      "split": "real",
+      "seconds": 44.55488800024614,
+      "peak_mib": 480.49609375
+    },
+    {
+      "arm": "uniform",
+      "seed": 12,
+      "split": "final",
+      "seconds": 601.8108586999588,
+      "peak_mib": 122.171875
+    },
+    {
+      "arm": "uniform",
+      "seed": 12,
+      "split": "real",
+      "seconds": 44.7149264998734,
+      "peak_mib": 480.49609375
+    },
+    {
+      "arm": "uniform",
+      "seed": 13,
+      "split": "final",
+      "seconds": 605.2051882999949,
+      "peak_mib": 122.171875
+    },
+    {
+      "arm": "uniform",
+      "seed": 13,
+      "split": "real",
+      "seconds": 44.88739399984479,
+      "peak_mib": 480.49609375
+    },
+    {
+      "arm": "direct",
+      "seed": 11,
+      "split": "final",
+      "seconds": 176.65962459985167,
+      "peak_mib": 122.169921875
+    },
+    {
+      "arm": "direct",
+      "seed": 11,
+      "split": "real",
+      "seconds": 11.834403600078076,
+      "peak_mib": 480.47265625
+    },
+    {
+      "arm": "direct",
+      "seed": 12,
+      "split": "final",
+      "seconds": 176.31295310007408,
+      "peak_mib": 122.169921875
+    },
+    {
+      "arm": "direct",
+      "seed": 12,
+      "split": "real",
+      "seconds": 12.209025899879634,
+      "peak_mib": 480.47265625
+    },
+    {
+      "arm": "direct",
+      "seed": 13,
+      "split": "final",
+      "seconds": 176.29398290021345,
+      "peak_mib": 122.169921875
+    },
+    {
+      "arm": "direct",
+      "seed": 13,
+      "split": "real",
+      "seconds": 11.823794699739665,
+      "peak_mib": 480.47265625
+    },
+    {
+      "arm": "group_pg",
+      "seed": 11,
+      "split": "final",
+      "seconds": 276.7326595997438,
+      "peak_mib": 122.169921875
+    },
+    {
+      "arm": "group_pg",
+      "seed": 11,
+      "split": "real",
+      "seconds": 17.962413999717683,
+      "peak_mib": 480.47265625
+    },
+    {
+      "arm": "group_pg",
+      "seed": 12,
+      "split": "final",
+      "seconds": 274.0418294998817,
+      "peak_mib": 122.169921875
+    },
+    {
+      "arm": "group_pg",
+      "seed": 12,
+      "split": "real",
+      "seconds": 17.86122910026461,
+      "peak_mib": 480.47265625
+    },
+    {
+      "arm": "group_pg",
+      "seed": 13,
+      "split": "final",
+      "seconds": 274.1877513998188,
+      "peak_mib": 122.169921875
+    },
+    {
+      "arm": "group_pg",
+      "seed": 13,
+      "split": "real",
+      "seconds": 17.96840739995241,
+      "peak_mib": 480.47265625
+    }
+  ],
+  "saved_records": 30828,
+  "actual_evaluation_forwards": 51747,
+  "actual_extra_adapter_pairs": 51747
+}

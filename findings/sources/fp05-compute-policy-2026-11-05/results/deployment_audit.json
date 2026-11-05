@@ -1,0 +1,401 @@
+{
+  "cycle": "FP05",
+  "status": "PASS",
+  "scientific_forwards": 0,
+  "optimizer_updates_performed_by_audit": 0,
+  "gpu_used": false,
+  "script_sha256": "dae04e7af7ac50d49685404d385dca74f3559a0cd470dd1149de29b2cabe6d98",
+  "python": "3.11.15 | packaged by Anaconda, Inc. | (main, Mar 11 2026, 17:12:15) [MSC v.1942 64 bit (AMD64)]",
+  "torch": "2.4.1+cu121",
+  "numpy": "1.26.4",
+  "tolerances": {
+    "metric_absolute": 1e-10,
+    "probability_rowsum": 2e-05,
+    "leaf_sum": 0.0002,
+    "exp_logp_absolute": 3e-07,
+    "exp_logp_relative": 2e-06,
+    "direct_scalar": "3e-5*(1+abs(expected))",
+    "pg_sd": "2e-6*(1+maxabsreward)",
+    "pg_actor": "3e-5+16*float32_eps*max(1,maxabsreward)*max(1,meanabslogp)/(recorded_sd+1e-6)"
+  },
+  "limitations": [
+    "No forward or training replay: logged PG conditional probabilities cannot be rederived without per-update states/checkpoints.",
+    "Calibration association is tied to its immutable fit folder/checkpoint; calibration records do not themselves store checkpoint SHA.",
+    "Failed retry extra-adapter counts are bounded where retry traces were not saved; actual forward/backward counts are exact.",
+    "Reference wall times exclude unrecorded prior/LP CPU time; reported wall sums are component totals, not critical-path time.",
+    "Recorded training/evaluation wall times are actual workload records under possible concurrent CPU audits/hash work, not controlled robust latency benchmarks."
+  ],
+  "anchors": {
+    "design_sha256": "8d790c1a3c962c47c6fc01ae60433bfeaff5302e0607f9fb7483a850d12900fe",
+    "lock_sha256": "18b27b3d9a4eb3c8fc321824bf32407ae8f888d27c4e2de4a10b66eba325c575",
+    "sources": 77,
+    "public_checkpoints": {
+      "C:\\Users\\seongjin\\Desktop\\csag_share\\research\\www2027\\results\\graph_pfn_suite_20261016\\checkpoints\\graphpfn-adapters-1_3.pt": "a4744c66bdf480062e1a34554b2389f6b57f70fa474805f3a1bbae6f4dcc3ae4",
+      "C:\\Users\\seongjin\\Desktop\\csag_share\\research\\www2027\\results\\graph_pfn_suite_20261016\\checkpoints\\LimiX-16M.ckpt": "ee6d6ae865821ca790a40a0199d09a662f4509da5e4c26535809432e599e7a52"
+    },
+    "bank_counts": {
+      "train": 1792,
+      "dev": 56,
+      "final": 1056,
+      "real": 45
+    }
+  },
+  "checkpoints": [
+    {
+      "arm": "fixed",
+      "seed": 11,
+      "checkpoint_sha256": "4befba8eec269a9a3521a7a03424dfb7b7c542023afc6b70a1bf00b85f34c2f8",
+      "final_digest": "53ea3ad120f56bc71271285bb5df403aaccd47cc789acaec365cd92e35f690ab",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "uniform",
+      "seed": 11,
+      "checkpoint_sha256": "18621a71b201857e94482e67cfffd7d4aef163554c7342b0aaf292685e859ebb",
+      "final_digest": "0fcbeeb90bb2ee27ff15d519fa9c6de19581489cb923155684dfb8ac8bfcb4ff",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "direct",
+      "seed": 11,
+      "checkpoint_sha256": "d9b8c1b9049486dd9d48b999f5d443710707ceecb01fbd2560646b3cc04c439a",
+      "final_digest": "eeeae7d31538890313a9932ac8b47459fea4608cdc2bb55902488fdc2b7fa0b2",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "group_pg",
+      "seed": 11,
+      "checkpoint_sha256": "c9fcd2586addc19601eb313cdba51259faf198f2faa1bf15c624cf98e9b9f521",
+      "final_digest": "11989d7be4141dfcedaceb638099156ec8567cb64edc45dfa73eb00b3d094c1f",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "fixed",
+      "seed": 12,
+      "checkpoint_sha256": "eb56f17cbbf68df73dbf7ae8742dfafbe05bbc92562e0a9307ac00df51c8919b",
+      "final_digest": "be352514aae77c0602e6ba3ac9c4540b444809f1f908725fbc437ce03cf9e56d",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "uniform",
+      "seed": 12,
+      "checkpoint_sha256": "86cd7af2264d640b51c0adb36d4852f5b9c84642584c53994fd63fd27771650c",
+      "final_digest": "79ca14a547efaedf84241e3257c8a46bcf45b37a894332065eaea29362f36540",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "direct",
+      "seed": 12,
+      "checkpoint_sha256": "b8d73c8dce90491e676631dbc9c9e0bcf9b926c0e680a808b815465942a88f81",
+      "final_digest": "b8cbe34c52bb50f1d1b2d9ffcf2ddcb0a8916f78e87b207cc1d51a5f24a7403b",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "group_pg",
+      "seed": 12,
+      "checkpoint_sha256": "363e09150bdb5755f939c2bac041fe8933f0fca2e695d8f4650874a49187ba0f",
+      "final_digest": "4bfddb8b24b0e753f36fd4ab7178a607e714b5feff425bb2e0df493e8428731f",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "fixed",
+      "seed": 13,
+      "checkpoint_sha256": "6766b51d91fed3a8924bcdefa077d963f983fc3502a3d78c3b4a4089d3f42c91",
+      "final_digest": "2a6d158ef5e41242d4dd564143a5403d1f4fa765d9ba693b2c12d20e78cdbaea",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "uniform",
+      "seed": 13,
+      "checkpoint_sha256": "eeb4527d43e4c6487ebfce0180b0a2cfd989d96e2006a16ba6aead1f306a0a9d",
+      "final_digest": "e237a740e1bd17a70901a962aaf1c749f273ab7882fdde8fb46a2e71aada60be",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "direct",
+      "seed": 13,
+      "checkpoint_sha256": "6ec68c094b1543c2872c25959ec17c98192cd0376b15b21556c52c4f297a7a45",
+      "final_digest": "f0147a85ea59201960591975dad8f0da75ffeea5c81cd8f8922bff2178de5694",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    },
+    {
+      "arm": "group_pg",
+      "seed": 13,
+      "checkpoint_sha256": "cc36896f1cd5d1c444a173f0a1f2f925926518b96332b07a17c630b24f628a21",
+      "final_digest": "ab8d501d511b3b68feb8dc94f3fabfa2740a5c5896c2f51e1a9b8da5afced34f",
+      "parameter_tensors": 148,
+      "all_trainable_float32_finite": true
+    }
+  ],
+  "public_frozen_digest": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+  "calibration": {
+    "fits": 6,
+    "branches_per_fit": 448,
+    "criterion": "independent mean CE; lower-cost/lexical ties",
+    "selected": [
+      {
+        "arm": "uniform",
+        "seed": 11,
+        "trace": [
+          1,
+          1,
+          0
+        ],
+        "checkpoint_sha256": "18621a71b201857e94482e67cfffd7d4aef163554c7342b0aaf292685e859ebb"
+      },
+      {
+        "arm": "uniform",
+        "seed": 12,
+        "trace": [
+          0,
+          1,
+          0
+        ],
+        "checkpoint_sha256": "86cd7af2264d640b51c0adb36d4852f5b9c84642584c53994fd63fd27771650c"
+      },
+      {
+        "arm": "uniform",
+        "seed": 13,
+        "trace": [
+          1,
+          1,
+          0
+        ],
+        "checkpoint_sha256": "eeb4527d43e4c6487ebfce0180b0a2cfd989d96e2006a16ba6aead1f306a0a9d"
+      },
+      {
+        "arm": "group_pg",
+        "seed": 11,
+        "trace": [
+          1,
+          1,
+          0
+        ],
+        "checkpoint_sha256": "c9fcd2586addc19601eb313cdba51259faf198f2faa1bf15c624cf98e9b9f521"
+      },
+      {
+        "arm": "group_pg",
+        "seed": 12,
+        "trace": [
+          1,
+          1,
+          0
+        ],
+        "checkpoint_sha256": "363e09150bdb5755f939c2bac041fe8933f0fca2e695d8f4650874a49187ba0f"
+      },
+      {
+        "arm": "group_pg",
+        "seed": 13,
+        "trace": [
+          1,
+          1,
+          0
+        ],
+        "checkpoint_sha256": "cc36896f1cd5d1c444a173f0a1f2f925926518b96332b07a17c630b24f628a21"
+      }
+    ]
+  },
+  "deployment": {
+    "records": 30828,
+    "max_independent_metric_error": 4.440892098500626e-16,
+    "exact_expected_variants": {
+      "fixed": [
+        "main"
+      ],
+      "uniform": [
+        "main",
+        "global"
+      ],
+      "direct": [
+        "main",
+        "replay000"
+      ],
+      "group_pg": [
+        "main",
+        "replay000",
+        "global"
+      ]
+    },
+    "reference_arms": [
+      "frozen_pcfi",
+      "frozen_nan",
+      "prior",
+      "lp"
+    ]
+  },
+  "independent_scientific_rescore": {
+    "primary": {
+      "fixed": {
+        "accuracy": 0.4929042022792023,
+        "graphs": 96
+      },
+      "uniform": {
+        "accuracy": 0.4947496152574278,
+        "graphs": 96
+      },
+      "direct": {
+        "accuracy": 0.48775866783679284,
+        "graphs": 96
+      },
+      "group_pg": {
+        "accuracy": 0.4879302121489622,
+        "graphs": 96
+      }
+    },
+    "primary_matched_secondary": {
+      "fixed": {
+        "accuracy": 0.4929042022792023,
+        "nll": 0.8450514436792834,
+        "brier": 0.5558493836581451,
+        "balanced_accuracy": 0.48848146853789215,
+        "macro_f1": 0.3699194492292839
+      },
+      "uniform": {
+        "accuracy": 0.4947496152574278,
+        "nll": 0.8455821757175114,
+        "brier": 0.5555085214249766,
+        "balanced_accuracy": 0.48598247897293034,
+        "macro_f1": 0.3701265141870265
+      },
+      "direct": {
+        "accuracy": 0.48775866783679284,
+        "nll": 0.845466738809083,
+        "brier": 0.5566081921772446,
+        "balanced_accuracy": 0.4818007910781348,
+        "macro_f1": 0.3634236299654742
+      },
+      "group_pg": {
+        "accuracy": 0.4879302121489622,
+        "nll": 0.8454058202617639,
+        "brier": 0.5566325667187685,
+        "balanced_accuracy": 0.4831285732978441,
+        "macro_f1": 0.3643239342491454
+      }
+    },
+    "gates": {
+      "group_pg_minus_fixed": {
+        "mean": -0.004973990130240128,
+        "ci": [
+          -0.010336099266763325,
+          0.00012146418396418034
+        ],
+        "n_graphs": 96,
+        "n_strata": 12,
+        "verdict": "FAIL"
+      },
+      "group_pg_minus_direct": {
+        "mean": 0.00017154431216931444,
+        "ci": [
+          -0.0024094612888558185,
+          0.002747835028108471
+        ],
+        "n_graphs": 96,
+        "n_strata": 12,
+        "verdict": "FAIL"
+      },
+      "feature_utility_none": {
+        "mean": -0.010633680555555552,
+        "ci": [
+          -0.05566677517361109,
+          0.040692816840277736
+        ],
+        "n_graphs": 48,
+        "n_strata": 6,
+        "verdict": "FAIL"
+      },
+      "feature_utility_shuffle": {
+        "mean": -0.0026041666666666665,
+        "ci": [
+          -0.02126736111111111,
+          0.01584201388888889
+        ],
+        "n_graphs": 48,
+        "n_strata": 6,
+        "verdict": "FAIL"
+      },
+      "full_natural_guard": {
+        "mean": 0.0013020833333333333,
+        "ci": [
+          -0.008246527777777776,
+          0.010416666666666666
+        ],
+        "n_graphs": 48,
+        "n_strata": 6,
+        "verdict": "PASS"
+      }
+    },
+    "utility_eligible_graphs": 48,
+    "utility_eligible_cases": 58,
+    "existing_summary_compared": true
+  },
+  "cost": {
+    "training": {
+      "successful_groups": 1536,
+      "logical_slots": 12288,
+      "successful_forwards": 9600,
+      "retry_forwards": 0,
+      "successful_transformer_backwards": 9600,
+      "retry_transformer_backwards": 0,
+      "successful_extra_pairs": 12850,
+      "retry_extra_pairs_lower": 0,
+      "retry_extra_pairs_upper": 0,
+      "retry_groups": 0,
+      "retry_attempts": 0,
+      "wall_seconds": 2811.497653398663
+    },
+    "preparation": {
+      "train": {
+        "prepare_wall_seconds": 85.98703949991614,
+        "prepare_cpu_seconds": 974.1875,
+        "pcfi_wall_seconds": 10.672468401957303
+      },
+      "dev": {
+        "prepare_wall_seconds": 3.230266199912876,
+        "prepare_cpu_seconds": 22.46875,
+        "pcfi_wall_seconds": 0.38831540010869503
+      },
+      "final": {
+        "prepare_wall_seconds": 33.53188899997622,
+        "prepare_cpu_seconds": 366.171875,
+        "pcfi_wall_seconds": 4.765395301859826
+      },
+      "real": {
+        "prepare_wall_seconds": 13.32703539961949,
+        "prepare_cpu_seconds": 13.03125,
+        "pcfi_wall_seconds": 1.8717988980934024
+      }
+    },
+    "preparation_wall_seconds": 136.07623009942472,
+    "pcfi_wall_seconds_subset_of_preparation": 17.697978002019227,
+    "calibration": {
+      "actual_forwards": 2688,
+      "extra_adapter_pairs": 4032,
+      "wall_seconds": 197.03345300024375
+    },
+    "deployment": {
+      "actual_forwards": 51747,
+      "extra_adapter_pairs": 51747,
+      "trained_evaluation_wall_seconds": 3690.869727499783,
+      "reference_record_seconds": 138.8782333014533
+    },
+    "total_actual_forwards": 64035,
+    "wall_component_sum_seconds": 6974.355297299568,
+    "wall_scope": "PCFI already included in preparation; no double count. Reference LP/prior timing is unrecorded. Checks/dev smoke not included. Workload times may include CPU-audit/hash contention and are not controlled robust latency benchmarks."
+  },
+  "max_actor_scalar_error": 3.504807111665009e-05,
+  "max_pg_actor_tolerance": 0.002516211068891623,
+  "source_hashes_unchanged": true,
+  "cpu_parameter_reconstruction_only": true,
+  "audit_wall_seconds": 77.93362689996138
+}

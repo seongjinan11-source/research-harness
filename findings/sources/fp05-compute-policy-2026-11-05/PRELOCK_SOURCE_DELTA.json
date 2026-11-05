@@ -1,0 +1,48 @@
+{
+  "status": "DOCUMENTED_PRELOCK_DELTA",
+  "manifests": {
+    "train": {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\bank\\train\\manifest.json",
+      "sha256": "77e866cc5d4bf060a6d309935dcad474840c82049cc7e8e9bd2ee3e9466cf2bc",
+      "dependency_mismatches": [
+        {
+          "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_util.py",
+          "recorded_sha256": "af7dba0d423b7f5fb0c94e9b744d32d19e61cf8b5b7b0edbc57674cec7f5c80d",
+          "current_sha256": "4ee7f2bfe2bfcf4c1e77ac19b7fb262d79c1abe02faaaa4623d4c9b733164e18"
+        }
+      ]
+    },
+    "dev": {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\bank\\dev\\manifest.json",
+      "sha256": "bed5efcd8e11df7bc092907677ca71dbdb062945b641bef986c6077bf28d258d",
+      "dependency_mismatches": [
+        {
+          "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_util.py",
+          "recorded_sha256": "af7dba0d423b7f5fb0c94e9b744d32d19e61cf8b5b7b0edbc57674cec7f5c80d",
+          "current_sha256": "4ee7f2bfe2bfcf4c1e77ac19b7fb262d79c1abe02faaaa4623d4c9b733164e18"
+        }
+      ]
+    },
+    "final": {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\bank\\final\\manifest.json",
+      "sha256": "415e28c4f0becd89286964012aee763ba92068ad9e1e1386f9052662019dda79",
+      "dependency_mismatches": []
+    },
+    "real": {
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\bank\\real\\manifest.json",
+      "sha256": "db3c14b1d61bec329d43ecdd65e63ee3b30e84b472bfbdffff44cde151c608be",
+      "dependency_mismatches": [
+        {
+          "path": "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_util.py",
+          "recorded_sha256": "af7dba0d423b7f5fb0c94e9b744d32d19e61cf8b5b7b0edbc57674cec7f5c80d",
+          "current_sha256": "4ee7f2bfe2bfcf4c1e77ac19b7fb262d79c1abe02faaaa4623d4c9b733164e18"
+        }
+      ]
+    }
+  },
+  "current_util_sha256": "4ee7f2bfe2bfcf4c1e77ac19b7fb262d79c1abe02faaaa4623d4c9b733164e18",
+  "scope": "Train/dev/real were prepared before the expanded design/source bookkeeping. Final was prepared under the design lock. Data implementation and every other recorded dependency match the current lock.",
+  "limitation": "The exact earlier rl_util.py bytes were not snapshotted. Removing the known source-enumeration addition did not reconstruct its recorded hash, so a byte-exact claim that this was the only change is unsupported. No old source snapshot is fabricated.",
+  "mitigation": "Preserve original preparation receipts and banks. Independent CPU audits recompute graph/mask/query/context/input identities and real projected preprocessing. Scientific training and final preparation use the explicit current design/full lock.",
+  "action": "No input, source, manifest, checkpoint or prediction modified by this audit."
+}

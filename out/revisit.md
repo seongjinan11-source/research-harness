@@ -17,6 +17,8 @@
 
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [PolicyGNN](https://arxiv.org/abs/2006.15097): 복수 태그 일치 (약한 단서); tags=adaptation, graph-structure-use; keywords=-
+  - 기록된 강점: Node별 aggregation 횟수를 학습하는 명시적인 RL 선행이다.
 
 ## BIND-F01 — Class pooling 전 context identity를 보존해 곱하면 실제 graph에서 좋아진다.
 
@@ -654,6 +656,8 @@
   - 기록된 강점: 값과 mask의 생성 과제를 함께 학습하는 단계와 실제 조건부 예측 단계를 분리하며, target에서 재학습이나 diffusion sampling을 요구하지 않는다.
 - [MaM](https://proceedings.mlr.press/v235/liu24az.html): 복수 태그 일치 (약한 단서); tags=amortized-inference, inference-cost; keywords=-
   - 기록된 강점: 관측 subset의 marginal probability를 직접 근사해 반복 conditional 평가의 비용을 줄인다.
+- [PolicyGNN](https://arxiv.org/abs/2006.15097): 구체 키워드+태그 일치 (미검증); tags=inference-cost; keywords=shared
+  - 기록된 강점: 서로 다른 깊이의 GNN에 layer parameters를 공유하고 action별 batch buffers를 사용한다.
 - [Time-MoE](https://arxiv.org/abs/2409.16040): 구체 키워드+태그 일치 (미검증); tags=inference-cost; keywords=shared
   - 기록된 강점: sparse MoE로 시계열 foundation model을 처음 2.4B 파라미터까지 키웠다. 같은 활성 파라미터의 dense 모델과 비교하면 학습 비용은 평균 78%, 추론 비용은 39% 줄었다. ultra 모델도 8GB 미만 VRAM의 소비자용 GPU에서 돌아간다.
   - 기록된 강점: 여러 해상도의 출력 head를 함께 학습해서 긴 horizon을 적은 decoding step으로 만든다. ablation에서 horizon 1짜리 head 하나로만 autoregressive하게 예측하면 MSE가 1.382까지 무너졌지만, 네 head를 쓰면 0.262였고 추론도 가장 빨랐다.
@@ -891,6 +895,24 @@
   - 기록된 강점: 공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+
+## FP05-F01 — 불완전 피처 입력에서 내부 세 지점의 adapter 추가 실행을 Group-PG로 학습하면 일반 fine-tuning과 기대 목적 직접 최적화보다 높은 missing-query accuracy와 관측 피처 효용을 얻는다.
+
+- 판정: 현재 반복 adapter action·학습 목적·128updates·greedy 배포의 확대를 중단한다. 이 후보를 missing 대응의 새 메인 메소드로 승격하지 않는다.
+- 원인·병목 [원인 미상]: 배포된 두 정책 모두 모든 최종 합성·실제 episode에서000을 골랐고 같은 checkpoint의000 replay와 확률 배열이 동일했다. 적응적인 경로 선택 효과가 없다는 것은 확인됐지만, 연산 후보·상태·목적·최적화·greedy 추론 중 최종 원인은 분리하지 못했다.
+- 반증·배제한 설명: 실제 public pretrained adapter를 학습했고 LimiX는 고정했다. 작은 scratch Factor만 학습한 결과가 아니다.; 초기000 parity/gradient 경계/tree probability/RNG·leakage 검사, checkpoint 내부/일정/배포/독립 지표·bootstrap 감사를 통과했다. 원인으로 확정할 구현 오류는 발견하지 못했다.; Primary96graphs/192cases와 utility48graphs/58cases가 남았으며 source0/1이나 입력 불변 shuffle을 성능에 따라 제거하지 않았다.
+- 재검토 조건: 유익한 대안 계산과 그것을 배포에서 실제 사용하는 학습 원리를 제시하고, 기존의 모든000 현상 및 강한 고정·직접 최적화 대조를 다룰 독립 검증을 설계할 수 있을 때.
+- 먼저 이겨야 할 기준선: 동일 public 초기값/PCFI/일정의 Fixed, Uniform8 및 dev-selected single-global, 동일8경로 Direct, own000 replay, frozen PCFI/NaN, LP/prior와 none/shuffle를 유지한다. 실제 추론 수와 calibration 비용을 맞춰 보고한다.
+- 최소 재검증: 새 cycle/plan/세 관점 검토/수치 검사 뒤 새 bank를 잠근다. 현재 final은 개발 자료로 취급하고 비용항·temperature·loss·학습량을 같은 bank에서 조정해 통과시키지 않는다. Primary missing-query accuracy와 utility·full guard를 먼저 고정한다.
+- 닫지 않은 것: RL 전체, 다른 유효한 추론 연산, 본체 Transformer의 policy-gradient, target-time 학습 또는 heterogeneous schema transfer는 검증하지 않았다. 작은 일반 fine-tuning 점 이득과 실제 피처 활용 반응은 보존한다.
+- 원문: [findings/sources/fp05-compute-policy-2026-11-05/DECISION_KO.md](../findings/sources/fp05-compute-policy-2026-11-05/DECISION_KO.md); [findings/sources/fp05-compute-policy-2026-11-05/results/summary.json](../findings/sources/fp05-compute-policy-2026-11-05/results/summary.json); [findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json](../findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json); [findings/sources/fp05-compute-policy-2026-11-05/results/deployment_audit.json](../findings/sources/fp05-compute-policy-2026-11-05/results/deployment_audit.json)
+
+- [MA-PFN](https://arxiv.org/abs/2611.01851v1): 복수 태그 일치 (약한 단서); tags=observation-mask, pretraining-data; keywords=-
+  - 기록된 강점: 값과 mask의 생성 과제를 함께 학습하는 단계와 실제 조건부 예측 단계를 분리하며, target에서 재학습이나 diffusion sampling을 요구하지 않는다.
+- [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
+  - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [PolicyGNN](https://arxiv.org/abs/2006.15097): 복수 태그 일치 (약한 단서); tags=adaptation, graph-structure-use; keywords=-
+  - 기록된 강점: Node별 aggregation 횟수를 학습하는 명시적인 RL 선행이다.
 
 ## RFILL-F01 — 현재 frozen conditional Gaussian completion이 분산을 맞춘 random-fill/graph-prior null보다 안정적으로 좋은 예측을 제공한다.
 

@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 47개 프로젝트 · 194개 기록 (실패·중단 56개, 보존 45개, 교훈 67개, 미실행 26개)
+총 48개 프로젝트 · 198개 기록 (실패·중단 57개, 보존 46개, 교훈 68개, 미실행 27개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1495,6 +1495,42 @@ node_minus_pcfi=+0.080097%p CI[-0.1365710486064015, 0.3025558766215623]; node_mi
 I/Node×weighted/uniform공간전파를비교했고confidence는descriptor와채널보정에유지했다. 기존dev2graph는모두label-homo였으며새32개개발graph는label-homo/hetero×feature-smooth/rough네cell에8개씩배정했다. 원test/realbank를독립최종검증으로재명명하지않았다.
 
 - 원문: [findings/sources/pcfi-reviewer-ablation-2026-11-03/REPORT_KO.md](../findings/sources/pcfi-reviewer-ablation-2026-11-03/REPORT_KO.md); [findings/sources/pcfi-reviewer-ablation-2026-11-03/METHOD_KO.md](../findings/sources/pcfi-reviewer-ablation-2026-11-03/METHOD_KO.md); [findings/sources/pcfi-reviewer-ablation-2026-11-03/protocol.json](../findings/sources/pcfi-reviewer-ablation-2026-11-03/protocol.json); [findings/sources/pcfi-reviewer-ablation-2026-11-03/results/statistics.json](../findings/sources/pcfi-reviewer-ablation-2026-11-03/results/statistics.json); [findings/sources/pcfi-reviewer-ablation-2026-11-03/results/audit.json](../findings/sources/pcfi-reviewer-ablation-2026-11-03/results/audit.json); [findings/sources/pcfi-reviewer-ablation-2026-11-03/results/preflight.json](../findings/sources/pcfi-reviewer-ablation-2026-11-03/results/preflight.json); [findings/sources/pcfi-reviewer-ablation-2026-11-03/reference/workspace/pcfi_orthogonal_pilot/reviewer_development/REVIEW_KO.md](../findings/sources/pcfi-reviewer-ablation-2026-11-03/reference/workspace/pcfi_orthogonal_pilot/reviewer_development/REVIEW_KO.md)
+
+## FP05 missing-feature GraphPFN computation policy
+
+실험 조건: 공개 GraphPFN1.3의 adapter 3,564,288 parameters를 CE로 fine-tuning하고 513-parameter 내부 연산 정책을 비교했다. LimiX/입출력 encoder는 고정이다. 같은 PCFI100 입력과 3-bit/8경로에서 Fixed, Uniform, Direct, Group-PG 각3seed/128updates, 총12fits/1,536updates다. 새 합성96graphs/95·99.5% whole-node missing, 재사용 Cora/CiteSeer/PubMed 개발 패널을 평가했다. 실제 graph weight update는0회다.
+
+### FP05-F01 [실패·중단] 불완전 피처 입력에서 내부 세 지점의 adapter 추가 실행을 Group-PG로 학습하면 일반 fine-tuning과 기대 목적 직접 최적화보다 높은 missing-query accuracy와 관측 피처 효용을 얻는다.
+
+Primary96graphs에서 Fixed49.290%, Uniform8평균49.475%, Direct48.776%, PG48.793%다. PG−Fixed−0.497%p nominal97.5% CI[-1.034,+0.012], PG−Direct+0.017[-0.241,+0.275]다. Disjoint48graphs/58cases의 PG observed−none−1.063[-5.567,+4.069], observed−shuffle−0.260[-2.127,+1.584]로 네 효능 gate 모두FAIL이다. Full-natural guard만PASS다. 30,828개 평가 예측의 주 감사와 두 독립 감사는PASS다.
+
+- 판정: 현재 반복 adapter action·학습 목적·128updates·greedy 배포의 확대를 중단한다. 이 후보를 missing 대응의 새 메인 메소드로 승격하지 않는다.
+- 원인·병목 [원인 미상]: 배포된 두 정책 모두 모든 최종 합성·실제 episode에서000을 골랐고 같은 checkpoint의000 replay와 확률 배열이 동일했다. 적응적인 경로 선택 효과가 없다는 것은 확인됐지만, 연산 후보·상태·목적·최적화·greedy 추론 중 최종 원인은 분리하지 못했다.
+- 닫은 범위: Layer2/5/8의 동일 residual conv+MLP 추가 실행 세 bit, PCFI100 front end, 현재 상태 요약·목적·예산·greedy 배포를 우수한 missing-feature 계산 정책으로 확대하는 주장.
+- 닫지 않은 것: RL 전체, 다른 유효한 추론 연산, 본체 Transformer의 policy-gradient, target-time 학습 또는 heterogeneous schema transfer는 검증하지 않았다. 작은 일반 fine-tuning 점 이득과 실제 피처 활용 반응은 보존한다.
+- 재검토 조건: 유익한 대안 계산과 그것을 배포에서 실제 사용하는 학습 원리를 제시하고, 기존의 모든000 현상 및 강한 고정·직접 최적화 대조를 다룰 독립 검증을 설계할 수 있을 때.
+- 기준선: 동일 public 초기값/PCFI/일정의 Fixed, Uniform8 및 dev-selected single-global, 동일8경로 Direct, own000 replay, frozen PCFI/NaN, LP/prior와 none/shuffle를 유지한다. 실제 추론 수와 calibration 비용을 맞춰 보고한다.
+- 최소 재검증: 새 cycle/plan/세 관점 검토/수치 검사 뒤 새 bank를 잠근다. 현재 final은 개발 자료로 취급하고 비용항·temperature·loss·학습량을 같은 bank에서 조정해 통과시키지 않는다. Primary missing-query accuracy와 utility·full guard를 먼저 고정한다.
+- 원문: [findings/sources/fp05-compute-policy-2026-11-05/DECISION_KO.md](../findings/sources/fp05-compute-policy-2026-11-05/DECISION_KO.md); [findings/sources/fp05-compute-policy-2026-11-05/results/summary.json](../findings/sources/fp05-compute-policy-2026-11-05/results/summary.json); [findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json](../findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json); [findings/sources/fp05-compute-policy-2026-11-05/results/deployment_audit.json](../findings/sources/fp05-compute-policy-2026-11-05/results/deployment_audit.json)
+
+### FP05-P01 [보존] 공개 PFN의 실제 adapter 학습과 내부 discrete 계산 경로를 구현했으며, 실제 graph에서는 남은 관측값을 활용하는 반응이 남아 있다.
+
+Fixed49.290%와 Uniform49.475%의 primary 점 추정은 frozen PCFI48.788%보다 높지만 추가 유의성 주장은 하지 않는다. Real95에서 PG observed−none은 Cora/CiteSeer/PubMed+21.134/+11.180/+24.768%p, observed−shuffle는+3.185/+1.385/+2.071%p다. Frozen PCFI와 Fixed에도 관측 정보 활용 반응이 있다. PG 자체는 같은 입력의 frozen PCFI와 LP보다 real95/99/99.5 accuracy가 모두 낮다.
+
+- 확대 금지: Point gain이나 관측 피처 반응은 RL 고유 효과가 아니다. PG의 main과000 replay는 확률까지 같으며, 단순 fine-tuning·공통 PCFI 경로와 구분해야 한다. Uniform은 inference8회다. Real은 k4/class, RP16 입력, 재사용3graphs이고3seed×3rep를 독립9graphs로 세지 않는다. Native k20 기준선과 비교하거나 새 schema·backbone RL·관측 likelihood 복원 성과로 부르지 않는다.
+- 원문: [findings/sources/fp05-compute-policy-2026-11-05/DECISION_KO.md](../findings/sources/fp05-compute-policy-2026-11-05/DECISION_KO.md); [findings/sources/fp05-compute-policy-2026-11-05/results/checks.json](../findings/sources/fp05-compute-policy-2026-11-05/results/checks.json); [findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json](../findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json)
+
+### FP05-L01 [교훈] 학습의 stochastic policy, greedy 배포 결정, adapter 학습 효과, 실제 관측 정보 효용을 각각 감사해야 한다.
+
+Direct와 PG의 배포는 모든 final/real episode에서000이고 replay 차이는0이다. 학습에서 여러 trace는 계속 sample되므로 이를 확률분포 collapse로 바꿔 부를 수 없다. PG dev CE 최선은3seed모두110이며0.01cost를 더한 개발 최선도 모두000은 아니므로 cost 하나로 원인을 확정하지 못한다. Direct도 같은 배포를 보여 PG sampling variance만으로 설명할 근거가 없다.
+
+- 원문: [findings/sources/fp05-compute-policy-2026-11-05/RESULT_INFERENCE.md](../findings/sources/fp05-compute-policy-2026-11-05/RESULT_INFERENCE.md); [findings/sources/fp05-compute-policy-2026-11-05/RESULT_EXPERIMENTS.md](../findings/sources/fp05-compute-policy-2026-11-05/RESULT_EXPERIMENTS.md); [findings/sources/fp05-compute-policy-2026-11-05/PRELOCK_SOURCE_DELTA.json](../findings/sources/fp05-compute-policy-2026-11-05/PRELOCK_SOURCE_DELTA.json)
+
+### FP05-U01 [미실행] 학습된 stochastic 계산 정책의 기대 예측과 greedy 배포 사이 차이를 같은 유한 경로의 확률 가중 평균으로 분리할 수 있는가.
+
+현재 주 비교는 PG/Direct의 greedy, Uniform의 균등8경로 평균 및 dev-selected 고정 경로다. 학습된 PG 확률을 사용한 전체 경로 가중 예측은 실행하지 않았다. 이는 calibrated Bayesian posterior가 아닌 계산 정책의 분포다. 같은8회 추론 비용의 강한 대조와 새 bank가 필요한 후속 질문이며, 현재 후보의 확대 중단 판정을 바꾸거나 성공·실패로 세지 않는다.
+
+- 원문: [findings/sources/fp05-compute-policy-2026-11-05/RESPONSE_RESULTS.md](../findings/sources/fp05-compute-policy-2026-11-05/RESPONSE_RESULTS.md)
 
 ## Plain relation adaptation과 CRR 제안 철회
 

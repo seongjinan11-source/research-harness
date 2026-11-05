@@ -1,0 +1,1378 @@
+{
+  "status": "PASS",
+  "cycle": "FP05",
+  "script_sha256": "39031b7e8c8eedf490f0c1e1f57f744556dea8df46c4e272c11923fec2389f04",
+  "model_forwards": 0,
+  "gpu_used": false,
+  "optimizer_updates": 0,
+  "scope": "saved artifacts only; post-result descriptive diagnostic, no gate changes",
+  "pairing_unit": "each fit/split physical episode; TV averaged equally across records, argmax change counts across query rows",
+  "allclose_thresholds": {
+    "numpy_default": {
+      "atol": 1e-08,
+      "rtol": 1e-05
+    },
+    "strict_absolute": [
+      1e-07,
+      1e-06
+    ]
+  },
+  "note": "All-greedy000 means conditional argmax chose0; it does not imply joint p000 near1 or entropy collapse.",
+  "lock_sha256": "18b27b3d9a4eb3c8fc321824bf32407ae8f888d27c4e2de4a10b66eba325c575",
+  "routing": [
+    {
+      "arm": "direct",
+      "seed": 11,
+      "split": "final",
+      "main_records": 1056,
+      "main_trace_counts": {
+        "000": 1056
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 1056,
+        "exact_arrays": 1056,
+        "allclose_numpy_default": 1056,
+        "allclose_abs1e_7": 1056,
+        "allclose_abs1e_6": 1056,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 16896,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "direct",
+      "seed": 11,
+      "split": "real",
+      "main_records": 45,
+      "main_trace_counts": {
+        "000": 45
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 45,
+        "exact_arrays": 45,
+        "allclose_numpy_default": 45,
+        "allclose_abs1e_7": 45,
+        "allclose_abs1e_6": 45,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 51285,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "direct",
+      "seed": 12,
+      "split": "final",
+      "main_records": 1056,
+      "main_trace_counts": {
+        "000": 1056
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 1056,
+        "exact_arrays": 1056,
+        "allclose_numpy_default": 1056,
+        "allclose_abs1e_7": 1056,
+        "allclose_abs1e_6": 1056,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 16896,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "direct",
+      "seed": 12,
+      "split": "real",
+      "main_records": 45,
+      "main_trace_counts": {
+        "000": 45
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 45,
+        "exact_arrays": 45,
+        "allclose_numpy_default": 45,
+        "allclose_abs1e_7": 45,
+        "allclose_abs1e_6": 45,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 51285,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "direct",
+      "seed": 13,
+      "split": "final",
+      "main_records": 1056,
+      "main_trace_counts": {
+        "000": 1056
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 1056,
+        "exact_arrays": 1056,
+        "allclose_numpy_default": 1056,
+        "allclose_abs1e_7": 1056,
+        "allclose_abs1e_6": 1056,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 16896,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "direct",
+      "seed": 13,
+      "split": "real",
+      "main_records": 45,
+      "main_trace_counts": {
+        "000": 45
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 45,
+        "exact_arrays": 45,
+        "allclose_numpy_default": 45,
+        "allclose_abs1e_7": 45,
+        "allclose_abs1e_6": 45,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 51285,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "group_pg",
+      "seed": 11,
+      "split": "final",
+      "main_records": 1056,
+      "main_trace_counts": {
+        "000": 1056
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 1056,
+        "exact_arrays": 1056,
+        "allclose_numpy_default": 1056,
+        "allclose_abs1e_7": 1056,
+        "allclose_abs1e_6": 1056,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 16896,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "group_pg",
+      "seed": 11,
+      "split": "real",
+      "main_records": 45,
+      "main_trace_counts": {
+        "000": 45
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 45,
+        "exact_arrays": 45,
+        "allclose_numpy_default": 45,
+        "allclose_abs1e_7": 45,
+        "allclose_abs1e_6": 45,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 51285,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "group_pg",
+      "seed": 12,
+      "split": "final",
+      "main_records": 1056,
+      "main_trace_counts": {
+        "000": 1056
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 1056,
+        "exact_arrays": 1056,
+        "allclose_numpy_default": 1056,
+        "allclose_abs1e_7": 1056,
+        "allclose_abs1e_6": 1056,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 16896,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "group_pg",
+      "seed": 12,
+      "split": "real",
+      "main_records": 45,
+      "main_trace_counts": {
+        "000": 45
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 45,
+        "exact_arrays": 45,
+        "allclose_numpy_default": 45,
+        "allclose_abs1e_7": 45,
+        "allclose_abs1e_6": 45,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 51285,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "group_pg",
+      "seed": 13,
+      "split": "final",
+      "main_records": 1056,
+      "main_trace_counts": {
+        "000": 1056
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 1056,
+        "exact_arrays": 1056,
+        "allclose_numpy_default": 1056,
+        "allclose_abs1e_7": 1056,
+        "allclose_abs1e_6": 1056,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 16896,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    },
+    {
+      "arm": "group_pg",
+      "seed": 13,
+      "split": "real",
+      "main_records": 45,
+      "main_trace_counts": {
+        "000": 45
+      },
+      "main_extra_pairs": 0,
+      "main_vs_replay000": {
+        "pairs": 45,
+        "exact_arrays": 45,
+        "allclose_numpy_default": 45,
+        "allclose_abs1e_7": 45,
+        "allclose_abs1e_6": 45,
+        "maximum_abs_probability_difference": 0.0,
+        "query_rows": 51285,
+        "argmax_changed_rows": 0,
+        "mean_record_TV": 0.0,
+        "argmax_changed_fraction": 0.0
+      }
+    }
+  ],
+  "training": [
+    {
+      "arm": "direct",
+      "seed": 11,
+      "entropy_kind": "exact8-leaf trajectory entropy",
+      "action1_kind": "probability-weighted",
+      "entire": {
+        "groups": 128,
+        "entropy_nats": {
+          "n": 128,
+          "mean": 2.022281353400584,
+          "minimum": 1.937836338980119,
+          "maximum": 2.0794414773401044
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.41342117660678923,
+          0.4224863944109529,
+          0.4129541931906715
+        ],
+        "mean_extra_pair_count": 1.2488617642084137,
+        "unique_traces_per8": {
+          "n": 128,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 128,
+          "mean": 0.05648283195387194,
+          "minimum": 0.0012644288362935185,
+          "maximum": 0.4390157461166382
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 128,
+          "mean": 0.20317757432349026,
+          "minimum": 0.12442999333143234,
+          "maximum": 0.27770599722862244
+        }
+      },
+      "first16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 2.0792235076394183,
+          "minimum": 2.078441000692523,
+          "maximum": 2.0794414773401044
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.49577860021963716,
+          0.4963713735342026,
+          0.4958012676797807
+        ],
+        "mean_extra_pair_count": 1.4879512414336205,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 0.07639057950291317,
+          "minimum": 0.0031745738815516233,
+          "maximum": 0.4390157461166382
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 16,
+          "mean": 0.12807487323880196,
+          "minimum": 0.12442999333143234,
+          "maximum": 0.13494855165481567
+        }
+      },
+      "last16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 1.9502294057540848,
+          "minimum": 1.937836338980119,
+          "maximum": 1.9646449239453547
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.35042453347705305,
+          0.3642149621155113,
+          0.34911248949356377
+        ],
+        "mean_extra_pair_count": 1.0637519850861281,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 0.04988177033374086,
+          "minimum": 0.005820508114993572,
+          "maximum": 0.14843246340751648
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 16,
+          "mean": 0.26910940185189247,
+          "minimum": 0.25896596908569336,
+          "maximum": 0.27770599722862244
+        }
+      },
+      "last_logged_update": {
+        "groups": 1,
+        "entropy_nats": {
+          "n": 1,
+          "mean": 1.9441615864305732,
+          "minimum": 1.9441615864305732,
+          "maximum": 1.9441615864305732
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.34614523872733116,
+          0.36185677722096443,
+          0.34556129202246666
+        ],
+        "mean_extra_pair_count": 1.0535633079707623,
+        "unique_traces_per8": {
+          "n": 1,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 1,
+          "mean": 0.04209494963288307,
+          "minimum": 0.04209494963288307,
+          "maximum": 0.04209494963288307
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 1,
+          "mean": 0.2733514606952667,
+          "minimum": 0.2733514606952667,
+          "maximum": 0.2733514606952667
+        }
+      },
+      "limitation": "Logged pre-update training states, including update128 before its optimizer step; no final evaluation-state policy entropy was saved."
+    },
+    {
+      "arm": "direct",
+      "seed": 12,
+      "entropy_kind": "exact8-leaf trajectory entropy",
+      "action1_kind": "probability-weighted",
+      "entire": {
+        "groups": 128,
+        "entropy_nats": {
+          "n": 128,
+          "mean": 1.9939722164134102,
+          "minimum": 1.8923580125847619,
+          "maximum": 2.0794414773401044
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.3931382441369351,
+          0.4018058963411022,
+          0.3937664652185049
+        ],
+        "mean_extra_pair_count": 1.1887106056965422,
+        "unique_traces_per8": {
+          "n": 128,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 128,
+          "mean": 0.061717887454506126,
+          "minimum": 0.0008700883481651545,
+          "maximum": 0.3307260274887085
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 128,
+          "mean": 0.22601760172983631,
+          "minimum": 0.1249999925494194,
+          "maximum": 0.3073011636734009
+        }
+      },
+      "first16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 2.079107403410444,
+          "minimum": 2.0779839545681296,
+          "maximum": 2.0794414773401044
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.49401626782491803,
+          0.4948400123976171,
+          0.49410534277558327
+        ],
+        "mean_extra_pair_count": 1.4829616229981184,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 0.058270256558898836,
+          "minimum": 0.004723368678241968,
+          "maximum": 0.12222413718700409
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 16,
+          "mean": 0.12935440288856626,
+          "minimum": 0.1249999925494194,
+          "maximum": 0.1370636373758316
+        }
+      },
+      "last16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 1.909719341877534,
+          "minimum": 1.8923580125847619,
+          "maximum": 1.928368252300626
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.32924752007238567,
+          0.3414306484628469,
+          0.33015853515826166
+        ],
+        "mean_extra_pair_count": 1.0008367036934942,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 0.061396741366479546,
+          "minimum": 0.009370021522045135,
+          "maximum": 0.2905478775501251
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 16,
+          "mean": 0.29622464068233967,
+          "minimum": 0.2840874493122101,
+          "maximum": 0.3073011636734009
+        }
+      },
+      "last_logged_update": {
+        "groups": 1,
+        "entropy_nats": {
+          "n": 1,
+          "mean": 1.896211368304146,
+          "minimum": 1.896211368304146,
+          "maximum": 1.896211368304146
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.3221105560660362,
+          0.3358268439769745,
+          0.32357317954301834
+        ],
+        "mean_extra_pair_count": 0.981510579586029,
+        "unique_traces_per8": {
+          "n": 1,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 1,
+          "mean": 0.2905478775501251,
+          "minimum": 0.2905478775501251,
+          "maximum": 0.2905478775501251
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 1,
+          "mean": 0.3048247694969177,
+          "minimum": 0.3048247694969177,
+          "maximum": 0.3048247694969177
+        }
+      },
+      "limitation": "Logged pre-update training states, including update128 before its optimizer step; no final evaluation-state policy entropy was saved."
+    },
+    {
+      "arm": "direct",
+      "seed": 13,
+      "entropy_kind": "exact8-leaf trajectory entropy",
+      "action1_kind": "probability-weighted",
+      "entire": {
+        "groups": 128,
+        "entropy_nats": {
+          "n": 128,
+          "mean": 2.0058590762280293,
+          "minimum": 1.915157096041887,
+          "maximum": 2.0794414773401044
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.4010036285035312,
+          0.4104742954368703,
+          0.401182071887888
+        ],
+        "mean_extra_pair_count": 1.2126599958282895,
+        "unique_traces_per8": {
+          "n": 128,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 128,
+          "mean": 0.057359058056135837,
+          "minimum": 0.0005405257688835263,
+          "maximum": 0.429668664932251
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 128,
+          "mean": 0.21672390593448654,
+          "minimum": 0.1249999925494194,
+          "maximum": 0.292660117149353
+        }
+      },
+      "first16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 2.0791496318717506,
+          "minimum": 2.077950449055529,
+          "maximum": 2.0794414773401044
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.4943538694642484,
+          0.495175251737237,
+          0.49442776478827
+        ],
+        "mean_extra_pair_count": 1.4839568859897554,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 0.056677146698348224,
+          "minimum": 0.008456947281956673,
+          "maximum": 0.1501384675502777
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 16,
+          "mean": 0.12909247213974595,
+          "minimum": 0.1249999925494194,
+          "maximum": 0.1371878683567047
+        }
+      },
+      "last16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 1.9262962284483565,
+          "minimum": 1.915157096041887,
+          "maximum": 1.941150023365423
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.3372236033901572,
+          0.3509210329502821,
+          0.3372673522680998
+        ],
+        "mean_extra_pair_count": 1.025411988608539,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 0.038203738164156675,
+          "minimum": 0.004957106895744801,
+          "maximum": 0.07332158088684082
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 16,
+          "mean": 0.28535096533596516,
+          "minimum": 0.2754876911640167,
+          "maximum": 0.292660117149353
+        }
+      },
+      "last_logged_update": {
+        "groups": 1,
+        "entropy_nats": {
+          "n": 1,
+          "mean": 1.9246609230520884,
+          "minimum": 1.9246609230520884,
+          "maximum": 1.9246609230520884
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.3363985940814018,
+          0.35073041170835495,
+          0.3357068598270416
+        ],
+        "mean_extra_pair_count": 1.0228358656167984,
+        "unique_traces_per8": {
+          "n": 1,
+          "mean": 8.0,
+          "minimum": 8.0,
+          "maximum": 8.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 1,
+          "mean": 0.030264316126704216,
+          "minimum": 0.030264316126704216,
+          "maximum": 0.030264316126704216
+        },
+        "zero_advantage_fraction": null,
+        "exact_training_p000": {
+          "n": 1,
+          "mean": 0.2865675389766693,
+          "minimum": 0.2865675389766693,
+          "maximum": 0.2865675389766693
+        }
+      },
+      "limitation": "Logged pre-update training states, including update128 before its optimizer step; no final evaluation-state policy entropy was saved."
+    },
+    {
+      "arm": "group_pg",
+      "seed": 11,
+      "entropy_kind": "on-policy Monte Carlo -mean(logp) across8 sampled trajectories",
+      "action1_kind": "sample frequency",
+      "entire": {
+        "groups": 128,
+        "entropy_nats": {
+          "n": 128,
+          "mean": 2.031315168249421,
+          "minimum": 1.516916185617447,
+          "maximum": 2.539087265729904
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.4365234375,
+          0.4404296875,
+          0.404296875
+        ],
+        "mean_extra_pair_count": 1.28125,
+        "unique_traces_per8": {
+          "n": 128,
+          "mean": 5.109375,
+          "minimum": 3.0,
+          "maximum": 7.0
+        },
+        "mean_presented_000_fraction": 0.2060546875,
+        "phi_gradient_norm": {
+          "n": 128,
+          "mean": 1.9820596934878267,
+          "minimum": 0.09260406345129013,
+          "maximum": 4.758580207824707
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "first16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 2.0786757301539183,
+          "minimum": 2.0551400184631348,
+          "maximum": 2.089201331138611
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.5078125,
+          0.484375,
+          0.4765625
+        ],
+        "mean_extra_pair_count": 1.46875,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 5.625,
+          "minimum": 4.0,
+          "maximum": 7.0
+        },
+        "mean_presented_000_fraction": 0.125,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 1.6465601734817028,
+          "minimum": 0.14756301045417786,
+          "maximum": 3.1425259113311768
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "last16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 2.009632029570639,
+          "minimum": 1.5725504606962204,
+          "maximum": 2.4684105813503265
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.3984375,
+          0.390625,
+          0.3671875
+        ],
+        "mean_extra_pair_count": 1.15625,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 5.125,
+          "minimum": 3.0,
+          "maximum": 7.0
+        },
+        "mean_presented_000_fraction": 0.265625,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 2.5364844743162394,
+          "minimum": 0.3923284113407135,
+          "maximum": 4.758580207824707
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "last_logged_update": {
+        "groups": 1,
+        "entropy_nats": {
+          "n": 1,
+          "mean": 1.7429967671632767,
+          "minimum": 1.7429967671632767,
+          "maximum": 1.7429967671632767
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.25,
+          0.25,
+          0.25
+        ],
+        "mean_extra_pair_count": 0.75,
+        "unique_traces_per8": {
+          "n": 1,
+          "mean": 5.0,
+          "minimum": 5.0,
+          "maximum": 5.0
+        },
+        "mean_presented_000_fraction": 0.375,
+        "phi_gradient_norm": {
+          "n": 1,
+          "mean": 1.5795928239822388,
+          "minimum": 1.5795928239822388,
+          "maximum": 1.5795928239822388
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "limitation": "Logged pre-update training states, including update128 before its optimizer step; no final evaluation-state policy entropy was saved."
+    },
+    {
+      "arm": "group_pg",
+      "seed": 12,
+      "entropy_kind": "on-policy Monte Carlo -mean(logp) across8 sampled trajectories",
+      "action1_kind": "sample frequency",
+      "entire": {
+        "groups": 128,
+        "entropy_nats": {
+          "n": 128,
+          "mean": 1.967977671069093,
+          "minimum": 1.2637186795473099,
+          "maximum": 2.3635319471359253
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.3583984375,
+          0.365234375,
+          0.421875
+        ],
+        "mean_extra_pair_count": 1.1455078125,
+        "unique_traces_per8": {
+          "n": 128,
+          "mean": 4.875,
+          "minimum": 2.0,
+          "maximum": 7.0
+        },
+        "mean_presented_000_fraction": 0.2548828125,
+        "phi_gradient_norm": {
+          "n": 128,
+          "mean": 2.2423586607910693,
+          "minimum": 0.11445579677820206,
+          "maximum": 5.24127197265625
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "first16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 2.0820902539417148,
+          "minimum": 2.063703954219818,
+          "maximum": 2.1194335967302322
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.40625,
+          0.453125,
+          0.59375
+        ],
+        "mean_extra_pair_count": 1.453125,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 5.0625,
+          "minimum": 4.0,
+          "maximum": 6.0
+        },
+        "mean_presented_000_fraction": 0.1328125,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 1.7603257354348898,
+          "minimum": 0.16504248976707458,
+          "maximum": 3.6678547859191895
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "last16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 1.8534700376912951,
+          "minimum": 1.2637186795473099,
+          "maximum": 2.1943333446979523
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.2578125,
+          0.3203125,
+          0.34375
+        ],
+        "mean_extra_pair_count": 0.921875,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 4.625,
+          "minimum": 2.0,
+          "maximum": 7.0
+        },
+        "mean_presented_000_fraction": 0.359375,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 2.152159756049514,
+          "minimum": 0.24010515213012695,
+          "maximum": 4.678689956665039
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "last_logged_update": {
+        "groups": 1,
+        "entropy_nats": {
+          "n": 1,
+          "mean": 1.9148490577936172,
+          "minimum": 1.9148490577936172,
+          "maximum": 1.9148490577936172
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.125,
+          0.25,
+          0.625
+        ],
+        "mean_extra_pair_count": 1.0,
+        "unique_traces_per8": {
+          "n": 1,
+          "mean": 4.0,
+          "minimum": 4.0,
+          "maximum": 4.0
+        },
+        "mean_presented_000_fraction": 0.375,
+        "phi_gradient_norm": {
+          "n": 1,
+          "mean": 3.656543731689453,
+          "minimum": 3.656543731689453,
+          "maximum": 3.656543731689453
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "limitation": "Logged pre-update training states, including update128 before its optimizer step; no final evaluation-state policy entropy was saved."
+    },
+    {
+      "arm": "group_pg",
+      "seed": 13,
+      "entropy_kind": "on-policy Monte Carlo -mean(logp) across8 sampled trajectories",
+      "action1_kind": "sample frequency",
+      "entire": {
+        "groups": 128,
+        "entropy_nats": {
+          "n": 128,
+          "mean": 1.962803565314971,
+          "minimum": 1.434685468673706,
+          "maximum": 2.386922612786293
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.388671875,
+          0.380859375,
+          0.3720703125
+        ],
+        "mean_extra_pair_count": 1.1416015625,
+        "unique_traces_per8": {
+          "n": 128,
+          "mean": 5.0390625,
+          "minimum": 3.0,
+          "maximum": 7.0
+        },
+        "mean_presented_000_fraction": 0.248046875,
+        "phi_gradient_norm": {
+          "n": 128,
+          "mean": 2.1408555812668055,
+          "minimum": 0.13710567355155945,
+          "maximum": 4.348188400268555
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "first16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 2.0805822871625423,
+          "minimum": 2.0704449117183685,
+          "maximum": 2.0904253125190735
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.5078125,
+          0.5078125,
+          0.5234375
+        ],
+        "mean_extra_pair_count": 1.5390625,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 5.375,
+          "minimum": 4.0,
+          "maximum": 7.0
+        },
+        "mean_presented_000_fraction": 0.09375,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 2.0087907277047634,
+          "minimum": 0.37440255284309387,
+          "maximum": 3.3547606468200684
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "last16": {
+        "groups": 16,
+        "entropy_nats": {
+          "n": 16,
+          "mean": 1.7954351790249348,
+          "minimum": 1.4789071381092072,
+          "maximum": 2.249157175421715
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.2734375,
+          0.34375,
+          0.2421875
+        ],
+        "mean_extra_pair_count": 0.859375,
+        "unique_traces_per8": {
+          "n": 16,
+          "mean": 4.375,
+          "minimum": 3.0,
+          "maximum": 6.0
+        },
+        "mean_presented_000_fraction": 0.3671875,
+        "phi_gradient_norm": {
+          "n": 16,
+          "mean": 2.3305125050246716,
+          "minimum": 0.6861244440078735,
+          "maximum": 4.0045166015625
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "last_logged_update": {
+        "groups": 1,
+        "entropy_nats": {
+          "n": 1,
+          "mean": 1.599447339773178,
+          "minimum": 1.599447339773178,
+          "maximum": 1.599447339773178
+        },
+        "maximum_three_bit_entropy_nats": 2.0794415416798357,
+        "mean_stage_action1": [
+          0.25,
+          0.25,
+          0.125
+        ],
+        "mean_extra_pair_count": 0.625,
+        "unique_traces_per8": {
+          "n": 1,
+          "mean": 4.0,
+          "minimum": 4.0,
+          "maximum": 4.0
+        },
+        "mean_presented_000_fraction": 0.375,
+        "phi_gradient_norm": {
+          "n": 1,
+          "mean": 1.3656944036483765,
+          "minimum": 1.3656944036483765,
+          "maximum": 1.3656944036483765
+        },
+        "zero_advantage_fraction": 0.0
+      },
+      "limitation": "Logged pre-update training states, including update128 before its optimizer step; no final evaluation-state policy entropy was saved."
+    }
+  ],
+  "dev_calibration": [
+    {
+      "arm": "uniform",
+      "seed": 11,
+      "episodes_per_trace": 56,
+      "mean_CE_by_lexicographic_trace": [
+        1.0909886667038378,
+        1.1091951074578799,
+        1.068049611649863,
+        1.07851190625265,
+        1.0807042485689695,
+        1.1065742048399996,
+        1.0555465544211802,
+        1.0767578670921814
+      ],
+      "mean_CE_plus_cost": [
+        1.0909886667038378,
+        1.1191951074578799,
+        1.078049611649863,
+        1.09851190625265,
+        1.0907042485689695,
+        1.1265742048399996,
+        1.0755465544211802,
+        1.1067578670921814
+      ],
+      "CE_best": [
+        1,
+        1,
+        0
+      ],
+      "CE_plus_cost_best": [
+        1,
+        1,
+        0
+      ],
+      "CE000_minus_best": 0.03544211228265759,
+      "cost_adjusted000_minus_best": 0.015442112282657572
+    },
+    {
+      "arm": "uniform",
+      "seed": 12,
+      "episodes_per_trace": 56,
+      "mean_CE_by_lexicographic_trace": [
+        1.1518211232711018,
+        1.1687245172393426,
+        1.124228888163651,
+        1.1277311446873173,
+        1.138323814752009,
+        1.1581394266097764,
+        1.1293481558281588,
+        1.1516327325318088
+      ],
+      "mean_CE_plus_cost": [
+        1.1518211232711018,
+        1.1787245172393426,
+        1.134228888163651,
+        1.1477311446873173,
+        1.148323814752009,
+        1.1781394266097764,
+        1.1493481558281589,
+        1.1816327325318088
+      ],
+      "CE_best": [
+        0,
+        1,
+        0
+      ],
+      "CE_plus_cost_best": [
+        0,
+        1,
+        0
+      ],
+      "CE000_minus_best": 0.02759223510745068,
+      "cost_adjusted000_minus_best": 0.01759223510745067
+    },
+    {
+      "arm": "uniform",
+      "seed": 13,
+      "episodes_per_trace": 56,
+      "mean_CE_by_lexicographic_trace": [
+        1.0597172364945657,
+        1.0640033200517194,
+        1.0474326035959445,
+        1.0466138647299792,
+        1.0534548131848402,
+        1.0649972295621173,
+        1.0380976417556025,
+        1.0497412834601774
+      ],
+      "mean_CE_plus_cost": [
+        1.0597172364945657,
+        1.0740033200517194,
+        1.0574326035959445,
+        1.0666138647299792,
+        1.0634548131848403,
+        1.0849972295621173,
+        1.0580976417556025,
+        1.0797412834601774
+      ],
+      "CE_best": [
+        1,
+        1,
+        0
+      ],
+      "CE_plus_cost_best": [
+        0,
+        1,
+        0
+      ],
+      "CE000_minus_best": 0.021619594738963244,
+      "cost_adjusted000_minus_best": 0.0022846328986212416
+    },
+    {
+      "arm": "group_pg",
+      "seed": 11,
+      "episodes_per_trace": 56,
+      "mean_CE_by_lexicographic_trace": [
+        1.0948944439654242,
+        1.098146394326534,
+        1.0738542234225001,
+        1.069649569977193,
+        1.0838425257878563,
+        1.0947772951457266,
+        1.0621657810599847,
+        1.0691119288332434
+      ],
+      "mean_CE_plus_cost": [
+        1.0948944439654242,
+        1.108146394326534,
+        1.0838542234225002,
+        1.089649569977193,
+        1.0938425257878563,
+        1.1147772951457267,
+        1.0821657810599847,
+        1.0991119288332434
+      ],
+      "CE_best": [
+        1,
+        1,
+        0
+      ],
+      "CE_plus_cost_best": [
+        1,
+        1,
+        0
+      ],
+      "CE000_minus_best": 0.03272866290543952,
+      "cost_adjusted000_minus_best": 0.012728662905439503
+    },
+    {
+      "arm": "group_pg",
+      "seed": 12,
+      "episodes_per_trace": 56,
+      "mean_CE_by_lexicographic_trace": [
+        1.1418181395166793,
+        1.154965019381899,
+        1.1051637773805703,
+        1.10325811017841,
+        1.12764155239789,
+        1.1438043504553785,
+        1.098261320515253,
+        1.1089938721043318
+      ],
+      "mean_CE_plus_cost": [
+        1.1418181395166793,
+        1.164965019381899,
+        1.1151637773805703,
+        1.12325811017841,
+        1.13764155239789,
+        1.1638043504553786,
+        1.118261320515253,
+        1.1389938721043318
+      ],
+      "CE_best": [
+        1,
+        1,
+        0
+      ],
+      "CE_plus_cost_best": [
+        0,
+        1,
+        0
+      ],
+      "CE000_minus_best": 0.04355681900142638,
+      "cost_adjusted000_minus_best": 0.026654362136109055
+    },
+    {
+      "arm": "group_pg",
+      "seed": 13,
+      "episodes_per_trace": 56,
+      "mean_CE_by_lexicographic_trace": [
+        1.0619256237974013,
+        1.062277664885281,
+        1.0445379934071735,
+        1.042457950135217,
+        1.0532772316209542,
+        1.0622157379272983,
+        1.0331218153250845,
+        1.0437536515297237
+      ],
+      "mean_CE_plus_cost": [
+        1.0619256237974013,
+        1.072277664885281,
+        1.0545379934071735,
+        1.062457950135217,
+        1.0632772316209542,
+        1.0822157379272983,
+        1.0531218153250845,
+        1.0737536515297237
+      ],
+      "CE_best": [
+        1,
+        1,
+        0
+      ],
+      "CE_plus_cost_best": [
+        1,
+        1,
+        0
+      ],
+      "CE000_minus_best": 0.028803808472316783,
+      "cost_adjusted000_minus_best": 0.008803808472316765
+    }
+  ],
+  "input_hashes": {
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\protocol.json": "bfe747edd3926578596c502c2691e57acbe6e15be31e083c32b69cedf33ef404",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\lock.json": "18b27b3d9a4eb3c8fc321824bf32407ae8f888d27c4e2de4a10b66eba325c575",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\direct_s11\\progress.jsonl": "67ca7bc4da7ff8ed2d54fe643dd567eaf8e885c7384ad1aa1ba0bf563aaad7f4",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\direct_s11\\final_evaluation.json": "0125201506732ffa23505416cad8a1d314f19aed5cb8d9eed313bc688b0cf497",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\direct_s11\\real_evaluation.json": "68c865d7b71ba98349126c32e866dfafb62a84997bd1ecd5d3db3ec3d34a272d",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\direct_s12\\progress.jsonl": "576f2c1a55b2332bd35f31ff34f7d50134833c153bb4b647bcb1ea028bb6747c",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\direct_s12\\final_evaluation.json": "e701344c843dfeb9065fdec95088aba1ce99ebf3473e15ef6e3e2dcc7d20324e",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\direct_s12\\real_evaluation.json": "98bb8e90d9e95251cc2326d7c57313e817c359044c93abd409380204fb4c3c53",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\direct_s13\\progress.jsonl": "dcff0b11626ea66c152cae699beace26ab677c1ec98314c42cc057efc732d89d",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\direct_s13\\final_evaluation.json": "9fccb1f4930167c16b859f2012d7c6a432ea15e41c47b9b5a2eba99c575437ed",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\direct_s13\\real_evaluation.json": "f7f8e62e77906dd36f78c4b2015543f8459def508adbb9c7ce50891d3a6e2fd8",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s11\\progress.jsonl": "ef6d7ecf395230b3cdb0826cd90686dc711fa3ae5635751edd5ae1b4c4318afe",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s11\\final_evaluation.json": "20d8ef82864bb7542a58f4576ef0a1ab948cdda595661844f2f7e7d147cf8878",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s11\\real_evaluation.json": "4de7095cb81096a1e704473c0af5a94f0771c3064530092db3c1b132ae0da6d3",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s12\\progress.jsonl": "257802ad68b2d42752280505e65965579ec32c7a36a638f5c8be35c4917f8bd7",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s12\\final_evaluation.json": "1f2e253cb731e698fb4842a9535c75087916d2e1916a6f517dc41c65dc229f38",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s12\\real_evaluation.json": "a9c84ebea782bd701a4b88caac87e75f214c95f87dc86f77679c77c8685dc768",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s13\\progress.jsonl": "24d5da92d0c0c961df8abe0d539409316a840ba9de9599befcbe2f2b011db563",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s13\\final_evaluation.json": "16e17fc01bc8f85241ea395035543a26f3433696c0af54396ffa83401e7b7959",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s13\\real_evaluation.json": "50f341651736a52d8a22ade7ca6825f3d911205bc8c88743df5cd4e90fa55f5e",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\uniform_s11\\global_trace.json": "7adc18496b193dbd17be9023c2cb4fd83ab5f4a8b26a5815eecce4cf0b52a510",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\uniform_s12\\global_trace.json": "228aab6c3ebf064f8da5d3690092b415ae8cced2accab8e2d20befa1a26ec7cf",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\uniform_s13\\global_trace.json": "c8f1cda9ac828c54820580ec6f70822fe9c86234c3402ef880c6ddb220ddb809",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s11\\global_trace.json": "6bc05ff3bb9a38b7f9d36fc273057dbc9d9d32594f2a1133b912fd5772cdb117",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s12\\global_trace.json": "cb1e30c2e7189e9f6d4856899db7317b5f7a2ecf50e79d1872e2b462db5e719e",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\results\\group_pg_s13\\global_trace.json": "524ae8ef6e9102067df9135f3d1efad822d081713fc6c70430dff86b7606bea8"
+  },
+  "scientific_sources_unchanged": true,
+  "seconds": 15.412064000032842
+}

@@ -1,0 +1,66 @@
+id: PolicyGNN
+title: "Policy-GNN: Aggregation Optimization for Graph Neural Networks"
+authors: "Kwei-Herng Lai, Daochen Zha, Kaixiong Zhou, Xia Hu"
+venue: "KDD 2020"
+year: 2020
+links:
+  paper: https://arxiv.org/abs/2006.15097
+  fulltext: https://arxiv.org/html/2006.15097
+  proceedings: https://www.kdd.org/kdd2020/proceedings/index.html
+  code: https://github.com/datamllab/Policy-GNN
+citation:
+  type: inproceedings
+  title: "Policy-GNN: Aggregation Optimization for Graph Neural Networks"
+  authors: ["Kwei-Herng Lai", "Daochen Zha", "Kaixiong Zhou", "Xia Hu"]
+  year: 2020
+  booktitle: "Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining"
+  publisher: "ACM"
+  arxiv: "2006.15097"
+  url: https://doi.org/10.1145/3394486.3403088
+  verified_from:
+    - https://www.kdd.org/kdd2020/proceedings/index.html
+    - https://arxiv.org/abs/2006.15097
+    - https://arxiv.org/pdf/2006.15097
+review:
+  status: full_text_checked
+  checked_on: '2026-11-05'
+  checked_sections: ["Sections 1-6", "Appendices A-B"]
+  full_text_checked: true
+areas: [graph-learning]
+problem: "Node마다 필요한 aggregation 횟수가 다른데 고정 깊이 GNN은 이를 동일하게 처리하는 문제를 다룬다."
+core_idea: "Node attributes를 state, aggregation hop 수를 action으로 하는 DQN을 학습한다. GCN의 validation accuracy 개선을 reward로 사용하고, shared layers와 action별 buffers로 학습한다."
+key_assumptions:
+  - "GCN 학습 label과 policy reward용 validation label을 사용할 수 있어야 한다."
+  - "Node attributes가 필요한 aggregation 횟수의 선택에 유용하다고 본다."
+strengths:
+  - text: "Node별 aggregation 횟수를 학습하는 명시적인 RL 선행이다."
+    tags: [graph-structure-use, adaptation]
+  - text: "서로 다른 깊이의 GNN에 layer parameters를 공유하고 action별 batch buffers를 사용한다."
+    tags: [inference-cost]
+limitations:
+  - text: "수백 training iterations가 필요하므로 큰 graph에서 학습 효율이 문제가 될 수 있다고 인정한다."
+    tags: [graph-scale, inference-cost]
+    source: self
+    evidence:
+      url: https://arxiv.org/pdf/2006.15097#page=9
+      section: "Section 6, Conclusions and Future work"
+  - text: "[analyst] Complete-feature citation-graph 실험은 extreme missing이나 synthetic-only PFN 전이를 검증하지 않는다."
+    tags: [observation-mask, distribution-shift, eval-protocol]
+    source: analyst
+    evidence:
+      url: https://arxiv.org/html/2006.15097
+      section: "Section 4.1에 근거한 평가 범위 판단"
+  - text: "[analyst] Node-attribute DQN과 pretrained PFN의 hidden-state controller는 구분해야 한다. Adaptive aggregation이라는 공통점만으로 동일 알고리즘 재현이나 backbone RL을 주장할 수 없다."
+    tags: [adaptation, graph-structure-use]
+    source: analyst
+    evidence:
+      url: https://arxiv.org/html/2006.15097
+      section: "Section 3의 계산과 사용자 실험 사이의 범위 비교"
+builds_on: [GCN, DQN]
+compared_against: [DeepWalk, Node2vec, GCN, GraphSAGE, FastGCN, GAT, LGCN, g-U-Nets, Adapt, GraphNAS, AGNN, RandomPolicy]
+open_questions:
+  - "저자가 향후 과제로 남긴 큰 graph의 효율적인 meta-policy와 더 다양한 aggregation의 결합은 검증되지 않았다."
+hooks:
+  - "FP05의 내부 연산 선택에서 adaptive propagation 자체의 novelty 경계를 정리하는 선행이다. 자동 matching은 feature utility의 해결 증거가 아니다."
+notes: "arXiv v1 전문과 appendix를 읽었다. Official KDD proceedings에서 게재·제목·저자 순서를 추가 확인했다. Pages는 이 기록의 verified_from에서 직접 확인하지 못해 citation에서 생략했다. 논문 기재 code URL은 직접 열기에서 404여서 코드 재현을 주장하지 않는다."
+added: '2026-11-05'

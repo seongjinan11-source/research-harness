@@ -1,0 +1,128 @@
+{
+  "cycle": "FP05",
+  "status": "PASS",
+  "optimizer_updates": 1,
+  "real_bank_used": false,
+  "final_bank_used": false,
+  "training_bank_used": false,
+  "protocol_version": 2,
+  "toy_only": false,
+  "execution_progress": {
+    "optimizer_step_attempts": 1,
+    "successful_optimizer_updates": 1
+  },
+  "tested_sources": {
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\fisf_graphpfn\\imputation.py": "4795646fe09ca695726e0b001c451be46cb07c33163b48edb7527b78b343b522",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\observed_cell_cycle\\data.py": "36f4967b3053c00d5647c764695f8da7dcf8ed132b6c282b456c9a67b3fa5b74",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\PLAN_v2.md": "55da174a56216caa169fc05afcb58692c790c0917021b39c62af384116489bb7",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\protocol.json": "bfe747edd3926578596c502c2691e57acbe6e15be31e083c32b69cedf33ef404",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_analyze.py": "f4a377427b911a7832ba1994f39b9170c9188d9117e704c9fdd7d6fdea489ed8",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_checks.py": "f04c884379e4ff6d66fa035fa0c41600e1450304f7a3d1338bca8b5d0e1bc59e",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_data.py": "2d72eff6ac0a8a1de243fc95511cfa20e13e37b7c33696921bac0a622770dc99",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_model.py": "db0b860547574658e0b67d17a9ab1d30687f3291902734fc6de929f5cd309c80",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_preflight.py": "d2577367f517657d09b6265de9ac4e44e32bca7cc00c1daf0028425f822e0793",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_run.py": "bf98a46fac0bf860a3fc6da45b19d32d653981140dab505c3d9b879a50a2e924",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_util.py": "af7dba0d423b7f5fb0c94e9b744d32d19e61cf8b5b7b0edbc57674cec7f5c80d",
+    "C:\\Users\\seongjin\\Desktop\\code\\mgpfn\\src\\mgpfn\\prior_adapter.py": "fd548437e990f2b50d989bc65e3cf19f650b4c7775e21116682afd03711bd57a",
+    "C:\\Users\\seongjin\\Desktop\\code\\mgpfn\\src\\mgpfn\\upstream.py": "eabb3eabeda31b877c181ad6ed50214ccf911fc635020aedbae73997b798dd97",
+    "C:\\Users\\seongjin\\Desktop\\csag_share\\research\\www2027\\results\\graph_pfn_suite_20261016\\upstream\\graphpfn-3b9b115490249cc777227c846babfb55f35bd8c4\\src\\graphpfn\\model\\layers.py": "6c055ba3f4e517a8b05c63ff635e487660a45cb37f8d42430c62817f75f992c9",
+    "C:\\Users\\seongjin\\Desktop\\csag_share\\research\\www2027\\results\\graph_pfn_suite_20261016\\upstream\\graphpfn-3b9b115490249cc777227c846babfb55f35bd8c4\\src\\graphpfn\\model\\light.py": "6f621abac419c8013710d54a760ba78726eadcc86de3324b3969e36fad596803"
+  },
+  "toy": {
+    "status": "PASS",
+    "dtype": "float64",
+    "probability_sum": 1.0,
+    "independent_probability_error": 5.551115123125783e-17,
+    "direct_vs_score_gradient_max": 0.0,
+    "direct_vs_finite_difference_max": 5.62022928196626e-11,
+    "rewarded_action_gradient": -0.49999950000050003,
+    "rewarded_probability_before": 0.5,
+    "rewarded_probability_after": 0.512497383992032,
+    "equal_group_loss": -0.0,
+    "equal_group_gradient": 0.0,
+    "reward_gradient_detached": true
+  },
+  "model": {
+    "status": "PASS",
+    "device": "cuda",
+    "scope": "tiny synthetic fixture only; no bank/real/final reads",
+    "input_whitelist": [
+      "classes",
+      "context_ids",
+      "context_labels",
+      "dst",
+      "forward_seed",
+      "observed",
+      "query_ids",
+      "src",
+      "values"
+    ],
+    "original000_forward_max": 0.0,
+    "original000_adapter_gradient_max": 0.0,
+    "tolerance": {
+      "forward_absolute": 0.002,
+      "gradient_absolute": 0.003,
+      "gradient_relative": 0.01
+    },
+    "all_trace_probability_sum": 0.9999999403953552,
+    "prefix_states": 7,
+    "trace_logit_variation": 0.46045100688934326,
+    "detached_actor_gradient": {
+      "parameters": 4,
+      "gradients_present": 4,
+      "l2": 0.0782185834519819
+    },
+    "live_adapter_ce_gradient": {
+      "parameters": 144,
+      "gradients_present": 144,
+      "l2": 3.7772958421918417
+    },
+    "discarded_optimizer_updates": 1,
+    "frozen_digest_before": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+    "frozen_digest_after": "61fde6802fd6aa0ea4e284182924885294d195427076f96a960126cb885ad97c",
+    "save_load_replay_max": 0.0,
+    "independent_action_rng": true,
+    "checkpoint_hashes": {
+      "C:\\Users\\seongjin\\Desktop\\csag_share\\research\\www2027\\results\\graph_pfn_suite_20261016\\checkpoints\\graphpfn-adapters-1_3.pt": "a4744c66bdf480062e1a34554b2389f6b57f70fa474805f3a1bbae6f4dcc3ae4",
+      "C:\\Users\\seongjin\\Desktop\\csag_share\\research\\www2027\\results\\graph_pfn_suite_20261016\\checkpoints\\LimiX-16M.ckpt": "ee6d6ae865821ca790a40a0199d09a662f4509da5e4c26535809432e599e7a52"
+    },
+    "upstream_commit": "3b9b115490249cc777227c846babfb55f35bd8c4",
+    "initial_adapter_digest": "c458f905d747b224893b3b12c7e12e76d8f04021cfe5a689f39e0a4a19ec41d2",
+    "initial_policy_digest": "df738070963e7b2c140c12b15a642270a8dd15e337f786522b3a0fae5338f306",
+    "absent_context_class_probability_error": 0.0,
+    "released_predictor_sensitivity": {
+      "class_rename_probability_max": 0.4131951630115509,
+      "column_order_probability_max": 0.011132419109344482,
+      "node_order_probability_max": 0.06582167744636536,
+      "scope": "diagnostic only; not an exact pretrained equivariance assertion"
+    },
+    "routed_forward_calls": 23,
+    "original_reference_forward_calls": 1,
+    "policy_statistics": {
+      "numpy_oracle_max": 2.2440683422608743e-08,
+      "class_renaming_max": 0.0,
+      "block_node_permutation_max": 1.1175870895385742e-08,
+      "empty_context_finite": true,
+      "zero_norm_pair_flags_zero": true
+    },
+    "raw_hidden_poison_scope": "Data pipeline checks; represented PCFI values at M=0 are legitimate inputs"
+  },
+  "tested_sources_after": {
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\fisf_graphpfn\\imputation.py": "4795646fe09ca695726e0b001c451be46cb07c33163b48edb7527b78b343b522",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\observed_cell_cycle\\data.py": "36f4967b3053c00d5647c764695f8da7dcf8ed132b6c282b456c9a67b3fa5b74",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\PLAN_v2.md": "55da174a56216caa169fc05afcb58692c790c0917021b39c62af384116489bb7",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\protocol.json": "bfe747edd3926578596c502c2691e57acbe6e15be31e083c32b69cedf33ef404",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_analyze.py": "f4a377427b911a7832ba1994f39b9170c9188d9117e704c9fdd7d6fdea489ed8",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_checks.py": "f04c884379e4ff6d66fa035fa0c41600e1450304f7a3d1338bca8b5d0e1bc59e",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_data.py": "2d72eff6ac0a8a1de243fc95511cfa20e13e37b7c33696921bac0a622770dc99",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_model.py": "db0b860547574658e0b67d17a9ab1d30687f3291902734fc6de929f5cd309c80",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_preflight.py": "d2577367f517657d09b6265de9ac4e44e32bca7cc00c1daf0028425f822e0793",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_run.py": "bf98a46fac0bf860a3fc6da45b19d32d653981140dab505c3d9b879a50a2e924",
+    "C:\\Users\\seongjin\\Desktop\\code\\gts_pfn\\pfn_rl_cycle\\rl_util.py": "af7dba0d423b7f5fb0c94e9b744d32d19e61cf8b5b7b0edbc57674cec7f5c80d",
+    "C:\\Users\\seongjin\\Desktop\\code\\mgpfn\\src\\mgpfn\\prior_adapter.py": "fd548437e990f2b50d989bc65e3cf19f650b4c7775e21116682afd03711bd57a",
+    "C:\\Users\\seongjin\\Desktop\\code\\mgpfn\\src\\mgpfn\\upstream.py": "eabb3eabeda31b877c181ad6ed50214ccf911fc635020aedbae73997b798dd97",
+    "C:\\Users\\seongjin\\Desktop\\csag_share\\research\\www2027\\results\\graph_pfn_suite_20261016\\upstream\\graphpfn-3b9b115490249cc777227c846babfb55f35bd8c4\\src\\graphpfn\\model\\layers.py": "6c055ba3f4e517a8b05c63ff635e487660a45cb37f8d42430c62817f75f992c9",
+    "C:\\Users\\seongjin\\Desktop\\csag_share\\research\\www2027\\results\\graph_pfn_suite_20261016\\upstream\\graphpfn-3b9b115490249cc777227c846babfb55f35bd8c4\\src\\graphpfn\\model\\light.py": "6f621abac419c8013710d54a760ba78726eadcc86de3324b3969e36fad596803"
+  },
+  "seconds": 13.454152599908412
+}
