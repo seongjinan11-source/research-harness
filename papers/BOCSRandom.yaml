@@ -1,0 +1,60 @@
+id: BOCSRandom
+title: Random Postprocessing for Combinatorial Bayesian Optimization
+authors: Keisuke Morita, Yoshihiko Nishikawa, Masayuki Ohzeki
+venue: J. Phys. Soc. Jpn. 92, 123801 (2023)
+year: 2023
+links:
+  paper: https://arxiv.org/abs/2309.02842
+citation:
+  type: article
+  title: Random Postprocessing for Combinatorial Bayesian Optimization
+  authors:
+  - Keisuke Morita
+  - Yoshihiko Nishikawa
+  - Masayuki Ohzeki
+  year: 2023
+  url: https://arxiv.org/abs/2309.02842
+  verified_from:
+  - https://arxiv.org/abs/2309.02842
+  - https://arxiv.org/html/2309.02842v2
+  journal: J. Phys. Soc. Jpn.
+  volume: 92
+  pages: '123801'
+  arxiv: '2309.02842'
+areas:
+- bo
+- ml-foundations
+problem: 중복 후보를 반복하는 combinatorial BO의 탐색 정체를 줄인다.
+core_idea: SK ground-state 문제에 normal-prior nBOCS를 사용하고, 제안점이 이미 관측됐으면 새 random point로 교체한다. TS/MAP와 random
+  postprocessing 유무를 비교한다.
+key_assumptions:
+- SK coupling은 dense하며 normal prior와 noise scale은 preliminary run에서 정한 값이다.
+strengths:
+- text: 본문 Eq.(3)–(7) 사이에서 dense SK coupling을 이유로 horseshoe 대신 normal prior를 선택했다고 명시한다.
+  tags:
+  - sparsity-prior
+- text: 중복 query 배제라는 간단한 탐색 대조를 제공한다.
+  tags:
+  - experimental-design
+limitations:
+- text: 결론은 다른 문제, 특히 constrained combinatorial optimization에 대한 적용을 향후 질문으로 남긴다.
+  tags:
+  - task-coverage
+  source: self
+- text: 주 실험의 변화는 random postprocessing이며 horseshoe 대 normal의 matched size 실험이 아니다. Normal 선택 이유를 size
+    손실의 실증으로 인용하지 않는다.
+  tags:
+  - subset-cardinality
+  - eval-protocol
+  source: analyst
+builds_on:
+- BOCS
+compared_against:
+- nBOCS TS
+- nBOCS MAP
+- random search
+open_questions: &id001
+- 같은 likelihood·basis·archive·acquisition을 유지한 prior 비교의 동기로 쓰되 count 효과의 검증 결과로 쓰지 않는다.
+hooks: *id001
+notes: arXiv v2 본문 Eq.(3)–(7), 마지막 결론 단락; arXiv metadata의 journal reference 확인.
+added: '2026-11-06'

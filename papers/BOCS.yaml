@@ -1,0 +1,68 @@
+id: BOCS
+title: Bayesian Optimization of Combinatorial Structures
+authors: Ricardo Baptista, Matthias Poloczek
+venue: ICML 2018
+year: 2018
+links:
+  paper: https://proceedings.mlr.press/v80/baptista18a.html
+  code: https://github.com/baptistar/BOCS
+citation:
+  type: inproceedings
+  title: Bayesian Optimization of Combinatorial Structures
+  authors:
+  - Ricardo Baptista
+  - Matthias Poloczek
+  year: 2018
+  url: https://proceedings.mlr.press/v80/baptista18a.html
+  verified_from:
+  - https://proceedings.mlr.press/v80/baptista18a.html
+  booktitle: Proceedings of the 35th International Conference on Machine Learning
+  volume: 80
+  pages: 462--471
+  publisher: PMLR
+areas:
+- bo
+- ml-foundations
+problem: 고비용 binary black-box 목적함수를 적은 관측으로 최적화한다.
+core_idea: Main/pairwise monomial 계수에 global-local horseshoe prior를 두고 posterior draw를 acquisition으로 사용한다.
+  알려진 regularizer는 acquisition에 별도로 더하며 SDP relaxation으로 후보를 찾는다.
+key_assumptions:
+- 낮은 차수 polynomial 근사가 유용해야 하며 native inference는 scale을 학습하는 horseshoe mixture다.
+strengths:
+- text: 계수별 희소화를 사용하는 quadratic CBO의 원래 모델과 baseline이다.
+  tags:
+  - sparsity-prior
+- text: 원문 §3.2는 알려진 regularizer를 sampled surrogate에 별도로 더한다.
+  tags:
+  - known-cost-separation
+limitations:
+- text: Morita는 SK의 dense coupling을 이유로 normal prior를 선택한다. 이는 prior 선택의 동기이며 horseshoe의 size-induced
+    regret 실패를 직접 입증한 비교는 아니다.
+  tags:
+  - sparsity-prior
+  source: cited
+  by: Random Postprocessing for Combinatorial Bayesian Optimization (2023)
+  by_id: BOCSRandom
+  by_link: https://arxiv.org/html/2309.02842v2
+- text: Deshwal은 SDP acquisition 최적화의 확장성과 고차 interaction이 필요한 문제에서의 모델 가정 제약을 지적한다.
+  tags:
+  - inference-cost
+  - task-coverage
+  source: cited
+  by: Scalable Combinatorial Bayesian Optimization with Tractable Statistical models (2020)
+  by_id: BOCSPSR
+  by_link: https://arxiv.org/pdf/2008.08177
+- text: Size는 이미 K와 C(K,2)로 표현 가능하지만 dense coefficient 방향에 어떤 prior mass가 놓이는지와 실제 같은-K 손실은 별도 질문이다. Isotropic
+    Gaussian 정리를 native horseshoe에 직접 적용할 수 없다.
+  tags:
+  - subset-cardinality
+  - basis-dependence
+  source: analyst
+builds_on: []
+compared_against: []
+open_questions: &id001
+- Known λK를 양쪽 모두 정확히 처리한 뒤 unknown size trend에 대한 prior 개입을 비교해야 한다.
+hooks: *id001
+notes: 원문 §3.1–3.2와 기존 official-source audit 재확인. Native Ising label은 KL이며 λK는 밖에서 처리한다. MATLAB/Python
+  basis·intercept 차이는 별도 fidelity 조건이다.
+added: '2026-11-06'

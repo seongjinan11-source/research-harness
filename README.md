@@ -187,3 +187,14 @@ partial_trained_minus_node:accuracy=-0.118074%p CI[-0.410523217262834, 0.1603503
 Excel의 `My Findings`에는 문헌 ID와 근거·역할이, `Citations`에는 전원 저자·확인 URL·citation key·BibTeX가 들어간다. 그래프에서 `SSP-P05`처럼 연구 기록을 검색하면 해당 노드가 표시된다. 문헌 버튼으로 paper 노드를 열면 인용 정보와 BibTeX를 확인할 수 있다. `문헌 근거` 체크박스로 명시적 citation edge를 표시하며, `재검토 단서`와 별도로 켜고 끌 수 있다.
 
 SSP의2026-11-04~05결과 종합은 `SSP_RESULTS_SUMMARY_2026-11-05.md`에 있다. 개별 성공·실패·교훈·미실행 기록과 원문 snapshot은 `findings/ssp-size-composition.yaml` 및 `findings/sources/ssp-2026-11-05/`에서 추적한다.
+
+
+## SSP: sparse polynomial prior와 size 구조 문헌 (2026-11-06)
+
+기존 72편에 사용자 제시 논문 5편과 BOCS·Factorization Machines 원 논문을 추가해 총 79편으로 갱신했다.
+[문헌 종합](findings/sources/ssp-sparse-size-2026-11-06/LITERATURE_REVIEW_KO.md)에서 dense SK의 normal prior 선택,
+basis-dependent sparsity, FABOLAS size basis, 최근 wavelength BOCS 응용을 구별했다.
+각 논문은 SSP 접점·원문 위치·출처별 한계·citation을 포함하고, 엑셀과 그래프·BibTeX에 반영했다.
+`SSP-SP-U01`은 미검증 가설이다. 모든 size 함수가 최대 dense하거나 horseshoe가 반드시 실패한다고 기록하지 않는다.
+FM rank1 예의 곡률 부호 제약, known-cost residualization과 native BOCS 대조 조건도 명시했다.
+직전 corrected linear 실험의 양성 regret 결과와 음성 signed mechanism 결과를 함께 보존하며 새 training은 실행하지 않았다.

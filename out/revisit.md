@@ -656,6 +656,8 @@
   - 기록된 강점: 값과 mask의 생성 과제를 함께 학습하는 단계와 실제 조건부 예측 단계를 분리하며, target에서 재학습이나 diffusion sampling을 요구하지 않는다.
 - [MaM](https://proceedings.mlr.press/v235/liu24az.html): 복수 태그 일치 (약한 단서); tags=amortized-inference, inference-cost; keywords=-
   - 기록된 강점: 관측 subset의 marginal probability를 직접 근사해 반복 conditional 평가의 비용을 줄인다.
+- [BOCSPSR](https://arxiv.org/abs/2008.08177): 구체 키워드+태그 일치 (미검증); tags=inference-cost; keywords=scalable
+  - 기록된 강점: BOCS의 acquisition optimizer와 surrogate prior의 기여를 구별할 비교 대상을 제공한다.
 - [PolicyGNN](https://arxiv.org/abs/2006.15097): 구체 키워드+태그 일치 (미검증); tags=inference-cost; keywords=shared
   - 기록된 강점: 서로 다른 깊이의 GNN에 layer parameters를 공유하고 action별 batch buffers를 사용한다.
 - [Time-MoE](https://arxiv.org/abs/2409.16040): 구체 키워드+태그 일치 (미검증); tags=inference-cost; keywords=shared

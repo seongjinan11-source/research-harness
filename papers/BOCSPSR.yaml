@@ -1,0 +1,52 @@
+id: BOCSPSR
+title: Scalable Combinatorial Bayesian Optimization with Tractable Statistical models
+authors: Aryan Deshwal, Syrine Belakaria, Janardhan Rao Doppa
+venue: arXiv
+year: 2020
+links:
+  paper: https://arxiv.org/abs/2008.08177
+  code: https://github.com/aryandeshwal/Submodular_Relaxation_BOCS
+citation:
+  type: misc
+  title: Scalable Combinatorial Bayesian Optimization with Tractable Statistical models
+  authors:
+  - Aryan Deshwal
+  - Syrine Belakaria
+  - Janardhan Rao Doppa
+  year: 2020
+  url: https://arxiv.org/abs/2008.08177
+  verified_from:
+  - https://arxiv.org/abs/2008.08177
+  - https://arxiv.org/pdf/2008.08177
+  arxiv: '2008.08177'
+areas:
+- bo
+- ml-foundations
+problem: BOCS acquisition 최적화의 SDP 비용과 근사 정확도를 개선한다.
+core_idea: Parameterized submodular relaxation의 내부 문제를 graph cut으로 풀고 외부 parameter를 갱신한다. Surrogate prior를
+  바꾸는 방법이 아니라 BOCS의 acquisition optimizer를 개선한다.
+key_assumptions:
+- Binary quadratic acquisition과 submodular relaxation을 사용한다.
+strengths:
+- text: 원문 §3은 BOCS가 저차 interaction 같은 모델 가정이 맞을 때 유용하다고 정리한다.
+  tags:
+  - task-coverage
+- text: BOCS의 acquisition optimizer와 surrogate prior의 기여를 구별할 비교 대상을 제공한다.
+  tags:
+  - inference-cost
+limitations:
+- text: Size/composition 분리나 horseshoe가 dense count 방향을 잃는 현상을 직접 평가한 연구가 아니다.
+  tags:
+  - subset-cardinality
+  - sparsity-prior
+  source: analyst
+builds_on:
+- BOCS
+compared_against:
+- BOCS SDP
+open_questions: &id001
+- 미래 BOCS 비교에서 acquisition optimizer 차이가 prior 차이로 섞이지 않도록 한다.
+hooks: *id001
+notes: arXiv 본문 pp.2–4, §5 확인. 같은 제목의 NeurIPS 2020 engineering workshop 자료도 있으나 citation은 author가 명시된
+  arXiv판으로 보수적으로 고정했다.
+added: '2026-11-06'

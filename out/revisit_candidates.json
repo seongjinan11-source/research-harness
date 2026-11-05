@@ -6438,6 +6438,46 @@
     "source_refs": [
       "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
     ],
+    "paper_id": "BOCSPSR",
+    "paper_title": "Scalable Combinatorial Bayesian Optimization with Tractable Statistical models",
+    "paper_link": "https://arxiv.org/abs/2008.08177",
+    "matches": [
+      {
+        "strength": "BOCS의 acquisition optimizer와 surrogate prior의 기여를 구별할 비교 대상을 제공한다.",
+        "tags": [
+          "inference-cost"
+        ],
+        "keywords": [
+          "scalable"
+        ],
+        "specific_keywords": [
+          "scalable"
+        ]
+      }
+    ],
+    "tags": [
+      "inference-cost"
+    ],
+    "keywords": [
+      "scalable"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LLBP-F12",
+    "project": "Learned-Likelihood BP / EAJ",
+    "claim": "R1은 품질이 낮아도 큰 속도 이점으로 정당화된다.",
+    "verdict": "큰 속도 우위 미확보",
+    "reason_status": "confirmed",
+    "failure_reason": "병렬 grid와의 실제 latency가 비슷했고 posterior/branch 수 감소가 큰 전체 속도 이점으로 이어지지 않았다. 작업 메모리 절감은 별도로 보존한다.",
+    "reopen_when": "실제 처리 규모나 memory constraint에서 quality를 유지하는 비용 우위를 입증하는 연산이 나올 때.",
+    "recheck": "동일 hardware·batch·quality 범위에서 latency 반복 변동과 total/working memory 및 최대 처리 graph를 측정한다.",
+    "comparison_floor": "병렬 Grid6/81, R1",
+    "source_refs": [
+      "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
+    ],
     "paper_id": "PolicyGNN",
     "paper_title": "Policy-GNN: Aggregation Optimization for Graph Neural Networks",
     "paper_link": "https://arxiv.org/abs/2006.15097",

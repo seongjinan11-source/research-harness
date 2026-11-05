@@ -1,0 +1,59 @@
+id: FABOLAS
+title: Fast Bayesian Optimization of Machine Learning Hyperparameters on Large Datasets
+authors: Aaron Klein, Stefan Falkner, Simon Bartels, Philipp Hennig, Frank Hutter
+venue: AISTATS 2017
+year: 2017
+links:
+  paper: https://proceedings.mlr.press/v54/klein17a.html
+citation:
+  type: inproceedings
+  title: Fast Bayesian Optimization of Machine Learning Hyperparameters on Large Datasets
+  authors:
+  - Aaron Klein
+  - Stefan Falkner
+  - Simon Bartels
+  - Philipp Hennig
+  - Frank Hutter
+  year: 2017
+  url: https://proceedings.mlr.press/v54/klein17a.html
+  verified_from:
+  - https://proceedings.mlr.press/v54/klein17a.html
+  booktitle: Proceedings of the 20th International Conference on Artificial Intelligence and Statistics
+  volume: 54
+  pages: 528--536
+  publisher: PMLR
+  arxiv: '1605.07079'
+areas:
+- bo
+- ml-foundations
+problem: 대규모 데이터의 비싼 hyperparameter 탐색을 작은 training subset 평가로 가속한다.
+core_idea: Training-data 비율 s를 별도 입력으로 두고 hyperparameter kernel과 finite-rank size basis covariance를 곱한다.
+  Loss와 log-cost를 모델링하고 full-data 최적점에 대한 정보 대비 비용으로 평가점을 선택한다.
+key_assumptions:
+- 작은 training dataset에서 full dataset으로의 구조적 extrapolation과 비용 모델이 유용해야 한다.
+strengths:
+- text: §3.1 Eq.(6)은 k(x,x′)·φ(s)ᵀΣφφ(s′) 형태의 명시적 size basis를 사용한다.
+  tags:
+  - subset-cardinality
+  - model-based-baseline
+- text: Size별 loss·계산비용과 full-data 목표를 연결하는 선행 설계다.
+  tags:
+  - inference-cost
+  - experimental-design
+limitations:
+- text: s는 hyperparameter 평가의 training-data fidelity다. 선택 item의 identity와 cardinality가 같은 binary vector에
+    섞이는 SSP 문제와는 다르다.
+  tags:
+  - nuisance-separation
+  source: analyst
+builds_on: []
+compared_against:
+- Entropy Search
+- Multi-Task Bayesian Optimization
+- Hyperband
+open_questions: &id001
+- 명시적 size basis 자체의 최초성은 주장하지 않고, subset composition prior와 결정 왜곡의 연결로 차별화한다.
+hooks: *id001
+notes: PMLR metadata 및 본문 §3.1 Eq.(6) 확인. Loss basis (1,(1−s)^2), log-cost basis (1,s). 이 논문의 모델 구조를 모든
+  실제 size curve의 보장으로 확대하지 않는다.
+added: '2026-11-06'

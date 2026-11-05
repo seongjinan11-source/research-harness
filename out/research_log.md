@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 49개 프로젝트 · 213개 기록 (실패·중단 64개, 보존 52개, 교훈 69개, 미실행 28개)
+총 50개 프로젝트 · 214개 기록 (실패·중단 64개, 보존 52개, 교훈 69개, 미실행 29개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1943,6 +1943,17 @@ Candidate2304probe중1152회가first-countfallback. 좁은조건전체288context
 
 - 확대 금지: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
 - 원문: [findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md); [findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/NEXT_HYPOTHESIS.md](../findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/NEXT_HYPOTHESIS.md)
+
+## SSP sparse size 문헌·미검증 확장
+
+실험 조건: 원문·기존72편 정리본·제한된 추가 검색. 새 training/objective 호출 없음.
+
+### SSP-SP-U01 [미실행] Tied count 구조가 개별 monomial shrinkage 아래 잘 추정되지 않아 same-count 결정을 해치는가?
+
+문헌은 dense SK의 normal prior 선택, basis별 sparsity 차이, size basis 모델링과 최근 horseshoe 응용을 각각 제공한다. 이들을 size→prior 손실→same-count regret의 직접 확인 결과로 결합할 수는 없다.
+
+- 확대 금지: 모든 size 함수가 최대 dense, horseshoe가 반드시 실패, FM rank1이 모든 곡률을 해결, 4arm만으로 원인 확정이라는 주장을 하지 않는다.
+- 원문: [findings/sources/ssp-sparse-size-2026-11-06/LITERATURE_REVIEW_KO.md](../findings/sources/ssp-sparse-size-2026-11-06/LITERATURE_REVIEW_KO.md); [findings/sources/ssp-sparse-size-2026-11-06/LINEAR_RESULT_KO.md](../findings/sources/ssp-sparse-size-2026-11-06/LINEAR_RESULT_KO.md)
 
 ## TSFM joint-information preservation and nuisance stability frozen pilot
 

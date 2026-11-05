@@ -1,0 +1,59 @@
+id: NonOrthogonalSet
+title: Learning Set Functions that are Sparse in Non-Orthogonal Fourier Bases
+authors: Chris Wendler, Andisheh Amrollahi, Bastian Seifert, Andreas Krause, Markus Püschel
+venue: AAAI 2021
+year: 2021
+links:
+  paper: https://arxiv.org/abs/2010.00439
+  code: https://github.com/wendlerc/aaai-ssft
+citation:
+  type: inproceedings
+  title: Learning Set Functions that are Sparse in Non-Orthogonal Fourier Bases
+  authors:
+  - Chris Wendler
+  - Andisheh Amrollahi
+  - Bastian Seifert
+  - Andreas Krause
+  - Markus Püschel
+  year: 2021
+  url: https://arxiv.org/abs/2010.00439
+  verified_from:
+  - https://arxiv.org/abs/2010.00439
+  - https://ojs.aaai.org/index.php/AAAI/article/download/17232/17039
+  booktitle: The Thirty-Fifth AAAI Conference on Artificial Intelligence
+  arxiv: '2010.00439'
+areas:
+- bo
+- ml-foundations
+problem: 적은 set-function query로 선택한 Fourier basis에서 sparse한 함수를 복원한다.
+core_idea: Non-orthogonal set Fourier basis를 사용하는 SSFT/SSFT+를 제안한다. Facility-location preference 함수가 model4에서는
+  sparse하지만 WHT에서는 dense한 예를 분석하고 실험한다.
+key_assumptions:
+- 선택 basis에서의 Fourier sparsity와 coefficient cancellation에 관한 조건을 사용한다. Query access를 가정한다.
+strengths:
+- text: 같은 set function의 sparsity가 basis에 따라 달라짐을 보여 준다. §5.2와 Table2가 facility-location의 구체적 예다.
+  tags:
+  - basis-dependence
+- text: 선택 basis의 sparse 함수에 대해 query 수와 복원 조건을 분석한다.
+  tags:
+  - experimental-design
+limitations:
+- text: 이 결과는 WHT 대 특정 non-orthogonal basis 비교다. 모든 cardinality 함수가 monomial 기저에서 최대 dense하다는 명제나 native
+    BOCS prior의 결정 실패를 입증하지 않는다.
+  tags:
+  - subset-cardinality
+  - sparsity-prior
+  source: analyst
+- text: Adaptive BO의 관측 archive와 regret에 보장을 바로 이전할 수 없다.
+  tags:
+  - decision-regret
+  source: analyst
+builds_on: []
+compared_against:
+- WHT
+- R-WHT
+open_questions: &id001
+- Size 함수를 tied count basis와 독립 monomial 계수로 표현할 때의 prior 차이를 설명하는 인접 선행이다.
+hooks: *id001
+notes: 공식 AAAI PDF 첫 페이지에서 venue 확인; arXiv 본문 §3, §5.2/Table2 대조. Query bound는 조건부이며 SSP의 새 정리로 사용하지 않는다.
+added: '2026-11-06'
