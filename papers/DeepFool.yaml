@@ -1,0 +1,45 @@
+id: DeepFool
+title: 'DeepFool: a simple and accurate method to fool deep neural networks'
+authors: Seyed-Mohsen Moosavi-Dezfooli, Alhussein Fawzi, Pascal Frossard
+venue: arXiv
+year: 2015
+links:
+  paper: https://arxiv.org/abs/1511.04599
+citation:
+  type: misc
+  title: 'DeepFool: a simple and accurate method to fool deep neural networks'
+  authors:
+  - Seyed-Mohsen Moosavi-Dezfooli
+  - Alhussein Fawzi
+  - Pascal Frossard
+  year: 2015
+  arxiv: '1511.04599'
+  url: https://arxiv.org/abs/1511.04599
+  verified_from:
+  - https://arxiv.org/abs/1511.04599
+areas:
+- ml-foundations
+problem: Classifier 결정을 바꾸는 작은 input perturbation을 계산한다.
+core_idea: Affine multiclass boundary까지의 거리를 구하고 nonlinear classifier를 국소 선형화해 perturbation을
+  갱신한다.
+key_assumptions:
+- 본문의 모델·관측·입력 가정 안에서 해석하며 SSP의 count-dependent adaptive 정책으로 보장을 자동 이전하지 않는다.
+strengths:
+- text: Affine margin을 normal norm으로 나눈 exact perturbation radius의 직접 선행이다.
+  tags: &id001
+  - robustness-radius
+  - robustness
+limitations:
+- text: Fitted classifier의 안정성은 SSP의 true composition 정확성과 같은 보장이 아니다.
+  tags: *id001
+  source: analyst
+builds_on: []
+compared_against: []
+open_questions:
+- SSP의 관측·count 예산과 실제 추천 손실에서 어떤 조건까지 적용할 수 있는가?
+hooks:
+- Decision-radius 후보를 중단한 직접 선행. CVPR2016은arXiv comment 확인; proceedings403으로preprint
+  인용.
+notes: 2026-11-05 primary metadata/abstract 재확인. SSP 적용과 한계는 analyst 판단. 세부 수식의 확인
+  범위는 보존한 문헌 리뷰에 기록.
+added: '2026-11-05'

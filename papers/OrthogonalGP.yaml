@@ -1,0 +1,45 @@
+id: OrthogonalGP
+title: ORTHOGONAL GAUSSIAN PROCESS MODELS
+authors: Matthew Plumlee, V. Roshan Joseph
+venue: Statistica Sinica
+year: 2018
+links:
+  paper: https://www3.stat.sinica.edu.tw/sstest/j28n2/j28n23/j28n23.html
+citation:
+  type: article
+  title: ORTHOGONAL GAUSSIAN PROCESS MODELS
+  authors:
+  - Matthew Plumlee
+  - V. Roshan Joseph
+  year: 2018
+  journal: Statistica Sinica
+  volume: 28
+  pages: 601--619
+  url: https://www3.stat.sinica.edu.tw/sstest/j28n2/j28n23/j28n23.html
+  verified_from:
+  - https://www3.stat.sinica.edu.tw/sstest/j28n2/j28n23/j28n23.html
+areas:
+- bo
+- ml-foundations
+problem: Polynomial mean과 GP residual의 식별성과 계수 해석 문제를 다룬다.
+core_idea: Stochastic GP 부분을 mean 부분과 직교시켜 mean 계수의 식별과 해석을 보호한다.
+key_assumptions:
+- 본문의 모델·관측·입력 가정 안에서 해석하며 SSP의 count-dependent adaptive 정책으로 보장을 자동 이전하지 않는다.
+strengths:
+- text: Mean과 nonparametric residual을 분리하는 orthogonality의 직접 선행이다.
+  tags: &id001
+  - identifiability
+  - nuisance-separation
+limitations:
+- text: 해당 직교화가 SSP의 count 일반화와 실제 추천 손실을 개선한다는 보장은 없다.
+  tags: *id001
+  source: analyst
+builds_on: []
+compared_against: []
+open_questions:
+- SSP의 관측·count 예산과 실제 추천 손실에서 어떤 조건까지 적용할 수 있는가?
+hooks:
+- Projection의 선행이며 예측 개선과 계수 식별을 구분한다.
+notes: 2026-11-05 primary metadata/abstract 재확인. SSP 적용과 한계는 analyst 판단. 세부 수식의 확인
+  범위는 보존한 문헌 리뷰에 기록.
+added: '2026-11-05'

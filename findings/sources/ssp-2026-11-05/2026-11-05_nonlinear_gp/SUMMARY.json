@@ -1,0 +1,2489 @@
+{
+  "status": "audited",
+  "runs": 140,
+  "charged_evaluations": 14000,
+  "offline_charged_row_replay": 14000,
+  "offline_catalog_reference_rows": 51476,
+  "offline_initial_diagnostic_fit_attempts": 120,
+  "offline_initial_diagnostic_fit_exceptions": 0,
+  "mean_auc": {
+    "linear": {
+      "uniform": 0.7866328124481619,
+      "ssp3": 0.8196503273982688,
+      "gp_base": 0.818807221237814,
+      "gp_plus": 0.8186363142211571,
+      "gp_split": 0.8190443293162049,
+      "gp_orth": 0.8183894944703327,
+      "gp_quad": 0.8174514691993517
+    },
+    "curve_linear": {
+      "uniform": 0.8421787264622687,
+      "ssp3": 0.8725784603895569,
+      "gp_base": 0.8637132035619246,
+      "gp_plus": 0.8708077198011746,
+      "gp_split": 0.8706288072263716,
+      "gp_orth": 0.8707961867348994,
+      "gp_quad": 0.8712427476600771
+    },
+    "interaction_size": {
+      "uniform": 0.773592575626834,
+      "ssp3": 0.7878793367304405,
+      "gp_base": 0.7848322245731145,
+      "gp_plus": 0.7870496361550002,
+      "gp_split": 0.7890055605258259,
+      "gp_orth": 0.787721851503919,
+      "gp_quad": 0.7892151522680795
+    },
+    "interaction_smallsize": {
+      "uniform": 0.7641658634368124,
+      "ssp3": 0.7724599382746358,
+      "gp_base": 0.7712456198996995,
+      "gp_plus": 0.7731303187818042,
+      "gp_split": 0.7734046391795252,
+      "gp_orth": 0.7740699886174919,
+      "gp_quad": 0.7740594558323315
+    },
+    "tomography": {
+      "uniform": 0.6760528661314378,
+      "ssp3": 0.6781725697275595,
+      "gp_base": 0.6776413804456556,
+      "gp_plus": 0.6787107345610708,
+      "gp_split": 0.6788061368524818,
+      "gp_orth": 0.6789574517731303,
+      "gp_quad": 0.679012600569374
+    }
+  },
+  "total_arm_wall_seconds": {
+    "uniform": 0.7813375000841916,
+    "ssp3": 14.20946150040254,
+    "gp_base": 3.734413501340896,
+    "gp_plus": 5.069626399315894,
+    "gp_split": 3.648725600913167,
+    "gp_orth": 5.054787700530142,
+    "gp_quad": 2.807887699920684
+  },
+  "primary_comparison": "gp_orth vs gp_plus",
+  "primary": {
+    "family_ratio_of_means_percent": {
+      "linear": -0.030150110193838398,
+      "curve_linear": -0.0013244102013421077,
+      "interaction_size": 0.08540952413151892,
+      "interaction_smallsize": 0.12154093725988968,
+      "tomography": 0.03635086340856297
+    },
+    "paired_target_percent": {
+      "linear": [
+        -0.11705052162686025,
+        0.0,
+        0.0,
+        -0.002984397849281617
+      ],
+      "curve_linear": [
+        -0.03202353026847682,
+        0.0,
+        0.0074657274138356655,
+        0.01886905666645955
+      ],
+      "interaction_size": [
+        0.07628504922665424,
+        0.26309783566684786,
+        0.0,
+        0.0012046936791687557
+      ],
+      "interaction_smallsize": [
+        -0.6098170116154544,
+        -0.10103347226015913,
+        1.1675688404745754,
+        0.04074712203061548
+      ],
+      "tomography": [
+        -0.0023157243940974404,
+        0.0,
+        0.0,
+        0.14508361679803627
+      ]
+    },
+    "equal_family_gain_percent": 0.042365360880958214
+  },
+  "primary_cost_ratio": 0.9970730192686873,
+  "all_required_development_gates": {
+    "equal_family_gain_at_least_1_percent": false,
+    "positive_in_at_least_3_of_5_families": true,
+    "no_family_below_minus_2_percent": true,
+    "aggregate_wall_ratio_at_most_3": true
+  },
+  "primary_progression": false,
+  "descriptive_secondary_vs_gp_plus": {
+    "uniform": {
+      "family_ratio_of_means_percent": {
+        "linear": -3.9093674708827297,
+        "curve_linear": -3.28763660311171,
+        "interaction_size": -1.70981090772222,
+        "interaction_smallsize": -1.159501202736013,
+        "tomography": -0.3916054799622204
+      },
+      "paired_target_percent": {
+        "linear": [
+          -2.671140906860714,
+          -3.860227337634503,
+          -4.424873541111851,
+          -4.700854006117927
+        ],
+        "curve_linear": [
+          -2.6961167253118146,
+          -4.76520890876605,
+          -2.8983756251134807,
+          -2.734493264398896
+        ],
+        "interaction_size": [
+          -1.4737506309266624,
+          -1.2541894954952726,
+          -2.5034458598486076,
+          -1.6053760882180468
+        ],
+        "interaction_smallsize": [
+          -1.1928847561771816,
+          -1.5220714616735131,
+          -0.4403893943874193,
+          -1.4703248718601403
+        ],
+        "tomography": [
+          -0.17300653013299083,
+          -0.4188145425409351,
+          -0.21285959982683123,
+          -0.7532545854081807
+        ]
+      },
+      "equal_family_gain_percent": -2.0915843328829786
+    },
+    "ssp3": {
+      "family_ratio_of_means_percent": {
+        "linear": 0.12386613682981995,
+        "curve_linear": 0.20334461306643625,
+        "interaction_size": 0.10541909141761341,
+        "interaction_smallsize": -0.08670989752732616,
+        "tomography": -0.07929222363918242
+      },
+      "paired_target_percent": {
+        "linear": [
+          0.014735840511170828,
+          0.434693903375849,
+          0.1565907097853092,
+          -0.11868199744607955
+        ],
+        "curve_linear": [
+          0.7827548046960286,
+          0.012793691291435039,
+          0.10388329923394224,
+          -0.07326082162423253
+        ],
+        "interaction_size": [
+          0.11072714032696052,
+          -0.023744108580459056,
+          0.4808251898696714,
+          -0.14690905322161107
+        ],
+        "interaction_smallsize": [
+          -0.6001123431526811,
+          -0.1316526708779575,
+          0.22305184931443733,
+          0.16072655286116788
+        ],
+        "tomography": [
+          0.13781542648161338,
+          -0.43058396213268013,
+          -0.15940957645126375,
+          0.1266636659724707
+        ]
+      },
+      "equal_family_gain_percent": 0.053325544029472205
+    },
+    "gp_base": {
+      "family_ratio_of_means_percent": {
+        "linear": 0.020877038275468607,
+        "curve_linear": -0.814705253287118,
+        "interaction_size": -0.28173719674384756,
+        "interaction_smallsize": -0.2437750578808351,
+        "tomography": -0.15755668224501918
+      },
+      "paired_target_percent": {
+        "linear": [
+          -0.09541139846901414,
+          0.23640804665603365,
+          0.0501642438647254,
+          -0.11217028936950646
+        ],
+        "curve_linear": [
+          -0.06156207686039972,
+          -0.9219350536463167,
+          -1.1702018137939807,
+          -1.0835234454979137
+        ],
+        "interaction_size": [
+          -0.022607082419390245,
+          -0.31601372765180935,
+          -0.6338237134770552,
+          -0.15015086581915416
+        ],
+        "interaction_smallsize": [
+          -0.5767319603279031,
+          -0.40923839066415724,
+          0.0,
+          0.009241261689219016
+        ],
+        "tomography": [
+          -0.56561202506481,
+          -0.5237506288345739,
+          0.4016592164205912,
+          0.06360847619053533
+        ]
+      },
+      "equal_family_gain_percent": -0.29537943037627024
+    },
+    "gp_split": {
+      "family_ratio_of_means_percent": {
+        "linear": 0.04984082527976774,
+        "curve_linear": -0.02054558896696923,
+        "interaction_size": 0.24851347119363432,
+        "interaction_smallsize": 0.03548177985741585,
+        "tomography": 0.014056399369133388
+      },
+      "paired_target_percent": {
+        "linear": [
+          0.017903312104783353,
+          0.096389082883519,
+          0.006237199789294046,
+          0.08065405114474622
+        ],
+        "curve_linear": [
+          0.3499052513699752,
+          -0.09694669648265819,
+          0.08426444069704608,
+          -0.4232172817211999
+        ],
+        "interaction_size": [
+          0.263924188708331,
+          0.4369739022107799,
+          0.3912165149469127,
+          -0.10008384746659216
+        ],
+        "interaction_smallsize": [
+          -0.5402480491619954,
+          -0.29911735202209355,
+          0.6159339930836172,
+          0.36584316981658205
+        ],
+        "tomography": [
+          -0.0006766386813961134,
+          -0.11180331653098952,
+          0.17218720965390677,
+          -0.0009971646348527763
+        ]
+      },
+      "equal_family_gain_percent": 0.06546937734659641
+    },
+    "gp_orth": {
+      "family_ratio_of_means_percent": {
+        "linear": -0.030150110193838398,
+        "curve_linear": -0.0013244102013421077,
+        "interaction_size": 0.08540952413151892,
+        "interaction_smallsize": 0.12154093725988968,
+        "tomography": 0.03635086340856297
+      },
+      "paired_target_percent": {
+        "linear": [
+          -0.11705052162686025,
+          0.0,
+          0.0,
+          -0.002984397849281617
+        ],
+        "curve_linear": [
+          -0.03202353026847682,
+          0.0,
+          0.0074657274138356655,
+          0.01886905666645955
+        ],
+        "interaction_size": [
+          0.07628504922665424,
+          0.26309783566684786,
+          0.0,
+          0.0012046936791687557
+        ],
+        "interaction_smallsize": [
+          -0.6098170116154544,
+          -0.10103347226015913,
+          1.1675688404745754,
+          0.04074712203061548
+        ],
+        "tomography": [
+          -0.0023157243940974404,
+          0.0,
+          0.0,
+          0.14508361679803627
+        ]
+      },
+      "equal_family_gain_percent": 0.042365360880958214
+    },
+    "gp_quad": {
+      "family_ratio_of_means_percent": {
+        "linear": -0.14473399252177277,
+        "curve_linear": 0.04995682158190906,
+        "interaction_size": 0.27514352508419826,
+        "interaction_smallsize": 0.1201785815347911,
+        "tomography": 0.044476386320657646
+      },
+      "paired_target_percent": {
+        "linear": [
+          -0.131487628639948,
+          -0.15323563762584813,
+          0.01643084718603305,
+          -0.3190711170793836
+        ],
+        "curve_linear": [
+          0.22966990958370737,
+          -0.006420016912223048,
+          0.0030487502244991305,
+          -0.0217502246108503
+        ],
+        "interaction_size": [
+          -0.21920206047039148,
+          0.586960820060578,
+          0.6221157303018199,
+          0.10205968086565154
+        ],
+        "interaction_smallsize": [
+          0.13487596303605187,
+          0.15686335417199881,
+          0.23542480622402717,
+          -0.042783234237875334
+        ],
+        "tomography": [
+          0.026002708336525515,
+          -0.11505342093558468,
+          0.016863210859185962,
+          0.2451331281973168
+        ]
+      },
+      "equal_family_gain_percent": 0.06900426439995666
+    }
+  },
+  "descriptive_secondary_vs_ssp3": {
+    "uniform": {
+      "family_ratio_of_means_percent": {
+        "linear": -4.028243977515511,
+        "curve_linear": -3.48389689950821,
+        "interaction_size": -1.813318415341869,
+        "interaction_smallsize": -1.073722328739668,
+        "tomography": -0.3125610929638811
+      },
+      "paired_target_percent": {
+        "linear": [
+          -2.6854810191719425,
+          -4.2763322852781505,
+          -4.574301319992468,
+          -4.587616683787344
+        ],
+        "curve_linear": [
+          -3.4518519926841074,
+          -4.777391395350572,
+          -2.9991433153227054,
+          -2.663183512897571
+        ],
+        "interaction_size": [
+          -1.582725264828655,
+          -1.2307376145903604,
+          -2.969990586839999,
+          -1.4606128074430735
+        ],
+        "interaction_smallsize": [
+          -0.5963511901249774,
+          -1.3922517273800006,
+          -0.6619647191539624,
+          -1.6284340987287926
+        ],
+        "tomography": [
+          -0.3103941855440273,
+          0.011820315976618367,
+          -0.05353536387237012,
+          -0.8788051245930961
+        ]
+      },
+      "equal_family_gain_percent": -2.142348542813828
+    },
+    "gp_base": {
+      "family_ratio_of_means_percent": {
+        "linear": -0.10286168775542892,
+        "curve_linear": -1.015983917787111,
+        "interaction_size": -0.38674858132096146,
+        "interaction_smallsize": -0.15720146958669856,
+        "tomography": -0.07832656548130146
+      },
+      "paired_target_percent": {
+        "linear": [
+          -0.11013101025015848,
+          -0.1974276507583861,
+          -0.10626007251880454,
+          0.006519445484687303
+        ],
+        "curve_linear": [
+          -0.8377592805362433,
+          -0.9346091739252493,
+          -1.272762924910087,
+          -1.0110032931929136
+        ],
+        "interaction_size": [
+          -0.1331867488680416,
+          -0.2923390323686159,
+          -1.1093150372127991,
+          -0.0032465821205973633
+        ],
+        "interaction_smallsize": [
+          0.023521538480508752,
+          -0.27795165055790605,
+          -0.22255543530024235,
+          -0.1512422047897144
+        ],
+        "tomography": [
+          -0.7024593541915869,
+          -0.09356956223030011,
+          0.5619646182896787,
+          -0.06297542280275792
+        ]
+      },
+      "equal_family_gain_percent": -0.3482244443863003
+    },
+    "gp_plus": {
+      "family_ratio_of_means_percent": {
+        "linear": -0.12371289844175237,
+        "curve_linear": -0.2029319618538139,
+        "interaction_size": -0.10530807660007468,
+        "interaction_smallsize": 0.08678514884095101,
+        "tomography": 0.07935514609909156
+      },
+      "paired_target_percent": {
+        "linear": [
+          -0.014733669381139514,
+          -0.4328124938520195,
+          -0.15634588665167648,
+          0.11882301897843117
+        ],
+        "curve_linear": [
+          -0.7766753411463156,
+          -0.012792054715438095,
+          -0.10377549382715179,
+          0.07331453245307262
+        ],
+        "interaction_size": [
+          -0.11060467093777504,
+          0.02374974774634886,
+          -0.4785243243784154,
+          0.14712519345037034
+        ],
+        "interaction_smallsize": [
+          0.6037354340121759,
+          0.1318262236222667,
+          -0.22255543530024235,
+          -0.16046863715224458
+        ],
+        "tomography": [
+          -0.1376257569577155,
+          0.43244600527627686,
+          0.1596640963109408,
+          -0.12650343208781
+        ]
+      },
+      "equal_family_gain_percent": -0.05316252839111968
+    },
+    "gp_split": {
+      "family_ratio_of_means_percent": {
+        "linear": -0.07393373269154457,
+        "curve_linear": -0.22343585725401738,
+        "interaction_size": 0.1429436898369607,
+        "interaction_smallsize": 0.12229772161382879,
+        "tomography": 0.09342269994447872
+      },
+      "paired_target_percent": {
+        "linear": [
+          0.003167004908810611,
+          -0.3368405949619291,
+          -0.15011843846769457,
+          0.19957290570167263
+        ],
+        "curve_linear": [
+          -0.4294877175811007,
+          -0.10972634972363782,
+          -0.019598498969553013,
+          -0.35021302903948115
+        ],
+        "interaction_size": [
+          0.1530276052901014,
+          0.4608274301566295,
+          -0.08917987561650742,
+          0.046894097429572845
+        ],
+        "interaction_smallsize": [
+          0.06022571594583859,
+          -0.16768544350918013,
+          0.3920077632038943,
+          0.2047874691156304
+        ],
+        "tomography": [
+          -0.13830146441000668,
+          0.3201591997691766,
+          0.33212622711709106,
+          -0.12749933527518298
+        ]
+      },
+      "equal_family_gain_percent": 0.012258904289941253
+    },
+    "gp_orth": {
+      "family_ratio_of_means_percent": {
+        "linear": -0.1538257090603845,
+        "curve_linear": -0.20425368440355474,
+        "interaction_size": -0.01998849559565752,
+        "interaction_smallsize": 0.208431565584144,
+        "tomography": 0.11573485578841858
+      },
+      "paired_target_percent": {
+        "linear": [
+          -0.13176694517113008,
+          -0.4328124938520195,
+          -0.15634588665167648,
+          0.11583507497752166
+        ],
+        "curve_linear": [
+          -0.8084501525518317,
+          -0.012792054715438095,
+          -0.0963175140088035,
+          0.0921974228802247
+        ],
+        "interaction_size": [
+          -0.034403996538789894,
+          0.28691006848549083,
+          -0.4785243243784154,
+          0.14833165953742622
+        ],
+        "interaction_smallsize": [
+          -0.00976325898504049,
+          0.03065956275103421,
+          0.9424149172589935,
+          -0.11978690147302906
+        ],
+        "tomography": [
+          -0.13993829431858673,
+          0.43244600527627686,
+          0.1596640963109408,
+          0.018396648955576467
+        ]
+      },
+      "equal_family_gain_percent": -0.010780293537406838
+    },
+    "gp_quad": {
+      "family_ratio_of_means_percent": {
+        "linear": -0.26826783634634754,
+        "curve_linear": -0.15307651863001315,
+        "interaction_size": 0.1695457001299694,
+        "interaction_smallsize": 0.20706802753660547,
+        "tomography": 0.12386682672109739
+      },
+      "paired_target_percent": {
+        "linear": [
+          -0.14620192506861196,
+          -0.5853849084931806,
+          -0.13994072841937433,
+          -0.20062722803495525
+        ],
+        "curve_linear": [
+          -0.5487892211163636,
+          -0.01921125037558369,
+          -0.10072990745826349,
+          0.05154836176675115
+        ],
+        "interaction_size": [
+          -0.32956428369049773,
+          0.6108499695210545,
+          0.1406144308281121,
+          0.2493350298189423
+        ],
+        "interaction_smallsize": [
+          0.7394256910290498,
+          0.28889636483033776,
+          0.012345420221482328,
+          -0.2031832177172066
+        ],
+        "tomography": [
+          -0.11165883504538066,
+          0.3168950404179194,
+          0.1765542316633395,
+          0.11831959428914018
+        ]
+      },
+      "equal_family_gain_percent": 0.01582723988226231
+    }
+  },
+  "online_gp_optimizer_failure_flags": 3,
+  "online_boundary_fits": 864,
+  "diagnostic_seconds": 5.655196200124919,
+  "analysis_seconds": 10.292195400223136,
+  "analysis_source_sha256": "eec603708130ba77c44a564381d85a278776e9314957c668c71e0a2b19c991f3",
+  "manifest_sha256": "03a59d35ff8c18f8eefe3cf2d8f01c8ba4bf69ccb5c2e5680dc39418dbac8092",
+  "input_sha256": {
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\0_uniform.json": "047cc892a06f09b9522221aa2223185517bfbcaa8c394703b2f1ba2ec195cfce",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\0_ssp3.json": "d7dac1348c122ef917b7d4fdef11ae0d93e51f2d7a4043c7f22aab0d5fc355f5",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\0_gp_base.json": "118c2c157779e8a796100017e49d57413d44b9c40160ed76e2575b380480747c",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\0_gp_plus.json": "fa26c1c2072ba96b33df8f7e6b46245617fcdd6d5fce0c3e8438d1c401dc6635",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\0_gp_split.json": "d9646c09851223072f0929eac6f0f6469377151f2ab8a55cae8716aa08af4cc5",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\0_gp_orth.json": "7dbdf641f99413038877d967aef02d732d529ca3580f1e9896039bd19c7a52ec",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\0_gp_quad.json": "f73d1d7d61fe70780df367dc083d6dbac90b3444da9e5f210a80ba9f94494d14",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\1_uniform.json": "92a3281447f5db3a88015cb79c830a30bc9aab213b921007e61f3fff948338d7",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\1_ssp3.json": "b6aa1acbf80a911ba37e5898766c93c5cb09d4c3219c33fe5e3acaa96cb5ebe1",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\1_gp_base.json": "0167d44b22be516c3896a13381e0e2a86daa02b9055eedc1a784bbc7abd89e55",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\1_gp_plus.json": "4036616b9e59ac344e91d9973091c8b6a187f4138bb791fd6d076674a253fd40",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\1_gp_split.json": "0abd18d877f677595a502ac0a02d2899efa2d17698b72cf153f9f04cda3da100",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\1_gp_orth.json": "b3c52e3fafd75c16b95deb8c208c6bc9bf59e7f22b26c0a0e692488928259cee",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\1_gp_quad.json": "061c231ca91b947bbcf79547eb5a6cc136912bfc60d873fc25fdaaf649d8a0f9",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\2_uniform.json": "63b3d87add6649121bb3db6414ff0a302e3293e5191054bfe6d8b000e9a4238b",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\2_ssp3.json": "a174596779586a0351118c08dfd6ac09b3355b1a6a9a41b7b1ec68d9e7e545bf",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\2_gp_base.json": "9a67d74b7bb4e1a01d39864559f7d7cb01100e4eb15333b7b4f82df3ebd3e965",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\2_gp_plus.json": "77f61e09487ade8369a092d4ee91189585d8c2c2d260b0d6e1a778fdf50eb9c4",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\2_gp_split.json": "3eadeda65a7779b401009b7e5e04077015da2e191402552720c7de5e40f93ee3",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\2_gp_orth.json": "11fd4694654690359bbda8a08fb7a19fef5e8c847632a81e1a49d1629979b714",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\2_gp_quad.json": "58fd5832e76057910173071c2e2ef68f4c456a7a3cd9fcf68ff54db627b3b7b1",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\3_uniform.json": "c4d66c264136bfb28d8473de315e7dab49fa196830436de98dce48e7fc0b48c0",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\3_ssp3.json": "028661500947a1bf9c6fb0ce815e75ae631deaae16c82b2920afd1fb4df5af73",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\3_gp_base.json": "37eedccad15f3e2843bb54f0af865b8b81c8dfbc0dd716cf4409caed85f4eb76",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\3_gp_plus.json": "3afdadb76664bf4e633858d8bd3d3f003067ebe6a90d15255c7a532ff54dc77c",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\3_gp_split.json": "2b7f8fab43530bdc3a77815de09e490b859398bf6c09adc09532300aae2f0c81",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\3_gp_orth.json": "0b96950e6ed2105bd6892c8252984a9d7c93b2cdb2a0aafc29d81076641a4d0d",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\linear\\3_gp_quad.json": "dd7f5eabf01f27f5661203924985e36b6d7019848a1e4adb9346c4f90f302812",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\0_uniform.json": "94392157e1bbe2283cebf9c94eb98e606a8b3ba4f88fb885a056bbe06c88cde0",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\0_ssp3.json": "202f8af92b5a572d5b96c8e7fdc6b7379098ce0d55de781ded70b064d20c79ff",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\0_gp_base.json": "7aa834b2fe60626174c741ea1e43d49b3a3e4cf29cce5fb2eca389220cd094f4",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\0_gp_plus.json": "bb1ecc7088aeb7eaf32c1ed4e024057e4868b70a12767efa22d2848d76041885",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\0_gp_split.json": "618d3e1c4c108ce41b4f9b75df5a29bf88a7fdfc20f055c9a252a7836158215d",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\0_gp_orth.json": "4d00f0505db8866b8e73633ec60fa6b8626eade6fd0d62903129c28790b04a1a",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\0_gp_quad.json": "cc5943605b785addff41b76da9494fbafbd3d0c4f4ff64400aad12368ee66d89",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\1_uniform.json": "011ab3566d674d047f87eea3674f95b63bba705617947c49bfb09fbce2fe1cc9",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\1_ssp3.json": "74dd8e0ab601fddb720cb91ebbfa43278c33c0907929ef3d658d847936398990",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\1_gp_base.json": "bd0810141d352d3ab10b85d8ac60a0f4dd182a77e317d7fcaf2b855677484d99",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\1_gp_plus.json": "9c5ce5d217b42d056b61219475f0807817f533b319388b77b859254c73c5b098",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\1_gp_split.json": "1ba165eaeba659ce076b585986cc939f52c7c4a52844e52c1a96980a736b8788",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\1_gp_orth.json": "9acb6c27e5ad1196af97dd99a0fbaa626df26ec347c7acd63b9c32d4f04046a1",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\1_gp_quad.json": "002b712d8ef68205561d1c81a3d156a612611e46197af583dda073ec0fc344f0",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\2_uniform.json": "7e33f87a0b62861c919897a4235c2370360f8420a75f0230d562e21d32fb5dcb",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\2_ssp3.json": "789629ea754a08cfe5dd657aaedc057020a5241716ba4ff4bc5ade46f724aaad",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\2_gp_base.json": "38e23c36a37cad860268e477e8df47c1a2fb1d4f923a963650ee6279077a2690",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\2_gp_plus.json": "92275244835d34c4f62a38d70b97a0c5adb5bd69810e12127e7ed480de5e94b5",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\2_gp_split.json": "6636b84b2249814b374df35f4d4e05ffd31f1da6053147c29413cb508f618834",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\2_gp_orth.json": "f5e928151c45b5e9f8a72f908e8e65d247711f89abb7182bd48d809db0a601a6",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\2_gp_quad.json": "bd83a8f4e33f008346a77fb49ff9bc4fd2785dfdb12f48541d709142645c7ad7",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\3_uniform.json": "e8f10fbd4d64200e7d0a4229707396c794152b24856b3fbd67a6f9b51627bde6",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\3_ssp3.json": "ed8f27a756f99fb35c15d293052531a19866d2eaee781d0f659a8ddde159c67d",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\3_gp_base.json": "1b91ae4788fba97ce925a80a47468a0dcc44d5833691e290f3adc4edb1f5f0ff",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\3_gp_plus.json": "629b8f9ea57a4fca3b49a9b4f0b7623d9e64bfa0887122a1bf5350ac0325df5b",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\3_gp_split.json": "0f91c15d1b38b14841668b457ef0c337a1c3f8bd6fb9c86947c687746b0f7734",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\3_gp_orth.json": "896af70be226b0336ddf8ba7f17f7c627bd88cd0c20fa57e0e4ac8f523b3efeb",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\curve_linear\\3_gp_quad.json": "2bf3c48816a17a0e7ddd006a6bd3e13323139894fd23b3e45d9f37347c633db1",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\0_uniform.json": "29648b906746f1aaf70783ba93ad616a561d9afc4a8f0597c660c11e4379f11a",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\0_ssp3.json": "3cb66060b9d8fc0bf9aff350f20997e8b31e63701f742bd316bde575507b78ca",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\0_gp_base.json": "8d45216ca6e4735435f834c8dd1966cb3e646f26b6253e994439470182a23a2f",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\0_gp_plus.json": "2132892b48efb5e77439519021783e2974af9614aec156db796f3ad39f4e202c",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\0_gp_split.json": "d71412c5cb952a447820b6899e09caf6e28d16fb6dc4fd3bbf47582ef753f084",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\0_gp_orth.json": "b3b64c9515d136666220aa75dc93a57533624273b849c3fd25e4b1af240da2f8",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\0_gp_quad.json": "b699dbfbc02fb721d087b324cd7976a21bfc07e41fbb3a5c69d8cb5626e6aded",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\1_uniform.json": "5ddea722d07fbae5f6b4467b188a50daa4074b97c8e865a1024baf0d69831583",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\1_ssp3.json": "91cc195ff4429470fe606b0e84bb2197dd1bf1f1955f3e2fe732a5cc69f58afd",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\1_gp_base.json": "7cacfa26febe1143fe578e284ef34e2395a7d0ca303c6d840df966c692cd9587",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\1_gp_plus.json": "7e26808e09f21e93641c7aff4ef370eb99258bc0ee62f18516320f1a8bff9371",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\1_gp_split.json": "d02460d257291a104043f44ddb2db81ddd484bb8ac23e3b70ce0cb6c06ef53c1",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\1_gp_orth.json": "7276312c305e80864a5422da99fc1d587667c9ec4467480451147c75d6a1ac36",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\1_gp_quad.json": "5b811f747634d9328703875655eeba499cddfec32aef4d9e938d4b601fbd1984",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\2_uniform.json": "786f8d57e962d390d0c0bc2748c8998def57fdd54daa57adcaf814e0f340add2",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\2_ssp3.json": "7cace93d5c35992b3869336eeb69a802fb9bff63847eaee31d657e5d6ee977d8",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\2_gp_base.json": "3a0ae5708d5fc42df447f66003c6467a9cf432d098f0613e86aaac6afa413c55",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\2_gp_plus.json": "a47ba2f27403c514a43b26496af59a6dad38dee95e975e7ef3c5598f2f466ba2",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\2_gp_split.json": "70b7f79b9be2735a4716c3d25e9450ddbaeec24b67bad9a4a54e5bb34da581d5",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\2_gp_orth.json": "61a35376ff886433746330d88d869a5708119ce36a49f4239fe8d89aac825ca0",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\2_gp_quad.json": "cac6783a3dbed85ca3b45c25d09822d5c09bfb16208e1eefa9feb2eae095cabe",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\3_uniform.json": "46bfc9f3462a122346bbcfc43f97a06d58f07ab03e193b7f67edd5d31f594fc8",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\3_ssp3.json": "6765bc24a79e9164bc1781672bb0b93c8f9e0091d15f1b71b86e77cf1291fe04",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\3_gp_base.json": "6b8d8df9e6dc64d26cbe7177980b676d4adee09d224ebfd04afaa6a64bcf847f",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\3_gp_plus.json": "a2dd3a6cd61cf780acdcf7c1585c44cdb6adfea2c211d68b43dda7342d899c66",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\3_gp_split.json": "b1da168f8f7061feb0a836e314e935d6105de06671406c7421184278c55ca994",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\3_gp_orth.json": "9b8d3b707b8acdcf308e90f64a1083ecd74532074180d8493651c2c41c981f3f",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_size\\3_gp_quad.json": "7bbf39914e4419a8c768dc03b4dec7dbf0c4cdeeb9aa68720933bf339efbb5e8",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\0_uniform.json": "bfd16261a7f28c87ae268dc6adff8722afc0fe9e30712bd8e4b9ccdfcacf4173",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\0_ssp3.json": "014253b5f31bbbf8810e3fdc7eccfe9741f34013d9be9e373caf9c5754dafa7c",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\0_gp_base.json": "3b36d1b7f0467fa2e23c33a270ae0e4b6226a72e47bbe675ed154c7fdb4f4c14",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\0_gp_plus.json": "d11957790a41dfabd1de4199a3c07fbc28bdca25b454860b45efba3ec95b94bf",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\0_gp_split.json": "ead5e41b6682125e15ffcc35bc4c52fd0bc42f364faa5b1286bc3d8e87cf9e3b",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\0_gp_orth.json": "1e06aa15840895b85079a0283b3eb575ece609162e0278ebf89d936f8a5826bd",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\0_gp_quad.json": "7b2f893f40fcbf4cc1741f09cca49ee9a7ffe8bf56e15d21a60f596e5e0fcf47",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\1_uniform.json": "8a0b59f7ffbf00ac7a68e8971761106c26e39545de58c88908ef98270c9fa537",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\1_ssp3.json": "bdaed0641cb4f654e1c05380982384f500561edcdda27e2ddebbc3d1d938592f",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\1_gp_base.json": "908c5db9de15b9c1701453daac54cfbc02277accf4e16157c73c0c805632794e",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\1_gp_plus.json": "6fafacf48b9d94e6e3cdb520064320f4d537e696b349c5c3e7bd598dbbc588fe",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\1_gp_split.json": "af2b2e9017eedfc3c1e475934c087bc38e0f28fa09632dd447145e3a717c1ca0",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\1_gp_orth.json": "7cdbf93269daae27f14c8678b9b9967cf2f13946b1da3cce9c8e483a70cfe394",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\1_gp_quad.json": "8ee559d98d7effbdcaeaf8ad481d57840617770723dd2de234b86440b371b51b",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\2_uniform.json": "2c2ca6174a4dc780def763b93204b46bfa3d3f40e970f6e65189086c8aafc2c6",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\2_ssp3.json": "48652669df402633780e652989cdc95dc2d132248ab2dc33b2f364e6b6682de1",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\2_gp_base.json": "9e9239043af7bb75655cc6ed64629bf2831e023797cf1ef6dfd44dfb8bf317e2",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\2_gp_plus.json": "b9fc5dd7849274ccd335efa1cedcbcca4ba65fdcedfa498a8a37bea94eb16c3f",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\2_gp_split.json": "9df14ea7efbcbf3c7ca8206562a90b4c8eded5541ef713dcfd4f17a0ba1a9c81",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\2_gp_orth.json": "12412c8806e6f60e50937ecdb4c04b080a91f7677fc889b5f629de50a25e2e94",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\2_gp_quad.json": "620df9829e2b682bae896a596a3ef61c320200f1bbf413cf6ff574aa63fefc6d",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\3_uniform.json": "3db8cbf8147a7c9e12ab285b549c12d1dc021a7a7760365c5e3b0b9eb1460b57",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\3_ssp3.json": "2e1503c19a0dcc1c49baa87a2b3311141a6f8a5604313cf0a9d5aa87c6f79a02",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\3_gp_base.json": "5334976965a28d4c03189f9c17fcf8dbd52591bc98d4109fc4cf1cb562b9b3d3",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\3_gp_plus.json": "216ab2f7726616e0ae1d9898f3e202dfdcec5533aa17fa6a4be8da06b2e73f2d",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\3_gp_split.json": "e1d2cc8ca0e94eb55c926603e1a6637d8760a3f17caab2010ca49e21cae4fdb4",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\3_gp_orth.json": "649e2f37a12344d2f30086b75c02b4923cd0081b78d220f33c29fb149bde5fcc",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\interaction_smallsize\\3_gp_quad.json": "e80932a967320f526c915381bdbfa11c4d2bfbcf0bfc11a3e967f7a9eece122d",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\0_uniform.json": "d298a2c55168043a6e3dbc14d42fb873f2e052f10157701dbea11092c5de48e2",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\0_ssp3.json": "fe469aa49ad663d078f8baaad2ac610a292032dfe99fa1b8795dd470b2f3f65f",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\0_gp_base.json": "f9dbdf2c24146ba8410a85fc06c2657b9a9459344c2b85e0ad1ed75e25085f71",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\0_gp_plus.json": "906678d7294196f71f3400cbe85f2f4d9d39c3542a31ab2215c58a0688252508",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\0_gp_split.json": "855cc0977059b09fdfc4decbdd75cd62bf05a9ba94ed0449322a679c32b4cf90",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\0_gp_orth.json": "e5e97fcffe8f80947c56826ff91afb48b1416b13189ef79a4278a01881873830",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\0_gp_quad.json": "06f8ea710992813e611f001ebec2609bd860572eeb1b8daa5744af2a844344e9",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\1_uniform.json": "4e9843bb012edee9b20e536793871516ed543263e403a16c75eb8bc0848a4cbd",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\1_ssp3.json": "e4a46b5ac0f955cec9ac8f14ced90776c46a00855533847b39cc436692c85293",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\1_gp_base.json": "9298e5c018f5ccada71126ae99f2fc14902fd61b9a3eb74d9ebf26647d2ad816",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\1_gp_plus.json": "13e257da1e016278e97bf77e37d9e6e7978bf35554957f7b597429daa6c83e28",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\1_gp_split.json": "b915290d94e8d311d9d5d9a3e4ede9bebd50227762d72cf6e7a397d58d4efe93",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\1_gp_orth.json": "d09af6de809cca5449e74e1d4f8696688ebd6131613addb21feafbbda348a252",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\1_gp_quad.json": "eed7b6e9bf155910b925250ec1814c781b47b9e8963dcdbe43c9a2fc7d864ee7",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\2_uniform.json": "46be3d08d1c246a203eb490a1fe4c7399bb3e42877ca6ebc7a25677ed1fcfb40",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\2_ssp3.json": "34217641570cb1e46f374d29b02ab55a21ee14ea2a1895dde371ef19054c0daf",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\2_gp_base.json": "8ed7716ea8f86ce26a226e6dab4a0455d1b6a8ff1517e050e4700f6a85c87982",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\2_gp_plus.json": "7b0faf6258b91e25e2256eeaba9580e39a594e3140f61dfc8ef1b6389f0b4898",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\2_gp_split.json": "1c63a9305c6e36246315bf93d719d41193ebbcc8901899e5df5a910b937381ba",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\2_gp_orth.json": "34836e988b29f6e8ea8477631f464e969ae5d1a2d334e99d5a17964ba471a7ab",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\2_gp_quad.json": "4feb2a3c4ce904102d8b756f29982ad13b9aa9e956453e1be44c50c2d8a12f0e",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\3_uniform.json": "213464d02f3fe8ba32bc83f27c9544cab1aae19f1c09dc6a5d4ef9ca89ab6567",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\3_ssp3.json": "1fd068f386a2386edefe5ea66fae4ac2b9ca95b85209a4d81516acae2142599a",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\3_gp_base.json": "91f4d1c638e272e557d83e72600b091c447199a00f434fb0c526a4dfa9e34c5a",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\3_gp_plus.json": "cf2e4ac7474404851692b211b90be52a20c47c9fe6097da9ac6ace8aa2eec59f",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\3_gp_split.json": "db568eee764d93a256e95953b86f2da9d1d1bdbdbc22b6a579604c859ff6d547",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\3_gp_orth.json": "528ce3fb44484de6eed121950b98b321e9632834884a6f2d9e9cb22f9a60b009",
+    "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\runs\\tomography\\3_gp_quad.json": "b42e043a7a1ed7926cd0b810d8539002c015bd127e9094dfc346f2753cce0841"
+  },
+  "audits": [
+    {
+      "family": "linear",
+      "target": 0,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 0,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 0,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 0,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 0,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 0,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 0,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 1,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 1,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "linear",
+      "target": 1,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 1,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 1,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "linear",
+      "target": 1,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 1,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 2,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 2,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "linear",
+      "target": 2,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "linear",
+      "target": 2,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "linear",
+      "target": 2,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 2,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "linear",
+      "target": 2,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "linear",
+      "target": 3,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 3,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 3,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "linear",
+      "target": 3,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 3,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 3,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "linear",
+      "target": 3,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 0,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "curve_linear",
+      "target": 0,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "curve_linear",
+      "target": 0,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 0,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "curve_linear",
+      "target": 0,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "curve_linear",
+      "target": 0,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 5.551115123125783e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "curve_linear",
+      "target": 0,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "curve_linear",
+      "target": 1,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "curve_linear",
+      "target": 1,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 1,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 1,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 1,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 1,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 1,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 2,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "curve_linear",
+      "target": 2,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 2,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 2,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 2,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 2,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 2,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 3,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 3,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "curve_linear",
+      "target": 3,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "curve_linear",
+      "target": 3,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 3,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 3,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "curve_linear",
+      "target": 3,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 0,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 0,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 0,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 0,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 0,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 0,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 0,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 1,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 1,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 1,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 1,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 1,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 1,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 1,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 2,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 2,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 2,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 2,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 2,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 2,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 2,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 3,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 3,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 3,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 3,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 3,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_size",
+      "target": 3,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_size",
+      "target": 3,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 0,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 0,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 3.3306690738754696e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 0,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 3.3306690738754696e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 0,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 0,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 0,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 0,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 1,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 1,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 1,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 1,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 1,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 1,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 1,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 2,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 2,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 2,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 2,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 2,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 2,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 2,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 3,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 3,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 3,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 3,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 3,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 3,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 3,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 0,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 0,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 0,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 0,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 0,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 0,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 0,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 5.551115123125783e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 1,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "tomography",
+      "target": 1,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 1,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 1,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 1,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 1,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 1,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 2,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 2,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 2.220446049250313e-16
+    },
+    {
+      "family": "tomography",
+      "target": 2,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 2,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 2,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 4.440892098500626e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 2,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 2,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 3,
+      "arm": "uniform",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 3,
+      "arm": "ssp3",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 3.3306690738754696e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 3,
+      "arm": "gp_base",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 3,
+      "arm": "gp_plus",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    },
+    {
+      "family": "tomography",
+      "target": 3,
+      "arm": "gp_split",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 1.1102230246251565e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 3,
+      "arm": "gp_orth",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 0.0
+    },
+    {
+      "family": "tomography",
+      "target": 3,
+      "arm": "gp_quad",
+      "rows": 100,
+      "unique_feasible_catalog": true,
+      "paired_initial": true,
+      "objective_error": 0.0,
+      "independent_hv_error": 2.220446049250313e-16,
+      "auc_error": 1.1102230246251565e-16
+    }
+  ],
+  "catalog_references": [
+    {
+      "family": "linear",
+      "target": 0,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\linear\\0.npz",
+      "sha256": "5b385717b318d60c9eb3a6c69725eee29224e541e51ac0360f2365566980a94b",
+      "catalog_hash": "7315373e674d7c91dcc90fff78769e49b3f8eb398fdb57277d2f74e911fb9a58"
+    },
+    {
+      "family": "linear",
+      "target": 1,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\linear\\1.npz",
+      "sha256": "5ddcbb6ccc3084d4ccc07535891a060b27192d013723884f6b92a579c6217ab4",
+      "catalog_hash": "a8ba3cbe49747c8d402ab3499503283cdcae9b1847f6253911ca8e29ab15c419"
+    },
+    {
+      "family": "linear",
+      "target": 2,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\linear\\2.npz",
+      "sha256": "e7715ffd2ae17a91c36ed4a73511ec821b8a54360a9dfb71711e6e073f9b5be8",
+      "catalog_hash": "53b8ebff25dc8c223abf7c04f27ced4c3cf80df919e456a9d47db37b0da83dda"
+    },
+    {
+      "family": "linear",
+      "target": 3,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\linear\\3.npz",
+      "sha256": "830356b1117d19967b2bca58d5d88bb662602d1af546870c7de2aeb959bae5d8",
+      "catalog_hash": "63ff01d51b5a2eafaf929f7e841da16069505dec7abe895ac7e0f628328b27a7"
+    },
+    {
+      "family": "curve_linear",
+      "target": 0,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\curve_linear\\0.npz",
+      "sha256": "0ae840243a0346cd7a189fef412b65ba21c678c55a68c6db7aeedf7aac448e75",
+      "catalog_hash": "dc9fdd516ee60159d83ac1e5f01876585849d302b3e5f5240e53c21f8a8f988c"
+    },
+    {
+      "family": "curve_linear",
+      "target": 1,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\curve_linear\\1.npz",
+      "sha256": "d1dbd7a56eeed2ecda717fc9b4461d73dde6c0916c00193fb368a83a391c8a73",
+      "catalog_hash": "db94af5cef06420d76e060e2f1dd4cec59e8382bef7c39a1f2b8b9ecc95ab17f"
+    },
+    {
+      "family": "curve_linear",
+      "target": 2,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\curve_linear\\2.npz",
+      "sha256": "e7dde9748b074b4d0f8f1c768594513ca597b4f1184db0a5ab380086c9e6afaf",
+      "catalog_hash": "d43945d38133cfa1a5639845bea9159d2d6500a4a819c5d374770307361d994b"
+    },
+    {
+      "family": "curve_linear",
+      "target": 3,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\curve_linear\\3.npz",
+      "sha256": "d08bde63c5c771846c024c6705676a7e7a96d7f68f4ca50c7d3173170c3c8263",
+      "catalog_hash": "317c1cd7588333eeb5157042c0881b999099947c5b20a1949b25dcbb06adfb6b"
+    },
+    {
+      "family": "interaction_size",
+      "target": 0,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\interaction_size\\0.npz",
+      "sha256": "91763ce44722a4fd1752d161f17c8c8507a2e33dd15e42909eafb2a831b15beb",
+      "catalog_hash": "bc11f4ba84869d7d424219e60b69a3738d19606562d29d0453c2daf98bbbd6b7"
+    },
+    {
+      "family": "interaction_size",
+      "target": 1,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\interaction_size\\1.npz",
+      "sha256": "958b558f642869c31e829b98e3f746c249f38af82762cd7e442e35a80f4c2744",
+      "catalog_hash": "924cce4d73ff192dc2a5ed9cecb248bcd4eba60887c7aa03fbaca54a833273e5"
+    },
+    {
+      "family": "interaction_size",
+      "target": 2,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\interaction_size\\2.npz",
+      "sha256": "b0d99fc5bf543ea97fda66a2ba8ba3d5f568ab0bb5e8a81b5a2fb427abb63f91",
+      "catalog_hash": "b36da5b591e4393210604892b8855c1f997e98177542006c8c49564596e29df1"
+    },
+    {
+      "family": "interaction_size",
+      "target": 3,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\interaction_size\\3.npz",
+      "sha256": "0357aad78d8da9ed93d0c650ed37aff51a5113ff7efbefa5a0ddc3437ed48445",
+      "catalog_hash": "0fbc4d0464cc3f544dde1e2ba981b3a30c37a50dea399413b7771d4b3ef20099"
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 0,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\interaction_smallsize\\0.npz",
+      "sha256": "82478efe1ad7e32f98f2d253591fd5183f9e618a7ad8bfb23a3de368d5b36913",
+      "catalog_hash": "5541fa1d00859eea022c8517278a55614127e7c7c2bd644133c67c7c868e2c9e"
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 1,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\interaction_smallsize\\1.npz",
+      "sha256": "fa1b9a816c25181bc23d05158d74f23e1f06313fd4308d752fe46ea428843fd4",
+      "catalog_hash": "ba887a3a65dc705bacb4cfdb4e7bf44a69e8e7727f9a614c631a42e9eb0afe5d"
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 2,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\interaction_smallsize\\2.npz",
+      "sha256": "e6901a1241ddba985bd928b5685afe7240ba8e1593b52bd0ff063d5489b8dc73",
+      "catalog_hash": "95bfb9805c236f25ebbb032614a77d39540f4e165bd0a4ceeb1258066e54a884"
+    },
+    {
+      "family": "interaction_smallsize",
+      "target": 3,
+      "rows": 2257,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\interaction_smallsize\\3.npz",
+      "sha256": "8fdc69666bcfd00c203a8cd6c77f09b46256e023820b1dbfa42a94d63eb25d75",
+      "catalog_hash": "d3ce869e0332a6fe4fe0b124f84bd190256e3627baede57d8f5787db184a721c"
+    },
+    {
+      "family": "tomography",
+      "target": 0,
+      "rows": 3841,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\tomography\\0.npz",
+      "sha256": "2241933fa83465506a5adce90c9c9e0dbd9049143beab2a9f1b41d34deca52a8",
+      "catalog_hash": "632b9703adbf6e4e12b88592f5cbb70829fcf6d115191a55d47ecbd48b5abf14"
+    },
+    {
+      "family": "tomography",
+      "target": 1,
+      "rows": 3841,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\tomography\\1.npz",
+      "sha256": "f5759329de34d3e5b4303e011ef621e7494c0d5da4edb253bf349ad58de9cfa4",
+      "catalog_hash": "316e737d71e8edb5d3b4d372e60b629ef5bbaf0fd7ea1d075df66fb16f9524ff"
+    },
+    {
+      "family": "tomography",
+      "target": 2,
+      "rows": 3841,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\tomography\\2.npz",
+      "sha256": "b011f4fd210ce58ca5d0f397f208ba4bf2dd68343eb54fb1f37d796e49e36496",
+      "catalog_hash": "e1f8dc0fbfc6bf719482495a04da54a92c3689a6e96958eb5d9291e13f3edaf8"
+    },
+    {
+      "family": "tomography",
+      "target": 3,
+      "rows": 3841,
+      "path": "C:\\Users\\seongjin\\Desktop\\code\\ssp-share\\research_cycles\\2026-11-05_nonlinear_gp\\catalog_references\\tomography\\3.npz",
+      "sha256": "3577069b0dead7b9bbc4f2b0566a6f9da2dd45ca3487ff9de77177ef23e2df81",
+      "catalog_hash": "ce640eb6c3c5aad801d806b73bc411c150ec747b0d5f4777b055893c90926803"
+    }
+  ],
+  "limitations": [
+    "Four targets per family are descriptive development evidence, with no inferential test",
+    "Equal-family means do not establish population-level generalization",
+    "Exact search/reference is within the finite public catalog, not the full feasible set",
+    "Static slice composition regret includes catalog designs already evaluated; it is not remaining-catalog regret",
+    "Full reference objectives and all ranking refits were computed only after all online runs completed",
+    "Initial heldout-catalog rankings are matched; selected-outcome RMSE uses different adaptive inputs",
+    "Removing orbit covariance A changes the size prior, not the nonlinear composition function class",
+    "Known projection principles and a small performance gain do not establish method novelty",
+    "SSPd optimizer convergence is unavailable in unchanged source",
+    "New catalog objectives and transfer scenarios cannot be compared directly with old unrestricted-runner percentages",
+    "The old confirmation40 bank and budgeted-ROI physical validation gap remain separate"
+  ]
+}

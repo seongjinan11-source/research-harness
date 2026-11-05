@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 48개 프로젝트 · 198개 기록 (실패·중단 57개, 보존 46개, 교훈 68개, 미실행 27개)
+총 49개 프로젝트 · 213개 기록 (실패·중단 64개, 보존 52개, 교훈 69개, 미실행 28개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1792,6 +1792,157 @@ Vanilla accuracy 57.01%, covariance 57.04%. Covariance−vanilla +0.032%p, graph
 Initial 대비 accuracy는 올랐지만 matched continuation 대비 증분은 약0.03%p였다. Balanced accuracy와 macro-F1은 initial 대비 하락했다.
 
 - 원문: [findings/sources/graphpfn-2026-11-01/source_error.md](../findings/sources/graphpfn-2026-11-01/source_error.md)
+
+## SSP size/composition 연구
+
+실험 조건: 2026-11-04~05 SSP 연구 cycle. 개발·독립확인·고정archive·online·수학검증·미실행을구분한다.
+
+### SSP-F01 [실패·중단] Thompson sampling 추가가 SSP mean을 개선하는가
+
+4family×2개 개발 target에서 equal-family AUC ratio 변화−3.2746%. 주 gate 실패. TS는Thompson sampling이다.
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [원인 미상]: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+- 닫은 범위: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+- 닫지 않은 것: 전체 TS, posterior covariance의 일반 가치, 다른 solver budget은 닫지 않는다.
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-04_ssp_ts/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-04_ssp_ts/DECISION_KO.md)
+
+### SSP-F02 [실패·중단] 복잡한 관측 가치 정책의 추가 효용
+
+교정된 physical tomography operator에서 추가 효용 gate 실패.
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [원인 미상]: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+- 닫은 범위: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+- 닫지 않은 것: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-04_tomo_utility/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-04_tomo_utility/DECISION_KO.md)
+
+### SSP-F03 [실패·중단] 고차 size 후보의 초기 주 비교
+
+d2_scalar 주 gate 실패. d3_spread는 보조 후보로 별도 확인에 넘겼다.
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [원인 미상]: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+- 닫은 범위: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+- 닫지 않은 것: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-04_tomo_shape/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-04_tomo_shape/DECISION_KO.md)
+
+### SSP-P01 [보존] 기존 d3_spread의 새 tomography 확인
+
+새40IID scenario에서 d1_spread 대비 AUC+1.30919%,95%CI[+1.04467%,+1.57140%],38/40승리.3200paired proposal의 실제count일치.
+
+- 확대 금지: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-04_tomo_confirm/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-04_tomo_confirm/DECISION_KO.md)
+
+### SSP-F04 [실패·중단] Nonlinear composition projection의 추가 효용
+
+gp_orth−gp_plus equal-family AUC+0.04237%, 사전 gate 실패.
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [원인 미상]: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+- 닫은 범위: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+- 닫지 않은 것: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_nonlinear_gp/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_nonlinear_gp/DECISION_KO.md)
+
+### SSP-P02 [보존] Size shape correction으로 composition 추천을 회복하는가
+
+새32target의 통제 실험에서 적절한 nonlinear joint fit이 same-count composition 결정을 회복했다. Step·좁은support외삽 한계도 유지.
+
+- 확대 금지: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_size_injection/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_size_injection/DECISION_KO.md)
+
+### SSP-P03 [보존] Count-table와probe의 범위 제한된 효과
+
+새24target에서 table_probe 대 SSPd3_spread 주 비교는 mean regret감소0.00807344,95%CI[0.00530370,0.01072307]로통과. 같은probe의SSPd3가더좋아table기본채택유보.
+
+- 확대 금지: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_count_support/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_count_support/DECISION_KO.md)
+
+### SSP-F05 [실패·중단] Cut의 full joint 대비 추가 필요성
+
+Wide-step primary joint−cut composition regret−0.0007840726,95%CI[−0.0019743353,+0.0000088348]. Cut 추가우위실패; optimizergate도실패.
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [진단이 지지]: 기록한 조건에서 full joint가 이미 크게 회복했고 cut이 일부 유용한 between-count 정보를 버린 진단이 있다. 모든 실패 원인의 완전한 인과 분해는 아니다.
+- 닫은 범위: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+- 닫지 않은 것: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_flexible_count/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_flexible_count/DECISION_KO.md)
+
+### SSP-P04 [보존] 유연한 joint count 모델의 고정 archive 회복
+
+Wide-step same-count regret SSPd3=0.24408065→jointEB=0.00818761,cut=0.00897169. 이비교는보조관찰이며실패한cutprimary를대체하지않는다.
+
+- 확대 금지: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_flexible_count/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_flexible_count/DECISION_KO.md)
+
+### SSP-P05 [보존] Flexible joint count GP의 online 실제 선택 회복
+
+새24target·2304runs. 비다항혼합 mean incumbent regret SSP3probe0.014104149→jointprobe0.007076945. paired감소0.007027205,95%CI[0.006036082,0.007998785],24/24target평균개선.
+
+- 확대 금지: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_joint_count_online/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_joint_count_online/DECISION_KO.md)
+
+### SSP-F06 [실패·중단] Decision radius의 새 일반 이론 신규성
+
+Affine multiclass margin/normal-norm radius의 직접선행과대응하여새이론후보중단. 수치실험미실행.
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [직접 확인]: 직접 affine robustness 공식과의 대응을 증명·문헌 리뷰에서 확인했다.
+- 닫은 범위: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+- 닫지 않은 것: Count-specific 진단의 유용성과 SSP의 다른 기여는 닫지 않는다.
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_decision_radius/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_decision_radius/DECISION_KO.md)
+
+### SSP-P06 [보존] Fixed-archive composition 식별 조건과 결정 하한
+
+Rank(M)=n−1 및 필요예산 N−m≥n−1. 관련 null방향에서 identical-law 두환경의worst expected normalized regret≥1/2. 새16설계64수학검증통과; BO성능증거아님.
+
+- 확대 금지: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_identifiability/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_identifiability/DECISION_KO.md)
+
+### SSP-F07 [실패·중단] 단일 애매한 swap을 겨냥하는 robust contrast probe의 추가 가치
+
+새24target·3456runs. Greedy−candidate composition gain0.000071953,99%CI[−0.000127103,+0.000271976];5primarygate모두실패. Stage2미실행.
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [진단이 지지]: 구현 검사는 통과했다. Narrow288contexts에서는 first-count fallback으로 greedy와 동일한 행동이었다. Wide의 추가 이득 부족 원인은 미확정이며 단일 swap 목표의 부적합은 가설이다.
+- 닫은 범위: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+- 닫지 않은 것: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md)
+
+### SSP-L01 [교훈] Count coverage와composition excitation은 다른 자원
+
+Candidate2304probe중1152회가first-countfallback. 좁은조건전체288contexts의greedy/A-opt/contrast query경로가정확히같았다. 수학적정보감소가actualregret개선을자동보장하지않는다.
+
+- 확대 금지: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md)
+
+### SSP-U01 [미실행] Paired count observations와A-opt 설계의 결합
+
+신규count에서두서로다른subset을짝지어관측하면차이에서g(K)가소거된다. Countcoverage감소와incumbent기회비용을포함한새계획과freshbank가필요하다.
+
+- 확대 금지: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md); [findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/NEXT_HYPOTHESIS.md](../findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/NEXT_HYPOTHESIS.md)
 
 ## TSFM joint-information preservation and nuisance stability frozen pilot
 

@@ -180,3 +180,10 @@ node_minus_pcfi=+0.080097%p CI[-0.1365710486064015, 0.3025558766215623]; node_mi
 partial_trained_minus_node:accuracy=-0.118074%p CI[-0.410523217262834, 0.16035034795655417]; partial_trained_minus_pcfi:accuracy=-0.135065%p CI[-0.3686364602286792, 0.08342222464999093]; partial_frozen_minus_node:accuracy=+0.011438%p CI[-0.19001886361456893, 0.2091231569541227]; partial_trained_minus_partial_frozen:accuracy=-0.129512%p CI[-0.4134588441218917, 0.14871358916660818]; partial_trained_minus_partial_initial:accuracy=-0.093266%p CI[-0.314049007360701, 0.11446042683875222]; partial_trained_minus_partial_random:accuracy=+2.305651%p CI[1.137082186911021, 3.648101343936383]; partial_random_minus_full_random:accuracy=-0.340911%p CI[-0.7137906330390282, 0.017033220980164184]; partial_trained_minus_signed_smooth:accuracy=+0.286140%p CI[-0.08556479459930283, 0.6371842445063916]; signed_smooth_minus_signed:accuracy=-0.313494%p CI[-0.610699974902656, 0.00012718194105000704]; signed_smooth_minus_pcfi:accuracy=-0.421204%p CI[-0.7337652552295654, -0.09699406895156527]
 
 같은 frame에서 source가 하나뿐이면 두 clamp가 같다는 적용 범위도 확인했다. Primary는 그대로 두고 source1/source2+를 secondary로 분리했다. 전체 메소드 novelty의 성공/종료 판정으로 확대하지 않는다. [전체 보고서](findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md), [계산 정의](findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md), [구조화 기록](findings/pcfi-partial-clamp.yaml).
+# 연구 기록과 문헌 인용 연결
+
+`findings/*.yaml`의 각 항목은 `literature`에 등록된 paper ID, 관계와 설명을 기록할 수 있다. 관계는 `foundation`, `motivation`, `direct_prior`, `comparison`, `boundary` 중 하나다. 이 연결은 검토한 문헌 근거이며 `revisit`의 자동 검색 단서와 구별한다. 존재하지 않는 paper ID나 관계는 `validate`에서 검출한다.
+
+Excel의 `My Findings`에는 문헌 ID와 근거·역할이, `Citations`에는 전원 저자·확인 URL·citation key·BibTeX가 들어간다. 그래프에서 `SSP-P05`처럼 연구 기록을 검색하면 해당 노드가 표시된다. 문헌 버튼으로 paper 노드를 열면 인용 정보와 BibTeX를 확인할 수 있다. `문헌 근거` 체크박스로 명시적 citation edge를 표시하며, `재검토 단서`와 별도로 켜고 끌 수 있다.
+
+SSP의2026-11-04~05결과 종합은 `SSP_RESULTS_SUMMARY_2026-11-05.md`에 있다. 개별 성공·실패·교훈·미실행 기록과 원문 snapshot은 `findings/ssp-size-composition.yaml` 및 `findings/sources/ssp-2026-11-05/`에서 추적한다.

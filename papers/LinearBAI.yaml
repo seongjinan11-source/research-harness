@@ -1,0 +1,45 @@
+id: LinearBAI
+title: Best-Arm Identification in Linear Bandits
+authors: Marta Soare, Alessandro Lazaric, Rémi Munos
+venue: Advances in Neural Information Processing Systems 27
+year: 2014
+links:
+  paper: https://proceedings.neurips.cc/paper_files/paper/2014/hash/f8d84caae48546d0934d637ab54f7086-Abstract.html
+citation:
+  type: inproceedings
+  title: Best-Arm Identification in Linear Bandits
+  authors:
+  - Marta Soare
+  - Alessandro Lazaric
+  - Rémi Munos
+  year: 2014
+  booktitle: Advances in Neural Information Processing Systems 27
+  url: https://proceedings.neurips.cc/paper_files/paper/2014/hash/f8d84caae48546d0934d637ab54f7086-Abstract.html
+  verified_from:
+  - https://proceedings.neurips.cc/paper_files/paper/2014/hash/f8d84caae48546d0934d637ab54f7086-Abstract.html
+areas:
+- bo
+- ml-foundations
+problem: 선형 구조를 공유하는 arm의 최선 선택을 적은 관측으로 식별한다.
+core_idea: Arm 차이 방향과 sample allocation을 분석해 near-optimal arm의 추정과 optimal design을
+  연결한다.
+key_assumptions:
+- 본문의 모델·관측·입력 가정 안에서 해석하며 SSP의 count-dependent adaptive 정책으로 보장을 자동 이전하지 않는다.
+strengths:
+- text: 추천을 바꾸는 contrast 방향을 겨냥하는 실험설계의 직접 선행이다.
+  tags: &id001
+  - experimental-design
+  - decision-regret
+limitations:
+- text: Count nuisance를 가진 SSP의 단일 challenger heuristic의 regret 개선은 별도 검증이 필요하다.
+  tags: *id001
+  source: analyst
+builds_on: []
+compared_against: []
+open_questions:
+- SSP의 관측·count 예산과 실제 추천 손실에서 어떤 조건까지 적용할 수 있는가?
+hooks:
+- Contrast probe와 A-opt 비교를 linear best-arm design에 위치시킨다.
+notes: 2026-11-05 primary metadata/abstract 재확인. SSP 적용과 한계는 analyst 판단. 세부 수식의 확인
+  범위는 보존한 문헌 리뷰에 기록.
+added: '2026-11-05'

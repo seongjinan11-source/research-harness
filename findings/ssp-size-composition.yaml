@@ -1,0 +1,702 @@
+project: SSP size/composition 연구
+date: '2026-11-05'
+source: findings/sources/ssp-2026-11-05/RESEARCH_PROGRESS_2026-11-05.md
+setting: 2026-11-04~05 SSP 연구 cycle. 개발·독립확인·고정archive·online·수학검증·미실행을구분한다.
+closed_scope: 각기록의구체적구현과가정만닫고역사적bank는보존한다.
+entries:
+- id: SSP-F01
+  kind: failure
+  claim: Thompson sampling 추가가 SSP mean을 개선하는가
+  observation: 4family×2개 개발 target에서 equal-family AUC ratio 변화−3.2746%. 주 gate 실패.
+    TS는Thompson sampling이다.
+  verdict: 현재 후보·주장 승격 보류
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 전체 TS, posterior covariance의 일반 가치, 다른 solver budget은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-04_ssp_ts/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: LinearBAI
+    relation: foundation
+    note: Contrast probe와 A-opt 비교를 linear best-arm design에 위치시킨다.
+- id: SSP-F02
+  kind: failure
+  claim: 복잡한 관측 가치 정책의 추가 효용
+  observation: 교정된 physical tomography operator에서 추가 효용 gate 실패.
+  verdict: 현재 후보·주장 승격 보류
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-04_tomo_utility/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: TransductiveLB
+    relation: foundation
+    note: 관측[B'x,e_K]와 추천[B'z,0]의 대응은 이번 analyst 도출이며 원문의 SSP 주장이 아니다.
+- id: SSP-F03
+  kind: failure
+  claim: 고차 size 후보의 초기 주 비교
+  observation: d2_scalar 주 gate 실패. d3_spread는 보조 후보로 별도 확인에 넘겼다.
+  verdict: 현재 후보·주장 승격 보류
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-04_tomo_shape/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: SetBO
+    relation: direct_prior
+    note: Variable-size set BO 선행을 인정하고 SSP의 정량적 leakage 분석과 구별한다.
+- id: SSP-P01
+  kind: preserved
+  claim: 기존 d3_spread의 새 tomography 확인
+  observation: 새40IID scenario에서 d1_spread 대비 AUC+1.30919%,95%CI[+1.04467%,+1.57140%],38/40승리.3200paired
+    proposal의 실제count일치.
+  verdict: 해당 범위에서 보존한 긍정 근거
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-04_tomo_confirm/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: SetBO
+    relation: direct_prior
+    note: Variable-size set BO 선행을 인정하고 SSP의 정량적 leakage 분석과 구별한다.
+  - paper_id: RegConfounding
+    relation: motivation
+    note: SSP의 count shrinkage와 composition 오염을 일반 통계 선행과 대조한다.
+- id: SSP-F04
+  kind: failure
+  claim: Nonlinear composition projection의 추가 효용
+  observation: gp_orth−gp_plus equal-family AUC+0.04237%, 사전 gate 실패.
+  verdict: 현재 후보·주장 승격 보류
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_nonlinear_gp/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: OrthogonalGP
+    relation: direct_prior
+    note: Projection의 선행이며 예측 개선과 계수 식별을 구분한다.
+- id: SSP-P02
+  kind: preserved
+  claim: Size shape correction으로 composition 추천을 회복하는가
+  observation: 새32target의 통제 실험에서 적절한 nonlinear joint fit이 same-count composition
+    결정을 회복했다. Step·좁은support외삽 한계도 유지.
+  verdict: 해당 범위에서 보존한 긍정 근거
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_size_injection/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: RegConfounding
+    relation: motivation
+    note: SSP의 count shrinkage와 composition 오염을 일반 통계 선행과 대조한다.
+  - paper_id: OrthogonalGP
+    relation: direct_prior
+    note: Projection의 선행이며 예측 개선과 계수 식별을 구분한다.
+- id: SSP-P03
+  kind: preserved
+  claim: Count-table와probe의 범위 제한된 효과
+  observation: 새24target에서 table_probe 대 SSPd3_spread 주 비교는 mean regret감소0.00807344,95%CI[0.00530370,0.01072307]로통과.
+    같은probe의SSPd3가더좋아table기본채택유보.
+  verdict: 해당 범위에서 보존한 긍정 근거
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_count_support/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: SetBO
+    relation: direct_prior
+    note: Variable-size set BO 선행을 인정하고 SSP의 정량적 leakage 분석과 구별한다.
+  - paper_id: NuisanceDesign
+    relation: foundation
+    note: Schur complement와 within-count 정보의 발명을 주장하지 않는다. Preprint2015, arXiv journal
+      reference는Stat Papers2016.
+- id: SSP-F05
+  kind: failure
+  claim: Cut의 full joint 대비 추가 필요성
+  observation: Wide-step primary joint−cut composition regret−0.0007840726,95%CI[−0.0019743353,+0.0000088348].
+    Cut 추가우위실패; optimizergate도실패.
+  verdict: 현재 후보·주장 승격 보류
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 기록한 조건에서 full joint가 이미 크게 회복했고 cut이 일부 유용한 between-count 정보를 버린
+    진단이 있다. 모든 실패 원인의 완전한 인과 분해는 아니다.
+  reason_status: supported
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_flexible_count/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: SemiModular
+    relation: direct_prior
+    note: SSP cut 후보의 직접 선행으로 이번 추가 효용 실패와 함께 기록한다.
+  - paper_id: CutSemiparametric
+    relation: direct_prior
+    note: Semiparametric cut 자체를 SSP의 새 발명으로 세지 않는다. 최초2025, 확인한v3은2026-03-26.
+- id: SSP-P04
+  kind: preserved
+  claim: 유연한 joint count 모델의 고정 archive 회복
+  observation: Wide-step same-count regret SSPd3=0.24408065→jointEB=0.00818761,cut=0.00897169.
+    이비교는보조관찰이며실패한cutprimary를대체하지않는다.
+  verdict: 해당 범위에서 보존한 긍정 근거
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_flexible_count/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: RegConfounding
+    relation: motivation
+    note: SSP의 count shrinkage와 composition 오염을 일반 통계 선행과 대조한다.
+  - paper_id: SemiModular
+    relation: direct_prior
+    note: SSP cut 후보의 직접 선행으로 이번 추가 효용 실패와 함께 기록한다.
+- id: SSP-P05
+  kind: preserved
+  claim: Flexible joint count GP의 online 실제 선택 회복
+  observation: 새24target·2304runs. 비다항혼합 mean incumbent regret SSP3probe0.014104149→jointprobe0.007076945.
+    paired감소0.007027205,95%CI[0.006036082,0.007998785],24/24target평균개선.
+  verdict: 해당 범위에서 보존한 긍정 근거
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_joint_count_online/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: SetBO
+    relation: direct_prior
+    note: Variable-size set BO 선행을 인정하고 SSP의 정량적 leakage 분석과 구별한다.
+  - paper_id: RegConfounding
+    relation: motivation
+    note: SSP의 count shrinkage와 composition 오염을 일반 통계 선행과 대조한다.
+  - paper_id: SemiModular
+    relation: direct_prior
+    note: SSP cut 후보의 직접 선행으로 이번 추가 효용 실패와 함께 기록한다.
+- id: SSP-F06
+  kind: failure
+  claim: Decision radius의 새 일반 이론 신규성
+  observation: Affine multiclass margin/normal-norm radius의 직접선행과대응하여새이론후보중단. 수치실험미실행.
+  verdict: 현재 후보·주장 승격 보류
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: Count-specific 진단의 유용성과 SSP의 다른 기여는 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 직접 affine robustness 공식과의 대응을 증명·문헌 리뷰에서 확인했다.
+  reason_status: confirmed
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_decision_radius/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: DeepFool
+    relation: direct_prior
+    note: Decision-radius 후보를 중단한 직접 선행. CVPR2016은arXiv comment 확인; proceedings403으로preprint
+      인용.
+  - paper_id: RobustnessBounds
+    relation: direct_prior
+    note: Decision-radius를 새 일반 이론으로 세지 않는 근거다.
+- id: SSP-P06
+  kind: preserved
+  claim: Fixed-archive composition 식별 조건과 결정 하한
+  observation: Rank(M)=n−1 및 필요예산 N−m≥n−1. 관련 null방향에서 identical-law 두환경의worst expected
+    normalized regret≥1/2. 새16설계64수학검증통과; BO성능증거아님.
+  verdict: 해당 범위에서 보존한 긍정 근거
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: unknown
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_identifiability/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: NuisanceDesign
+    relation: foundation
+    note: Schur complement와 within-count 정보의 발명을 주장하지 않는다. Preprint2015, arXiv journal
+      reference는Stat Papers2016.
+  - paper_id: TransductiveLB
+    relation: foundation
+    note: 관측[B'x,e_K]와 추천[B'z,0]의 대응은 이번 analyst 도출이며 원문의 SSP 주장이 아니다.
+  - paper_id: BAIComplexity
+    relation: foundation
+    note: Gaussian 두 환경 검정과 unknown-environment 식별의 차이를 명시한다.
+- id: SSP-F07
+  kind: failure
+  claim: 단일 애매한 swap을 겨냥하는 robust contrast probe의 추가 가치
+  observation: 새24target·3456runs. Greedy−candidate composition gain0.000071953,99%CI[−0.000127103,+0.000271976];5primarygate모두실패.
+    Stage2미실행.
+  verdict: 현재 후보·주장 승격 보류
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 구현 검사는 통과했다. Narrow288contexts에서는 first-count fallback으로 greedy와
+    동일한 행동이었다. Wide의 추가 이득 부족 원인은 미확정이며 단일 swap 목표의 부적합은 가설이다.
+  reason_status: supported
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: LinearBAI
+    relation: foundation
+    note: Contrast probe와 A-opt 비교를 linear best-arm design에 위치시킨다.
+  - paper_id: TransductiveLB
+    relation: foundation
+    note: 관측[B'x,e_K]와 추천[B'z,0]의 대응은 이번 analyst 도출이며 원문의 SSP 주장이 아니다.
+  - paper_id: NuisanceDesign
+    relation: foundation
+    note: Schur complement와 within-count 정보의 발명을 주장하지 않는다. Preprint2015, arXiv journal
+      reference는Stat Papers2016.
+- id: SSP-L01
+  kind: lesson
+  claim: Count coverage와composition excitation은 다른 자원
+  observation: Candidate2304probe중1152회가first-countfallback. 좁은조건전체288contexts의greedy/A-opt/contrast
+    query경로가정확히같았다. 수학적정보감소가actualregret개선을자동보장하지않는다.
+  verdict: 후속 판단 기준
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: confirmed
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  - identifiability
+  - experimental-design
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: NuisanceDesign
+    relation: foundation
+    note: Schur complement와 within-count 정보의 발명을 주장하지 않는다. Preprint2015, arXiv journal
+      reference는Stat Papers2016.
+  - paper_id: SemiparametricBandits
+    relation: boundary
+    note: Same-K cancellation과 전체 count 선택의 차이를 명시한다.
+  - paper_id: TransductiveLB
+    relation: foundation
+    note: 관측[B'x,e_K]와 추천[B'z,0]의 대응은 이번 analyst 도출이며 원문의 SSP 주장이 아니다.
+- id: SSP-U01
+  kind: untested
+  claim: Paired count observations와A-opt 설계의 결합
+  observation: 신규count에서두서로다른subset을짝지어관측하면차이에서g(K)가소거된다. Countcoverage감소와incumbent기회비용을포함한새계획과freshbank가필요하다.
+  verdict: 미구현·미실행
+  closed_scope: 기록된 cycle의 구현·대조·예산 및 사전 endpoint
+  not_closed: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+  do_not_claim: 다른 문제 일반화, 독립 최초성, adaptive regret 보장으로 확대하지 않는다.
+  failure_reason: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+  reason_status: hypothesis
+  excluded_explanations: []
+  reopen_when: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+  comparison_floor: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및
+    표준 joint posterior 설계
+  recheck: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent
+    regret를 사전 endpoint로 비교한다.
+  tags:
+  - subset-cardinality
+  - nuisance-separation
+  - decision-regret
+  keywords:
+  - SSP
+  - subset
+  - count
+  - composition
+  - joint
+  - probe
+  reopen_tags:
+  - nuisance-separation
+  - experimental-design
+  reopen_keywords:
+  - count
+  - composition
+  - within-count
+  - paired design
+  source_refs:
+  - findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md
+  - findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/NEXT_HYPOTHESIS.md
+  evidence: 원문 보존; 수치·범위는 해당 cycle 결과와 독립 리뷰에 근거
+  literature:
+  - paper_id: NuisanceDesign
+    relation: foundation
+    note: Schur complement와 within-count 정보의 발명을 주장하지 않는다. Preprint2015, arXiv journal
+      reference는Stat Papers2016.
+  - paper_id: LinearBAI
+    relation: foundation
+    note: Contrast probe와 A-opt 비교를 linear best-arm design에 위치시킨다.

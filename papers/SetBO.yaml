@@ -1,0 +1,52 @@
+id: SetBO
+title: Kernels over Sets of Finite Sets using RKHS Embeddings, with Application to
+  Bayesian (Combinatorial) Optimization
+authors: Poompol Buathong, David Ginsbourger, Tipaluck Krityakierne
+venue: Proceedings of the Twenty Third International Conference on Artificial Intelligence
+  and Statistics
+year: 2020
+links:
+  paper: https://proceedings.mlr.press/v108/buathong20a.html
+citation:
+  type: inproceedings
+  title: Kernels over Sets of Finite Sets using RKHS Embeddings, with Application
+    to Bayesian (Combinatorial) Optimization
+  authors:
+  - Poompol Buathong
+  - David Ginsbourger
+  - Tipaluck Krityakierne
+  year: 2020
+  booktitle: Proceedings of the Twenty Third International Conference on Artificial
+    Intelligence and Statistics
+  volume: 108
+  pages: 2731--2741
+  publisher: PMLR
+  url: https://proceedings.mlr.press/v108/buathong20a.html
+  verified_from:
+  - https://proceedings.mlr.press/v108/buathong20a.html
+areas:
+- bo
+- ml-foundations
+problem: 집합 입력에 대한 kernel 예측과 Bayesian set optimization을 다룬다.
+core_idea: RKHS set embedding의 Double Sum과 Deep Embedding kernel을 비교하고 정정치성 조건을 분석한다.
+key_assumptions:
+- 본문의 모델·관측·입력 가정 안에서 해석하며 SSP의 count-dependent adaptive 정책으로 보장을 자동 이전하지 않는다.
+strengths:
+- text: Variable-cardinality set BO와 set kernel의 직접 선행이다.
+  tags: &id001
+  - subset-cardinality
+  - uncertainty
+limitations:
+- text: Count nuisance shrinkage가 composition 추정과 선택을 오염시키는 SSP의 구체적 손실 분석과 같은 정리라고
+    볼 수 없다.
+  tags: *id001
+  source: analyst
+builds_on: []
+compared_against: []
+open_questions:
+- SSP의 관측·count 예산과 실제 추천 손실에서 어떤 조건까지 적용할 수 있는가?
+hooks:
+- Variable-size set BO 선행을 인정하고 SSP의 정량적 leakage 분석과 구별한다.
+notes: 2026-11-05 primary metadata/abstract 재확인. SSP 적용과 한계는 analyst 판단. 세부 수식의 확인
+  범위는 보존한 문헌 리뷰에 기록.
+added: '2026-11-05'

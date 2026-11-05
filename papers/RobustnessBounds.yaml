@@ -1,0 +1,43 @@
+id: RobustnessBounds
+title: Formal Guarantees on the Robustness of a Classifier against Adversarial Manipulation
+authors: Matthias Hein, Maksym Andriushchenko
+venue: Advances in Neural Information Processing Systems 30
+year: 2017
+links:
+  paper: https://proceedings.neurips.cc/paper/2017/hash/e077e1a544eec4f0307cf5c3c721d944-Abstract.html
+citation:
+  type: inproceedings
+  title: Formal Guarantees on the Robustness of a Classifier against Adversarial Manipulation
+  authors:
+  - Matthias Hein
+  - Maksym Andriushchenko
+  year: 2017
+  booktitle: Advances in Neural Information Processing Systems 30
+  url: https://proceedings.neurips.cc/paper/2017/hash/e077e1a544eec4f0307cf5c3c721d944-Abstract.html
+  verified_from:
+  - https://proceedings.neurips.cc/paper/2017/hash/e077e1a544eec4f0307cf5c3c721d944-Abstract.html
+areas:
+- ml-foundations
+problem: Classifier 결정이 바뀌지 않는 input perturbation 범위를 보장한다.
+core_idea: Instance-specific lower bound와 Cross-Lipschitz regularization을 구성하며 linear
+  exact case를 포함한다.
+key_assumptions:
+- 본문의 모델·관측·입력 가정 안에서 해석하며 SSP의 count-dependent adaptive 정책으로 보장을 자동 이전하지 않는다.
+strengths:
+- text: Margin 기반 robustness radius와 보장 범위의 직접 선행이다.
+  tags: &id001
+  - robustness-radius
+  - robustness
+limitations:
+- text: Robustness radius로 posterior calibration이나 true objective의 선택 회복을 보장할 수 없다.
+  tags: *id001
+  source: analyst
+builds_on: []
+compared_against: []
+open_questions:
+- SSP의 관측·count 예산과 실제 추천 손실에서 어떤 조건까지 적용할 수 있는가?
+hooks:
+- Decision-radius를 새 일반 이론으로 세지 않는 근거다.
+notes: 2026-11-05 primary metadata/abstract 재확인. SSP 적용과 한계는 analyst 판단. 세부 수식의 확인
+  범위는 보존한 문헌 리뷰에 기록.
+added: '2026-11-05'

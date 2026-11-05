@@ -35,6 +35,7 @@ VIS_JS = ROOT / "src" / "vendor" / "vis-network.min.js"
 SOURCE_WEIGHT = {"cited": 1.0, "review": 0.8, "self": 0.6, "analyst": 0.4}
 SOURCE_KO = {"cited": "후속 논문 지적", "review": "리뷰 지적", "self": "저자 인정", "analyst": "조사자 판단"}
 KIND_KO = {"failure": "실패·중단", "preserved": "보존한 결과", "lesson": "교훈", "untested": "미실행 (실패 아님)"}
+CITATION_ROLE_KO = {"foundation": "이론·방법 근거", "motivation": "문제 동기", "direct_prior": "직접 선행", "comparison": "비교 기준", "boundary": "적용 범위"}
 
 
 # ---------------------------------------------------------------- loading
@@ -281,6 +282,13 @@ def validate(papers, ideas, areas, tags, findings=()):
         for t in as_list(e.get("reopen_tags")):
             if t not in tags:
                 warns.append(f"finding {e.get('id')}: 미등록 reopen tag '{t}'")
+        for ref in as_list(e.get("literature")):
+            if ref.get("paper_id") not in ids:
+                warns.append(f"finding {e.get('id')}: 문헌 id 없음 {ref.get('paper_id')}")
+            if ref.get("relation") not in CITATION_ROLE_KO:
+                warns.append(f"finding {e.get('id')}: 문헌 관계 잘못됨 {ref.get('relation')}")
+            if not ref.get("note"):
+                warns.append(f"finding {e.get('id')}: 문헌 연결 설명 없음")
         for ref in as_list(e.get("source_refs")):
             relative = str(ref).split("#", 1)[0]
             resolved = (ROOT / relative).resolve()
@@ -588,11 +596,13 @@ def write_excel(papers, ideas, areas, tags, cands, tagrows, path: Path, findings
              e.get("observation", ""), e.get("verdict", ""), e.get("closed_scope", ""),
              e.get("not_closed", "") or e.get("do_not_claim", ""), c(e.get("tags")), c(e.get("keywords")), e.get("evidence", ""),
              REASON_KO.get(e.get("reason_status"), ""), e.get("failure_reason", ""), e.get("reopen_when", ""),
-             e.get("comparison_floor", ""), e.get("recheck", ""), c(e.get("source_refs")), e.get("setting", "")]
+             e.get("comparison_floor", ""), e.get("recheck", ""), c(e.get("source_refs")), e.get("setting", ""),
+             c([r['paper_id'] for r in as_list(e.get('literature'))]),
+             "\n".join(f"{r['paper_id']} [{CITATION_ROLE_KO.get(r.get('relation'), '')}]: {r.get('note', '')}" for r in as_list(e.get('literature')))]
             for e in findings]
     sheet("My Findings", ["project", "id", "구분", "가설·주장", "관찰", "판정", "닫은 범위", "닫지 않은 것 / 확대 금지", "tags", "keywords", "근거",
-          "원인 수준", "원인·병목", "재검토 조건", "강한 대조군", "최소 재검증", "원문", "실험 조건"],
-          [22, 14, 12, 45, 70, 22, 40, 50, 26, 30, 10, 15, 65, 65, 45, 65, 65, 65], rows, fills=[kfill.get(e.get("kind")) for e in findings])
+          "원인 수준", "원인·병목", "재검토 조건", "강한 대조군", "최소 재검증", "원문", "실험 조건", "문헌 id", "문헌 근거와 역할"],
+          [22, 14, 12, 45, 70, 22, 40, 50, 26, 30, 10, 15, 65, 65, 45, 65, 65, 65, 34, 80], rows, fills=[kfill.get(e.get("kind")) for e in findings])
     rows = [[r["finding_id"], r["project"], r["paper_id"], r["signal"], r["failure_reason"],
         REASON_KO.get(r["reason_status"], ""), "\n".join(m["strength"] for m in r["matches"]),
         c(r["tags"]), c(r["keywords"]), r["reopen_when"], r["comparison_floor"], r["recheck"],
@@ -630,6 +640,7 @@ AREA_COLORS = ["#4C78A8", "#F58518", "#54A24B", "#B279A2", "#E45756", "#72B7B2",
 
 
 def graph_data(papers, ideas, areas, tags, findings=()):
+    keys = bib_keys(papers)
     ids = {p["id"] for p in papers}
     used_areas = [a for a in areas if any(a in as_list(p.get("areas")) for p in papers)]
     area_color = {a: AREA_COLORS[i % len(AREA_COLORS)] for i, a in enumerate(used_areas)}
@@ -648,6 +659,8 @@ def graph_data(papers, ideas, areas, tags, findings=()):
                              "by": x.get("by", ""), "by_link": x.get("by_link", "")} for x in as_list(p.get("limitations"))],
             "open_questions": as_list(p.get("open_questions")), "hooks": as_list(p.get("hooks")),
             "links": p.get("links") or {},
+            "citation": p.get("citation") or {}, "citation_key": keys.get(p['id'], ''),
+            "bibtex": bibtex(p, keys.get(p['id'], '')),
         }
         nodes.append({"id": f"p:{p['id']}", "label": p["id"], "group": "paper", "shape": "box",
                       "color": {"background": color, "border": color}, "font": {"color": "#fff"},
@@ -690,7 +703,11 @@ def graph_data(papers, ideas, areas, tags, findings=()):
                                  ("id", "project", "claim", "observation", "verdict", "closed_scope", "not_closed", "do_not_claim",
                                   "failure_reason", "reason_status", "reopen_when", "recheck", "comparison_floor", "source_refs", "setting")},
                                  "reason_label": REASON_KO.get(e.get("reason_status"), ""),
-                                 "tags": as_list(e.get("tags"))}})
+                                 "tags": as_list(e.get("tags")), "literature": as_list(e.get('literature'))}})
+        for ref in as_list(e.get('literature')):
+            if ref.get('paper_id') in ids:
+                edges.append({'from': f"f:{e['id']}", 'to': f"p:{ref['paper_id']}", 'type': 'citation',
+                              'text': CITATION_ROLE_KO.get(ref.get('relation'), '') + ': ' + ref.get('note', '')})
         for t in as_list(e.get("tags")):
             used_tags.add(t)
             edges.append({"from": f"f:{e['id']}", "to": f"t:{t}", "type": "finding"})
@@ -730,6 +747,8 @@ GRAPH_HTML = r"""<!DOCTYPE html>
   <label><input type="checkbox" id="e_ext"> 외부 모델 노드</label>
   <label><input type="checkbox" id="e_weak" checked> 조사자 판단 한계 포함</label>
   <label><input type="checkbox" id="e_find"> 내 연구 기록 (실패·보존·교훈)</label>
+  <label><input type="checkbox" id="e_citation" checked> 문헌 근거 (연구 기록 → 논문)</label>
+  <label><input type="checkbox" id="ssp_only"> SSP 문헌·결과만</label>
   <label><input type="checkbox" id="e_revisit"> 재검토 단서 (논문 → 실패, 해결 판정 아님)</label>
  </div>
  <div class="lg" style="margin-top:6px">
@@ -757,6 +776,7 @@ function styleEdge(e){
     s.title = (e.by? "["+e.by+"] ":"") + e.text; }
   else if(e.type==="idea"){ s.color={color:"#d4a400"}; s.dashes=true; }
   else if(e.type==="finding"){ s.color={color:"#888",opacity:.5}; s.dashes=[2,4]; s.width=1; }
+  else if(e.type==="citation"){ s.color={color:"#2563eb",opacity:.85}; s.width=2; s.arrows="to"; s.title="문헌 근거: "+e.text; }
   else if(e.type==="revisit"){ s.color={color:"#8e44ad",opacity:.6}; s.dashes=true; s.arrows="to"; s.title=e.text; }
   else if(e.type==="critiques"){ s.color={color:"#E67E22"}; s.arrows="to"; s.width=2.2; s.title="비판: "+e.text; }
   else { s.color={color:"#4C78A8"}; s.arrows="to"; s.width=1.5; }
@@ -764,13 +784,17 @@ function styleEdge(e){
 }
 const nodes = new vis.DataSet(DATA.nodes.map(n => ({...n, title: n.detail && n.detail.title ? n.detail.title : undefined})));
 const edges = new vis.DataSet(DATA.edges.map(styleEdge));
-const nodeView = new vis.DataView(nodes, {filter: n => (n.group!=="external" || ck("e_ext")) && (n.group!=="finding" || ck("e_find"))});
+const sspNodes = new Set(DATA.nodes.filter(n=>n.id.startsWith("f:SSP-")).map(n=>n.id));
+DATA.edges.filter(e=>e.type==="citation"&&sspNodes.has(e.from)).forEach(e=>sspNodes.add(e.to));
+const nodeView = new vis.DataView(nodes, {filter: n => (!ck("ssp_only")||sspNodes.has(n.id)) && (n.group!=="external" || ck("e_ext")) && (n.group!=="finding" || ck("e_find"))});
 const edgeView = new vis.DataView(edges, {filter: e => {
+  if(ck("ssp_only")&&(!sspNodes.has(e.from)||!sspNodes.has(e.to)))return false;
   if(e.type==="strength") return ck("e_strength");
   if(e.type==="limitation") return ck("e_limitation") && (e.source!=="analyst" || ck("e_weak"));
   if(e.type==="builds_on") return ck("e_builds");
   if(e.type==="critiques") return ck("e_crit");
   if(e.type==="finding") return ck("e_find");
+  if(e.type==="citation") return ck("e_find") && ck("e_citation");
   if(e.type==="revisit") return ck("e_find") && ck("e_revisit");
   if(e.type==="builds_on_ext") return ck("e_builds") && ck("e_ext");
   return true; }});
@@ -778,13 +802,27 @@ function ck(id){ return document.getElementById(id).checked; }
 const net = new vis.Network(document.getElementById("net"), {nodes:nodeView, edges:edgeView}, {
   physics:{solver:"forceAtlas2Based", forceAtlas2Based:{gravitationalConstant:-60, springLength:120}, stabilization:{iterations:300}},
   interaction:{hover:true, tooltipDelay:120}, nodes:{margin:8}, edges:{smooth:{type:"continuous"}}});
-["e_strength","e_limitation","e_crit","e_builds","e_ext","e_weak","e_find","e_revisit"].forEach(id => document.getElementById(id).onchange = () => {nodeView.refresh(); edgeView.refresh();});
+["e_strength","e_limitation","e_crit","e_builds","e_ext","e_weak","e_find","e_citation","e_revisit","ssp_only"].forEach(id => document.getElementById(id).onchange = () => {if(id==="ssp_only"&&ck(id))document.getElementById("e_find").checked=true;nodeView.refresh(); edgeView.refresh();if(id==="ssp_only")net.fit({animation:true});});
+
+function citationHTML(d){
+  const c=d.citation||{};
+  if(!c.title) return "";
+  return `<h3>인용 정보</h3><div><code>${esc(d.citation_key)}</code></div><div>${esc((c.authors||[]).join(", "))} (${esc(c.year)}). ${esc(c.title)}.</div>
+    <div class="src">${esc(c.booktitle||c.journal||(c.arxiv?"arXiv:"+c.arxiv:""))}</div>
+    <div>${(c.verified_from||[]).map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">확인한 원문</a>`).join(" · ")}</div>
+    <details><summary>BibTeX</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px">${esc(d.bibtex)}</pre></details>`;
+}
+function literatureHTML(d){
+  const refs=d.literature||[];
+  if(!refs.length) return "";
+  return `<h3>문헌 근거</h3><ul>${refs.map(r=>{const p=nodes.get("p:"+r.paper_id);const c=p?.detail||{};return `<li><button type="button" data-node="p:${esc(r.paper_id)}">${esc(r.paper_id)}</button> <code>${esc(c.citation_key||"")}</code><br>${esc(r.note)}</li>`;}).join("")}</ul>`;
+}
 
 function paperHTML(d){
   const L = d.links||{};
   return `<h2>${esc(d.id)}</h2><div>${esc(d.title)}</div><div class="src">${esc(d.venue)} · ${esc((d.areas||[]).join(", "))}
    ${L.paper?` · <a href="${esc(L.paper)}" target="_blank">paper</a>`:""}${L.code?` · <a href="${esc(L.code)}" target="_blank">code</a>`:""}</div>
-   <h3>문제</h3><div>${esc(d.problem)}</div><h3>핵심 아이디어</h3><div>${esc(d.core_idea)}</div>
+   ${citationHTML(d)}<h3>문제</h3><div>${esc(d.problem)}</div><h3>핵심 아이디어</h3><div>${esc(d.core_idea)}</div>
    <h3>강점</h3><ul>${d.strengths.map(s=>`<li>${esc(s.text)} ${tg(s.tags)}</li>`).join("")}</ul>
    <h3>한계</h3><ul>${d.limitations.map(s=>`<li>${esc(s.text)} ${tg(s.tags)}<br><span class="src">${esc(s.source)}${s.by?" — "+(s.by_link?`<a href="${esc(s.by_link)}" target="_blank">${esc(s.by)}</a>`:esc(s.by)):""}</span></li>`).join("")}</ul>
    ${(()=>{const cb=DATA.edges.filter(e=>e.type==="critiques"&&e.to==="p:"+d.id).map(e=>e.from.slice(2)); const ct=DATA.edges.filter(e=>e.type==="critiques"&&e.from==="p:"+d.id).map(e=>e.to.slice(2));
@@ -814,16 +852,17 @@ net.on("click", ev => {
      ${d.failure_reason?`<h3>원인·병목 (${esc(d.reason_label)})</h3><div>${esc(d.failure_reason)}</div>`:""}
      ${d.reopen_when?`<h3>무엇이 달라지면 재검토하나?</h3><div>${esc(d.reopen_when)}</div><h3>강한 대조군</h3><div>${esc(d.comparison_floor)}</div><h3>최소 재검증</h3><div>${esc(d.recheck)}</div>`:""}
      ${d.source_refs?`<h3>원문</h3><div>${esc((d.source_refs||[]).join("; "))}</div>`:""}
-     ${d.do_not_claim?`<h3>확대 금지</h3><div>${esc(d.do_not_claim)}</div>`:""}<div>${tg(d.tags)}</div>`;
+     ${d.do_not_claim?`<h3>확대 금지</h3><div>${esc(d.do_not_claim)}</div>`:""}${literatureHTML(d)}<div>${tg(d.tags)}</div>`;
   else if(d.kind==="idea") h = `<h2>💡 ${esc(d.id)}</h2><div>${esc(d.text)}</div><div>${tg(d.tags)}</div>`;
   else h = `<h2>${esc(d.id)}</h2><div class="src">하네스 밖의 모델 (builds_on 대상)</div>`;
   document.getElementById("info").innerHTML = h;
 });
 document.getElementById("q").addEventListener("keydown", e => {
   if(e.key!=="Enter") return; const q = e.target.value.trim().toLowerCase(); if(!q) return;
-  const hit = nodes.get().find(n => n.label.toLowerCase().includes(q));
-  if(hit){ net.selectNodes([hit.id]); net.focus(hit.id,{scale:1.3,animation:true}); net.body.emitter.emit("click",{nodes:[hit.id]}); }
+  const hit = nodes.get().find(n => [n.label,n.detail?.title,n.detail?.claim,n.detail?.citation_key].some(s=>String(s||"").toLowerCase().includes(q)));
+  if(hit){ if(hit.group==="finding")document.getElementById("e_find").checked=true;document.getElementById("ssp_only").checked=sspNodes.has(hit.id);nodeView.refresh();edgeView.refresh(); net.selectNodes([hit.id]); net.focus(hit.id,{scale:1.3,animation:true}); net.body.emitter.emit("click",{nodes:[hit.id]}); }
 });
+document.getElementById("info").addEventListener("click",e=>{const id=e.target.closest("[data-node]")?.dataset.node;if(id){net.selectNodes([id]);net.focus(id,{scale:1.3,animation:true});net.body.emitter.emit("click",{nodes:[id]});}});
 </script></body></html>"""
 
 

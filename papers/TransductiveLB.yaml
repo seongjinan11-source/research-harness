@@ -1,0 +1,46 @@
+id: TransductiveLB
+title: Sequential Experimental Design for Transductive Linear Bandits
+authors: Tanner Fiez, Lalit Jain, Kevin G. Jamieson, Lillian Ratliff
+venue: Advances in Neural Information Processing Systems 32
+year: 2019
+links:
+  paper: https://proceedings.neurips.cc/paper/2019/hash/8ba6c657b03fc7c8dd4dff8e45defcd2-Abstract.html
+citation:
+  type: inproceedings
+  title: Sequential Experimental Design for Transductive Linear Bandits
+  authors:
+  - Tanner Fiez
+  - Lalit Jain
+  - Kevin G. Jamieson
+  - Lillian Ratliff
+  year: 2019
+  booktitle: Advances in Neural Information Processing Systems 32
+  url: https://proceedings.neurips.cc/paper/2019/hash/8ba6c657b03fc7c8dd4dff8e45defcd2-Abstract.html
+  verified_from:
+  - https://proceedings.neurips.cc/paper/2019/hash/8ba6c657b03fc7c8dd4dff8e45defcd2-Abstract.html
+areas:
+- bo
+- ml-foundations
+problem: 측정 가능한 feature 집합과 추천 대상 feature 집합이 다른 선형 식별을 다룬다.
+core_idea: 측정과 추천의 기하에 의존하는 lower bound와 그에 근접하는 순차 설계를 제시한다.
+key_assumptions:
+- 본문의 모델·관측·입력 가정 안에서 해석하며 SSP의 count-dependent adaptive 정책으로 보장을 자동 이전하지 않는다.
+strengths:
+- text: Augmented measurement와 target contrast가 다른 SSP 고정 archive를 표현할 일반 틀이다.
+  tags: &id001
+  - experimental-design
+  - identifiability
+  - decision-regret
+limitations:
+- text: 일반 틀의 존재가 현재 GP empirical-Bayes probe의 보장을 뜻하지 않는다.
+  tags: *id001
+  source: analyst
+builds_on: []
+compared_against: []
+open_questions:
+- SSP의 관측·count 예산과 실제 추천 손실에서 어떤 조건까지 적용할 수 있는가?
+hooks:
+- 관측[B'x,e_K]와 추천[B'z,0]의 대응은 이번 analyst 도출이며 원문의 SSP 주장이 아니다.
+notes: 2026-11-05 primary metadata/abstract 재확인. SSP 적용과 한계는 analyst 판단. 세부 수식의 확인
+  범위는 보존한 문헌 리뷰에 기록.
+added: '2026-11-05'

@@ -4839,6 +4839,258 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "SSP-F01",
+    "project": "SSP size/composition 연구",
+    "claim": "Thompson sampling 추가가 SSP mean을 개선하는가",
+    "verdict": "현재 후보·주장 승격 보류",
+    "reason_status": "unknown",
+    "failure_reason": "보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.",
+    "reopen_when": "새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때",
+    "recheck": "새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.",
+    "comparison_floor": "기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계",
+    "source_refs": [
+      "findings/sources/ssp-2026-11-05/2026-11-04_ssp_ts/DECISION_KO.md"
+    ],
+    "paper_id": "NuisanceDesign",
+    "paper_title": "Optimal approximate designs for estimating treatment contrasts resistant to nuisance effects",
+    "paper_link": "https://arxiv.org/abs/1504.06079",
+    "matches": [
+      {
+        "strength": "Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.",
+        "tags": [
+          "experimental-design",
+          "nuisance-separation"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "experimental-design",
+      "nuisance-separation"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SSP-F02",
+    "project": "SSP size/composition 연구",
+    "claim": "복잡한 관측 가치 정책의 추가 효용",
+    "verdict": "현재 후보·주장 승격 보류",
+    "reason_status": "unknown",
+    "failure_reason": "보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.",
+    "reopen_when": "새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때",
+    "recheck": "새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.",
+    "comparison_floor": "기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계",
+    "source_refs": [
+      "findings/sources/ssp-2026-11-05/2026-11-04_tomo_utility/DECISION_KO.md"
+    ],
+    "paper_id": "NuisanceDesign",
+    "paper_title": "Optimal approximate designs for estimating treatment contrasts resistant to nuisance effects",
+    "paper_link": "https://arxiv.org/abs/1504.06079",
+    "matches": [
+      {
+        "strength": "Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.",
+        "tags": [
+          "experimental-design",
+          "nuisance-separation"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "experimental-design",
+      "nuisance-separation"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SSP-F03",
+    "project": "SSP size/composition 연구",
+    "claim": "고차 size 후보의 초기 주 비교",
+    "verdict": "현재 후보·주장 승격 보류",
+    "reason_status": "unknown",
+    "failure_reason": "보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.",
+    "reopen_when": "새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때",
+    "recheck": "새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.",
+    "comparison_floor": "기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계",
+    "source_refs": [
+      "findings/sources/ssp-2026-11-05/2026-11-04_tomo_shape/DECISION_KO.md"
+    ],
+    "paper_id": "NuisanceDesign",
+    "paper_title": "Optimal approximate designs for estimating treatment contrasts resistant to nuisance effects",
+    "paper_link": "https://arxiv.org/abs/1504.06079",
+    "matches": [
+      {
+        "strength": "Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.",
+        "tags": [
+          "experimental-design",
+          "nuisance-separation"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "experimental-design",
+      "nuisance-separation"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SSP-F04",
+    "project": "SSP size/composition 연구",
+    "claim": "Nonlinear composition projection의 추가 효용",
+    "verdict": "현재 후보·주장 승격 보류",
+    "reason_status": "unknown",
+    "failure_reason": "보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.",
+    "reopen_when": "새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때",
+    "recheck": "새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.",
+    "comparison_floor": "기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계",
+    "source_refs": [
+      "findings/sources/ssp-2026-11-05/2026-11-05_nonlinear_gp/DECISION_KO.md"
+    ],
+    "paper_id": "NuisanceDesign",
+    "paper_title": "Optimal approximate designs for estimating treatment contrasts resistant to nuisance effects",
+    "paper_link": "https://arxiv.org/abs/1504.06079",
+    "matches": [
+      {
+        "strength": "Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.",
+        "tags": [
+          "experimental-design",
+          "nuisance-separation"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "experimental-design",
+      "nuisance-separation"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SSP-F05",
+    "project": "SSP size/composition 연구",
+    "claim": "Cut의 full joint 대비 추가 필요성",
+    "verdict": "현재 후보·주장 승격 보류",
+    "reason_status": "supported",
+    "failure_reason": "기록한 조건에서 full joint가 이미 크게 회복했고 cut이 일부 유용한 between-count 정보를 버린 진단이 있다. 모든 실패 원인의 완전한 인과 분해는 아니다.",
+    "reopen_when": "새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때",
+    "recheck": "새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.",
+    "comparison_floor": "기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계",
+    "source_refs": [
+      "findings/sources/ssp-2026-11-05/2026-11-05_flexible_count/DECISION_KO.md"
+    ],
+    "paper_id": "NuisanceDesign",
+    "paper_title": "Optimal approximate designs for estimating treatment contrasts resistant to nuisance effects",
+    "paper_link": "https://arxiv.org/abs/1504.06079",
+    "matches": [
+      {
+        "strength": "Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.",
+        "tags": [
+          "experimental-design",
+          "nuisance-separation"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "experimental-design",
+      "nuisance-separation"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SSP-F06",
+    "project": "SSP size/composition 연구",
+    "claim": "Decision radius의 새 일반 이론 신규성",
+    "verdict": "현재 후보·주장 승격 보류",
+    "reason_status": "confirmed",
+    "failure_reason": "직접 affine robustness 공식과의 대응을 증명·문헌 리뷰에서 확인했다.",
+    "reopen_when": "새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때",
+    "recheck": "새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.",
+    "comparison_floor": "기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계",
+    "source_refs": [
+      "findings/sources/ssp-2026-11-05/2026-11-05_decision_radius/DECISION_KO.md"
+    ],
+    "paper_id": "NuisanceDesign",
+    "paper_title": "Optimal approximate designs for estimating treatment contrasts resistant to nuisance effects",
+    "paper_link": "https://arxiv.org/abs/1504.06079",
+    "matches": [
+      {
+        "strength": "Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.",
+        "tags": [
+          "experimental-design",
+          "nuisance-separation"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "experimental-design",
+      "nuisance-separation"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SSP-F07",
+    "project": "SSP size/composition 연구",
+    "claim": "단일 애매한 swap을 겨냥하는 robust contrast probe의 추가 가치",
+    "verdict": "현재 후보·주장 승격 보류",
+    "reason_status": "supported",
+    "failure_reason": "구현 검사는 통과했다. Narrow288contexts에서는 first-count fallback으로 greedy와 동일한 행동이었다. Wide의 추가 이득 부족 원인은 미확정이며 단일 swap 목표의 부적합은 가설이다.",
+    "reopen_when": "새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때",
+    "recheck": "새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.",
+    "comparison_floor": "기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계",
+    "source_refs": [
+      "findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md"
+    ],
+    "paper_id": "NuisanceDesign",
+    "paper_title": "Optimal approximate designs for estimating treatment contrasts resistant to nuisance effects",
+    "paper_link": "https://arxiv.org/abs/1504.06079",
+    "matches": [
+      {
+        "strength": "Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.",
+        "tags": [
+          "experimental-design",
+          "nuisance-separation"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "experimental-design",
+      "nuisance-separation"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "TSY-F01",
     "project": "TSFM joint-information preservation and nuisance stability frozen pilot",
     "claim": "Frozen Chronos-2가 product 공동정보를 clean pair에서 활용하면서,동일 주변분포 nuisance 추가로 유의한 손해를 보여 conditional-null 재학습의 첫 gate를 통과한다.",

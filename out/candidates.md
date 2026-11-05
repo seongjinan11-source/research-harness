@@ -15,11 +15,11 @@ A의 한계 하나와 B의 강점이 같은 태그로 걸린 경우예요. 점�
 - **Moirai 한계** (후속 논문 지적 — Moirai 2.0: When Less Is More for Time Series Forecasting (2025)): 같은 Salesforce 그룹의 후속작이 Moirai의 핵심 설계를 대부분 되돌렸다. masked encoder는 sample 하나당 loss를 한 번만 내고 가려진 일부 token만 loss에 참여해서 데이터 활용이 비효율적이고, 반복 예측 때마다 key-value를 처음부터 다시 계산해야 한다고 지적했다. multi-patch 구성은 frequency 간 학습을 오히려 제약했다고 보고 single patch로 바꿨다. mixture distribution 출력은 실제로는 효과가 덜하고 설계와 최적화를 복잡하게 만들며, NLL이 outlier에서 variance collapse나 불안정한 gradient를 겪을 수 있다며 quantile loss로 대체했다. multivariate 예측과 covariate 지원은 이득이 거의 없었다며 아예 뺐고, 그런 성질을 가진 고품질 데이터가 부족한 탓으로 추정했다.
 - **TabImpute 강점**: Section 3의 architecture는 원래 TabPFN의 query 사이 attention 제한을 제거한다. Missing-entry query가 공유 잠재 구조를 통해 의존할 수 있다는 이유이며, 우리 graph PFN의 성능 개선을 입증한 결과는 아니다.
 
-## 4. NodePFN ← Chronos-2 [pretraining-data, prior-mismatch] (점수 0.86 · 분야 교차)
+## 4. NodePFN ← Chronos-2 [pretraining-data, prior-mismatch] (점수 0.85 · 분야 교차)
 - **NodePFN 한계** (후속 논문 지적 — A Fair Evaluation of Graph Foundation Models for Node Property Prediction (2026)): NodePFN이 약한 이유로 세 가지를 가설로 든다. 첫째, sample 하나를 token 하나로 보는 TabPFN v1 시절 구조를 쓴다. 둘째, 강한 tabular FM에서 초기화하지 않고 처음부터 학습한다. 셋째, GraphPFN보다 prior가 단순하다. 이 이유로 자신들의 공정 비교 평가에서는 NodePFN을 아예 제외했다. 검증된 원인이 아니라 저자들의 추정이라는 점은 감안해야 한다.
 - **Chronos-2 강점**: 실제 다변량 데이터 없이 synthetic multivariatizer만으로 다변량·covariate 능력을 얻었다. synthetic 데이터만으로 학습한 변형도 GIFT-Eval과 Chronos Benchmark II에서 본 모델에 거의 근접해, synthetic prior 설계의 효과를 보여준다.
 
-## 5. NodePFN ← TimesFM [pretraining-data, prior-mismatch] (점수 0.86 · 분야 교차)
+## 5. NodePFN ← TimesFM [pretraining-data, prior-mismatch] (점수 0.85 · 분야 교차)
 - **NodePFN 한계** (후속 논문 지적 — A Fair Evaluation of Graph Foundation Models for Node Property Prediction (2026)): NodePFN이 약한 이유로 세 가지를 가설로 든다. 첫째, sample 하나를 token 하나로 보는 TabPFN v1 시절 구조를 쓴다. 둘째, 강한 tabular FM에서 초기화하지 않고 처음부터 학습한다. 셋째, GraphPFN보다 prior가 단순하다. 이 이유로 자신들의 공정 비교 평가에서는 NodePFN을 아예 제외했다. 검증된 원인이 아니라 저자들의 추정이라는 점은 감안해야 한다.
 - **TimesFM 강점**: synthetic 데이터를 빼면 실제 데이터에 드문 granularity(quarterly, yearly, 10분 등)와 15분 ETT에서 성능이 떨어진다는 ablation을 보여, 실제 corpus의 빈 곳을 synthetic prior로 메우는 효과를 실증했다.
 
@@ -27,7 +27,7 @@ A의 한계 하나와 B의 강점이 같은 태그로 걸린 경우예요. 점�
 - **Time-MoE 한계** (후속 논문 지적 — TimeSqueeze: Dynamic Patching for Efficient Time Series Forecasting (2026)): Time-MoE 같은 point-wise encoding은 sequence가 길어질수록 확장성이 떨어지며, 이것이 긴 context 사전학습의 병목이라고 지적한다. 이 논문은 Time-MoE의 backbone, Time-300B, 손실을 그대로 두고 tokenizer만 SSM 기반 dynamic patching으로 바꿨다. 그 결과 학습이 최대 20배 빠르고 사전학습 데이터 효율이 8배 높다고 보고한다.
 - **LoGIC 강점**: 예산을 정한 context만으로 full-context 정확도를 유지하면서 peak 메모리를 크게 줄인다. GraphPFN 기준 artnet-exp에서 full graph 추론은 51.86 AP에 19.59GB였는데, LoGIC은 52.06 AP에 8.24GB였다. TabPFNv2 기준 tolokers-2에서도 4.10GB가 2.20GB로 줄었고 AP는 오히려 조금 올랐다.
 
-## 7. Moirai ← TSFM-Survey [channel-dependency, tokenization, uncertainty] (점수 0.8)
+## 7. Moirai ← TSFM-Survey [channel-dependency, tokenization, uncertainty] (점수 0.79)
 - **Moirai 한계** (후속 논문 지적 — Moirai 2.0: When Less Is More for Time Series Forecasting (2025)): 같은 Salesforce 그룹의 후속작이 Moirai의 핵심 설계를 대부분 되돌렸다. masked encoder는 sample 하나당 loss를 한 번만 내고 가려진 일부 token만 loss에 참여해서 데이터 활용이 비효율적이고, 반복 예측 때마다 key-value를 처음부터 다시 계산해야 한다고 지적했다. multi-patch 구성은 frequency 간 학습을 오히려 제약했다고 보고 single patch로 바꿨다. mixture distribution 출력은 실제로는 효과가 덜하고 설계와 최적화를 복잡하게 만들며, NLL이 outlier에서 variance collapse나 불안정한 gradient를 겪을 수 있다며 quantile loss로 대체했다. multivariate 예측과 covariate 지원은 이득이 거의 없었다며 아예 뺐고, 그런 성질을 가진 고품질 데이터가 부족한 탓으로 추정했다.
 - **TSFM-Survey 강점**: Table 2가 15개 모델을 같은 열로 정리해서 모델 선택용 참고표로 쓰기 좋다. 예를 들어 MOMENT와 TimesFM은 결정적 출력, Chronos와 MOIRAI는 확률적 출력, Time-MoE는 point forecast만 낸다는 점을 바로 비교할 수 있다.
 
@@ -59,49 +59,49 @@ A의 한계 하나와 B의 강점이 같은 태그로 걸린 경우예요. 점�
 - **SSGP 한계** (저자 인정): §2의 label posterior와 §3.2의 geometry conditioning에 Gaussian 근사를 사용한다.
 - **StructuralMissingPFN 강점**: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
 
-## 15. Chronos-2 ← GraphPFN [pretraining-data, prior-mismatch] (점수 0.64 · 분야 교차)
-- **Chronos-2 한계** (저자 인정): 단변량을 넘어서는 능력은 전적으로 synthetic 데이터에 기대고 있다고 저자들이 명시한다. synthetic만으로 학습한 변형은 fev-bench skill score가 45.9%로 본 모델(47.3%)보다 낮아, 실제 데이터가 여전히 기여한다는 점도 저자들 ablation에 나타난다.
-- **GraphPFN 강점**: Graph prior가 구조(multi-level SBM + preferential attachment)와 attribute(MLP·GNN neuron 혼합 SCM)를 분리해 설계되어 있고, 그래프 의존 정도를 mixing 확률로 조절할 수 있다. 부록 분석에서 synthetic graph의 평균 차수·clustering·power-law 적합도 분포가 실제 GraphLand 그래프 통계를 대체로 덮는다.
-
-## 16. Chronos-2 ← NodePFN [pretraining-data, prior-mismatch] (점수 0.64 · 분야 교차)
-- **Chronos-2 한계** (저자 인정): 단변량을 넘어서는 능력은 전적으로 synthetic 데이터에 기대고 있다고 저자들이 명시한다. synthetic만으로 학습한 변형은 fev-bench skill score가 45.9%로 본 모델(47.3%)보다 낮아, 실제 데이터가 여전히 기여한다는 점도 저자들 ablation에 나타난다.
-- **NodePFN 강점**: 합성 그래프 수를 늘릴수록 성능이 오르는 prior-scale 분석과, ER·cSBM·BA 구성을 바꾼 prior ablation을 함께 제시해 어떤 prior 성분이 도움이 되는지 일부 보여준다.
-
-## 17. Chronos-2 ← PFNSeparability [pretraining-data, prior-mismatch] (점수 0.64 · 분야 교차)
-- **Chronos-2 한계** (저자 인정): 단변량을 넘어서는 능력은 전적으로 synthetic 데이터에 기대고 있다고 저자들이 명시한다. synthetic만으로 학습한 변형은 fev-bench skill score가 45.9%로 본 모델(47.3%)보다 낮아, 실제 데이터가 여전히 기여한다는 점도 저자들 ablation에 나타난다.
-- **PFNSeparability 강점**: Feature law와 conditional label law의 의존성을 prior 설계의 명시적 선택으로 다룬다.
-
-## 18. Chronos-2 ← Wander [pretraining-data, prior-mismatch] (점수 0.64 · 분야 교차)
-- **Chronos-2 한계** (저자 인정): 단변량을 넘어서는 능력은 전적으로 synthetic 데이터에 기대고 있다고 저자들이 명시한다. synthetic만으로 학습한 변형은 fev-bench skill score가 45.9%로 본 모델(47.3%)보다 낮아, 실제 데이터가 여전히 기여한다는 점도 저자들 ablation에 나타난다.
-- **Wander 강점**: Synthetic prior가 NodePFN식과 GraphPFN식 생성기에 Watts–Strogatz, random geometric, graphon 기반 구조를 더해 섞는다. 그래서 GraphPFN prior가 덮지 못한다고 인정한 공간·기하 구조 그래프를 사전학습 분포에 명시적으로 포함한다.
-
-## 19. GraphPFN ← Chronos-2 [pretraining-data, prior-mismatch] (점수 0.64 · 분야 교차)
-- **GraphPFN 한계** (저자 인정): 부록의 prior ablation에서 단순 degree-corrected SBM으로 사전학습해도 제안한 multi-level SBM + PA prior와 비슷하거나 일부 데이터셋에서 더 좋았다. 저자들도 이전 revision과 결과가 달라졌음을 인정하고, 제안 prior는 일관성과 다양성 때문에 유지했다고 설명한다. 즉 새 graph prior의 성능상 기여는 최종본에서 뒷받침되지 않는다.
-- **Chronos-2 강점**: 실제 다변량 데이터 없이 synthetic multivariatizer만으로 다변량·covariate 능력을 얻었다. synthetic 데이터만으로 학습한 변형도 GIFT-Eval과 Chronos Benchmark II에서 본 모델에 거의 근접해, synthetic prior 설계의 효과를 보여준다.
-
-## 20. GraphPFN ← TimesFM [pretraining-data, prior-mismatch] (점수 0.64 · 분야 교차)
-- **GraphPFN 한계** (저자 인정): 부록의 prior ablation에서 단순 degree-corrected SBM으로 사전학습해도 제안한 multi-level SBM + PA prior와 비슷하거나 일부 데이터셋에서 더 좋았다. 저자들도 이전 revision과 결과가 달라졌음을 인정하고, 제안 prior는 일관성과 다양성 때문에 유지했다고 설명한다. 즉 새 graph prior의 성능상 기여는 최종본에서 뒷받침되지 않는다.
-- **TimesFM 강점**: synthetic 데이터를 빼면 실제 데이터에 드문 granularity(quarterly, yearly, 10분 등)와 15분 ETT에서 성능이 떨어진다는 ablation을 보여, 실제 corpus의 빈 곳을 synthetic prior로 메우는 효과를 실증했다.
-
-## 21. GraphPFN ← Wander [feature-heterogeneity, label-space] (점수 0.64)
+## 15. GraphPFN ← Wander [feature-heterogeneity, label-space] (점수 0.64)
 - **GraphPFN 한계** (후속 논문 지적 — NodeGround: A Node Classification Benchmark in the Graph Foundation Model Era (2026)): 대규모 node classification benchmark에서 GraphPFN은 가장 강한 GFM이었지만, 데이터셋 조건별로 보면 강한 homophily, 고차원 feature, 심하게 불균형한 target에서 튜닝된 GNN(GCNII, GPRGNN)에 뒤졌다. 10개 초과 class task도 불리했다. 라벨을 50%까지 늘려도 고차원 feature·불균형 target·다중 class 약점은 남았다. 저자들은 사전학습 표현을 새 그래프에 적응시키는 능력의 한계로 해석한다.
 - **Wander 강점**: Feature와 class를 channel별 token으로 다루고 같은 종류의 channel끼리 모듈을 공유하므로, feature 차원 수와 class 수에 제한 없이 차원 축소 없이 처리한다. 같은 표에서 NodePFN은 지원 class 수를 넘는 데이터셋 계열(Cit. Full, HM Cat.)에서 아예 빠졌다.
 
-## 22. NodePFN ← NodeGround [feature-heterogeneity, label-space] (점수 0.64)
+## 16. NodePFN ← NodeGround [feature-heterogeneity, label-space] (점수 0.64)
 - **NodePFN 한계** (후속 논문 지적 — To Learn is to Wander: Learning Across Graphs and Tasks with Random Walks (2026)): node마다 representation 하나만 유지하고 feature 차원 상한이 고정돼 있다고 지적한다. 지원 class 수를 넘는 데이터셋 열에서는 NodePFN 결과를 아예 보고할 수 없었다.
 - **NodeGround 강점**: 7개 데이터셋 성질로 22개 부분집합을 만들어 '어떤 조건에서 GFM이 지는가'를 진단한다. 예를 들어 GraphPFN은 binary task, high-degree 그래프, 중간 수준 homophily에서는 튜닝된 GCNII·GPRGNN보다 앞서지만, 강한 homophily, 고차원 feature, 심한 불균형 target, 10개 초과 class에서는 뒤진다. 평균 순위 하나로는 보이지 않는 약점을 드러낸다.
 
-## 23. NodePFN ← Wander [feature-heterogeneity, label-space] (점수 0.64)
+## 17. NodePFN ← Wander [feature-heterogeneity, label-space] (점수 0.64)
 - **NodePFN 한계** (후속 논문 지적 — To Learn is to Wander: Learning Across Graphs and Tasks with Random Walks (2026)): node마다 representation 하나만 유지하고 feature 차원 상한이 고정돼 있다고 지적한다. 지원 class 수를 넘는 데이터셋 열에서는 NodePFN 결과를 아예 보고할 수 없었다.
 - **Wander 강점**: Feature와 class를 channel별 token으로 다루고 같은 종류의 channel끼리 모듈을 공유하므로, feature 차원 수와 class 수에 제한 없이 차원 축소 없이 처리한다. 같은 표에서 NodePFN은 지원 class 수를 넘는 데이터셋 계열(Cit. Full, HM Cat.)에서 아예 빠졌다.
 
-## 24. Sundial ← GraphPFN [pretraining-data, prior-mismatch] (점수 0.64 · 분야 교차)
-- **Sundial 한계** (저자 인정): TimeBench에는 중·저주파 시계열이 많아서 아주 고주파인 데이터에서의 성능은 보장할 수 없다고 저자들이 인정한다. 모델 용량을 키웠어도 hallucination이 생길 수 있다고 밝히며, 다중 스케일 시계열로의 일반화를 중요한 향후 과제로 든다.
+## 18. Chronos-2 ← GraphPFN [pretraining-data, prior-mismatch] (점수 0.63 · 분야 교차)
+- **Chronos-2 한계** (저자 인정): 단변량을 넘어서는 능력은 전적으로 synthetic 데이터에 기대고 있다고 저자들이 명시한다. synthetic만으로 학습한 변형은 fev-bench skill score가 45.9%로 본 모델(47.3%)보다 낮아, 실제 데이터가 여전히 기여한다는 점도 저자들 ablation에 나타난다.
 - **GraphPFN 강점**: Graph prior가 구조(multi-level SBM + preferential attachment)와 attribute(MLP·GNN neuron 혼합 SCM)를 분리해 설계되어 있고, 그래프 의존 정도를 mixing 확률로 조절할 수 있다. 부록 분석에서 synthetic graph의 평균 차수·clustering·power-law 적합도 분포가 실제 GraphLand 그래프 통계를 대체로 덮는다.
 
-## 25. Sundial ← NodePFN [pretraining-data, prior-mismatch] (점수 0.64 · 분야 교차)
-- **Sundial 한계** (저자 인정): TimeBench에는 중·저주파 시계열이 많아서 아주 고주파인 데이터에서의 성능은 보장할 수 없다고 저자들이 인정한다. 모델 용량을 키웠어도 hallucination이 생길 수 있다고 밝히며, 다중 스케일 시계열로의 일반화를 중요한 향후 과제로 든다.
+## 19. Chronos-2 ← NodePFN [pretraining-data, prior-mismatch] (점수 0.63 · 분야 교차)
+- **Chronos-2 한계** (저자 인정): 단변량을 넘어서는 능력은 전적으로 synthetic 데이터에 기대고 있다고 저자들이 명시한다. synthetic만으로 학습한 변형은 fev-bench skill score가 45.9%로 본 모델(47.3%)보다 낮아, 실제 데이터가 여전히 기여한다는 점도 저자들 ablation에 나타난다.
 - **NodePFN 강점**: 합성 그래프 수를 늘릴수록 성능이 오르는 prior-scale 분석과, ER·cSBM·BA 구성을 바꾼 prior ablation을 함께 제시해 어떤 prior 성분이 도움이 되는지 일부 보여준다.
+
+## 20. Chronos-2 ← PFNSeparability [pretraining-data, prior-mismatch] (점수 0.63 · 분야 교차)
+- **Chronos-2 한계** (저자 인정): 단변량을 넘어서는 능력은 전적으로 synthetic 데이터에 기대고 있다고 저자들이 명시한다. synthetic만으로 학습한 변형은 fev-bench skill score가 45.9%로 본 모델(47.3%)보다 낮아, 실제 데이터가 여전히 기여한다는 점도 저자들 ablation에 나타난다.
+- **PFNSeparability 강점**: Feature law와 conditional label law의 의존성을 prior 설계의 명시적 선택으로 다룬다.
+
+## 21. Chronos-2 ← Wander [pretraining-data, prior-mismatch] (점수 0.63 · 분야 교차)
+- **Chronos-2 한계** (저자 인정): 단변량을 넘어서는 능력은 전적으로 synthetic 데이터에 기대고 있다고 저자들이 명시한다. synthetic만으로 학습한 변형은 fev-bench skill score가 45.9%로 본 모델(47.3%)보다 낮아, 실제 데이터가 여전히 기여한다는 점도 저자들 ablation에 나타난다.
+- **Wander 강점**: Synthetic prior가 NodePFN식과 GraphPFN식 생성기에 Watts–Strogatz, random geometric, graphon 기반 구조를 더해 섞는다. 그래서 GraphPFN prior가 덮지 못한다고 인정한 공간·기하 구조 그래프를 사전학습 분포에 명시적으로 포함한다.
+
+## 22. EDiS ← TSAD-OneLiners [nonstationarity, task-coverage] (점수 0.63 · 분야 교차)
+- **EDiS 한계** (저자 인정): Task-aware score, dynamic temporal composition, graph-/link-level prediction 확장을 향후 과제로 남겼다.
+- **TSAD-OneLiners 강점**: 예측 기반 점수의 실패 원인도 설명했다. sliding window가 sequence anomaly 안으로 들어가면 context가 이미 이상한 값을 담고 있어서, 모델이 다음 이상값을 잘 맞혀 버리고 오차가 작아진다. 한 사례에서 TimesFM-1.0-512의 VUS-PR은 sequence anomaly에서 horizon 1일 때 0.04, 128일 때 0.68이었고, point anomaly에서는 반대로 1.0에서 0.02로 떨어졌다. TSB-AD가 보고한 'point anomaly에는 강하고 sequence anomaly에는 약하다'는 현상을 설명하는 근거다.
+
+## 23. GraphPFN ← Chronos-2 [pretraining-data, prior-mismatch] (점수 0.63 · 분야 교차)
+- **GraphPFN 한계** (저자 인정): 부록의 prior ablation에서 단순 degree-corrected SBM으로 사전학습해도 제안한 multi-level SBM + PA prior와 비슷하거나 일부 데이터셋에서 더 좋았다. 저자들도 이전 revision과 결과가 달라졌음을 인정하고, 제안 prior는 일관성과 다양성 때문에 유지했다고 설명한다. 즉 새 graph prior의 성능상 기여는 최종본에서 뒷받침되지 않는다.
+- **Chronos-2 강점**: 실제 다변량 데이터 없이 synthetic multivariatizer만으로 다변량·covariate 능력을 얻었다. synthetic 데이터만으로 학습한 변형도 GIFT-Eval과 Chronos Benchmark II에서 본 모델에 거의 근접해, synthetic prior 설계의 효과를 보여준다.
+
+## 24. GraphPFN ← TimesFM [pretraining-data, prior-mismatch] (점수 0.63 · 분야 교차)
+- **GraphPFN 한계** (저자 인정): 부록의 prior ablation에서 단순 degree-corrected SBM으로 사전학습해도 제안한 multi-level SBM + PA prior와 비슷하거나 일부 데이터셋에서 더 좋았다. 저자들도 이전 revision과 결과가 달라졌음을 인정하고, 제안 prior는 일관성과 다양성 때문에 유지했다고 설명한다. 즉 새 graph prior의 성능상 기여는 최종본에서 뒷받침되지 않는다.
+- **TimesFM 강점**: synthetic 데이터를 빼면 실제 데이터에 드문 granularity(quarterly, yearly, 10분 등)와 15분 ETT에서 성능이 떨어진다는 ablation을 보여, 실제 corpus의 빈 곳을 synthetic prior로 메우는 효과를 실증했다.
+
+## 25. Sundial ← GraphPFN [pretraining-data, prior-mismatch] (점수 0.63 · 분야 교차)
+- **Sundial 한계** (저자 인정): TimeBench에는 중·저주파 시계열이 많아서 아주 고주파인 데이터에서의 성능은 보장할 수 없다고 저자들이 인정한다. 모델 용량을 키웠어도 hallucination이 생길 수 있다고 밝히며, 다중 스케일 시계열로의 일반화를 중요한 향후 과제로 든다.
+- **GraphPFN 강점**: Graph prior가 구조(multi-level SBM + preferential attachment)와 attribute(MLP·GNN neuron 혼합 SCM)를 분리해 설계되어 있고, 그래프 의존 정도를 mixing 확률로 조절할 수 있다. 부록 분석에서 synthetic graph의 평균 차수·clustering·power-law 적합도 분포가 실제 GraphLand 그래프 통계를 대체로 덮는다.
 
 # 빈칸: 한계로만 지적되고, 하네스 안에 해결한 논문이 없는 축
 

@@ -1,0 +1,47 @@
+id: RegConfounding
+title: Regularization and confounding in linear regression for treatment effect estimation
+authors: P. Richard Hahn, Carlos M. Carvalho, Jingyu He, David Puelz
+venue: arXiv
+year: 2016
+links:
+  paper: https://arxiv.org/abs/1602.02176
+citation:
+  type: misc
+  title: Regularization and confounding in linear regression for treatment effect
+    estimation
+  authors:
+  - P. Richard Hahn
+  - Carlos M. Carvalho
+  - Jingyu He
+  - David Puelz
+  year: 2016
+  arxiv: '1602.02176'
+  url: https://arxiv.org/abs/1602.02176
+  verified_from:
+  - https://arxiv.org/abs/1602.02176
+areas:
+- bo
+- ml-foundations
+problem: Nuisance 회귀의 regularization이 관심 계수에 bias를 만드는 문제를 다룬다.
+core_idea: Control 계수의 과도한 shrinkage가 regularization-induced confounding을 만드는 기전을
+  분석하고 동시 회귀와 prior 설계로 대응한다.
+key_assumptions:
+- 본문의 모델·관측·입력 가정 안에서 해석하며 SSP의 count-dependent adaptive 정책으로 보장을 자동 이전하지 않는다.
+strengths:
+- text: Nuisance shrinkage가 다른 계수 추정으로 bias를 전달하는 직접 통계 선행이다.
+  tags: &id001
+  - nuisance-separation
+  - prior-mismatch
+limitations:
+- text: Treatment-effect 결과를 count-dependent nuisance 또는 adaptive BO의 보장으로 옮길 수 없다.
+  tags: *id001
+  source: analyst
+builds_on: []
+compared_against: []
+open_questions:
+- SSP의 관측·count 예산과 실제 추천 손실에서 어떤 조건까지 적용할 수 있는가?
+hooks:
+- SSP의 count shrinkage와 composition 오염을 일반 통계 선행과 대조한다.
+notes: 2026-11-05 primary metadata/abstract 재확인. SSP 적용과 한계는 analyst 판단. 세부 수식의 확인
+  범위는 보존한 문헌 리뷰에 기록.
+added: '2026-11-05'

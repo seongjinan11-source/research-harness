@@ -1069,6 +1069,104 @@
 - [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=covariance
   - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 
+## SSP-F01 — Thompson sampling 추가가 SSP mean을 개선하는가
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [원인 미상]: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 먼저 이겨야 할 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 닫지 않은 것: 전체 TS, posterior covariance의 일반 가치, 다른 solver budget은 닫지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-04_ssp_ts/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-04_ssp_ts/DECISION_KO.md)
+
+- [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
+  - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+
+## SSP-F02 — 복잡한 관측 가치 정책의 추가 효용
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [원인 미상]: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 먼저 이겨야 할 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 닫지 않은 것: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-04_tomo_utility/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-04_tomo_utility/DECISION_KO.md)
+
+- [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
+  - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+
+## SSP-F03 — 고차 size 후보의 초기 주 비교
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [원인 미상]: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 먼저 이겨야 할 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 닫지 않은 것: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-04_tomo_shape/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-04_tomo_shape/DECISION_KO.md)
+
+- [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
+  - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+
+## SSP-F04 — Nonlinear composition projection의 추가 효용
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [원인 미상]: 보고된 관찰의 범위만 확인했으며 단일 인과 원인을 확정하지 않았다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 먼저 이겨야 할 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 닫지 않은 것: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_nonlinear_gp/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_nonlinear_gp/DECISION_KO.md)
+
+- [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
+  - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+
+## SSP-F05 — Cut의 full joint 대비 추가 필요성
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [진단이 지지]: 기록한 조건에서 full joint가 이미 크게 회복했고 cut이 일부 유용한 between-count 정보를 버린 진단이 있다. 모든 실패 원인의 완전한 인과 분해는 아니다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 먼저 이겨야 할 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 닫지 않은 것: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_flexible_count/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_flexible_count/DECISION_KO.md)
+
+- [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
+  - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+
+## SSP-F06 — Decision radius의 새 일반 이론 신규성
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [직접 확인]: 직접 affine robustness 공식과의 대응을 증명·문헌 리뷰에서 확인했다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 먼저 이겨야 할 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 닫지 않은 것: Count-specific 진단의 유용성과 SSP의 다른 기여는 닫지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_decision_radius/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_decision_radius/DECISION_KO.md)
+
+- [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
+  - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+
+## SSP-F07 — 단일 애매한 swap을 겨냥하는 robust contrast probe의 추가 가치
+
+- 판정: 현재 후보·주장 승격 보류
+- 원인·병목 [진단이 지지]: 구현 검사는 통과했다. Narrow288contexts에서는 first-count fallback으로 greedy와 동일한 행동이었다. Wide의 추가 이득 부족 원인은 미확정이며 단일 swap 목표의 부적합은 가설이다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 새 장치가 기록된 병목을 바꾸고 강한 단순 대조를 넘어 실제 추천 손실을 줄일 독립 근거가 생길 때
+- 먼저 이겨야 할 기준선: 기존 SSPd3+probe, 유연한 full joint count GP, greedy/random/A-opt 및 표준 joint posterior 설계
+- 최소 재검증: 새 개발/확인 bank를 분리하고 같은 정보·count·호출 예산에서 actual composition/latent incumbent regret를 사전 endpoint로 비교한다.
+- 닫지 않은 것: 다른 구현·가정·예산과 전체 SSP 방향은 닫지 않는다.
+- 원문: [findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md](../findings/sources/ssp-2026-11-05/2026-11-05_contrast_probe/DECISION_KO.md)
+
+- [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
+  - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+
 ## TSY-F01 — Frozen Chronos-2가 product 공동정보를 clean pair에서 활용하면서,동일 주변분포 nuisance 추가로 유의한 손해를 보여 conditional-null 재학습의 첫 gate를 통과한다.
 
 - 판정: 이 product bank를 근거로 제안2x2를 시작하지 않는다. Clean 공동정보 활용·nuisance 손해가 함께 확인되지 않았으며 강한 전체 interaction sparse regression이 toy를 해결했다.

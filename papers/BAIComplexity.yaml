@@ -1,0 +1,47 @@
+id: BAIComplexity
+title: On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models
+authors: Emilie Kaufmann, Olivier Cappé, Aurélien Garivier
+venue: JMLR
+year: 2016
+links:
+  paper: https://jmlr.org/papers/v17/kaufman16a.html
+citation:
+  type: article
+  title: On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models
+  authors:
+  - Emilie Kaufmann
+  - Olivier Cappé
+  - Aurélien Garivier
+  year: 2016
+  journal: JMLR
+  volume: 17
+  pages: 1--42
+  url: https://jmlr.org/papers/v17/kaufman16a.html
+  verified_from:
+  - https://jmlr.org/papers/v17/kaufman16a.html
+areas:
+- bo
+- ml-foundations
+problem: Fixed-budget과 fixed-confidence best-arm identification의 통계적 복잡성을 다룬다.
+core_idea: 정보량 기반 lower bound, Gaussian/Bernoulli 두-arm의 정밀 결과와 change-of-measure
+  도구를 제시한다.
+key_assumptions:
+- 본문의 모델·관측·입력 가정 안에서 해석하며 SSP의 count-dependent adaptive 정책으로 보장을 자동 이전하지 않는다.
+strengths:
+- text: 구별하기 어려운 두 환경에서 추천의 한계를 유도하는 직접 기초다.
+  tags: &id001
+  - decision-regret
+  - theory-gap
+limitations:
+- text: 현재 fixed-archive 두 환경의 normalized loss 식이 일반 adaptive BO 달성 보장은 아니다.
+  tags: *id001
+  source: analyst
+builds_on: []
+compared_against: []
+open_questions:
+- SSP의 관측·count 예산과 실제 추천 손실에서 어떤 조건까지 적용할 수 있는가?
+hooks:
+- Gaussian 두 환경 검정과 unknown-environment 식별의 차이를 명시한다.
+notes: 2026-11-05 primary metadata/abstract 재확인. SSP 적용과 한계는 analyst 판단. 세부 수식의 확인
+  범위는 보존한 문헌 리뷰에 기록.
+added: '2026-11-05'
