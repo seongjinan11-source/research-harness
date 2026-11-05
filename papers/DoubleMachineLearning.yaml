@@ -1,0 +1,58 @@
+id: DoubleMachineLearning
+title: Double Machine Learning for Treatment and Causal Parameters
+authors: Victor Chernozhukov, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney
+  Newey
+venue: arXiv
+year: 2016
+links:
+  paper: https://arxiv.org/abs/1608.00060v4
+citation:
+  type: misc
+  title: Double Machine Learning for Treatment and Causal Parameters
+  authors:
+  - Victor Chernozhukov
+  - Denis Chetverikov
+  - Mert Demirer
+  - Esther Duflo
+  - Christian Hansen
+  - Whitney Newey
+  year: 2016
+  url: https://arxiv.org/abs/1608.00060v4
+  verified_from:
+  - https://arxiv.org/abs/1608.00060v4
+  - https://arxiv.org/pdf/1608.00060v4
+  arxiv: 1608.00060v4
+areas:
+- bo
+- ml-foundations
+problem: Nuisance ML의 regularization bias와 overfitting이 저차원 관심 parameter의 추정·추론으로 전달된다.
+core_idea: Auxiliary prediction으로 Neyman-orthogonal score를 구성하여 nuisance 오차의 1차 영향을 줄이고 cross-fitting으로
+  overfitting을 제어한다.
+key_assumptions:
+- Target-specific orthogonal score, 식별·moment 조건, nuisance 수렴률과 sample splitting의 조건이 필요하다.
+strengths:
+- text: 예측 정확도와 target parameter 추정 정확도를 구별하고 nuisance regularization 오염에 대응한다.
+  tags:
+  - nuisance-separation
+  - theory-gap
+- text: Cross-fitting과 orthogonal score를 결합하여 조건부 점근 추론을 가능하게 한다.
+  tags:
+  - experimental-design
+limitations:
+- text: Neyman orthogonality는 일반적으로 local·1차 robustness다. 작은 adaptive BO archive의 exact posterior invariance나
+    ranking·regret 보장을 뜻하지 않는다.
+  tags:
+  - decision-regret
+  - identifiability
+  source: analyst
+builds_on: []
+compared_against:
+- Naive plug-in ML
+- Single ML estimators
+open_questions: &id001
+- Composition contrast나 ranking target에 nuisance count 오차가 전달되는 경로를 검토하되 새 score·조건의 증명이 필요하다.
+hooks: *id001
+notes: 정확히 읽은 arXiv v4(2016-12-30)의 제목과 저자6명을 citation에 고정했다. 2018 Econometrics Journal의 treatment and
+  structural parameters 판은 제목·저자7명(James Robins 포함)이 달라 섞지 않는다. 원 종합의 2018 DOI는 관련 출판판 안내이며 이 항목의 BibTeX는
+  v4다.
+added: '2026-11-06'

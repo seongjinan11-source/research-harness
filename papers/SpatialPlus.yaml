@@ -1,0 +1,63 @@
+id: SpatialPlus
+title: 'Spatial+: A novel approach to spatial confounding'
+authors: Emiko Dupont, Simon N. Wood, Nicole H. Augustin
+venue: Biometrics 78(4), 1279–1290 (2022)
+year: 2022
+links:
+  paper: https://doi.org/10.1111/biom.13656
+  preprint: https://arxiv.org/abs/2009.09420
+citation:
+  type: article
+  title: 'Spatial+: A novel approach to spatial confounding'
+  authors:
+  - Emiko Dupont
+  - Simon N. Wood
+  - Nicole H. Augustin
+  year: 2022
+  url: https://doi.org/10.1111/biom.13656
+  verified_from:
+  - https://onlinelibrary.wiley.com/doi/full/10.1111/biom.13656
+  - https://arxiv.org/pdf/2009.09420
+  journal: Biometrics
+  volume: 78
+  number: 4
+  pages: 1279--1290
+  doi: 10.1111/biom.13656
+areas:
+- bo
+- ml-foundations
+problem: Spatial smooth와 correlated covariate가 겹칠 때 smoothing-induced bias가 covariate 효과로 전달된다.
+core_idea: Covariate의 spatial dependence를 먼저 회귀하고 그 residual을 spatial model의 covariate로 사용한다. Thin-plate
+  spline 분석과 simulation으로 bias를 검토한다.
+key_assumptions:
+- 공간적으로 smooth한 nuisance와 covariate의 선형 효과를 사용하며, 효과를 식별할 residual covariate variation이 필요하다.
+strengths:
+- text: Smoothing-induced confounding을 residualization으로 줄이는 직접적인 타분야 해결 선행이다.
+  tags:
+  - nuisance-separation
+  - identifiability
+- text: Spatial+는 원래 response를 유지하므로 model comparison이 가능하며 non-Gaussian response로 확장한다.
+  tags:
+  - model-based-baseline
+limitations:
+- text: 원문 Discussion은 covariate의 선형 효과를 사용한 분석이며 nonlinear 효과의 확장을 향후 질문으로 남긴다.
+  tags:
+  - task-coverage
+  source: self
+- text: Φ의 count-dependent 성분을 제거하는 SSP 설계와의 대응은 analyst 전이다. Fully collinear archive의 정보 부족이나 같은-K regret
+    개선을 자동 해결하지 않는다.
+  tags:
+  - subset-cardinality
+  - decision-regret
+  source: analyst
+builds_on: []
+compared_against:
+- Spatial model
+- Restricted spatial regression
+- gSEM
+open_questions: &id001
+- Count에 따른 composition feature residualization의 추정 대상·남는 정보·regularization 변화를 구별해 검토한다.
+hooks: *id001
+notes: Preprint 본문 model formulation 및 Discussion을 읽고 Wiley 최종 제목·저자·연도·권호·페이지·DOI와 대조했다. arXiv는 2020이고
+  citation은 2022 출판판이다.
+added: '2026-11-06'

@@ -198,3 +198,13 @@ basis-dependent sparsity, FABOLAS size basis, 최근 wavelength BOCS 응용을 �
 `SSP-SP-U01`은 미검증 가설이다. 모든 size 함수가 최대 dense하거나 horseshoe가 반드시 실패한다고 기록하지 않는다.
 FM rank1 예의 곡률 부호 제약, known-cost residualization과 native BOCS 대조 조건도 명시했다.
 직전 corrected linear 실험의 양성 regret 결과와 음성 signed mechanism 결과를 함께 보존하며 새 training은 실행하지 않았다.
+
+
+## SSP: 타분야 해결 원리 문헌 (2026-11-06)
+
+기존 79편에 BCF·Spatial+·functional horseshoe·smooth functional shrinkage·NLFS·pooled horseshoe·LAVA·DML을 추가해 총 87편으로 갱신했다.
+기존 RegConfounding 항목을 중복 없이 연결했다. [import 정리](findings/sources/ssp-cross-field-2026-11-06/IMPORT_REPORT_KO.md)는
+nuisance 보호, 함수 subspace 수축, shared+dense/sparse 분해의 실제 해결 선행과 SSP 적용 경계를 구분한다.
+원문의 자기 한계와 확인한 후속 critique를 구별하고, DML은 읽은 v4의 제목·저자 목록을 유지했다.
+`SSP-XF-U01`은 9편과 연결한 미검증 적용 가설이며 기존 실패·양성 결과·SSPd3 선택은 변경하지 않았다.
+새 fitting이나 objective 호출은 없다. 자동 revisit 매칭은 재검토 단서이며 해결 판정이 아니다.

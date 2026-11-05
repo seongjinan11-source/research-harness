@@ -1084,6 +1084,8 @@
 
 - [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
   - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+- [PooledHorseshoeQF](https://arxiv.org/abs/2110.03411): 구체 키워드+태그 일치 (미검증); tags=nuisance-separation; keywords=count
+  - 기록된 강점: 공통 mean을 Gaussian으로 추정하고 개별 deviation을 global-local scale로 수축한다. Common mean=0이면 conventional HS가 된다.
 
 ## SSP-F02 — 복잡한 관측 가치 정책의 추가 효용
 
@@ -1098,6 +1100,8 @@
 
 - [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
   - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+- [PooledHorseshoeQF](https://arxiv.org/abs/2110.03411): 구체 키워드+태그 일치 (미검증); tags=nuisance-separation; keywords=count
+  - 기록된 강점: 공통 mean을 Gaussian으로 추정하고 개별 deviation을 global-local scale로 수축한다. Common mean=0이면 conventional HS가 된다.
 
 ## SSP-F03 — 고차 size 후보의 초기 주 비교
 
@@ -1112,6 +1116,8 @@
 
 - [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
   - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+- [PooledHorseshoeQF](https://arxiv.org/abs/2110.03411): 구체 키워드+태그 일치 (미검증); tags=nuisance-separation; keywords=count
+  - 기록된 강점: 공통 mean을 Gaussian으로 추정하고 개별 deviation을 global-local scale로 수축한다. Common mean=0이면 conventional HS가 된다.
 
 ## SSP-F04 — Nonlinear composition projection의 추가 효용
 
@@ -1126,6 +1132,8 @@
 
 - [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
   - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+- [PooledHorseshoeQF](https://arxiv.org/abs/2110.03411): 구체 키워드+태그 일치 (미검증); tags=nuisance-separation; keywords=count
+  - 기록된 강점: 공통 mean을 Gaussian으로 추정하고 개별 deviation을 global-local scale로 수축한다. Common mean=0이면 conventional HS가 된다.
 
 ## SSP-F05 — Cut의 full joint 대비 추가 필요성
 
@@ -1140,6 +1148,8 @@
 
 - [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
   - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+- [PooledHorseshoeQF](https://arxiv.org/abs/2110.03411): 구체 키워드+태그 일치 (미검증); tags=nuisance-separation; keywords=count
+  - 기록된 강점: 공통 mean을 Gaussian으로 추정하고 개별 deviation을 global-local scale로 수축한다. Common mean=0이면 conventional HS가 된다.
 
 ## SSP-F06 — Decision radius의 새 일반 이론 신규성
 
@@ -1154,6 +1164,8 @@
 
 - [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
   - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+- [PooledHorseshoeQF](https://arxiv.org/abs/2110.03411): 구체 키워드+태그 일치 (미검증); tags=nuisance-separation; keywords=count
+  - 기록된 강점: 공통 mean을 Gaussian으로 추정하고 개별 deviation을 global-local scale로 수축한다. Common mean=0이면 conventional HS가 된다.
 
 ## SSP-F07 — 단일 애매한 swap을 겨냥하는 robust contrast probe의 추가 가치
 
@@ -1168,6 +1180,8 @@
 
 - [NuisanceDesign](https://arxiv.org/abs/1504.06079): 복수 태그 일치 (약한 단서); tags=experimental-design, nuisance-separation; keywords=-
   - 기록된 강점: Nuisance를 제거한 contrast information 및 설계의 직접 선행이다.
+- [PooledHorseshoeQF](https://arxiv.org/abs/2110.03411): 구체 키워드+태그 일치 (미검증); tags=nuisance-separation; keywords=count
+  - 기록된 강점: 공통 mean을 Gaussian으로 추정하고 개별 deviation을 global-local scale로 수축한다. Common mean=0이면 conventional HS가 된다.
 
 ## TSY-F01 — Frozen Chronos-2가 product 공동정보를 clean pair에서 활용하면서,동일 주변분포 nuisance 추가로 유의한 손해를 보여 conditional-null 재학습의 첫 gate를 통과한다.
 

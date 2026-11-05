@@ -1,0 +1,76 @@
+project: SSP cross-field 해결 원리·문헌
+date: '2026-11-06'
+source: findings/sources/ssp-cross-field-2026-11-06/IMPORT_REPORT_KO.md
+setting: 문헌 import만 수행; 기존 실험·평가 bank 및 SSPd3 선택 유지.
+entries:
+- id: SSP-XF-U01
+  kind: untested
+  claim: 타분야의 nuisance 보호·함수 subspace shrinkage·shared+sparse 원리가 sparse polynomial BO의 count-induced
+    결정 왜곡을 해결하는가?
+  observation: 8편을 추가하고 기존 RegConfounding을 연결했다. 이들 해결 원리는 원 분야의 결과이며 SSP에서 새 fitting이나 objective 평가를
+    하지 않았다.
+  verdict: 관련 해결 선행 확보; SSP 적용과 native BOCS 결정 회복은 미검증
+  not_closed: Count 대비 composition contrast의 prior 보존, adaptive archive의 식별 및 실제 same-count regret 회복은
+    별도 검증해야 한다.
+  do_not_claim: 일반 nuisance 보호·dense+sparse·functional shrinkage를 새 발명으로 주장하거나 원문의 보장을 BO regret로 자동 이전하지
+    않는다.
+  failure_reason: 문헌 연결만으로 SSP의 실제 실패·회복이나 인과 메커니즘은 입증되지 않는다.
+  reason_status: hypothesis
+  reopen_when: 같은 archive·likelihood·basis·known costs·추론 예산의 독립 대조가 count 오차와 same-count 손실의 연결을 확인할
+    때
+  comparison_floor: 원 SSPd3, 단순 joint count 항, Gaussian shared mean+HS residual 및 같은 basis의 prior 대조
+  recheck: 기존 positive/negative gates를 보존하고 적용 estimand·local 대 exact 보장·잠재 분해와 예측 총합을 구분한다.
+  tags:
+  - nuisance-separation
+  - sparsity-prior
+  - basis-dependence
+  - decision-regret
+  keywords:
+  - SSP
+  - count
+  - composition
+  - RIC
+  - Spatial+
+  - functional horseshoe
+  - NLFS
+  - pooled horseshoe
+  - LAVA
+  - DML
+  reopen_tags:
+  - nuisance-separation
+  - sparsity-prior
+  reopen_keywords:
+  - shared mean
+  - subspace
+  source_refs:
+  - findings/sources/ssp-cross-field-2026-11-06/REVIEW_KO.md
+  - findings/sources/ssp-cross-field-2026-11-06/IMPORT_REPORT_KO.md
+  evidence: 문헌·판본·메타데이터 확인; BO 적용은 analyst 대응이며 새 성능 실험 없음
+  literature:
+  - paper_id: RegConfounding
+    relation: boundary
+    note: 타분야의 실제 해결 원리 및 novelty 경계; SSP의 성능 회복은 미검증.
+  - paper_id: BayesianCausalForests
+    relation: boundary
+    note: 타분야의 실제 해결 원리 및 novelty 경계; SSP의 성능 회복은 미검증.
+  - paper_id: SpatialPlus
+    relation: boundary
+    note: 타분야의 실제 해결 원리 및 novelty 경계; SSP의 성능 회복은 미검증.
+  - paper_id: FunctionalHorseshoe
+    relation: boundary
+    note: 타분야의 실제 해결 원리 및 novelty 경계; SSP의 성능 회복은 미검증.
+  - paper_id: SmoothFunctionalShrinkage
+    relation: boundary
+    note: 타분야의 실제 해결 원리 및 novelty 경계; SSP의 성능 회복은 미검증.
+  - paper_id: NonlinearFunctionalShrinkage
+    relation: boundary
+    note: 타분야의 실제 해결 원리 및 novelty 경계; SSP의 성능 회복은 미검증.
+  - paper_id: PooledHorseshoeQF
+    relation: boundary
+    note: 타분야의 실제 해결 원리 및 novelty 경계; SSP의 성능 회복은 미검증.
+  - paper_id: LAVA
+    relation: boundary
+    note: 타분야의 실제 해결 원리 및 novelty 경계; SSP의 성능 회복은 미검증.
+  - paper_id: DoubleMachineLearning
+    relation: boundary
+    note: 타분야의 실제 해결 원리 및 novelty 경계; SSP의 성능 회복은 미검증.

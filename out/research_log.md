@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 50개 프로젝트 · 214개 기록 (실패·중단 64개, 보존 52개, 교훈 69개, 미실행 29개)
+총 51개 프로젝트 · 215개 기록 (실패·중단 64개, 보존 52개, 교훈 69개, 미실행 30개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1792,6 +1792,17 @@ Vanilla accuracy 57.01%, covariance 57.04%. Covariance−vanilla +0.032%p, graph
 Initial 대비 accuracy는 올랐지만 matched continuation 대비 증분은 약0.03%p였다. Balanced accuracy와 macro-F1은 initial 대비 하락했다.
 
 - 원문: [findings/sources/graphpfn-2026-11-01/source_error.md](../findings/sources/graphpfn-2026-11-01/source_error.md)
+
+## SSP cross-field 해결 원리·문헌
+
+실험 조건: 문헌 import만 수행; 기존 실험·평가 bank 및 SSPd3 선택 유지.
+
+### SSP-XF-U01 [미실행] 타분야의 nuisance 보호·함수 subspace shrinkage·shared+sparse 원리가 sparse polynomial BO의 count-induced 결정 왜곡을 해결하는가?
+
+8편을 추가하고 기존 RegConfounding을 연결했다. 이들 해결 원리는 원 분야의 결과이며 SSP에서 새 fitting이나 objective 평가를 하지 않았다.
+
+- 확대 금지: 일반 nuisance 보호·dense+sparse·functional shrinkage를 새 발명으로 주장하거나 원문의 보장을 BO regret로 자동 이전하지 않는다.
+- 원문: [findings/sources/ssp-cross-field-2026-11-06/REVIEW_KO.md](../findings/sources/ssp-cross-field-2026-11-06/REVIEW_KO.md); [findings/sources/ssp-cross-field-2026-11-06/IMPORT_REPORT_KO.md](../findings/sources/ssp-cross-field-2026-11-06/IMPORT_REPORT_KO.md)
 
 ## SSP size/composition 연구
 

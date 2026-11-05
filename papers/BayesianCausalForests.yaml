@@ -1,0 +1,55 @@
+id: BayesianCausalForests
+title: 'Bayesian regression tree models for causal inference: regularization, confounding, and heterogeneous
+  effects'
+authors: P. Richard Hahn, Jared S. Murray, Carlos M. Carvalho
+venue: arXiv
+year: 2017
+links:
+  paper: https://arxiv.org/abs/1706.09523v4
+citation:
+  type: misc
+  title: 'Bayesian regression tree models for causal inference: regularization, confounding, and heterogeneous
+    effects'
+  authors:
+  - P. Richard Hahn
+  - Jared S. Murray
+  - Carlos M. Carvalho
+  year: 2017
+  url: https://arxiv.org/abs/1706.09523v4
+  verified_from:
+  - https://arxiv.org/abs/1706.09523v4
+  - https://arxiv.org/pdf/1706.09523
+  arxiv: '1706.09523'
+areas:
+- bo
+- ml-foundations
+problem: 관측 자료에서 강한 confounding과 작은 heterogeneous treatment effect를 함께 추정한다.
+core_idea: Outcome을 prognostic component와 treatment-effect component로 나누고 별도 tree prior를 둔다. 추정 propensity를
+  prognostic response model에 포함하여 regularization-induced confounding을 완화한다.
+key_assumptions:
+- Causal 해석에는 treatment assignment의 unconfoundedness와 overlap 등 본문 식별 가정이 필요하다.
+strengths:
+- text: 예측 정확도와 treatment-effect 정확도를 구별하고 두 효과의 regularization을 분리한다.
+  tags:
+  - nuisance-separation
+  - prior-mismatch
+- text: Propensity estimate를 response prior에 반영하여 targeted selection에 대응한다.
+  tags:
+  - experimental-design
+limitations:
+- text: Propensity와 treatment-effect의 causal 추정은 BO의 adaptive archive 및 same-count ranking과 다른 대상이다. Propensity
+    feature 하나로 SSP 결정이 보호된다고 주장할 수 없다.
+  tags:
+  - decision-regret
+  source: analyst
+builds_on:
+- RegConfounding
+compared_against:
+- BART
+- Propensity-augmented BART
+open_questions: &id001
+- Count와 composition의 prior를 구별하고 관측 수집 구조를 고려하는 인접 해결 선행으로 인용한다.
+hooks: *id001
+notes: 본문 §4–5, Appendix §8.2–8.4 확인. arXiv 최초 제출 2017, 읽은 v4는 2019. PDF 저자 표기의 Carlos M. Carvalho를 사용한다.
+  정식 저널 metadata를 추정하지 않는다.
+added: '2026-11-06'

@@ -1,0 +1,66 @@
+id: FunctionalHorseshoe
+title: Functional Horseshoe Priors for Subspace Shrinkage
+authors: Minsuk Shin, Anirban Bhattacharya, Valen E. Johnson
+venue: arXiv
+year: 2016
+links:
+  paper: https://arxiv.org/abs/1606.05021v3
+citation:
+  type: misc
+  title: Functional Horseshoe Priors for Subspace Shrinkage
+  authors:
+  - Minsuk Shin
+  - Anirban Bhattacharya
+  - Valen E. Johnson
+  year: 2016
+  url: https://arxiv.org/abs/1606.05021v3
+  verified_from:
+  - https://arxiv.org/abs/1606.05021v3
+  - https://arxiv.org/pdf/1606.05021
+  arxiv: '1606.05021'
+areas:
+- bo
+- ml-foundations
+problem: 개별 coefficient의 sparsity 대신 함수가 알려진 parametric shape에 가까운지를 학습한다.
+core_idea: Spline coefficient에 βᵀΦᵀ(I−Q₀)Φβ penalty를 주어 지정된 함수 subspace에서 벗어나는 성분을 수축한다. Scale에 horseshoe
+  계열 prior를 주고 posterior contraction과 model selection을 분석한다.
+key_assumptions:
+- 지정 subspace가 spline function space 안에 포함되며 이론의 design·smoothness·hyperparameter 조건을 만족해야 한다.
+strengths:
+- text: Linear·quadratic·일반 polynomial shape 쪽으로 함수 자체를 수축할 수 있다. 개별 계수의 zero sparsity와 구별된다.
+  tags:
+  - basis-dependence
+  - sparsity-prior
+- text: 함수 subspace를 기준으로 prior를 설계하는 직접적인 원리 선행이다.
+  tags:
+  - nuisance-separation
+limitations:
+- text: 본문 §3.1은 null space에 접근하나 포함되지 않는 중간 영역의 shrinkage behavior를 이론 분석에서 제외하고 추가 연구로 남긴다.
+  tags:
+  - theory-gap
+  source: self
+- text: 전체 함수를 pure-count subspace로 수축하면 composition도 줄일 수 있다. Native horseshoe contrast를 유지하면서 count
+    방향만 보호하는 모델과 동일하지 않다.
+  tags:
+  - subset-cardinality
+  - decision-regret
+  source: analyst
+- text: Wiemann·Kneib는 원래 fHS가 curvature를 직접 제어하지 않아 wiggly fit이나 essential pattern 포착 실패가 가능하다고 지적하며
+    smoothing을 추가한다. 해당 논문의 fHS 직접 실험 비교는 하지 않았다고 명시한다.
+  tags:
+  - basis-dependence
+  - robustness
+  source: cited
+  by: Adaptive shrinkage of smooth functional effects towards a predefined functional subspace (2021)
+  by_id: SmoothFunctionalShrinkage
+  by_link: https://arxiv.org/pdf/2101.05630
+builds_on: []
+compared_against:
+- Standard horseshoe
+- Penalized likelihood methods
+open_questions: &id001
+- Count를 dense monomial support가 아닌 저차원 함수 구조로 다루되 composition prior 보존 조건을 별도로 설계한다.
+hooks: *id001
+notes: §3 Eq.(4)–(7), Theorem3.3 후 단락 및 Discussion 확인. arXiv 최초 2016, 읽은 v3는 2018. PDF의 Bhattachrya 오탈자
+  대신 arXiv metadata의 Bhattacharya 사용; 정식 JASA판과 섞지 않는다.
+added: '2026-11-06'

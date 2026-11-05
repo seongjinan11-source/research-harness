@@ -1,0 +1,58 @@
+id: SmoothFunctionalShrinkage
+title: Adaptive shrinkage of smooth functional effects towards a predefined functional subspace
+authors: Paul Wiemann, Thomas Kneib
+venue: arXiv
+year: 2021
+links:
+  paper: https://arxiv.org/abs/2101.05630
+citation:
+  type: misc
+  title: Adaptive shrinkage of smooth functional effects towards a predefined functional subspace
+  authors:
+  - Paul Wiemann
+  - Thomas Kneib
+  year: 2021
+  url: https://arxiv.org/abs/2101.05630
+  verified_from:
+  - https://arxiv.org/abs/2101.05630
+  - https://arxiv.org/pdf/2101.05630
+  arxiv: '2101.05630'
+areas:
+- bo
+- ml-foundations
+problem: 많은 spline basis를 사용하면서 지정 parametric space 쪽으로 수축하고 과도한 진동도 막는다.
+core_idea: Coefficient마다가 아니라 functional effect마다 scale을 두어 subspace deviation을 수축하고 random-walk 형태의 smoothing
+  penalty를 결합한다. Gibbs와 slice sampling으로 추론한다.
+key_assumptions:
+- Spline representation, 미리 정한 함수 subspace와 smoothing hierarchy를 사용한다.
+strengths:
+- text: 구조적 함수 수축과 smoothness를 함께 제어하여 계수별 희소화의 대안을 준다.
+  tags:
+  - sparsity-prior
+  - basis-dependence
+limitations:
+- text: Discussion은 일부 조건에서 shrinkage/non-shrinkage 분리가 더 필요하다고 보고하며 scale prior와 joint smoothing prior의
+    개선을 향후 과제로 제시한다.
+  tags:
+  - prior-mismatch
+  source: self
+- text: Count curve 모델로 가져올 수 있으나 subset composition, adaptive archive, ranking functional의 결과는 원문에서 평가하지
+    않았다.
+  tags:
+  - subset-cardinality
+  - decision-regret
+  source: analyst
+- text: MCMC와 smoothness scale을 추가하므로 제한된 BO budget에서 계산비용과 튜닝 조건을 따로 비교해야 한다.
+  tags:
+  - inference-cost
+  source: analyst
+builds_on:
+- FunctionalHorseshoe
+compared_against:
+- Bayesian P-splines
+open_questions: &id001
+- SSPd3보다 유연한 count curve가 필요한 증거가 있을 때 smooth structural prior의 선행으로 검토한다.
+hooks: *id001
+notes: arXiv v1 본문 prior specification·inference·German energy application 확인. 미확인 게재정보와 공식 코드 URL은 적지
+  않는다. §4는 fHS 직접 실험 비교를 하지 않았다고 밝힌다. 본문 비교 baseline과 구조적 선행을 구별한다.
+added: '2026-11-06'

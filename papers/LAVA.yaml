@@ -1,0 +1,56 @@
+id: LAVA
+title: A lava attack on the recovery of sums of dense and sparse signals
+authors: Victor Chernozhukov, Christian Hansen, Yuan Liao
+venue: arXiv
+year: 2015
+links:
+  paper: https://arxiv.org/abs/1502.03155v2
+citation:
+  type: misc
+  title: A lava attack on the recovery of sums of dense and sparse signals
+  authors:
+  - Victor Chernozhukov
+  - Christian Hansen
+  - Yuan Liao
+  year: 2015
+  url: https://arxiv.org/abs/1502.03155v2
+  verified_from:
+  - https://arxiv.org/abs/1502.03155v2
+  - https://arxiv.org/pdf/1502.03155
+  arxiv: '1502.03155'
+areas:
+- bo
+- ml-foundations
+problem: Sparse한 큰 신호와 dense한 작은 신호가 공존할 때 lasso나 ridge 단독의 가정이 맞지 않는다.
+core_idea: 전체 계수를 dense β와 sparse δ의 합으로 나누고 λ₂||β||²₂+λ₁||δ||₁을 각각 부과한다. Gaussian risk와 fixed-design
+  prediction error를 분석한다.
+key_assumptions:
+- Gaussian sequence 또는 fixed-design Gaussian regression 등 본문별 risk 분석 조건과 penalty 선택을 사용한다.
+strengths:
+- text: Dense+sparse 분해를 통해 양 구조를 함께 추정하고 조건부 risk 및 prediction bound를 분석한다.
+  tags:
+  - sparsity-prior
+  - prior-mismatch
+- text: 같은 계수에 ridge와 lasso를 동시에 부과하는 elastic net과 다른 latent-sum penalty다.
+  tags:
+  - model-based-baseline
+limitations:
+- text: 두 잠재 계수 성분의 분해를 고유한 실재 효과로 해석할 수는 없다. 원문의 target은 주로 총합의 예측·추정 risk다.
+  tags:
+  - identifiability
+  source: analyst
+- text: 임의 dense 계수와 알려진 저차원 count 방향은 다르며 prediction risk 보장은 BO same-count regret 보장이 아니다.
+  tags:
+  - subset-cardinality
+  - decision-regret
+  source: analyst
+builds_on: []
+compared_against:
+- Lasso
+- Ridge
+- Elastic net
+open_questions: &id001
+- Count 구조 + sparse composition 주장을 일반 dense+sparse 추정 선행과 구별하고 단순 대조를 구성한다.
+hooks: *id001
+notes: arXiv2015 v2 본문 estimator 정의와 Gaussian risk 분석 확인. 정식 출판 metadata를 추정하지 않는다.
+added: '2026-11-06'
