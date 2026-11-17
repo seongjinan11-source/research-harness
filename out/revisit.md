@@ -1183,6 +1183,20 @@
 - [PooledHorseshoeQF](https://arxiv.org/abs/2110.03411): 구체 키워드+태그 일치 (미검증); tags=nuisance-separation; keywords=count
   - 기록된 강점: 공통 mean을 Gaussian으로 추정하고 개별 deviation을 global-local scale로 수축한다. Common mean=0이면 conventional HS가 된다.
 
+## SPFN02-F01 — 합성에서 학습한 PPR 피처 보정이 실제 세 그래프에서 PPR+ridge를 이기면서 PPR 대비 bAcc 하락을 그래프별 2%p 이하로 유지한다.
+
+- 판정: 현재 RP24·합성 prior·head 조합의 확장을 중단한다.
+- 원인·병목 [원인 미상]: CiteSeer에서 head recall 하락이 tail 개선을 상쇄했다. 투영, 피처 요약, prior와 학습 목표 중 어느 것이 해당 하락을 야기했는지는 분리하지 못했다.
+- 반증·배제한 설명: 학습된 피처 보정은 실제에서도 고정 결합보다 높았으므로 모든 결합이 무효라는 해석은 수치와 맞지 않는다. 피처가 전혀 없는 경우 PPR 기저 반환과 클래스 순열은 구현 체크에서 통과했다.
+- 재검토 조건: 관측 context만으로 어떤 피처 보정이 head 성능을 해치지 않는지 판별할 구체적 신호나, RP24에서 사라지는 라벨 관련 피처를 가변 차원으로 처리할 연산을 제시할 때.
+- 먼저 이겨야 할 기준선: class-balanced PPR, ridge, 개발에서 계수를 고정한 PPR+ridge, 같은 크기 score-only 학습 head, 기존 frozen tail.
+- 최소 재검증: 새 synthetic bank와 새 실제 데이터에서 overall bAcc 및 head/tail recall을 분리한다. 고정 PPR 대비 교정/손실 수를 기록한다. 현재 실제 개발 패널은 독립 평가로 사용하지 않는다.
+- 닫지 않은 것: 스칼라 확산 계산과 합성에서 확인된 피처 요약의 추가 효과는 보존한다. 다른 피처 표현, 다른 생성 prior 및 독립 실제 그래프에서의 전이는 미검증이다.
+- 원문: [findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md](../findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md); [findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json](../findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json)
+
+현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
+
+
 ## SPFN01-F01 — 관측 tail 앵커를 모두 남기고 head를 압축하면 같은 토큰 수를 관측 빈도에 비례 배정한 압축보다 tail recall을 높인다.
 
 - 판정: 잠근 소형 head/합성 prior/토큰 배정 조합의 확대를 중단한다.

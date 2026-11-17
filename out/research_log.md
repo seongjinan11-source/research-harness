@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 52개 프로젝트 · 219개 기록 (실패·중단 65개, 보존 53개, 교훈 70개, 미실행 31개)
+총 53개 프로젝트 · 222개 기록 (실패·중단 66개, 보존 55개, 교훈 70개, 미실행 31개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1965,6 +1965,37 @@ Candidate2304probe중1152회가first-countfallback. 좁은조건전체288context
 
 - 확대 금지: 모든 size 함수가 최대 dense, horseshoe가 반드시 실패, FM rank1이 모든 곡률을 해결, 4arm만으로 원인 확정이라는 주장을 하지 않는다.
 - 원문: [findings/sources/ssp-sparse-size-2026-11-06/LITERATURE_REVIEW_KO.md](../findings/sources/ssp-sparse-size-2026-11-06/LITERATURE_REVIEW_KO.md); [findings/sources/ssp-sparse-size-2026-11-06/LINEAR_RESULT_KO.md](../findings/sources/ssp-sparse-size-2026-11-06/LINEAR_RESULT_KO.md)
+
+## SPFN02 Subgraph-PFN scalar reassociation and PPR feature correction
+
+실험 조건: A는 SPFN01의 합성 96개와 실제 15 draw에서 frozen 모델을 재생했고 CPU 배치를 계측했다. B는 균형 CE로 두 head를 각각 세 seed, 512 updates 학습했다. 새 합성 96개 그래프와 기존 Cora, CiteSeer, 전체 PubMed 개발 패널을 사용했으며 target update는 0회였다.
+
+### SPFN02-P01 [보존] 그룹 특징 모멘트의 직접 확산을 앵커 질량 확산과 query에서의 합산으로 바꿔 기존 압축 헤드의 예측을 유지할 수 있다.
+
+합성 96개와 실제 15 draw에서 tail·proportional 및 세 seed의 최대 확률 차이 3.58e−7, argmax 변경 0건. 실제 그래프 첫 draw의 paired latency 가속은 기존 그룹 요약 대비 Cora 3.69×, CiteSeer 4.32×, PubMed 4.03×였다. 전체 앵커 대비 각각 1.81×, 1.67×, 1.03×였다.
+
+- 확대 금지: 작은 합성 테스트에서도 항상 빠르다거나, 최대 메모리 또는 일반적인 scalability가 개선됐다는 주장. 시간은 고정 24차원 투영 이후 CPU 한 스레드에서 측정했다. 이 코드는 피처 보정 모델의 시간을 줄인 결과와 별개다.
+- 원문: [findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md](../findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md); [findings/sources/subgraph-pfn-v2-2026-11-17/results/a_summary.json](../findings/sources/subgraph-pfn-v2-2026-11-17/results/a_summary.json)
+
+### SPFN02-P02 [보존] 동일한 크기의 학습 head에서 ridge 점수 외에 관측 피처 요약을 제공하면 합성 조건에서 PPR 피처 보정이 강해진다.
+
+새 합성 96개 그래프에서 피처 요약 보정의 bAcc 76.29%, PPR+ridge 70.20%, ridge 점수 보정 70.50%. 고정 결합 대비 paired 차이 +6.09%p, 97.5% CI [+4.17,+8.05]. 점수 보정 대비 +5.79%p, CI [+4.01,+7.68]. 실제 개발 세 그래프의 tail recall도 PPR 대비 각각 +5.05, +1.25, +2.19%p였다.
+
+- 확대 금지: 기존 frozen tail과 합성 전체 bAcc는 거의 같고 tail recall은 더 낮았다. 피처 제거 시 PPR 복귀가 피처가 있는 경우의 최소 성능을 보장하지 않는다. 일반 결측 및 실제 독립 검증은 별도로 필요하다.
+- 원문: [findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md](../findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md); [findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json](../findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json)
+
+### SPFN02-F01 [실패·중단] 합성에서 학습한 PPR 피처 보정이 실제 세 그래프에서 PPR+ridge를 이기면서 PPR 대비 bAcc 하락을 그래프별 2%p 이하로 유지한다.
+
+고정 결합 대비 Cora +1.90, CiteSeer +1.74, PubMed +5.07%p. 그러나 PPR 대비 CiteSeer 전체 bAcc −2.53%p로 실제 복합 기준 FAIL. CiteSeer tail recall은 +1.25%p, head recall은 −6.32%p이며 세 seed 모두 정답 손실 수가 정답 복구 수보다 많았다.
+
+- 판정: 현재 RP24·합성 prior·head 조합의 확장을 중단한다.
+- 원인·병목 [원인 미상]: CiteSeer에서 head recall 하락이 tail 개선을 상쇄했다. 투영, 피처 요약, prior와 학습 목표 중 어느 것이 해당 하락을 야기했는지는 분리하지 못했다.
+- 닫은 범위: 같은 개발 패널에 맞추어 현재 RP24, 고정 PPR offset 및 피처 요약 head의 숫자를 계속 튜닝하고 범용 방법으로 확대하는 것.
+- 닫지 않은 것: 스칼라 확산 계산과 합성에서 확인된 피처 요약의 추가 효과는 보존한다. 다른 피처 표현, 다른 생성 prior 및 독립 실제 그래프에서의 전이는 미검증이다.
+- 재검토 조건: 관측 context만으로 어떤 피처 보정이 head 성능을 해치지 않는지 판별할 구체적 신호나, RP24에서 사라지는 라벨 관련 피처를 가변 차원으로 처리할 연산을 제시할 때.
+- 기준선: class-balanced PPR, ridge, 개발에서 계수를 고정한 PPR+ridge, 같은 크기 score-only 학습 head, 기존 frozen tail.
+- 최소 재검증: 새 synthetic bank와 새 실제 데이터에서 overall bAcc 및 head/tail recall을 분리한다. 고정 PPR 대비 교정/손실 수를 기록한다. 현재 실제 개발 패널은 독립 평가로 사용하지 않는다.
+- 원문: [findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md](../findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md); [findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json](../findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json)
 
 ## SPFN01 Subgraph-PFN observed-support compression
 
