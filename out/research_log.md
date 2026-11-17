@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 51개 프로젝트 · 215개 기록 (실패·중단 64개, 보존 52개, 교훈 69개, 미실행 30개)
+총 52개 프로젝트 · 219개 기록 (실패·중단 65개, 보존 53개, 교훈 70개, 미실행 31개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1965,6 +1965,42 @@ Candidate2304probe중1152회가first-countfallback. 좁은조건전체288context
 
 - 확대 금지: 모든 size 함수가 최대 dense, horseshoe가 반드시 실패, FM rank1이 모든 곡률을 해결, 4arm만으로 원인 확정이라는 주장을 하지 않는다.
 - 원문: [findings/sources/ssp-sparse-size-2026-11-06/LITERATURE_REVIEW_KO.md](../findings/sources/ssp-sparse-size-2026-11-06/LITERATURE_REVIEW_KO.md); [findings/sources/ssp-sparse-size-2026-11-06/LINEAR_RESULT_KO.md](../findings/sources/ssp-sparse-size-2026-11-06/LINEAR_RESULT_KO.md)
+
+## SPFN01 Subgraph-PFN observed-support compression
+
+실험 조건: Degree-corrected SBM와 graph-conditioned nonlinear features의 합성 prior에서 4 arms×3 seeds×320 updates. 학습과 별도 합성 96 graphs에 대해 관측1–4개 클래스의 recall을 비교했다. Cora/CiteSeer/전체 PubMed는 고정 RP24 및 공식 train/test 분리의 개발 패널로 target update 0이다.
+
+### SPFN01-F01 [실패·중단] 관측 tail 앵커를 모두 남기고 head를 압축하면 같은 토큰 수를 관측 빈도에 비례 배정한 압축보다 tail recall을 높인다.
+
+합성96 graphs에서 tail−proportional +0.658%p, nominal 97.5% CI [−0.340,+1.657]로 사전 우월성 기준 미통과. 실제 개발 패널에서 제안의 전체 bAcc 41.37/24.90/48.13%는 class-mean PPR 62.95/42.60/60.00%보다 낮다.
+
+- 판정: 잠근 소형 head/합성 prior/토큰 배정 조합의 확대를 중단한다.
+- 원인·병목 [원인 미상]: 같은 학습 조건에서 관측 tail quota의 증분이 확실하지 않고, 단순 구조 대조가 세 실제 graph의 전체 bAcc에서 우세했다. 구체적 원인을 prior·RP·표현·학습예산 중 하나로 분리 검증하지 않았다.
+- 닫은 범위: 현재 3,705-parameter synthetic-only head의 scarce anchor 배정과 직접 moment diffusion을 그대로 더 크게 학습해 불균형용 메인 방법으로 확장.
+- 닫지 않은 것: 동일 quota에서 집계가 원형 검색보다 좋은 합성 효과는 보존. Release PFN 결합, feature 결측, zero-context class와 대형 독립 실제 data, 계산상 동등한 빠른 구현은 미검증.
+- 재검토 조건: class-normalized PPR 구조 증거를 잃지 않으면서 novel graphs에서 관측 feature/evidence의 추가 이득을 주는 구체 연산이 제시될 때.
+- 기준선: 같은 token count/decoder의 proportional과 PPR+feature raw top, optimized full, class PPR, ridge, 필요시 released NodePFN/GraphPFN/Ephris.
+- 최소 재검증: 새 synthetic 및 실제 graph에서 tail recall과 전체 bAcc를 미리 고정한다. Preprocessing·검색·diffusion·scoring을 함께 계측하고 이 bank에 맞춘 구제를 하지 않는다.
+- 원문: [findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md](../findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md); [findings/sources/subgraph-pfn-2026-11-17/results/summary.json](../findings/sources/subgraph-pfn-2026-11-17/results/summary.json)
+
+### SPFN01-P01 [보존] 같은 클래스별 토큰 예산 아래에서 전체 앵커의 그룹 모멘트를 집계하면 PPR+피처 raw anchor 선택보다 소수 라벨 클래스의 예측을 개선할 수 있다.
+
+합성96 graphs tail recall 74.51 vs 71.90%, +2.611%p CI [+1.183,+4.066]. 전체 bAcc tail−full +0.023%p CI [−0.616,+0.678], −2%p guard PASS. 더 큰 held-out48에서는 평균 9.65 vs59.19 tokens.
+
+- 확대 금지: raw top도 같은 tail 앵커를 모두 보존하므로 이 차이는 singleton 보호의 독립 효과가 아니다. 전체 bAcc guard는 tail 동등성, 실제 전이, 속도·메모리 우위, posterior 보존을 입증하지 않는다.
+- 원문: [findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md](../findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md); [findings/sources/subgraph-pfn-2026-11-17/results/audit.json](../findings/sources/subgraph-pfn-2026-11-17/results/audit.json)
+
+### SPFN01-L01 [교훈] Decoder token 수를 줄여도 그래프에서 local moment를 계산하는 비용까지 줄어드는 것은 아니다.
+
+Real CPU 준비+점수 중앙값 tail/full Cora41.64/23.07, CiteSeer46.76/20.86, PubMed112.49/32.48 ms (공통 native load/RP 제외). Cora 측정 draw에서 직접 moment kernel diffusion columns 446 vs optimized full scalar-only 56.
+
+- 원문: [findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md](../findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md); [findings/sources/subgraph-pfn-2026-11-17/results/artifact_manifest.json](../findings/sources/subgraph-pfn-2026-11-17/results/artifact_manifest.json)
+
+### SPFN01-U01 [미실행] 그룹별로 singleton 질량을 먼저 확산하고 query에서 모멘트를 합산하는 계산과 직접 group-moment 확산을 비교해 좁은 쪽을 택할 수 있다.
+
+두 계산은 유한 확산의 선형성으로 동일한 group mass/first moment를 얻을 수 있다. min(|group|,1+3F) 기준의 실행 방식 선택은 이번에 구현하거나 계측하지 않았다.
+
+- 원문: [findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md](../findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md)
 
 ## TSFM joint-information preservation and nuisance stability frozen pilot
 

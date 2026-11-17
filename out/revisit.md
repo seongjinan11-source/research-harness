@@ -1183,6 +1183,22 @@
 - [PooledHorseshoeQF](https://arxiv.org/abs/2110.03411): 구체 키워드+태그 일치 (미검증); tags=nuisance-separation; keywords=count
   - 기록된 강점: 공통 mean을 Gaussian으로 추정하고 개별 deviation을 global-local scale로 수축한다. Common mean=0이면 conventional HS가 된다.
 
+## SPFN01-F01 — 관측 tail 앵커를 모두 남기고 head를 압축하면 같은 토큰 수를 관측 빈도에 비례 배정한 압축보다 tail recall을 높인다.
+
+- 판정: 잠근 소형 head/합성 prior/토큰 배정 조합의 확대를 중단한다.
+- 원인·병목 [원인 미상]: 같은 학습 조건에서 관측 tail quota의 증분이 확실하지 않고, 단순 구조 대조가 세 실제 graph의 전체 bAcc에서 우세했다. 구체적 원인을 prior·RP·표현·학습예산 중 하나로 분리 검증하지 않았다.
+- 반증·배제한 설명: 관측 빈도만으로 tail을 정했고 query 정답은 model.Input에 들어가지 않는다. Sparse diffusion의 dense oracle 및 수치·재채점 감사에서 과학적 재실행이 필요한 오류는 확인되지 않았다.
+- 재검토 조건: class-normalized PPR 구조 증거를 잃지 않으면서 novel graphs에서 관측 feature/evidence의 추가 이득을 주는 구체 연산이 제시될 때.
+- 먼저 이겨야 할 기준선: 같은 token count/decoder의 proportional과 PPR+feature raw top, optimized full, class PPR, ridge, 필요시 released NodePFN/GraphPFN/Ephris.
+- 최소 재검증: 새 synthetic 및 실제 graph에서 tail recall과 전체 bAcc를 미리 고정한다. Preprocessing·검색·diffusion·scoring을 함께 계측하고 이 bank에 맞춘 구제를 하지 않는다.
+- 닫지 않은 것: 동일 quota에서 집계가 원형 검색보다 좋은 합성 효과는 보존. Release PFN 결합, feature 결측, zero-context class와 대형 독립 실제 data, 계산상 동등한 빠른 구현은 미검증.
+- 원문: [findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md](../findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md); [findings/sources/subgraph-pfn-2026-11-17/results/summary.json](../findings/sources/subgraph-pfn-2026-11-17/results/summary.json)
+
+- [Ephris](https://arxiv.org/abs/2609.37057): 복수 태그 일치 (약한 단서); tags=context-scale, graph-structure-use; keywords=-
+  - 기록된 강점: Section 3.1과 Appendix B의 feature별 Gather는 context와 query 노드를 모두 사용한다. Context-label embedding도 압축 전 scalar token에 제공하므로, feature memory를 label-context 노드에만 한정하지 않는 직접적인 선행 대조다.
+- [LoGIC](https://arxiv.org/abs/2609.05955): 복수 태그 일치 (약한 단서); tags=context-scale, graph-structure-use; keywords=-
+  - 기록된 강점: Label 예산과 구조 예산을 분리한 halo 설계가 adapter backbone에서 효과를 보였다. tolokers-2에서 PPR context(k=4096)만 넣으면 54.20 AP였지만, label을 가린 1-hop halo를 더하자 61.09 AP로 올라 full-graph 기준치(61.29)에 거의 도달했다.
+
 ## TSY-F01 — Frozen Chronos-2가 product 공동정보를 clean pair에서 활용하면서,동일 주변분포 nuisance 추가로 유의한 손해를 보여 conditional-null 재학습의 첫 gate를 통과한다.
 
 - 판정: 이 product bank를 근거로 제안2x2를 시작하지 않는다. Clean 공동정보 활용·nuisance 손해가 함께 확인되지 않았으며 강한 전체 interaction sparse regression이 toy를 해결했다.

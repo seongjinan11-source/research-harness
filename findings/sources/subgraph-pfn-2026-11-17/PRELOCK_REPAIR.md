@@ -1,0 +1,3 @@
+The first prelock development check stopped before its first optimizer step because Windows NumPy `arange` defaulted to int32 for the class scatter index. Use an explicit int64 group index (and real label coordinates). The CSR self-loop construction was also changed to sparse identity addition to avoid the storage warning; row orientation/polynomial are rechecked. No scientific fit or final score was generated prior to these changes.
+
+The second prelock check performed one discarded dev AdamW step, then stopped because the assertion used `torch.equal` on saved NumPy probabilities. The check now uses `np.array_equal`. This changes the test only.

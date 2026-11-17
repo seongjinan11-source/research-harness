@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "dense_oracle": true,
+  "singleton_parity": true,
+  "zero_reach": true,
+  "quota": true,
+  "paired_indices": true,
+  "checks": {
+    "tail": {
+      "permutation_chunk_max_prob_error": 2.9802322387695312e-08,
+      "finite_head_grads": true,
+      "discarded_updates": 1
+    },
+    "proportional": {
+      "permutation_chunk_max_prob_error": 2.9802322387695312e-08,
+      "finite_head_grads": true,
+      "discarded_updates": 1
+    },
+    "top": {
+      "permutation_chunk_max_prob_error": 2.9802322387695312e-08,
+      "finite_head_grads": true,
+      "discarded_updates": 1
+    },
+    "full": {
+      "permutation_chunk_max_prob_error": 2.9802322387695312e-08,
+      "finite_head_grads": true,
+      "discarded_updates": 1
+    }
+  }
+}

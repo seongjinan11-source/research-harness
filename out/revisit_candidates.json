@@ -4659,6 +4659,80 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "SPFN01-F01",
+    "project": "SPFN01 Subgraph-PFN observed-support compression",
+    "claim": "관측 tail 앵커를 모두 남기고 head를 압축하면 같은 토큰 수를 관측 빈도에 비례 배정한 압축보다 tail recall을 높인다.",
+    "verdict": "잠근 소형 head/합성 prior/토큰 배정 조합의 확대를 중단한다.",
+    "reason_status": "unknown",
+    "failure_reason": "같은 학습 조건에서 관측 tail quota의 증분이 확실하지 않고, 단순 구조 대조가 세 실제 graph의 전체 bAcc에서 우세했다. 구체적 원인을 prior·RP·표현·학습예산 중 하나로 분리 검증하지 않았다.",
+    "reopen_when": "class-normalized PPR 구조 증거를 잃지 않으면서 novel graphs에서 관측 feature/evidence의 추가 이득을 주는 구체 연산이 제시될 때.",
+    "recheck": "새 synthetic 및 실제 graph에서 tail recall과 전체 bAcc를 미리 고정한다. Preprocessing·검색·diffusion·scoring을 함께 계측하고 이 bank에 맞춘 구제를 하지 않는다.",
+    "comparison_floor": "같은 token count/decoder의 proportional과 PPR+feature raw top, optimized full, class PPR, ridge, 필요시 released NodePFN/GraphPFN/Ephris.",
+    "source_refs": [
+      "findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md",
+      "findings/sources/subgraph-pfn-2026-11-17/results/summary.json"
+    ],
+    "paper_id": "Ephris",
+    "paper_title": "Message Passing Does More with Less for In-Context Learning on Graphs",
+    "paper_link": "https://arxiv.org/abs/2609.37057",
+    "matches": [
+      {
+        "strength": "Section 3.1과 Appendix B의 feature별 Gather는 context와 query 노드를 모두 사용한다. Context-label embedding도 압축 전 scalar token에 제공하므로, feature memory를 label-context 노드에만 한정하지 않는 직접적인 선행 대조다.",
+        "tags": [
+          "context-scale",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "context-scale",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SPFN01-F01",
+    "project": "SPFN01 Subgraph-PFN observed-support compression",
+    "claim": "관측 tail 앵커를 모두 남기고 head를 압축하면 같은 토큰 수를 관측 빈도에 비례 배정한 압축보다 tail recall을 높인다.",
+    "verdict": "잠근 소형 head/합성 prior/토큰 배정 조합의 확대를 중단한다.",
+    "reason_status": "unknown",
+    "failure_reason": "같은 학습 조건에서 관측 tail quota의 증분이 확실하지 않고, 단순 구조 대조가 세 실제 graph의 전체 bAcc에서 우세했다. 구체적 원인을 prior·RP·표현·학습예산 중 하나로 분리 검증하지 않았다.",
+    "reopen_when": "class-normalized PPR 구조 증거를 잃지 않으면서 novel graphs에서 관측 feature/evidence의 추가 이득을 주는 구체 연산이 제시될 때.",
+    "recheck": "새 synthetic 및 실제 graph에서 tail recall과 전체 bAcc를 미리 고정한다. Preprocessing·검색·diffusion·scoring을 함께 계측하고 이 bank에 맞춘 구제를 하지 않는다.",
+    "comparison_floor": "같은 token count/decoder의 proportional과 PPR+feature raw top, optimized full, class PPR, ridge, 필요시 released NodePFN/GraphPFN/Ephris.",
+    "source_refs": [
+      "findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md",
+      "findings/sources/subgraph-pfn-2026-11-17/results/summary.json"
+    ],
+    "paper_id": "LoGIC",
+    "paper_title": "LoGIC: Budgeted Context Construction for Node-Level Graph In-Context Learning with Tabular Foundation Models",
+    "paper_link": "https://arxiv.org/abs/2609.05955",
+    "matches": [
+      {
+        "strength": "Label 예산과 구조 예산을 분리한 halo 설계가 adapter backbone에서 효과를 보였다. tolokers-2에서 PPR context(k=4096)만 넣으면 54.20 AP였지만, label을 가린 1-hop halo를 더하자 61.09 AP로 올라 full-graph 기준치(61.29)에 거의 도달했다.",
+        "tags": [
+          "context-scale",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "context-scale",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "SRC-F01",
     "project": "출처 중첩·공유 보간 오차 attention",
     "claim": "Source covariance를 보정하면 분류가 개선된다.",
