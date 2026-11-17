@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 53개 프로젝트 · 222개 기록 (실패·중단 66개, 보존 55개, 교훈 70개, 미실행 31개)
+총 54개 프로젝트 · 225개 기록 (실패·중단 67개, 보존 56개, 교훈 71개, 미실행 31개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -1965,6 +1965,36 @@ Candidate2304probe중1152회가first-countfallback. 좁은조건전체288context
 
 - 확대 금지: 모든 size 함수가 최대 dense, horseshoe가 반드시 실패, FM rank1이 모든 곡률을 해결, 4arm만으로 원인 확정이라는 주장을 하지 않는다.
 - 원문: [findings/sources/ssp-sparse-size-2026-11-06/LITERATURE_REVIEW_KO.md](../findings/sources/ssp-sparse-size-2026-11-06/LITERATURE_REVIEW_KO.md); [findings/sources/ssp-sparse-size-2026-11-06/LINEAR_RESULT_KO.md](../findings/sources/ssp-sparse-size-2026-11-06/LINEAR_RESULT_KO.md)
+
+## SPFN03 class compatibility and PPR mass mixing
+
+실험 조건: 관측 context 레이블로 P² 호환 행렬과 기존 8회 PPR을 계산했다. 질량 m/(m+τ), 고정 .5, 평균 일치 대조를 같은 weighted ridge와 비교했다. 새 합성 96개와 기존 합성 96개, 재사용 실제 15 draw, optimizer 0회.
+
+### SPFN03-F01 [실패·중단] 두 홉 클래스 호환과 PPR 도달 질량 혼합이 피처 및 구조 기준선을 새 합성과 실제 그래프에서 동시에 앞선다.
+
+새 합성 96개에서 제안 57.10%, Ridge 73.13%, frozen tail 75.84%. 제안−Ridge −16.03%p, nominal 97.5% CI [−18.89,−13.14]. PPR 대비 실제 차이는 Cora −15.09, CiteSeer −11.77, PubMed −0.21%p로 복합 기준 실패.
+
+- 판정: 현재 shrinkage가 없는 empirical H와 스칼라 질량의 결합을 확대하지 않는다.
+- 원인·병목 [진단이 지지]: 같은 질량을 고정한 비교에서 H가 Cora와 CiteSeer의 bAcc를 크게 훼손했다. 새 합성의 Ridge 단독 대비 하락과 평균을 맞춘 질량 배분의 불확실한 효과를 확인했다. 짧은 앵커 경로와 혼합 길이 PPR의 차이, context 선택 편향, 관측 부족의 상대 기여는 분리하지 않았다.
+- 닫은 범위: 같은 데이터에서 2-hop H와 m/(m+τ)를 튜닝해 PPR에 대한 성능 하한을 주장하는 방식.
+- 닫지 않은 것: 실제 그래프에서 관측 라벨을 이용해 compatibility의 식별성과 경로 길이를 검증하는 방법, 또는 covariance 기반 routing은 미평가다.
+- 재검토 조건: 소수 앵커에서 관계 보정이 식별되는 정도를 정답 없이 검증하고 동일한 mixture baseline을 넘어설 구체적 추론법이 나올 때.
+- 기준선: PPR, Ridge, α 고정 logit fusion, matched mean와 .5 확률 혼합, fixed matched C&S, frozen SPFN01; compatibility 자체는 CLP와의 직접 검증 필요.
+- 최소 재검증: 독립 실제 homophily 및 heterophily 그래프를 사전 지정하고 H의 pair coverage와 동일 weight에서의 H−I를 함께 보고한다.
+- 원문: [findings/sources/subgraph-pfn-mass-2026-11-18/REPORT_KO.md](../findings/sources/subgraph-pfn-mass-2026-11-18/REPORT_KO.md); [findings/sources/subgraph-pfn-mass-2026-11-18/results/summary.json](../findings/sources/subgraph-pfn-mass-2026-11-18/results/summary.json)
+
+### SPFN03-P01 [보존] 합성에서 클래스 호환 행렬의 효과는 관계가 같은 클래스 간 연결을 억제하는지에 따라 달라졌다.
+
+같은 질량에서 H−I는 disassortative +7.00%p, assortative −10.82%p. 전체 −1.91%p CI [−4.79,+1.00]. Ridge는 두 subgroup 모두 제안보다 높다. 실제 PubMed에서는 H=I인 반면 Cora/CiteSeer H−I는 −13.84/−8.44%p.
+
+- 확대 금지: 실제 heterophily 데이터에서의 유효성, 관계 조건을 스스로 구별하는 능력, 실제 분류 baseline 우위, 새 방법의 독립 novelty로 해석하지 않는다.
+- 원문: [findings/sources/subgraph-pfn-mass-2026-11-18/REPORT_KO.md](../findings/sources/subgraph-pfn-mass-2026-11-18/REPORT_KO.md); [findings/sources/subgraph-pfn-mass-2026-11-18/results/summary.json](../findings/sources/subgraph-pfn-mass-2026-11-18/results/summary.json)
+
+### SPFN03-L01 [교훈] 도달 질량은 평균적으로 PPR의 상대 정답률과 연결됐으나 가중치 배분의 실질 효과를 입증하지 못했다.
+
+평균 가중치가 일치하는 고정 대조 대비 +0.87%p, CI [−0.01,+1.73]. 실제 Cora와 PubMed에서는 단순 .5 확률 혼합이 두 질량 가중 방식보다 높았다. 측정한 세 실제 draw의 제안 latency는 4.13/4.65/25.45 ms였다.
+
+- 원문: [findings/sources/subgraph-pfn-mass-2026-11-18/REPORT_KO.md](../findings/sources/subgraph-pfn-mass-2026-11-18/REPORT_KO.md); [findings/sources/subgraph-pfn-mass-2026-11-18/results/audit.json](../findings/sources/subgraph-pfn-mass-2026-11-18/results/audit.json)
 
 ## SPFN02 Subgraph-PFN scalar reassociation and PPR feature correction
 

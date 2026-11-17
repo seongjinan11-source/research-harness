@@ -1183,6 +1183,20 @@
 - [PooledHorseshoeQF](https://arxiv.org/abs/2110.03411): 구체 키워드+태그 일치 (미검증); tags=nuisance-separation; keywords=count
   - 기록된 강점: 공통 mean을 Gaussian으로 추정하고 개별 deviation을 global-local scale로 수축한다. Common mean=0이면 conventional HS가 된다.
 
+## SPFN03-F01 — 두 홉 클래스 호환과 PPR 도달 질량 혼합이 피처 및 구조 기준선을 새 합성과 실제 그래프에서 동시에 앞선다.
+
+- 판정: 현재 shrinkage가 없는 empirical H와 스칼라 질량의 결합을 확대하지 않는다.
+- 원인·병목 [진단이 지지]: 같은 질량을 고정한 비교에서 H가 Cora와 CiteSeer의 bAcc를 크게 훼손했다. 새 합성의 Ridge 단독 대비 하락과 평균을 맞춘 질량 배분의 불확실한 효과를 확인했다. 짧은 앵커 경로와 혼합 길이 PPR의 차이, context 선택 편향, 관측 부족의 상대 기여는 분리하지 않았다.
+- 반증·배제한 설명: 실제 패널에는 클래스당 관측 1개가 없어서 singleton 대각만으로 실제 실패를 설명할 수 없다.; Dense H 및 C&S, class permutation, zero reach 검사를 통과했고 기존 raw PPR과 동일했다.; PubMed 다섯 draw에서 H=I라 해당 비교의 소폭 하락은 H 때문이 아니다.
+- 재검토 조건: 소수 앵커에서 관계 보정이 식별되는 정도를 정답 없이 검증하고 동일한 mixture baseline을 넘어설 구체적 추론법이 나올 때.
+- 먼저 이겨야 할 기준선: PPR, Ridge, α 고정 logit fusion, matched mean와 .5 확률 혼합, fixed matched C&S, frozen SPFN01; compatibility 자체는 CLP와의 직접 검증 필요.
+- 최소 재검증: 독립 실제 homophily 및 heterophily 그래프를 사전 지정하고 H의 pair coverage와 동일 weight에서의 H−I를 함께 보고한다.
+- 닫지 않은 것: 실제 그래프에서 관측 라벨을 이용해 compatibility의 식별성과 경로 길이를 검증하는 방법, 또는 covariance 기반 routing은 미평가다.
+- 원문: [findings/sources/subgraph-pfn-mass-2026-11-18/REPORT_KO.md](../findings/sources/subgraph-pfn-mass-2026-11-18/REPORT_KO.md); [findings/sources/subgraph-pfn-mass-2026-11-18/results/summary.json](../findings/sources/subgraph-pfn-mass-2026-11-18/results/summary.json)
+
+현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
+
+
 ## SPFN02-F01 — 합성에서 학습한 PPR 피처 보정이 실제 세 그래프에서 PPR+ridge를 이기면서 PPR 대비 bAcc 하락을 그래프별 2%p 이하로 유지한다.
 
 - 판정: 현재 RP24·합성 prior·head 조합의 확장을 중단한다.
