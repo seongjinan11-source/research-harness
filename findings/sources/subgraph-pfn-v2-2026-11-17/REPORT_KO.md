@@ -16,7 +16,7 @@
 
 ## B. PPR 분류 점수에 학습된 피처 보정 추가
 
-class-balanced PPR을 2% 균등 확률로 평활화했다. 고정 결합 모델은 별도 합성 개발 48개 과제의 NLL로 ridge 점수 계수 4를 선택했다. 학습 보정 모델 두 개는 같은 3,745개 파라미터, 초기화, 과제 순서와 각 512회 업데이트를 사용했다. 첫 모델에는 ridge 점수, 두 번째에는 ridge 점수와 20개 관측 피처 요약을 줬다. 둘 다 피처 입력이 0인 forward를 빼서 피처를 제거하면 구조 기저를 그대로 반환한다. 합성 query 라벨은 CE 학습에만 사용했고 실제 그래프에서 가중치 업데이트는 0회였다.
+class-balanced PPR을 2% 균등 확률로 평활화했다. 고정 결합 모델은 별도 합성 개발 48개 과제의 NLL로 ridge 점수 계수 4를 선택했다. 학습 보정 모델 두 개는 같은 3,745개 파라미터, 초기화, 과제 순서와 각 512회 업데이트를 사용했다. 첫 모델에는 ridge 점수, 두 번째에는 ridge 점수와 20개 관측 피처 요약을 줬다. 둘 다 피처 입력이 0인 forward를 빼서 피처를 제거하면 구조 기저를 그대로 반환한다. 모델은 학습 과제의 query 라벨로 CE를 최소화했다. 추론 입력의 레이블은 context에 한정했고 실제 그래프에서 가중치 업데이트는 0회였다.
 
 | 평가 | PPR | Ridge | PPR+ridge | ridge 점수 보정 | 피처 요약 보정 | 기존 frozen tail |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -25,7 +25,7 @@ class-balanced PPR을 2% 균등 확률로 평활화했다. 고정 결합 모델�
 | CiteSeer | **42.60** | 24.06 | 38.33 | 39.27 | 40.07 | 24.90 |
 | PubMed | 60.00 | 42.08 | 55.83 | 60.00 | **60.90** | 48.13 |
 
-수치는 balanced accuracy (%). 실제 그래프는 기존 Cora·CiteSeer·전체 PubMed의 그래프별 다섯 draw를 재사용했다. Cora의 PPR와 고정 결합은 같은 bAcc를 냈지만 예측은 178건 바뀌었다. 합성 학습은 6회, 총 3,072 updates이며 seed·입력·출력 해시는 `results/b_manifest.json`과 `results/b_training.json`에 있다.
+수치는 balanced accuracy (%). 실제 그래프는 기존 Cora·CiteSeer·전체 PubMed의 그래프별 다섯 draw를 재사용했다. Cora에서 고정 결합은 PPR와 bAcc가 같았고, 89건을 맞히게 바꾸는 동시에 89건을 틀리게 바꿨다. 전체 클래스 예측 변경은 295건이었다. 합성 학습은 6회, 총 3,072 updates이며 seed·입력·출력 해시는 `results/b_manifest.json`과 `results/b_training.json`에 있다.
 
 | 새 합성 평가의 사전 기준 | 차이 (%p) | Paired 97.5% CI (%p) | 결과 |
 | --- | ---: | ---: | --- |
