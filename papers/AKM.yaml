@@ -1,0 +1,57 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: AKM
+title: "High Wage Workers and High Wage Firms"
+authors: "John M. Abowd, Francis Kramarz, David N. Margolis"
+venue: "Econometrica 1999"
+year: 1999
+links:
+  paper: https://econometricsociety.org/publications/econometrica/1999/03/01/high-wage-workers-and-high-wage-firms
+  doi: https://doi.org/10.1111/1468-0262.00020
+  working_paper: https://www.nber.org/papers/w4917
+
+citation:
+  type: article
+  title: "High Wage Workers and High Wage Firms"
+  authors: ["John M. Abowd", "Francis Kramarz", "David N. Margolis"]
+  year: 1999
+  journal: "Econometrica"
+  volume: 67
+  pages: "251--333"
+  publisher: "The Econometric Society"
+  url: https://doi.org/10.1111/1468-0262.00020
+  verified_from:
+    - https://econometricsociety.org/publications/econometrica/1999/03/01/high-wage-workers-and-high-wage-firms
+    - https://api.crossref.org/works/10.1111/1468-0262.00020
+
+areas: [ml-foundations]
+problem: "고용주와 노동자를 연결한 대규모 panel에서 임금 변동을 노동자 고유 효과와 기업 고유 효과로 분리하고, 두 효과가 생산성·수익성과 어떻게 연결되는지 보고자 한다."
+core_idea: "약 100만 명의 프랑스 노동자와 50만 개가 넘는 기업을 잇는 longitudinal 자료로, 연간 실질 총보상을 관측 노동자 특성, person effect, firm effect, 잔차로 분해한다. 잔차만 다른 성분과 상관이 없다고 제약하고, person effect와 firm effect는 서로 및 관측 특성과 자유롭게 상관하도록 둔다. Person effect는 같은 사람의 반복 관측으로, firm effect는 같은 기업의 여러 노동자로 식별된다. 둘을 분리하는 핵심 정보는 기업 사이를 옮겨 다니는 노동자(mover)다. 전체 최소제곱은 고차원 비희소 연립방정식이 되어 직접 풀기 어렵다. 그래서 (NBER working paper 판 기준) firm effect를 기업·노동자 특성에 projection하는 Chamberlain·Mundlak식 근사로 추정한다."
+key_assumptions:
+  - "임금은 person effect와 firm effect의 가산 합에 관측 특성과 잔차를 더한 형태다(two-way fixed effects)."
+  - "Firm effect가 person effect와 분리되려면 기업 사이 이동이 충분해야 한다. 이동이 없는 기업 집합 사이에서는 두 효과를 따로 식별할 수 없다."
+  - "(Working paper 판 논의) Firm effect를 기업의 임금 정책으로 해석하려면 이동이 임금 경로와 무관하게 외생적이어야 한다."
+strengths:
+  - text: "Linked employer-employee 자료로 person effect와 firm effect를 처음 대규모로 함께 추정했다. Person effect가 임금 변동의 더 큰 원천이며, 산업 간 임금 격차의 약 90%와 기업 규모 임금 효과의 약 75%를 person effect가 설명한다고 보고했다."
+    tags: [nuisance-separation, interpretability]
+  - text: "두 고정효과의 상관을 제약하지 않고, 잔차와의 무상관만 요구하는 식별 구조를 썼다. 높은 임금 노동자를 쓰는 기업과 높은 임금을 주는 기업을 구분해, 전자는 생산적이지만 수익성이 높지 않고 후자는 둘 다 높다는 결과를 냈다."
+    tags: [identifiability]
+limitations:
+  - text: "(NBER working paper 판) 저자들의 예시 모형에서, 기업 사이 이동이 없으면 firm effect를 따로 식별할 수 없어 임의로 정규화했다. 본문은 개인의 이동이 이 통계 모형의 식별에 필수라고 강조한다. 관측이 적은 기업(10건 미만)은 firm effect를 따로 계산하지 못해 한 회귀로 묶었다. 이 묶음이 관측의 26%, 기업의 86%였다. 표본을 줄이면 식별된 firm effect가 주로 큰 기업에서 나와 대표성이 떨어진다는 점도 지적한다."
+    tags: [identifiability, structural-imbalance]
+    source: self
+  - text: "(NBER working paper 판) 이동이 임금 경로에 따라 내생적으로 일어나면 firm effect를 기업 임금 정책으로 읽는 해석이 틀릴 수 있다고 저자들이 인정한다. 또 단순 경제 모형에서도 구조적 이질성과 통계적 이질성이 일치하지 않음을 보인다."
+    tags: [selection-bias, identifiability]
+    source: self
+  - text: "[analyst] 식별이 mover로 만들어지는 연결 구조에 전적으로 기대므로, 집단(기업) 사이 연결이 희박하면 효과 추정이 소수 연결에 크게 의존한다. 연결 집합 밖의 집단에 대해서는 아무것도 말할 수 없다."
+    tags: [identifiability, group-offset]
+    source: analyst
+builds_on: [Chamberlain1984, Mundlak1978]
+compared_against: []
+open_questions:
+  - "Mover가 희박할 때 두 고정효과 분산 분해의 bias를 어떻게 진단·보정할 것인가?"
+  - "이동이 효과와 상관된 방식으로 선택될 때, 어떤 추가 가정이나 설계가 firm effect의 정책적 해석을 지켜 주는가?"
+hooks:
+  - "(BSEL-U01, 이원 FE 원형의 식별) 노드 특징을 x = μ_class + α_community로 보는 이원 FE 원형은 AKM과 같은 구조다. class가 worker type에, community가 firm에 대응하고, 한 community 안에 여러 클래스의 context가 함께 있는 것이 mover에 해당한다. BSEL-U01 리뷰 proxy가 지적한 두 가지 문제는 이 논문이 명시한 식별 조건 위반이다. 첫째, community 안 클래스 대비가 부족하면 μ와 α가 섞인다(이동 없는 기업 집합). 둘째, context가 없는 community의 offset은 추정할 수 없다(표본 없는 기업). 동질성 그래프의 commconc context에서는 한 community가 한 클래스만 갖는 경우가 많아, 이 연결 구조가 특히 희박하다."
+  - "(BSEL-L04, 값싼 사전 진단) BSEL-L04 교훈에 따라 이원 FE 계열을 다시 계획하기 전에 먼저 할 일이 있다. context 라벨로 클래스–community 이분 그래프를 만들고, 연결 성분 수, 2개 이상 클래스를 가진 community 비율, context가 없는 community가 차지하는 pool 질량을 세는 것이다. 이것만으로 FE 원형이 식별되는 범위를 1분 안에 판정할 수 있다. 연결 성분이 여럿이면 성분 사이의 상대 원형은 원리적으로 정해지지 않는다."
+notes: "서지 정보는 Econometric Society 논문 페이지와 Crossref(DOI 등록 정보)에서 읽었다. 정식판 본문은 로그인이 필요해 읽지 못했다. 방법·식별 논의는 같은 저자의 이전 판인 NBER Working Paper 4917 본문에서 확인했으며, 해당 서술에는 working paper 판이라고 표시했다. 출판본과 수치·서술이 다를 수 있다. 강점의 수치(약 90%, 약 75%)는 출판본 초록에서 읽었다."
+added: 2026-11-20

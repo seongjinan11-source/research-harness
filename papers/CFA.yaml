@@ -1,0 +1,57 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: CFA
+title: "Robustifying Vision Transformer without Retraining from Scratch by Test-Time Class-Conditional Feature Alignment"
+authors: "Takeshi Kojima, Yutaka Matsuo, Yusuke Iwasawa (The University of Tokyo)"
+venue: "IJCAI 2022"
+year: 2022
+links:
+  paper: https://arxiv.org/abs/2206.13951
+  proceedings: https://www.ijcai.org/proceedings/2022/141
+  code: https://github.com/kojima-takeshi188/CFA
+
+citation:
+  type: inproceedings
+  title: "Robustifying Vision Transformer without Retraining from Scratch by Test-Time Class-Conditional Feature Alignment"
+  authors: ["Takeshi Kojima", "Yutaka Matsuo", "Yusuke Iwasawa"]
+  year: 2022
+  booktitle: "Proceedings of the Thirty-First International Joint Conference on Artificial Intelligence (IJCAI-22)"
+  publisher: "International Joint Conferences on Artificial Intelligence Organization"
+  pages: "1009--1016"
+  arxiv: "2206.13951"
+  url: https://doi.org/10.24963/ijcai.2022/141
+  verified_from:
+    - https://www.ijcai.org/proceedings/2022/141
+    - https://api.crossref.org/works/10.24963/ijcai.2022/141
+    - https://arxiv.org/abs/2206.13951
+
+areas: [ml-foundations]
+problem: "학습을 다시 하지 않고 test 시점에만 적응해, corruption·style shift를 받은 Vision Transformer 계열 모델의 분류 성능을 회복하고자 한다."
+core_idea: "Source 학습 데이터로 hidden representation의 통계를 미리 계산해 저장한다. 저장하는 통계는 전체 분포의 평균과 고차 central moment, 그리고 class별 centroid다. 통계를 내기 전에는 affine 없는 layer normalization으로 각 표본의 표현 범위를 묶는다. Test 시점에는 들어오는 minibatch마다 pseudo-label을 붙이고 두 loss를 줄이도록 LayerNorm affine 등 일부 parameter를 online으로 갱신한다. 하나는 전체 분포의 central moment distance(CMD, 기본 3차까지)이고, 다른 하나는 minibatch에 등장한 pseudo-label class들의 target centroid와 source centroid 사이의 거리다. Source 데이터 자체는 필요 없고 통계만 있으면 된다."
+key_assumptions:
+  - "Source 데이터는 없어도 source의 전체·class별 feature 통계는 배포 시 함께 제공될 수 있다고 가정한다. 저자들은 BN처럼 통계가 이미 모델 안에 들어 있는 경우가 흔하다는 점을 근거로 든다."
+  - "Test minibatch의 pseudo-label이 class 조건부 centroid를 추정할 만큼 정확하다고 가정한다. Class 크기가 batch 크기보다 크면 1차 moment(centroid)만으로 class 조건부 정렬에 충분하다고 본다."
+  - "Shift는 target 전체에 공통인 하나의 domain shift이며, 정렬 후의 target class별 분포가 source class별 분포와 같아야 한다고 본다."
+strengths:
+  - text: "전체 분포 정렬에 class 조건부 centroid 정렬을 더했다. Ablation에서 둘 각각이 source 대비 이득을 냈고, 결합하면 대부분의 데이터셋에서 더 좋아졌다. 분포 정렬을 class 단위로 내린 것이 핵심 기여다."
+    tags: [group-offset, distribution-shift]
+  - text: "Source 통계라는 보조 정보 덕분에 modulation parameter를 신중히 고르지 않아도 안정적이다. Tent·PL이 전체 parameter 갱신에서 catastrophic failure를 내는 설정에서도 CFA는 무너지지 않았고, learning rate·batch size 변화에도 덜 민감했다."
+    tags: [training-stability, robustness]
+  - text: "ResNet, MLP-Mixer, ViT·DeiT·BeiT 계열에 모두 적용되는 model-agnostic 방법이다. BeiT-L16에서 ImageNet-C top-1 error 19.8%로, 학습 단계를 바꾸지 않는 TTA 중 최고를 보고했다."
+    tags: [adaptation]
+limitations:
+  - text: "[analyst] 전체 분포 CMD 항은 target batch의 moment를 source 전체 moment에 맞춘다. Target의 class 비율이 source와 다르면(label shift) 이 항이 source의 class 구성을 강요하게 된다. 논문 실험은 class 비율이 같은 corruption·style shift만 다루므로 이 경우는 검증되지 않았다."
+    tags: [label-shift, distribution-shift]
+    source: analyst
+  - text: "[analyst] Class 조건부 항은 기준이 될 정확한 source class centroid를 전제한다. Target centroid는 pseudo-label로 추정하므로, 초기 예측이 특정 부분집단으로 쏠리면 정렬 대상 자체가 편향된다. 또 shift를 target 전체에 공통인 하나의 변환으로 보므로, 하위집단마다 다른 offset은 모델링하지 않는다."
+    tags: [group-offset, selection-bias]
+    source: analyst
+builds_on: [TFA, CMD, Tent, SHOT, T3A]
+compared_against: [Tent, PL, TFA, T3A, SHOT-IM]
+open_questions:
+  - "Target의 class 비율이 source와 다를 때, 전체 분포 정렬 항을 class 비율 추정과 함께 재가중하면 label shift 아래에서도 이득이 유지되는가?"
+  - "기준이 되는 class별 통계 자체가 편향된 표본(예: 선택된 일부 집단)에서 계산되었다면 class 조건부 정렬은 bias를 줄이는가, 옮기는가?"
+hooks:
+  - "(BSEL, 기준 원형이 핵심) CFA의 class 조건부 정렬은 정확한 class별 기준 centroid를 전제로 한다. commconc에서는 이것이 바로 없는 정보다. BSEL-P04는 참 pool 원형이 있으면 E-moment가 손실의 0.92를 회복하지만 context 원형으로는 0.21에 그친다고 보였다. 따라서 CFA를 그대로 옮기면 기준을 context 원형으로 잡게 되고, 상대 오차 1.34인 원형 편향을 정렬 목표로 삼게 된다. CFA는 해법이라기보다 '기준 원형이 맞으면 class 조건부 정렬이 작동한다'는 상한 쪽 근거다."
+  - "(BSEL, 이미 닫힌 범위) Pseudo-label로 target class centroid를 잡아 정렬하는 구조는 BSEL-F02의 CCT-EM(PFN posterior 가중 클래스 조건부 community 수송)과 같은 축이다. CCT-EM은 posterior 정확도가 우연 수준(0.31)이고 context community 쪽으로 쏠려 gate에서 실패했다. 전체 분포 moment 정렬은 BSEL-F01의 ctx-match·CMD-GCN과 같은 축이고, 이것도 실패했다. 재개하려면 편향되지 않은 기준 원형이나 class 조건부 posterior를 얻는 새 장치가 먼저 필요하다."
+notes: "arXiv v1 본문(방법·실험·ablation·결론)을 확인했다. 정식판 IJCAI 페이지와 Crossref에서 서지 정보를 읽었다. 결론에 저자 명시 한계 문단이 없어 self 한계는 두지 않았다. 요청 기준(class 조건부 feature 정렬)에 해당하므로 유지했다."
+added: 2026-11-20

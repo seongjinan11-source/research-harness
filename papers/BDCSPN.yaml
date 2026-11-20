@@ -1,0 +1,71 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: BDCSPN
+title: "Prototype Rectification for Few-Shot Learning"
+authors: "Jinlu Liu, Liang Song, Yongqiang Qin (AInnovation Technology)"
+venue: "ECCV 2020"
+year: 2020
+links:
+  paper: https://arxiv.org/abs/1911.10713
+  proceedings: https://www.ecva.net/papers/eccv_2020/papers_ECCV/html/2748_ECCV_2020_paper.php
+
+citation:
+  type: inproceedings
+  title: "Prototype Rectification for Few-Shot Learning"
+  authors: ["Jinlu Liu", "Liang Song", "Yongqiang Qin"]
+  year: 2020
+  booktitle: "Computer Vision – ECCV 2020"
+  publisher: "Springer International Publishing"
+  pages: "741--756"
+  arxiv: "1911.10713"
+  url: https://doi.org/10.1007/978-3-030-58452-8_43
+  verified_from:
+    - https://www.ecva.net/papers/eccv_2020/papers_ECCV/html/2748_ECCV_2020_paper.php
+    - https://api.crossref.org/works/10.1007/978-3-030-58452-8_43
+    - https://arxiv.org/abs/1911.10713
+
+areas: [ml-foundations]
+problem: "Few-shot classification에서 support 몇 개의 평균으로 만든 class prototype이 그 class 전체 평균에서 벗어나 있는 문제(prototype bias)를 transductive 설정에서 줄이고자 한다."
+core_idea: "먼저 base class에서 cosine classifier로 feature extractor를 학습하고, 새 class의 support 평균을 기본 prototype으로 쓰는 CSPN을 만든다. 저자들은 prototype bias를 두 가지로 나눈다. Intra-class bias는 가용 라벨 데이터의 평균과 class 전체 분포 평균의 차이이고, cross-class bias는 support 집합 평균과 query 집합 평균의 차이다. 앞의 것은 query 중 class별로 가장 확신도가 높은 Z개를 pseudo-label로 support에 더하고, 기본 prototype과의 cosine 유사도 softmax로 가중합해 prototype을 다시 계산하는 방식으로 줄인다. 뒤의 것은 support 평균에서 query 평균을 뺀 하나의 shift 벡터를 모든 query feature에 더해 줄인다. 이론 분석에서는 기대 cosine 유사도의 하한이 prototype 계산에 쓰인 표본 수와 함께 올라간다는 1차 근사 결과를 제시한다."
+key_assumptions:
+  - "Support와 query는 같은 domain에서 오며, 둘의 평균 차이는 domain gap이 아니라 표본 부족에서 오는 분포 bias라고 본다. 그래서 class를 모르는 채로 모든 query에 같은 shift를 더해도 된다고 가정한다."
+  - "각 class가 query에 충분히 들어 있어 class마다 top-Z개 pseudo-label을 뽑을 수 있고, 확신도 높은 query가 그 class의 대표적인 표본이라고 가정한다(실험은 class당 query 15개의 균형 task)."
+  - "이론 분석은 feature의 각 차원이 서로 독립이라는 가정과 비율 기대값의 1차 근사에 기댄다."
+strengths:
+  - text: "추가 학습 없이 inference 단계에서 pseudo-label 가중 재계산과 평균 shift라는 두 가지 단순한 조작만으로, 1-shot에서 CSPN 대비 약 8~9%p를 올렸다. miniImageNet 1-shot 70.31%, tieredImageNet 1-shot 78.74%로 당시 transductive 방법 중 최고였다."
+    tags: [adaptation, inference-cost]
+  - text: "Prototype 오차를 intra-class(표본 부족)와 cross-class(support·query 집합 평균 차이)로 나누어 각각에 대응하는 장치를 둔다. Ablation에서 두 모듈이 각각 따로 이득을 냈다. 덕분에 prototype bias를 어디서 줄이는지 분해해서 볼 수 있다."
+    tags: [group-offset, interpretability]
+  - text: "Pseudo-label을 단순 평균하지 않고 기본 prototype과의 유사도로 가중해, 잘못 붙은 pseudo-label이 prototype을 크게 끌고 가는 것을 완화한다."
+    tags: [robustness]
+limitations:
+  - text: "저자들의 ablation에서 bias 감소 모듈의 이득은 1-shot에 몰려 있고, 5-shot에서는 상대적으로 작았다. 저자들도 5-shot 개선이 작다고 적었다."
+    tags: [adaptation]
+    source: self
+  - text: "Query 집합의 class 비율을 Dirichlet 분포로 무작위화하면 BD-CSPN의 성능이 떨어진다. mini-ImageNet ResNet-18 1-shot에서 2.4%p 하락했다(5/10/20-shot에서는 1.8/1.4/1.1%p). 다른 transductive 방법보다 하락 폭은 작은 편이었지만, 균형 query를 전제로 한 평가에서 이득 일부가 나왔다는 지적에 포함된다."
+    tags: [label-shift, eval-protocol]
+    source: cited
+    by: "Realistic evaluation of transductive few-shot learning (2021)"
+    by_id: AlphaTIM
+    by_link: https://arxiv.org/abs/2204.11181
+  - text: "LaplacianShot 저자들은 BD-CSPN식 rectified prototype과 support·query 평균 shift를 자기 방법에 결합해 썼다. 그런데 class 불균형이 큰 iNat benchmark에서는 rectification이 성능을 크게 떨어뜨려서 그 결과를 보고하지 않았다고 밝혔다."
+    tags: [label-imbalance, label-shift]
+    source: cited
+    by: "Laplacian Regularized Few-Shot Learning (2020)"
+    by_id: LaplacianShot
+    by_link: https://arxiv.org/abs/2006.15486
+  - text: "[analyst] Cross-class shift는 class를 모르는 하나의 전역 벡터다. Support와 query의 class 구성이 다르면 두 집합 평균의 차이에는 구성 차이가 섞인다. 그러면 shift가 offset이 아니라 구성 bias를 query에 주입한다. 논문의 균형 support·query 설정에서는 이 문제가 드러나지 않는다."
+    tags: [group-offset, label-shift]
+    source: analyst
+  - text: "[analyst] Intra-class 보정은 확신도 높은 query를 prototype에 더한다. 그래서 초기 prototype이 특정 부분집단 쪽으로 치우쳐 있으면, 그 부분집단에서 가장 확신도 높은 표본이 선택되어 bias를 오히려 강화할 수 있다. 논문은 support가 class 분포에서 무작위로 뽑힌다는 전제에서만 이 장치를 분석한다."
+    tags: [selection-bias, group-offset]
+    source: analyst
+builds_on: [ProtoNet, CosineClassifier, LST, TPN]
+compared_against: [MatchingNet, MAML, ProtoNet, RelationNet, LEO, MetaOptNet, TPN, EGNN, TransductiveFineTuning, LST, SemiProtoNet]
+open_questions:
+  - "Support의 class·하위집단 구성이 query와 다를 때 cross-class shift를 class 조건부로 바꾸면(예: posterior 가중 class별 shift) 구성 bias 없이 offset만 보정할 수 있는가?"
+  - "Pseudo-label 선택이 이미 편향된 prototype 쪽으로 쏠리는 자기강화를 막으려면 어떤 선택 규칙(예: 하위집단별 quota)이 필요한가?"
+hooks:
+  - "(BSEL, commconc 원형 편향) BD-CSPN의 intra-class bias는 BSEL-P04가 병목으로 지목한 context 원형 오차와 같은 대상이다. commconc context 원형의 상대 오차는 1.34(uniform 1.03)였다. 다만 BD-CSPN의 처방은 확신도 높은 unlabeled 노드를 원형에 더하는 것이다. BSEL-F02에서는 편향 context의 posterior가 우연 수준(0.31)이고 c-context community로 약 3.5배 쏠렸다. 그러므로 top-Z pseudo-label 재계산은 원형을 context community 쪽으로 더 끌고 갈 가능성이 높다. BSEL-L04 교훈에 따라, 메소드로 채택하기 전에 BD식 재계산 원형의 상대 오차와 E-moment SRec을 참 pool 원형(SRec 0.92)·context 원형(0.21)과 같은 표에 놓는 1분짜리 진단을 먼저 하는 것이 맞다."
+  - "(BSEL, 클래스 무관 shift) Cross-class shift(support 평균 − query 평균을 전체 query에 더함)는 클래스 무관 전역 offset 보정이다. BSEL-F01(ctx-match·comm-z)과 BSEL-F03(클래스 무관 community offset 제거 O-both)에서 이런 보정은 실데이터에서 실패했다. 따라서 BD-CSPN의 shift 항은 재개 후보가 아니라 이미 닫힌 범위 안의 기준선으로 분류하는 것이 맞다."
+notes: "본문(arXiv v4)의 방법·이론·실험·결론을 확인했다. 결론에는 저자 명시 한계 문단이 없어 self 한계는 ablation의 5-shot 서술만 넣었다. ECVA 페이지에는 booktitle·쪽수가 없어서 Crossref(Springer DOI 등록 정보)에서 읽었다. 공식 코드 링크는 확인하지 못했다."
+added: 2026-11-20

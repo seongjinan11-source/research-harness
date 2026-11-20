@@ -1,0 +1,68 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: Harmony
+title: "Fast, sensitive and accurate integration of single-cell data with Harmony"
+authors: "Ilya Korsunsky, Nghia Millard, Jean Fan, Kamil Slowikowski, Fan Zhang, Kevin Wei, Yuriy Baglaenko, Michael Brenner, Po-ru Loh, Soumya Raychaudhuri"
+venue: "Nature Methods 2019"
+year: 2019
+links:
+  paper: https://pmc.ncbi.nlm.nih.gov/articles/PMC6884693/
+  doi: https://doi.org/10.1038/s41592-019-0619-0
+  code: https://github.com/immunogenomics/harmony
+
+citation:
+  type: article
+  title: "Fast, sensitive and accurate integration of single-cell data with Harmony"
+  authors: ["Ilya Korsunsky", "Nghia Millard", "Jean Fan", "Kamil Slowikowski", "Fan Zhang", "Kevin Wei", "Yuriy Baglaenko", "Michael Brenner", "Po-ru Loh", "Soumya Raychaudhuri"]
+  year: 2019
+  journal: "Nature Methods"
+  volume: 16
+  pages: "1289--1296"
+  url: https://doi.org/10.1038/s41592-019-0619-0
+  verified_from:
+    - https://pmc.ncbi.nlm.nih.gov/articles/PMC6884693/
+    - https://api.crossref.org/works/10.1038/s41592-019-0619-0
+    - https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=31740819&retmode=json
+
+areas: [single-cell, ml-foundations]
+problem: "여러 batch(실험·기술·기증자)에서 온 single-cell 데이터를 하나의 embedding으로 통합할 때, 같은 cell type이 batch별로 갈라지는 technical effect를 지우면서 생물학적 구분은 보존하고자 한다."
+core_idea: "PCA embedding과 batch label을 입력으로 받아 두 단계를 수렴할 때까지 반복한다. 첫째, cosine 거리 위의 soft k-means로 세포를 여러 cluster에 확률적으로 배정한다. 이때 entropy 항(σ)이 배정을 부드럽게 유지하고, diversity penalty(θ)가 소수 batch만으로 이루어진 cluster를 벌한다. 이 penalty는 cluster별 관측 batch 구성과, batch와 cluster가 독립일 때의 기대 구성을 비교한다. 둘째, cluster마다 batch 항과 절편으로 된 ridge 회귀(mixture of experts)를 세포의 소속 확률로 가중해 적합한다. 그 뒤 절편(cell type 신호)은 남기고 batch 항만 뺀다. 세포별 보정량은 소속 cluster들의 보정을 소속 확률로 가중합한 값이라 세포마다 다르다. 보정은 매번 원래 embedding에서 다시 계산해 과보정을 피한다. τ는 작은 batch의 θ를 깎아, 모든 cell type을 갖지 않았을 작은 batch를 억지로 퍼뜨리지 않게 한다."
+key_assumptions:
+  - "Batch 효과는 cluster(세포 상태)별로 다른 선형 이동으로 근사할 수 있고, 같은 cluster 안에서 batch 간 평균 차이는 technical effect라고 본다."
+  - "Diversity penalty는 각 cluster의 batch 구성이 전체 batch 비율과 비슷해야 한다는 독립성 기대를 기준으로 삼는다. 작은 batch에서는 이 가정이 깨질 수 있어 τ로 완화한다."
+  - "입력은 library-size 정규화 후 PCA로 줄인 embedding이며, cosine·correlation 유사도로 이웃 구조가 보존된다고 본다."
+strengths:
+  - text: "Cluster 단위의 batch별 선형 보정이라 batch 효과가 cell type마다 달라도 다룰 수 있다. Soft 배정 덕분에 전이 상태 세포도 여러 cluster의 보정을 섞어 받는다."
+    tags: [group-offset, nuisance-separation]
+  - text: "50만 세포를 68분, 7.2GB 메모리로 처리했고, MultiCCA·MNN Correct보다 30~200배 빨랐다."
+    tags: [inference-cost, context-scale]
+  - text: "Cell line, PBMC, 췌도, 발생 시계열, MERFISH 공간 데이터에서 batch 혼합(iLISI)은 올리고 cell type 분리(cLISI 약 1)는 유지했다. 원 연구에서 찾기 어려웠던 희귀 alpha 세포 ER-stress 집단도 찾았다."
+    tags: [robustness, interpretability]
+limitations:
+  - text: "Embedding만 보정하고 유전자 수준 발현값은 바꾸지 않는다. 그래서 저자들은 차등 발현 분석에는 batch를 넣은 mixed-effects 모델 같은 별도 방법을 권한다. Count 모델로의 확장도 향후 과제로 남긴다."
+    tags: [task-coverage]
+    source: self
+  - text: "알려진 batch 변수만 보정하며, 잠재적인 미지의 변동원으로의 확장은 향후 과제다."
+    tags: [nuisance-separation]
+    source: self
+  - text: "Cluster마다 batch가 고르게 섞여야 한다는 가정은 세포 수가 적은 batch에서 깨지기 쉽다. 그런 batch를 모든 cluster에 퍼뜨리면 잘못된 clustering이 생긴다고 저자들이 인정하고 τ로 완화한다. 발생 시계열 분석에서 erythroid 집단 사이의 분리 일부가 생물학이 아니라 batch artifact일 수 있다고도 언급한다."
+    tags: [group-offset, label-shift]
+    source: self
+  - text: "Harmony는 경험적으로 성공했지만 이론적 성질과 보장이 없다는 지적이 있다. 목적함수의 주 항은 shared spherical covariance Gaussian mixture의 soft 판 k-means에 해당해서, cluster별 비구형 기하에서만 드러나는 batch 효과는 잡기 어렵다는 것이다. 지적한 논문은 대신 entropy 항이 이 경직성을 보완한다고 설명한다."
+    tags: [theory-gap, model-based-baseline]
+    source: cited
+    by: "MoDaH achieves rate optimal batch correction (2025)"
+    by_id: MoDaH
+    by_link: https://arxiv.org/abs/2512.09259
+  - text: "[analyst] Diversity penalty의 기준은 batch와 cluster의 독립이다. 실제로 batch마다 cell type 구성이 다르면 penalty가 구성 차이까지 지우려 한다. 그러면 구성 차이와 technical offset이 교락된다. τ는 작은 batch만 완화할 뿐, 큰 batch끼리 구성이 다른 경우는 다루지 않는다."
+    tags: [group-offset, identifiability]
+    source: analyst
+builds_on: [SoftKMeans, MixtureOfExperts, PCA]
+compared_against: [MNNCorrect, MultiCCA]
+open_questions:
+  - "Batch마다 cell type 구성이 실제로 다를 때, diversity penalty의 기대 구성을 독립 대신 추정한 구성으로 바꾸면 과보정 없이 offset만 제거할 수 있는가?"
+  - "일부 세포에 라벨이 있을 때(준지도), 라벨을 cluster 배정의 고정점으로 쓰면 cluster별 batch 보정의 식별성이 얼마나 좋아지는가?"
+hooks:
+  - "(BSEL, 클래스 조건부 community offset) Harmony의 cluster별 batch 보정은 'community = batch, class = cluster'로 놓으면 클래스 조건부 community offset 추정이다. BSEL-P02의 O-ctx(pool 라벨을 쓴 클래스 조건부 community 특징 수송)가 손실의 절반가량을 되살린 것과 같은 축이고, 클래스 무관 offset 제거(BSEL-F03 O-both)가 실패한 것과도 맞아떨어진다. 차이는 Harmony가 라벨 없이 soft clustering으로 cluster를 정한다는 점이다. BSEL-F02에서 라벨 없는 posterior가 우연 수준이었으므로, 옮긴다면 context 라벨을 배정 고정점으로 쓰는 준지도 판이어야 한다."
+  - "(BSEL, 동질성 그래프에서의 교락) 동질성 그래프에서는 community마다 클래스 구성이 크게 다르다. 그래서 batch·cluster 독립을 기준으로 하는 diversity penalty는 진짜 구성 차이를 offset으로 지우려 한다. 이는 BSEL-U01 proxy에서 offset-GMM이 클래스 구조를 offset으로 흡수한 현상과 같은 교락의 반대 방향 판이다. τ(작은 batch 완화)는 context가 적은 community에 대응하는 장치로 참고할 수 있지만, 구성 차이를 식별해 주지는 않는다."
+notes: "PMC 전문(방법·결과·discussion·code availability, 앞 100,000자)을 확인했다. 제목 표기는 Crossref·PubMed 기준이다. PMC 요약에서 diversity penalty의 기대 구성이 batch·cluster 독립이라는 해석은 수식에서 나온 것으로, 저자 문장 그대로는 아니다. compared_against에는 본문에서 속도 비교 대상으로 확인한 MultiCCA·MNN Correct만 넣었다. 다른 비교 방법 목록은 대조하지 않았다."
+added: 2026-11-20

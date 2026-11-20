@@ -1,0 +1,56 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: CorrectSmooth
+title: "Combining Label Propagation and Simple Models out-performs Graph Neural Networks"
+authors: "Qian Huang, Horace He, Abhay Singh, Ser-Nam Lim, Austin R. Benson (Cornell University / Facebook AI)"
+venue: "ICLR 2021"
+year: 2021
+links:
+  paper: https://iclr.cc/virtual/2021/poster/3274
+  openreview: https://openreview.net/forum?id=8E1-f3VhX1o
+  arxiv: https://arxiv.org/abs/2010.13993
+  code: https://github.com/CUAI/CorrectAndSmooth
+citation:
+  type: inproceedings
+  title: "Combining Label Propagation and Simple Models out-performs Graph Neural Networks"
+  authors: ["Qian Huang", "Horace He", "Abhay Singh", "Ser-Nam Lim", "Austin Benson"]
+  year: 2021
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2010.13993"
+  url: https://openreview.net/forum?id=8E1-f3VhX1o
+  verified_from:
+    - https://iclr.cc/virtual/2021/poster/3274
+    - https://arxiv.org/abs/2010.13993
+areas: [graph-learning]
+problem: "Transductive node classification에서 큰 GNN이 정말 필요한지 묻고, graph를 학습에 쓰지 않는 단순 base model에 label 상관을 이용한 후처리만 붙여 GNN 수준의 성능을 낼 수 있는지 보인다."
+core_idea: "먼저 graph 구조를 쓰지 않는 linear model이나 얕은 MLP로 base prediction Z를 만든다(spectral embedding을 feature에 덧붙일 수 있다). Correct 단계는 학습 노드에서의 residual(정답 one-hot − Z)을 label spreading으로 graph 전체에 퍼뜨린다. 연결된 노드의 오차가 양의 상관을 갖는다는 가정이며, 퍼진 residual의 크기가 작아지는 문제를 autoscale이나 학습 노드 값을 고정하는 FDiff-scale로 보정한다. Smooth 단계는 학습(과 선택적으로 validation) 노드를 정답 라벨로 재설정한 뒤, 보정된 예측을 다시 label propagation으로 매끄럽게 한다. 두 단계 모두 학습이 끝난 뒤의 후처리이고 end-to-end 학습이 없다."
+key_assumptions:
+  - "연결된 노드의 라벨과 base model 오차가 모두 양의 상관을 가진다(homophily, cluster assumption)."
+  - "Transductive 설정이라 추론 시점에 모든 학습·validation 라벨과 그래프 전체를 쓸 수 있다."
+  - "실험의 라벨 노드는 무작위 split으로 뽑히며 라벨 비율이 높다(작은 citation graph 60/20/20, Rice·US County·Email 40/10/50)."
+strengths:
+  - text: "Graph를 학습에 쓰지 않는 base model에 두 번의 label propagation 후처리만 붙여 여러 benchmark에서 SOTA GNN과 같거나 더 좋았다. OGB-Products에서는 최고 GNN보다 parameter가 137배 적고 학습 시간이 100배 넘게 짧으면서 더 정확했다. MLP base 예측이 63%에서 84%로 오른 것처럼 이득 대부분이 후처리에서 나온다."
+    tags: [graph-structure-use, inference-cost, graph-scale]
+  - text: "추론 시 라벨을 직접 쓰는 것이 성능의 핵심 원천임을 분리해 보였다. 라벨 없이 출력만 smoothing한 Basic Model도 GCN을 자주 넘었지만, 라벨을 쓰는 C&S와는 격차가 남았다. Validation 라벨까지 smoothing에 넣으면 9개 중 7개 데이터셋에서 SOTA를 넘었다."
+    tags: [graph-structure-use]
+  - text: "어떤 base predictor 위에도 붙는 후처리라 비용이 작고, 큰 GNN 위에 얹어도 작은 추가 이득을 준다."
+    tags: [adaptation, inference-cost]
+limitations:
+  - text: "평가는 transductive node classification에 한정된다. 저자들은 inductive node classification, link prediction, graph-level 예측으로의 확장을 향후 과제로 든다."
+    tags: [task-coverage]
+    source: self
+  - text: "최신 대형 GNN에 C&S를 결합했을 때의 이득은 작았다고 저자들이 밝힌다."
+    tags: [adaptation]
+    source: self
+  - text: "[analyst] 모든 실험이 무작위 split과 높은 라벨 비율에서 이루어져, 라벨 위치가 구조적으로 편향된 경우의 동작은 확인되지 않았다. Correct는 학습 노드의 residual이 주변 노드 오차를 대표한다고 보고, Smooth는 학습 라벨을 고정한 채 퍼뜨린다. 라벨이 일부 community에 몰리면 두 단계 모두 그 community 주변의 클래스 질량을 키우는 방향으로 작동할 수 있다."
+    tags: [selection-bias, eval-protocol]
+    source: analyst
+builds_on: [LabelSpreading, GaussianFieldsHarmonic, ResidualPropagation, APPNP, SGC]
+compared_against: [GCN, SGC, APPNP, LabelPropagation, UniMP, GCNII, MLP, Linear]
+open_questions:
+  - "라벨이 구조적으로 편향되게 놓였을 때 Correct와 Smooth가 각각 손실을 줄이는지 키우는지 분해된 결과가 없다."
+  - "Residual의 크기를 맞추는 autoscale은 학습 노드 오차 분포가 test 노드와 같다는 전제에 기대는데, 이 전제가 깨질 때의 대안은 무엇인가?"
+hooks:
+  - "(BSEL-F04의 실패 근거) BSEL-F04에서 frozen GraphPFN 출력에 C&S를 붙이면 CiteSeer commconc에서 최선 설정이 SG −5.1(commconc 이득 약 −7pt 수준), Correct-only −3.4, LP-PoE −3.5였다. F04 failure_reason은 'context 라벨을 전파하는 방법은 편향을 키운다'다. C&S의 메커니즘으로 보면 이렇게 설명된다. Smooth는 context 라벨을 고정한 채 퍼뜨리므로, 클래스 c의 라벨이 몰린 소수 community와 그 이웃으로 c의 질량을 더 밀어 넣는다. 그 결과 BSEL-P03이 지목한 community 단위 클래스 출력 prior 왜곡이 강화된다. Correct는 context 노드 residual이 context 없는 community의 오차를 대표한다는 전제가 깨진다. 또 context 노드는 PFN 입력에 라벨이 들어간 row이므로 residual이 작게 나올 가능성도 있다(가설, 미확인). 따라서 C&S는 commconc에서 메소드가 아니라 '라벨 전파 계열은 해롭다'는 음성 대조로 쓰는 것이 맞다. F04 comparison_floor에 이미 들어가 있다."
+  - "(진단으로의 재사용) Uniform context에서는 C&S가 해롭지 않고 commconc에서만 해롭다면, 이 차이 자체가 손실이 선택 위치에서 온다는 값싼 증거가 된다. 같은 seed에서 uniform 대비 C&S 변화량을 함께 보고하면 해석이 깔끔하다."
+notes: "ICLR 2021 게재는 iclr.cc 가상 포스터 페이지(OpenReview 링크 포함)에서 확인했다. 그 페이지의 제목은 'out-performs'(소문자 o)이고 마지막 저자는 'Austin Benson'으로 표기되어 citation은 그대로 따랐다. arXiv 표기는 'Out-performs', 'Austin R. Benson'이다. OpenReview 페이지 자체는 bot challenge로 열지 못했다. 코드 링크는 PDF 본문 표기(CUAI)를 따랐고, arXiv 페이지에는 Chillee/CorrectAndSmooth로도 링크되어 있다."
+added: 2026-11-20

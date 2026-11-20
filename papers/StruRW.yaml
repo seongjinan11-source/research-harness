@@ -1,0 +1,70 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: StruRW
+title: "Structural Re-weighting Improves Graph Domain Adaptation"
+authors: "Shikun Liu, Tianchun Li, Yongbin Feng, Nhan Tran, Han Zhao, Qiang Qiu, Pan Li (Georgia Tech / Purdue / Fermilab / UIUC)"
+venue: "ICML 2023"
+year: 2023
+links:
+  paper: https://proceedings.mlr.press/v202/liu23u.html
+  arxiv: https://arxiv.org/abs/2306.03221
+  code: https://github.com/Graph-COM/StruRW
+citation:
+  type: inproceedings
+  title: "Structural Re-weighting Improves Graph Domain Adaptation"
+  authors: ["Shikun Liu", "Tianchun Li", "Yongbin Feng", "Nhan Tran", "Han Zhao", "Qiang Qiu", "Pan Li"]
+  year: 2023
+  booktitle: "Proceedings of the 40th International Conference on Machine Learning"
+  publisher: "PMLR"
+  volume: 202
+  pages: "21778--21793"
+  arxiv: "2306.03221"
+  url: https://proceedings.mlr.press/v202/liu23u.html
+  verified_from:
+    - https://proceedings.mlr.press/v202/liu23u.html
+    - https://arxiv.org/abs/2306.03221
+areas: [graph-learning]
+problem: "Graph domain adaptation에서 기존 방법은 domain 간에 공유한 GNN encoder로 node representation 분포를 맞추는데, 같은 클래스 노드의 연결 패턴 자체가 domain마다 달라지는 경우에는 이 방식이 원리적으로 최적이 아님을 보이고 대안을 낸다."
+core_idea: "저자들은 같은 클래스가 주어졌을 때 adjacency 분포가 달라지는 conditional structure shift(CSS)를 정의한다. CSBM 예제로, 이웃 분포는 같은데 중심 노드의 정답이 domain마다 바뀌는 경우 shared encoder로 representation을 맞추면 target 오차가 0.25 아래로 내려갈 수 없지만 domain별로 encoder를 달리하면 0으로 갈 수 있음을 보인다. StruRW는 source graph의 message passing에서 class-j 이웃이 class-i 노드로 보내는 message에 B^T_ij / B^S_ij 비율을 weight로 주어, source 이웃 multiset이 target의 클래스 쌍별 연결 확률을 따르도록 bootstrap한다. B^S는 source 라벨로, B^T는 target pseudo-label로 추정하고, pseudo-label 오류를 감안해 원래 edge와 재가중 edge를 λ로 섞는다. 이 모듈을 ERM, DANN식 adversarial 학습, graph Mixup 앞에 붙여 StruRW-ERM/Adv/Mix로 쓴다."
+key_assumptions:
+  - "그래프가 CSBM처럼 클래스 쌍마다 하나의 연결 확률을 갖는다고 보며, 같은 클래스 쌍의 edge는 같은 weight를 공유한다."
+  - "분석에서 attribute shift P(X|Y)와 label shift P(Y)는 없다고 둔다."
+  - "Target graph에 학습 중 접근할 수 있고, pseudo-label이 B^T를 추정할 만큼 정확하다고 가정한다."
+strengths:
+  - text: "GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다."
+    tags: [distribution-shift, graph-structure-use, theory-gap]
+  - text: "기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다."
+    tags: [distribution-shift, graph-structure-use]
+limitations:
+  - text: "분석에서 attribute shift를 다루지 않았다. Label shift와 attribute shift가 CSS와 함께 있는 경우는 향후 과제로 남겼다."
+    tags: [label-shift, distribution-shift]
+    source: self
+  - text: "CSBM에 기반하므로 같은 끝점 라벨 쌍의 edge는 모두 같은 weight를 받는다. 저자들은 이 제약을 더 완화할 수 있다고 본다."
+    tags: [graph-structure-use]
+    source: self
+  - text: "HEP pileup에서는 개선이 미미했다. 저자들은 이진 분류라는 점과 여러 graph에 걸쳐 weight를 평균하는 방식이 성능을 제한했을 가능성을 든다. Mixup 변형은 여러 graph를 쓰는 데이터에 적용하지 못했다."
+    tags: [distribution-shift]
+    source: self
+  - text: "StruRW의 edge weight는 이웃 라벨 분포의 비율 γ가 아니라 edge 연결 확률 비율 w에 해당해 CSS 보정의 핵심 항을 놓친다고 지적한다. 또 source 예측이 완벽하다고 보고 target hard pseudo-label로 추정하며, label shift는 전혀 고려하지 않는다. 그래서 StruRW는 label shift가 없고 target 예측이 완벽하다는 특수한 경우의 Pair-Align으로 볼 수 있다고 한다."
+    tags: [label-shift, identifiability]
+    source: cited
+    by: "Pairwise Alignment Improves Graph Domain Adaptation (2024)"
+    by_id: PairAlign
+    by_link: https://arxiv.org/abs/2403.01092
+  - text: "Source graph의 edge를 재가중하는 GDA 방법은 source와 target graph에 동시에 접근해야 하므로 source를 다시 볼 수 없는 test-time adaptation으로 확장할 수 없다고 지적한다."
+    tags: [adaptation]
+    source: cited
+    by: "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation (2025)"
+    by_id: Matcha
+    by_link: https://arxiv.org/abs/2410.06976
+  - text: "[analyst] 실험에서 B^T 추정에 target validation 노드의 정답 라벨을 쓴다고 명시되어 있다(나머지는 pseudo-label). 완전한 unsupervised adaptation이라기보다 target 라벨 일부를 구조 통계 추정에 쓰는 설정이라, target validation을 모델 선택에만 쓰는 baseline과의 비교가 그만큼 유리할 수 있다."
+    tags: [eval-protocol]
+    source: analyst
+builds_on: [CSBM, DANN, GraphMixup, GCN]
+compared_against: [ERM, DANN, GraphMixup, UDAGCN, EERM, CDAN]
+open_questions:
+  - "클래스 쌍 하나당 하나의 weight 대신 노드·community별 연결 패턴을 반영한 weight를 쓰면 CSS 보정이 나아지는가?"
+  - "Pseudo-label 오류가 클 때 B^T 추정 편향이 성능을 얼마나 깎는지, λ 외의 원리적 보정이 있는가?"
+hooks:
+  - "(BSEL commconc의 구조 쪽 해석) commconc context 노드의 이웃은 대부분 같은 community에 있으므로, context 노드가 보는 클래스 쌍별 연결 통계와 그래프 전체의 통계가 다르다. 즉 context를 source, 나머지를 target으로 보면 한 그래프 안의 CSS로 해석할 수 있다. 다만 StruRW식 보정에는 target 쪽 클래스 쌍 연결 확률이 필요하고, 그것을 PFN posterior로 추정하면 BSEL-F02의 실패(U posterior 정확도 0.31, 클래스 질량이 c-context community로 약 3.5배 몰림)를 그대로 물려받는다. PairAlign이 지적한 hard pseudo-label 문제도 겹친다. 그래서 StruRW는 메소드 후보라기보다, '참 라벨 B^T를 넣은 adapter attention 재가중 oracle'로 구조 경로의 상한을 재는 도구로만 쓸 만하다(가설, 미검증)."
+notes: "PMLR 페이지는 여섯 번째 저자를 'Qiang Qiu'로, arXiv 페이지는 'Qiu Qiang'으로 표기한다. citation은 정식판(PMLR) 표기를 따랐다. 코드 링크는 arXiv Comments에서 읽었다."
+added: 2026-11-20

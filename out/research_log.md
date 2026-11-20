@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 54개 프로젝트 · 225개 기록 (실패·중단 67개, 보존 56개, 교훈 71개, 미실행 31개)
+총 55개 프로젝트 · 240개 기록 (실패·중단 71개, 보존 61개, 교훈 76개, 미실행 32개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -46,6 +46,133 @@ Gaussian accuracy56.154827%,NLL0.672120,Brier0.479871. Mask PFN:accuracy%p +3.79
 SSGP는 graph regularizer/probit/EP/evidence 선택, GGP는 P K(X,X) P^T/robust-max/variational ELBO를 사용한다. 현재 구현은 관측행 singular score와24 sign/amplitude 가설의 고정 Gaussian/probit 추론이며 두 논문의 재현이 아니다. 참 label-law LP57.135862%와 Gaussian56.154827%의 accuracy차이는 -0.981035 [95% CI -3.304919, +1.346377]%p였다.
 
 - 원문: [findings/sources/gaussian-probit-review-2026-11-02/REVIEW_KO.md](../findings/sources/gaussian-probit-review-2026-11-02/REVIEW_KO.md); [findings/sources/gaussian-probit-review-2026-11-02/PRIMARY_COMPARISONS.json](../findings/sources/gaussian-probit-review-2026-11-02/PRIMARY_COMPARISONS.json); [findings/sources/gaussian-probit-review-2026-11-02/SOURCE_VERIFICATION.json](../findings/sources/gaussian-probit-review-2026-11-02/SOURCE_VERIFICATION.json); [findings/sources/gaussian-probit-review-2026-11-02/papers/SSGP.yaml](../findings/sources/gaussian-probit-review-2026-11-02/papers/SSGP.yaml); [findings/sources/gaussian-probit-review-2026-11-02/papers/GGP.yaml](../findings/sources/gaussian-probit-review-2026-11-02/papers/GGP.yaml); [findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md](../findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md); [findings/sources/adaptive-transport-2026-11-02/protocol.json](../findings/sources/adaptive-transport-2026-11-02/protocol.json); [findings/sources/adaptive-transport-2026-11-02/results/statistics.json](../findings/sources/adaptive-transport-2026-11-02/results/statistics.json); [findings/sources/adaptive-transport-2026-11-02/results/cost.json](../findings/sources/adaptive-transport-2026-11-02/results/cost.json)
+
+## BSEL community-concentrated context selection for frozen GraphPFN
+
+실험 조건: Frozen 공식 GraphPFN(LimiX-16M + adapters, 10 members, PCA64) 노드 분류. W 프로토콜의 step 불균형 context(ρ 10/20)를 uniform과 commconc(클래스마다 소수 Louvain community에 몰아 뽑는 mkpol 이식) 두 정책으로 만든다. dev 그래프 Cora, CiteSeer, photo, PubMed, seed 10개, pairwise one-vs-one AUC가 주 지표이고 seed 군집 bootstrap을 쓴다. W의 target 8개 그래프는 쓰지 않았다. Phase 0(진단) → S0/S1(CCT-EM 수송) → CPC(출력 prior 보정, 부분 E1에서 중단) → PDB(원형 편향 제거, 계획만) 순서다.
+
+### BSEL-P01 [보존] community 집중 context 선택(commconc)은 frozen GraphPFN에 실제 손실을 만들고, 그 손실은 GraphPFN 고유가 아니다.
+
+commconc 손실 Δ_GP(AUC pt): Cora +2.4 [+1.7,+3.2], CiteSeer +5.5 [+4.2,+6.9], photo +13.8 [+11.4,+16.2], PubMed +13.5 [+8.8,+18.1]. 크기를 보존한 community 순열 null 손실은 −0.3~+1.0. BS-GCN 손실 3.1/7.6/12.3/17.8, LP 3.9/9.9/9.1/21.4. G = Δ_GP − Δ_BS는 photo에서만 +1.5 [+0.2,+2.7]. Cora는 평가 불가(손실 CI 하한 ≤ 2pt).
+
+- 확대 금지: PFN 고유 고장, W target 그래프나 다른 선택 정책(highdegree 등)으로의 일반화, 다른 Graph FM의 손실 크기.
+- 원문: [findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md](../findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md); [findings/sources/biased-selection-2026-11-20/phase0/report.json](../findings/sources/biased-selection-2026-11-20/phase0/report.json)
+
+### BSEL-P02 [보존] pool 라벨을 쓰는 클래스 조건부 community 특징 수송 oracle(O-ctx)은 손실의 절반가량을 되살리며, 특징 수송의 상한은 그 수준에 머문다.
+
+Phase 0 O-ctx Rec: Cora 0.64, CiteSeer 0.51 [0.39,0.61], photo 0.43 [0.36,0.48], PubMed 0.67 [0.57,0.77], uniform 변화 최대 −0.7pt. S1에서 이웃까지 옮기는 O-ctx+nbr은 0.42/0.76/0.48(CiteSeer/PubMed/photo), 클래스 무관 양쪽 중심화 O-both는 −0.14/0.49/0.65. 합성 POS에서는 O-both 1.08, O-ctx+nbr 1.02였다.
+
+- 확대 금지: 라벨 없이 이 상한에 도달할 수 있다는 주장, 손실이 가산 평행이동 모형으로 완전히 설명된다는 주장.
+- 원문: [findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md](../findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md); [findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md](../findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md)
+
+### BSEL-P03 [보존] 편향 context는 PFN의 community 단위 클래스 출력 사전확률을 왜곡하며, 이 왜곡이 commconc 손실의 대부분을 설명한다(그래프 1–2개).
+
+O-swap(pool 라벨 없이 같은 seed·ρ의 uniform context PFN 출력의 community 평균으로 교체) 선택 특유 이득 SG: CiteSeer +4.0 [+2.8,+5.2] SRec 0.77, Cora +2.2 [+1.7,+2.8] SRec 0.89. O-prior(참 pool p(c|k)) SRec 0.83/0.86, O-info(정책 무관 무작위 라벨 |ctx|개) 0.72/0.82. CiteSeer AUC 2×2 Shapley: prior 축 6.4pt, 특징 축 1.6pt. photo·PubMed는 미측정.
+
+- 확대 금지: O-swap은 uniform context의 PFN 출력이 필요한 oracle이므로 메소드가 아니다. photo/PubMed와 S3 확인 없이 일반화하지 않는다.
+- 원문: [findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md](../findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md); [findings/sources/biased-selection-2026-11-20/context_prior/e1_report.json](../findings/sources/biased-selection-2026-11-20/context_prior/e1_report.json)
+
+### BSEL-P04 [보존] community 특징 평균의 원형 결합(E-moment)으로 p(c|k)를 추정하는 경로의 병목은 클래스 원형 추정 하나다.
+
+원형만 참 pool 클래스 평균으로 바꾸면 AUC SG CiteSeer +4.8 [+3.7,+6.0] SRec 0.92, Cora +2.3 [+1.6,+3.1] SRec 0.95. context 원형은 SRec 0.21/0.20. commconc context 원형 상대 오차 1.34(uniform 1.03), context 없는 community TV 0.38 대 참 원형 0.27 대 평탄 0.62(CiteSeer).
+
+- 확대 금지: 라벨 없는 원형 추정이 가능하다는 주장. scratch 계산이며 동결 코드 밖이다(PDB PLAN에 재현 예정으로 기록).
+- 원문: [findings/sources/biased-selection-2026-11-20/proto_debias/PLAN_KO.md](../findings/sources/biased-selection-2026-11-20/proto_debias/PLAN_KO.md)
+
+### BSEL-P05 [보존] 같은 진짜 라벨 예산은 prior·원형 추정보다 context에 추가하는 편이 낫다.
+
+예산 25%(CiteSeer 60개, Cora 70개), commconc 이득 AUC pt: L-ctx +7.2/+3.6, L-prior +4.2/+2.5, L-moment +4.5/+2.8, L-both +6.2/+3.7, L-uncov +5.1/+2.8. 새 라벨로 만든 원형은 TV를 0.38에서 0.26으로 줄였다.
+
+- 확대 금지: 능동 선택 정책 비교(GraphPart, LoGIC 대비)나 photo/PubMed 결과.
+- 원문: [findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md](../findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md)
+
+### BSEL-F01 [실패·중단] 라벨 없는 test-time 조정(community 표준화 comm-z, context 통계 맞춤 ctx-match, 판별형 density-ratio 복제)이 commconc 손실을 줄인다.
+
+Rec_abs comm-z −2.84/−2.17/−0.15/−0.62, ctx-match −0.14/−0.08/+0.02/−0.05, DR −0.47/−0.09/+0.03/+0.09(Cora/CiteSeer/photo/PubMed). DR은 PubMed uniform을 2.8pt 해쳤다. CMD-GCN(λ=0/0.1/1)은 BS-GCN과 거의 같다(PubMed 15.8/14.9/14.1).
+
+- 판정: 기각(J2' comm-z, ctx-match, J3 재가중 모두 평가 가능 3개 그래프에서 기각).
+- 원인·병목 [미검증 가설]: 세 방법 모두 클래스 구성을 보정하지 않는 community 단위 조정이다. 클래스 조건부 offset을 라벨 없이 추정하지 못한 것이 원인으로 보이나 분리하지 않았다.
+- 닫은 범위: 클래스 구성을 고려하지 않는 community 단위 특징 표준화·통계 맞춤·판별형 비율 재가중을 frozen GraphPFN 입력에 적용하는 것.
+- 닫지 않은 것: 구성 보정 offset 추정, 출력 쪽 prior 보정, 사전학습 prior 변경.
+- 재검토 조건: community offset과 클래스 구성을 라벨 없이 분리하는 추정기가 나오고, O-ctx 상한 대비 회복을 정답 없이 검증할 수 있을 때.
+- 기준선: O-ctx oracle, GP 원래 context, BS-GCN, CMD-GCN(SR-GNN식).
+- 최소 재검증: 같은 dev context에서 Rec와 uniform 변화를 seed 군집 CI로 재측정하고 null 대조를 함께 본다.
+- 원문: [findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md](../findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md)
+
+### BSEL-F02 [실패·중단] PFN posterior로 가중한 클래스 조건부 community 수송(CCT-EM)이 라벨 없이 O-ctx 상한의 상당 부분을 회복한다.
+
+합성 S0 gate(POS commconc) CCT-EM T3 회복률 0.126 < 기준 0.2. uniform 변화 −0.058(비열등 기준 −0.005). U posterior 정확도 0.31(우연 0.25). 클래스 c의 q 질량 0.37–0.40이 U의 0.106을 차지하는 c-context community에 몰렸다(약 3.5배). 전역 클래스 평균 상대 오차 1.27–1.36. CCT-global −0.35 이하.
+
+- 판정: 사전 gate 실패, 실데이터 메소드 단계(S2/S3) 미진행.
+- 원인·병목 [진단이 지지]: 편향 context의 posterior가 우연 수준이고 context community 쪽으로 쏠려 전역 클래스 평균 추정이 실패했다. 고정점 붕괴(‖δ̂‖/‖δ^O‖ < 0.3)는 일어나지 않았다(비율 약 0.6).
+- 닫은 범위: 편향 context 하나로 얻은 PFN posterior를 E-step으로 쓰는 클래스 조건부 평균 정렬(BD-CSPN·JDA 계열의 test-time 판).
+- 닫지 않은 것: posterior를 쓰지 않는 원형 추정, 소수 진짜 라벨을 쓰는 판, 순도가 높은 그래프(PUR 0.95에서 T5 0.42).
+- 재검토 조건: 편향 context에서도 posterior가 클래스 질량을 context community에 몰지 않는 추정 장치가 생길 때.
+- 기준선: O-ctx, CCT-global, comm-center, self-train, soft-PL, REF-GP.
+- 최소 재검증: 합성 POS와 순도 계열 PUR에서 같은 gate를 다시 본다.
+- 원문: [findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S0_KO.md](../findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S0_KO.md); [findings/sources/biased-selection-2026-11-20/em_transport/s0_report.json](../findings/sources/biased-selection-2026-11-20/em_transport/s0_report.json)
+
+### BSEL-F03 [실패·중단] 모든 노드에서 클래스 무관 community offset(구성 보정)을 빼면 특징 수송 상한이 거의 완전 회복으로 오른다(합성 결과의 실데이터 이전).
+
+S1 O-both − O-ctx: CiteSeer −3.4 [−3.9,−2.8], PubMed −2.5 [−3.2,−1.8], photo +3.1 [+1.8,+4.3], Cora −0.5. 사전 규칙(하한 > 2pt 그래프 2개 이상) 충족 0개. O-both uniform 변화 CiteSeer −2.8, PubMed −1.2.
+
+- 판정: 채택 안 함.
+- 원인·병목 [미검증 가설]: 합성 생성식의 가정(클래스 무관 가산 offset)이 실데이터에서 맞지 않는 것으로 보인다. offset의 상당 부분이 클래스 신호와 교락된다는 해석은 가설이다.
+- 닫은 범위: 참 라벨 구성 보정까지 넣은 클래스 무관 community offset을 PFN 입력 전 노드에서 빼는 것.
+- 닫지 않은 것: offset을 PFN 입력이 아닌 prior 추정에만 쓰는 방식, photo처럼 이득이 난 그래프의 조건.
+- 재검토 조건: 실데이터에서 클래스 무관 offset과 클래스 구성의 교락을 분리하는 근거나 장치가 나올 때.
+- 기준선: O-ctx.
+- 최소 재검증: dev 4개 그래프 S1 oracle 분해를 정정된 pool로 다시 본다.
+- 원문: [findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md](../findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md); [findings/sources/biased-selection-2026-11-20/em_transport/s1_report.json](../findings/sources/biased-selection-2026-11-20/em_transport/s1_report.json)
+
+### BSEL-F04 [실패·중단] context 라벨·그래프·특징만으로 community별 클래스 사전확률 p(c|k)를 추정해 PFN 출력을 보정하면(CPC) commconc 손실의 선택 특유 부분을 되돌린다.
+
+CiteSeer(유일한 평가 가능 그래프) SG: E-moment 주 설정 +1.1 [−0.3,+2.3] SRec 0.21, 네 설정 모두 CI가 0 포함. E-LP −3.4, E-PoE −2.5, E-ctxcount(λ1) −4.6, E-R2 +0.3, C&S 최선 −5.1, Correct-only −3.4, LP-PoE −3.5, stacking 최선 −1.0, context 재표집 −1.0, REF-GP +0.1. E-moment null SG 약 0. C&S는 CiteSeer commconc 이득 −7pt 수준. E0는 사용자 지시로 중단(photo 14/40, PubMed 0/40), 정식 gate 미판정.
+
+- 판정: 중단(실용 성능 부족; 정식 E1 판정 없음).
+- 원인·병목 [진단이 지지]: E-moment는 commconc context 원형이 community offset으로 오염되어 실패한다(BSEL-P04의 참 원형 상한). context 라벨을 전파하는 방법은 편향을 키운다. context 없는 community에 클래스 질량의 65–92%가 있다(리뷰 proxy).
+- 닫은 범위: context 원형 E-moment, context 라벨 PPR·count prior, PFN posterior 기반 community Saerens EM(W R2 선택 설정), C&S·LP-PoE·stacking 후처리를 frozen GraphPFN 출력에 적용하는 것(CiteSeer, Cora 기술 통계).
+- 닫지 않은 것: photo·PubMed, 편향 없는 원형 추정기, S3 확인.
+- 재검토 조건: community 집중 context에서도 클래스 원형(또는 p(c|k))을 라벨 없이 편향 없이 추정하는 장치가 나오고, 참 원형 상한 대비 TV를 줄인다는 근거가 있을 때.
+- 기준선: O-swap, 참 원형 E-moment, L-ctx(같은 라벨을 context에 추가), C&S, REF-GP.
+- 최소 재검증: 캐시된 CiteSeer/Cora와 photo/PubMed 보충 캐시로 SG와 context 없는 community TV를 함께 본다.
+- 원문: [findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md](../findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md); [findings/sources/biased-selection-2026-11-20/context_prior/e1_report.json](../findings/sources/biased-selection-2026-11-20/context_prior/e1_report.json)
+
+### BSEL-L01 [교훈] community·클래스별 상수 보정은 같은 community 안의 pairwise AUC를 바꾸지 못하고, 클래스 상수(logit adjustment)는 pairwise AUC에서 무효다.
+
+S1 O-prior의 AUC 이득은 전부 community 간 쌍에서 나왔다. uniform에서도 +0.4~+4.6pt가 올라 정보 주입과 선택 편향 보정을 구분할 수 없었다.
+
+- 원문: [findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md](../findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md); [findings/sources/biased-selection-2026-11-20/context_prior/PLAN_KO.md](../findings/sources/biased-selection-2026-11-20/context_prior/PLAN_KO.md)
+
+### BSEL-L02 [교훈] W dev 입력의 eval_mask는 val뿐이라 pool = ¬eval_mask에 test 라벨이 들어간다.
+
+Phase 0와 S1 oracle은 PubMed/photo test 노드 라벨을 집계 수준으로 썼다(평가 val 라벨 누출은 아님). 이후 cycle은 pool = ¬(val ∪ test)로 정정했다.
+
+- 원문: [findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md](../findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md)
+
+### BSEL-L03 [교훈] 클래스 무관 가산 offset을 심은 합성 생성식은 실데이터의 offset 메커니즘을 잘못 예측했다.
+
+합성 POS에서 O-both 1.08, O-ctx+nbr 1.02였으나 실데이터에서 O-both는 CiteSeer −0.14, uniform −2.8pt였다.
+
+- 원문: [findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S0_KO.md](../findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S0_KO.md); [findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md](../findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md)
+
+### BSEL-L04 [교훈] 사전 예측이 낮은 메소드 계획을 리뷰까지 돌리기 전에 결정적인 값싼 진단과 실패 기록을 먼저 본다.
+
+CPC와 PDB는 각각 독립 리뷰 3개를 거쳤으나 사전 예측이 낮음/중간 이하였다. PDB 직전의 참 원형 상한 계산(약 1분)은 병목을 바로 드러냈다. 사용자 지적(2026-11-20).
+
+- 원문: [findings/sources/biased-selection-2026-11-20/proto_debias/PLAN_KO.md](../findings/sources/biased-selection-2026-11-20/proto_debias/PLAN_KO.md)
+
+### BSEL-L05 [교훈] 동결 분석 코드가 평가 가능성 gate를 투표에 적용하지 않아 판정이 바뀔 수 있었다.
+
+Phase 0 J1은 report.json에서 rejected(3/4)였으나 계획대로 평가 가능 그래프만 투표하면 결론 없음(2/3)이다. 이후 공용 투표 함수와 단위 테스트를 두었다.
+
+- 원문: [findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md](../findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md)
+
+### BSEL-U01 [미실행] 다중 초기화·라벨 없는 해 선택·전역 혼합비 수축을 쓴 community 혼합비 준지도 GMM(PDB M2*)이 원형 편향을 줄인다.
+
+계획 v2만 있고 실행하지 않았다. 리뷰 proxy(Cora seed 3개와 합성만): v1 변형(이원 FE, FE-GMM, offset-GMM)은 모두 context 원형보다 context 없는 community TV가 나빴다. 참 원형에서 시작한 GMM은 oracle 수준 TV(0.18–0.25). offset-GMM은 동질성 그래프에서 클래스 구조를 offset으로 흡수했다. 사전 예측은 gate 통과 가능성 낮음.
+
+- 원문: [findings/sources/biased-selection-2026-11-20/proto_debias/PLAN_KO.md](../findings/sources/biased-selection-2026-11-20/proto_debias/PLAN_KO.md); [findings/sources/biased-selection-2026-11-20/proto_debias/PLAN_v1_KO.md](../findings/sources/biased-selection-2026-11-20/proto_debias/PLAN_v1_KO.md)
 
 ## Common-context witness 고정 곱셈
 

@@ -1,0 +1,68 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: LaplacianShot
+title: "Laplacian Regularized Few-Shot Learning"
+authors: "Imtiaz Masud Ziko, Jose Dolz, Eric Granger, Ismail Ben Ayed (ÉTS Montreal)"
+venue: "ICML 2020"
+year: 2020
+links:
+  paper: https://arxiv.org/abs/2006.15486
+  proceedings: https://proceedings.mlr.press/v119/ziko20a.html
+  code: https://github.com/imtiazziko/LaplacianShot
+
+citation:
+  type: inproceedings
+  title: "Laplacian Regularized Few-Shot Learning"
+  authors: ["Imtiaz Ziko", "Jose Dolz", "Eric Granger", "Ismail Ben Ayed"]
+  year: 2020
+  booktitle: "Proceedings of the 37th International Conference on Machine Learning"
+  publisher: "PMLR"
+  volume: 119
+  pages: "11660--11670"
+  arxiv: "2006.15486"
+  url: https://proceedings.mlr.press/v119/ziko20a.html
+  verified_from:
+    - https://proceedings.mlr.press/v119/ziko20a.html
+    - https://arxiv.org/abs/2006.15486
+
+areas: [ml-foundations, graph-learning]
+problem: "Base class에서 학습한 임의의 feature embedding을 다시 학습하지 않고, few-shot task의 query 집합 전체를 함께 써서 label을 더 정확하게 할당하고자 한다."
+core_idea: "Query들의 class 할당 행렬에 대해 두 항으로 된 이진 할당 목적함수를 최소화한다. 첫째 unary 항은 각 query를 가장 가까운 class prototype에 붙이고, 둘째 pairwise Laplacian 항은 query 사이 kNN affinity graph에서 이웃한 query들이 같은 label을 갖도록 한다. 저자들은 이를 support supervision이 붙은 query 집합의 graph clustering으로 해석한다. 정수 제약을 풀어 Laplacian 항을 concave하게 relax한 뒤 MM(bound optimization)으로 푼다. 각 반복의 surrogate는 query마다 독립인 softmax 형태 갱신이라 병렬로 계산되고, 단조 감소와 수렴이 보장되며 보통 15회 이내에 수렴한다. Prototype을 어떻게 만들지는 방법과 무관하다. 실험에서는 support 평균 외에 BD-CSPN식 rectified prototype과 support·query 평균 shift도 결합했다."
+key_assumptions:
+  - "Feature 공간에서 kNN으로 이웃한 query는 같은 class일 가능성이 높다는 manifold·cluster 가정을 둔다(k는 base class task로 3·5·10 중 선택)."
+  - "Unary 항의 prototype이 class 위치를 대체로 맞게 잡고 있다고 가정한다. Laplacian 항은 할당을 매끄럽게 할 뿐 prototype 자체를 다시 추정하지는 않는다."
+  - "Base training은 표준 cross-entropy이고 새 class에서 embedding은 고정된다."
+strengths:
+  - text: "Meta-learning 없이 고정 feature 위에 붙이는 inference 절차만으로 miniImageNet·tieredImageNet·CUB·cross-domain·iNat 5개 benchmark에서 당시 최고 수준을 냈다. Ablation에서 Laplacian 항은 nearest-prototype 대비 1-shot에서 약 2~3%p 이상 꾸준히 올렸다."
+    tags: [adaptation, graph-structure-use]
+  - text: "Query별 독립 갱신이라 계산이 O(NkC)이고, 5-shot task당 0.012초로 inductive SimpleShot(0.009초)과 같은 자릿수였다. Transductive fine-tuning(20.7초)보다 세 자릿수 빠르다."
+    tags: [inference-cost]
+  - text: "Prototype 추정 방식과 할당 정규화가 분리되어 있어, 같은 Laplacian 항에 서로 다른 prototype(기본·rectified)을 바꿔 끼워 비교할 수 있다."
+    tags: [interpretability, model-based-baseline]
+  - text: "후속 재평가에서 query class 비율을 Dirichlet으로 무작위화해도 5-shot 이상에서는 하락이 0.5%p 이하였고, 극단적 불균형에서도 성능을 유지한 소수 방법 중 하나였다."
+    tags: [label-shift, robustness]
+limitations:
+  - text: "Class 불균형이 큰 iNat benchmark에서는 rectified prototype을 쓰면 성능이 크게 나빠져서 그 결합을 쓰지 않았다고 저자들이 밝힌다. 즉 query 정보로 prototype을 고치는 장치는 class 구성이 고르지 않을 때 해가 될 수 있다."
+    tags: [label-imbalance, label-shift]
+    source: self
+  - text: "Validation class로 고른 정규화 계수 λ가 5-shot에서는 test 최적값(주로 0.1)과 달랐다고 저자들이 보고한다. 보고 수치는 validation 기준 λ로 냈다."
+    tags: [eval-protocol]
+    source: self
+  - text: "Query 집합의 class 비율을 Dirichlet(a=2)로 뽑으면 mini-ImageNet ResNet-18 1-shot에서 4.7%p 떨어졌다. 5-shot 이상의 하락은 0.5%p 이하로 작았지만, 1-shot 이득 일부는 균형 query 평가에 기대고 있었다."
+    tags: [label-shift, eval-protocol]
+    source: cited
+    by: "Realistic evaluation of transductive few-shot learning (2021)"
+    by_id: AlphaTIM
+    by_link: https://arxiv.org/abs/2204.11181
+  - text: "[analyst] Laplacian 항은 unary 항이 정한 할당을 이웃으로 퍼뜨린다. Prototype이 한쪽 하위집단으로 치우쳐 있고 kNN graph가 그 하위집단 안에서 촘촘하면, 오류가 집단 단위로 굳어질 수 있다. 원형 편향 자체를 고치는 장치는 아니다."
+    tags: [group-offset, graph-structure-use]
+    source: analyst
+builds_on: [SimpleShot, BDCSPN, ProtoNet, MatchingNet]
+compared_against: [SimpleShot, TransductiveFineTuning, BDCSPN, TPN, MetaOptNet, ProtoNet, MAML, MatchingNet, RelationNet]
+open_questions:
+  - "Prototype 오차와 할당 정규화의 기여를 분리하면, Laplacian 항은 prototype이 편향된 경우에도 이득을 주는가, 아니면 편향을 집단 단위로 굳히는가?"
+  - "iNat에서 rectification이 해가 된 원인은 class 불균형인가, class 간 시각적 유사도인가? 저자들은 원인을 분리하지 않았다."
+hooks:
+  - "(BSEL, 원형 병목 분리 실험) LaplacianShot은 prototype 추정과 할당 정규화가 분리된 구조다. 같은 Laplacian 항에 commconc context 원형과 참 pool 원형을 각각 넣으면, BSEL-P04가 말한 원형 병목(SRec 0.21 대 0.92)이 할당 정규화를 붙여도 그대로 남는지 볼 수 있다. 다만 실제 그래프를 affinity로 쓰는 Laplacian smoothing은 LP·C&S 계열과 같은 축이다. BSEL-F04에서 C&S 최선은 −5.1, LP-PoE는 −3.5였으므로 기본 원형 위에 Laplacian을 붙이는 것만으로는 재개 근거가 되지 않는다."
+  - "(BSEL, rectification 경고) 저자들 스스로 class 불균형 iNat에서 query로 원형을 고치는 rectification이 크게 해로웠다고 보고했다. commconc에서 원형을 unlabeled 노드로 보정하는 모든 transductive 장치(BD식 pseudo-label 가중, posterior 가중 수송)에 대한 외부 경고 근거로 쓸 수 있다."
+notes: "arXiv v3 본문(방법·실험·ablation·결론)을 확인했다. PMLR 페이지의 저자 표기는 Imtiaz Ziko이고 arXiv는 Imtiaz Masud Ziko다. citation에는 정식판(PMLR) 표기를 썼다."
+added: 2026-11-20

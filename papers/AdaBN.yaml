@@ -1,0 +1,55 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: AdaBN
+title: "Revisiting Batch Normalization For Practical Domain Adaptation"
+authors: "Yanghao Li, Naiyan Wang, Jianping Shi, Jiaying Liu, Xiaodi Hou (Peking University, TuSimple, SenseTime)"
+venue: "arXiv 2016"
+year: 2016
+links:
+  paper: https://arxiv.org/abs/1603.04779
+
+citation:
+  type: misc
+  title: "Revisiting Batch Normalization For Practical Domain Adaptation"
+  authors: ["Yanghao Li", "Naiyan Wang", "Jianping Shi", "Jiaying Liu", "Xiaodi Hou"]
+  year: 2016
+  arxiv: "1603.04779"
+  url: https://arxiv.org/abs/1603.04779
+  verified_from:
+    - https://arxiv.org/abs/1603.04779
+
+areas: [ml-foundations]
+problem: "Target domain 라벨 없이, 추가 parameter나 별도 학습 단계도 없이 batch-normalized DNN을 새 domain으로 옮기고자 한다."
+core_idea: "Label 관련 지식은 각 층의 가중치에, domain 관련 지식은 BN 층의 평균·분산 통계에 담긴다는 가설을 세운다. 그래서 source에서 학습한 모델의 모든 BN 층 통계를 target domain 전체 이미지로 다시 계산한 평균·분산으로 바꾸기만 한다. 여러 source domain이면 각 표본을 자기 domain의 통계로 표준화하며, 학습 중에는 minibatch가 한 domain에서만 오도록 맞춘다. 근거로 든 pilot 실험에서는 Caltech-256과 Bing의 minibatch BN 통계가 얕은 층과 깊은 층 모두에서 domain별로 뚜렷하게 갈렸다."
+key_assumptions:
+  - "Domain 차이는 층별 1·2차 통계(채널별 평균·분산)로 요약되고, 그 차이를 없애도 class 판별 정보는 가중치에 남는다고 가정한다."
+  - "Target domain 전체(또는 충분한 수의 batch)로 계산한 통계가 domain만을 반영하며, source와 target의 class 구성이 비슷하다는 점을 암묵적으로 전제한다."
+  - "Feature 채널을 서로 독립으로 표준화한다. 공분산 whitening은 minibatch 크기가 feature 차원보다 작아 특이행렬이 되므로 쓰지 않는다."
+strengths:
+  - text: "추가 component·parameter·튜닝이 전혀 없고, target 통계 재계산만으로 Office-31 단일·다중 source와 Caltech-Bing에서 당시 최고 수준을 냈다. CORAL과 결합하면 대체로 더 좋아졌다."
+    tags: [adaptation, inference-cost]
+  - text: "BN 통계로 domain을 거의 완벽히 구분할 수 있다는 pilot 분석으로, domain shift가 얕은 층과 깊은 층 모두에 있다는 점을 보였다. 출력층만 고쳐서는 부족하다는 논거다."
+    tags: [distribution-shift, interpretability]
+  - text: "Target batch 하나로 통계를 계산해도 기준선보다 좋았고, 적은 수의 target batch로 성능이 빠르게 안정됐다."
+    tags: [robustness]
+limitations:
+  - text: "Caltech→Bing에서는 모든 domain adaptation 방법의 개선이 작았고, CORAL을 결합해도 이득이 없었다. 저자들은 Bing 데이터가 더 다양하고 noisy하며 두 domain의 이미지 수가 불균형하기 때문일 수 있다고 추측한다."
+    tags: [robustness]
+    source: self
+  - text: "AdaBN류 사후 BN 통계 정렬은 좁은 범위의 shift에서만 크게 도움이 되고, 성능을 오히려 해치는 경우도 있다. Label 분포가 달라지면 평균 정렬이 결정 경계를 밀어 정확도를 떨어뜨린다. CIFAR-10-C에서 target class 수를 줄이면 성능이 떨어져, 한 class만 남기면 50% 아래로 내려갔다. 깊은 층일수록 label shift에 민감해서 마지막 일부 BN 층을 정렬에서 빼면 이 하락이 완화됐다. Label 분포가 같아도 표본·공간 위치마다 shift가 다르면 실패할 수 있다고 보였다."
+    tags: [label-shift, distribution-shift]
+    source: cited
+    by: "Limitations of Post-Hoc Feature Alignment for Robustness (2021)"
+    by_link: https://arxiv.org/abs/2103.05898
+  - text: "[analyst] Domain별 평균에는 domain offset뿐 아니라 그 domain의 class 구성도 섞여 있다. 그래서 class 구성이 domain마다 다르면 표준화가 구성 차이까지 지운다. 이 논문의 benchmark(Office, Caltech-Bing)는 domain 간 class가 같아 이 교락이 드러나지 않는다."
+    tags: [group-offset, label-shift]
+    source: analyst
+builds_on: [BatchNorm, CORAL]
+compared_against: [SA, LSSA, GFK, CORAL, DDC, DAN, RevGrad, DeepCORAL]
+open_questions:
+  - "Domain(집단)별 통계를 class 구성으로 보정한 뒤 정렬하면(class 조건부 또는 재가중 통계), label shift 아래에서도 AdaBN의 이득을 유지할 수 있는가?"
+  - "어느 층까지 정렬할지를 데이터로 고를 수 있는가? 후속 연구는 깊은 층이 label shift에 더 민감하다고 보였다."
+hooks:
+  - "(BSEL-F01, 이미 닫힌 기준선) community를 domain으로 보면 BSEL-F01의 comm-z(community 표준화)는 AdaBN의 다중 domain 판이다. 이 방법은 Rec_abs −2.84/−2.17/−0.15/−0.62로 기각되었다. F01의 원인 가설(클래스 구성을 보정하지 않는 community 단위 조정)은 Burns·Steinhardt가 AdaBN에 대해 보인 label-shift 실패 기전과 같다. 동질성 그래프의 community는 클래스 구성이 크게 다르므로 이 실패는 예상된 결과다. 이 대응은 F01의 reason_status를 hypothesis에서 supported로 올릴 외부 근거 후보이지만, 같은 기전을 우리 그래프에서 직접 분리한 실험은 아직 없다."
+  - "(BSEL-F03, 클래스 무관 offset) BSEL-F03의 O-both(모든 노드에서 클래스 무관 community offset 제거)도 1차 moment만 맞추는 AdaBN과 같은 축이고 실패했다. 후속 연구가 보인 '깊은 층을 정렬에서 빼면 label shift 피해가 줄어든다'는 결과는 frozen GraphPFN 입력 feature 수준에서는 직접 대응하는 층 선택이 없어 옮기기 어렵다."
+notes: "arXiv v4 본문(방법, pilot 실험, 실험, target 크기 민감도, cloud detection, 결론)을 확인했다. arXiv 본문 머리에는 ICLR 2017 심사 중으로 적혀 있으나 게재는 확인하지 않았다. 이후 저널판이 있다는 정보도 검증하지 않았으므로 misc로 두었다. cited 한계는 Burns·Steinhardt arXiv 2103.05898 본문에서 AdaBN을 직접 분석한 부분을 확인한 것이다. 이 논문은 harness에 없어 by_id를 비웠다. 새 항목으로 추가할지는 사용자 확인이 필요하다."
+added: 2026-11-20

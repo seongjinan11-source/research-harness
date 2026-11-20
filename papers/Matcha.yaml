@@ -1,0 +1,57 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: Matcha
+title: "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation"
+authors: "Wenxuan Bao, Zhichen Zeng, Zhining Liu, Hanghang Tong, Jingrui He (UIUC)"
+venue: "ICLR 2025"
+year: 2025
+links:
+  paper: https://iclr.cc/virtual/2025/poster/30388
+  openreview: https://openreview.net/forum?id=EpgoFFUM2q
+  arxiv: https://arxiv.org/abs/2410.06976
+  code: https://github.com/baowenxuan/Matcha
+citation:
+  type: inproceedings
+  title: "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation"
+  authors: ["Wenxuan Bao", "Zhichen Zeng", "Zhining Liu", "Hanghang Tong", "Jingrui He"]
+  year: 2025
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2410.06976"
+  url: https://openreview.net/forum?id=EpgoFFUM2q
+  verified_from:
+    - https://iclr.cc/virtual/2025/poster/30388
+    - https://arxiv.org/abs/2410.06976
+areas: [graph-learning]
+problem: "Source graph로 학습한 GNN을 source 데이터 없이 라벨 없는 target graph에 맞추는 graph test-time adaptation에서, 기존 TTA가 attribute shift에는 통하지만 degree·homophily 같은 structure shift에는 거의 효과가 없는 이유를 밝히고 대안을 낸다."
+core_idea: "저자들은 CSBM과 1층 GCN으로 target 정확도 손실을 두 항으로 나눈다. Featurizer를 고정한 채 classifier만 최적으로 바꿨을 때도 남는 representation degradation과, classifier를 고치면 줄어드는 classifier bias다. Attribute shift는 주로 decision boundary를 옮기지만(classifier bias), structure shift는 클래스별 representation을 섞어 featurizer 자체를 망가뜨린다(representation degradation). 그래서 classifier 경계를 다듬는 일반 TTA로는 부족하다. 최적 hop 결합 가중은 target의 degree와 homophily에 따라 달라지므로, Matcha는 GPRGNN의 general PageRank 계수 같은 hop-aggregation parameter만 test 시점에 조정한다. 목표 함수는 soft prediction으로 계산한 클래스 내 분산 대비 클래스 간 분산 비율인 prediction-informed clustering(PIC) loss이며, 비율 형태라 logit 크기를 키우는 것만으로 줄어드는 entropy의 자명해를 피한다. T3A·Tent·AdaNPC 같은 일반 TTA와 번갈아 돌려 attribute shift도 함께 다룬다."
+key_assumptions:
+  - "Source model이 source graph에서 클래스별로 뭉친 representation을 배우고, shift가 없으면 잘 일반화한다고 가정한다(저자들이 limitation으로 명시)."
+  - "Backbone에 GPRGNN·APPNP·JKNet·GCNII처럼 hop 결합을 조절하는 parameter가 있어야 한다."
+  - "Target graph 전체를 한 번에 볼 수 있고, source graph와 라벨은 adaptation 중 다시 쓸 수 없다."
+  - "Structure shift는 degree shift와 homophily shift로 대표된다고 본다. 클래스 사전확률 변화(label shift)는 다루지 않는다."
+strengths:
+  - text: "정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다."
+    tags: [distribution-shift, graph-structure-use, theory-gap]
+  - text: "바꾸는 parameter가 hop-aggregation 계수뿐이라 가볍다. PIC loss는 노드 수에 선형인 비용으로 계산되고, entropy minimization의 scale 자명해를 피한다. 초기 예측에 잡음이 많아도 PIC로 정확도가 오르는 예를 부록에서 보였다."
+    tags: [adaptation, inference-cost]
+  - text: "CSBM과 Syn-Cora·Syn-Products·Twitch-E·OGB-Arxiv에서 ERM보다 최대 31.95% 높았고, 기존 TTA와 결합하면 그 성능을 최대 40.61% 더 올렸다. GTrans·SOGA·GraphPatcher 같은 graph TTA와도 결합 가능했다."
+    tags: [distribution-shift, adaptation]
+limitations:
+  - text: "Source model이 클래스별로 뭉친 representation을 이미 배워야 하며, signal-to-noise가 매우 낮은 응용에서는 개선이 보장되지 않는다. 저자들은 이것이 대부분의 TTA가 공유하는 한계라고 덧붙인다."
+    tags: [adaptation, zero-shot-gap]
+    source: self
+  - text: "Test 시점에 추가 계산이 든다. 저자들은 GNN 추론 시간에 비해 작다고 측정했다."
+    tags: [inference-cost]
+    source: self
+  - text: "[analyst] PIC loss는 soft prediction의 클래스 질량으로 분산을 계산하므로, target의 클래스 구성이 바뀌거나 예측 prior가 치우치면 그 치우침이 목표 함수에 그대로 들어간다. Label shift를 별도로 다루는 장치가 없고, hop-aggregation parameter가 없는 모델에는 바로 적용할 수 없다."
+    tags: [label-shift, adaptation]
+    source: analyst
+builds_on: [GPRGNN, APPNP, JKNet, GCNII, Tent, T3A, AdaNPC, CSBM]
+compared_against: [ERM, T3A, Tent, AdaNPC, GTrans, SOGA, GraphPatcher]
+open_questions:
+  - "Structure shift와 label shift가 함께 있을 때 PIC loss가 prior 치우침을 증폭하는지, 클래스 구성 추정과 결합해야 하는지 검증되지 않았다."
+  - "Hop-aggregation parameter가 없는 attention 기반 모델(graph transformer, PFN adapter)에서 같은 역할을 하는 손잡이는 무엇인가?"
+hooks:
+  - "(BSEL 손실 분해와의 대응) Matcha의 분해를 commconc에 옮기면 BSEL의 두 oracle이 각 항에 대응한다. 특징 경로를 고치는 O-ctx(BSEL-P02)는 representation 쪽 보정으로 43–67%를 회복했고, 입력은 그대로 두고 PFN의 community 단위 출력 prior만 uniform context 것으로 바꾸는 O-swap(BSEL-P03)은 출력 쪽 보정으로 77–89%를 회복했다(그래프 1–2개). Matcha의 용어로는 commconc 손실의 큰 부분이 classifier bias형(출력 prior)으로 보인다는 뜻이다. 그렇다면 representation을 복원하는 Matcha류 장치는 commconc에서 덜 중요한 손잡이다. 단, O-swap은 uniform context PFN 출력이 필요한 oracle이라는 BSEL-P03 do_not_claim을 함께 적어야 한다."
+  - "(GraphPFN에 대응 손잡이 없음) GraphPFN adapter는 block마다 1-hop masked attention이고 GPRGNN식 hop 계수가 없다. Matcha를 쓰려면 adapter 출력 residual scale 같은 대체 손잡이를 정의해야 하므로 메소드 이식은 비용이 크다. 위 분해가 이미 출력 쪽을 가리키므로 우선순위는 낮다."
+notes: "ICLR 2025 게재는 iclr.cc 가상 포스터 페이지(OpenReview forum EpgoFFUM2q 링크 포함)에서 확인했다. OpenReview 페이지 자체는 bot challenge로 열지 못했다. 한계는 부록 E.2 Limitations에서 읽었다."
+added: 2026-11-20

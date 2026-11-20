@@ -1,0 +1,57 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: LogitAdjust
+title: "Long-tail learning via logit adjustment"
+authors: "Aditya Krishna Menon, Sadeep Jayasumana, Ankit Singh Rawat, Himanshu Jain, Andreas Veit, Sanjiv Kumar"
+venue: "ICLR 2021"
+year: 2021
+links:
+  paper: https://arxiv.org/abs/2007.07314
+  openreview: https://openreview.net/forum?id=37nvvqkCo5
+citation:
+  type: inproceedings
+  title: "Long-tail learning via logit adjustment"
+  authors: ["Aditya Krishna Menon", "Sadeep Jayasumana", "Ankit Singh Rawat", "Himanshu Jain", "Andreas Veit", "Sanjiv Kumar"]
+  year: 2021
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2007.07314"
+  url: https://openreview.net/forum?id=37nvvqkCo5
+  verified_from:
+    - https://iclr.cc/virtual/2021/spotlight/3516
+    - https://arxiv.org/abs/2007.07314
+areas: [ml-foundations]
+problem: "Long-tailed label 분포에서 학습한 classifier는 dominant class 쪽으로 치우쳐 rare class를 잘 못 맞힌다. Class별 오류율을 평균한 balanced error를 줄이는, 통계적으로 근거 있는 단순한 보정을 찾는다."
+core_idea: "Balanced error의 Bayes 최적 classifier는 원래 posterior를 class prior로 나눈 것이므로, logit에서 τ·log π_y를 빼면 된다. 이를 두 형태로 쓴다. Post-hoc logit adjustment는 학습된 모델의 logit에서 학습 class 빈도의 log를 빼고 argmax를 취한다. Logit-adjusted loss는 학습 중 softmax cross-entropy의 각 logit에 τ·log π_y를 더하는데, 이는 class 쌍마다 log prior 비율만큼 margin을 두는 pairwise margin loss와 같다. 저자들은 이 loss가 balanced error에 대해 Fisher consistent함을 보이고, weight normalization·LDAM·equalized loss가 이 기준을 만족하지 않음을 분석한다."
+key_assumptions:
+  - "학습 class prior π를 알거나 학습 빈도로 추정할 수 있다."
+  - "목표 지표가 모든 class를 동등하게 보는 balanced error이다."
+  - "p(x|y)는 학습과 평가에서 같다."
+  - "Post-hoc 방식은 τ로 출력 calibration 문제를 흡수할 수 있다고 본다."
+strengths:
+  - text: "Balanced error에 대한 Bayes 최적 해에서 바로 나온 보정이라 근거가 분명하다. Logit-adjusted loss의 Fisher consistency를 증명하고, 기존 margin·reweighting 방법들이 이를 만족하지 않는 이유를 하나의 loss family 안에서 설명한다."
+    tags: [label-imbalance, theory-gap]
+  - text: "Post-hoc 버전은 이미 학습된 모델의 logit에서 class별 상수만 빼면 되므로 재학습이 필요 없다."
+    tags: [label-imbalance, inference-cost]
+  - text: "CIFAR-10/100-LT, ImageNet-LT, iNaturalist에서 balanced error를 ERM보다 크게 줄였다(예: CIFAR-10-LT 27.16→22.33, ImageNet-LT 53.11→48.89). 이득은 주로 rare class에서 나왔다."
+    tags: [label-imbalance]
+  - text: "Weight normalization이 class 빈도를 따르는 정도가 optimizer(SGD momentum 대 Adam)에 따라 달라진다는 점을 보여, post-hoc weight normalization의 숨은 의존성을 드러냈다."
+    tags: [label-imbalance, robustness]
+limitations:
+  - text: "기존 cost-sensitive 방법과의 자세한 비교, DRW 같은 다른 기법과의 결합, relative·adaptive margin 결합의 정식 분석을 향후 과제로 남긴다. 저자들은 margin 결합을 heuristic이라 부른다."
+    tags: [label-imbalance, theory-gap]
+    source: self
+  - text: "Consistency 결과는 population 수준이다. Non-convex 신경망 학습에서는 bias 항을 더하면 다른 local minimum으로 갈 수 있다고 저자들이 적는다."
+    tags: [theory-gap, training-stability]
+    source: self
+  - text: "[analyst] Post-hoc 보정은 class마다 같은 상수를 logit에 더하는 것이라, 각 class의 logit으로 샘플 순위를 매기는 ranking 지표는 바꾸지 못하고 argmax 기반 지표(정확도, balanced error)만 바꾼다. 또 평가 분포가 균등하다는 목표를 전제하므로, 집단마다 목표 prior가 다른 경우에는 따로 확장이 필요하다."
+    tags: [label-shift, label-imbalance]
+    source: analyst
+builds_on: [SaerensEM, LDAM, weight-normalization]
+compared_against: [ERM, weight-normalization, LDAM, equalized-loss]
+open_questions:
+  - "Classifier의 implicit 학습 prior가 학습 빈도와 다를 때(예: in-context 모델이 context에서 읽어 낸 prior), 무엇을 log π로 빼야 하는가?"
+  - "집단마다 학습 prior와 목표 prior가 다를 때 집단별 logit adjustment는 언제 정당한가?"
+hooks:
+  - "(BSEL-L01) 이 프로젝트에서 class 단위 상수 logit adjustment는 pairwise AUC에 대해 무효였다. 메커니즘상 post-hoc 보정은 class별 상수 이동이라 그 결과는 예상된 것이다. BSEL에서 LogitAdjust를 기준선으로 둔다면 bAcc 같은 argmax 지표에서만 의미가 있고, AUC 손실을 되돌리는 후보로 세지 않는다."
+  - "(BSEL, per-community 확장의 한계) 'community별 log prior를 빼는' 확장은 per-(community,class) 상수 보정이 되므로, BSEL-L01에 따라 within-community 순위는 그대로이고 community 간 쌍에서만 효과가 난다. 또 무엇을 log π로 볼지가 핵심 문제로 남는다. BSEL-P03은 frozen GraphPFN의 community 단위 출력 prior가 context 개수와 달리 왜곡되어 있음을 보였으므로, context 빈도로 log π를 정하는 것은 잘못된 분모일 수 있다(가설)."
+notes: "arXiv v2(ICLR 2021 게재 표기)와 ar5iv 본문을 읽었다. ICLR 2021 spotlight로 iclr.cc 가상 페이지에서 확인했고, OpenReview forum 주소도 그 페이지에서 읽었다. OpenReview 자체는 접근이 막혀 리뷰는 읽지 않았다. booktitle은 학회 이름만 적었다."
+added: 2026-11-20

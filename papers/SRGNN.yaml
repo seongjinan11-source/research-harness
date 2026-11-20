@@ -1,0 +1,60 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: SRGNN
+title: "Shift-Robust GNNs: Overcoming the Limitations of Localized Graph Training data"
+authors: "Qi Zhu, Natalia Ponomareva, Jiawei Han, Bryan Perozzi (UIUC / Google Research)"
+venue: "NeurIPS 2021"
+year: 2021
+links:
+  paper: https://papers.neurips.cc/paper/2021/hash/eb55e369affa90f77dd7dc9e2cd33b16-Abstract.html
+  arxiv: https://arxiv.org/abs/2108.01099
+  code: https://github.com/GentleZhu/Shift-Robust-GNNs
+citation:
+  type: inproceedings
+  title: "Shift-Robust GNNs: Overcoming the Limitations of Localized Graph Training data"
+  authors: ["Qi Zhu", "Natalia Ponomareva", "Jiawei Han", "Bryan Perozzi"]
+  year: 2021
+  booktitle: "Advances in Neural Information Processing Systems"
+  volume: 34
+  arxiv: "2108.01099"
+  url: https://papers.neurips.cc/paper/2021/hash/eb55e369affa90f77dd7dc9e2cd33b16-Abstract.html
+  verified_from:
+    - https://papers.neurips.cc/paper/2021/hash/eb55e369affa90f77dd7dc9e2cd33b16-Abstract.html
+    - https://arxiv.org/abs/2108.01099
+areas: [graph-learning]
+problem: "Semi-supervised node classification에서 라벨 노드가 그래프 전체의 IID 표본이 아니라 일부 지역에 몰려 뽑히면, GNN이 그 지역의 우연한 규칙성에 과적합해 나머지 그래프에서 성능이 떨어진다. 같은 그래프 안의 이 train/test 분포 차이를 줄이는 학습 방법을 찾는다."
+core_idea: "저자들은 마지막 hidden representation Z에서 라벨 노드 분포와 그래프 전체 분포가 다른 것을 shift로 정의하고, 두 갈래로 보정한다. 학습 가능한 층이 graph 연산과 섞인 GCN류에서는 라벨 노드 표현과 라벨 없는 IID 표본 노드 표현 사이의 central moment discrepancy(CMD, 5차 moment까지)를 cross-entropy에 regularizer로 더한다. APPNP·SGC처럼 graph propagation이 학습 층 뒤에 선형으로 붙는 linearized GNN에서는 PPR 행 벡터 공간에서 kernel mean matching(KMM)으로 라벨 노드별 instance weight를 구해 loss를 재가중한다. 이때 클래스별 weight 합이 원래 개수와 같도록 제약해 재가중이 클래스 불균형을 새로 만들지 않게 한다. 실험용으로는 seed 노드의 sparse PPR 이웃 중 같은 라벨 노드를 묶어 넣는 PPR-S biased sampler를 제안해, 지역에 몰린 라벨 집합을 재현 가능하게 만든다."
+key_assumptions:
+  - "Representation 공간에서 Pr(Y|Z)는 train과 test에서 같고, shift는 주로 Pr(Z)의 차이에서 온다고 가정한다."
+  - "그래프 전체에서 균일하게 뽑은 라벨 없는 IID 표본을 학습 중에 쓸 수 있다고 가정한다(transductive 설정)."
+  - "GNN encoder를 다시 학습할 수 있어야 한다. CMD는 hidden layer gradient로, KMM은 학습 loss의 재가중으로 작동한다."
+  - "편향은 PPR로 정의한 국소 이웃 쏠림으로 모사된다고 본다. 실험의 편향 강도는 PPR-S의 teleport 확률 α로 조절한다."
+strengths:
+  - text: "같은 그래프 안에서 라벨이 국소적으로 몰리는 문제를 GNN의 distribution shift로 처음 정면으로 다뤘다. PPR-S sampler는 대형 그래프에서도 sublinear 시간에 국소화된 라벨 집합을 만들 수 있어, 이후 FRGNN 등이 그대로 가져다 쓰는 편향 라벨 평가 protocol이 되었다."
+    tags: [selection-bias, eval-protocol]
+  - text: "편향 라벨에서는 모든 baseline이 크게 떨어진다는 것을 정량화했다. 예를 들어 PubMed에서 IID GCN의 Micro-F1 79.8이 편향 라벨에서는 baseline 전부 10점 넘게 떨어졌다. SR-GNN은 GCN 대비 손실을 최소 40% 줄였다(Cora 7.3점 손실 대 GCN 13.2점). ogb-arxiv(1% 라벨)에서도 61.6으로 APPNP 59.8보다 높아 손실의 약 30%를 되돌렸다."
+    tags: [selection-bias, distribution-shift]
+  - text: "Hidden layer 정렬(CMD)과 linear propagation 뒤의 instance reweighting(KMM)을 한 objective로 묶어 deep GNN과 linearized GNN 모두에 붙는다. Ablation에서 두 요소를 함께 쓸 때가 각각보다 좋았고, CMD는 같은 GNN에서 DANN식 adversarial regularizer보다 좋고 덜 민감했다. 추가 비용은 IID 표본 forward/backward와 사전 kernel 계산뿐이다."
+    tags: [distribution-shift, inference-cost]
+limitations:
+  - text: "저자들은 일반적인 분포 차이만 다뤘고, spam·abuse 탐지처럼 특정 분야의 shift 유형에 맞춘 regularizer와 불균형 학습 데이터에서 fairness 같은 제약을 지키는 방법은 향후 과제로 남겼다."
+    tags: [distribution-shift, label-imbalance]
+    source: self
+  - text: "분포 차이를 줄이는 기존 접근(SR-GNN의 hidden layer regularization 포함)은 모두 모델을 다시 학습해야 하므로, 모델 구조나 parameter에 접근할 수 없는 상황에서는 쓸 수 없다고 지적한다. 이 논문은 학습된 GNN을 그대로 두고 test 시점에 라벨 노드 feature만 바꾸는 대안을 낸다."
+    tags: [adaptation, selection-bias]
+    source: cited
+    by: "FRGNN: Mitigating the Impact of Distribution Shift on Graph Neural Networks via Test-Time Feature Reconstruction (2023)"
+    by_id: FRGNN
+    by_link: https://arxiv.org/abs/2308.09259
+  - text: "[analyst] KMM 재가중은 클래스별 weight 합을 원래대로 고정하고, CMD는 클래스를 구분하지 않고 marginal Pr(Z)를 맞춘다. 그래서 라벨 집합의 클래스 구성이 그래프 전체와 다른 경우(label shift)나 지역마다 클래스 구성이 다른 경우는 보정 대상이 아니다. Pr(Y|Z) 불변 가정 아래 marginal만 맞추면 클래스 구성 차이를 오히려 feature 쪽으로 밀어 넣을 수 있다는 점은 PairAlign이 marginal alignment 일반에 대해 지적한 문제와 같다."
+    tags: [label-shift, group-offset, theory-gap]
+    source: analyst
+builds_on: [CMD, KMM, APPNP, SGC, DANN]
+compared_against: [GCN, GAT, SGC, APPNP, DGI, DeepWalk, MLP, DANN]
+open_questions:
+  - "KMM의 클래스 합 제약을 풀고 지역별 클래스 구성까지 맞추도록 재가중하면 국소화 라벨 손실이 더 줄어드는가, 아니면 라벨 없는 IID 표본만으로는 그 구성이 식별되지 않는가?"
+  - "라벨 노드가 어떤 community에도 없는 지역(coverage 0)은 재가중으로 해결할 수 없다. 재가중이 되돌릴 수 있는 손실과 coverage 부족에서 오는 손실을 나누는 실험이 없다."
+hooks:
+  - "(BSEL commconc 선행 protocol) SR-GNN의 PPR-S는 seed 주변 같은 라벨 노드를 묶어 뽑으므로 commconc(클래스마다 소수 Louvain community에서 context를 뽑음)의 가장 가까운 선례다. SR-GNN 표에서도 GCN·GAT·SGC·APPNP·DGI가 모두 비슷하게 크게 떨어지는데, 이는 BSEL-P01의 'commconc 손실 2.4–13.8 AUC pt는 GraphPFN 고유가 아니다(BS-GCN·LP도 비슷하게 손실)'와 같은 방향의 외부 근거다. 차이점은 commconc가 community 단위·클래스별 집중이고 step 불균형 context 위에서 pairwise AUC로 잰다는 것, 그리고 모델이 학습 불가능한 frozen PFN이라는 것이다. Related work에서 이 차이를 분명히 적어야 한다."
+  - "(BSEL-F01과의 대조) BSEL-F01에서 SR-GNN식 CMD-GCN(λ=0/0.1/1)은 BS-GCN과 거의 같았고(PubMed 손실 15.8/14.9/14.1), 판별형 density-ratio 재가중도 효과가 없었다. SR-GNN의 두 장치는 모두 클래스 구성을 보지 않는 marginal 정렬이므로, F01의 failure_reason('클래스 구성을 보정하지 않는 community 단위 조정')과 메커니즘이 같다. 다만 F01은 CMD만 재현했으므로, 비교 하한을 완결하려면 SR-GNN 원래 설정(APPNP + CMD + KMM)을 BS 표에 한 줄 더 넣는 것이 깔끔하다. Frozen GraphPFN에서는 KMM weight를 줄 loss가 없고 context row 재표집만 가능한데, F04에서 context 재표집은 −1.0이었다."
+notes: "NeurIPS proceedings 페이지 제목은 끝이 'Training data'(소문자 d)로 표기되어 그대로 따랐다. arXiv 제목은 'Training Data'. 코드 링크는 arXiv PDF 각주에서 읽었다. pages는 proceedings 페이지에 표시되지 않아 지웠다."
+added: 2026-11-20

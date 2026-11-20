@@ -1,0 +1,58 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: SparseJointShift
+title: "Estimating and Explaining Model Performance When Both Covariates and Labels Shift"
+authors: "Lingjiao Chen, Matei Zaharia, James Zou"
+venue: "NeurIPS 2022"
+year: 2022
+links:
+  paper: https://arxiv.org/abs/2209.08436
+  proceedings: https://proceedings.neurips.cc/paper_files/paper/2022/hash/4aa13186c795a52ba88f5b822f4b77eb-Abstract-Conference.html
+citation:
+  type: inproceedings
+  title: "Estimating and Explaining Model Performance When Both Covariates and Labels Shift"
+  authors: ["Lingjiao Chen", "Matei Zaharia", "James Y Zou"]
+  year: 2022
+  booktitle: "Advances in Neural Information Processing Systems"
+  volume: 35
+  arxiv: "2209.08436"
+  url: https://proceedings.neurips.cc/paper_files/paper/2022/hash/4aa13186c795a52ba88f5b822f4b77eb-Abstract-Conference.html
+  verified_from:
+    - https://proceedings.neurips.cc/paper_files/paper/2022/hash/4aa13186c795a52ba88f5b822f4b77eb-Abstract-Conference.html
+    - https://arxiv.org/abs/2209.08436
+areas: [ml-foundations]
+problem: "실제 배포에서는 label 분포와 일부 feature 분포가 함께 바뀌는데, label shift나 covariate shift 하나만 가정한 기존 방법은 이를 다루지 못한다. Target label 없이 이런 결합 shift를 식별하고, 모델 성능 변화를 추정하고, 어떤 feature가 shift를 일으켰는지 설명하고자 한다."
+core_idea: "Sparse Joint Shift(SJS)는 label y와 소수 feature 집합 x_I의 결합 분포는 바뀌어도, 나머지 feature의 조건부 분포 p(x_{-I}|x_I, y)는 그대로라고 가정한다. Label shift(I가 공집합)와 sparse covariate shift는 그 특수한 경우다. 조건부 source density들이 label 값에 대해 선형 독립이면 target feature 주변분포만으로 target 결합분포가 식별된다는 정리를 준다. SEES는 최대 m개 feature와 y에만 의존하는 weight w(x, y)를 학습해, 가중한 source feature density가 target feature density와 맞도록 한다(연속형은 L1 penalty가 있는 KL 매칭 SEES-c, 이산형은 후보 집합 열거와 회귀 SEES-d). 그 weight로 labeled source loss를 재가중해 target 성능을 추정하고, weight를 좌우하는 feature를 shift 설명으로 낸다."
+key_assumptions:
+  - "Shift는 정확히 m-sparse이다. 즉 label과 함께 바뀌는 feature는 최대 m개이고 나머지의 조건부 분포는 불변이다."
+  - "식별을 위한 선형 독립 조건이 성립한다. Shift되는 feature가 전체의 절반을 넘으면 조건이 성립하지 않는다."
+  - "Labeled source와 unlabeled target이 있다. SEES-c는 shift를 반영하는 basis function을 미리 골라야 한다."
+strengths:
+  - text: "Label shift와 sparse covariate shift를 하나의 가정으로 묶고, 그 아래에서 target label 없이 결합 shift가 식별되는 충분조건을 명시한다."
+    tags: [label-shift, identifiability, distribution-shift]
+  - text: "Weight가 소수 feature에만 의존하도록 제한해 해석 가능한 설명(어떤 feature가 label과 함께 움직였는가)을 같이 준다."
+    tags: [interpretability, distribution-shift]
+  - text: "COVID-19 사례에서 weight MSE가 SEES-d 0.002, BBSE 0.144, KLIEP 0.573이었다. 실제 지역·연도 shift(EMPLOY, INCOME, INSURANCE)에서도 성능 gap 추정 오차를 baseline보다 줄였고, 표본이 늘면 SEES 오차는 줄지만 BBSE·KLIEP는 거의 줄지 않았다."
+    tags: [label-shift, model-based-baseline]
+limitations:
+  - text: "Label과 함께 shift되는 feature가 많아질수록 추정 오차가 커진다고 저자들이 보고한다."
+    tags: [identifiability, distribution-shift]
+    source: self
+  - text: "순수 label shift(0-SJS)에서는 BBSE보다 약간 나쁘다. 저자들은 더 일반적인 shift를 덮는 대가로 설명한다."
+    tags: [label-shift]
+    source: self
+  - text: "연속적으로 바뀌는 data stream으로의 적응은 다루지 않으며, 소수의 target label을 질의할 수 있을 때의 개선과 SJS에 robust한 모델 학습은 열린 문제로 남긴다."
+    tags: [nonstationarity, adaptation]
+    source: self
+  - text: "[analyst] 목표가 예측 보정이 아니라 성능 추정과 설명이다. 추정한 w(x_I, y)로 예측을 바꾸더라도 그것은 (x_I, y)별 상수 재가중이라, x_I로 묶인 집단 안에서의 순위는 바꾸지 못한다. 실험도 gradient boosting 기반 tabular 데이터에 한정된다."
+    tags: [task-coverage, label-shift]
+    source: analyst
+builds_on: [BBSE, KLIEP]
+compared_against: [BBSE, KLIEP]
+open_questions:
+  - "Shift되는 feature가 이산 집단 표지(예: community)일 때, SJS 식별 조건은 집단별 class 구성이 얼마나 다양해야 성립하는가?"
+  - "Labeled source 자체가 집단에 따라 편향 선택된 경우, SEES의 density 매칭은 무엇을 기준으로 해야 하는가?"
+hooks:
+  - "(BSEL, shift 모델) commconc는 SJS의 꼴로 쓸 수 있다. Community 표지를 shift된 feature x_I로 보면, 선택이 community에 따라 일어나고 community 안에서는 class와 무관하다는 가정 아래 p(나머지 feature|community, y)는 context와 query에서 같고 p(community, y)만 바뀐다. 이 틀은 Saerens의 p(x|y) 불변보다 BSEL에 맞는 가정이며, BSEL-P03처럼 community 단위 prior가 문제라는 관찰과 맞는다."
+  - "(BSEL-L01 제약) SEES의 weight w(community, y)는 per-(community,class) 상수다. 그래서 정확히 추정해도 within-community pairwise AUC는 바꾸지 못하고, 이득은 community 간 쌍에서만 나온다. BSEL에서 쓸 가치는 보정기보다 진단 쪽에 있다. 예를 들어 frozen GraphPFN의 commconc 성능 하락을 라벨 없이 추정하거나, 어떤 community가 손실을 만드는지 설명하는 데 쓸 수 있다(가설)."
+notes: "arXiv v1 HTML 본문을 읽었다(부록 증명 일부는 읽지 않음). NeurIPS proceedings 페이지의 저자 표기는 James Y Zou다. 쪽수는 페이지에 없고 DOI 10.52202/068431-0833만 있다."
+added: 2026-11-20

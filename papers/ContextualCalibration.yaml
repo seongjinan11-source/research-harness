@@ -1,0 +1,60 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: ContextualCalibration
+title: "Calibrate Before Use: Improving Few-shot Performance of Language Models"
+authors: "Tony Z. Zhao, Eric Wallace, Shi Feng, Dan Klein, Sameer Singh"
+venue: "ICML 2021"
+year: 2021
+links:
+  paper: https://arxiv.org/abs/2102.09690
+  proceedings: https://proceedings.mlr.press/v139/zhao21c.html
+citation:
+  type: inproceedings
+  title: "Calibrate Before Use: Improving Few-shot Performance of Language Models"
+  authors: ["Zihao Zhao", "Eric Wallace", "Shi Feng", "Dan Klein", "Sameer Singh"]
+  year: 2021
+  booktitle: "Proceedings of the 38th International Conference on Machine Learning"
+  publisher: "PMLR"
+  volume: 139
+  pages: "12697--12706"
+  arxiv: "2102.09690"
+  url: https://proceedings.mlr.press/v139/zhao21c.html
+  verified_from:
+    - https://proceedings.mlr.press/v139/zhao21c.html
+    - https://arxiv.org/abs/2102.09690
+areas: [ml-foundations]
+problem: "GPT-3의 few-shot in-context learning 정확도가 prompt 형식, demonstration 선택, 순서에 따라 우연 수준에서 최고 수준까지 크게 흔들린다. 그 원인을 분석하고, label 없이 이 불안정성을 줄이는 방법을 찾는다."
+core_idea: "저자들은 불안정성의 주된 원인을 prompt가 만드는 출력 쪽 bias로 본다. Prompt에 많이 나온 label을 선호하는 majority label bias, 끝 쪽 demonstration의 label을 선호하는 recency bias, 사전학습에서 흔한 token을 선호하는 common token bias다. 이 bias는 주로 출력 분포의 이동으로 나타난다. Contextual calibration은 같은 prompt에 내용이 없는 입력('N/A', '[MASK]', 빈 문자열)을 넣어 얻은 label 확률 p_cf를 평균해 bias를 추정하고, 그 입력의 예측이 균일해지도록 W=diag(p_cf)⁻¹, b=0인 대각 affine 변환을 실제 입력의 확률에 적용한다. Label이 있는 데이터는 필요 없고 forward pass 몇 번만 추가된다."
+key_assumptions:
+  - "Content-free 입력에서의 bias가 같은 prompt의 실제 입력에서의 bias를 대표한다."
+  - "보정 후 기준점은 균일 분포다. 즉 content-free 입력은 모든 답에 같은 점수를 받아야 한다."
+  - "Bias는 class별 대각 scaling으로 근사된다. 파라미터 수를 억제하려고 W를 대각으로 제한했다."
+strengths:
+  - text: "Label 없이 prompt마다 bias를 추정해 보정하므로 비용이 거의 없다. GPT-3·GPT-2의 여러 task에서 평균·최악 정확도를 최대 30.0%p 올리고, demonstration 선택·순서·prompt 형식에 따른 변동을 줄였다."
+    tags: [label-shift, robustness]
+  - text: "In-context 모델의 출력 bias가 context 구성(label 빈도, 순서)에서 생긴다는 점을 체계적으로 보였다. 예를 들어 불균형 SST-2 prompt는 예측을 다수 class로 크게 기울였다."
+    tags: [label-imbalance, robustness]
+  - text: "AGNews에서 training-free 보정이 validation으로 튜닝한 oracle W에 가까운 성능을 냈다."
+    tags: [label-shift, uncertainty]
+limitations:
+  - text: "Prompt engineering의 필요를 없애지는 못하고 줄일 뿐이라고 저자들이 적는다."
+    tags: [robustness]
+    source: self
+  - text: "어떤 content-free 입력을 쓰느냐가 결과에 영향을 준다고 저자들이 인정한다(좋은 선택이 여럿 있지만 선택 자체는 중요하다)."
+    tags: [robustness, uncertainty]
+    source: self
+  - text: "Open-ended generation 보정은 향후 과제이며, 생성 task에서는 첫 token만 보정한다. Fine-tuning과의 관계도 다루지 않았다."
+    tags: [task-coverage]
+    source: self
+  - text: "[analyst] 균일 분포를 목표로 하므로, 평가 데이터의 참 class 분포가 불균형하면 그 불균형까지 bias로 보고 지울 수 있다. 실제로 표의 일부 설정(GPT-2 XL CB 0-shot 44.6→17.9)에서 보정이 크게 해로웠지만 원인 분석은 없다. 보정도 class별 상수 scaling이다."
+    tags: [label-shift, label-imbalance]
+    source: analyst
+builds_on: [GPT-3, vector-scaling]
+compared_against: [uncalibrated-ICL]
+open_questions:
+  - "In-context 모델에서 '내용 없는 입력'은 무엇이어야 하는가? 입력 모달리티(그래프 노드, tabular row)에 따라 content-free query의 정의는 어떻게 달라지는가?"
+  - "평가 분포가 균일하지 않을 때 목표 분포를 무엇으로 두어야 하는가?"
+hooks:
+  - "(BSEL, PFN context bias 진단) 이 논문의 진단은 frozen GraphPFN에도 거의 그대로 옮겨진다. Context 구성(commconc의 community 집중)이 출력 prior를 기울인다는 BSEL-P03의 관찰은 majority label bias의 그래프판으로 읽을 수 있다. 다만 PFN에서 content-free query를 무엇으로 둘지(평균 feature에 edge 없는 노드, 또는 community별 평균 노드)는 정해져 있지 않다. Community별 content-free query로 PFN의 community 단위 implicit prior를 직접 재는 것은 BSEL-P03의 O-swap을 라벨 없이 근사하는 값싼 진단이 될 수 있다(가설, 미실행)."
+  - "(BSEL-L01 제약) 보정 자체는 class별(또는 community별로 확장하면 per-(community,class)) 상수 scaling이라, BSEL-L01에 따라 within-community pairwise AUC는 바꾸지 못한다. 또 균일 목표를 쓰면 community 안의 실제 class 구성까지 지우게 되어, community batch calibration이 크게 해로웠던 결과(flat 분자, −15 AUC pt)와 같은 실패를 반복할 위험이 있다."
+notes: "arXiv v2와 ar5iv 본문을 읽었다. PMLR 페이지는 첫 저자를 Zihao Zhao로 표기하고 arXiv는 Tony Z. Zhao로 표기한다. citation은 PMLR 표기를 따르고 표시용 authors는 arXiv 표기를 남겼다. 제목 대소문자도 PMLR 표기('Few-shot')를 따랐다."
+added: 2026-11-20

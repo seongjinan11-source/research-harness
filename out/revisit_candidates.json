@@ -590,6 +590,53 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "SPFN02-F01",
+    "project": "SPFN02 Subgraph-PFN scalar reassociation and PPR feature correction",
+    "claim": "합성에서 학습한 PPR 피처 보정이 실제 세 그래프에서 PPR+ridge를 이기면서 PPR 대비 bAcc 하락을 그래프별 2%p 이하로 유지한다.",
+    "verdict": "현재 RP24·합성 prior·head 조합의 확장을 중단한다.",
+    "reason_status": "unknown",
+    "failure_reason": "CiteSeer에서 head recall 하락이 tail 개선을 상쇄했다. 투영, 피처 요약, prior와 학습 목표 중 어느 것이 해당 하락을 야기했는지는 분리하지 못했다.",
+    "reopen_when": "관측 context만으로 어떤 피처 보정이 head 성능을 해치지 않는지 판별할 구체적 신호나, RP24에서 사라지는 라벨 관련 피처를 가변 차원으로 처리할 연산을 제시할 때.",
+    "recheck": "새 synthetic bank와 새 실제 데이터에서 overall bAcc 및 head/tail recall을 분리한다. 고정 PPR 대비 교정/손실 수를 기록한다. 현재 실제 개발 패널은 독립 평가로 사용하지 않는다.",
+    "comparison_floor": "class-balanced PPR, ridge, 개발에서 계수를 고정한 PPR+ridge, 같은 크기 score-only 학습 head, 기존 frozen tail.",
+    "source_refs": [
+      "findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md",
+      "findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json"
+    ],
+    "paper_id": "PairAlign",
+    "paper_title": "Pairwise Alignment Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v235/liu24ci.html",
+    "matches": [
+      {
+        "strength": "Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      },
+      {
+        "strength": "국가별로 나눈 MAG citation graph(약 38만 노드, 135만 edge)라는 대형 GDA 데이터를 만들고, 여기서 StruRW 대비 25% 넘는 상대 개선을 보였다. HEP pileup에서는 label 분포가 심하게 치우친 높은 PU에서 낮은 PU로 옮길 때 LS 보정(PA-LS)이, 반대 방향에서는 CSS 보정(PA-CSS)이 효과적이어서 두 모듈의 역할이 분리되어 드러났다.",
+        "tags": [
+          "distribution-shift",
+          "label-imbalance"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use",
+      "label-imbalance"
+    ],
+    "keywords": [],
+    "retrieval_score": 6,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "SRC-F01",
     "project": "출처 중첩·공유 보간 오차 attention",
     "claim": "Source covariance를 보정하면 분류가 개선된다.",
@@ -625,6 +672,73 @@
     "keywords": [],
     "retrieval_score": 6,
     "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "BSEL-F04",
+    "project": "BSEL community-concentrated context selection for frozen GraphPFN",
+    "claim": "context 라벨·그래프·특징만으로 community별 클래스 사전확률 p(c|k)를 추정해 PFN 출력을 보정하면(CPC) commconc 손실의 선택 특유 부분을 되돌린다.",
+    "verdict": "중단(실용 성능 부족; 정식 E1 판정 없음).",
+    "reason_status": "supported",
+    "failure_reason": "E-moment는 commconc context 원형이 community offset으로 오염되어 실패한다(BSEL-P04의 참 원형 상한). context 라벨을 전파하는 방법은 편향을 키운다. context 없는 community에 클래스 질량의 65–92%가 있다(리뷰 proxy).",
+    "reopen_when": "community 집중 context에서도 클래스 원형(또는 p(c|k))을 라벨 없이 편향 없이 추정하는 장치가 나오고, 참 원형 상한 대비 TV를 줄인다는 근거가 있을 때.",
+    "recheck": "캐시된 CiteSeer/Cora와 photo/PubMed 보충 캐시로 SG와 context 없는 community TV를 함께 본다.",
+    "comparison_floor": "O-swap, 참 원형 E-moment, L-ctx(같은 라벨을 context에 추가), C&S, REF-GP.",
+    "source_refs": [
+      "findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md",
+      "findings/sources/biased-selection-2026-11-20/context_prior/e1_report.json"
+    ],
+    "paper_id": "LatentLabelShift",
+    "paper_title": "Unsupervised Learning under Latent Label Shift",
+    "paper_link": "https://arxiv.org/abs/2207.13179",
+    "matches": [
+      {
+        "strength": "Label 없이도 domain 간 class 비율 차이만으로 잠재 class와 domain별 prior를 식별하는 조건을 준다. Label shift를 보정 대상이 아니라 비지도 학습의 신호로 쓴다.",
+        "tags": [
+          "identifiability",
+          "label-shift"
+        ],
+        "keywords": [
+          "latent label shift"
+        ],
+        "specific_keywords": [
+          "latent label shift"
+        ]
+      },
+      {
+        "strength": "Prior 추정에 labeled source를 쓰지 않고 domain 표지와 모든 unlabeled 입력만 쓴다. 따라서 labeled 집합의 선택 방식에 기대지 않는다.",
+        "tags": [
+          "label-shift"
+        ],
+        "keywords": [
+          "latent label shift"
+        ],
+        "specific_keywords": [
+          "latent label shift"
+        ]
+      },
+      {
+        "strength": "Feature 유사도가 class와 어긋나는 데이터(FieldGuide: 같은 종의 애벌레와 성체)에서 SCAN을 크게 이겼다(FieldGuide-2 최희소 설정 0.947 대 0.589). CIFAR-20에서도 희소한 class-domain 구조에서 큰 차이가 났다(0.807 대 0.445).",
+        "tags": [
+          "label-shift"
+        ],
+        "keywords": [
+          "latent label shift"
+        ],
+        "specific_keywords": [
+          "latent label shift"
+        ]
+      }
+    ],
+    "tags": [
+      "identifiability",
+      "label-shift"
+    ],
+    "keywords": [
+      "latent label shift"
+    ],
+    "retrieval_score": 5,
+    "signal": "구체 키워드+태그 일치 (미검증)",
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
@@ -746,6 +860,51 @@
       "findings/sources/adaptive-transport-2026-11-02/results/cost.json",
       "findings/sources/adaptive-transport-2026-11-02/results/preflight.json"
     ],
+    "paper_id": "LaplacianShot",
+    "paper_title": "Laplacian Regularized Few-Shot Learning",
+    "paper_link": "https://arxiv.org/abs/2006.15486",
+    "matches": [
+      {
+        "strength": "Meta-learning 없이 고정 feature 위에 붙이는 inference 절차만으로 miniImageNet·tieredImageNet·CUB·cross-domain·iNat 5개 benchmark에서 당시 최고 수준을 냈다. Ablation에서 Laplacian 항은 nearest-prototype 대비 1-shot에서 약 2~3%p 이상 꾸준히 올렸다.",
+        "tags": [
+          "adaptation",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "ADTR-F01",
+    "project": "Unknown-law adaptive feature transport around frozen GraphPFN",
+    "claim": "관측 feature와 context로 추론한 q(g)를 두 PCFI completion의 가중치로 쓰면 frozen PFN이 고정 평균·feature-only 적응보다 정확해진다.",
+    "verdict": "참 법칙을 주지 않는 적응 PCFI→frozen PFN은 사전 primary를 통과하지 못했다. 피처만 쓰는 적응과50:50 평균을 정확도에서 확실히 넘지 못했고, NLL/Brier는 두 대조보다 악화했다. 같은 입력의 직접 Gaussian/probit 추론은 유의한 피처 활용 이득을 보였다. 이번 입력 가설 선택기를 새 PFN 메소드로 확대하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "정확도 primary 두 CI가0을 포함하고 NLL/Brier는 두-completion 평균과 feature-only보다 악화했다. Known-family Gaussian/probit는 직접 예측에서 더 좋았다. 입력 후보·prior mismatch·decoder·weight 추정 중 고유 원인은 분리하지 않았다.",
+    "reopen_when": "추정한 법칙을 입력 가중치로만 전달하지 않고 classifier의 조건부 추론에 활용하는 구체적 연산이 생기며, 고정 직접 Gaussian/signed 추론이 하는 기능과 학습의 추가 가치를 분리할 수 있을 때.",
+    "recheck": "현재 bank를 조정하지 않는다. Label/feature law 교차와 source-context 분리를 유지한 새 graph bank에서 missing-query accuracy·동일-query 피처 제거·NLL/Brier·실제 비용을 사전 고정해 확인한다.",
+    "comparison_floor": "같은 정보·2branches의50:50와 strict feature-only; Mask/identity/parity PCFI; graph-only adaptive LP; 직접 Gaussian/probit; 동일-query zero-feature; privileged known-law는 reference로만 보고; 비용도 비교.",
+    "source_refs": [
+      "findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md",
+      "findings/sources/adaptive-transport-2026-11-02/METHOD_KO.md",
+      "findings/sources/adaptive-transport-2026-11-02/protocol.json",
+      "findings/sources/adaptive-transport-2026-11-02/results/statistics.json",
+      "findings/sources/adaptive-transport-2026-11-02/results/audit.json",
+      "findings/sources/adaptive-transport-2026-11-02/results/classical_audit.json",
+      "findings/sources/adaptive-transport-2026-11-02/results/latent_accuracy_audit.json",
+      "findings/sources/adaptive-transport-2026-11-02/runtime/latent_accuracy_addendum.json",
+      "findings/sources/adaptive-transport-2026-11-02/results/cost.json",
+      "findings/sources/adaptive-transport-2026-11-02/results/preflight.json"
+    ],
     "paper_id": "PEMix",
     "paper_title": "When Missingness Follows the Graph: Beyond Feature Propagation for Missing Features",
     "paper_link": "https://arxiv.org/abs/2610.18113",
@@ -808,6 +967,117 @@
     "tags": [
       "adaptation",
       "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "BSEL-F04",
+    "project": "BSEL community-concentrated context selection for frozen GraphPFN",
+    "claim": "context 라벨·그래프·특징만으로 community별 클래스 사전확률 p(c|k)를 추정해 PFN 출력을 보정하면(CPC) commconc 손실의 선택 특유 부분을 되돌린다.",
+    "verdict": "중단(실용 성능 부족; 정식 E1 판정 없음).",
+    "reason_status": "supported",
+    "failure_reason": "E-moment는 commconc context 원형이 community offset으로 오염되어 실패한다(BSEL-P04의 참 원형 상한). context 라벨을 전파하는 방법은 편향을 키운다. context 없는 community에 클래스 질량의 65–92%가 있다(리뷰 proxy).",
+    "reopen_when": "community 집중 context에서도 클래스 원형(또는 p(c|k))을 라벨 없이 편향 없이 추정하는 장치가 나오고, 참 원형 상한 대비 TV를 줄인다는 근거가 있을 때.",
+    "recheck": "캐시된 CiteSeer/Cora와 photo/PubMed 보충 캐시로 SG와 context 없는 community TV를 함께 본다.",
+    "comparison_floor": "O-swap, 참 원형 E-moment, L-ctx(같은 라벨을 context에 추가), C&S, REF-GP.",
+    "source_refs": [
+      "findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md",
+      "findings/sources/biased-selection-2026-11-20/context_prior/e1_report.json"
+    ],
+    "paper_id": "BBSE",
+    "paper_title": "Detecting and Correcting for Label Shift with Black Box Predictors",
+    "paper_link": "https://arxiv.org/abs/1802.03916",
+    "matches": [
+      {
+        "strength": "Weight 오차가 confusion matrix의 최소 singular value σ_min의 제곱에 반비례하고 표본 수에 따라 줄어든다는 유한표본 bound를 준다. 언제 추정이 불안정해지는지가 식으로 드러난다.",
+        "tags": [
+          "identifiability",
+          "label-shift"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "identifiability",
+      "label-shift"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "BSEL-F04",
+    "project": "BSEL community-concentrated context selection for frozen GraphPFN",
+    "claim": "context 라벨·그래프·특징만으로 community별 클래스 사전확률 p(c|k)를 추정해 PFN 출력을 보정하면(CPC) commconc 손실의 선택 특유 부분을 되돌린다.",
+    "verdict": "중단(실용 성능 부족; 정식 E1 판정 없음).",
+    "reason_status": "supported",
+    "failure_reason": "E-moment는 commconc context 원형이 community offset으로 오염되어 실패한다(BSEL-P04의 참 원형 상한). context 라벨을 전파하는 방법은 편향을 키운다. context 없는 community에 클래스 질량의 65–92%가 있다(리뷰 proxy).",
+    "reopen_when": "community 집중 context에서도 클래스 원형(또는 p(c|k))을 라벨 없이 편향 없이 추정하는 장치가 나오고, 참 원형 상한 대비 TV를 줄인다는 근거가 있을 때.",
+    "recheck": "캐시된 CiteSeer/Cora와 photo/PubMed 보충 캐시로 SG와 context 없는 community TV를 함께 본다.",
+    "comparison_floor": "O-swap, 참 원형 E-moment, L-ctx(같은 라벨을 context에 추가), C&S, REF-GP.",
+    "source_refs": [
+      "findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md",
+      "findings/sources/biased-selection-2026-11-20/context_prior/e1_report.json"
+    ],
+    "paper_id": "PairAlign",
+    "paper_title": "Pairwise Alignment Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v235/liu24ci.html",
+    "matches": [
+      {
+        "strength": "Edge weight와 label weight를 모두 pseudo-label 혼동 행렬 기반 선형계로 추정한다. StruRW가 가정한 완벽한 source 예측과 hard pseudo-label 대신 soft 혼동 행렬과 regularization을 써서 추정이 더 안정적이다.",
+        "tags": [
+          "identifiability",
+          "label-shift"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "identifiability",
+      "label-shift"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "BSEL-F04",
+    "project": "BSEL community-concentrated context selection for frozen GraphPFN",
+    "claim": "context 라벨·그래프·특징만으로 community별 클래스 사전확률 p(c|k)를 추정해 PFN 출력을 보정하면(CPC) commconc 손실의 선택 특유 부분을 되돌린다.",
+    "verdict": "중단(실용 성능 부족; 정식 E1 판정 없음).",
+    "reason_status": "supported",
+    "failure_reason": "E-moment는 commconc context 원형이 community offset으로 오염되어 실패한다(BSEL-P04의 참 원형 상한). context 라벨을 전파하는 방법은 편향을 키운다. context 없는 community에 클래스 질량의 65–92%가 있다(리뷰 proxy).",
+    "reopen_when": "community 집중 context에서도 클래스 원형(또는 p(c|k))을 라벨 없이 편향 없이 추정하는 장치가 나오고, 참 원형 상한 대비 TV를 줄인다는 근거가 있을 때.",
+    "recheck": "캐시된 CiteSeer/Cora와 photo/PubMed 보충 캐시로 SG와 context 없는 community TV를 함께 본다.",
+    "comparison_floor": "O-swap, 참 원형 E-moment, L-ctx(같은 라벨을 context에 추가), C&S, REF-GP.",
+    "source_refs": [
+      "findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md",
+      "findings/sources/biased-selection-2026-11-20/context_prior/e1_report.json"
+    ],
+    "paper_id": "SparseJointShift",
+    "paper_title": "Estimating and Explaining Model Performance When Both Covariates and Labels Shift",
+    "paper_link": "https://arxiv.org/abs/2209.08436",
+    "matches": [
+      {
+        "strength": "Label shift와 sparse covariate shift를 하나의 가정으로 묶고, 그 아래에서 target label 없이 결합 shift가 식별되는 충분조건을 명시한다.",
+        "tags": [
+          "identifiability",
+          "label-shift"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "identifiability",
+      "label-shift"
     ],
     "keywords": [],
     "retrieval_score": 4,
@@ -1016,6 +1286,132 @@
       "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
       "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
     ],
+    "paper_id": "AdaBN",
+    "paper_title": "Revisiting Batch Normalization For Practical Domain Adaptation",
+    "paper_link": "https://arxiv.org/abs/1603.04779",
+    "matches": [
+      {
+        "strength": "추가 component·parameter·튜닝이 전혀 없고, target 통계 재계산만으로 Office-31 단일·다중 source와 Caltech-Bing에서 당시 최고 수준을 냈다. CORAL과 결합하면 대체로 더 좋아졌다.",
+        "tags": [
+          "adaptation",
+          "inference-cost"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "DFI-F01",
+    "project": "Conditional diffusion and ESS-controlled SMC in frozen FactorPFN",
+    "claim": "작은 conditional diffusion proposal과 동일 potential의 MH/SMC 보정이 비슷한 추론 비용의 classical SMC보다 정확한 query inference를 제공한다.",
+    "verdict": "현재 learned proposal+correction을 메인 방법으로 확대하지 않는다. 비용 대조 SMC보다 accuracy와 target-fit이 악화했고,더 저렴한1sweep SMC도 평균적으로 좋았다.",
+    "reason_status": "unknown",
+    "failure_reason": "Exact frozen-model KL·accuracy 사전 gate를 통과하지 못했다. Small-state kernel validation은 통과했지만 finite-particle/short-schedule/denoiser fit/mixing/representation의 고유 원인은 분리하지 않았다.",
+    "reopen_when": "같은 잠재 state와 local factor에서 proposal이 어느 예측적으로 중요한 joint mode를 누락하는지 독립 증거를 제시하고,classical Gibbs/blocked sampler와 비용을 맞춰 이를 해결하는 연산이 있을 때.",
+    "recheck": "이번 final bank를 튜닝하지 않는다. 새 독립 graph/명시된 구조 family에서 finite sampler exact-target error와accuracy·NLL/Brier·role coverage·비용을 사전 분리하고 fullsupport/양방향proposal/MH 검사를 유지한다.",
+    "comparison_floor": "Ordinary1sweep/개발 latency로 정한2sweep Gibbs-SMC;original Factor BP,constant BP,exact learned-Factor,Grid6exact/BP;동일새 bank의 frozen Mask/PCFI;teacher/training/inference 비용.",
+    "source_refs": [
+      "findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/protocol.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/statistics.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/audit.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
+    ],
+    "paper_id": "BDCSPN",
+    "paper_title": "Prototype Rectification for Few-Shot Learning",
+    "paper_link": "https://arxiv.org/abs/1911.10713",
+    "matches": [
+      {
+        "strength": "추가 학습 없이 inference 단계에서 pseudo-label 가중 재계산과 평균 shift라는 두 가지 단순한 조작만으로, 1-shot에서 CSPN 대비 약 8~9%p를 올렸다. miniImageNet 1-shot 70.31%, tieredImageNet 1-shot 78.74%로 당시 transductive 방법 중 최고였다.",
+        "tags": [
+          "adaptation",
+          "inference-cost"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "DFI-F01",
+    "project": "Conditional diffusion and ESS-controlled SMC in frozen FactorPFN",
+    "claim": "작은 conditional diffusion proposal과 동일 potential의 MH/SMC 보정이 비슷한 추론 비용의 classical SMC보다 정확한 query inference를 제공한다.",
+    "verdict": "현재 learned proposal+correction을 메인 방법으로 확대하지 않는다. 비용 대조 SMC보다 accuracy와 target-fit이 악화했고,더 저렴한1sweep SMC도 평균적으로 좋았다.",
+    "reason_status": "unknown",
+    "failure_reason": "Exact frozen-model KL·accuracy 사전 gate를 통과하지 못했다. Small-state kernel validation은 통과했지만 finite-particle/short-schedule/denoiser fit/mixing/representation의 고유 원인은 분리하지 않았다.",
+    "reopen_when": "같은 잠재 state와 local factor에서 proposal이 어느 예측적으로 중요한 joint mode를 누락하는지 독립 증거를 제시하고,classical Gibbs/blocked sampler와 비용을 맞춰 이를 해결하는 연산이 있을 때.",
+    "recheck": "이번 final bank를 튜닝하지 않는다. 새 독립 graph/명시된 구조 family에서 finite sampler exact-target error와accuracy·NLL/Brier·role coverage·비용을 사전 분리하고 fullsupport/양방향proposal/MH 검사를 유지한다.",
+    "comparison_floor": "Ordinary1sweep/개발 latency로 정한2sweep Gibbs-SMC;original Factor BP,constant BP,exact learned-Factor,Grid6exact/BP;동일새 bank의 frozen Mask/PCFI;teacher/training/inference 비용.",
+    "source_refs": [
+      "findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/protocol.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/statistics.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/audit.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
+    ],
+    "paper_id": "CorrectSmooth",
+    "paper_title": "Combining Label Propagation and Simple Models out-performs Graph Neural Networks",
+    "paper_link": "https://iclr.cc/virtual/2021/poster/3274",
+    "matches": [
+      {
+        "strength": "어떤 base predictor 위에도 붙는 후처리라 비용이 작고, 큰 GNN 위에 얹어도 작은 추가 이득을 준다.",
+        "tags": [
+          "adaptation",
+          "inference-cost"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "DFI-F01",
+    "project": "Conditional diffusion and ESS-controlled SMC in frozen FactorPFN",
+    "claim": "작은 conditional diffusion proposal과 동일 potential의 MH/SMC 보정이 비슷한 추론 비용의 classical SMC보다 정확한 query inference를 제공한다.",
+    "verdict": "현재 learned proposal+correction을 메인 방법으로 확대하지 않는다. 비용 대조 SMC보다 accuracy와 target-fit이 악화했고,더 저렴한1sweep SMC도 평균적으로 좋았다.",
+    "reason_status": "unknown",
+    "failure_reason": "Exact frozen-model KL·accuracy 사전 gate를 통과하지 못했다. Small-state kernel validation은 통과했지만 finite-particle/short-schedule/denoiser fit/mixing/representation의 고유 원인은 분리하지 않았다.",
+    "reopen_when": "같은 잠재 state와 local factor에서 proposal이 어느 예측적으로 중요한 joint mode를 누락하는지 독립 증거를 제시하고,classical Gibbs/blocked sampler와 비용을 맞춰 이를 해결하는 연산이 있을 때.",
+    "recheck": "이번 final bank를 튜닝하지 않는다. 새 독립 graph/명시된 구조 family에서 finite sampler exact-target error와accuracy·NLL/Brier·role coverage·비용을 사전 분리하고 fullsupport/양방향proposal/MH 검사를 유지한다.",
+    "comparison_floor": "Ordinary1sweep/개발 latency로 정한2sweep Gibbs-SMC;original Factor BP,constant BP,exact learned-Factor,Grid6exact/BP;동일새 bank의 frozen Mask/PCFI;teacher/training/inference 비용.",
+    "source_refs": [
+      "findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/protocol.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/statistics.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/audit.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
+    ],
     "paper_id": "GGP",
     "paper_title": "Bayesian Semi-supervised Learning with Graph Gaussian Processes",
     "paper_link": "https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html",
@@ -1064,6 +1460,48 @@
     "matches": [
       {
         "strength": "Backbone을 재학습하지 않는 추론 시점 인터페이스라서, pure-tabular backbone(G2T featurization + TabPFNv2·LimiX)과 adapter backbone(GraphPFN)에 같은 방식으로 붙는다. 정식화 자체가 full-context tabular 추론, per-query retrieval, full-graph 추론을 특수한 경우로 포함하므로 기존 protocol과의 관계도 분명하다.",
+        "tags": [
+          "adaptation",
+          "inference-cost"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "DFI-F01",
+    "project": "Conditional diffusion and ESS-controlled SMC in frozen FactorPFN",
+    "claim": "작은 conditional diffusion proposal과 동일 potential의 MH/SMC 보정이 비슷한 추론 비용의 classical SMC보다 정확한 query inference를 제공한다.",
+    "verdict": "현재 learned proposal+correction을 메인 방법으로 확대하지 않는다. 비용 대조 SMC보다 accuracy와 target-fit이 악화했고,더 저렴한1sweep SMC도 평균적으로 좋았다.",
+    "reason_status": "unknown",
+    "failure_reason": "Exact frozen-model KL·accuracy 사전 gate를 통과하지 못했다. Small-state kernel validation은 통과했지만 finite-particle/short-schedule/denoiser fit/mixing/representation의 고유 원인은 분리하지 않았다.",
+    "reopen_when": "같은 잠재 state와 local factor에서 proposal이 어느 예측적으로 중요한 joint mode를 누락하는지 독립 증거를 제시하고,classical Gibbs/blocked sampler와 비용을 맞춰 이를 해결하는 연산이 있을 때.",
+    "recheck": "이번 final bank를 튜닝하지 않는다. 새 독립 graph/명시된 구조 family에서 finite sampler exact-target error와accuracy·NLL/Brier·role coverage·비용을 사전 분리하고 fullsupport/양방향proposal/MH 검사를 유지한다.",
+    "comparison_floor": "Ordinary1sweep/개발 latency로 정한2sweep Gibbs-SMC;original Factor BP,constant BP,exact learned-Factor,Grid6exact/BP;동일새 bank의 frozen Mask/PCFI;teacher/training/inference 비용.",
+    "source_refs": [
+      "findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/protocol.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/statistics.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/audit.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
+    ],
+    "paper_id": "Matcha",
+    "paper_title": "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation",
+    "paper_link": "https://iclr.cc/virtual/2025/poster/30388",
+    "matches": [
+      {
+        "strength": "바꾸는 parameter가 hop-aggregation 계수뿐이라 가볍다. PIC loss는 노드 수에 선형인 비용으로 계산되고, entropy minimization의 scale 자명해를 피한다. 초기 예측에 잡음이 많아도 PIC로 정확도가 오르는 예를 부록에서 보였다.",
         "tags": [
           "adaptation",
           "inference-cost"
@@ -1142,6 +1580,132 @@
       "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
       "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
     ],
+    "paper_id": "AdaBN",
+    "paper_title": "Revisiting Batch Normalization For Practical Domain Adaptation",
+    "paper_link": "https://arxiv.org/abs/1603.04779",
+    "matches": [
+      {
+        "strength": "추가 component·parameter·튜닝이 전혀 없고, target 통계 재계산만으로 Office-31 단일·다중 source와 Caltech-Bing에서 당시 최고 수준을 냈다. CORAL과 결합하면 대체로 더 좋아졌다.",
+        "tags": [
+          "adaptation",
+          "inference-cost"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "DFI-F02",
+    "project": "Conditional diffusion and ESS-controlled SMC in frozen FactorPFN",
+    "claim": "Rényi-2/ESS 기반 adaptive likelihood tempering이 같은 learned diffusion+SMC fixed schedule보다 예측 품질을 개선한다.",
+    "verdict": "현재.8K threshold/8stage budget의ESS controller 증분은 미입증이며 추가 tuning하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "KL 증분 CI가0을 포함하고accuracy도 개선되지 않았다. Weight entropy/step schedule만으로 latent coverage와 predictive fit을 보장할 수 없으며 고유 원인은 미분리다.",
+    "reopen_when": "Weight entropy와 label-predictive joint mode error의 관계를 분리하고,같은 particle/latency budget에서 ESS 외의 필요한 정보를 이용하는 제어 연산이 생길 때.",
+    "recheck": "새graph에서fixed-ESS controller 차이를posterior fit/분류/시간으로나누어검증한다. 최종ESS상승을성공으로대체하거나RNP논문방법을실행했다고부르지않는다.",
+    "comparison_floor": "동일proposal/potential의fixed schedule,ordinary Gibbs-SMC,exact frozen-model reference와accuracy를유지한다. Adaptive extra overhead를 포함한다.",
+    "source_refs": [
+      "findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/protocol.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/statistics.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/audit.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
+    ],
+    "paper_id": "BDCSPN",
+    "paper_title": "Prototype Rectification for Few-Shot Learning",
+    "paper_link": "https://arxiv.org/abs/1911.10713",
+    "matches": [
+      {
+        "strength": "추가 학습 없이 inference 단계에서 pseudo-label 가중 재계산과 평균 shift라는 두 가지 단순한 조작만으로, 1-shot에서 CSPN 대비 약 8~9%p를 올렸다. miniImageNet 1-shot 70.31%, tieredImageNet 1-shot 78.74%로 당시 transductive 방법 중 최고였다.",
+        "tags": [
+          "adaptation",
+          "inference-cost"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "DFI-F02",
+    "project": "Conditional diffusion and ESS-controlled SMC in frozen FactorPFN",
+    "claim": "Rényi-2/ESS 기반 adaptive likelihood tempering이 같은 learned diffusion+SMC fixed schedule보다 예측 품질을 개선한다.",
+    "verdict": "현재.8K threshold/8stage budget의ESS controller 증분은 미입증이며 추가 tuning하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "KL 증분 CI가0을 포함하고accuracy도 개선되지 않았다. Weight entropy/step schedule만으로 latent coverage와 predictive fit을 보장할 수 없으며 고유 원인은 미분리다.",
+    "reopen_when": "Weight entropy와 label-predictive joint mode error의 관계를 분리하고,같은 particle/latency budget에서 ESS 외의 필요한 정보를 이용하는 제어 연산이 생길 때.",
+    "recheck": "새graph에서fixed-ESS controller 차이를posterior fit/분류/시간으로나누어검증한다. 최종ESS상승을성공으로대체하거나RNP논문방법을실행했다고부르지않는다.",
+    "comparison_floor": "동일proposal/potential의fixed schedule,ordinary Gibbs-SMC,exact frozen-model reference와accuracy를유지한다. Adaptive extra overhead를 포함한다.",
+    "source_refs": [
+      "findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/protocol.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/statistics.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/audit.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
+    ],
+    "paper_id": "CorrectSmooth",
+    "paper_title": "Combining Label Propagation and Simple Models out-performs Graph Neural Networks",
+    "paper_link": "https://iclr.cc/virtual/2021/poster/3274",
+    "matches": [
+      {
+        "strength": "어떤 base predictor 위에도 붙는 후처리라 비용이 작고, 큰 GNN 위에 얹어도 작은 추가 이득을 준다.",
+        "tags": [
+          "adaptation",
+          "inference-cost"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "DFI-F02",
+    "project": "Conditional diffusion and ESS-controlled SMC in frozen FactorPFN",
+    "claim": "Rényi-2/ESS 기반 adaptive likelihood tempering이 같은 learned diffusion+SMC fixed schedule보다 예측 품질을 개선한다.",
+    "verdict": "현재.8K threshold/8stage budget의ESS controller 증분은 미입증이며 추가 tuning하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "KL 증분 CI가0을 포함하고accuracy도 개선되지 않았다. Weight entropy/step schedule만으로 latent coverage와 predictive fit을 보장할 수 없으며 고유 원인은 미분리다.",
+    "reopen_when": "Weight entropy와 label-predictive joint mode error의 관계를 분리하고,같은 particle/latency budget에서 ESS 외의 필요한 정보를 이용하는 제어 연산이 생길 때.",
+    "recheck": "새graph에서fixed-ESS controller 차이를posterior fit/분류/시간으로나누어검증한다. 최종ESS상승을성공으로대체하거나RNP논문방법을실행했다고부르지않는다.",
+    "comparison_floor": "동일proposal/potential의fixed schedule,ordinary Gibbs-SMC,exact frozen-model reference와accuracy를유지한다. Adaptive extra overhead를 포함한다.",
+    "source_refs": [
+      "findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/protocol.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/statistics.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/audit.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
+    ],
     "paper_id": "GGP",
     "paper_title": "Bayesian Semi-supervised Learning with Graph Gaussian Processes",
     "paper_link": "https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html",
@@ -1190,6 +1754,48 @@
     "matches": [
       {
         "strength": "Backbone을 재학습하지 않는 추론 시점 인터페이스라서, pure-tabular backbone(G2T featurization + TabPFNv2·LimiX)과 adapter backbone(GraphPFN)에 같은 방식으로 붙는다. 정식화 자체가 full-context tabular 추론, per-query retrieval, full-graph 추론을 특수한 경우로 포함하므로 기존 protocol과의 관계도 분명하다.",
+        "tags": [
+          "adaptation",
+          "inference-cost"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "DFI-F02",
+    "project": "Conditional diffusion and ESS-controlled SMC in frozen FactorPFN",
+    "claim": "Rényi-2/ESS 기반 adaptive likelihood tempering이 같은 learned diffusion+SMC fixed schedule보다 예측 품질을 개선한다.",
+    "verdict": "현재.8K threshold/8stage budget의ESS controller 증분은 미입증이며 추가 tuning하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "KL 증분 CI가0을 포함하고accuracy도 개선되지 않았다. Weight entropy/step schedule만으로 latent coverage와 predictive fit을 보장할 수 없으며 고유 원인은 미분리다.",
+    "reopen_when": "Weight entropy와 label-predictive joint mode error의 관계를 분리하고,같은 particle/latency budget에서 ESS 외의 필요한 정보를 이용하는 제어 연산이 생길 때.",
+    "recheck": "새graph에서fixed-ESS controller 차이를posterior fit/분류/시간으로나누어검증한다. 최종ESS상승을성공으로대체하거나RNP논문방법을실행했다고부르지않는다.",
+    "comparison_floor": "동일proposal/potential의fixed schedule,ordinary Gibbs-SMC,exact frozen-model reference와accuracy를유지한다. Adaptive extra overhead를 포함한다.",
+    "source_refs": [
+      "findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/protocol.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/statistics.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/audit.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
+    ],
+    "paper_id": "Matcha",
+    "paper_title": "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation",
+    "paper_link": "https://iclr.cc/virtual/2025/poster/30388",
+    "matches": [
+      {
+        "strength": "바꾸는 parameter가 hop-aggregation 계수뿐이라 가볍다. PIC loss는 노드 수에 선형인 비용으로 계산되고, entropy minimization의 scale 자명해를 피한다. 초기 예측에 잡음이 많아도 PIC로 정확도가 오르는 예를 부록에서 보였다.",
         "tags": [
           "adaptation",
           "inference-cost"
@@ -2544,6 +3150,45 @@
       "findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json",
       "findings/sources/fp05-compute-policy-2026-11-05/results/deployment_audit.json"
     ],
+    "paper_id": "LaplacianShot",
+    "paper_title": "Laplacian Regularized Few-Shot Learning",
+    "paper_link": "https://arxiv.org/abs/2006.15486",
+    "matches": [
+      {
+        "strength": "Meta-learning 없이 고정 feature 위에 붙이는 inference 절차만으로 miniImageNet·tieredImageNet·CUB·cross-domain·iNat 5개 benchmark에서 당시 최고 수준을 냈다. Ablation에서 Laplacian 항은 nearest-prototype 대비 1-shot에서 약 2~3%p 이상 꾸준히 올렸다.",
+        "tags": [
+          "adaptation",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "FP05-F01",
+    "project": "FP05 missing-feature GraphPFN computation policy",
+    "claim": "불완전 피처 입력에서 내부 세 지점의 adapter 추가 실행을 Group-PG로 학습하면 일반 fine-tuning과 기대 목적 직접 최적화보다 높은 missing-query accuracy와 관측 피처 효용을 얻는다.",
+    "verdict": "현재 반복 adapter action·학습 목적·128updates·greedy 배포의 확대를 중단한다. 이 후보를 missing 대응의 새 메인 메소드로 승격하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "배포된 두 정책 모두 모든 최종 합성·실제 episode에서000을 골랐고 같은 checkpoint의000 replay와 확률 배열이 동일했다. 적응적인 경로 선택 효과가 없다는 것은 확인됐지만, 연산 후보·상태·목적·최적화·greedy 추론 중 최종 원인은 분리하지 못했다.",
+    "reopen_when": "유익한 대안 계산과 그것을 배포에서 실제 사용하는 학습 원리를 제시하고, 기존의 모든000 현상 및 강한 고정·직접 최적화 대조를 다룰 독립 검증을 설계할 수 있을 때.",
+    "recheck": "새 cycle/plan/세 관점 검토/수치 검사 뒤 새 bank를 잠근다. 현재 final은 개발 자료로 취급하고 비용항·temperature·loss·학습량을 같은 bank에서 조정해 통과시키지 않는다. Primary missing-query accuracy와 utility·full guard를 먼저 고정한다.",
+    "comparison_floor": "동일 public 초기값/PCFI/일정의 Fixed, Uniform8 및 dev-selected single-global, 동일8경로 Direct, own000 replay, frozen PCFI/NaN, LP/prior와 none/shuffle를 유지한다. 실제 추론 수와 calibration 비용을 맞춰 보고한다.",
+    "source_refs": [
+      "findings/sources/fp05-compute-policy-2026-11-05/DECISION_KO.md",
+      "findings/sources/fp05-compute-policy-2026-11-05/results/summary.json",
+      "findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json",
+      "findings/sources/fp05-compute-policy-2026-11-05/results/deployment_audit.json"
+    ],
     "paper_id": "MA-PFN",
     "paper_title": "Missingness-Aware Prior-Data Fitted Network for Irregular Clinical Time-Series",
     "paper_link": "https://arxiv.org/abs/2611.01851v1",
@@ -3221,6 +3866,226 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "LLBP-F08",
+    "project": "Learned-Likelihood BP / EAJ",
+    "claim": "같은 potential에서 role weights를 다시 계산하는 자기-update가 OOD 문제를 전반적으로 해결한다.",
+    "verdict": "보편적 OOD 해결 주장 기각",
+    "reason_status": "supported",
+    "failure_reason": "Low density에서는 exact role update도 실패해 Bethe partition 근사만으로 설명할 수 없었다. Potential·conditional·parameter uncertainty 상호작용은 미해결이다.",
+    "reopen_when": "Sparse/OOD potential uncertainty와 conditional inference를 함께 해결하는 연산이 나올 때.",
+    "recheck": "Low density를 포함한 새 bank에서 exact/Bethe·conditional 교차를 고정해 본다.",
+    "comparison_floor": "Constant+update, R1, Grid6/81",
+    "source_refs": [
+      "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
+    ],
+    "paper_id": "SparseJointShift",
+    "paper_title": "Estimating and Explaining Model Performance When Both Covariates and Labels Shift",
+    "paper_link": "https://arxiv.org/abs/2209.08436",
+    "matches": [
+      {
+        "strength": "Label shift와 sparse covariate shift를 하나의 가정으로 묶고, 그 아래에서 target label 없이 결합 shift가 식별되는 충분조건을 명시한다.",
+        "tags": [
+          "distribution-shift"
+        ],
+        "keywords": [
+          "density",
+          "sparse"
+        ],
+        "specific_keywords": [
+          "density",
+          "sparse"
+        ]
+      },
+      {
+        "strength": "Weight가 소수 feature에만 의존하도록 제한해 해석 가능한 설명(어떤 feature가 label과 함께 움직였는가)을 같이 준다.",
+        "tags": [
+          "distribution-shift"
+        ],
+        "keywords": [
+          "density",
+          "sparse"
+        ],
+        "specific_keywords": [
+          "density",
+          "sparse"
+        ]
+      }
+    ],
+    "tags": [
+      "distribution-shift"
+    ],
+    "keywords": [
+      "density",
+      "sparse"
+    ],
+    "retrieval_score": 4,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LLBP-F09",
+    "project": "Learned-Likelihood BP / EAJ",
+    "claim": "자기-update 경로까지 학습하는 T1이 R1보다 우수하다.",
+    "verdict": "추가 이득 미확인",
+    "reason_status": "unknown",
+    "failure_reason": "Self-update를 미분해 학습하는 경로는 작동했지만 R1 대비 이득이 없었다. Optimization·model bias 중 고유 원인은 미상이다.",
+    "reopen_when": "동일 계산 budget에서 inference-aware 학습의 독립 이득을 보이는 원리가 나올 때.",
+    "recheck": "추론 시 head 제거 효과와 새 학습 효과를 분리하고 initial state·schedule·예산을 맞춘다.",
+    "comparison_floor": "Frozen R1, R0, Constant+update, Grid6",
+    "source_refs": [
+      "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
+    ],
+    "paper_id": "SemiProtoNet",
+    "paper_title": "Meta-Learning for Semi-Supervised Few-Shot Classification",
+    "paper_link": "https://arxiv.org/abs/1803.00676",
+    "matches": [
+      {
+        "strength": "Unlabeled 예제를 prototype 계산에 넣는 과정을 미분 가능하게 만들어 episode 단위 meta-learning으로 학습했다. 같은 embedding에서 test 때만 soft k-means를 적용하는 기준선보다 좋았다. Test 때 unlabeled 수를 학습 때(5개)보다 늘려도(최대 25개) 정확도가 계속 올랐다.",
+        "tags": [
+          "adaptation",
+          "amortized-inference"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "amortized-inference"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LLBP-F10",
+    "project": "Learned-Likelihood BP / EAJ",
+    "claim": "Low-density 실패는 partition 근사 또는 role weights만의 문제다.",
+    "verdict": "단일 병목 설명 기각",
+    "reason_status": "supported",
+    "failure_reason": "교차 대조에서 learned conditional 손해와 비가법 interaction을 확인했다. Role weights만 고치면 된다는 단일 원인 설명은 지지되지 않는다.",
+    "reopen_when": "Potential·partition·conditional 오차를 일관되게 제어하는 추론 연산이 나올 때.",
+    "recheck": "네 교차 조합과 exact-role/BP conditional을 함께 비교해 단일 병목 주장을 검증한다.",
+    "comparison_floor": "Constant/learned weights×conditional 교차, exact update",
+    "source_refs": [
+      "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
+    ],
+    "paper_id": "Matcha",
+    "paper_title": "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation",
+    "paper_link": "https://iclr.cc/virtual/2025/poster/30388",
+    "matches": [
+      {
+        "strength": "정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LLBP-F10",
+    "project": "Learned-Likelihood BP / EAJ",
+    "claim": "Low-density 실패는 partition 근사 또는 role weights만의 문제다.",
+    "verdict": "단일 병목 설명 기각",
+    "reason_status": "supported",
+    "failure_reason": "교차 대조에서 learned conditional 손해와 비가법 interaction을 확인했다. Role weights만 고치면 된다는 단일 원인 설명은 지지되지 않는다.",
+    "reopen_when": "Potential·partition·conditional 오차를 일관되게 제어하는 추론 연산이 나올 때.",
+    "recheck": "네 교차 조합과 exact-role/BP conditional을 함께 비교해 단일 병목 주장을 검증한다.",
+    "comparison_floor": "Constant/learned weights×conditional 교차, exact update",
+    "source_refs": [
+      "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
+    ],
+    "paper_id": "PairAlign",
+    "paper_title": "Pairwise Alignment Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v235/liu24ci.html",
+    "matches": [
+      {
+        "strength": "Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "conditional"
+        ],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [
+      "conditional"
+    ],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LLBP-F10",
+    "project": "Learned-Likelihood BP / EAJ",
+    "claim": "Low-density 실패는 partition 근사 또는 role weights만의 문제다.",
+    "verdict": "단일 병목 설명 기각",
+    "reason_status": "supported",
+    "failure_reason": "교차 대조에서 learned conditional 손해와 비가법 interaction을 확인했다. Role weights만 고치면 된다는 단일 원인 설명은 지지되지 않는다.",
+    "reopen_when": "Potential·partition·conditional 오차를 일관되게 제어하는 추론 연산이 나올 때.",
+    "recheck": "네 교차 조합과 exact-role/BP conditional을 함께 비교해 단일 병목 주장을 검증한다.",
+    "comparison_floor": "Constant/learned weights×conditional 교차, exact update",
+    "source_refs": [
+      "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
+    ],
+    "paper_id": "StruRW",
+    "paper_title": "Structural Re-weighting Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v202/liu23u.html",
+    "matches": [
+      {
+        "strength": "GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "conditional"
+        ],
+        "specific_keywords": []
+      },
+      {
+        "strength": "기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "conditional"
+        ],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [
+      "conditional"
+    ],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "LLBP-F12",
     "project": "Learned-Likelihood BP / EAJ",
     "claim": "R1은 품질이 낮아도 큰 속도 이점으로 정당화된다.",
@@ -3286,6 +4151,126 @@
     "tags": [
       "amortized-inference",
       "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LPC-F01",
+    "project": "LP-conditioned structural residual",
+    "claim": "LP internal conditioning이 output offset과 Plain을 일관되게 넘는다.",
+    "verdict": "LP residual tuning·대규모 확장 중단",
+    "reason_status": "unknown",
+    "failure_reason": "보인 이득 대부분과 output offset 효과를 구분해야 했고, schema adaptation 특유의 이득이라는 증거가 약했다. 조기 relation aggregation이 원인이라는 설명은 가설이지 확정 원인이 아니다.",
+    "reopen_when": "압축된 LP 확률보다 풍부한 context 정보를 활용하며 output offset만의 효과를 넘어서는 연산이 나올 때.",
+    "recheck": "Relation 수·feature 폭·missing을 분리한 factorial과 새로운 semantic schema에서 내부 conditioning의 독립 증분을 확인한다.",
+    "comparison_floor": "Plain, offset-only, 같은 파라미터·초기화·학습 budget",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/lpc.md",
+      "findings/sources/graphpfn-2026-11-01/lpc_factorial.md"
+    ],
+    "paper_id": "Matcha",
+    "paper_title": "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation",
+    "paper_link": "https://iclr.cc/virtual/2025/poster/30388",
+    "matches": [
+      {
+        "strength": "정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LPC-F01",
+    "project": "LP-conditioned structural residual",
+    "claim": "LP internal conditioning이 output offset과 Plain을 일관되게 넘는다.",
+    "verdict": "LP residual tuning·대규모 확장 중단",
+    "reason_status": "unknown",
+    "failure_reason": "보인 이득 대부분과 output offset 효과를 구분해야 했고, schema adaptation 특유의 이득이라는 증거가 약했다. 조기 relation aggregation이 원인이라는 설명은 가설이지 확정 원인이 아니다.",
+    "reopen_when": "압축된 LP 확률보다 풍부한 context 정보를 활용하며 output offset만의 효과를 넘어서는 연산이 나올 때.",
+    "recheck": "Relation 수·feature 폭·missing을 분리한 factorial과 새로운 semantic schema에서 내부 conditioning의 독립 증분을 확인한다.",
+    "comparison_floor": "Plain, offset-only, 같은 파라미터·초기화·학습 budget",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/lpc.md",
+      "findings/sources/graphpfn-2026-11-01/lpc_factorial.md"
+    ],
+    "paper_id": "PairAlign",
+    "paper_title": "Pairwise Alignment Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v235/liu24ci.html",
+    "matches": [
+      {
+        "strength": "Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LPC-F01",
+    "project": "LP-conditioned structural residual",
+    "claim": "LP internal conditioning이 output offset과 Plain을 일관되게 넘는다.",
+    "verdict": "LP residual tuning·대규모 확장 중단",
+    "reason_status": "unknown",
+    "failure_reason": "보인 이득 대부분과 output offset 효과를 구분해야 했고, schema adaptation 특유의 이득이라는 증거가 약했다. 조기 relation aggregation이 원인이라는 설명은 가설이지 확정 원인이 아니다.",
+    "reopen_when": "압축된 LP 확률보다 풍부한 context 정보를 활용하며 output offset만의 효과를 넘어서는 연산이 나올 때.",
+    "recheck": "Relation 수·feature 폭·missing을 분리한 factorial과 새로운 semantic schema에서 내부 conditioning의 독립 증분을 확인한다.",
+    "comparison_floor": "Plain, offset-only, 같은 파라미터·초기화·학습 budget",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/lpc.md",
+      "findings/sources/graphpfn-2026-11-01/lpc_factorial.md"
+    ],
+    "paper_id": "StruRW",
+    "paper_title": "Structural Re-weighting Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v202/liu23u.html",
+    "matches": [
+      {
+        "strength": "GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      },
+      {
+        "strength": "기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
     ],
     "keywords": [],
     "retrieval_score": 4,
@@ -3599,6 +4584,49 @@
       "findings/sources/nsd-token-2026-11-03/results/cost.json",
       "findings/sources/nsd-token-2026-11-03/results/preflight.json"
     ],
+    "paper_id": "Matcha",
+    "paper_title": "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation",
+    "paper_link": "https://iclr.cc/virtual/2025/poster/30388",
+    "matches": [
+      {
+        "strength": "정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "NSDT-F01",
+    "project": "Interleaved NSD hidden-token GraphPFN",
+    "claim": "현재 token에서 geometry를 갱신하는 PFN이 PCFI/identity/static보다 missing 분류가 좋고 실제 heterophily의 강한 floor와 경쟁한다.",
+    "verdict": "현재 SO2 token adapter는 사전 gate를 통과하지 못했으며 자동 확대나 추가 loss/head/budget 구제를 하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "동일budget의strongarm/realfloor조건중일부가충족되지않았다. 아래수치로확인한현상이며architecture최적화·학습량·RP16·prior차이중고유한원인은분리하지않았다.",
+    "reopen_when": "새근거가현재함수족/geometry식별/전이에서구체적으로다른정보나추론을제공하고nativePCFI·identity/static·고정negativeLP의floor를넘을이유를보일때.",
+    "recheck": "새basegraph와미사용realgraph를먼저고정하고dynamic-static/identity의독립증분,관측anchor,layergeometry변화와signedcos실사용,feature/context개입및numericalreplay를함께평가한다. Secondary를primary로대체하지않는다.",
+    "comparison_floor": "동일초기화·taskorder·updates의Mask/PCFI100/identity/static/dynamic;nativePCFI→같은PFN;publicsingleforward;양/음LP;NLL/Brier/macroF1·fullfeature·source2/8·no-source·전체추론비용.",
+    "source_refs": [
+      "findings/sources/nsd-token-2026-11-03/REPORT_KO.md",
+      "findings/sources/nsd-token-2026-11-03/METHOD_KO.md",
+      "findings/sources/nsd-token-2026-11-03/protocol.json",
+      "findings/sources/nsd-token-2026-11-03/results/statistics.json",
+      "findings/sources/nsd-token-2026-11-03/results/audit.json",
+      "findings/sources/nsd-token-2026-11-03/results/control_summary.json",
+      "findings/sources/nsd-token-2026-11-03/results/cost.json",
+      "findings/sources/nsd-token-2026-11-03/results/preflight.json"
+    ],
     "paper_id": "NeuralSheafDiffusion",
     "paper_title": "Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs",
     "paper_link": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html",
@@ -3624,6 +4652,101 @@
     ],
     "tags": [
       "graph-geometry",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "NSDT-F01",
+    "project": "Interleaved NSD hidden-token GraphPFN",
+    "claim": "현재 token에서 geometry를 갱신하는 PFN이 PCFI/identity/static보다 missing 분류가 좋고 실제 heterophily의 강한 floor와 경쟁한다.",
+    "verdict": "현재 SO2 token adapter는 사전 gate를 통과하지 못했으며 자동 확대나 추가 loss/head/budget 구제를 하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "동일budget의strongarm/realfloor조건중일부가충족되지않았다. 아래수치로확인한현상이며architecture최적화·학습량·RP16·prior차이중고유한원인은분리하지않았다.",
+    "reopen_when": "새근거가현재함수족/geometry식별/전이에서구체적으로다른정보나추론을제공하고nativePCFI·identity/static·고정negativeLP의floor를넘을이유를보일때.",
+    "recheck": "새basegraph와미사용realgraph를먼저고정하고dynamic-static/identity의독립증분,관측anchor,layergeometry변화와signedcos실사용,feature/context개입및numericalreplay를함께평가한다. Secondary를primary로대체하지않는다.",
+    "comparison_floor": "동일초기화·taskorder·updates의Mask/PCFI100/identity/static/dynamic;nativePCFI→같은PFN;publicsingleforward;양/음LP;NLL/Brier/macroF1·fullfeature·source2/8·no-source·전체추론비용.",
+    "source_refs": [
+      "findings/sources/nsd-token-2026-11-03/REPORT_KO.md",
+      "findings/sources/nsd-token-2026-11-03/METHOD_KO.md",
+      "findings/sources/nsd-token-2026-11-03/protocol.json",
+      "findings/sources/nsd-token-2026-11-03/results/statistics.json",
+      "findings/sources/nsd-token-2026-11-03/results/audit.json",
+      "findings/sources/nsd-token-2026-11-03/results/control_summary.json",
+      "findings/sources/nsd-token-2026-11-03/results/cost.json",
+      "findings/sources/nsd-token-2026-11-03/results/preflight.json"
+    ],
+    "paper_id": "PairAlign",
+    "paper_title": "Pairwise Alignment Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v235/liu24ci.html",
+    "matches": [
+      {
+        "strength": "Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "NSDT-F01",
+    "project": "Interleaved NSD hidden-token GraphPFN",
+    "claim": "현재 token에서 geometry를 갱신하는 PFN이 PCFI/identity/static보다 missing 분류가 좋고 실제 heterophily의 강한 floor와 경쟁한다.",
+    "verdict": "현재 SO2 token adapter는 사전 gate를 통과하지 못했으며 자동 확대나 추가 loss/head/budget 구제를 하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "동일budget의strongarm/realfloor조건중일부가충족되지않았다. 아래수치로확인한현상이며architecture최적화·학습량·RP16·prior차이중고유한원인은분리하지않았다.",
+    "reopen_when": "새근거가현재함수족/geometry식별/전이에서구체적으로다른정보나추론을제공하고nativePCFI·identity/static·고정negativeLP의floor를넘을이유를보일때.",
+    "recheck": "새basegraph와미사용realgraph를먼저고정하고dynamic-static/identity의독립증분,관측anchor,layergeometry변화와signedcos실사용,feature/context개입및numericalreplay를함께평가한다. Secondary를primary로대체하지않는다.",
+    "comparison_floor": "동일초기화·taskorder·updates의Mask/PCFI100/identity/static/dynamic;nativePCFI→같은PFN;publicsingleforward;양/음LP;NLL/Brier/macroF1·fullfeature·source2/8·no-source·전체추론비용.",
+    "source_refs": [
+      "findings/sources/nsd-token-2026-11-03/REPORT_KO.md",
+      "findings/sources/nsd-token-2026-11-03/METHOD_KO.md",
+      "findings/sources/nsd-token-2026-11-03/protocol.json",
+      "findings/sources/nsd-token-2026-11-03/results/statistics.json",
+      "findings/sources/nsd-token-2026-11-03/results/audit.json",
+      "findings/sources/nsd-token-2026-11-03/results/control_summary.json",
+      "findings/sources/nsd-token-2026-11-03/results/cost.json",
+      "findings/sources/nsd-token-2026-11-03/results/preflight.json"
+    ],
+    "paper_id": "StruRW",
+    "paper_title": "Structural Re-weighting Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v202/liu23u.html",
+    "matches": [
+      {
+        "strength": "GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      },
+      {
+        "strength": "기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
       "graph-structure-use"
     ],
     "keywords": [],
@@ -4626,6 +5749,49 @@
       "findings/sources/sheaf-pcfi-2026-11-03/results/cost.json",
       "findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md"
     ],
+    "paper_id": "Matcha",
+    "paper_title": "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation",
+    "paper_link": "https://iclr.cc/virtual/2025/poster/30388",
+    "matches": [
+      {
+        "strength": "정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SPCFI-F01",
+    "project": "Confidence-weighted Sheaf-PCFI GraphPFN synthetic-to-real pilot",
+    "claim": "Synthetic-trained2D sheaf transport를PCFI에넣으면양수전파및signed scalar보다강하고실제homo/heterophily missing을함께개선한다.",
+    "verdict": "현재RP16·symmetric-contraction·384updates구성은확대하지않는다. 일부CiteSeer증분과signed대비이득을범용성공으로승격하지않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "PCFI100/200/weighted대비syntheticaccuracy CI가0을포함하며realheterophily평균도낮다. 고유원인은미상이다. 첫좌표직접전달계수a<0비율은0이고cross-stalk사용은관측됐다. 행렬의다른성분·고유값·반복경로의signed효과는이통계로판정할수없다. Warm/RP16/학습량/prior차이를확인된원인으로단정하지않는다.",
+    "reopen_when": "새근거가현재함수족/geometry식별/전이의구체적제약을바꾸고,원본피처PCFI와weighted및고정negativeLP보다유리한정보·계산을설명할때.",
+    "recheck": "구조/예산을새bank전에고정하고feature/label법칙을분리한다. 새로운syntheticgraph및미사용realgraph에서missing-queryaccuracy와확률점수,피처제거/셔플,negative実사용과numericalreplay를함께평가한다.",
+    "comparison_floor": "동일prior·초기화·updates의Mask/PCFI100/200/weighted/signed;원본피처PCFI→동일PFN;public초기화;양/음LP;관측0source포함;학습/추론비용과수치재현.",
+    "source_refs": [
+      "findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md",
+      "findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md",
+      "findings/sources/sheaf-pcfi-2026-11-03/protocol.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/audit.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/cost.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md"
+    ],
     "paper_id": "NeuralSheafDiffusion",
     "paper_title": "Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs",
     "paper_link": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html",
@@ -4651,6 +5817,101 @@
     ],
     "tags": [
       "graph-geometry",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SPCFI-F01",
+    "project": "Confidence-weighted Sheaf-PCFI GraphPFN synthetic-to-real pilot",
+    "claim": "Synthetic-trained2D sheaf transport를PCFI에넣으면양수전파및signed scalar보다강하고실제homo/heterophily missing을함께개선한다.",
+    "verdict": "현재RP16·symmetric-contraction·384updates구성은확대하지않는다. 일부CiteSeer증분과signed대비이득을범용성공으로승격하지않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "PCFI100/200/weighted대비syntheticaccuracy CI가0을포함하며realheterophily평균도낮다. 고유원인은미상이다. 첫좌표직접전달계수a<0비율은0이고cross-stalk사용은관측됐다. 행렬의다른성분·고유값·반복경로의signed효과는이통계로판정할수없다. Warm/RP16/학습량/prior차이를확인된원인으로단정하지않는다.",
+    "reopen_when": "새근거가현재함수족/geometry식별/전이의구체적제약을바꾸고,원본피처PCFI와weighted및고정negativeLP보다유리한정보·계산을설명할때.",
+    "recheck": "구조/예산을새bank전에고정하고feature/label법칙을분리한다. 새로운syntheticgraph및미사용realgraph에서missing-queryaccuracy와확률점수,피처제거/셔플,negative実사용과numericalreplay를함께평가한다.",
+    "comparison_floor": "동일prior·초기화·updates의Mask/PCFI100/200/weighted/signed;원본피처PCFI→동일PFN;public초기화;양/음LP;관측0source포함;학습/추론비용과수치재현.",
+    "source_refs": [
+      "findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md",
+      "findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md",
+      "findings/sources/sheaf-pcfi-2026-11-03/protocol.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/audit.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/cost.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md"
+    ],
+    "paper_id": "PairAlign",
+    "paper_title": "Pairwise Alignment Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v235/liu24ci.html",
+    "matches": [
+      {
+        "strength": "Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SPCFI-F01",
+    "project": "Confidence-weighted Sheaf-PCFI GraphPFN synthetic-to-real pilot",
+    "claim": "Synthetic-trained2D sheaf transport를PCFI에넣으면양수전파및signed scalar보다강하고실제homo/heterophily missing을함께개선한다.",
+    "verdict": "현재RP16·symmetric-contraction·384updates구성은확대하지않는다. 일부CiteSeer증분과signed대비이득을범용성공으로승격하지않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "PCFI100/200/weighted대비syntheticaccuracy CI가0을포함하며realheterophily평균도낮다. 고유원인은미상이다. 첫좌표직접전달계수a<0비율은0이고cross-stalk사용은관측됐다. 행렬의다른성분·고유값·반복경로의signed효과는이통계로판정할수없다. Warm/RP16/학습량/prior차이를확인된원인으로단정하지않는다.",
+    "reopen_when": "새근거가현재함수족/geometry식별/전이의구체적제약을바꾸고,원본피처PCFI와weighted및고정negativeLP보다유리한정보·계산을설명할때.",
+    "recheck": "구조/예산을새bank전에고정하고feature/label법칙을분리한다. 새로운syntheticgraph및미사용realgraph에서missing-queryaccuracy와확률점수,피처제거/셔플,negative実사용과numericalreplay를함께평가한다.",
+    "comparison_floor": "동일prior·초기화·updates의Mask/PCFI100/200/weighted/signed;원본피처PCFI→동일PFN;public초기화;양/음LP;관측0source포함;학습/추론비용과수치재현.",
+    "source_refs": [
+      "findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md",
+      "findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md",
+      "findings/sources/sheaf-pcfi-2026-11-03/protocol.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/audit.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/results/cost.json",
+      "findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md"
+    ],
+    "paper_id": "StruRW",
+    "paper_title": "Structural Re-weighting Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v202/liu23u.html",
+    "matches": [
+      {
+        "strength": "GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      },
+      {
+        "strength": "기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
       "graph-structure-use"
     ],
     "keywords": [],
@@ -4725,6 +5986,89 @@
     ],
     "tags": [
       "context-scale",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SPFN02-F01",
+    "project": "SPFN02 Subgraph-PFN scalar reassociation and PPR feature correction",
+    "claim": "합성에서 학습한 PPR 피처 보정이 실제 세 그래프에서 PPR+ridge를 이기면서 PPR 대비 bAcc 하락을 그래프별 2%p 이하로 유지한다.",
+    "verdict": "현재 RP24·합성 prior·head 조합의 확장을 중단한다.",
+    "reason_status": "unknown",
+    "failure_reason": "CiteSeer에서 head recall 하락이 tail 개선을 상쇄했다. 투영, 피처 요약, prior와 학습 목표 중 어느 것이 해당 하락을 야기했는지는 분리하지 못했다.",
+    "reopen_when": "관측 context만으로 어떤 피처 보정이 head 성능을 해치지 않는지 판별할 구체적 신호나, RP24에서 사라지는 라벨 관련 피처를 가변 차원으로 처리할 연산을 제시할 때.",
+    "recheck": "새 synthetic bank와 새 실제 데이터에서 overall bAcc 및 head/tail recall을 분리한다. 고정 PPR 대비 교정/손실 수를 기록한다. 현재 실제 개발 패널은 독립 평가로 사용하지 않는다.",
+    "comparison_floor": "class-balanced PPR, ridge, 개발에서 계수를 고정한 PPR+ridge, 같은 크기 score-only 학습 head, 기존 frozen tail.",
+    "source_refs": [
+      "findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md",
+      "findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json"
+    ],
+    "paper_id": "Matcha",
+    "paper_title": "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation",
+    "paper_link": "https://iclr.cc/virtual/2025/poster/30388",
+    "matches": [
+      {
+        "strength": "정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "SPFN02-F01",
+    "project": "SPFN02 Subgraph-PFN scalar reassociation and PPR feature correction",
+    "claim": "합성에서 학습한 PPR 피처 보정이 실제 세 그래프에서 PPR+ridge를 이기면서 PPR 대비 bAcc 하락을 그래프별 2%p 이하로 유지한다.",
+    "verdict": "현재 RP24·합성 prior·head 조합의 확장을 중단한다.",
+    "reason_status": "unknown",
+    "failure_reason": "CiteSeer에서 head recall 하락이 tail 개선을 상쇄했다. 투영, 피처 요약, prior와 학습 목표 중 어느 것이 해당 하락을 야기했는지는 분리하지 못했다.",
+    "reopen_when": "관측 context만으로 어떤 피처 보정이 head 성능을 해치지 않는지 판별할 구체적 신호나, RP24에서 사라지는 라벨 관련 피처를 가변 차원으로 처리할 연산을 제시할 때.",
+    "recheck": "새 synthetic bank와 새 실제 데이터에서 overall bAcc 및 head/tail recall을 분리한다. 고정 PPR 대비 교정/손실 수를 기록한다. 현재 실제 개발 패널은 독립 평가로 사용하지 않는다.",
+    "comparison_floor": "class-balanced PPR, ridge, 개발에서 계수를 고정한 PPR+ridge, 같은 크기 score-only 학습 head, 기존 frozen tail.",
+    "source_refs": [
+      "findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md",
+      "findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json"
+    ],
+    "paper_id": "StruRW",
+    "paper_title": "Structural Re-weighting Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v202/liu23u.html",
+    "matches": [
+      {
+        "strength": "GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      },
+      {
+        "strength": "기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
       "graph-structure-use"
     ],
     "keywords": [],
@@ -5375,6 +6719,44 @@
       "findings/sources/graphpfn-2026-11-01/expanded.md",
       "findings/sources/graphpfn-2026-11-01/accuracy_selector.md"
     ],
+    "paper_id": "Matcha",
+    "paper_title": "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation",
+    "paper_link": "https://iclr.cc/virtual/2025/poster/30388",
+    "matches": [
+      {
+        "strength": "정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "XFER-F01",
+    "project": "Context path 선택과 고정 LP/PFN 혼합",
+    "claim": "DBLP에서 통했던 context-LOO path 선택을 다른 graph로 옮기면 강하다.",
+    "verdict": "고정 선택 규칙의 전이 실패",
+    "reason_status": "supported",
+    "failure_reason": "소수 context의 ranking이 query utility와 맞지 않았다. 후보 pool 확대와 accuracy 목적 변경만으로는 해결되지 않았다. 추정 분산·risk mismatch의 상대 기여는 미상이다.",
+    "reopen_when": "극소 context의 추정 불확실성과 실제 query risk를 다루며 task 내 utility를 식별하는 방법이 나올 때.",
+    "recheck": "독립 graph에서 동일 context·후보 pool·선택 예산으로 사전 규칙을 고정해 검증한다.",
+    "comparison_floor": "Uniform/union LP, individual paths, fixed GraphPFN path inputs",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/transfer.md",
+      "findings/sources/graphpfn-2026-11-01/expanded.md",
+      "findings/sources/graphpfn-2026-11-01/accuracy_selector.md"
+    ],
     "paper_id": "PEMix",
     "paper_title": "When Missingness Follows the Graph: Beyond Feature Propagation for Missing Features",
     "paper_link": "https://arxiv.org/abs/2610.18113",
@@ -5413,6 +6795,44 @@
       "findings/sources/graphpfn-2026-11-01/expanded.md",
       "findings/sources/graphpfn-2026-11-01/accuracy_selector.md"
     ],
+    "paper_id": "PairAlign",
+    "paper_title": "Pairwise Alignment Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v235/liu24ci.html",
+    "matches": [
+      {
+        "strength": "Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "XFER-F01",
+    "project": "Context path 선택과 고정 LP/PFN 혼합",
+    "claim": "DBLP에서 통했던 context-LOO path 선택을 다른 graph로 옮기면 강하다.",
+    "verdict": "고정 선택 규칙의 전이 실패",
+    "reason_status": "supported",
+    "failure_reason": "소수 context의 ranking이 query utility와 맞지 않았다. 후보 pool 확대와 accuracy 목적 변경만으로는 해결되지 않았다. 추정 분산·risk mismatch의 상대 기여는 미상이다.",
+    "reopen_when": "극소 context의 추정 불확실성과 실제 query risk를 다루며 task 내 utility를 식별하는 방법이 나올 때.",
+    "recheck": "독립 graph에서 동일 context·후보 pool·선택 예산으로 사전 규칙을 고정해 검증한다.",
+    "comparison_floor": "Uniform/union LP, individual paths, fixed GraphPFN path inputs",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/transfer.md",
+      "findings/sources/graphpfn-2026-11-01/expanded.md",
+      "findings/sources/graphpfn-2026-11-01/accuracy_selector.md"
+    ],
     "paper_id": "SSGP",
     "paper_title": "Semi-supervised Gaussian Process Classifiers",
     "paper_link": "https://www.ijcai.org/Proceedings/07/Papers/171.pdf",
@@ -5430,6 +6850,53 @@
     "tags": [
       "graph-structure-use",
       "uncertainty"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "XFER-F01",
+    "project": "Context path 선택과 고정 LP/PFN 혼합",
+    "claim": "DBLP에서 통했던 context-LOO path 선택을 다른 graph로 옮기면 강하다.",
+    "verdict": "고정 선택 규칙의 전이 실패",
+    "reason_status": "supported",
+    "failure_reason": "소수 context의 ranking이 query utility와 맞지 않았다. 후보 pool 확대와 accuracy 목적 변경만으로는 해결되지 않았다. 추정 분산·risk mismatch의 상대 기여는 미상이다.",
+    "reopen_when": "극소 context의 추정 불확실성과 실제 query risk를 다루며 task 내 utility를 식별하는 방법이 나올 때.",
+    "recheck": "독립 graph에서 동일 context·후보 pool·선택 예산으로 사전 규칙을 고정해 검증한다.",
+    "comparison_floor": "Uniform/union LP, individual paths, fixed GraphPFN path inputs",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/transfer.md",
+      "findings/sources/graphpfn-2026-11-01/expanded.md",
+      "findings/sources/graphpfn-2026-11-01/accuracy_selector.md"
+    ],
+    "paper_id": "StruRW",
+    "paper_title": "Structural Re-weighting Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v202/liu23u.html",
+    "matches": [
+      {
+        "strength": "GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      },
+      {
+        "strength": "기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.",
+        "tags": [
+          "distribution-shift",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "distribution-shift",
+      "graph-structure-use"
     ],
     "keywords": [],
     "retrieval_score": 4,
@@ -5581,6 +7048,47 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "BSEL-F02",
+    "project": "BSEL community-concentrated context selection for frozen GraphPFN",
+    "claim": "PFN posterior로 가중한 클래스 조건부 community 수송(CCT-EM)이 라벨 없이 O-ctx 상한의 상당 부분을 회복한다.",
+    "verdict": "사전 gate 실패, 실데이터 메소드 단계(S2/S3) 미진행.",
+    "reason_status": "supported",
+    "failure_reason": "편향 context의 posterior가 우연 수준이고 context community 쪽으로 쏠려 전역 클래스 평균 추정이 실패했다. 고정점 붕괴(‖δ̂‖/‖δ^O‖ < 0.3)는 일어나지 않았다(비율 약 0.6).",
+    "reopen_when": "편향 context에서도 posterior가 클래스 질량을 context community에 몰지 않는 추정 장치가 생길 때.",
+    "recheck": "합성 POS와 순도 계열 PUR에서 같은 gate를 다시 본다.",
+    "comparison_floor": "O-ctx, CCT-global, comm-center, self-train, soft-PL, REF-GP.",
+    "source_refs": [
+      "findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S0_KO.md",
+      "findings/sources/biased-selection-2026-11-20/em_transport/s0_report.json"
+    ],
+    "paper_id": "BDCSPN",
+    "paper_title": "Prototype Rectification for Few-Shot Learning",
+    "paper_link": "https://arxiv.org/abs/1911.10713",
+    "matches": [
+      {
+        "strength": "Prototype 오차를 intra-class(표본 부족)와 cross-class(support·query 집합 평균 차이)로 나누어 각각에 대응하는 장치를 둔다. Ablation에서 두 모듈이 각각 따로 이득을 냈다. 덕분에 prototype bias를 어디서 줄이는지 분해해서 볼 수 있다.",
+        "tags": [
+          "group-offset"
+        ],
+        "keywords": [
+          "prototype rectification"
+        ],
+        "specific_keywords": [
+          "prototype rectification"
+        ]
+      }
+    ],
+    "tags": [
+      "group-offset"
+    ],
+    "keywords": [
+      "prototype rectification"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "COUP-F01",
     "project": "Feature↔Label 양방향 추론",
     "claim": "Label→feature 반복 피드백이 일방향 추론보다 유용하다.",
@@ -5661,6 +7169,88 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "EVID-F01",
+    "project": "Relation-wise Evidence Head",
+    "claim": "Relation 출처를 보존하는 head가 강한 Plain의 class decision을 개선한다.",
+    "verdict": "현재 Evidence Head No-Go",
+    "reason_status": "unknown",
+    "failure_reason": "Plain 정답을 잃는 mass5.36%가 구제2.48%보다 컸다. 정보 중복과 representation 간섭 중 원인은 식별하지 못했다. Confidence를 낮춰서 NLL이 좋아졌다는 설명은 후속 분석에서 기각됐다.",
+    "reopen_when": "Plain의 강한 결정 능력을 유지하면서 출처별 정보의 독립 가치를 회수하는 장치가 나올 때.",
+    "recheck": "동일 task에서 harmed/rescued partition과 NLL/Brier/accuracy를 함께 비교하고 conflict 강도별 증분을 확인한다.",
+    "comparison_floor": "Plain, Mean/Separate 동일 용량 control, fixed context-weighted evidence",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/evidence.md",
+      "findings/sources/graphpfn-2026-11-01/evidence_utility.md"
+    ],
+    "paper_id": "BatchCalibration",
+    "paper_title": "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering",
+    "paper_link": "https://arxiv.org/abs/2309.17249",
+    "matches": [
+      {
+        "strength": "약 10개의 unlabeled 샘플로도 강한 성능에 이르러, 500개 이상이 필요한 PC보다 표본 효율이 훨씬 좋다고 보고한다. CLIP 이미지 분류에도 적용했다.",
+        "tags": [
+          "uncertainty"
+        ],
+        "keywords": [
+          "decision boundary"
+        ],
+        "specific_keywords": [
+          "decision boundary"
+        ]
+      }
+    ],
+    "tags": [
+      "uncertainty"
+    ],
+    "keywords": [
+      "decision boundary"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "EVID-F01",
+    "project": "Relation-wise Evidence Head",
+    "claim": "Relation 출처를 보존하는 head가 강한 Plain의 class decision을 개선한다.",
+    "verdict": "현재 Evidence Head No-Go",
+    "reason_status": "unknown",
+    "failure_reason": "Plain 정답을 잃는 mass5.36%가 구제2.48%보다 컸다. 정보 중복과 representation 간섭 중 원인은 식별하지 못했다. Confidence를 낮춰서 NLL이 좋아졌다는 설명은 후속 분석에서 기각됐다.",
+    "reopen_when": "Plain의 강한 결정 능력을 유지하면서 출처별 정보의 독립 가치를 회수하는 장치가 나올 때.",
+    "recheck": "동일 task에서 harmed/rescued partition과 NLL/Brier/accuracy를 함께 비교하고 conflict 강도별 증분을 확인한다.",
+    "comparison_floor": "Plain, Mean/Separate 동일 용량 control, fixed context-weighted evidence",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/evidence.md",
+      "findings/sources/graphpfn-2026-11-01/evidence_utility.md"
+    ],
+    "paper_id": "Matcha",
+    "paper_title": "Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation",
+    "paper_link": "https://iclr.cc/virtual/2025/poster/30388",
+    "matches": [
+      {
+        "strength": "정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "decision boundary"
+        ],
+        "specific_keywords": [
+          "decision boundary"
+        ]
+      }
+    ],
+    "tags": [
+      "graph-structure-use"
+    ],
+    "keywords": [
+      "decision boundary"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "FEAT-F01",
     "project": "실제 관측 feature 기여의 개입 분석",
     "claim": "IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.",
@@ -5719,6 +7309,86 @@
     "matches": [
       {
         "strength": "중간 layer별 graph로 여러 granularity의 구조를 학습에 사용한다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "alignment"
+        ],
+        "specific_keywords": [
+          "alignment"
+        ]
+      }
+    ],
+    "tags": [
+      "graph-structure-use"
+    ],
+    "keywords": [
+      "alignment"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "FEAT-F01",
+    "project": "실제 관측 feature 기여의 개입 분석",
+    "claim": "IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.",
+    "verdict": "해당 feature-reliability 동기 약화",
+    "reason_status": "supported",
+    "failure_reason": "평균상 실제 값 효과가 거의 상쇄됐다. 구조 입력 PFN과 synthetic-input 경로의 차이를 feature-only evidence로 오인할 수 없다. Node별 양·음의 효과가 왜 상쇄되는지는 미상이다.",
+    "reopen_when": "실제 관측 feature의 양·음 utility를 누수 없이 분리하거나, 유효 feature가 남는 조건을 특정한 방법이 나올 때.",
+    "recheck": "Mask·context·query·graph를 맞춘 제거/셔플 개입에서 실제 값 경로와 synthetic injection 변화를 분리한다.",
+    "comparison_floor": "Structure-only PFN, no-observed end-to-end, independent-injection controlled Full/Zero",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/feature_intervention.md"
+    ],
+    "paper_id": "PairAlign",
+    "paper_title": "Pairwise Alignment Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v235/liu24ci.html",
+    "matches": [
+      {
+        "strength": "Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "alignment"
+        ],
+        "specific_keywords": [
+          "alignment"
+        ]
+      }
+    ],
+    "tags": [
+      "graph-structure-use"
+    ],
+    "keywords": [
+      "alignment"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "FEAT-F01",
+    "project": "실제 관측 feature 기여의 개입 분석",
+    "claim": "IMDB의 PFN 우위는 남은 실제 관측 feature의 평균 추가 효용이다.",
+    "verdict": "해당 feature-reliability 동기 약화",
+    "reason_status": "supported",
+    "failure_reason": "평균상 실제 값 효과가 거의 상쇄됐다. 구조 입력 PFN과 synthetic-input 경로의 차이를 feature-only evidence로 오인할 수 없다. Node별 양·음의 효과가 왜 상쇄되는지는 미상이다.",
+    "reopen_when": "실제 관측 feature의 양·음 utility를 누수 없이 분리하거나, 유효 feature가 남는 조건을 특정한 방법이 나올 때.",
+    "recheck": "Mask·context·query·graph를 맞춘 제거/셔플 개입에서 실제 값 경로와 synthetic injection 변화를 분리한다.",
+    "comparison_floor": "Structure-only PFN, no-observed end-to-end, independent-injection controlled Full/Zero",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/feature_intervention.md"
+    ],
+    "paper_id": "StruRW",
+    "paper_title": "Structural Re-weighting Improves Graph Domain Adaptation",
+    "paper_link": "https://proceedings.mlr.press/v202/liu23u.html",
+    "matches": [
+      {
+        "strength": "GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.",
         "tags": [
           "graph-structure-use"
         ],
@@ -6190,6 +7860,98 @@
     ],
     "keywords": [
       "sparse"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LLBP-F08",
+    "project": "Learned-Likelihood BP / EAJ",
+    "claim": "같은 potential에서 role weights를 다시 계산하는 자기-update가 OOD 문제를 전반적으로 해결한다.",
+    "verdict": "보편적 OOD 해결 주장 기각",
+    "reason_status": "supported",
+    "failure_reason": "Low density에서는 exact role update도 실패해 Bethe partition 근사만으로 설명할 수 없었다. Potential·conditional·parameter uncertainty 상호작용은 미해결이다.",
+    "reopen_when": "Sparse/OOD potential uncertainty와 conditional inference를 함께 해결하는 연산이 나올 때.",
+    "recheck": "Low density를 포함한 새 bank에서 exact/Bethe·conditional 교차를 고정해 본다.",
+    "comparison_floor": "Constant+update, R1, Grid6/81",
+    "source_refs": [
+      "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
+    ],
+    "paper_id": "SRGNN",
+    "paper_title": "Shift-Robust GNNs: Overcoming the Limitations of Localized Graph Training data",
+    "paper_link": "https://papers.neurips.cc/paper/2021/hash/eb55e369affa90f77dd7dc9e2cd33b16-Abstract.html",
+    "matches": [
+      {
+        "strength": "편향 라벨에서는 모든 baseline이 크게 떨어진다는 것을 정량화했다. 예를 들어 PubMed에서 IID GCN의 Micro-F1 79.8이 편향 라벨에서는 baseline 전부 10점 넘게 떨어졌다. SR-GNN은 GCN 대비 손실을 최소 40% 줄였다(Cora 7.3점 손실 대 GCN 13.2점). ogb-arxiv(1% 라벨)에서도 61.6으로 APPNP 59.8보다 높아 손실의 약 30%를 되돌렸다.",
+        "tags": [
+          "distribution-shift"
+        ],
+        "keywords": [
+          "sparse"
+        ],
+        "specific_keywords": [
+          "sparse"
+        ]
+      },
+      {
+        "strength": "Hidden layer 정렬(CMD)과 linear propagation 뒤의 instance reweighting(KMM)을 한 objective로 묶어 deep GNN과 linearized GNN 모두에 붙는다. Ablation에서 두 요소를 함께 쓸 때가 각각보다 좋았고, CMD는 같은 GNN에서 DANN식 adversarial regularizer보다 좋고 덜 민감했다. 추가 비용은 IID 표본 forward/backward와 사전 kernel 계산뿐이다.",
+        "tags": [
+          "distribution-shift"
+        ],
+        "keywords": [
+          "sparse"
+        ],
+        "specific_keywords": [
+          "sparse"
+        ]
+      }
+    ],
+    "tags": [
+      "distribution-shift"
+    ],
+    "keywords": [
+      "sparse"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LLBP-F09",
+    "project": "Learned-Likelihood BP / EAJ",
+    "claim": "자기-update 경로까지 학습하는 T1이 R1보다 우수하다.",
+    "verdict": "추가 이득 미확인",
+    "reason_status": "unknown",
+    "failure_reason": "Self-update를 미분해 학습하는 경로는 작동했지만 R1 대비 이득이 없었다. Optimization·model bias 중 고유 원인은 미상이다.",
+    "reopen_when": "동일 계산 budget에서 inference-aware 학습의 독립 이득을 보이는 원리가 나올 때.",
+    "recheck": "추론 시 head 제거 효과와 새 학습 효과를 분리하고 initial state·schedule·예산을 맞춘다.",
+    "comparison_floor": "Frozen R1, R0, Constant+update, Grid6",
+    "source_refs": [
+      "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
+    ],
+    "paper_id": "CFA",
+    "paper_title": "Robustifying Vision Transformer without Retraining from Scratch by Test-Time Class-Conditional Feature Alignment",
+    "paper_link": "https://arxiv.org/abs/2206.13951",
+    "matches": [
+      {
+        "strength": "ResNet, MLP-Mixer, ViT·DeiT·BeiT 계열에 모두 적용되는 model-agnostic 방법이다. BeiT-L16에서 ImageNet-C top-1 error 19.8%로, 학습 단계를 바꾸지 않는 TTA 중 최고를 보고했다.",
+        "tags": [
+          "adaptation"
+        ],
+        "keywords": [
+          "training"
+        ],
+        "specific_keywords": [
+          "training"
+        ]
+      }
+    ],
+    "tags": [
+      "adaptation"
+    ],
+    "keywords": [
+      "training"
     ],
     "retrieval_score": 3,
     "signal": "구체 키워드+태그 일치 (미검증)",
@@ -6685,6 +8447,59 @@
       "findings/sources/graphpfn-2026-11-01/lpc.md",
       "findings/sources/graphpfn-2026-11-01/lpc_factorial.md"
     ],
+    "paper_id": "CorrectSmooth",
+    "paper_title": "Combining Label Propagation and Simple Models out-performs Graph Neural Networks",
+    "paper_link": "https://iclr.cc/virtual/2021/poster/3274",
+    "matches": [
+      {
+        "strength": "Graph를 학습에 쓰지 않는 base model에 두 번의 label propagation 후처리만 붙여 여러 benchmark에서 SOTA GNN과 같거나 더 좋았다. OGB-Products에서는 최고 GNN보다 parameter가 137배 적고 학습 시간이 100배 넘게 짧으면서 더 정확했다. MLP base 예측이 63%에서 84%로 오른 것처럼 이득 대부분이 후처리에서 나온다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "residual"
+        ],
+        "specific_keywords": [
+          "residual"
+        ]
+      },
+      {
+        "strength": "추론 시 라벨을 직접 쓰는 것이 성능의 핵심 원천임을 분리해 보였다. 라벨 없이 출력만 smoothing한 Basic Model도 GCN을 자주 넘었지만, 라벨을 쓰는 C&S와는 격차가 남았다. Validation 라벨까지 smoothing에 넣으면 9개 중 7개 데이터셋에서 SOTA를 넘었다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "residual"
+        ],
+        "specific_keywords": [
+          "residual"
+        ]
+      }
+    ],
+    "tags": [
+      "graph-structure-use"
+    ],
+    "keywords": [
+      "residual"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LPC-F01",
+    "project": "LP-conditioned structural residual",
+    "claim": "LP internal conditioning이 output offset과 Plain을 일관되게 넘는다.",
+    "verdict": "LP residual tuning·대규모 확장 중단",
+    "reason_status": "unknown",
+    "failure_reason": "보인 이득 대부분과 output offset 효과를 구분해야 했고, schema adaptation 특유의 이득이라는 증거가 약했다. 조기 relation aggregation이 원인이라는 설명은 가설이지 확정 원인이 아니다.",
+    "reopen_when": "압축된 LP 확률보다 풍부한 context 정보를 활용하며 output offset만의 효과를 넘어서는 연산이 나올 때.",
+    "recheck": "Relation 수·feature 폭·missing을 분리한 factorial과 새로운 semantic schema에서 내부 conditioning의 독립 증분을 확인한다.",
+    "comparison_floor": "Plain, offset-only, 같은 파라미터·초기화·학습 budget",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/lpc.md",
+      "findings/sources/graphpfn-2026-11-01/lpc_factorial.md"
+    ],
     "paper_id": "HGRL",
     "paper_title": "Dual-view contrastive learning for heterogeneous graph representation",
     "paper_link": "https://www.sciencedirect.com/science/article/pii/S0031320326020248",
@@ -6976,6 +8791,47 @@
     ],
     "keywords": [
       "program"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "RATIO-F01",
+    "project": "Frozen counterfactual PFN residual",
+    "claim": "Full−Neutral log probability가 LP에 더할 새로운 feature evidence다.",
+    "verdict": "Frozen 비율 보정 중단",
+    "reason_status": "supported",
+    "failure_reason": "Neutral이 정확한 feature marginalization이 아니므로 비율을 likelihood ratio로 해석할 근거가 없다. IMDB LP log margin은0.134~0.151로 작고, residual argmax 변경률34.68%였다. 원인별 기여는 분리하지 않았다.",
+    "reopen_when": "통제 입력의 의미와 feature marginalization을 정의하고 확률 비율이 유효한 증거가 되는 조건을 제시하는 방법이 나올 때.",
+    "recheck": "먼저 feature intervention으로 순효용을 확인하고, 동일 구조·주입 아래 ratio가 정답 방향 보정인지 새 graph에서 평가한다.",
+    "comparison_floor": "LP/PFN alone, 50:50, controlled neutral",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/ratio.md",
+      "findings/sources/graphpfn-2026-11-01/feature_intervention.md"
+    ],
+    "paper_id": "SaerensEM",
+    "paper_title": "Adjusting the Outputs of a Classifier to New A Priori Probabilities: A Simple Procedure",
+    "paper_link": "https://doi.org/10.1162/089976602753284446",
+    "matches": [
+      {
+        "strength": "Prior가 실제로 바뀌었는지 판정하는 likelihood ratio test를 함께 제시해, 보정이 필요할 때만 적용하는 절차를 준다.",
+        "tags": [
+          "uncertainty"
+        ],
+        "keywords": [
+          "likelihood ratio"
+        ],
+        "specific_keywords": [
+          "likelihood ratio"
+        ]
+      }
+    ],
+    "tags": [
+      "uncertainty"
+    ],
+    "keywords": [
+      "likelihood ratio"
     ],
     "retrieval_score": 3,
     "signal": "구체 키워드+태그 일치 (미검증)",
@@ -7571,6 +9427,90 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "XFER-F01",
+    "project": "Context path 선택과 고정 LP/PFN 혼합",
+    "claim": "DBLP에서 통했던 context-LOO path 선택을 다른 graph로 옮기면 강하다.",
+    "verdict": "고정 선택 규칙의 전이 실패",
+    "reason_status": "supported",
+    "failure_reason": "소수 context의 ranking이 query utility와 맞지 않았다. 후보 pool 확대와 accuracy 목적 변경만으로는 해결되지 않았다. 추정 분산·risk mismatch의 상대 기여는 미상이다.",
+    "reopen_when": "극소 context의 추정 불확실성과 실제 query risk를 다루며 task 내 utility를 식별하는 방법이 나올 때.",
+    "recheck": "독립 graph에서 동일 context·후보 pool·선택 예산으로 사전 규칙을 고정해 검증한다.",
+    "comparison_floor": "Uniform/union LP, individual paths, fixed GraphPFN path inputs",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/transfer.md",
+      "findings/sources/graphpfn-2026-11-01/expanded.md",
+      "findings/sources/graphpfn-2026-11-01/accuracy_selector.md"
+    ],
+    "paper_id": "ContextualCalibration",
+    "paper_title": "Calibrate Before Use: Improving Few-shot Performance of Language Models",
+    "paper_link": "https://arxiv.org/abs/2102.09690",
+    "matches": [
+      {
+        "strength": "AGNews에서 training-free 보정이 validation으로 튜닝한 oracle W에 가까운 성능을 냈다.",
+        "tags": [
+          "uncertainty"
+        ],
+        "keywords": [
+          "few-shot"
+        ],
+        "specific_keywords": [
+          "few-shot"
+        ]
+      }
+    ],
+    "tags": [
+      "uncertainty"
+    ],
+    "keywords": [
+      "few-shot"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "XFER-F01",
+    "project": "Context path 선택과 고정 LP/PFN 혼합",
+    "claim": "DBLP에서 통했던 context-LOO path 선택을 다른 graph로 옮기면 강하다.",
+    "verdict": "고정 선택 규칙의 전이 실패",
+    "reason_status": "supported",
+    "failure_reason": "소수 context의 ranking이 query utility와 맞지 않았다. 후보 pool 확대와 accuracy 목적 변경만으로는 해결되지 않았다. 추정 분산·risk mismatch의 상대 기여는 미상이다.",
+    "reopen_when": "극소 context의 추정 불확실성과 실제 query risk를 다루며 task 내 utility를 식별하는 방법이 나올 때.",
+    "recheck": "독립 graph에서 동일 context·후보 pool·선택 예산으로 사전 규칙을 고정해 검증한다.",
+    "comparison_floor": "Uniform/union LP, individual paths, fixed GraphPFN path inputs",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/transfer.md",
+      "findings/sources/graphpfn-2026-11-01/expanded.md",
+      "findings/sources/graphpfn-2026-11-01/accuracy_selector.md"
+    ],
+    "paper_id": "LaplacianShot",
+    "paper_title": "Laplacian Regularized Few-Shot Learning",
+    "paper_link": "https://arxiv.org/abs/2006.15486",
+    "matches": [
+      {
+        "strength": "Meta-learning 없이 고정 feature 위에 붙이는 inference 절차만으로 miniImageNet·tieredImageNet·CUB·cross-domain·iNat 5개 benchmark에서 당시 최고 수준을 냈다. Ablation에서 Laplacian 항은 nearest-prototype 대비 1-shot에서 약 2~3%p 이상 꾸준히 올렸다.",
+        "tags": [
+          "graph-structure-use"
+        ],
+        "keywords": [
+          "few-shot"
+        ],
+        "specific_keywords": [
+          "few-shot"
+        ]
+      }
+    ],
+    "tags": [
+      "graph-structure-use"
+    ],
+    "keywords": [
+      "few-shot"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "XFER-F02",
     "project": "Context path 선택과 고정 LP/PFN 혼합",
     "claim": "LP와 PFN 확률의 고정 혼합이 각자의 강점을 보존한다.",
@@ -7826,6 +9766,46 @@
     ],
     "tags": [
       "graph-structure-use"
+    ],
+    "keywords": [
+      "fusion"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "XFER-F02",
+    "project": "Context path 선택과 고정 LP/PFN 혼합",
+    "claim": "LP와 PFN 확률의 고정 혼합이 각자의 강점을 보존한다.",
+    "verdict": "고정 혼합 메인 방향 중단",
+    "reason_status": "unknown",
+    "failure_reason": "서로 맞히는 query가 다르다는 사실이 고정 확률 평균의 utility를 보장하지 않았다. 중복 증거가 원인일 수 있으나 직접 분리한 결과는 아니다.",
+    "reopen_when": "중복 evidence와 decision risk를 실제 관측량으로 구분하며 최강 단일 predictor를 보존하는 원리가 나올 때.",
+    "recheck": "같은 query·context에서 within-task 오류 보완성과 독립 개발/확인 graph의 평균·worst-case utility를 함께 본다.",
+    "comparison_floor": "LP alone, PCFI/FISF+PFN alone, compute-matched fixed mixtures",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/fusion.md"
+    ],
+    "paper_id": "SaerensEM",
+    "paper_title": "Adjusting the Outputs of a Classifier to New A Priori Probabilities: A Simple Procedure",
+    "paper_link": "https://doi.org/10.1162/089976602753284446",
+    "matches": [
+      {
+        "strength": "Prior가 실제로 바뀌었는지 판정하는 likelihood ratio test를 함께 제시해, 보정이 필요할 때만 적용하는 절차를 준다.",
+        "tags": [
+          "uncertainty"
+        ],
+        "keywords": [
+          "fusion"
+        ],
+        "specific_keywords": [
+          "fusion"
+        ]
+      }
+    ],
+    "tags": [
+      "uncertainty"
     ],
     "keywords": [
       "fusion"

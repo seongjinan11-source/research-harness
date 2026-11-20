@@ -1,0 +1,58 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: SemiProtoNet
+title: "Meta-Learning for Semi-Supervised Few-Shot Classification"
+authors: "Mengye Ren, Eleni Triantafillou, Sachin Ravi, Jake Snell, Kevin Swersky, Joshua B. Tenenbaum, Hugo Larochelle, Richard S. Zemel"
+venue: "ICLR 2018"
+year: 2018
+links:
+  paper: https://arxiv.org/abs/1803.00676
+  conference: https://iclr.cc/virtual/2018/poster/88
+  openreview: https://openreview.net/forum?id=HJcSzz-CZ
+  code: https://github.com/renmengye/few-shot-ssl-public
+
+citation:
+  type: inproceedings
+  title: "Meta-Learning for Semi-Supervised Few-Shot Classification"
+  authors: ["Mengye Ren", "Eleni Triantafillou", "Sachin Ravi", "Jake Snell", "Kevin Swersky", "Joshua B. Tenenbaum", "Hugo Larochelle", "Richard S. Zemel"]
+  year: 2018
+  booktitle: "ICLR 2018"
+  arxiv: "1803.00676"
+  url: https://iclr.cc/virtual/2018/poster/88
+  verified_from:
+    - https://iclr.cc/virtual/2018/poster/88
+    - https://arxiv.org/abs/1803.00676
+
+areas: [ml-foundations]
+problem: "Few-shot episode마다 라벨 없는 예제가 추가로 주어질 때, 특히 그중 일부가 episode와 무관한 distractor class일 때, 이 unlabeled 예제로 class prototype을 개선하는 방법을 meta-learning으로 배우고자 한다."
+core_idea: "Prototypical Network의 prototype을 cluster 중심으로 보고 semi-supervised clustering처럼 다듬는다. 세 가지 변형이 있다. (1) Support 평균 prototype에서 출발해 unlabeled 예제에 거리 기반 soft assignment를 주고, support와 unlabeled를 함께 가중 평균해 prototype을 한 번 갱신하는 soft k-means. (2) 원점에 중심을 둔 distractor cluster를 하나 추가하고 그 length-scale만 학습해, 무관한 예제가 class prototype을 끌지 않게 하는 변형. (3) Prototype까지의 정규화 거리 통계를 작은 MLP에 넣어 class별 threshold·slope를 예측하고, 멀리 있는 unlabeled 예제의 기여를 soft mask로 줄이는 masked soft k-means. 모두 episode 단위로 end-to-end 학습하며, refinement는 학습과 test 모두에서 한 단계만 쓴다. 새 benchmark인 tieredImageNet도 제안한다."
+key_assumptions:
+  - "Unlabeled 집합의 relevant 부분은 labeled support와 같은 분포에서 오며, episode의 각 class에서 같은 수(M개)씩 뽑힌다. 실험은 class별 라벨/비라벨 분할을 무작위로 만든다."
+  - "Support 평균 prototype이 refinement의 좋은 출발점이며, 한 단계 soft assignment로 충분하다고 본다(여러 단계는 이득이 없었다고 보고)."
+  - "Distractor는 class prototype들에서 멀리 떨어져 있어 거리만으로 걸러낼 수 있다고 가정한다."
+strengths:
+  - text: "Unlabeled 예제를 prototype 계산에 넣는 과정을 미분 가능하게 만들어 episode 단위 meta-learning으로 학습했다. 같은 embedding에서 test 때만 soft k-means를 적용하는 기준선보다 좋았다. Test 때 unlabeled 수를 학습 때(5개)보다 늘려도(최대 25개) 정확도가 계속 올랐다."
+    tags: [adaptation, amortized-inference]
+  - text: "Distractor가 섞인 설정에서 masked soft k-means가 세 데이터셋 대부분에서 최고였고, distractor가 없는 경우의 상한에 가까운 성능을 냈다. Mask 값은 distractor와 비-distractor로 갈리는 bimodal 분포를 보였다."
+    tags: [robustness]
+  - text: "상위 범주 단위로 train/test class를 나눈 tieredImageNet을 제안해, 의미적으로 가까운 class가 train·test에 함께 들어가는 miniImageNet split의 누수를 줄였다."
+    tags: [eval-protocol]
+limitations:
+  - text: "저자들은 distractor를 하나의 cluster로 잡는 방식이 너무 단순하다고 인정한다. Distractor가 여러 class에 걸치면 cluster 하나가 class 하나라는 가정과 맞지 않으며, 이것이 masked 변형을 만든 이유다."
+    tags: [label-space, robustness]
+    source: self
+  - text: "Refinement를 여러 번 반복해도 한 단계보다 나아지지 않았다고 저자들이 보고한다. 향후 과제로는 episode 내용에 따라 embedding 자체가 달라지도록 fast weight를 넣는 방향을 든다."
+    tags: [adaptation]
+    source: self
+  - text: "[analyst] Unlabeled 예제가 class마다 같은 수로, labeled와 같은 분포에서 뽑힌다는 설정이 성공의 전제다. 초기 prototype이 편향되거나 unlabeled의 class 비율이 고르지 않으면, 한 단계 soft assignment는 초기값 근처에 머물러 편향을 그대로 물려받는다. 논문은 이 경우를 다루지 않는다."
+    tags: [selection-bias, label-shift]
+    source: analyst
+builds_on: [ProtoNet]
+compared_against: [ProtoNet]
+open_questions:
+  - "Support와 unlabeled가 다른 하위집단 구성에서 왔을 때(선택 편향), soft k-means refinement는 prototype bias를 줄이는가, 강화하는가?"
+  - "여러 단계 refinement가 이득이 없었던 것은 초기값이 이미 좋아서인가, 아니면 soft k-means가 나쁜 국소해로 가기 쉬워서인가?"
+hooks:
+  - "(BSEL-U01, community 혼합비 준지도 GMM) Soft k-means refinement는 context 원형에서 출발하는 준지도 GMM의 가장 단순한 형태다. BSEL-U01의 리뷰 proxy에서 참 원형으로 시작한 GMM은 oracle 수준 TV(0.18–0.25)에 갔지만, context 초기화에서는 나쁜 basin이나 class collapse에 빠졌다. 이 논문이 한 단계 refinement로 충분했던 것은 support와 unlabeled가 같은 분포에서 무작위로 나뉜 설정이라 초기값이 이미 좋았기 때문으로 읽힌다(가설). 따라서 이 결과는 commconc 초기화 문제에 대한 해법이 아니라, 초기화가 좋을 때만 refinement가 안전하다는 쪽의 근거다."
+  - "(BSEL, context 없는 community) Masked soft k-means의 거리 기반 soft mask는 prototype에서 멀리 떨어진 unlabeled 노드의 기여를 줄인다. context가 없는 community의 노드가 편향된 원형 추정을 끌지 않게 하는 장치로 옮겨 볼 수 있다. 다만 이 장치는 그 노드들을 버리는 쪽이라, context 없는 community의 offset이나 p(c|k)를 추정해 주지는 않는다."
+notes: "arXiv v1 본문(모델 세 가지, 실험 설정, 결과, 결론, 부록 hyperparameter)을 확인했다. ICLR 2018 게재는 iclr.cc poster 페이지에서 확인했다. 그 페이지에는 학회 정식 명칭이 약어로만 나와 있어 booktitle을 ICLR 2018로 적었다. OpenReview forum은 bot 검증 때문에 열지 못해 review 한계는 넣지 않았다. 저자 철자는 arXiv 표기를 따랐다(iclr.cc는 Joshua B Tenenbaum, Richard Zemel)."
+added: 2026-11-20

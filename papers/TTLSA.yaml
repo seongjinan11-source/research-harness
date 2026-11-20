@@ -1,0 +1,64 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: TTLSA
+title: 'Beyond Invariance: Test-Time Label-Shift Adaptation for Addressing "Spurious" Correlations'
+authors: "Qingyao Sun, Kevin P. Murphy, Sayna Ebrahimi, Alexander D'Amour (Cornell / Google DeepMind / Google Cloud AI Research)"
+venue: "NeurIPS 2023"
+year: 2023
+links:
+  paper: https://arxiv.org/abs/2211.15646
+  proceedings: https://proceedings.neurips.cc/paper_files/paper/2023/hash/4b0c1645f3d6a1730931e65ecbf91ac3-Abstract-Conference.html
+citation:
+  type: inproceedings
+  title: 'Beyond Invariance: Test-Time Label-Shift Adaptation for Addressing "Spurious" Correlations'
+  authors: ["Qingyao Sun", "Kevin P. Murphy", "Sayna Ebrahimi", "Alexander D'Amour"]
+  year: 2023
+  booktitle: "Advances in Neural Information Processing Systems"
+  volume: 36
+  arxiv: "2211.15646"
+  url: https://proceedings.neurips.cc/paper_files/paper/2023/hash/4b0c1645f3d6a1730931e65ecbf91ac3-Abstract-Conference.html
+  verified_from:
+    - https://proceedings.neurips.cc/paper_files/paper/2023/hash/4b0c1645f3d6a1730931e65ecbf91ac3-Abstract-Conference.html
+    - https://arxiv.org/abs/2211.15646
+areas: [ml-foundations]
+problem: "Class label y와 nuisance z(예: 성별, 배경)의 상관이 domain마다 바뀌는 상황에서, invariance를 강제해 z 정보를 버리는 대신 target domain의 (y, z) 결합 분포에 test time에 맞추어 예측을 개선하고자 한다."
+core_idea: "y와 z를 묶은 meta-label m=(y, z)를 정의하면, p(x|y, z)가 domain 간 불변이고 p(y, z)만 바뀐다는 가정은 m에 대한 표준 label shift가 된다. Source에서 z annotation을 써서 p(y, z|x)를 내는 discriminative model을 logit adjustment로 학습하고, labeled source holdout에서 bias-corrected temperature scaling으로 calibrate한다. Target에서는 unlabeled 샘플에 Saerens식 EM을 돌려 p_t(y, z)를 추정하고, posterior를 'target prior/source prior' 비율로 재가중한 뒤 z를 합쳐 y를 예측한다. 생성 모델은 학습하지 않고 discriminative 출력만 재가중한다."
+key_assumptions:
+  - "p(x|y, z)가 source와 target에서 같다(저자들은 causal stability라 부른다). 변하는 것은 (y, z)의 결합 prior뿐이다."
+  - "학습 시 z가 labeled되어 있고, z는 이산적이다."
+  - "Discriminative model의 확률이 calibrated되어 있다. 저자들은 calibration이 실제로 중요하다고 본다."
+  - "(y, z)로 설명되지 않는 p(x)의 covariate shift는 다루지 않는다."
+strengths:
+  - text: "Spurious correlation 문제를 invariance가 아니라 확장된 label에 대한 label shift 적응으로 다시 쓴다. 그래서 z가 y를 예측하는 데 유용한 target에서는 z 정보를 버리지 않고 오히려 활용한다."
+    tags: [label-shift, nuisance-separation]
+  - text: "Colored MNIST와 CheXpert(z=성별)에서 shift 강도에 따라 ERM은 무너지고 invariant 방법은 평탄했지만, TTLSA는 unconfounded 지점을 빼면 invariant 방법보다 좋았고 unlabeled target이 늘수록 참 prior를 쓴 oracle에 다가갔다."
+    tags: [label-shift, distribution-shift]
+  - text: "Test time에 posterior 재가중과 EM만 하므로 모델을 다시 학습하지 않는다. Target 샘플 64개나 512개로도 실험했다."
+    tags: [label-shift, inference-cost]
+  - text: "Calibration 단계(BCTS)를 명시적인 구성요소로 두고, calibration이 없으면 결과가 나빠지고 변동이 커진다는 ablation을 보였다."
+    tags: [uncertainty, label-shift]
+limitations:
+  - text: "p(x|y, z) 불변 가정이 깨지면 방법의 근거가 사라지며, 저자들은 이를 핵심 약점으로 인정한다. 이 가정이 포착하는 shift는 일부일 뿐이라고도 적는다."
+    tags: [distribution-shift, label-shift]
+    source: self
+  - text: "학습 시 z annotation이 필요하다. 저자들은 이 요구를 semi-supervised 방법 등으로 완화하는 것을 향후 과제로 둔다."
+    tags: [nuisance-separation]
+    source: self
+  - text: "Z가 고차원이 되면 각 단계와 적절한 데이터 확보가 어려워진다고 저자들이 적는다. (y, z) 조합 수만큼 prior를 추정해야 하기 때문이다."
+    tags: [label-space, context-scale]
+    source: self
+  - text: "Calibration이 없으면 성능이 나빠지고 불안정해진다(부록 C.2). 즉 source holdout에서 잘 calibrate할 수 있어야 한다."
+    tags: [uncertainty]
+    source: self
+  - text: "[analyst] Worst-group benchmark에서 average accuracy 이득은 데이터셋마다 엇갈렸다(Waterbirds 95.23 대 ERM 93.19, CivilComments 85.03 대 88.00). BBSE 같은 다른 prior 추정기와의 비교도 없다."
+    tags: [eval-protocol, label-shift]
+    source: analyst
+builds_on: [SaerensEM, BBSE, LogitAdjust, BCTS]
+compared_against: [ERM, GroupDRO, SUBG, LogitAdjust]
+open_questions:
+  - "z가 x의 결정적 함수(예: 그래프 community)일 때, (y, z) meta-label 적응은 z별 Saerens EM과 무엇이 다른가?"
+  - "Source posterior가 calibrated되지 않았고 그 implicit source prior도 알 수 없을 때(예: in-context 모델) '나눌 prior'를 어떻게 정해야 하는가?"
+hooks:
+  - "(BSEL, 가정 대응) TTLSA의 틀에서 community를 z로 두면, commconc 선택은 p(y, z)를 바꾸는 선택으로 볼 수 있다. Community 안에서 class와 무관하게 노드를 고른다면 p(x|y, z)는 근사적으로 불변이고, Saerens의 p(x|y) 불변보다 BSEL에 더 맞는 가정이다. 하지만 BSEL에서 community는 각 노드에 대해 정해져 있으므로 p(y, z|x)는 z를 고정한 p(y|x, z)가 된다. 따라서 TTLSA를 그대로 옮기면 community별 Saerens EM과 같아지고, 이는 W의 R2(−0.32 bAcc)·BSEL-F04에서 이미 실패한 경로다. 새로 시험할 것은 메커니즘이 아니라 아래 calibration 쪽이다."
+  - "(BSEL-P03과의 관계) TTLSA는 source posterior를 BCTS로 calibrate한 뒤 셈으로 얻은 source prior p_s(y, z)를 나눈다. Frozen GraphPFN은 context를 보고 implicit prior를 내므로, 나눠야 할 것은 context의 community별 class 개수가 아니라 PFN이 실제로 쓰는 community 단위 출력 prior다. BSEL-P03의 O-swap이 77–89%를 회복한 것은 바로 이 분모를 uniform context PFN의 community 평균으로 바꾼 결과로 읽힌다. 다만 O-swap도 per-(community,class) 상수 재가중이라 BSEL-L01의 within-community AUC 제약은 그대로 남는다."
+notes: "arXiv v4(2023-11-29) HTML 본문을 읽었다. arXiv 페이지 제목은 'for Distributions with \"Spurious\" Correlations'로 표기되어 proceedings 제목('for Addressing ...')과 다르다. citation과 title은 NeurIPS proceedings 페이지 표기를 따랐다. Proceedings 페이지에 쪽수는 없고 DOI 10.52202/075280-1033만 있다. 공개 코드 주소는 직접 확인하지 않아 links에 넣지 않았다."
+added: 2026-11-20

@@ -15,10 +15,76 @@
 - 닫지 않은 것: 새 prior matched 학습, 내부 관측-라벨 공동추론, 임의 heterophily·heterogeneous schema와 실제 graph 전이를 기각하지 않는다. 이번에 하지 않은 neural training을 학습 실패로 세지 않는다. 직접 통계 추론의 피처 활용 이득은 보존한다.
 - 원문: [findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md](../findings/sources/adaptive-transport-2026-11-02/REPORT_KO.md); [findings/sources/adaptive-transport-2026-11-02/METHOD_KO.md](../findings/sources/adaptive-transport-2026-11-02/METHOD_KO.md); [findings/sources/adaptive-transport-2026-11-02/protocol.json](../findings/sources/adaptive-transport-2026-11-02/protocol.json); [findings/sources/adaptive-transport-2026-11-02/results/statistics.json](../findings/sources/adaptive-transport-2026-11-02/results/statistics.json); [findings/sources/adaptive-transport-2026-11-02/results/audit.json](../findings/sources/adaptive-transport-2026-11-02/results/audit.json); [findings/sources/adaptive-transport-2026-11-02/results/classical_audit.json](../findings/sources/adaptive-transport-2026-11-02/results/classical_audit.json); [findings/sources/adaptive-transport-2026-11-02/results/latent_accuracy_audit.json](../findings/sources/adaptive-transport-2026-11-02/results/latent_accuracy_audit.json); [findings/sources/adaptive-transport-2026-11-02/runtime/latent_accuracy_addendum.json](../findings/sources/adaptive-transport-2026-11-02/runtime/latent_accuracy_addendum.json); [findings/sources/adaptive-transport-2026-11-02/results/cost.json](../findings/sources/adaptive-transport-2026-11-02/results/cost.json); [findings/sources/adaptive-transport-2026-11-02/results/preflight.json](../findings/sources/adaptive-transport-2026-11-02/results/preflight.json)
 
+- [LaplacianShot](https://arxiv.org/abs/2006.15486): 복수 태그 일치 (약한 단서); tags=adaptation, graph-structure-use; keywords=-
+  - 기록된 강점: Meta-learning 없이 고정 feature 위에 붙이는 inference 절차만으로 miniImageNet·tieredImageNet·CUB·cross-domain·iNat 5개 benchmark에서 당시 최고 수준을 냈다. Ablation에서 Laplacian 항은 nearest-prototype 대비 1-shot에서 약 2~3%p 이상 꾸준히 올렸다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [PolicyGNN](https://arxiv.org/abs/2006.15097): 복수 태그 일치 (약한 단서); tags=adaptation, graph-structure-use; keywords=-
   - 기록된 강점: Node별 aggregation 횟수를 학습하는 명시적인 RL 선행이다.
+
+## BSEL-F01 — 라벨 없는 test-time 조정(community 표준화 comm-z, context 통계 맞춤 ctx-match, 판별형 density-ratio 복제)이 commconc 손실을 줄인다.
+
+- 판정: 기각(J2' comm-z, ctx-match, J3 재가중 모두 평가 가능 3개 그래프에서 기각).
+- 원인·병목 [미검증 가설]: 세 방법 모두 클래스 구성을 보정하지 않는 community 단위 조정이다. 클래스 조건부 offset을 라벨 없이 추정하지 못한 것이 원인으로 보이나 분리하지 않았다.
+- 반증·배제한 설명: LimiX 표준화의 context-only 통계(N0)는 원인이 아니다(J0 기각).; 손실은 선택 크기 때문이 아니다(크기 보존 null ≈ 0).
+- 재검토 조건: community offset과 클래스 구성을 라벨 없이 분리하는 추정기가 나오고, O-ctx 상한 대비 회복을 정답 없이 검증할 수 있을 때.
+- 먼저 이겨야 할 기준선: O-ctx oracle, GP 원래 context, BS-GCN, CMD-GCN(SR-GNN식).
+- 최소 재검증: 같은 dev context에서 Rec와 uniform 변화를 seed 군집 CI로 재측정하고 null 대조를 함께 본다.
+- 닫지 않은 것: 구성 보정 offset 추정, 출력 쪽 prior 보정, 사전학습 prior 변경.
+- 원문: [findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md](../findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md)
+
+현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
+
+
+## BSEL-F02 — PFN posterior로 가중한 클래스 조건부 community 수송(CCT-EM)이 라벨 없이 O-ctx 상한의 상당 부분을 회복한다.
+
+- 판정: 사전 gate 실패, 실데이터 메소드 단계(S2/S3) 미진행.
+- 원인·병목 [진단이 지지]: 편향 context의 posterior가 우연 수준이고 context community 쪽으로 쏠려 전역 클래스 평균 추정이 실패했다. 고정점 붕괴(‖δ̂‖/‖δ^O‖ < 0.3)는 일어나지 않았다(비율 약 0.6).
+- 반증·배제한 설명: EM 고정점 붕괴(사전 정의 기준 미충족).
+- 재검토 조건: 편향 context에서도 posterior가 클래스 질량을 context community에 몰지 않는 추정 장치가 생길 때.
+- 먼저 이겨야 할 기준선: O-ctx, CCT-global, comm-center, self-train, soft-PL, REF-GP.
+- 최소 재검증: 합성 POS와 순도 계열 PUR에서 같은 gate를 다시 본다.
+- 닫지 않은 것: posterior를 쓰지 않는 원형 추정, 소수 진짜 라벨을 쓰는 판, 순도가 높은 그래프(PUR 0.95에서 T5 0.42).
+- 원문: [findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S0_KO.md](../findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S0_KO.md); [findings/sources/biased-selection-2026-11-20/em_transport/s0_report.json](../findings/sources/biased-selection-2026-11-20/em_transport/s0_report.json)
+
+- [BDCSPN](https://arxiv.org/abs/1911.10713): 구체 키워드+태그 일치 (미검증); tags=group-offset; keywords=prototype rectification
+  - 기록된 강점: Prototype 오차를 intra-class(표본 부족)와 cross-class(support·query 집합 평균 차이)로 나누어 각각에 대응하는 장치를 둔다. Ablation에서 두 모듈이 각각 따로 이득을 냈다. 덕분에 prototype bias를 어디서 줄이는지 분해해서 볼 수 있다.
+
+## BSEL-F03 — 모든 노드에서 클래스 무관 community offset(구성 보정)을 빼면 특징 수송 상한이 거의 완전 회복으로 오른다(합성 결과의 실데이터 이전).
+
+- 판정: 채택 안 함.
+- 원인·병목 [미검증 가설]: 합성 생성식의 가정(클래스 무관 가산 offset)이 실데이터에서 맞지 않는 것으로 보인다. offset의 상당 부분이 클래스 신호와 교락된다는 해석은 가설이다.
+- 반증·배제한 설명: 확정된 배제 없음
+- 재검토 조건: 실데이터에서 클래스 무관 offset과 클래스 구성의 교락을 분리하는 근거나 장치가 나올 때.
+- 먼저 이겨야 할 기준선: O-ctx.
+- 최소 재검증: dev 4개 그래프 S1 oracle 분해를 정정된 pool로 다시 본다.
+- 닫지 않은 것: offset을 PFN 입력이 아닌 prior 추정에만 쓰는 방식, photo처럼 이득이 난 그래프의 조건.
+- 원문: [findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md](../findings/sources/biased-selection-2026-11-20/em_transport/DECISION_S1_KO.md); [findings/sources/biased-selection-2026-11-20/em_transport/s1_report.json](../findings/sources/biased-selection-2026-11-20/em_transport/s1_report.json)
+
+현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
+
+
+## BSEL-F04 — context 라벨·그래프·특징만으로 community별 클래스 사전확률 p(c|k)를 추정해 PFN 출력을 보정하면(CPC) commconc 손실의 선택 특유 부분을 되돌린다.
+
+- 판정: 중단(실용 성능 부족; 정식 E1 판정 없음).
+- 원인·병목 [진단이 지지]: E-moment는 commconc context 원형이 community offset으로 오염되어 실패한다(BSEL-P04의 참 원형 상한). context 라벨을 전파하는 방법은 편향을 키운다. context 없는 community에 클래스 질량의 65–92%가 있다(리뷰 proxy).
+- 반증·배제한 설명: 구조만으로 생기는 이득이 아니다(E-moment null SG 약 0).; logit adjustment 같은 클래스 상수 보정은 pairwise AUC에서 정의상 무효다.
+- 재검토 조건: community 집중 context에서도 클래스 원형(또는 p(c|k))을 라벨 없이 편향 없이 추정하는 장치가 나오고, 참 원형 상한 대비 TV를 줄인다는 근거가 있을 때.
+- 먼저 이겨야 할 기준선: O-swap, 참 원형 E-moment, L-ctx(같은 라벨을 context에 추가), C&S, REF-GP.
+- 최소 재검증: 캐시된 CiteSeer/Cora와 photo/PubMed 보충 캐시로 SG와 context 없는 community TV를 함께 본다.
+- 닫지 않은 것: photo·PubMed, 편향 없는 원형 추정기, S3 확인.
+- 원문: [findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md](../findings/sources/biased-selection-2026-11-20/context_prior/DECISION_E1_PARTIAL_KO.md); [findings/sources/biased-selection-2026-11-20/context_prior/e1_report.json](../findings/sources/biased-selection-2026-11-20/context_prior/e1_report.json)
+
+- [LatentLabelShift](https://arxiv.org/abs/2207.13179): 구체 키워드+태그 일치 (미검증); tags=identifiability, label-shift; keywords=latent label shift
+  - 기록된 강점: Label 없이도 domain 간 class 비율 차이만으로 잠재 class와 domain별 prior를 식별하는 조건을 준다. Label shift를 보정 대상이 아니라 비지도 학습의 신호로 쓴다.
+  - 기록된 강점: Prior 추정에 labeled source를 쓰지 않고 domain 표지와 모든 unlabeled 입력만 쓴다. 따라서 labeled 집합의 선택 방식에 기대지 않는다.
+  - 기록된 강점: Feature 유사도가 class와 어긋나는 데이터(FieldGuide: 같은 종의 애벌레와 성체)에서 SCAN을 크게 이겼다(FieldGuide-2 최희소 설정 0.947 대 0.589). CIFAR-20에서도 희소한 class-domain 구조에서 큰 차이가 났다(0.807 대 0.445).
+- [BBSE](https://arxiv.org/abs/1802.03916): 복수 태그 일치 (약한 단서); tags=identifiability, label-shift; keywords=-
+  - 기록된 강점: Weight 오차가 confusion matrix의 최소 singular value σ_min의 제곱에 반비례하고 표본 수에 따라 줄어든다는 유한표본 bound를 준다. 언제 추정이 불안정해지는지가 식으로 드러난다.
+- [PairAlign](https://proceedings.mlr.press/v235/liu24ci.html): 복수 태그 일치 (약한 단서); tags=identifiability, label-shift; keywords=-
+  - 기록된 강점: Edge weight와 label weight를 모두 pseudo-label 혼동 행렬 기반 선형계로 추정한다. StruRW가 가정한 완벽한 source 예측과 hard pseudo-label 대신 soft 혼동 행렬과 regularization을 써서 추정이 더 안정적이다.
+- [SparseJointShift](https://arxiv.org/abs/2209.08436): 복수 태그 일치 (약한 단서); tags=identifiability, label-shift; keywords=-
+  - 기록된 강점: Label shift와 sparse covariate shift를 하나의 가정으로 묶고, 그 아래에서 target label 없이 결합 shift가 식별되는 충분조건을 명시한다.
 
 ## BIND-F01 — Class pooling 전 context identity를 보존해 곱하면 실제 graph에서 좋아진다.
 
@@ -55,6 +121,8 @@
   - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
 - [StructuralMissingPFN](https://arxiv.org/abs/2601.18500): 복수 태그 일치 (약한 단서); tags=amortized-inference, uncertainty; keywords=-
   - 기록된 강점: Mask를 포함한 불완전 입력에서 직접 예측하며 explicit posterior sampling과 분류 경로를 구분한다.
+- [SaerensEM](https://doi.org/10.1162/089976602753284446): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=likelihood ratio
+  - 기록된 강점: Prior가 실제로 바뀌었는지 판정하는 likelihood ratio test를 함께 제시해, 보정이 필요할 때만 적용하는 절차를 준다.
 
 ## DVP-F01 — J: entropy 감소로 학습 mask prior를 구성하면 같은 Mask PFN이 random·geometry·2배 random 학습보다 새 random-mask query를 정확히 분류한다.
 
@@ -99,10 +167,18 @@
 - 닫지 않은 것: Diffusion 전체,DPM-SNC/ReDiSC/RDSMC 원본 방법,다른 proposal/학습량,실제 graph/unseen schema,RNP objective,새 feature-law의 실패로 세지 않는다. 기존 Factor의 positive results는 보존한다.
 - 원문: [findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md](../findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md); [findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md](../findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md); [findings/sources/diffusion-factor-2026-11-02/protocol.json](../findings/sources/diffusion-factor-2026-11-02/protocol.json); [findings/sources/diffusion-factor-2026-11-02/results/statistics.json](../findings/sources/diffusion-factor-2026-11-02/results/statistics.json); [findings/sources/diffusion-factor-2026-11-02/results/audit.json](../findings/sources/diffusion-factor-2026-11-02/results/audit.json); [findings/sources/diffusion-factor-2026-11-02/results/benchmark.json](../findings/sources/diffusion-factor-2026-11-02/results/benchmark.json); [findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json](../findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json)
 
+- [AdaBN](https://arxiv.org/abs/1603.04779): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: 추가 component·parameter·튜닝이 전혀 없고, target 통계 재계산만으로 Office-31 단일·다중 source와 Caltech-Bing에서 당시 최고 수준을 냈다. CORAL과 결합하면 대체로 더 좋아졌다.
+- [BDCSPN](https://arxiv.org/abs/1911.10713): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: 추가 학습 없이 inference 단계에서 pseudo-label 가중 재계산과 평균 shift라는 두 가지 단순한 조작만으로, 1-shot에서 CSPN 대비 약 8~9%p를 올렸다. miniImageNet 1-shot 70.31%, tieredImageNet 1-shot 78.74%로 당시 transductive 방법 중 최고였다.
+- [CorrectSmooth](https://iclr.cc/virtual/2021/poster/3274): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: 어떤 base predictor 위에도 붙는 후처리라 비용이 작고, 큰 GNN 위에 얹어도 작은 추가 이득을 준다.
 - [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
   - 기록된 강점: Inducing variables로 근사 추론하고 별도 early-stopping validation을 요구하지 않는다.
 - [LoGIC](https://arxiv.org/abs/2609.05955): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
   - 기록된 강점: Backbone을 재학습하지 않는 추론 시점 인터페이스라서, pure-tabular backbone(G2T featurization + TabPFNv2·LimiX)과 adapter backbone(GraphPFN)에 같은 방식으로 붙는다. 정식화 자체가 full-context tabular 추론, per-query retrieval, full-graph 추론을 특수한 경우로 포함하므로 기존 protocol과의 관계도 분명하다.
+- [Matcha](https://iclr.cc/virtual/2025/poster/30388): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: 바꾸는 parameter가 hop-aggregation 계수뿐이라 가볍다. PIC loss는 노드 수에 선형인 비용으로 계산되고, entropy minimization의 scale 자명해를 피한다. 초기 예측에 잡음이 많아도 PIC로 정확도가 오르는 예를 부록에서 보였다.
 - [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=adaptation, model-based-baseline; keywords=-
   - 기록된 강점: 소수 라벨에서 evidence 기반 선택을 cross-validation과 비교한다.
 
@@ -117,10 +193,18 @@
 - 닫지 않은 것: Rényi Neural Processes의 variational objective는 실행하지 않았다. 모든 Rényi divergence/entropy 활용,다른SMC bridge/step budget·posterior inference를 기각하지 않는다.
 - 원문: [findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md](../findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md); [findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md](../findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md); [findings/sources/diffusion-factor-2026-11-02/protocol.json](../findings/sources/diffusion-factor-2026-11-02/protocol.json); [findings/sources/diffusion-factor-2026-11-02/results/statistics.json](../findings/sources/diffusion-factor-2026-11-02/results/statistics.json); [findings/sources/diffusion-factor-2026-11-02/results/audit.json](../findings/sources/diffusion-factor-2026-11-02/results/audit.json); [findings/sources/diffusion-factor-2026-11-02/results/benchmark.json](../findings/sources/diffusion-factor-2026-11-02/results/benchmark.json); [findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json](../findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json)
 
+- [AdaBN](https://arxiv.org/abs/1603.04779): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: 추가 component·parameter·튜닝이 전혀 없고, target 통계 재계산만으로 Office-31 단일·다중 source와 Caltech-Bing에서 당시 최고 수준을 냈다. CORAL과 결합하면 대체로 더 좋아졌다.
+- [BDCSPN](https://arxiv.org/abs/1911.10713): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: 추가 학습 없이 inference 단계에서 pseudo-label 가중 재계산과 평균 shift라는 두 가지 단순한 조작만으로, 1-shot에서 CSPN 대비 약 8~9%p를 올렸다. miniImageNet 1-shot 70.31%, tieredImageNet 1-shot 78.74%로 당시 transductive 방법 중 최고였다.
+- [CorrectSmooth](https://iclr.cc/virtual/2021/poster/3274): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: 어떤 base predictor 위에도 붙는 후처리라 비용이 작고, 큰 GNN 위에 얹어도 작은 추가 이득을 준다.
 - [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
   - 기록된 강점: Inducing variables로 근사 추론하고 별도 early-stopping validation을 요구하지 않는다.
 - [LoGIC](https://arxiv.org/abs/2609.05955): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
   - 기록된 강점: Backbone을 재학습하지 않는 추론 시점 인터페이스라서, pure-tabular backbone(G2T featurization + TabPFNv2·LimiX)과 adapter backbone(GraphPFN)에 같은 방식으로 붙는다. 정식화 자체가 full-context tabular 추론, per-query retrieval, full-graph 추론을 특수한 경우로 포함하므로 기존 protocol과의 관계도 분명하다.
+- [Matcha](https://iclr.cc/virtual/2025/poster/30388): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: 바꾸는 parameter가 hop-aggregation 계수뿐이라 가볍다. PIC loss는 노드 수에 선형인 비용으로 계산되고, entropy minimization의 scale 자명해를 피한다. 초기 예측에 잡음이 많아도 PIC로 정확도가 오르는 예를 부록에서 보였다.
 
 ## DMARG-F01 — 현재 conditional tree circuit이 알려진 family의 강한 classical inference와 경쟁하는 메인 메소드다.
 
@@ -225,6 +309,10 @@
   - 기록된 강점: LCC 밖의 노드와 low-/high-degree 노드의 서로 다른 구조적 문제를 augmentation 설계에 반영한다.
 - [MGHC](https://ieeexplore.ieee.org/abstract/document/11721212/): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=alignment
   - 기록된 강점: 중간 layer별 graph로 여러 granularity의 구조를 학습에 사용한다.
+- [PairAlign](https://proceedings.mlr.press/v235/liu24ci.html): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=alignment
+  - 기록된 강점: Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.
+- [StruRW](https://proceedings.mlr.press/v202/liu23u.html): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=alignment
+  - 기록된 강점: GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.
 
 ## COUP-F01 — Label→feature 반복 피드백이 일방향 추론보다 유용하다.
 
@@ -582,10 +670,16 @@
 
 - [MA-PFN](https://arxiv.org/abs/2611.01851v1): 복수 태그 일치 (약한 단서); tags=distribution-shift, uncertainty; keywords=-
   - 기록된 강점: 동일한 context-query predictor로 imputation과 forecasting을 다루고, MIMIC-III 내부 및 eICU 외부 평가를 보고한다.
+- [SparseJointShift](https://arxiv.org/abs/2209.08436): 구체 키워드+태그 일치 (미검증); tags=distribution-shift; keywords=density, sparse
+  - 기록된 강점: Label shift와 sparse covariate shift를 하나의 가정으로 묶고, 그 아래에서 target label 없이 결합 shift가 식별되는 충분조건을 명시한다.
+  - 기록된 강점: Weight가 소수 feature에만 의존하도록 제한해 해석 가능한 설명(어떤 feature가 label과 함께 움직였는가)을 같이 준다.
 - [CSBMInference](https://arxiv.org/abs/2306.07948): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=sparse
   - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [Moirai-MoE](https://arxiv.org/abs/2410.10469): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=sparse
   - 기록된 강점: 학습에 쓰지 않은 10개 데이터셋 zero-shot 평가에서 Base가 CRPS와 MASE 평균 모두 최고였고, 평가 데이터 일부가 사전학습에 들어간 TimesFM, Chronos, Time-MoE보다도 나았다. Small도 모든 크기의 Moirai보다 CRPS가 3~14%, MASE가 8~16% 좋았다. point 예측 지표 외에 PICP, QICE 같은 구간 coverage 지표까지 함께 보고했다.
+- [SRGNN](https://papers.neurips.cc/paper/2021/hash/eb55e369affa90f77dd7dc9e2cd33b16-Abstract.html): 구체 키워드+태그 일치 (미검증); tags=distribution-shift; keywords=sparse
+  - 기록된 강점: 편향 라벨에서는 모든 baseline이 크게 떨어진다는 것을 정량화했다. 예를 들어 PubMed에서 IID GCN의 Micro-F1 79.8이 편향 라벨에서는 baseline 전부 10점 넘게 떨어졌다. SR-GNN은 GCN 대비 손실을 최소 40% 줄였다(Cora 7.3점 손실 대 GCN 13.2점). ogb-arxiv(1% 라벨)에서도 61.6으로 APPNP 59.8보다 높아 손실의 약 30%를 되돌렸다.
+  - 기록된 강점: Hidden layer 정렬(CMD)과 linear propagation 뒤의 instance reweighting(KMM)을 한 objective로 묶어 deep GNN과 linearized GNN 모두에 붙는다. Ablation에서 두 요소를 함께 쓸 때가 각각보다 좋았고, CMD는 같은 GNN에서 DANN식 adversarial regularizer보다 좋고 덜 민감했다. 추가 비용은 IID 표본 forward/backward와 사전 kernel 계산뿐이다.
 
 ## LLBP-F09 — 자기-update 경로까지 학습하는 T1이 R1보다 우수하다.
 
@@ -598,6 +692,10 @@
 - 닫지 않은 것: head 없는 학습 경로와 gradient 흐름은 확인됐다. 더 큰 예산에서 절대 개선되지 않는다는 증명은 아니다.
 - 원문: [findings/sources/llbp-eaj-retrospective-2026-11-01.md](../findings/sources/llbp-eaj-retrospective-2026-11-01.md)
 
+- [SemiProtoNet](https://arxiv.org/abs/1803.00676): 복수 태그 일치 (약한 단서); tags=adaptation, amortized-inference; keywords=-
+  - 기록된 강점: Unlabeled 예제를 prototype 계산에 넣는 과정을 미분 가능하게 만들어 episode 단위 meta-learning으로 학습했다. 같은 embedding에서 test 때만 soft k-means를 적용하는 기준선보다 좋았다. Test 때 unlabeled 수를 학습 때(5개)보다 늘려도(최대 25개) 정확도가 계속 올랐다.
+- [CFA](https://arxiv.org/abs/2206.13951): 구체 키워드+태그 일치 (미검증); tags=adaptation; keywords=training
+  - 기록된 강점: ResNet, MLP-Mixer, ViT·DeiT·BeiT 계열에 모두 적용되는 model-agnostic 방법이다. BeiT-L16에서 ImageNet-C top-1 error 19.8%로, 학습 단계를 바꾸지 않는 TTA 중 최고를 보고했다.
 - [LoGIC](https://arxiv.org/abs/2609.05955): 구체 키워드+태그 일치 (미검증); tags=adaptation; keywords=training
   - 기록된 강점: Backbone을 재학습하지 않는 추론 시점 인터페이스라서, pure-tabular backbone(G2T featurization + TabPFNv2·LimiX)과 adapter backbone(GraphPFN)에 같은 방식으로 붙는다. 정식화 자체가 full-context tabular 추론, per-query retrieval, full-graph 추론을 특수한 경우로 포함하므로 기존 protocol과의 관계도 분명하다.
 - [TabImpute](https://arxiv.org/abs/2510.02625v6): 구체 키워드+태그 일치 (미검증); tags=amortized-inference; keywords=training
@@ -614,6 +712,13 @@
 - 닫지 않은 것: 기각하지 못한 가능성: potential 추정 편향, parameter uncertainty 부족, conditional BP 오차, 과확신, 이들의 상호작용.
 - 원문: [findings/sources/llbp-eaj-retrospective-2026-11-01.md](../findings/sources/llbp-eaj-retrospective-2026-11-01.md)
 
+- [Matcha](https://iclr.cc/virtual/2025/poster/30388): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: 정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.
+- [PairAlign](https://proceedings.mlr.press/v235/liu24ci.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=conditional
+  - 기록된 강점: Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.
+- [StruRW](https://proceedings.mlr.press/v202/liu23u.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=conditional
+  - 기록된 강점: GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.
+  - 기록된 강점: 기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.
 - [CSBMInference](https://arxiv.org/abs/2306.07948): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=BP
   - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=BP
@@ -677,6 +782,16 @@
 - 닫지 않은 것: Relation 정보를 합치기 전 보존하는 구조와 별도 semantic schema 전이는 별개다.
 - 원문: [findings/sources/graphpfn-2026-11-01/lpc.md](../findings/sources/graphpfn-2026-11-01/lpc.md); [findings/sources/graphpfn-2026-11-01/lpc_factorial.md](../findings/sources/graphpfn-2026-11-01/lpc_factorial.md)
 
+- [Matcha](https://iclr.cc/virtual/2025/poster/30388): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: 정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.
+- [PairAlign](https://proceedings.mlr.press/v235/liu24ci.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.
+- [StruRW](https://proceedings.mlr.press/v202/liu23u.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.
+  - 기록된 강점: 기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.
+- [CorrectSmooth](https://iclr.cc/virtual/2021/poster/3274): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=residual
+  - 기록된 강점: Graph를 학습에 쓰지 않는 base model에 두 번의 label propagation 후처리만 붙여 여러 benchmark에서 SOTA GNN과 같거나 더 좋았다. OGB-Products에서는 최고 GNN보다 parameter가 137배 적고 학습 시간이 100배 넘게 짧으면서 더 정확했다. MLP base 예측이 63%에서 84%로 오른 것처럼 이득 대부분이 후처리에서 나온다.
+  - 기록된 강점: 추론 시 라벨을 직접 쓰는 것이 성능의 핵심 원천임을 분리해 보였다. 라벨 없이 출력만 smoothing한 Basic Model도 GCN을 자주 넘었지만, 라벨을 쓰는 C&S와는 격차가 남았다. Validation 라벨까지 smoothing에 넣으면 9개 중 7개 데이터셋에서 SOTA를 넘었다.
 - [HGRL](https://www.sciencedirect.com/science/article/pii/S0031320326020248): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=residual
   - 기록된 강점: 관계별 local 구조와 Mamba 기반 long-range 의미를 서로 다른 encoder로 다룬다.
 - [NodePFN](https://arxiv.org/abs/2604.19028): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=residual
@@ -755,9 +870,16 @@
 - 닫지 않은 것: 원본NSDtarget-graph학습재현,일반O(d)/generalrestriction,GraphPFNgraphmodule의완전교체,원본physicalfeature공간,새heterogeneousschema는미검증이다. 일부대조의이득은별도로보존한다.
 - 원문: [findings/sources/nsd-token-2026-11-03/REPORT_KO.md](../findings/sources/nsd-token-2026-11-03/REPORT_KO.md); [findings/sources/nsd-token-2026-11-03/METHOD_KO.md](../findings/sources/nsd-token-2026-11-03/METHOD_KO.md); [findings/sources/nsd-token-2026-11-03/protocol.json](../findings/sources/nsd-token-2026-11-03/protocol.json); [findings/sources/nsd-token-2026-11-03/results/statistics.json](../findings/sources/nsd-token-2026-11-03/results/statistics.json); [findings/sources/nsd-token-2026-11-03/results/audit.json](../findings/sources/nsd-token-2026-11-03/results/audit.json); [findings/sources/nsd-token-2026-11-03/results/control_summary.json](../findings/sources/nsd-token-2026-11-03/results/control_summary.json); [findings/sources/nsd-token-2026-11-03/results/cost.json](../findings/sources/nsd-token-2026-11-03/results/cost.json); [findings/sources/nsd-token-2026-11-03/results/preflight.json](../findings/sources/nsd-token-2026-11-03/results/preflight.json)
 
+- [Matcha](https://iclr.cc/virtual/2025/poster/30388): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: 정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.
 - [NeuralSheafDiffusion](https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html): 복수 태그 일치 (약한 단서); tags=graph-geometry, graph-structure-use; keywords=-
   - 기록된 강점: 양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.
   - 기록된 강점: 공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.
+- [PairAlign](https://proceedings.mlr.press/v235/liu24ci.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.
+- [StruRW](https://proceedings.mlr.press/v202/liu23u.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.
+  - 기록된 강점: 기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.
 
 ## OBS-F01 — Mask-aware 학습 정책이 강한 경로 규칙을 넘는다.
 
@@ -828,10 +950,21 @@
   - 기록된 강점: 그래프와 feature를 covariance에서 결합하며 empirical kernel mean embedding으로 해석한다.
 - [MA-PFN](https://arxiv.org/abs/2611.01851v1): 복수 태그 일치 (약한 단서); tags=distribution-shift, uncertainty; keywords=-
   - 기록된 강점: 동일한 context-query predictor로 imputation과 forecasting을 다루고, MIMIC-III 내부 및 eICU 외부 평가를 보고한다.
+- [Matcha](https://iclr.cc/virtual/2025/poster/30388): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: 정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [PairAlign](https://proceedings.mlr.press/v235/liu24ci.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.
 - [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
+- [StruRW](https://proceedings.mlr.press/v202/liu23u.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.
+  - 기록된 강점: 기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.
+- [ContextualCalibration](https://arxiv.org/abs/2102.09690): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=few-shot
+  - 기록된 강점: AGNews에서 training-free 보정이 validation으로 튜닝한 oracle W에 가까운 성능을 냈다.
+- [LaplacianShot](https://arxiv.org/abs/2006.15486): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=few-shot
+  - 기록된 강점: Meta-learning 없이 고정 feature 위에 붙이는 inference 절차만으로 miniImageNet·tieredImageNet·CUB·cross-domain·iNat 5개 benchmark에서 당시 최고 수준을 냈다. Ablation에서 Laplacian 항은 nearest-prototype 대비 1-shot에서 약 2~3%p 이상 꾸준히 올렸다.
 
 ## XFER-F02 — LP와 PFN 확률의 고정 혼합이 각자의 강점을 보존한다.
 
@@ -866,6 +999,8 @@
   - 기록된 강점: Homophilic·heterophilic 그래프를 포함한 9개 node-classification 데이터셋에서 평가했다.
 - [RGaKE](https://www.nature.com/articles/s41598-026-76105-8): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=fusion
   - 기록된 강점: Global context와 multi-scale feature fusion을 결합해 4개 KG link-prediction benchmark에서 평가했다.
+- [SaerensEM](https://doi.org/10.1162/089976602753284446): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=fusion
+  - 기록된 강점: Prior가 실제로 바뀌었는지 판정하는 likelihood ratio test를 함께 제시해, 보정이 필요할 때만 적용하는 절차를 준다.
 
 ## PCFIO-F01 — PCFI의 confidence·경계값·100회·채널 보정을 유지하고 수치 공간 전파만 직교 Sheaf로 교체하면 고정 PFN에서 강한 대조보다 missing 분류가 좋아진다.
 
@@ -909,6 +1044,8 @@
 - 닫지 않은 것: RL 전체, 다른 유효한 추론 연산, 본체 Transformer의 policy-gradient, target-time 학습 또는 heterogeneous schema transfer는 검증하지 않았다. 작은 일반 fine-tuning 점 이득과 실제 피처 활용 반응은 보존한다.
 - 원문: [findings/sources/fp05-compute-policy-2026-11-05/DECISION_KO.md](../findings/sources/fp05-compute-policy-2026-11-05/DECISION_KO.md); [findings/sources/fp05-compute-policy-2026-11-05/results/summary.json](../findings/sources/fp05-compute-policy-2026-11-05/results/summary.json); [findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json](../findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json); [findings/sources/fp05-compute-policy-2026-11-05/results/deployment_audit.json](../findings/sources/fp05-compute-policy-2026-11-05/results/deployment_audit.json)
 
+- [LaplacianShot](https://arxiv.org/abs/2006.15486): 복수 태그 일치 (약한 단서); tags=adaptation, graph-structure-use; keywords=-
+  - 기록된 강점: Meta-learning 없이 고정 feature 위에 붙이는 inference 절차만으로 miniImageNet·tieredImageNet·CUB·cross-domain·iNat 5개 benchmark에서 당시 최고 수준을 냈다. Ablation에서 Laplacian 항은 nearest-prototype 대비 1-shot에서 약 2~3%p 이상 꾸준히 올렸다.
 - [MA-PFN](https://arxiv.org/abs/2611.01851v1): 복수 태그 일치 (약한 단서); tags=observation-mask, pretraining-data; keywords=-
   - 기록된 강점: 값과 mask의 생성 과제를 함께 학습하는 단계와 실제 조건부 예측 단계를 분리하며, target에서 재학습이나 diffusion sampling을 요구하지 않는다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
@@ -987,6 +1124,10 @@
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
 - [SSGP](https://www.ijcai.org/Proceedings/07/Papers/171.pdf): 복수 태그 일치 (약한 단서); tags=graph-structure-use, uncertainty; keywords=-
   - 기록된 강점: Covariance에 unlabeled geometry를 반영하면서 out-of-sample 확률 예측을 제공한다.
+- [BatchCalibration](https://arxiv.org/abs/2309.17249): 구체 키워드+태그 일치 (미검증); tags=uncertainty; keywords=decision boundary
+  - 기록된 강점: 약 10개의 unlabeled 샘플로도 강한 성능에 이르러, 500개 이상이 필요한 PC보다 표본 효율이 훨씬 좋다고 보고한다. CLIP 이미지 분류에도 적용했다.
+- [Matcha](https://iclr.cc/virtual/2025/poster/30388): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=decision boundary
+  - 기록된 강점: 정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.
 
 ## PROG-F01 — 고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.
 
@@ -1039,9 +1180,16 @@
 - 닫지 않은 것: 원본NSD/FSD-CAP/CPGNN/CLP재현,physicalfeature공간에서의새학습,일반sheaf표현력,heterogeneousgraph는미검증이다. 원본피처추론firstrep는별도진단이며그곳의양수신호도보존한다.
 - 원문: [findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/REPORT_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/METHOD_KO.md); [findings/sources/sheaf-pcfi-2026-11-03/protocol.json](../findings/sources/sheaf-pcfi-2026-11-03/protocol.json); [findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json](../findings/sources/sheaf-pcfi-2026-11-03/results/statistics.json); [findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json](../findings/sources/sheaf-pcfi-2026-11-03/results/supplement.json); [findings/sources/sheaf-pcfi-2026-11-03/results/audit.json](../findings/sources/sheaf-pcfi-2026-11-03/results/audit.json); [findings/sources/sheaf-pcfi-2026-11-03/results/cost.json](../findings/sources/sheaf-pcfi-2026-11-03/results/cost.json); [findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md](../findings/sources/sheaf-pcfi-2026-11-03/DESIGN_CORRECTION_KO.md)
 
+- [Matcha](https://iclr.cc/virtual/2025/poster/30388): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: 정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.
 - [NeuralSheafDiffusion](https://proceedings.neurips.cc/paper_files/paper/2022/hash/75c45fca2aa416ada062b26cc4fb7641-Abstract-Conference.html): 복수 태그 일치 (약한 단서); tags=graph-geometry, graph-structure-use; keywords=-
   - 기록된 강점: 양의 weighted diffusion, signed map, 다차원 sheaf의 표현력 차이를 분석한다.
   - 기록된 강점: 공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.
+- [PairAlign](https://proceedings.mlr.press/v235/liu24ci.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.
+- [StruRW](https://proceedings.mlr.press/v202/liu23u.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.
+  - 기록된 강점: 기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.
 
 ## SRC-F01 — Source covariance를 보정하면 분류가 개선된다.
 
@@ -1208,8 +1356,14 @@
 - 닫지 않은 것: 스칼라 확산 계산과 합성에서 확인된 피처 요약의 추가 효과는 보존한다. 다른 피처 표현, 다른 생성 prior 및 독립 실제 그래프에서의 전이는 미검증이다.
 - 원문: [findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md](../findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md); [findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json](../findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json)
 
-현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
-
+- [PairAlign](https://proceedings.mlr.press/v235/liu24ci.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use, label-imbalance; keywords=-
+  - 기록된 강점: Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.
+  - 기록된 강점: 국가별로 나눈 MAG citation graph(약 38만 노드, 135만 edge)라는 대형 GDA 데이터를 만들고, 여기서 StruRW 대비 25% 넘는 상대 개선을 보였다. HEP pileup에서는 label 분포가 심하게 치우친 높은 PU에서 낮은 PU로 옮길 때 LS 보정(PA-LS)이, 반대 방향에서는 CSS 보정(PA-CSS)이 효과적이어서 두 모듈의 역할이 분리되어 드러났다.
+- [Matcha](https://iclr.cc/virtual/2025/poster/30388): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: 정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.
+- [StruRW](https://proceedings.mlr.press/v202/liu23u.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=-
+  - 기록된 강점: GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.
+  - 기록된 강점: 기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.
 
 ## SPFN01-F01 — 관측 tail 앵커를 모두 남기고 head를 압축하면 같은 토큰 수를 관측 빈도에 비례 배정한 압축보다 tail recall을 높인다.
 

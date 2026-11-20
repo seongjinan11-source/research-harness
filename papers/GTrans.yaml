@@ -1,0 +1,56 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: GTrans
+title: "Empowering Graph Representation Learning with Test-Time Graph Transformation"
+authors: "Wei Jin, Tong Zhao, Jiayuan Ding, Yozen Liu, Jiliang Tang, Neil Shah (Michigan State University / Snap Inc.)"
+venue: "ICLR 2023"
+year: 2023
+links:
+  paper: https://iclr.cc/virtual/2023/poster/10910
+  openreview: https://openreview.net/forum?id=Lnxl5pr018
+  arxiv: https://arxiv.org/abs/2210.03561
+  code: https://github.com/ChandlerBang/GTrans
+citation:
+  type: inproceedings
+  title: "Empowering Graph Representation Learning with Test-Time Graph Transformation"
+  authors: ["Wei Jin", "Tong Zhao", "Jiayuan Ding", "Yozen Liu", "Jiliang Tang", "Neil Shah"]
+  year: 2023
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2210.03561"
+  url: https://openreview.net/forum?id=Lnxl5pr018
+  verified_from:
+    - https://iclr.cc/virtual/2023/poster/10910
+    - https://arxiv.org/abs/2210.03561
+areas: [graph-learning]
+problem: "Distribution shift, 비정상 node feature, adversarial structure attack처럼 test graph 품질이 나쁠 때, 학습된 GNN을 고치거나 재학습하지 않고 test graph 자체를 바꿔 성능을 되살릴 수 있는지 묻는다."
+core_idea: "GTrans는 pre-trained GNN의 가중치를 고정하고 test graph의 node feature에 더하는 연속 perturbation ΔX와 기존 edge를 끄는 이진 flip ΔA를 자유 parameter로 둔다. ΔA는 edge 변경 수 예산 B 아래 projected gradient descent로 연속 완화해 최적화한 뒤 Bernoulli로 샘플링하고, 탐색 공간은 기존 edge로 제한한다. Test 라벨이 없으므로 DropEdge로 만든 두 view의 node representation 일치를 높이고 feature를 섞은 negative와는 멀게 하는 parameter-free contrastive surrogate loss를 쓴다. 저자들은 surrogate loss gradient가 classification loss gradient와 양의 상관을 가지면 test 손실이 줄어든다는 정리와, 같은 aggregated feature를 가진 서로 다른 클래스 노드는 모델 적응으로는 못 나누지만 데이터 적응으로는 나눌 수 있다는 예를 근거로 든다. 변환된 graph는 다른 pre-trained GNN에도 그대로 쓸 수 있다."
+key_assumptions:
+  - "Contrastive surrogate loss가 test classification loss와 정보를 공유한다(gradient 양의 상관)."
+  - "Surrogate가 클래스 조건부 엔트로피를 줄인다는 정리는, augmentation이 같은 클래스 view를 만들고 클래스가 균형이며 두 view의 클래스별 평균이 같다는 가정에 기댄다(Theorem 2)."
+  - "Model parameter와 학습 절차는 바꾸지 않고, test graph 전체를 한 번에 볼 수 있다."
+strengths:
+  - text: "모델을 전혀 바꾸지 않고 입력 graph만 바꾸는 data-centric test-time 방법이라, 구조나 가중치에 접근하기 어려운 학습된 모델에도 붙는다. 한 모델로 변환한 graph가 다른 GNN에도 옮겨 가는 transferability를 보였다."
+    tags: [adaptation, distribution-shift]
+  - text: "EERM 설정의 OOD node classification 6개 데이터셋에서 GCN·SAGE·GAT·GPR backbone 평균 순위가 1.0/1.7/2.0/1.7로 EERM(2.9/3.4/3.0/2.0)보다 좋았다. GCN 기준 Cora·Elliptic·OGB-Arxiv에서 ERM보다 3.1/5.0/2.0% 높았고, 비정상 feature와 adversarial attack에서도 최대 8.2%, 3.8% 개선했다."
+    tags: [distribution-shift, robustness]
+  - text: "Gradient step이 5~10번이라 추가 시간이 작고, bilevel 재학습이 필요한 EERM보다 시간과 메모리가 모두 적다."
+    tags: [inference-cost]
+limitations:
+  - text: "OOD 설정에서는 데이터 적응과 모델 적응의 성능이 가까워 어느 쪽이 낫다고 단정하기 어렵다고 저자들이 인정한다. 데이터 적응의 뚜렷한 우위는 비정상 feature처럼 데이터가 오염된 경우에 나타났다."
+    tags: [adaptation, distribution-shift]
+    source: self
+  - text: "Degree bias 완화와 long-range dependency 같은 응용은 향후 과제로 남겼다."
+    tags: [structural-imbalance, graph-structure-use]
+    source: self
+  - text: "[analyst] Surrogate loss는 라벨과 클래스 구성을 보지 않는 view 일치 목표이고, 그 이론적 정당화도 클래스 균형을 가정한다. 그래서 test graph의 클래스 사전확률이 학습 때와 다르거나 지역마다 다른 경우(label shift)를 보정할 수단이 없다. Feature perturbation에 크기 제약도 없어, 무엇을 바꿨는지가 클래스 정보와 무관하게 정해질 수 있다."
+    tags: [label-shift, theory-gap]
+    source: analyst
+builds_on: [Tent, TTT, DropEdge, DGI, GraphContrastiveLearning, PGDAttack]
+compared_against: [ERM, DropEdge, Tent, EERM, AirGNN, GAT, APPNP]
+open_questions:
+  - "클래스 구성까지 반영하는 surrogate(예: 예측 분포 제약)를 쓰면 label shift가 섞인 shift에서도 데이터 적응이 유효한가?"
+  - "Feature perturbation과 structure perturbation 중 어떤 shift에서 무엇이 기여하는지는 부록 ablation뿐이다. 분포 이동의 원인별로 어느 쪽을 바꿔야 하는지 원리적 규칙은 없다."
+hooks:
+  - "(BSEL-F01 계열의 일반형) GTrans는 frozen 모델의 입력 feature를 라벨 없이 test 시점에 바꾸는 방법이라, BSEL-F01에서 기각된 comm-z(community 표준화), ctx-match(context 통계 맞춤)의 가장 일반적인 형태다. F01 failure_reason은 '클래스 구성을 보정하지 않는 community 단위 조정'이고, GTrans의 surrogate도 클래스 구성을 보지 않으므로 같은 이유로 실패할 것이라 예상된다(가설). 비용이 작으므로, frozen GraphPFN에서 query·context feature에 ΔX를 주고 PFN 내부 representation의 view 일치를 surrogate로 삼는 버전을 O-ctx 상한(BSEL-P02, 43–67%) 대비 Rec와 uniform 비열등성으로 한 번만 재 보면 F01 closed_scope를 GTrans까지 넓힐 수 있다."
+  - "(데이터 적응 논리와 group offset) GTrans의 예는 같은 aggregated feature를 가진 서로 다른 클래스 노드를 데이터 쪽에서 떼어 놓는 것이다. commconc의 community offset이 클래스 구성과 교락된 상황(BSEL-F03, 클래스 무관 offset 제거가 실데이터에서 실패)은 그 반대 문제라서, 라벨 없는 데이터 적응이 offset과 구성을 구분할 근거를 surrogate가 주지 못한다는 점을 분명히 해 두는 것이 좋다."
+notes: "ICLR 2023 게재는 iclr.cc 가상 포스터 페이지(OpenReview forum Lnxl5pr018 링크 포함)에서 확인했다. OpenReview 페이지 자체는 bot challenge로 열지 못해 리뷰 한계는 넣지 않았다."
+added: 2026-11-20

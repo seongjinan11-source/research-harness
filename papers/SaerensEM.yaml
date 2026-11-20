@@ -1,0 +1,62 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: SaerensEM
+title: "Adjusting the Outputs of a Classifier to New A Priori Probabilities: A Simple Procedure"
+authors: "Marco Saerens, Patrice Latinne, Christine Decaestecker (Université Libre de Bruxelles)"
+venue: "Neural Computation 2002"
+year: 2002
+links:
+  paper: https://doi.org/10.1162/089976602753284446
+  pdf: https://dipot.ulb.ac.be/dspace/bitstream/2013/68391/1/Decaestecker_NeuralComp02.pdf
+citation:
+  type: article
+  title: "Adjusting the Outputs of a Classifier to New A Priori Probabilities: A Simple Procedure"
+  authors: ["Marco Saerens", "Patrice Latinne", "Christine Decaestecker"]
+  year: 2002
+  journal: "Neural Computation"
+  publisher: "MIT Press"
+  volume: 14
+  pages: "21--41"
+  url: https://doi.org/10.1162/089976602753284446
+  verified_from:
+    - https://api.crossref.org/works/10.1162/089976602753284446
+    - https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=11747533
+areas: [ml-foundations]
+problem: "Case-control 연구처럼 학습 데이터의 class 비율이 실제 배포 데이터와 다르게 정해진 경우, 학습된 classifier가 내는 posterior는 학습 prior에 묶여 있어 새 데이터에서 최적이 아니다. 새 데이터의 class prior를 모를 때도 모델을 다시 학습하지 않고 출력만 고치는 방법을 찾는다."
+core_idea: "p(x|class)가 학습·배포 사이에서 같다는 가정 아래, 새 posterior는 기존 posterior에 '새 prior/학습 prior' 비율을 곱하고 정규화한 것과 같다. 새 prior를 모르면 EM으로 함께 추정한다. E-step은 현재 prior 비율로 각 새 샘플의 posterior를 다시 가중·정규화하고, M-step은 그 posterior들의 평균을 새 prior로 삼는다. 학습 prior에서 시작해 수렴할 때까지 반복하며, 이는 새 데이터의 likelihood를 prior에 대해 최대화한다. 비교 대상으로 학습셋 confusion matrix로 선형계를 푸는 기존 방법을 제시하고, prior 변화 여부를 판정하는 likelihood ratio test도 함께 논의한다."
+key_assumptions:
+  - "Classifier 출력이 posterior를 충분히 잘 근사해야 한다. 출력이 확률이 아니면 적용할 수 없다."
+  - "학습 샘플 선택이 class label에만 근거하고 입력 x에는 근거하지 않아야 한다. 그래야 within-class density p(x|class)가 바뀌지 않는다. 저자들은 선택이 x에도 의존하면 선택 확률을 안다는 전제로 inverse-probability weighted likelihood를 쓰는 survey 표준 해법을 가리킨다."
+  - "새 prior를 정확히 추정할 만큼 새 데이터가 충분히 커야 한다."
+strengths:
+  - text: "모델을 다시 학습하지 않고 출력 posterior와 unlabeled 새 데이터만으로 새 prior와 보정된 posterior를 함께 얻는다. 연산은 posterior 재가중과 평균의 반복뿐이라 아주 싸다."
+    tags: [label-shift, inference-cost]
+  - text: "Ringnorm과 UCI 의료 데이터 3종(학습 50:50, 테스트 20:80)에서 EM prior 추정이 confusion matrix 방법보다 대체로 정확했다(예: Diabetes 24.8% 대 31.3%, 참값 20%). 보정 후 정확도는 참 prior를 쓴 경우에 근접했다(Diabetes 67.4%→76.3%, 참 prior 78.3%)."
+    tags: [label-shift, model-based-baseline]
+  - text: "학습셋을 줄여 posterior를 일부러 나쁘게 만들어도 prior 추정은 조금만 나빠졌고 테스트셋 크기를 줄여도 영향이 작았다. 첫째·셋째 가정을 어느 정도 완화할 수 있음을 보였다."
+    tags: [robustness]
+  - text: "Prior가 실제로 바뀌었는지 판정하는 likelihood ratio test를 함께 제시해, 보정이 필요할 때만 적용하는 절차를 준다."
+    tags: [label-shift, uncertainty]
+limitations:
+  - text: "저자들은 학습·새 데이터의 prior가 같을 때 보정을 적용하면 정확도가 오히려 떨어진다고 관찰했다(Ringnorm 50:50 조건). 그래서 likelihood ratio test로 유의한 변화가 있을 때만 쓰라고 권한다."
+    tags: [label-shift, robustness]
+    source: self
+  - text: "저자들이 결론에서 명시한 세 가정(좋은 posterior, label만 따른 선택, 충분한 새 데이터)에 의존한다. 특히 선택이 x에 의존하면 within-class density가 바뀌어 이 절차의 근거가 사라지고, 그때는 알려진 선택 확률로 가중하는 다른 해법이 필요하다고 저자들이 직접 적는다."
+    tags: [selection-bias, label-shift]
+    source: self
+  - text: "Prior 추정치가 50% 쪽으로 약간 치우쳤고, 저자들은 이를 균등 학습셋으로 학습한 신경망 classifier의 bias로 해석한다. 즉 posterior의 miscalibration이 그대로 prior 추정 편향으로 옮겨 간다."
+    tags: [uncertainty, label-shift]
+    source: self
+  - text: "[analyst] 실험이 모두 binary이고 학습 prior가 50:50인 단순 설정이다. Class가 많거나 일부 class가 거의 없는 집단, 또는 posterior 자체가 집단에 따라 다르게 왜곡된 경우의 EM 거동(수렴점, 초기값 의존)은 다루지 않는다."
+    tags: [label-space, label-shift]
+    source: analyst
+builds_on: [EM-algorithm, confusion-matrix-prior-estimation]
+compared_against: [confusion-matrix-prior-estimation]
+open_questions:
+  - "선택이 x(구조·집단)에 의존할 때, 선택 확률을 모르는 상태에서 within-class density 변화를 어떻게 함께 보정할 수 있는가?"
+  - "Posterior가 집단별로 다르게 miscalibrated되어 있으면 EM의 fixed point는 참 prior와 얼마나 떨어지는가?"
+hooks:
+  - "(BSEL, community 집중 context) 이 논문의 둘째 가정이 BSEL 설정에서 정확히 깨진다. commconc는 context를 class가 아니라 community(구조, 곧 x 쪽 정보)에 따라 고르므로, context와 query 사이에서 p(x|class)가 같다는 전제가 성립하지 않는다. W의 R2(PFN posterior 위 per-community Saerens EM, −0.32 bAcc)와 BSEL-F04에서 닫힌 community Saerens EM 실패는 이 가정 위반과 일관된다. 다만 원인이 가정 위반 하나라고 확정된 것은 아니다."
+  - "(BSEL-P03과의 관계) M-step이 '보정된 posterior의 평균'을 prior로 삼으므로, 출발 posterior의 community 단위 class prior가 이미 왜곡되어 있으면 EM은 그 왜곡을 상당 부분 물려받는다. BSEL-P03의 O-swap(uniform context PFN 출력의 community 평균으로 교체)은 '학습 prior' 자리에 무엇을 나눠야 하는지를 바꾼 oracle로 읽을 수 있다. 라벨 없는 추정기가 선택 편향을 물려받은 관찰도 같은 구조다(가설)."
+  - "(재검토 단서) 저자들이 가리킨 대안, 즉 선택이 x에 의존할 때 알려진 선택 확률의 역수로 가중하는 likelihood는 BSEL에서 시험해 볼 만한 방향이다. commconc의 선택 규칙은 실험자가 정한 것이므로 community별 선택 확률을 근사할 수 있다. 하지만 이것도 per-(community,class) 상수 보정이면 BSEL-L01에 따라 within-community pairwise AUC는 바꾸지 못한다는 점을 먼저 확인해야 한다."
+notes: "본문은 ULB 저장소의 저자 PDF(25쪽)에서 텍스트를 추출해 읽었다. 서지 값은 Crossref(MIT Press 등록 metadata: 저자 전체 이름, 권 14, 호 1, 21–41쪽, 2002년 1월)와 PubMed esummary(PMID 11747533, 같은 권·쪽·DOI)에서 확인했다. MIT Press 기사 페이지(direct.mit.edu)는 403이라 직접 읽지 못했다. 제목 대소문자는 Crossref 표기를 따랐다(PubMed는 sentence case)."
+added: 2026-11-20

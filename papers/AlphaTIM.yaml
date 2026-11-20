@@ -1,0 +1,62 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: AlphaTIM
+title: "Realistic evaluation of transductive few-shot learning"
+authors: "Olivier Veilleux, Malik Boudiaf, Pablo Piantanida, Ismail Ben Ayed (ÉTS Montreal, CentraleSupélec)"
+venue: "NeurIPS 2021"
+year: 2021
+links:
+  paper: https://arxiv.org/abs/2204.11181
+  proceedings: https://proceedings.nips.cc/paper/2021/hash/4d7a968bb636e25818ff2a3941db08c1-Abstract.html
+  code: https://github.com/oveilleux/Realistic_Transductive_Few_Shot
+
+citation:
+  type: inproceedings
+  title: "Realistic evaluation of transductive few-shot learning"
+  authors: ["Olivier Veilleux", "Malik Boudiaf", "Pablo Piantanida", "Ismail Ben Ayed"]
+  year: 2021
+  booktitle: "Advances in Neural Information Processing Systems 34 (NeurIPS 2021)"
+  volume: 34
+  arxiv: "2204.11181"
+  url: https://proceedings.nips.cc/paper/2021/hash/4d7a968bb636e25818ff2a3941db08c1-Abstract.html
+  verified_from:
+    - https://proceedings.nips.cc/paper/2021/hash/4d7a968bb636e25818ff2a3941db08c1-Abstract.html
+    - https://arxiv.org/pdf/2204.11181
+
+areas: [ml-foundations, benchmark]
+problem: "Transductive few-shot 평가가 query 집합의 class 비율이 완전히 균등하다고 가정하는 인공적 설정에 기대고 있다는 점을 드러내고, class 비율을 모르는 현실적 task에서도 견디는 transductive 추론을 만들고자 한다."
+core_idea: "Query의 class 비율을 Dirichlet 분포에서 뽑은 확률 벡터로 두고, Gamma 표본을 정규화해 simplex 위 비율을 샘플링하는 평가 protocol을 만든다(validation a=1, test a=2). 이 protocol에서 최상위 transductive 방법들이 class 균형 prior를 품고 있음을 보인다. PT-MAP은 Sinkhorn 제약으로 균등 marginal을 강제하고, TIM의 marginal entropy 항은 query label marginal과 균등 분포 사이 KL penalty와 같다. 해법으로 TIM의 Shannon entropy를 Tsallis α-entropy로 바꾼 α-mutual information loss(α-TIM)를 제안한다. α가 커질수록 marginal이 균등에서 벗어나는 것을 덜 벌하면서도, 모든 표본이 한 class로 몰리는 trivial 해를 막는 장벽은 남는다."
+key_assumptions:
+  - "각 task의 query class 비율은 알려지지 않은 임의 값이지만, 한 class만 남는 극단은 드물다고 보고 test에 a=2의 Dirichlet을 쓴다."
+  - "Support 집합은 여전히 class 균형이다. 불균형은 query 쪽에만 둔다."
+  - "Feature extractor는 base class에서 표준 cross-entropy로 학습한 뒤 고정한다. 각 task의 classifier parameter만 inference 때 학습한다."
+strengths:
+  - text: "기존 benchmark가 query의 label marginal을 균등으로 알고 있다고 가정한다는 점을 짚고, Dirichlet 비율 샘플링이라는 단순한 protocol로 이를 제거했다. 같은 framework에서 재현한 transductive 방법 다수가 이 설정에서 inductive 기준선보다 나빠졌다. PT-MAP은 평균 18% 이상 떨어졌다."
+    tags: [eval-protocol, label-shift]
+  - text: "Label-marginal entropy 항이 사실상 균등 분포로 당기는 KL penalty라는 점을 식으로 보이고, Tsallis α-entropy로 일반화해 marginal의 이탈 허용 정도를 α 하나로 조절하게 했다. 한 class collapse를 막는 장벽은 유지된다. α-TIM은 거의 모든 데이터셋·backbone·shot에서 최고였다."
+    tags: [label-shift, robustness]
+  - text: "불균형 심도(Dirichlet a)를 바꾼 실험에서 대부분의 transductive 방법이 불균형이 심해질수록 급락했다. 반면 α-TIM과 LaplacianShot은 극단적 불균형에서도 성능을 유지했다."
+    tags: [label-imbalance, robustness]
+limitations:
+  - text: "저자들은 α-entropy도 Shannon entropy처럼 본질적으로 균등 분포 쪽으로 기울어 있다고 인정한다. 불균형에 더 강한 이유는 목적함수의 최적점이 아니라 gradient 동역학(균등에서 벗어나도 벌점이 완만함)에 있다고 설명한다."
+    tags: [label-shift, theory-gap]
+    source: self
+  - text: "불균형을 query 쪽에만 두었다. Support와 query 양쪽에 동시에 불균형이 있을 때의 효과는 향후 과제로 남긴다고 저자들이 밝힌다."
+    tags: [label-imbalance, eval-protocol]
+    source: self
+  - text: "Marginal entropy 가중치를 원 논문 값 그대로 두면 TIM이 약 18% 떨어지고, 가중치를 낮게 조정해야 4% 수준으로 줄었다고 보고한다. 즉 결과가 class 균형 관련 hyperparameter의 validation 조정에 민감하다. α-TIM의 α도 같은 validation protocol로 고른다."
+    tags: [eval-protocol]
+    source: self
+  - text: "[analyst] 보정 대상이 task 하나당 하나의 label marginal이다. Query 안에 하위집단마다 다른 class 비율이 있는 구조(집단별 p(c|group))는 다루지 않는다."
+    tags: [label-shift, group-offset]
+    source: analyst
+builds_on: [TIM, PT-MAP, SimpleShot]
+compared_against: [ProtoNet, Baseline, Baseline++, SimpleShot, MAML, Versa, Entropy-min, LR+ICI, PT-MAP, SIB, LaplacianShot, BDCSPN, TIM]
+open_questions:
+  - "Label marginal을 하위집단별로 둔 경우(집단마다 다른 class 비율), α-entropy 같은 유연한 marginal 항을 집단 단위로 걸면 collapse 없이 집단별 비율을 추정할 수 있는가?"
+  - "Support도 불균형한 경우, prototype 추정 bias와 query marginal 추정 bias는 어떻게 상호작용하는가?"
+hooks:
+  - "(BSEL-P03, community별 출력 prior) BSEL-P03은 편향 context가 PFN의 community 단위 클래스 출력 사전확률을 왜곡하고, 그것이 commconc 손실 대부분을 설명한다고 보였다. 이 논문은 같은 현상의 task 단위 판이다. 균등 marginal을 강제하는 항이 실제 비율이 다를 때 큰 손실을 낸다는 것이 핵심이다. 따라서 p(c|k)를 PFN 출력에서 직접 추정하는 경로에는 균등 prior를 강제하지 않는 marginal 항이 필요하다. 다만 BSEL-L01에 따라 community·클래스 상수 보정은 같은 community 안의 pairwise AUC를 바꾸지 못한다는 점을 함께 고려해야 한다."
+  - "(BSEL-U01, class collapse 방지) BSEL-U01의 community 혼합비 준지도 GMM은 context 초기화에서 class collapse에 빠졌고, 계획 v2는 전역 혼합비 수축으로 이를 막으려 한다. α-entropy는 marginal이 균등에서 벗어나는 것은 허용하면서 한 class로 몰리는 해만 막는 장벽이다. 그래서 community별 혼합비에 거는 수축 항의 대안으로 검토할 만하다. 단, 원형 자체의 편향은 고치지 못하므로 BSEL-P04의 병목과는 별개다."
+  - "(평가 protocol) Query 비율을 Dirichlet으로 뽑는 방식은 commconc의 집중도 ρ를 연속적으로 바꾸는 평가와 같은 논리다. 집중도별 곡선을 보고하면 uniform 성능 보존과 선택 편향 보정을 함께 보여 줄 수 있다."
+notes: "arXiv 2204.11181 본문(설정, class 균형 bias 분석, α-TIM, Table 1·2, 불균형 심도 실험, 결론)을 확인했다. 정식판 NeurIPS proceedings 페이지에는 쪽수·출판사 표기가 없어 넣지 않았다. 이 논문이 BDCSPN·LaplacianShot을 재평가한 수치는 두 항목의 cited 한계에 넣었다."
+added: 2026-11-20

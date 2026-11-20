@@ -1,0 +1,62 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: MoDaH
+title: "MoDaH achieves rate optimal batch correction"
+authors: "Yang Cao, Zongming Ma (Yale University)"
+venue: "arXiv 2025"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2512.09259
+
+citation:
+  type: misc
+  title: "MoDaH achieves rate optimal batch correction"
+  authors: ["Yang Cao", "Zongming Ma"]
+  year: 2025
+  arxiv: "2512.09259"
+  url: https://arxiv.org/abs/2512.09259
+  verified_from:
+    - https://arxiv.org/abs/2512.09259
+
+areas: [single-cell, ml-foundations]
+problem: "Single-cell 데이터의 batch correction을 통계적 추정 문제로 정식화하고, 경험적 방법(Harmony 등)에 없는 오차율 보장을 갖는 보정 알고리즘을 만들고자 한다."
+core_idea: "Batch b의 cluster k에 속한 세포의 (PCA 후) 발현 벡터가 평균 μ_k + δ_bk, 공분산 Σ_k인 Gaussian을 따른다고 둔다. 여기서 δ_bk는 batch와 cluster가 함께 정하는 batch 효과다. 식별을 위해 cluster마다 batch 효과의 세포 수 가중합 Σ_b n_bk δ_bk가 0이 되도록 제약한다. 보정은 cluster label과 δ_bk를 추정해 각 세포에서 해당 δ를 빼는 것이다. 손실은 참 label과 δ를 아는 oracle 보정과의 평균제곱오차다. 제약 MLE는 계산이 어려워 EM형 hard-assignment 반복으로 푼다. k-means 같은 대략적 초기 clustering에서 출발해 μ_k, δ_bk, Σ_k를 갱신하고, Mahalanobis형 기준으로 배정을 다시 하는 과정을 수렴까지 반복한다. 이론적으로는 misclustering 오차와 δ 추정 오차로 분해한 minimax 하한을 세우고, 초기값이 충분히 좋으면 MoDaH가 그 rate를 달성함을 보인다. 이론은 anisotropic Gaussian mixture clustering 결과(Chen and Zhang, 2024)를 활용한다."
+key_assumptions:
+  - "모든 batch가 모든 cluster를 공유하고, batch×cluster 칸의 세포 수가 서로 비슷한 규모다(Condition 1: 최소 n_bk / 최대 n_bk가 상수 이상). Batch 수 B, cluster 수 K, 차원 d는 고정이고 batch별 세포 수만 무한대로 간다."
+  - "Batch 효과의 크기는 cluster 간 분리보다 느리게 커지며, SNR이 충분히 커야 한다."
+  - "초기 cluster 배정의 오차가 전체 세포 수에 비해 작아야 한다(o(n)). 저자들은 batch마다 Lloyd를 돌린 뒤 local cluster를 batch 간에 짝짓는 초기화를 예로 든다."
+  - "라벨은 쓰지 않는 완전 비지도 설정이며, cluster 수 K는 주어지거나 Leiden 기반으로 추정한다."
+strengths:
+  - text: "Batch 효과를 cluster마다 다른 δ_bk로 두는 명시적 생성 모형 아래에서 batch correction의 minimax 오차율을 세우고, 그 rate를 달성하는 알고리즘을 제시했다. 저자들은 이를 batch correction 최초의 이론 보장으로 소개한다."
+    tags: [identifiability, theory-gap]
+  - text: "Cluster별 공분산을 따로 두어 비구형 cluster 기하에서만 드러나는 batch 효과도 잡는다. 실데이터 5개(scRNA-seq 3, 공간 proteomics 2)에서 Harmony와 함께 종합 점수 최상위였고, Seurat V5·LIGER보다 좋았다."
+    tags: [group-offset, model-based-baseline]
+  - text: "입력 cluster 수를 잘못 줘도, 특히 실제보다 크게 줘도 성능이 완만하게만 나빠졌다. Batch 크기가 크게 다르고 일부 cell type이 일부 batch에 없는 PBMC, 한 batch에 한 cell line만 있는 Cell Line처럼 이론 가정을 벗어난 데이터에서도 경쟁력을 유지했다."
+    tags: [robustness]
+limitations:
+  - text: "이론은 batch·cluster 칸 크기가 비슷하다는 조건 아래에서만 성립한다. 일부 cluster가 일부 batch에 없는 경우의 일관성·최적성 조건은 향후 과제로 남긴다고 저자들이 밝힌다. Batch 수가 커지는(B→∞) regime도 다루지 않는다."
+    tags: [identifiability, theory-gap]
+    source: self
+  - text: "한 batch에서 한 cluster가 완전히 빠진 시뮬레이션에서는 손실이 SNR에 대해 단조롭지 않았다. SNR을 올리면 손실이 오히려 커지다가 훨씬 높은 SNR에서 급감하는 상전이가 나타났다. 저자들은 cluster의 부재를 감지하려면 강한 SNR이 필요할 수 있다고 해석한다."
+    tags: [identifiability, robustness]
+    source: self
+  - text: "보장은 초기 배정 오차가 o(n)일 때만 성립한다. 저자들은 batch별 Lloyd 후 짝짓기 같은 초기화가 SNR이 클 때 이를 만족한다고 설명한다. 다시 말해 초기화 품질이 보장의 전제다."
+    tags: [training-stability]
+    source: self
+  - text: "[analyst] 식별 제약 Σ_b n_bk δ_bk = 0 때문에 μ_k는 관측된 batch 구성으로 가중한 cluster 중심이 된다. 어떤 batch에 어느 cluster가 얼마나 들어 있느냐가 바뀌면 '보정 후 class 중심'의 정의도 바뀐다. 표본 선택이 batch·cluster 구성을 바꾸는 설정에서는 이 제약을 어떤 모집단 가중으로 둘지가 결과를 좌우한다."
+    tags: [identifiability, selection-bias]
+    source: analyst
+  - text: "[analyst] Batch 하나하나가 크고 모든 cell type을 고르게 갖는다는 전제는, 집단 수가 많고 집단마다 구성이 한쪽으로 치우친 데이터(예: 동질성 그래프의 community)와 정반대다. 그런 데이터는 Condition 1과 강한 SNR 영역 밖에 있다."
+    tags: [group-offset, structural-imbalance]
+    source: analyst
+builds_on: [Harmony, AnisotropicGMMClustering, LloydKMeans]
+compared_against: [Harmony, Seurat-V5, LIGER]
+open_questions:
+  - "일부 cluster가 일부 batch에 없을 때, 어떤 관측 구조(공유 cluster의 연결성 등)가 δ_bk의 식별을 보장하는가?"
+  - "일부 세포에 라벨이 있으면(준지도), 초기화 조건과 상전이 SNR 문턱이 얼마나 완화되는가?"
+  - "Batch 수가 많고 batch당 세포 수가 적은 regime에서 δ_bk에 shrinkage·계층 prior를 두면 rate가 어떻게 바뀌는가?"
+hooks:
+  - "(BSEL-P04, 원형 정의) MoDaH의 생성 모형은 'community = batch, class = cluster'로 놓으면 community×class offset 모형 x = μ_c + δ_kc + ε 그 자체다. 식별 제약 Σ_k n_kc δ_kc = 0에서 n_kc를 pool의 community×class 수로 두면 μ_c는 정확히 pool 클래스 평균이 된다. BSEL-P04는 이 참 pool 원형이 있으면 E-moment가 손실의 0.92를 회복한다고 보였다. 반대로 context 수로 두면 commconc context 원형(상대 오차 1.34)이 된다. 즉 이 논문은 '원형을 어떤 가중으로 정의하느냐가 식별 제약의 선택'이라는 점을 정식화해 준다. 이 틀 안에서 pool 가중 제약을 라벨 없이 맞출 수 있는지가 핵심 질문이 된다."
+  - "(BSEL-U01, offset 흡수와 초기화) BSEL-U01 proxy에서 offset-GMM은 동질성 그래프에서 클래스 구조를 offset으로 흡수했다. 또 community 혼합비 GMM은 참 원형에서는 좋은 해(TV 0.18–0.25)에 갔지만 context 초기화에서는 나쁜 basin·class collapse에 빠졌다. MoDaH의 이론은 바로 이 두 실패 조건을 전제로 배제한다. 하나는 Condition 1(모든 community×class 칸이 비슷한 크기)이고, 다른 하나는 o(n) 초기화다. 한 cluster가 빠진 batch에서 나타난 상전이도 같은 방향의 증거다. 그러므로 이 논문은 offset-GMM 재시도의 근거가 아니라, 왜 실패했는지를 설명하는 조건 목록으로 쓰는 것이 맞다. 재검토 최소 실험은 Cora에서 community×class 칸 크기 비(min/max)와 빈 칸 비율을 세고 Condition 1 위반 정도를 보고하는 것이다."
+  - "(초기화 대안) Remark 1의 초기화(batch마다 local clustering 후 batch 간 짝짓기)는 context 원형에 의존하지 않는 초기화다. 다만 각 community가 모든 클래스를 충분히 가질 때만 성립하므로, 동질성 그래프의 작은 community에서는 쓰기 어렵다."
+notes: "arXiv v1 본문(모형, 알고리즘, Condition 1, Theorem 1·2, Remark 1, 시뮬레이션, 실데이터, Harmony 비교, 향후 과제, 부록 I의 missing cluster 시뮬레이션)을 확인했다. 학회·저널 게재 정보는 확인되지 않아 misc로 두었다. 수식 기호(δ, Σ)는 이 harness의 설명용으로 단순화했다."
+added: 2026-11-20

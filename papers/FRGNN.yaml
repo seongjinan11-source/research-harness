@@ -1,0 +1,52 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: FRGNN
+title: "FRGNN: Mitigating the Impact of Distribution Shift on Graph Neural Networks via Test-Time Feature Reconstruction"
+authors: "Rui Ding, Jielong Yang, Feng Ji, Xionghu Zhong, Linbo Xie"
+venue: "arXiv 2023"
+year: 2023
+links:
+  paper: https://arxiv.org/abs/2308.09259
+citation:
+  type: misc
+  title: "FRGNN: Mitigating the Impact of Distribution Shift on Graph Neural Networks via Test-Time Feature Reconstruction"
+  authors: ["Rui Ding", "Jielong Yang", "Feng Ji", "Xionghu Zhong", "Linbo Xie"]
+  year: 2023
+  arxiv: "2308.09259"
+  url: https://arxiv.org/abs/2308.09259
+  verified_from:
+    - https://arxiv.org/abs/2308.09259
+areas: [graph-learning]
+problem: "편향된 학습 노드 선택과 적은 라벨 때문에 학습 노드와 test 노드 사이에 distribution shift가 생길 때, 학습된 GNN의 구조와 가중치를 바꾸거나 재학습하지 않고 test 성능을 되살리려 한다."
+core_idea: "먼저 GNN을 평소대로 학습하고 전체 노드의 예측 Ŷ를 얻는다. 그다음 2층 MLP로 예측 Ŷ에서 원래 feature X로 가는 역방향 mapping을 학습한다. 이 MLP에 각 클래스의 one-hot 벡터를 넣어 나온 출력을 그 클래스의 class representative embedding으로 삼는다. Test 시점에는 학습·validation 노드의 feature를 자기 클래스의 representative로 바꾼 feature 행렬로 같은 GNN을 다시 돌린다. 바뀐 라벨 노드 feature가 message passing을 통해 이웃 test 노드의 embedding을 자기 클래스 쪽으로 끌어당기는 것이 의도다. 이론적으로는 클래스별 feature 분포와 이웃 라벨 분포가 i.i.d.라는 가정 아래 test 노드 embedding이 클래스 기댓값 주변에 모이고, representative로 바꾸면 그 기댓값이 representative에 가까워진다는 정리를 제시한다."
+key_assumptions:
+  - "각 노드 feature는 클래스별 분포에서, 이웃 라벨은 중심 노드 클래스별 분포에서 독립으로 뽑힌다고 가정한다(Assumption 1). 지역·community별 feature offset은 모형에 없다."
+  - "학습된 GNN이 학습 노드 embedding을 잘 분리해, 각 클래스를 대표하는 embedding이 존재한다고 본다."
+  - "추론 시 라벨 노드가 충분히 있고, 그 노드들이 test 노드와 message passing으로 연결되어 있다고 가정한다."
+  - "실험의 편향은 SR-GNN의 PPR 기반 scalable biased sampler로 만든다."
+strengths:
+  - text: "모델 구조와 가중치를 전혀 바꾸지 않는 test-time 방법이다. 라벨 노드 feature만 바꾸므로 GCN·GAT·GraphSAGE·APPNP에 그대로 붙는다."
+    tags: [adaptation, selection-bias]
+  - text: "SR-GNN의 biased sampler로 만든 편향 학습 집합(10개 집합 × 10개 초기화)에서 네 base model 모두를 개선했다. Cora·Citeseer에서는 SR-GNN, WT-AWP, GAUG, MH-AUG, KDGA 등 모든 baseline보다 좋았고, Pubmed에서는 WT-AWP 다음이었다."
+    tags: [selection-bias, distribution-shift]
+  - text: "이득의 출처를 분석했다. 같은 클래스 이웃 비율이 높은 노드에서 오분류가 크게 줄었고, 그 비율이 낮은 노드에서는 도움이 적었다. 방법이 homophily를 통한 라벨 신호 전달에 기대고 있음을 스스로 드러낸다."
+    tags: [graph-structure-use, interpretability]
+limitations:
+  - text: "Feature 재구성이 라벨 노드에 의존하므로, 라벨 노드에 접근할 수 없거나 너무 적으면 효과가 없을 수 있다. 저자들은 node feature만으로 재구성하는 방향을 향후 과제로 든다. 라벨 비율이 가장 낮은 Pubmed에서 개선이 가장 작았던 것도 같은 이유로 설명한다."
+    tags: [context-scale, selection-bias]
+    source: self
+  - text: "같은 클래스 이웃 비율이 낮은 노드에서는 도움이 제한적이라고 저자들이 보고한다."
+    tags: [graph-structure-use]
+    source: self
+  - text: "[analyst] 모든 라벨 노드 feature를 클래스당 하나의 벡터로 덮어쓰므로, 사실상 라벨을 feature 채널로 퍼뜨리는 label propagation이다. 라벨이 일부 지역에 몰려 있으면 그 지역 주변으로 클래스 신호를 더 밀어 넣는 방향으로 작동한다. Representative도 편향된 라벨 노드로 학습한 모델과 역 mapping에서 나오므로 선택 편향을 그대로 물려받는다. 이론의 i.i.d. 클래스 조건부 feature 가정은 community offset이 있는 경우 성립하지 않는다."
+    tags: [selection-bias, group-offset, theory-gap]
+    source: analyst
+builds_on: [SRGNN, GCN, GAT, GraphSAGE, APPNP]
+compared_against: [GCN, GAT, GraphSAGE, APPNP, LGD-GNN, DGNN, WT-AWP, SRGNN, GAUG, MH-AUG, KDGA]
+open_questions:
+  - "Representative를 클래스당 하나가 아니라 지역·community별로 두면 편향 선택에서 더 나은가, 아니면 offset과 클래스 구성이 섞여 더 나빠지는가?"
+  - "라벨 노드 feature를 덮어쓰는 것과 라벨을 출력 쪽에서 전파하는 것(C&S)의 차이는 무엇이고, 어느 조건에서 한쪽이 낫는가?"
+hooks:
+  - "(BSEL O-ctx와의 대비) FRGNN은 context(라벨) 노드 feature를 test 시점에 바꾸는 방법이라는 점에서 BSEL-P02의 O-ctx(클래스 조건부 community 특징 수송)와 같은 자리를 건드린다. 차이는 representative를 모델 출력의 역 mapping으로 얻는다는 점이다. BSEL-P04에 따르면 commconc context에서 추정한 클래스 원형은 상대 오차 1.34로 오염되어 있고(uniform 1.03), context 원형을 쓴 E-moment는 SRec 0.21에 그쳤다. 참 pool 원형을 쓰면 0.92였다. FRGNN의 representative도 같은 편향 context로 학습한 모델에서 나오므로 같은 오염을 물려받을 것으로 예상된다. 또 frozen GraphPFN(LimiX)에서 context row들을 클래스당 같은 feature로 덮으면 ICL이 보는 feature-label 관계가 퇴화할 수 있다(가설). 확인한다면 원형 출처(context 대 참 pool)만 바꾸는 2×1 비교로 충분하다."
+  - "(BSEL-F04의 라벨 전파 계열) analyst 한계대로 FRGNN은 feature 채널을 쓰는 라벨 전파라서, F04에서 C&S·LP-PoE가 commconc를 악화시킨 것과 같은 방향의 위험이 있다. 실행하지 않고 기각하려면 이 메커니즘 근거만으로는 부족하고, 위 2×1 비교 결과가 필요하다."
+notes: "게재처는 확인하지 못해 misc로 두었다. arXiv 현재판은 v2(2023-10-13)이고 v1은 2023-08-18에 올라왔다. 세 번째 저자는 arXiv 페이지 메타데이터에서 'Feng Ji'로, PDF 1쪽에서는 'Ji Feng'으로 표기되어 있어 arXiv 페이지 표기를 따랐다. 코드 링크는 원고에 없다."
+added: 2026-11-20

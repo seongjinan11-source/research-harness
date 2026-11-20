@@ -1,0 +1,54 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: BatchCalibration
+title: "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering"
+authors: "Han Zhou, Xingchen Wan, Lev Proleev, Diana Mincu, Jilin Chen, Katherine Heller, Subhrajit Roy"
+venue: "ICLR 2024"
+year: 2024
+links:
+  paper: https://arxiv.org/abs/2309.17249
+  openreview: https://openreview.net/forum?id=L3FHMoKZcS
+citation:
+  type: inproceedings
+  title: "Batch Calibration: Rethinking Calibration for In-Context Learning and Prompt Engineering"
+  authors: ["Han Zhou", "Xingchen Wan", "Lev Proleev", "Diana Mincu", "Jilin Chen", "Katherine Heller", "Subhrajit Roy"]
+  year: 2024
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2309.17249"
+  url: https://openreview.net/forum?id=L3FHMoKZcS
+  verified_from:
+    - https://iclr.cc/virtual/2024/poster/18875
+    - https://arxiv.org/abs/2309.17249
+areas: [ml-foundations]
+problem: "LLM의 in-context learning과 prompt engineering에서 생기는 출력 bias를 보정하는 기존 방법(contextual calibration, domain-context calibration, prototypical calibration)이 언제 왜 실패하는지 분석하고, 비용이 거의 없는 더 안정적인 보정을 찾는다."
+core_idea: "저자들은 기존 보정들을 decision boundary 관점에서 정리한다. Content-free 입력을 쓰는 CC는 경계를 회전시키고, 무작위 in-domain token을 쓰는 DC는 경계를 이동시키며, GMM 기반 PC는 비선형 경계를 맞추다 overfitting과 불안정에 빠진다. Batch Calibration(BC)은 content-free 입력 대신 실제 test 입력 batch에 대한 모델 출력의 class별 평균으로 contextual bias를 추정하고, 확률을 그 평균으로 나눈다(log 공간에서는 평균을 빼는 것). 경계는 선형으로 유지된다. Batch를 순차로 받을 때는 running estimate로 갱신한다. Label이 조금 있으면 bias를 γ배만큼 빼는 BCL로 확장하고 γ를 grid search로 고른다."
+key_assumptions:
+  - "Test batch에 대한 평균 출력이 입력 내용이 아니라 prompt context가 만든 bias를 반영한다. 논문은 test batch의 참 label 분포가 균형이라는 조건을 명시적으로 다루지 않는다."
+  - "Batch가 P(x)를 대표한다."
+  - "선형 decision boundary가 비선형 경계보다 robust하다."
+strengths:
+  - text: "Content-free 입력이 multi-sentence task(QNLI 등)에서 오히려 특정 답으로 기우는 부적절한 prior 추정기가 될 수 있음을 보이고, 실제 입력 batch로 bias를 추정해 이 문제를 피한다."
+    tags: [label-shift, robustness]
+  - text: "Zero-shot, inference-only이고 추가 API 호출이 없다. PaLM 2-S 1-shot 13개 task 평균이 ICL 66.20에서 BC 74.41로, PaLM 2-L은 75.16에서 81.09로 올라 CC·DC·PC보다 높았다."
+    tags: [label-shift, inference-cost]
+  - text: "약 10개의 unlabeled 샘플로도 강한 성능에 이르러, 500개 이상이 필요한 PC보다 표본 효율이 훨씬 좋다고 보고한다. CLIP 이미지 분류에도 적용했다."
+    tags: [label-shift, uncertainty]
+limitations:
+  - text: "Batched 입력의 target 통계에 의존하는 test-time 방법이라 bias를 추정할 입력 batch가 반드시 필요하다고 저자들이 인정한다."
+    tags: [label-shift]
+    source: self
+  - text: "Short-form generation에도 contextual bias가 있을 것으로 보지만 분류 밖 task로의 확장은 향후 과제로 남긴다."
+    tags: [task-coverage]
+    source: self
+  - text: "[analyst] Batch 평균으로 나누는 것은 batch의 참 class 구성이 균일하다고 보는 것과 같다. Test batch가 class 불균형이면 실제 구성까지 bias로 지우게 되는데, 논문은 이 경우를 분석하지 않는다. CLIP 표에서 일부 데이터셋(FGVC Aircraft 24.8→22.3)은 보정 후 나빠졌다."
+    tags: [label-shift, label-imbalance]
+    source: analyst
+builds_on: [ContextualCalibration, domain-context-calibration, prototypical-calibration]
+compared_against: [ContextualCalibration, domain-context-calibration, prototypical-calibration, uncalibrated-ICL]
+open_questions:
+  - "Batch의 참 class 구성이 균일하지 않을 때, batch 평균에서 '모델 bias'와 '실제 구성'을 어떻게 분리하는가? 목표 분포를 균일 대신 추정된 구성으로 두면 BC는 Saerens EM의 한 단계와 무엇이 다른가?"
+  - "Batch를 집단(domain, community)별로 나누면 bias 추정은 더 정확해지는가, 아니면 집단 고유 구성을 지우는가?"
+hooks:
+  - "(BSEL, 직접 대응하는 실패) 이 프로젝트의 community batch calibration(각 community의 평균 PFN posterior로 나누고 분자는 flat)은 BC를 community를 batch로 삼아 적용한 것에 해당하며, AUC가 약 15pt 떨어질 만큼 매우 해로웠다. BC의 숨은 전제, 즉 batch의 참 class 구성이 균일하다는 전제가 commconc에서는 크게 깨진다. Community는 class가 몰려 있는 단위라서, community 평균 posterior에는 PFN bias뿐 아니라 실제 class 구성이 크게 들어 있고, 그것까지 나눠 버리면 진짜 신호가 사라진다. 이 해석은 메커니즘상 일관되지만 원인 분해 실험으로 확정된 것은 아니다."
+  - "(BSEL-P03과 재설계 조건) BSEL-P03의 O-swap이 효과가 있었던 것은 분모를 같은 community의 uniform context PFN 출력 평균으로 두었기 때문이다. 즉 '편향 context 평균 / 비편향 context 평균'의 비율로 bias를 잡았다. 라벨 없이 BC를 살리려면 flat 분자 대신 community 구성의 추정치를 분자에 두거나, 편향 없는 기준 batch를 따로 만들어야 한다. 그래도 per-(community,class) 상수 보정이라 BSEL-L01의 within-community AUC 제약은 남는다."
+notes: "arXiv v3(2024-12) HTML 본문을 읽었다. ICLR 2024 poster로 iclr.cc 가상 페이지에서 확인했고 OpenReview forum 주소도 그 페이지에서 읽었다. OpenReview는 접근이 막혀 리뷰를 읽지 못했다. 논문 Eq. 1은 확률 표기지만 부록에서 log-probability로 계산한다고 적혀 있어, core_idea에 두 표현을 함께 적었다."
+added: 2026-11-20

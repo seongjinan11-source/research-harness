@@ -1,0 +1,58 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: ReNode
+title: "Topology-Imbalance Learning for Semi-Supervised Node Classification"
+authors: "Deli Chen, Yankai Lin, Guangxiang Zhao, Xuancheng Ren, Peng Li, Jie Zhou, Xu Sun (WeChat AI, Tencent / Peking University)"
+venue: "NeurIPS 2021"
+year: 2021
+links:
+  paper: https://papers.nips.cc/paper/2021/hash/fa7cdfad1a5aaf8370ebeda47a1ff1c3-Abstract.html
+  arxiv: https://arxiv.org/abs/2110.04099
+  code: https://github.com/victorchen96/ReNode
+citation:
+  type: inproceedings
+  title: "Topology-Imbalance Learning for Semi-Supervised Node Classification"
+  authors: ["Deli Chen", "Yankai Lin", "Guangxiang Zhao", "Xuancheng Ren", "Peng Li", "Jie Zhou", "Xu Sun"]
+  year: 2021
+  booktitle: "Advances in Neural Information Processing Systems"
+  volume: 34
+  arxiv: "2110.04099"
+  url: https://papers.nips.cc/paper/2021/hash/fa7cdfad1a5aaf8370ebeda47a1ff1c3-Abstract.html
+  verified_from:
+    - https://papers.nips.cc/paper/2021/hash/fa7cdfad1a5aaf8370ebeda47a1ff1c3-Abstract.html
+    - https://arxiv.org/abs/2110.04099
+areas: [graph-learning]
+problem: "노드 분류의 불균형을 클래스별 라벨 개수(quantity imbalance)로만 보지 말고, 라벨 노드가 그래프 안에서 어디에 놓였는지에서 오는 불균형(topology imbalance)으로도 보고 그 영향을 측정·완화하려 한다."
+core_idea: "저자들은 GCN 예측과 Label Propagation(LP) 예측이 크게 일치한다는 관찰에서 출발해, 각 노드가 어느 클래스의 라벨 노드로부터 가장 큰 영향을 받는지를 node influence로 본다. 라벨 노드의 개수와 위치가 모두 이 영향 경계를 실제 클래스 경계에서 밀어내며(node influence shift), 클래스 경계 근처 라벨은 influence conflict를, 라벨에서 먼 노드는 influence insufficient를 겪는다. 라벨 노드별 위치를 재기 위해 PPR 행렬로 그 노드가 다른 클래스 라벨 노드들의 영향과 얼마나 충돌하는지의 기댓값인 Totoro를 정의한다. 값이 클수록 클래스 경계에 가깝다. ReNode는 Totoro 순위에 cosine annealing을 걸어 경계에 가까운 라벨 노드의 학습 weight를 낮추고 중심에 가까운 노드의 weight를 높인다. 클래스 빈도 재가중과 곱해 quantity imbalance와 함께 다룰 수 있고, 대형 그래프에서는 PPRGo식 근사 PPR로 같은 weight를 계산한다."
+key_assumptions:
+  - "연결된 노드가 비슷한 homophily 그래프를 가정한다. 저자들도 heterophily 그래프는 범위 밖이라고 밝힌다."
+  - "LP의 node influence 경계가 GNN decision boundary를 잘 대변한다고 본다."
+  - "라벨 노드들 사이의 PPR 영향 충돌만으로 그 노드가 클래스 중심에 가까운지 경계에 가까운지를 알 수 있다고 가정한다. 라벨이 충분히 많고 그래프가 잘 연결되어야 신호가 생긴다."
+strengths:
+  - text: "라벨 위치에서 오는 불균형을 quantity imbalance와 직교하는 별도 문제로 정식화했다. Quantity-balanced로 뽑아도 작은 클래스가 경계 근처 라벨을 더 많이 갖게 되어 영향 경계가 큰 클래스 쪽으로 밀릴 수 있음을 LP로 보였다."
+    tags: [structural-imbalance, label-imbalance, selection-bias]
+  - text: "Totoro로 잰 학습 집합 전체의 충돌 총량이 GCN 성능과 강한 음의 상관을 가졌다(무작위 학습 집합 50개, Pearson −0.618). 학습 집합 선택에 따른 GNN 성능 변동의 일부를 설명하는 값싼 진단 지표가 된다."
+    tags: [selection-bias, eval-protocol]
+  - text: "Model-agnostic 재가중이라 GCN·GAT·PPNP·GraphSAGE·ChebGCN·SGC 여섯 모델 모두에서 Weighted-F1·Macro-F1을 대체로 올렸다. 충돌이 큰 학습 집합에서 이득이 가장 컸고, 클래스 빈도 재가중·Focal·CB loss와 결합하면 DR-GCN·RA-GCN·GraphSMOTE 같은 graph 전용 불균형 방법보다 좋았다. Reddit·MAG-Scholar 같은 대형 그래프에도 PPRGo로 확장했다."
+    tags: [structural-imbalance, label-imbalance, graph-scale]
+  - text: "GNN마다 topology imbalance 민감도가 다르다는 것을 보였다(GCN > PPNP > GAT). 학습 집합 위치에 대한 민감도를 architecture 평가의 새 축으로 제안한다."
+    tags: [graph-structure-use, robustness]
+limitations:
+  - text: "ReNode는 homophily 그래프용으로 설계되었고, protein network 같은 heterophily 그래프에는 수정이 필요하다."
+    tags: [graph-structure-use]
+    source: self
+  - text: "그래프 연결이 약하거나(CiteSeer) 라벨 비율이 극히 낮으면(MAG-Scholar) 라벨 노드 사이 충돌이 거의 없어 위치를 잘 드러내지 못한다. 저자들은 이를 cold start 문제로 인정한다."
+    tags: [structural-imbalance, context-scale]
+    source: self
+  - text: "[analyst] 문제 정의에서는 라벨에서 먼 노드의 influence insufficient를 위험으로 들지만, 처방은 이미 있는 라벨 노드의 weight를 바꾸는 것뿐이다. 라벨이 없는 지역은 weight 조정으로 영향을 받을 수 없다. 라벨이 소수 community에 몰린 경우 community 내부 라벨은 충돌이 작아 오히려 weight가 올라가므로, 쏠림이 강화될 수도 있다."
+    tags: [selection-bias, structural-imbalance]
+    source: analyst
+builds_on: [LabelPropagation, PPR, PPRGo, ClassReweighting]
+compared_against: [GCN, GAT, PPNP, GraphSAGE, ChebNet, SGC, Re-weight, FocalLoss, ClassBalancedLoss, DR-GCN, RA-GCN, GraphSMOTE, PPRGo]
+open_questions:
+  - "Influence insufficient(라벨이 닿지 않는 지역)를 줄이는 처방은 무엇인가? 재가중이 아니라 coverage를 늘리는 선택이나 출력 쪽 보정이 필요한지 분해되지 않았다."
+  - "Totoro와 성능의 음의 상관은 무작위 학습 집합에서 잰 것이다. 구조적으로 편향된 선택 정책에서도 같은 상관이 유지되는가?"
+hooks:
+  - "(BSEL 값싼 진단) commconc는 topology imbalance의 극단, 특히 influence insufficient가 지배하는 경우로 볼 수 있다. ReNode의 LP 기반 influence 경계 이동은 BSEL-P03의 'community 단위 클래스 출력 prior 왜곡'을 LP 언어로 바꾼 설명이다. BSEL-L04(무거운 계획 전에 결정적인 값싼 진단)를 따른다면, 같은 seed에서 uniform과 commconc context의 Totoro 충돌 총량 및 클래스별 PPR 영향 질량이 context 없는 community에 얼마나 닿는지를 계산해 seed별 AUC 손실과의 상관을 보는 것이 1분 수준의 진단이 된다. 이 값이 BS-GCN·LP 손실과 GraphPFN 손실을 같이 설명하면, BSEL-P01의 '손실은 PFN 고유가 아니다'를 메커니즘 수준에서 뒷받침한다."
+  - "(메소드로는 부적합) ReNode의 처방은 학습 loss 재가중이라 frozen GraphPFN에는 직접 들어갈 곳이 없고, 위 analyst 한계처럼 commconc에서는 쏠림을 강화할 수도 있다. 비교 하한에 넣는다면 BS-GCN에 ReNode weight를 준 한 줄이면 충분하다."
+notes: "코드 링크는 arXiv PDF 각주에서 읽었다. pages는 proceedings 페이지에 표시되지 않아 지웠다."
+added: 2026-11-20
