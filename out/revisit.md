@@ -1040,7 +1040,7 @@
   - 기록된 강점: 공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
-- [UECO](https://github.com/Thinklab-SJTU/UECO/blob/main/paper_preview.pdf): 복수 태그 일치 (약한 단서); tags=eval-protocol, graph-structure-use; keywords=-
+- [UECO](https://neurips.cc/virtual/2026/oral/153348): 복수 태그 일치 (약한 단서); tags=eval-protocol, graph-structure-use; keywords=-
   - 기록된 강점: Encoder만 교체하는 통제 실험으로 TSP, ATSP, CVRP, ACVRP, MIS, MaxClique, MaxCut의 여러 규모에서 거의 일관된 해 품질·일반화 개선을 보고했다. 기존 encoder와의 교락을 줄인 비교 설계다.
 
 ## FP05-F01 — 불완전 피처 입력에서 내부 세 지점의 adapter 추가 실행을 Group-PG로 학습하면 일반 fine-tuning과 기대 목적 직접 최적화보다 높은 missing-query accuracy와 관측 피처 효용을 얻는다.

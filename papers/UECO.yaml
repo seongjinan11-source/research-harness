@@ -1,19 +1,24 @@
 # 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
 id: UECO
-title: "UECO: A Unified Encoder for Neural Combinatorial Optimization with Iterative Edge-Node Reasoning"
+title: "UECO: A Unified Encoder with Structure-Aware Attention Mixture via Iterative Edge Evolving for Neural Combinatorial Optimization"
 authors: "Wenzheng Pan, Shuyi Yan, Nuoyan Chen, Yiyang Qu, Jiale Ma, Junchi Yan (Shanghai Jiao Tong University, Shanghai Innovation Institute)"
-venue: "NeurIPS 2026 (README 표기, 미확인)"
+venue: "NeurIPS 2026 (Oral)"
 year: 2026
 links:
-  paper: https://github.com/Thinklab-SJTU/UECO/blob/main/paper_preview.pdf
+  openreview: https://openreview.net/forum?id=M2lqt23VO7
+  paper: https://neurips.cc/virtual/2026/oral/153348
+  preview_pdf: https://github.com/Thinklab-SJTU/UECO/blob/main/paper_preview.pdf
   code: https://github.com/Thinklab-SJTU/UECO
 citation:
-  type: misc
-  title: "UECO: A Unified Encoder for Neural Combinatorial Optimization with Iterative Edge-Node Reasoning"
+  type: inproceedings
+  title: "UECO: A Unified Encoder with Structure-Aware Attention Mixture via Iterative Edge Evolving for Neural Combinatorial Optimization"
   authors: ["Wenzheng Pan", "Shuyi Yan", "Nuoyan Chen", "Yiyang Qu", "Jiale Ma", "Junchi Yan"]
   year: 2026
-  url: https://github.com/Thinklab-SJTU/UECO
+  booktitle: "Advances in Neural Information Processing Systems"
+  url: https://neurips.cc/virtual/2026/poster/153347
   verified_from:
+    - https://neurips.cc/virtual/2026/oral/153348
+    - https://neurips.cc/static/virtual/data/neurips-2026-orals-posters.json
     - https://github.com/Thinklab-SJTU/UECO
     - https://github.com/Thinklab-SJTU/UECO/blob/main/paper_preview.pdf
 areas: [graph-learning, co-heuristics]
@@ -47,5 +52,5 @@ open_questions:
 hooks:
   - "사용자의 LLM 휴리스틱 자동설계(AHD) 보상 연구는 TSP를 주 문제로 두고 크기 일반화를 따로 본다. UECO는 같은 TSP에서 학습 크기 밖 외삽(100→1000, D&C로 100K)을 보고하므로, 생성 휴리스틱이 넘어야 할 neural solver 기준선으로 쓸 수 있다(직접 비교 결과는 없음)."
   - "Backbone을 고정하고 encoder만 바꾸는 통제 비교 설계는, 사용자 실험에서 보상 정의만 바꾸고 나머지 파이프라인을 고정하는 원칙과 같은 방향의 평가 protocol 근거다."
-notes: "README와 PDF preview는 NeurIPS 2026(Oral)을 표기하지만 neurips.cc에서 확인하지 못했고 arXiv id도 찾지 못해 misc로 둔다. PDF는 camera-ready 이전 early preview라고 README가 밝힌다."
+notes: "NeurIPS 2026 Oral(Orals 3F Graphs, Sketching & Scalable Algorithms, decision Accept (oral))을 neurips.cc 공식 논문 데이터에서 확인했다. 학회 제목은 'UECO: A Unified Encoder with Structure-Aware Attention Mixture via Iterative Edge Evolving for Neural Combinatorial Optimization'이고, 저장소의 early preview PDF 제목은 'UECO: A Unified Encoder for Neural Combinatorial Optimization with Iterative Edge-Node Reasoning'로 다르다. 본문은 preview PDF로 읽었으며 camera-ready와 다를 수 있다. arXiv id는 찾지 못했다."
 added: 2026-11-20

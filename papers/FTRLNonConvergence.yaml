@@ -2,18 +2,23 @@
 id: FTRLNonConvergence
 title: "Follow the Regularized Leader Does Not Converge in Constrained Optimization"
 authors: "Ioannis Anagnostides, Ioannis Panageas, Nikolas Patris, Tuomas Sandholm"
-venue: "arXiv 2026"
+venue: "NeurIPS 2026 (Oral)"
 year: 2026
 links:
-  paper: https://arxiv.org/abs/2610.35004
+  openreview: https://openreview.net/forum?id=dmNapb9nHG
+  paper: https://neurips.cc/virtual/2026/oral/150987
+  arxiv: https://arxiv.org/abs/2610.35004
 citation:
-  type: misc
+  type: inproceedings
   title: "Follow the Regularized Leader Does Not Converge in Constrained Optimization"
   authors: ["Ioannis Anagnostides", "Ioannis Panageas", "Nikolas Patris", "Tuomas Sandholm"]
   year: 2026
+  booktitle: "Advances in Neural Information Processing Systems"
   arxiv: "2610.35004"
-  url: https://arxiv.org/abs/2610.35004
+  url: https://neurips.cc/virtual/2026/poster/150986
   verified_from:
+    - https://neurips.cc/virtual/2026/oral/150987
+    - https://neurips.cc/static/virtual/data/neurips-2026-orals-posters.json
     - https://arxiv.org/abs/2610.35004
 areas: [ml-foundations]
 problem: "Online learning의 기본 알고리즘인 FTRL이 제약이 있는 nonconvex 최적화에서 1차 정류점(KKT 조건)으로 수렴하는지 묻는다. Mirror descent와 gradient descent는 수렴이 알려져 있지만 FTRL은 정규화항에 대한 특수 가정이 없으면 열려 있었다."
@@ -43,5 +48,5 @@ open_questions:
 hooks:
   - "SpyRL(RLSVR)처럼 self-play 게임으로 보상을 만드는 LLM 학습은 multi-agent no-regret dynamics로 볼 수 있다. 이 논문은 potential 구조가 있어도 정류점 수렴이 보장되지 않는다는 이론적 경계를 준다(가설 수준 연결, 실제 학습 dynamics에 적용된 근거는 없음)."
   - "FTRL은 zero-sum 게임 풀이(CFR 계열)와 CTR 예측의 핵심 엔진이다. 사용자 연구에서 게임식 보상이나 no-regret 업데이트를 쓸 때 수렴 진단을 목적값 개선이 아니라 KKT gap으로 따로 봐야 한다는 근거로 쓸 수 있다."
-notes: "PDF 본문(서론, 결론, 감사의 글)에 NeurIPS 리뷰어 언급이 있으나 게재 venue는 확인되지 않아 misc로 둔다."
+notes: "NeurIPS 2026 Oral(Orals 2F Optimization & Online Learning Theory, decision Accept (oral))을 neurips.cc 공식 논문 데이터에서 확인했다. 본문은 arXiv v1 PDF로 읽었다."
 added: 2026-11-20
