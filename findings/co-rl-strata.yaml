@@ -27,7 +27,7 @@ entries:
     reopen_when: '학습 중 층별 분산이 크게 이동한다는 근거, 또는 층 충돌 쌍이 충분히 많은 문제·pool이 생겨 처방 사이 판정 차이가 커질 때.'
     comparison_floor: 'R0(혼합 평균), MO-GRPO형 group z-score, 고정 스케일 Pre-Norm, CALM 저장소 보상.'
     recheck: '새 문제나 pool의 dev에서 같은 precheck_r2_r3.py로 형태 사이 불일치율과 층 충돌 쌍 수를 먼저 잰다.'
-    tags: [reward-signal, multi-reward, co-heuristics, eval-protocol]
+    tags: [reward-signal, multi-reward, eval-protocol]
     keywords: [strata mixed reward, size strata, online bin packing, TSP, GRPO advantage, MO-GRPO, win rate aggregation, decision disagreement, precheck]
     reopen_tags: [reward-signal, multi-reward]
     reopen_keywords: [policy-dependent reward variance, stratum weight drift, rank aggregation reward, per-instance advantage]
@@ -45,7 +45,7 @@ entries:
     claim: '선행 대비 차별점 정리: 층 혼합 보상의 문제·기제·처방은 선행이 있고, 남는 차별점은 목표 선언 아래 균등화의 정오 판정, gap 정규화 뒤 남는 분산 가중, 작은 group 강건성, 학습 중 가중 이동뿐이다.'
     observation: 'A2DEPT 부록 식(48), MO-GRPO Theorem 1·Limitations·부록 Pre-Norm 단락, AdaEva Table 1·3과 부록 B, LLMEndToEndCO §4.3, GDPO 초록·그림 1을 원문에서 확인했다.'
     do_not_claim: '층 혼합 보상의 scale bias를 처음 지적했다거나, 층별 정규화·순위 집계를 새 처방으로 주장하지 않는다.'
-    tags: [reward-signal, multi-reward, co-heuristics]
+    tags: [reward-signal, multi-reward]
     keywords: [novelty audit, differentiation, scale bias, Pre-Norm]
     source_refs: [findings/sources/co-rl-strata-2026-11-20/DIFFERENTIATION_KO.md]
     literature:
@@ -64,6 +64,6 @@ entries:
     claim: '휴리스틱 순위 수준의 층 사이 불일치(OBP τ 0.43–0.85)는 child–parent 판정 수준의 형태 간 차이로 이어지지 않을 수 있다.'
     observation: 'OBP dev에서 층 사이 순위 τ가 낮았는데도 R0와 R3의 판정 불일치는 2.9%였다.'
     interpretation: '처방 비교 cycle을 설계하기 전에, 판정에 실제로 쓰이는 단위(쌍·group)에서 형태 간 불일치를 먼저 잰다. 이것이 값싼 결정적 진단이다.'
-    tags: [eval-protocol, co-heuristics]
+    tags: [eval-protocol, reward-signal]
     keywords: [precheck first, decision-level disagreement, rank-level vs pair-level]
     source_refs: [findings/sources/co-rl-strata-2026-11-20/PRECHECK_KO.md]
