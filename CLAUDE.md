@@ -72,3 +72,5 @@
 - 관측 그래프를 다변량 시계열 PFN에 넣기 (PEMS 등 교통 데이터)
 - MVTSFM이 irrelevant/nuisance context를 무시하지 못하는 문제, regime shift 후 obsolete history
 - 조합 BO (count-constrained, amortized proposal), TabPFN surrogate MOBO
+- 조합최적화(CO): RL(GRPO)로 학습하는 LLM 휴리스틱 자동설계(CALM 계열)에서 작은 고정 instance 집합 보상의 잡음과 크기·용량 층이 섞인 보상(TSP, online bin packing), neural CO solver와의 비교
+- 편향 context 선택(community 집중) 아래 frozen GraphPFN 노드 분류 (findings BSEL)
