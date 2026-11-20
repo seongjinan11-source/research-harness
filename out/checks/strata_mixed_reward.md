@@ -1,0 +1,312 @@
+# 아이디어 점검 (2026-11-20)
+
+> LLM 휴리스틱 자동설계를 GRPO로 학습할 때 크기 층이 섞인 스칼라 보상의 쏠림을 진단하고, 층별 blocking 순위(R3)가 MO-GRPO/GDPO형 group 정규화와 고정 스케일보다 held-out 층 전이에 낫는지 판정한다. 차별점 정리: ssp-share/co_rl/2026-11-20_strata_mixed_reward/DIFFERENTIATION_KO.md
+
+태그: distribution-shift, multi-reward, reward-signal / 키워드: instance set, size strata, group normalization, GRPO, heuristic design, TSP, bin packing
+
+## 1. 차별점을 정리해야 할 선행연구
+같은 축을 이미 강점으로 내세운 방법 논문이에요. 기각 사유가 아니라, 무엇이 다른지 한 줄로 써둘 대상입니다.
+
+- **A2DEPT** [reward-signal] Fitness를 원 목적값 합으로 두면 큰 instance가 지배하는 스케일 편향이 생긴다고 명시하고, 크기 척도로 나눈 점수를 평균해 모든 크기 단계가 같은 몫으로 기여하도록 설계했다.
+- **AdaBN** [distribution-shift] BN 통계로 domain을 거의 완벽히 구분할 수 있다는 pilot 분석으로, domain shift가 얕은 층과 깊은 층 모두에 있다는 점을 보였다. 출력층만 고쳐서는 부족하다는 논거다.
+- **AHDAgent** [distribution-shift] 학습하지 않은 OP·MKP·BPP·비용 인식 BO 획득함수로 transfer를 평가했다. 학습 도메인 수를 늘리면 held-out OP-ACO gap이 24.5%에서 8.9%로 줄어, 문제 다양성이 일반화의 핵심 변수임을 보였다.
+- **AlphaEvolve** [distribution-shift] Google Borg 데이터센터 스케줄링 휴리스틱을 과거 workload snapshot 시뮬레이터로 진화시키고, 더 최근 데이터로 따로 일반화를 확인했다. 배포 후 평균 약 0.7%의 fleet 계산 자원을 되찾아 시뮬레이터 예측과 맞았다. Gemini kernel tiling도 학습 shape와 held-out shape를 나눠 평가해 평균 약 23% kernel 속도 향상을 냈다.
+- **BBSE** [distribution-shift] Shift 검출을 고차원 two-sample test 대신 1차원 predictor 출력 분포의 검정으로 바꾸어, shift가 없을 때 type I error를 지키고 kernel B-test보다 검정력이 높았다(MNIST).
+- **CALM** [reward-signal] Ablation이 보상 형태의 중요성을 직접 보여 준다. GRPO를 빼면 OBP 1.78%로 가장 크게 나빠지고, 보상을 단순 성능 기반으로 바꾸면 1.24%, 이진 보상으로 바꾸면 1.04%가 된다. 같은 RL 틀에서 보상 정의만으로 결과가 크게 갈린다는 근거다.
+- **CALM** [reward-signal] 실패 유형을 단계별로 구분한 음수 보상과 난수 사용 페널티로, 학습 초기에 대부분 실패하는 상황에서도 신호를 만들고 비결정적 휴리스틱을 걸러 낸다.
+- **CFA** [distribution-shift] 전체 분포 정렬에 class 조건부 centroid 정렬을 더했다. Ablation에서 둘 각각이 source 대비 이득을 냈고, 결합하면 대부분의 데이터셋에서 더 좋아졌다. 분포 정렬을 class 단위로 내린 것이 핵심 기여다.
+- **DGNN** [distribution-shift] Test 노드나 라벨 없는 IID 표본에 접근하지 않고 라벨 노드 집합 안의 재가중만으로 편향을 줄인다. SR-GNN처럼 unbiased 표본이 필요한 방법을 쓸 수 없는 agnostic 상황을 겨냥한다.
+- **DPOforAAD** [reward-signal] 탐색 부산물(평가된 알고리즘 database)을 학습 데이터로 재사용하는 오프라인 방식이라 학습 중 추가 평가가 필요 없다. 인접 순위 구간을 건너뛰어 쌍을 만드는 규칙으로 품질 차이가 작은 쌍을 피하며, top-k sampling보다 선호 gap이 크고 더 좋은 모델을 만든다고 보고한다.
+- **DPOforAAD** [distribution-shift] CVRP-50으로 학습한 8B를 CVRP-100에서 써도 top-1 gap이 줄었고(FunSearch 26.27에서 24.1, EoH 26.88에서 23.34), CVRP로 학습한 모델이 TSP-50에서도 개선되었다.
+- **EoH** [distribution-shift] 학습 용량 100에서 진화했지만 용량 500 test에서도 성능을 유지했다. FunSearch는 1k_C500에서 수작업 휴리스틱보다 나빴던 반면 EoH는 그렇지 않았다고 저자들이 강조한다. TSP에서는 uniform 분포로 학습한 neural solver가 TSPLib에서 열화한 반면 EoH는 상대적으로 잘 옮겨 갔다.
+- **EvoTune** [distribution-shift] Validation 점수만이 아니라 perturbed validation 집합(bin packing 아이템 순서 변경, TSP edge 비용 교란, flatpack 장애물)과 held-out test 집합에서도 이득이 유지됨을 보고했다.
+- **FRGNN** [distribution-shift] SR-GNN의 biased sampler로 만든 편향 학습 집합(10개 집합 × 10개 초기화)에서 네 base model 모두를 개선했다. Cora·Citeseer에서는 SR-GNN, WT-AWP, GAUG, MH-AUG, KDGA 등 모든 baseline보다 좋았고, Pubmed에서는 WT-AWP 다음이었다.
+- **FunSearch** [distribution-shift] 8차원에서 512개짜리 cap set을 찾아 기존 최대값을 넘었고, admissible set을 통해 cap set capacity의 하한도 개선했다. Online bin packing에서는 OR-Library와 Weibull 두 benchmark 모두에서 first fit·best fit보다 적은 bin을 썼고, 큰 instance로 갈수록 best fit과의 격차가 커졌다.
+- **FunSearch** [reward-signal] 평가 결과가 실행 기반이라 보상을 위조하기 어렵고, 시간·메모리 제한과 출력 검증으로 잘못된 프로그램을 걸러 낸다. 입력별 점수 벡터로 프로그램을 묶는 score signature는 동작이 같은 프로그램을 한 cluster로 취급하는 장치이기도 하다.
+- **GDPO** [multi-reward] 합 보상 정규화가 보상 조합을 같은 advantage로 뭉개는 현상을 구체적 예와 rollout·보상 수에 따른 서로 다른 advantage 개수로 보이고, 성분별 정규화가 이 해상도를 회복함을 보였다. std 항만 빼는 방식(GRPO w/o std, Dr. GRPO)은 개수 증가가 미미하고, tool calling에서 BFCL-v3 형식 정답률이 0%로 무너졌다.
+- **GDPO** [multi-reward] Tool calling(Qwen2.5 1.5B·3B), 수학(DeepSeek-R1 1.5B·7B, Qwen3-4B, 정답 + 길이 보상), 코드(정답률·길이·버그 비율 세 보상)에서 GRPO보다 정답률과 제약 준수가 함께 좋아졌다. 예를 들어 DeepSeek-R1-1.5B의 AIME 정확도가 23.1%에서 29.4%로, 길이 초과율이 10.8%에서 6.5%로 개선되었다.
+- **GDPO** [multi-reward, reward-signal] 가중치만으로는 난이도 차이가 큰 목적의 우선순위를 안정적으로 바꾸지 못한다는 점을 실험으로 보이고, 조건부 보상 설계라는 대안을 제시했다.
+- **GRPOContrastive** [reward-signal] GRPO의 mean·std 정규화가 성공률에 따라 정답·오답 가중을 바꾸는 contrastive 목적이라는 해석과, 정규화 방식(mean+std 대 mean-only)과 KL 방식(기준 모델, 이전 iterate, 혼합)별 최적 정책의 닫힌 형태를 준다.
+- **GTrans** [distribution-shift] 모델을 전혀 바꾸지 않고 입력 graph만 바꾸는 data-centric test-time 방법이라, 구조나 가중치에 접근하기 어려운 학습된 모델에도 붙는다. 한 모델로 변환한 graph가 다른 GNN에도 옮겨 가는 transferability를 보였다.
+- **GTrans** [distribution-shift] EERM 설정의 OOD node classification 6개 데이터셋에서 GCN·SAGE·GAT·GPR backbone 평균 순위가 1.0/1.7/2.0/1.7로 EERM(2.9/3.4/3.0/2.0)보다 좋았다. GCN 기준 Cora·Elliptic·OGB-Arxiv에서 ERM보다 3.1/5.0/2.0% 높았고, 비정상 feature와 adversarial attack에서도 최대 8.2%, 3.8% 개선했다.
+- **LLMEndToEndCO** [multi-reward, reward-signal] SFT만 하면 목적값을 위해 제약을 살짝 넘는 over-greedy 해(OP의 거리 한도 초과, CVRP의 용량 초과)가 나온다는 실패 양상을 관찰하고, 제약별 가중치를 둔 feasibility 보상으로 RL 단계에서 이를 교정했다. 보상이 형식·제약·품질 성분으로 나뉘어 있어 어느 성분이 무엇을 고치는지 설계가 명시적이다.
+- **LLMEndToEndCO** [reward-signal] optimality 보상을 1/(1+상대 gap)으로 두고 advantage를 instance 하나의 group 안에서 정규화해, 한 응답의 보상이 여러 크기 instance의 평균이 되지 않는다. 그래서 instance 사이 스케일 차이가 보상 안에 섞이지 않는 구조다.
+- **LLMEndToEndCO** [distribution-shift] 크기 tier별(small/medium/large) 결과를 따로 보고해 크기에 따른 열화를 드러냈다. 예를 들어 CVRP는 1.70%→4.57%→7.24%, JSSP는 2.86%→9.56%→16.25%였다.
+- **MA-PFN** [distribution-shift] 동일한 context-query predictor로 imputation과 forecasting을 다루고, MIMIC-III 내부 및 eICU 외부 평가를 보고한다.
+- **Matcha** [distribution-shift] 정확도 손실을 representation degradation과 classifier bias로 분해해, structure shift가 왜 일반 TTA로 안 풀리는지를 이론과 실험으로 설명했다. 이 분해는 다른 shift에도 쓸 수 있는 진단 틀이다.
+- **Matcha** [distribution-shift] CSBM과 Syn-Cora·Syn-Products·Twitch-E·OGB-Arxiv에서 ERM보다 최대 31.95% 높았고, 기존 TTA와 결합하면 그 성능을 최대 40.61% 더 올렸다. GTrans·SOGA·GraphPatcher 같은 graph TTA와도 결합 가능했다.
+- **MOGRPO** [multi-reward] 보상 성분의 분산 차이가 GRPO advantage를 한쪽으로 쏠리게 하는 기제를 정리로 명시하고, 성분별 group z-score라는 간단한 처방으로 그 쏠림을 없앤다. 처방은 수동 가중치 조정이 필요 없고 성분 스케일 변환에 불변이다.
+- **MOGRPO** [multi-reward] 50-arm bandit(성분 std 10, 1, 0.1), WMT 번역(BLEURT + jReadability, BLEURT + TRank), AlpacaFarm(reward model + 길이 보상)에서 GRPO·Dr. GRPO가 한 목적만 올리는 hacking(예: 일본어 번역을 영어로 출력해 jReadability를 올림, 중국어 대신 다른 언어 출력 68.7%)을 MO-GRPO가 크게 줄였다(5.6%).
+- **MOGRPO** [distribution-shift, multi-reward] 부록에서 고정 통계로 미리 정규화하는 방식도 hacking을 피하지만, WMT 도메인마다 통계가 달라 실용성이 떨어진다고 보고한다. group 안 통계를 매번 쓰는 이유를 실험으로 보였다.
+- **PairAlign** [distribution-shift] Structure shift를 CSS와 LS로 분해하고, CSS 보정에 필요한 것이 이웃 라벨 분포의 클래스 조건부 정렬이라는 충분조건을 정리로 제시했다. Marginal alignment가 LS 아래에서는 클래스 조건부 정렬을 깨고 CSS 아래에서는 shared encoder로 원리적으로 실패한다는 점을 명확히 했다.
+- **PairAlign** [distribution-shift] 국가별로 나눈 MAG citation graph(약 38만 노드, 135만 edge)라는 대형 GDA 데이터를 만들고, 여기서 StruRW 대비 25% 넘는 상대 개선을 보였다. HEP pileup에서는 label 분포가 심하게 치우친 높은 PU에서 낮은 PU로 옮길 때 LS 보정(PA-LS)이, 반대 방향에서는 CSS 보정(PA-CSS)이 효과적이어서 두 모듈의 역할이 분리되어 드러났다.
+- **RankGRPO** [reward-signal] 보상의 집계 단위를 sequence에서 순위로 낮추고, advantage 정규화도 같은 순위끼리 하도록 바꿔 sequence 보상이 모든 token에 퍼지는 non-causal credit assignment를 줄였다. GRPO·GSPO보다 빨리 수렴하고 Recall·NDCG가 높으며, 이득은 목록 뒤쪽 순위에서 가장 크다.
+- **ReEvo** [distribution-shift] ACO에서 가장 작은 크기로만 학습한 휴리스틱을 더 큰 크기 test에 적용해 크기 외삽을 함께 보고한다.
+- **RFTHGS** [distribution-shift] 작은 instance(400노드 이하)로 학습해 1,000노드까지 test해 크기 외삽을 보고한다.
+- **RFTHGS** [reward-signal] 컴파일 → 실행 → 개선으로 이어지는 단계형 보상과 표절 페널티로 초기 희소 보상과 복제 응답 문제를 함께 다룬다. RFTHGS는 생성한 연산자 16개가 모두 컴파일됐지만 GPT-4o·o3·o4-mini는 3–9개였다.
+- **RLSVR** [reward-signal] 외부 judge나 rubric 실행기 없이 규칙 기반으로 보상을 계산한다. Rubric-as-Reward 비교 대상은 verifier 비용으로 약 200–900달러가 드는 반면 SpyRL은 그 비용이 없다고 보고한다.
+- **SIRL** [reward-signal] 보상 경로 전체가 solver 실행 결과로 결정되어 LLM judge가 필요 없고, 실행 결과인 .lp 파일에서 구조 정보를 꺼내 과정 수준 신호(bonus)와 데이터 합성 기준으로 함께 쓴다.
+- **SparseJointShift** [distribution-shift] Label shift와 sparse covariate shift를 하나의 가정으로 묶고, 그 아래에서 target label 없이 결합 shift가 식별되는 충분조건을 명시한다.
+- **SparseJointShift** [distribution-shift] Weight가 소수 feature에만 의존하도록 제한해 해석 가능한 설명(어떤 feature가 label과 함께 움직였는가)을 같이 준다.
+- **SRGNN** [distribution-shift] 편향 라벨에서는 모든 baseline이 크게 떨어진다는 것을 정량화했다. 예를 들어 PubMed에서 IID GCN의 Micro-F1 79.8이 편향 라벨에서는 baseline 전부 10점 넘게 떨어졌다. SR-GNN은 GCN 대비 손실을 최소 40% 줄였다(Cora 7.3점 손실 대 GCN 13.2점). ogb-arxiv(1% 라벨)에서도 61.6으로 APPNP 59.8보다 높아 손실의 약 30%를 되돌렸다.
+- **SRGNN** [distribution-shift] Hidden layer 정렬(CMD)과 linear propagation 뒤의 instance reweighting(KMM)을 한 objective로 묶어 deep GNN과 linearized GNN 모두에 붙는다. Ablation에서 두 요소를 함께 쓸 때가 각각보다 좋았고, CMD는 같은 GNN에서 DANN식 adversarial regularizer보다 좋고 덜 민감했다. 추가 비용은 IID 표본 forward/backward와 사전 kernel 계산뿐이다.
+- **StruRW** [distribution-shift] GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.
+- **StruRW** [distribution-shift] 기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.
+- **ThetaEvolve** [distribution-shift] 모델 두 개 × 과제 네 개에서 test-time RL이 추론만 하는 경우보다 좋았고 더 적은 step에 좋은 점수에 도달했다. CirclePacking으로 학습한 checkpoint를 추론에만 써도 처음 보는 과제에서 평균 성능이 올랐다.
+- **ThetaEvolve** [reward-signal] Ablation이 RL 신호의 구성을 분리해 보여 준다. 초기 프로그램에서만 출발하는 정적 환경 RL은 추론만 한 경우보다도 나빴고, 형식만 보상한 RL도 추론만 한 경우보다 나빴다.
+- **TTLSA** [distribution-shift] Colored MNIST와 CheXpert(z=성별)에서 shift 강도에 따라 ERM은 무너지고 invariant 방법은 평탄했지만, TTLSA는 unconfounded 지점을 빼면 invariant 방법보다 좋았고 unlabeled target이 늘수록 참 prior를 쓴 oracle에 다가갔다.
+- **TTTDiscover** [reward-signal] Ablation이 각 장치의 기여를 분리한다. TriMul H100 기준 전체 1203µs에 비해, 기대 보상 목적은 1986µs, test-time 학습 없이 재사용만 하면 2061µs, 재사용 없이 학습하면 5274µs, 단순 RL은 5329µs, 같은 예산의 best-of-N은 5352µs였다.
+- **TTTDiscover** [distribution-shift] GPU kernel은 학습 GPU 외의 GPU에서 신뢰구간과 함께 평가하고, AtCoder는 공식 private test에, 단일세포 denoising은 학습과 다른 dataset에 평가해 학습 보상과 최종 평가를 분리했다.
+- **UECO** [distribution-shift] TSP-100에서 학습한 모델을 TSP-1000으로 외삽하고, divide-and-conquer 틀(DualOPT)의 부분 solver로 넣어 TSP-1K/10K/100K에서 LKH 대비 gap 0.66%/0.64%/1.55%를 보고했다(DualOPT-AM은 2.58%/1.90%/1.71%). MIS/MCl/MCut은 최대 11000 노드로 외삽했다.
+- **UECO** [distribution-shift] Gaussian, clustered 등 학습 분포 밖 TSP/ATSP instance와 실제 TWITTER/COLLAB MaxClique에서도 평가했다.
+- **VLMCO** [distribution-shift] 크기 tier별로 보면 대형 instance에서 이득이 커졌다. 대형 CVRP 5.53% 대 7.24%, 대형 JSSP 10.28% 대 16.25%였고, 대형 CVRP에서 OR-Tools(8.84%)와 parallel savings(6.12%)보다도 좋았다.
+- **VLMCO** [multi-reward, reward-signal] 보상을 제약 충족 성분과 품질 성분으로 나누고, 품질 항은 제약을 모두 만족할 때만 주는 gating 구조라 feasibility를 먼저 확보하도록 유도한다.
+
+평가·분석 연구 중 이 축을 다룬 것 (실험 설계·평가 protocol 참고용):
+- **AdaEva** [reward-signal] instance 사이 순위 일치도를 Kendall's W로 정량화해 문제별 차이를 드러냈다. OBP는 1.00, TSP 0.03, FSSP 0.61, BBOB 0.66이었고, 후보 평균의 across-CV와 후보 내부 within-CV도 함께 보고해 OBP·TSP에서는 얕은 평가로 충분하고 BBOB는 깊은 평가가 필요한 이유를 설명했다.
+- **AdaEva** [reward-signal] Friedman 검정을 paired t-test로 바꾸거나, pool 소진 후 재평가·refill을 끄는 ablation이 모두 성능을 떨어뜨림을 보여, rank 기반 짝비교와 재평가 장치가 각각 기여함을 확인했다.
+- **COBench** [reward-signal] instance별로 최적·best-known 대비 비율을 먼저 계산한 뒤 평균해서, 목적값 스케일이 큰 instance나 문제가 집계를 지배하지 않게 했다. infeasible과 timeout을 0으로 두어 실행 가능성 실패도 점수에 반영한다.
+- **EvolutionOrIllusion** [reward-signal] transaction scheduling의 validator가 출력이 인덱스 순열인지만 보고 전체 transaction을 다 포함하는지는 검사하지 않아, AdaEvolve 최고 프로그램이 300개 중 3개만 스케줄하고도 기존 결과의 약 4배 점수를 받은 evaluator exploit을 찾아 보고했다.
+- **FisherR1** [reward-signal] 보상을 결과값의 스케일에 맞게 설계했다. p-value는 0 근처에 몰려 차이가 안 보이므로 z-scale로 바꾸고 상한을 두어 비교하며, 연속 근접도와 이산 결정 일치를 섞고, 형식·실행 유효성을 곱셈 gate로 둔다. 정답 키가 있는 합성 환경 덕분에 외부 judge 없이 보상을 결정적으로 계산한다.
+- **FrontierCO** [distribution-shift] TSP 1,000만 노드, MIS 800만 노드까지 규모를 키우고 실제 대회 instance를 써서, 작은 합성 벤치마크에서 보이던 성능이 무너지는 모습을 보였다. 예를 들어 LEHD는 표준 TSP 벤치마크에서 약 0.72% gap이었지만 FrontierCO easy TSP에서 약 10%, hard TSP에서 약 77%였다.
+- **FrontierCO** [distribution-shift] LLM agent의 8개 문제 평균 gap이 easy에서 hard로 가며 약 세 배로 늘었다(FunSearch 10.05%→30.65%, Self-Refine 8.18%→22.03%, ReEvo 7.25%→19.25%). 동시에 Self-Refine이 easy MIS에서 KaMIS를, FunSearch가 hard CVRP에서 HGS를 이긴 사례도 보고해 결과를 한쪽으로만 읽지 않게 했다.
+- **GNNmim** [distribution-shift] Dense raw-feature 평가와 결측 mechanism shift를 제공해 sparse benchmark의 정보 손실 문제를 구분한다.
+- **HerrmannPallez** [distribution-shift] Uniform(40,120)·용량 250부터 Weibull(7,75)·용량 500까지 학습과 다른 분포·용량에서 ab 계열이 모든 baseline과 LLM 휴리스틱을 앞섰고, c14는 Weibull(7,75)에서 그래프에 넣을 수 없을 만큼 무너졌다. LLM 휴리스틱이 학습 분포 하나에 과도하게 맞춰져 있다는 근거다.
+- **HeuriGym** [reward-signal] 실행 가능성과 품질을 하나의 지표로 묶었다. Yield와 Quality의 조화평균이라 한쪽만 좋은 결과가 높은 점수를 받지 못하며, quality는 instance마다 expert 비용 대비 비율이라 instance 스케일이 집계를 지배하지 않는다.
+
+## 2. 동기로 인용할 수 있는 한계
+이 아이디어가 겨냥하는 축에서 기존 논문이 약하다고 확인된 지점이에요. 후속 논문·리뷰 지적이 가장 강한 근거입니다.
+
+- **AdaBN** (후속 논문 지적 — Limitations of Post-Hoc Feature Alignment for Robustness (2021)) [distribution-shift] AdaBN류 사후 BN 통계 정렬은 좁은 범위의 shift에서만 크게 도움이 되고, 성능을 오히려 해치는 경우도 있다. Label 분포가 달라지면 평균 정렬이 결정 경계를 밀어 정확도를 떨어뜨린다. CIFAR-10-C에서 target class 수를 줄이면 성능이 떨어져, 한 class만 남기면 50% 아래로 내려갔다. 깊은 층일수록 label shift에 민감해서 마지막 일부 BN 층을 정렬에서 빼면 이 하락이 완화됐다. Label 분포가 같아도 표본·공간 위치마다 shift가 다르면 실패할 수 있다고 보였다.
+- **EoH** (후속 논문 지적 — CALM: Co-evolution of Algorithms and Language Model for Automatic Heuristic Design (2026)) [reward-signal] EoH를 포함한 기존 LLM-AHD는 LLM을 고정해 두고 프롬프트만 바꾸는 verbal guidance에 의존해서, 휴리스틱 평가에서 나온 성능 신호로 모델 자체를 개선하지 못한다고 지적한다.
+- **FunSearch** (후속 논문 지적 — An In-depth Study of LLM Contributions to the Bin Packing Problem (2025)) [distribution-shift] FunSearch의 bin packing 휴리스틱 두 개를 다시 분석했다. Uniform 쪽 휴리스틱은 두 parameter 규칙으로 줄일 수 있었지만, Weibull 쪽 휴리스틱은 원 논문이 말한 의미로 해석 가능하지 않았다. 핵심 임계값(약 21)은 코드 어디에도 직접 나오지 않고 실험으로만 드러났다. 또 이 휴리스틱들은 하나의 분포에 맞춰져 있어 분포를 바꾸면 견고하지 않았다. 두 임계값을 둔 단순한 FirstFit·WorstFit 변형이 노트북에서 몇 분 튜닝으로 FunSearch 휴리스틱을 넘었다. 저자들은 FunSearch가 선행 bin packing 문헌을 검토하지 않았고, 새로워 보이는 부분은 대체로 익숙한 전략을 다시 parameter화한 것이라고 비판한다.
+- **PairAlign** (후속 논문 지적 — Matcha: Mitigating Graph Structure Shifts with Test-Time Adaptation (2025)) [distribution-shift] GDA 방법들은 source와 target graph에 동시에 접근해야 하므로, 이 논문의 edge 재가중 계열도 source 데이터를 다시 볼 수 없는 test-time adaptation 상황으로 확장할 수 없다고 지적한다.
+- **AHDAgent** (저자 인정) [distribution-shift] 학습된 정책이 BPP에서는 DeepACO와의 격차를 줄이는 데 그쳐 여전히 약하다. 저자들은 이를 학습 정책의 한계 지점으로 본다.
+- **AlphaEvolve** (저자 인정) [reward-signal] 자동 평가기가 필요하다는 것이 주된 한계라고 저자들이 직접 밝힌다. 수작업 실험이 필요한 과제는 다룰 수 없고, LLM 기반 평가는 가능하지만 이 연구의 초점이 아니었다.
+- **BBSE** (저자 인정) [distribution-shift] x와 y에 함께 영향을 주는 숨은 confounder가 있으면 label shift도 covariate shift도 성립하지 않는다. 저자들은 그래도 유한표본에서 근사로 쓸모가 있을 수 있다고만 말한다.
+- **CALM** (저자 인정) [reward-signal] 학습 신호가 프롬프트와 응답에 명시적으로 들어간 휴리스틱의 성능에 크게 의존한다. 어느 쪽에도 휴리스틱이 없는 trajectory는 보상이 없어 배우지 못한다(초기화 연산자는 보상 0).
+- **CALM** (저자 인정) [reward-signal] 난수를 쓰는 휴리스틱은 평가 비용과 잡음 때문에 배제했다. 저자들은 제약을 풀면 허용할 수 있지만 평가 부담이 커진다고 밝힌다.
+- **EoH** (저자 인정) [distribution-shift] 연산자 일부를 빼면 결과가 크게 무너졌다. E1만 쓴 변형은 일부 용량 500 설정에서 gap이 50%를 넘었고, 코드만 진화시킨 EoC는 1k_100에서 148.63%였다. 저자들은 부록에서 이를 학습 fitness 분포에 대한 과적합으로 해석한다.
+- **FrontierCO** (저자 인정) [reward-signal] LLM은 생성한 알고리즘 중 무엇이 효과적인지 스스로 판단하지 못해 결과 분산이 크고, 그래서 검증이 어려운 task에는 쓰기 어렵다고 저자들이 지적했다. 큰 instance에서 자원을 많이 쓰는 코드를 실행하는 안전 문제도 언급했다.
+- **FunSearch** (저자 인정) [reward-signal] 평가기가 효율적이고 점수가 연속적이며 skeleton으로 분리할 부분이 있는 문제에 적용 범위가 묶인다. 점수 신호를 정의하기 어려운 문제는 다루지 못한다고 저자들이 직접 밝힌다.
+- **G2MLP** (저자 인정) [distribution-shift] Node-classification 평가는 homophilic benchmark에 한정되며 체계적인 heterophilic 검증을 향후 과제로 남겼다.
+- **GDPO** (저자 인정) [multi-reward] 보상 가중치 조정만으로는 쉬운 목적과 어려운 목적의 난이도 차이가 클 때 어려운 목적을 우선시하지 못한다. 모델이 쉬운 보상만 계속 올렸고, 큰 가중치 차이에서만 뚜렷한 변화가 있었다.
+- **GRPOContrastive** (저자 인정) [reward-signal] 기준 모델의 성공률이 0인 prompt에서는 GRPO가 성공을 만들지 못한다. 저자들은 temperature, entropy bonus, data mixing 같은 탐색 장치를 권한다.
+- **GTrans** (저자 인정) [distribution-shift] OOD 설정에서는 데이터 적응과 모델 적응의 성능이 가까워 어느 쪽이 낫다고 단정하기 어렵다고 저자들이 인정한다. 데이터 적응의 뚜렷한 우위는 비정상 feature처럼 데이터가 오염된 경우에 나타났다.
+- **HerrmannPallez** (저자 인정) [distribution-shift] item 수가 적으면 ab 계열의 성능이 나빠지고, 최악 경우 비율이 c/(c−b)로 제한된다고 인정했다. c12도 item이 약 90개 미만이면 BestFit보다 나빴다.
+- **MA-PFN** (저자 인정) [distribution-shift] 13개 공통 검사 변수와 하나의 외부 데이터베이스에 한정되어, 다른 변수 공간이나 더 넓은 의료기관 분포의 일반화는 미확인이다.
+- **MOGRPO** (저자 인정) [multi-reward] 복잡한 실제 task에서 목적이 셋 이상인 경우는 시험하지 않았다. 정규화 뒤 같은 가중치로 더하므로 우선순위가 비대칭이거나 reward model 신뢰도가 다른 경우에는 맞지 않을 수 있고, 가중 MO-GRPO는 향후 과제다.
+- **NeuralSheafDiffusion** (저자 인정) [distribution-shift] Limitations 절에서 이론이 sheaf의 일반화 성질을 다루지 않는다고 명시한다.
+- **RankGRPO** (저자 인정) [reward-signal] 보상 shaping이 단순하며 sliding-window return 같은 정교한 방식은 향후 과제로 남겼다. 3B를 넘는 backbone은 latency·비용 문제로 실험하지 않았다.
+- **RLSVR** (저자 인정) [distribution-shift] 수학으로 학습한 모델은 글쓰기 task로의 전이가 base 수준에 못 미쳤다. 같은 도메인 안(PubMed에서 arXiv·BillSum)의 전이는 보고했지만 task 종류를 넘는 전이는 제한적이다.
+- **ShinkaEvolve** (저자 인정) [distribution-shift] ALE-Bench 결과가 초기 ALE-Agent 해에서 크게 벗어나지 않아, 초기 프로그램에 과적합했을 가능성을 저자들이 언급한다. MoE loss 실험은 비슷한 구조와 제한된 학습 예산에서만 했다고 밝힌다.
+- **SIRL** (저자 인정) [reward-signal] 저자들은 reward hacking이 여전히 남은 과제라고 인정한다. IndustryOR와 OptMATH 같은 어려운 벤치마크에서는 고급 모델도 성능이 제한적이며, 체계적 오류 분석을 다음 단계로 든다.
+- **SparseJointShift** (저자 인정) [distribution-shift] Label과 함께 shift되는 feature가 많아질수록 추정 오차가 커진다고 저자들이 보고한다.
+- **SpatialContextMemory** (저자 인정) [distribution-shift] 장별 잡음 수준·drift·도메인과 짧은 Lyapunov 시간 범위가 일반화를 제한한다.
+- **SRGNN** (저자 인정) [distribution-shift] 저자들은 일반적인 분포 차이만 다뤘고, spam·abuse 탐지처럼 특정 분야의 shift 유형에 맞춘 regularizer와 불균형 학습 데이터에서 fairness 같은 제약을 지키는 방법은 향후 과제로 남겼다.
+- **StruRW** (저자 인정) [distribution-shift] 분석에서 attribute shift를 다루지 않았다. Label shift와 attribute shift가 CSS와 함께 있는 경우는 향후 과제로 남겼다.
+- **StruRW** (저자 인정) [distribution-shift] HEP pileup에서는 개선이 미미했다. 저자들은 이진 분류라는 점과 여러 graph에 걸쳐 weight를 평균하는 방식이 성능을 제한했을 가능성을 든다. Mixup 변형은 여러 graph를 쓰는 데이터에 적용하지 못했다.
+- **ThetaEvolve** (저자 인정) [reward-signal] Reward shaping parameter를 과제마다 튜닝해야 하고, 최적 설정이 두 모델 사이에서도 달랐다고 밝힌다. 큰 database는 test-time 계산량이 충분할 때만 도움이 된다.
+- **TTLSA** (저자 인정) [distribution-shift] p(x|y, z) 불변 가정이 깨지면 방법의 근거가 사라지며, 저자들은 이를 핵심 약점으로 인정한다. 이 가정이 포착하는 shift는 일부일 뿐이라고도 적는다.
+- **TTTDiscover** (저자 인정) [reward-signal] 연속 보상이 있는 문제에만 적용되며, 희소·이진 보상과 검증 불가능한 영역을 주된 향후 과제로 남긴다.
+- **A2DEPT** (조사자 판단) [reward-signal] [analyst] 크기로 나누는 정규화는 instance 사이 스케일은 맞추지만 휴리스틱 사이 점수 분산은 맞추지 않는다. 그래서 선택 판정이 여전히 특정 크기 단계의 차이에 끌려갈 수 있다. 또 16개 instance로 평가한 fitness의 표본 잡음과 크기별 순위 불일치는 보고하지 않는다.
+- **AdaEva** (조사자 판단) [reward-signal] [analyst] Kendall's W를 계산한 search pool은 문제마다 크기·용량이 하나인 단일 층이다(OBP 5k items·용량 100, TSP 100-city uniform). 따라서 W는 같은 층 안의 instance 사이 일치도이고, 크기·용량이 섞인 집합에서 평균을 낼 때 생기는 층 사이 충돌은 재지 않는다. 또 TSP의 W=0.03은 across-CV가 0.0001로 후보 평균이 거의 동률인 상태에서 나온 값이라, instance들이 서로 반대 방향을 가리킨다기보다 후보 차이가 instance 잡음보다 작다는 뜻에 가깝다. W 하나로 'TSP는 instance 잡음이 크다'고 옮기면 과장이 된다.
+- **AdaEva** (조사자 판단) [reward-signal] [analyst] 평가 단위가 진화 탐색의 후보 선택이라서, RL로 LLM을 학습할 때의 보상(GRPO advantage의 부호·크기)에는 직접 적용되지 않는다. RL 쪽에서는 탈락 결정 대신 group 내부 순위나 parent 대비 부호를 정해야 하고, 같은 instance를 group 전체가 공유하는 상관 구조가 추가된다.
+- **AHDAgent** (조사자 판단) [multi-reward, reward-signal] [analyst] 보상인 design set 점수의 집계 방식이 명시되지 않았다. RL 학습 prompt는 N=40–80을 섞어 쓰는데, 평균 목적값을 그대로 쓴다면 큰 N이 점수 차이를 지배할 수 있다. Validation은 크기별로 나눠 보고하면서 보상은 그렇게 하지 않는 비대칭이 있다. 또 결과의 seed 분산과 보상이 design set 표본에 얼마나 민감한지도 분석되지 않았다.
+- **AHDAgent** (조사자 판단) [multi-reward, reward-signal] [analyst] 보상이 고정 baseline 휴리스틱과의 차이라서, baseline이 강한 환경과 약한 환경 사이에서 보상 스케일이 달라진다. GRPO는 prompt 안에서 정규화하므로 group 사이 스케일은 상쇄되지만, 같은 prompt 안 instance 층 사이의 스케일 차이는 남는다.
+- **AlphaEvolve** (조사자 판단) [reward-signal] [analyst] Run 사이 분산, 사용한 평가 횟수와 비용이 문제별로 체계적으로 보고되지 않는다. Cascade로 후보를 자르는 기준이 평가 잡음에 얼마나 민감한지도 분석되지 않았다.
+- **CALM** (조사자 판단) [multi-reward, reward-signal] [analyst] 보상은 4–64개짜리 고정 학습 집합의 평균 목적값으로 계산되고, OBP는 크기·용량이 다른 instance를 한 평균에 섞는다. 이 평균이 instance 표본과 층 스케일에 얼마나 휘둘리는지, 그것이 GRPO advantage의 부호를 바꾸는지는 분석되지 않았다. 학습 곡선과 결과의 seed 분산도 본문 표에는 없다.
+- **CALM** (조사자 판단) [multi-reward, reward-signal] [analyst] TSP 학습 성능 규약이 원래 단위의 tour length 평균이라, 최적해 대비 gap이 아니라 instance 크기에 비례하는 raw 값이 보상의 스케일을 정한다. N=50 한 크기로만 학습하면 문제가 드러나지 않지만, 크기를 섞어 학습하면 큰 instance가 보상을 지배하게 된다.
+- **CFA** (조사자 판단) [distribution-shift] [analyst] 전체 분포 CMD 항은 target batch의 moment를 source 전체 moment에 맞춘다. Target의 class 비율이 source와 다르면(label shift) 이 항이 source의 class 구성을 강요하게 된다. 논문 실험은 class 비율이 같은 corruption·style shift만 다루므로 이 경우는 검증되지 않았다.
+- **COBench** (조사자 판단) [reward-signal] [analyst] dev와 test 점수를 따로 보고하지만 dev-test 격차나 dev set 과적합, instance 크기에 따른 성능 변화를 체계적으로 분석하지 않는다. agent가 dev 점수로 최고 후보를 고르는 구조라서 작은 dev set에서의 selection 잡음이 test 순위에 얼마나 들어가는지 알 수 없다.
+- **DPOforAAD** (조사자 판단) [reward-signal] [analyst] 선호 쌍의 방향은 탐색 때 계산한 fitness 순위에 전적으로 의존하지만, 그 fitness를 몇 개 instance로 계산했는지와 순위의 표본 잡음은 다루지 않는다. 같은 database의 순위로 쌍을 만들고 같은 평가 설정으로 성능을 재므로, 평가 집합에 맞춘 선호가 학습되었을 가능성을 분리하지 못한다. 실험도 탐색 3회로 보고한다.
+- **EoH** (조사자 판단) [multi-reward, reward-signal] [analyst] Bin packing 학습 fitness는 5k@100 한 층의 instance 5개에서만 계산하고, test는 1k·5k·10k × 용량 100·500의 여섯 층에서 따로 보고한다. 즉 학습 신호는 한 층이고 평가는 층별이다. 층을 섞어 학습했을 때 어떤 층이 선택을 지배하는지는 이 설정으로는 알 수 없다.
+- **EvolutionOrIllusion** (조사자 판단) [reward-signal] [analyst] seed 사이 변동만 다루고, 후보 하나를 평가하는 instance 집합 자체에서 오는 잡음은 분석하지 않는다. 다섯 task 중 둘은 결정적이고 둘은 수학 문제라서 CO 휴리스틱의 instance 표본·크기 혼합 문제와는 겹치는 부분이 작다. 비교한 세 전략도 FunSearch·EoH·ReEvo 같은 CO 휴리스틱 설계 표준 방법이 아니다.
+- **EvoTune** (조사자 판단) [reward-signal] [analyst] 선호 쌍은 같은 prompt의 출력을 validation 점수의 상하 절반으로 가르는데, 그 점수의 instance 표본 잡음 때문에 상하 경계 근처 쌍의 방향이 뒤집힐 수 있다. 이 잡음과 그것이 학습에 미치는 영향은 측정하지 않았다.
+- **FisherR1** (조사자 판단) [reward-signal] [analyst] 보상에 방법 선택 항이 없어서, 부적절한 방법이라도 p-value가 참조와 비슷하면 보상을 받는다. 또 보상 구성요소(z-scale 변환, 결정 항 0.1, 상한 5)를 하나씩 뺀 ablation이 없어, 어느 설계가 이득을 냈는지 분리되지 않는다.
+- **FrontierCO** (조사자 판단) [distribution-shift] [analyst] LLM agent의 easy→hard 열화를 instance 크기 효과와 구조 효과로 분리하지 않았다. 저자들은 주로 run 사이 높은 분산으로 해석하는데, agent가 생성기 기반 dev set에서 고른 휴리스틱이 크기 분포가 전혀 다른 test로 옮겨가는 것인지, 구조가 달라서인지는 이 설계로 구분되지 않는다.
+- **FunSearch** (조사자 판단) [multi-reward, reward-signal] [analyst] 휴리스틱 점수는 고정된 입력 집합에서 낸 평균 같은 단일 집계다. 서로 다른 크기·용량 instance를 섞을 때 그 집계가 어느 층을 우선하게 되는지, 집계 선택이 진화 방향을 바꾸는지는 다루지 않았다.
+- **GDPO** (조사자 판단) [multi-reward, reward-signal] [analyst] 실험은 100–500 training step 규모이고, 보상 성분은 정답·형식·길이·버그처럼 종류가 다른 보상이다. 같은 목적을 다른 조건(예: instance 크기)에서 잰 성분이나, 성분별 group 분산이 매우 작은 작은 group에서 per-reward std 추정 잡음이 미치는 영향은 분석하지 않았다.
+- **GRPOContrastive** (조사자 판단) [multi-reward] [analyst] 결과가 이진 보상의 성공 확률 p로 닫히는 구조에 의존하므로, 연속 보상(예: 목적값 gap)이나 여러 성분을 합친 보상에서 advantage 가중이 어떻게 되는지는 이 이론에서 바로 나오지 않는다.
+- **HerrmannPallez** (조사자 판단) [distribution-shift] [analyst] 일반화 결과 대부분이 그림으로만 제시되고 수치 표가 적어서, 어느 분포·용량에서 얼마나 차이 나는지를 정량적으로 옮기기 어렵다. 분석 대상도 FunSearch와 EoH의 공개 휴리스틱 몇 개에 한정되어, RL로 학습한 휴리스틱 생성기(CALM 등)의 출력에도 같은 결론이 성립하는지는 다루지 않는다.
+- **HeuriGym** (조사자 판단) [reward-signal] [analyst] 문제별 QYI를 instance 수로 가중 평균하므로, instance가 많은 문제가 전체 점수를 더 크게 좌우한다. 또 demonstration set이 약 5개라서 반복 개선 단계의 피드백이 그 몇 개 instance에 맞춰질 위험이 있는데, demonstration 점수와 evaluation 점수의 격차는 분석하지 않는다.
+- **HGT-Slot** (조사자 판단) [distribution-shift] [analyst] 한 그래프 내부의 node-type feature 분리와 그래프마다 다른 feature 공간 사이의 transfer는 별도 문제다. 후자를 입증한 것으로 확대하지 않는다.
+- **Lambda-ModE** (조사자 판단) [distribution-shift] [analyst] 대수적 정식화의 타당성과 실제 학습된 embedding의 OOD 일반화는 별도 확인해야 하는 주장이다.
+- **LLM4AD** (조사자 판단) [reward-signal] [analyst] Benchmark는 run 3개의 평균과 표준편차만 보고하고 통계 검정이 없으며 본문에 정확한 수치표도 없다. 평가 instance 집합의 크기나 구성에 따른 순위 변화도 다루지 않아, 플랫폼이 평가를 통일해도 그 평가 자체의 신뢰도는 검증되지 않는다.
+- **LLMEndToEndCO** (조사자 판단) [distribution-shift] [analyst] 학습과 평가가 같은 생성기와 같은 크기 범위(라우팅 10–100 노드)에 머물러, 크기 tier 결과도 대부분 학습 범위 안의 외삽 아닌 내삽이다. Taillard JSSP처럼 학습 밖 벤치마크에서는 gap이 14–23%로 커진다.
+- **MCTSAHD** (조사자 판단) [reward-signal] [analyst] 주 결과표는 방법마다 run 3개의 평균이고 표준편차를 싣지 않는다(일부 과제의 p-value만 부록에 있다). 또 node 값을 자식의 최댓값으로 전파하므로, 작은 평가 집합에서 우연히 높게 나온 점수가 tree 전체의 선택을 끌어당길 수 있다. 평가 잡음에 대한 민감도는 분석되지 않았다.
+- **MOGRPO** (조사자 판단) [multi-reward] [analyst] 성분은 서로 다른 종류의 보상(번역 품질, 가독성, 길이)이다. 한 응답의 보상이 이질적인 instance 층의 평균일 때처럼 '같은 목적의 다른 조건'을 성분으로 보는 경우, 그리고 정책이 변하면서 성분별 분산이 이동하는 경우는 다루지 않는다.
+- **PolicyGNN** (조사자 판단) [distribution-shift] [analyst] Complete-feature citation-graph 실험은 extreme missing이나 synthetic-only PFN 전이를 검증하지 않는다.
+- **RFTHGS** (조사자 판단) [reward-signal] [analyst] Error bar, 여러 seed, 신뢰구간이 없고, 보고 수치는 연산자 16개 중 최고를 고른 결과다. 학습 instance와 test instance가 모두 CVRPLIB X에서 나오는데 서로소인지 밝히지 않았고, 본문은 학습 집합을 '고정 30개'라고도 '무작위'라고도 써서 일관되지 않다. 기준선과의 차이가 0.03–0.2%p 수준이라 이 불확실성 안에 들 수 있다.
+- **RFTHGS** (조사자 판단) [multi-reward] [analyst] 보상이 크기가 섞인 instance 30개의 평균 목적값 상대 개선이라, 목적값이 큰 큰 instance의 개선이 보상을 지배할 수 있다. 크기 외삽을 내세우면서도 보상 안의 크기 가중은 설계 변수로 다루지 않는다.
+- **RGaKE** (조사자 판단) [distribution-shift] [analyst] 4개 benchmark에서의 일반화 주장을 unseen entity·새로운 relation vocabulary에 대한 inductive transfer의 검증으로 확대하지 않는다.
+- **RLSVR** (조사자 판단) [reward-signal] [analyst] 규칙으로 검증되는 것은 탐지 보상뿐이다. 생성 품질을 직접 학습시키는 수행 보상은 같은 모델로 만든 탐지자의 투표이므로, 'verifiable 보상으로 품질을 학습한다'는 주장은 투표와 품질의 상관이라는 가정에 기대며 그 상관의 크기는 본문에서 정량화되지 않는다. 품질의 주 평가자도 GPT-4o다.
+- **RMS** (조사자 판단) [distribution-shift] [analyst] Recommendation 실험은 missing-feature node classification이나 RL-backbone PFN 전이를 검증하지 않는다.
+- **SIRL** (조사자 판단) [reward-signal] [analyst] 보상의 정답 판정이 최적 목적값 일치이므로, 목적값은 맞지만 원 문제와 다른 모델(우연히 같은 최적값)을 걸러내지 못한다. 또 벤치마크별로는 모든 기준선을 이기지 않는다(MAMO Complex, IndustryOR에서는 DeepSeek-V3.1이 앞섬).
+- **TabImpute** (조사자 판단) [distribution-shift] [analyst] Pattern-specialist가 알려진 pattern에 맞는다는 사실은 미지 mechanism 선택 능력과 다르다.
+- **ThetaEvolve** (조사자 판단) [reward-signal] [analyst] 목표가 instance 하나의 최고 해이고 평가기가 결정적이라, 보상 잡음 문제가 구조적으로 없다. 그래서 여러 instance에서 일반화하는 휴리스틱을 RL로 학습할 때 생기는 표본 잡음·층 혼합 문제에 대해서는 이 결과가 근거가 되지 못한다. RL과 추론만의 비교도 최고 점수 차이가 작은 과제가 많고 run 수가 적다.
+- **TTTDiscover** (조사자 판단) [reward-signal] [analyst] AtCoder 보상은 로컬 생성 test 점수이고, 최댓값 위주의 entropic objective와 PUCT 최댓값 평가는 보상 표본의 우연한 고점을 쫓기 쉬운 구조다. 로컬 test 과적합이나 평가 잡음의 영향은 직접 분석하지 않았다(공식 private test 결과만 보고).
+- **VLMCO** (조사자 판단) [reward-signal] [analyst] group 크기, λf·λo, KL 계수 같은 RL 설정이 본문에 없고 보상 성분별 ablation도 없어서, 개선이 시각 입력에서 오는지 RL 설정 차이에서 오는지 완전히 분리되지 않는다.
+
+## 3. 키워드가 등장하는 논문
+- **A2DEPT**: grpo, tsp
+- **ACCORD**: tsp, bin packing
+- **AdaEva**: grpo, tsp, bin packing
+- **AHDAgent**: grpo, heuristic design, tsp
+- **CALM**: grpo, heuristic design, tsp
+- **COBench**: tsp
+- **DPOforAAD**: tsp
+- **EoH**: tsp, bin packing
+- **EvoTune**: grpo, tsp, bin packing
+- **FisherR1**: tsp
+- **FrontierCO**: tsp
+- **FunSearch**: grpo, bin packing
+- **GDPO**: grpo
+- **GRPOContrastive**: grpo
+- **HerrmannPallez**: bin packing
+- **HeuriGym**: tsp, bin packing
+- **LLM4AD**: tsp, bin packing
+- **LLMEndToEndCO**: grpo, tsp
+- **MCTSAHD**: grpo, heuristic design, tsp
+- **MOGRPO**: grpo
+- **RankGRPO**: grpo
+- **ReEvo**: tsp
+- **RFTHGS**: tsp
+- **RLSVR**: grpo
+- **ShinkaEvolve**: tsp
+- **ThetaEvolve**: grpo
+- **Time-MoE**: tsp
+- **TSAD-OneLiners**: tsp
+- **UECO**: tsp
+- **VLMCO**: grpo, tsp
+
+## 4. 내 연구에서 이미 확인한 것
+### 이미 닫은 갈래 — 같은 가설을 이름만 바꿔 반복하는 건 아닌지 확인
+- **BSEL-F01** (BSEL community-concentrated context selection for frozen GraphPFN) [distribution-shift] 라벨 없는 test-time 조정(community 표준화 comm-z, context 통계 맞춤 ctx-match, 판별형 density-ratio 복제)이 commconc 손실을 줄인다.
+  - 판정: 기각(J2' comm-z, ctx-match, J3 재가중 모두 평가 가능 3개 그래프에서 기각).. Rec_abs comm-z −2.84/−2.17/−0.15/−0.62, ctx-match −0.14/−0.08/+0.02/−0.05, DR −0.47/−0.09/+0.03/+0.09(Cora/CiteSeer/photo/PubMed). DR은 PubMed uniform을 2.8pt 해쳤다. CMD-GCN(λ=0/0.1/1)은 BS-GCN과 거의 같다(PubMed 15.8/14.9/14.1).
+  - 닫은 범위: 클래스 구성을 고려하지 않는 community 단위 특징 표준화·통계 맞춤·판별형 비율 재가중을 frozen GraphPFN 입력에 적용하는 것.
+  - 닫지 않은 것: 구성 보정 offset 추정, 출력 쪽 prior 보정, 사전학습 prior 변경.
+  - 원인·병목 [미검증 가설]: 세 방법 모두 클래스 구성을 보정하지 않는 community 단위 조정이다. 클래스 조건부 offset을 라벨 없이 추정하지 못한 것이 원인으로 보이나 분리하지 않았다.
+  - 재검토 조건: community offset과 클래스 구성을 라벨 없이 분리하는 추정기가 나오고, O-ctx 상한 대비 회복을 정답 없이 검증할 수 있을 때.
+  - 기준선 / 최소 재검증: O-ctx oracle, GP 원래 context, BS-GCN, CMD-GCN(SR-GNN식). / 같은 dev context에서 Rec와 uniform 변화를 seed 군집 CI로 재측정하고 null 대조를 함께 본다.
+  - 원문: findings/sources/biased-selection-2026-11-20/phase0/DECISION_PHASE0_KO.md
+- **FLAW-F01** (Feature-law adaptive observed-cell Factor) [distribution-shift] 관측 cell의 부호 제약을 제거하고 새 graph의 column 통계에 조건부인 factor를 학습하면 static과 기존 Factor보다 자기 피처가 없는 query 분류가 좋아진다.
+  - 판정: 사용자가 정한 primary accuracy 기준을 충족하지 못했으므로, 현재 cell 함수 교체만으로 독립 메인 메소드가 된다는 가설은 닫는다. 추가 head/loss/temperature/updates로 이 bank에서 구제하지 않는다.. original: accuracy64.628114%/NLL0.643004/Brier0.445450/referenceKL0.022515; static: accuracy64.412478%/NLL0.643406/Brier0.446408/referenceKL0.021705; adaptive: accuracy64.467455%/NLL0.650797/Brier0.449291/referenceKL0.027830; fixed_exact: accuracy63.406498%/NLL0.631744/Brier0.440029/referenceKL0.004696; fixed_bp: accuracy64.081101%/NLL0.646232/Brier0.446208/referenceKL0.023510; mask_pfn: accuracy53.488343%/NLL0.693767/Brier0.499510/referenceKL0.068593; pcfi_pfn: accuracy52.969715%/NLL0.693928/Brier0.499014/referenceKL0.068545. Adaptive−static accuracy%p +0.054977 CI[-0.976294,+1.037881], adaptive−original -0.160659 CI[-1.202481,+0.821535]. 두 primary CI 모두0 포함. Gaussian guard: adaptive−original +0.543981 CI[-0.842978,+2.276235], adaptive−static +0.866127 CI[-0.434124,+2.338011]. Adaptation gate=False, Gaussian guard=True, competitive gate=False. Single-graph cost adaptive6.759ms, fixed exact8.861ms, fixed BP10.077ms.
+  - 닫은 범위: 12-node binary native graph/2relations/2features, context총1/2/4개와 observed nodes3/6개 완전 분리, Gaussian mean/Student-t3 mean/variance law를 학습에 모두 넣고 diagonal train/off-diagonal heldout parameter tuples를 비교한 frozen-graph cell-only256-update CE pilot.
+  - 닫지 않은 것: 기존 disjoint feature/label 연결 연산·signed likelihood·자기 role-update와 이전 Factor/teacher의 국소 개선은 보존한다. 모든 학습된 feature factor, unseen feature laws, 가변 feature/schema, 더 큰 실제 graph,99.5% missing의 효과를 기각한 결과는 아니다. 이번에도 law 이름은 이미 보았다.
+  - 원인·병목 [원인 미상]: 부호 제약 제거와 관측 column 통계 conditioning만으로 이 예산에서 분류 이득을 확인하지 못했다. 관측 정보량·통계 요약·함수족·비선형 최적화·finite BP/Bethe·학습량의 기여를 분리하지 않아 고유 원인은 미상이다. CI에0을 포함한 것을 효과0 또는 동등성의 증명으로 쓰지 않는다.
+  - 재검토 조건: 관측 통계로 pointwise rho만 조절하는 것과 다른, 현재 함수족이 놓치는 feature–relation 의존성을 학습·전이하는 구체적인 연산이 등장하고 강한 명시적 법칙 주변화보다 유리할 근거가 생길 때.
+  - 기준선 / 최소 재검증: Original sign-constrained Factor, parameter-matched Flexible-static/adaptive, 동일 frozen graph의 full normalized law/parameter/orientation fixed-exact 및 same24-step fixed-BP, 실제 새 prior로 학습한 Mask/PCFI public PFN. Accuracy/NLL/Brier/reference KL과 end-to-end cost를 분리한다. / 이 final bank를 추가 tuning에 쓰지 않는다. 새 연산의 구체적인 차이를 먼저 고정하고 독립 base graphs에서 자기 피처 없는 query accuracy를 primary로 비교하며 Gaussian 보존과 고정 추론 품질–비용을 함께 확인한다.
+  - 원문: findings/sources/feature-law-2026-11-02/REPORT_KO.md; findings/sources/feature-law-2026-11-02/METHOD.md; findings/sources/feature-law-2026-11-02/protocol.json; findings/sources/feature-law-2026-11-02/results/statistics.json; findings/sources/feature-law-2026-11-02/results/cost.json; findings/sources/feature-law-2026-11-02/results/audit.json; findings/sources/feature-law-2026-11-02/results/preflight.json; findings/sources/feature-law-2026-11-02/results/runtime_amendment.json
+- **LLBP-F04** (Learned-Likelihood BP / EAJ) [distribution-shift] Learned potential + 기존 frozen role q만으로 넓은 조건에서 adaptive OOD 추론이 된다.
+  - 판정: 범용성 미확보. Matched에서는 좋아졌지만, Coupled에서는 auxiliary 포함 learned BP가 constant보다 나빴다. Density 0.12 외삽에서는 일부 Plain/signed 대조보다도 나빴고, density/signal 이동에서 oracle potential과의 차이가 커졌다.
+  - 닫은 범위: 관측 통계 encoder로 potential을 학습해 고정 role head와 결합하는 것만으로 범용 추론기를 주장하는 것
+  - 닫지 않은 것: 원인은 확정하지 못했다: potential point estimate, frozen posterior의 분포 이동, conditional BP 근사, 이들의 상호작용.
+  - 원인·병목 [진단이 지지]: Potential과 frozen role posterior의 OOD 불일치 및 conditional 근사 오차가 후보였다. 뒤의 coherent-update 대조가 일부 병목을 지지하지만 모든 shift의 원인을 확정하지 않는다.
+  - 재검토 조건: 새 graph 통계로 일관된 role/parameter evidence를 추론하고 단순 EB/grid를 넘는 방법이 나올 때.
+  - 기준선 / 최소 재검증: Constant+update, density estimator, Grid6/81 / 같은 conditional branches에서 posterior·potential 교차 대조와 새 density/signal bank를 평가한다.
+  - 원문: findings/sources/llbp-eaj-retrospective-2026-11-01.md
+- **LLBP-F08** (Learned-Likelihood BP / EAJ) [distribution-shift] 같은 potential에서 role weights를 다시 계산하는 자기-update가 OOD 문제를 전반적으로 해결한다.
+  - 판정: 보편적 OOD 해결 주장 기각. Exclusive high density에서는 자기 exact update 0.04029가 Constant+update 0.05073보다 좋았다 (세 prior 모두 CI 0 제외). 하지만 low density에서는 자기 exact update 0.01159가 frozen q 0.00915, Constant+update 0.00917보다 나빴다. Bethe를 exact로 바꿔도 해결되지 않았다.
+  - 닫은 범위: potential과 weights를 맞추면 분포 이동도 전반적으로 해결된다는 주장
+  - 닫지 않은 것: 자기-update는 특정 조건에서 유효한 추론 개선이다.
+  - 원인·병목 [진단이 지지]: Low density에서는 exact role update도 실패해 Bethe partition 근사만으로 설명할 수 없었다. Potential·conditional·parameter uncertainty 상호작용은 미해결이다.
+  - 재검토 조건: Sparse/OOD potential uncertainty와 conditional inference를 함께 해결하는 연산이 나올 때.
+  - 기준선 / 최소 재검증: Constant+update, R1, Grid6/81 / Low density를 포함한 새 bank에서 exact/Bethe·conditional 교차를 고정해 본다.
+  - 원문: findings/sources/llbp-eaj-retrospective-2026-11-01.md
+- **LLBP-F10** (Learned-Likelihood BP / EAJ) [distribution-shift] Low-density 실패는 partition 근사 또는 role weights만의 문제다.
+  - 판정: 단일 병목 설명 기각. Constant/learned weights × constant/learned conditional 네 조합 교차에서 learned conditional 교체는 세 prior 모두 손해였다. Learned weights 교체는 Independent·Exclusive에서 손해, Coupled에서 도움이었고, 비가법적 상호작용이 있었다. Exact role update에서도 실패했다.
+  - 닫은 범위: role posterior만 고치면 된다는 설명, exact partition이면 해결된다는 설명
+  - 닫지 않은 것: 기각하지 못한 가능성: potential 추정 편향, parameter uncertainty 부족, conditional BP 오차, 과확신, 이들의 상호작용.
+  - 원인·병목 [진단이 지지]: 교차 대조에서 learned conditional 손해와 비가법 interaction을 확인했다. Role weights만 고치면 된다는 단일 원인 설명은 지지되지 않는다.
+  - 재검토 조건: Potential·partition·conditional 오차를 일관되게 제어하는 추론 연산이 나올 때.
+  - 기준선 / 최소 재검증: Constant/learned weights×conditional 교차, exact update / 네 교차 조합과 exact-role/BP conditional을 함께 비교해 단일 병목 주장을 검증한다.
+  - 원문: findings/sources/llbp-eaj-retrospective-2026-11-01.md
+- **LPC-F01** (LP-conditioned structural residual) [distribution-shift] LP internal conditioning이 output offset과 Plain을 일관되게 넘는다.
+  - 판정: LP residual tuning·대규모 확장 중단. Matched conditioned−Plain−0.35%p, heldout_shape+0.90%p; offset 대비−0.03/+0.35%p. 새 factorial 내부 효과+0.36~0.52%p이나 relation 추가효과+0.10 CI[−0.21,+0.42], feature 효과+0.06 CI[−0.11,+0.23]. NLL/Brier는 offset-only가 더 좋았다.
+  - 닫은 범위: 현재 LP offset/residual conditioning 확대
+  - 닫지 않은 것: Relation 정보를 합치기 전 보존하는 구조와 별도 semantic schema 전이는 별개다.
+  - 원인·병목 [원인 미상]: 보인 이득 대부분과 output offset 효과를 구분해야 했고, schema adaptation 특유의 이득이라는 증거가 약했다. 조기 relation aggregation이 원인이라는 설명은 가설이지 확정 원인이 아니다.
+  - 재검토 조건: 압축된 LP 확률보다 풍부한 context 정보를 활용하며 output offset만의 효과를 넘어서는 연산이 나올 때.
+  - 기준선 / 최소 재검증: Plain, offset-only, 같은 파라미터·초기화·학습 budget / Relation 수·feature 폭·missing을 분리한 factorial과 새로운 semantic schema에서 내부 conditioning의 독립 증분을 확인한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/lpc.md; findings/sources/graphpfn-2026-11-01/lpc_factorial.md
+- **MCP-F01** (Mechanism-crossed GraphPFN controlled-prior pilot) [distribution-shift] 동일 주변분포의 feature-style/label-rule crossing이 강한 입력 기준선을 넘어 공식-prior 결측 과제로 전이된다.
+  - 판정: 두 gate 동시 통과 실패; 현재 controlled prior를 메인 방법으로 확대하지 않음. Gate A=False, Gate B=False; controlled:offdiagonal:uniform vs coupled_mask: -0.00119 [-0.00603, +0.00402]; controlled:offdiagonal:clustered vs coupled_mask: -0.00288 [-0.00817, +0.00207]; controlled:offdiagonal:uniform vs coupled_pcfi: +0.00396 [-0.00917, +0.01896]; controlled:offdiagonal:clustered vs coupled_pcfi: -0.01740 [-0.03587, -0.00337]; official:any:uniform vs official_mask: -0.00210 [-0.00970, +0.00530]; official:any:clustered vs official_mask: -0.00369 [-0.00928, +0.00194]
+  - 닫은 범위: 이 finite controlled family와 공개 Mask Plain continuation 설정에서 단순 mechanism crossing만으로 범용 missing GraphPFN 성과를 주장하는 것
+  - 닫지 않은 것: 다른 그래프 prior·관측 정보가 충분한 task family·실제 graph·동적 learned generator 일반을 기각하지 않는다. 기존 공식 prior의 induced coupling 자체가 실패 원인이라고 입증하지 않았다.
+  - 원인·병목 [원인 미상]: 정해진 초기화·256 성공 updates·함수족에서 요구한 predictive 우위를 확보하지 못했다. Prior의 한계, 학습량, preprocessing, context 식별 난도 중 원인을 분리한 실험은 아니다.
+  - 재검토 조건: 어떤 관측 정보와 예측 rule의 조합이 전이에 필요한지를 구체적으로 바꾸는 generator/inference 원리가 나오고 동일 비용의 강한 대조를 넘을 근거가 생길 때.
+  - 기준선 / 최소 재검증: 동일 구조·초기화·update의 Official/Coupled Mask, 입력으로 학습한 Coupled PCFI, context/uniform prior, LP, 4-view random-fill; 실제 graph에서는 PCFI/FISF-trained PFN·Ephris도 필요. / 새 독립 bank에서 full/node/cell 조건과 actual-feature 제거·셔플을 고정해 검증한다. 같은 bank의 loss/epochs 튜닝으로 구제하지 않는다. Controlled/official family 변경과 coupling만의 효과를 분리한다.
+  - 원문: findings/sources/mechanism-crossed-2026-11-02/REPORT.md; findings/sources/mechanism-crossed-2026-11-02/paired.json; findings/sources/mechanism-crossed-2026-11-02/protocol.json
+- **MISS-F01** (초기 Missingness-aware GraphPFN) [distribution-shift] Missingness prior 추가가 공식 입력 경로와 미학습 MNAR에서 유리하다.
+  - 판정: 범용 우위 미확보·해당 라인 중단. NaN-input Ours−B4는 label_dep에서 +0.75/+1.43/+0.78%p였지만 degree_dep/self_mask는 약 ±0.1%p. Official imputation의 released GraphPFN이 NaN-trained Ours보다 label_dep에서 0.54/0.63/0.12%p 높았다.
+  - 닫은 범위: NaN 학습의 작은 이득을 official-input robustness나 unseen-MNAR 일반화로 승격
+  - 닫지 않은 것: Imputed-input에 맞춘 prior의 효과는 미평가다. 더 넓은 MNAR 식별 문제도 기각하지 않는다.
+  - 원인·병목 [진단이 지지]: Raw-NaN 기준선이 공식 imputation보다 약했고, official fill만으로도 mask가 잘 드러났다(AUROC 0.97). Context-query mask 관계 불일치에서 mixed-prior 이득이 유지되지 않았다. 이것만으로 모든 원인을 확정하지는 않는다.
+  - 재검토 조건: 관측 메커니즘의 context-query shift를 다루면서 official preprocessing 대비 추가 가치를 보이는 학습 원리가 나올 때.
+  - 기준선 / 최소 재검증: 공개 GraphPFN + official imputation, 동일 예산 B4 / 동일 입력 경로·초기화·예산의 새 bank에서 context-query mismatch와 미학습 mask를 paired 평가한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/missing_closure.md; findings/sources/graphpfn-2026-11-01/missing_pilot.md; findings/sources/graphpfn-2026-11-01/missing_context.md
+- **XFER-F01** (Context path 선택과 고정 LP/PFN 혼합) [distribution-shift] DBLP에서 통했던 context-LOO path 선택을 다른 graph로 옮기면 강하다.
+  - 판정: 고정 선택 규칙의 전이 실패. Expanded LOO는 ACM k20 75.78% vs uniform LP85.55%, IMDB k5 27.53% vs uniform32.04%. Context accuracy로 목적을 바꿔도 IMDB k20 33.55%였다.
+  - 닫은 범위: 현재 LOO scalar score로 하나의 metapath를 고르는 규칙
+  - 닫지 않은 것: Context가 유용한 관계를 알려주는 다른 설정이나 relation 의미 추론 일반은 기각하지 않는다.
+  - 원인·병목 [진단이 지지]: 소수 context의 ranking이 query utility와 맞지 않았다. 후보 pool 확대와 accuracy 목적 변경만으로는 해결되지 않았다. 추정 분산·risk mismatch의 상대 기여는 미상이다.
+  - 재검토 조건: 극소 context의 추정 불확실성과 실제 query risk를 다루며 task 내 utility를 식별하는 방법이 나올 때.
+  - 기준선 / 최소 재검증: Uniform/union LP, individual paths, fixed GraphPFN path inputs / 독립 graph에서 동일 context·후보 pool·선택 예산으로 사전 규칙을 고정해 검증한다.
+  - 원문: findings/sources/graphpfn-2026-11-01/transfer.md; findings/sources/graphpfn-2026-11-01/expanded.md; findings/sources/graphpfn-2026-11-01/accuracy_selector.md
+- **FP05-F01** (FP05 missing-feature GraphPFN computation policy) [distribution-shift, grpo] 불완전 피처 입력에서 내부 세 지점의 adapter 추가 실행을 Group-PG로 학습하면 일반 fine-tuning과 기대 목적 직접 최적화보다 높은 missing-query accuracy와 관측 피처 효용을 얻는다.
+  - 판정: 현재 반복 adapter action·학습 목적·128updates·greedy 배포의 확대를 중단한다. 이 후보를 missing 대응의 새 메인 메소드로 승격하지 않는다.. Primary96graphs에서 Fixed49.290%, Uniform8평균49.475%, Direct48.776%, PG48.793%다. PG−Fixed−0.497%p nominal97.5% CI[-1.034,+0.012], PG−Direct+0.017[-0.241,+0.275]다. Disjoint48graphs/58cases의 PG observed−none−1.063[-5.567,+4.069], observed−shuffle−0.260[-2.127,+1.584]로 네 효능 gate 모두FAIL이다. Full-natural guard만PASS다. 30,828개 평가 예측의 주 감사와 두 독립 감사는PASS다.
+  - 닫은 범위: Layer2/5/8의 동일 residual conv+MLP 추가 실행 세 bit, PCFI100 front end, 현재 상태 요약·목적·예산·greedy 배포를 우수한 missing-feature 계산 정책으로 확대하는 주장.
+  - 닫지 않은 것: RL 전체, 다른 유효한 추론 연산, 본체 Transformer의 policy-gradient, target-time 학습 또는 heterogeneous schema transfer는 검증하지 않았다. 작은 일반 fine-tuning 점 이득과 실제 피처 활용 반응은 보존한다.
+  - 원인·병목 [원인 미상]: 배포된 두 정책 모두 모든 최종 합성·실제 episode에서000을 골랐고 같은 checkpoint의000 replay와 확률 배열이 동일했다. 적응적인 경로 선택 효과가 없다는 것은 확인됐지만, 연산 후보·상태·목적·최적화·greedy 추론 중 최종 원인은 분리하지 못했다.
+  - 재검토 조건: 유익한 대안 계산과 그것을 배포에서 실제 사용하는 학습 원리를 제시하고, 기존의 모든000 현상 및 강한 고정·직접 최적화 대조를 다룰 독립 검증을 설계할 수 있을 때.
+  - 기준선 / 최소 재검증: 동일 public 초기값/PCFI/일정의 Fixed, Uniform8 및 dev-selected single-global, 동일8경로 Direct, own000 replay, frozen PCFI/NaN, LP/prior와 none/shuffle를 유지한다. 실제 추론 수와 calibration 비용을 맞춰 보고한다. / 새 cycle/plan/세 관점 검토/수치 검사 뒤 새 bank를 잠근다. 현재 final은 개발 자료로 취급하고 비용항·temperature·loss·학습량을 같은 bank에서 조정해 통과시키지 않는다. Primary missing-query accuracy와 utility·full guard를 먼저 고정한다.
+  - 원문: findings/sources/fp05-compute-policy-2026-11-05/DECISION_KO.md; findings/sources/fp05-compute-policy-2026-11-05/results/summary.json; findings/sources/fp05-compute-policy-2026-11-05/results/statistics_audit.json; findings/sources/fp05-compute-policy-2026-11-05/results/deployment_audit.json
+- **SPFN03-F01** (SPFN03 class compatibility and PPR mass mixing) [distribution-shift] 두 홉 클래스 호환과 PPR 도달 질량 혼합이 피처 및 구조 기준선을 새 합성과 실제 그래프에서 동시에 앞선다.
+  - 판정: 현재 shrinkage가 없는 empirical H와 스칼라 질량의 결합을 확대하지 않는다.. 새 합성 96개에서 제안 57.10%, Ridge 73.13%, frozen tail 75.84%. 제안−Ridge −16.03%p, nominal 97.5% CI [−18.89,−13.14]. PPR 대비 실제 차이는 Cora −15.09, CiteSeer −11.77, PubMed −0.21%p로 복합 기준 실패.
+  - 닫은 범위: 같은 데이터에서 2-hop H와 m/(m+τ)를 튜닝해 PPR에 대한 성능 하한을 주장하는 방식.
+  - 닫지 않은 것: 실제 그래프에서 관측 라벨을 이용해 compatibility의 식별성과 경로 길이를 검증하는 방법, 또는 covariance 기반 routing은 미평가다.
+  - 원인·병목 [진단이 지지]: 같은 질량을 고정한 비교에서 H가 Cora와 CiteSeer의 bAcc를 크게 훼손했다. 새 합성의 Ridge 단독 대비 하락과 평균을 맞춘 질량 배분의 불확실한 효과를 확인했다. 짧은 앵커 경로와 혼합 길이 PPR의 차이, context 선택 편향, 관측 부족의 상대 기여는 분리하지 않았다.
+  - 재검토 조건: 소수 앵커에서 관계 보정이 식별되는 정도를 정답 없이 검증하고 동일한 mixture baseline을 넘어설 구체적 추론법이 나올 때.
+  - 기준선 / 최소 재검증: PPR, Ridge, α 고정 logit fusion, matched mean와 .5 확률 혼합, fixed matched C&S, frozen SPFN01; compatibility 자체는 CLP와의 직접 검증 필요. / 독립 실제 homophily 및 heterophily 그래프를 사전 지정하고 H의 pair coverage와 동일 weight에서의 H−I를 함께 보고한다.
+  - 원문: findings/sources/subgraph-pfn-mass-2026-11-18/REPORT_KO.md; findings/sources/subgraph-pfn-mass-2026-11-18/results/summary.json
+- **SPFN02-F01** (SPFN02 Subgraph-PFN scalar reassociation and PPR feature correction) [distribution-shift] 합성에서 학습한 PPR 피처 보정이 실제 세 그래프에서 PPR+ridge를 이기면서 PPR 대비 bAcc 하락을 그래프별 2%p 이하로 유지한다.
+  - 판정: 현재 RP24·합성 prior·head 조합의 확장을 중단한다.. 고정 결합 대비 Cora +1.90, CiteSeer +1.74, PubMed +5.07%p. 그러나 PPR 대비 CiteSeer 전체 bAcc −2.53%p로 실제 복합 기준 FAIL. CiteSeer tail recall은 +1.25%p, head recall은 −6.32%p이며 세 seed 모두 정답 손실 수가 정답 복구 수보다 많았다.
+  - 닫은 범위: 같은 개발 패널에 맞추어 현재 RP24, 고정 PPR offset 및 피처 요약 head의 숫자를 계속 튜닝하고 범용 방법으로 확대하는 것.
+  - 닫지 않은 것: 스칼라 확산 계산과 합성에서 확인된 피처 요약의 추가 효과는 보존한다. 다른 피처 표현, 다른 생성 prior 및 독립 실제 그래프에서의 전이는 미검증이다.
+  - 원인·병목 [원인 미상]: CiteSeer에서 head recall 하락이 tail 개선을 상쇄했다. 투영, 피처 요약, prior와 학습 목표 중 어느 것이 해당 하락을 야기했는지는 분리하지 못했다.
+  - 재검토 조건: 관측 context만으로 어떤 피처 보정이 head 성능을 해치지 않는지 판별할 구체적 신호나, RP24에서 사라지는 라벨 관련 피처를 가변 차원으로 처리할 연산을 제시할 때.
+  - 기준선 / 최소 재검증: class-balanced PPR, ridge, 개발에서 계수를 고정한 PPR+ridge, 같은 크기 score-only 학습 head, 기존 frozen tail. / 새 synthetic bank와 새 실제 데이터에서 overall bAcc 및 head/tail recall을 분리한다. 고정 PPR 대비 교정/손실 수를 기록한다. 현재 실제 개발 패널은 독립 평가로 사용하지 않는다.
+  - 원문: findings/sources/subgraph-pfn-v2-2026-11-17/REPORT_KO.md; findings/sources/subgraph-pfn-v2-2026-11-17/results/b_summary.json
+- **SPFN01-F01** (SPFN01 Subgraph-PFN observed-support compression) [distribution-shift] 관측 tail 앵커를 모두 남기고 head를 압축하면 같은 토큰 수를 관측 빈도에 비례 배정한 압축보다 tail recall을 높인다.
+  - 판정: 잠근 소형 head/합성 prior/토큰 배정 조합의 확대를 중단한다.. 합성96 graphs에서 tail−proportional +0.658%p, nominal 97.5% CI [−0.340,+1.657]로 사전 우월성 기준 미통과. 실제 개발 패널에서 제안의 전체 bAcc 41.37/24.90/48.13%는 class-mean PPR 62.95/42.60/60.00%보다 낮다.
+  - 닫은 범위: 현재 3,705-parameter synthetic-only head의 scarce anchor 배정과 직접 moment diffusion을 그대로 더 크게 학습해 불균형용 메인 방법으로 확장.
+  - 닫지 않은 것: 동일 quota에서 집계가 원형 검색보다 좋은 합성 효과는 보존. Release PFN 결합, feature 결측, zero-context class와 대형 독립 실제 data, 계산상 동등한 빠른 구현은 미검증.
+  - 원인·병목 [원인 미상]: 같은 학습 조건에서 관측 tail quota의 증분이 확실하지 않고, 단순 구조 대조가 세 실제 graph의 전체 bAcc에서 우세했다. 구체적 원인을 prior·RP·표현·학습예산 중 하나로 분리 검증하지 않았다.
+  - 재검토 조건: class-normalized PPR 구조 증거를 잃지 않으면서 novel graphs에서 관측 feature/evidence의 추가 이득을 주는 구체 연산이 제시될 때.
+  - 기준선 / 최소 재검증: 같은 token count/decoder의 proportional과 PPR+feature raw top, optimized full, class PPR, ridge, 필요시 released NodePFN/GraphPFN/Ephris. / 새 synthetic 및 실제 graph에서 tail recall과 전체 bAcc를 미리 고정한다. Preprocessing·검색·diffusion·scoring을 함께 계측하고 이 bank에 맞춘 구제를 하지 않는다.
+  - 원문: findings/sources/subgraph-pfn-2026-11-17/REPORT_KO.md; findings/sources/subgraph-pfn-2026-11-17/results/summary.json
+
+### 반복된 교훈
+- **FLAW-L01** (Feature-law adaptive observed-cell Factor) [distribution-shift] 점별 cell 함수의 표현력 제약 제거와, 새 graph에서 feature law를 추론해 분류를 개선하는 것은 다른 검증이다.
+  - 분산 차이의 참 half log-likelihood ratio는 x²의 함수라 큰 양수와 큰 음수가 같은 evidence를 준다. Original x*positiveNN은 이를 그대로 표현할 수 없지만 새 static/adaptive 함수는 짝수 evidence도 허용한다. 그 구조 변경 이후에도 primary adaptive−static과 adaptive−original accuracy 우위는 확인되지 않았다.
+- **LLBP-L3** (Learned-Likelihood BP / EAJ) [distribution-shift] 일관된 추론이라고 OOD가 해결되지 않는다. 같은 potential 기반 추론은 잘못 맞는 potential을 자동으로 교정하지 않는다.
+  - Self-update는 효과가 있었지만 low density를 해결하지 못했다.
+- **ROLE-L01** (Plain relation adaptation과 CRR 제안 철회) [distribution-shift] Plain이 전역 relation utility 적응을 못한다는 전제로 새 router를 정당화하지 않는다.
+  - 공유 relation MLP에 relation-ID embedding이 없고, context 통계를 따라 역할 교환에 적응했다. Conflict end-to-end는 약2.09%p 하락해 완전 robustness는 아니다.
+
+### 보존한 결과 — 재사용할 수 있는 자산
+- **BSEL-P01** (BSEL community-concentrated context selection for frozen GraphPFN) [distribution-shift] community 집중 context 선택(commconc)은 frozen GraphPFN에 실제 손실을 만들고, 그 손실은 GraphPFN 고유가 아니다.
+  - commconc 손실 Δ_GP(AUC pt): Cora +2.4 [+1.7,+3.2], CiteSeer +5.5 [+4.2,+6.9], photo +13.8 [+11.4,+16.2], PubMed +13.5 [+8.8,+18.1]. 크기를 보존한 community 순열 null 손실은 −0.3~+1.0. BS-GCN 손실 3.1/7.6/12.3/17.8, LP 3.9/9.9/9.1/21.4. G = Δ_GP − Δ_BS는 photo에서만 +1.5 [+0.2,+2.7]. Cora는 평가 불가(손실 CI 하한 ≤ 2pt). (확대 금지: PFN 고유 고장, W target 그래프나 다른 선택 정책(highdegree 등)으로의 일반화, 다른 Graph FM의 손실 크기.)
+- **BSEL-P02** (BSEL community-concentrated context selection for frozen GraphPFN) [distribution-shift] pool 라벨을 쓰는 클래스 조건부 community 특징 수송 oracle(O-ctx)은 손실의 절반가량을 되살리며, 특징 수송의 상한은 그 수준에 머문다.
+  - Phase 0 O-ctx Rec: Cora 0.64, CiteSeer 0.51 [0.39,0.61], photo 0.43 [0.36,0.48], PubMed 0.67 [0.57,0.77], uniform 변화 최대 −0.7pt. S1에서 이웃까지 옮기는 O-ctx+nbr은 0.42/0.76/0.48(CiteSeer/PubMed/photo), 클래스 무관 양쪽 중심화 O-both는 −0.14/0.49/0.65. 합성 POS에서는 O-both 1.08, O-ctx+nbr 1.02였다. (확대 금지: 라벨 없이 이 상한에 도달할 수 있다는 주장, 손실이 가산 평행이동 모형으로 완전히 설명된다는 주장.)
+- **MCP-P02** (Mechanism-crossed GraphPFN controlled-prior pilot) [distribution-shift] Constructed off-diagonal 조건의 Coupled Mask 대비 정확도 신호
+  - controlled:offdiagonal:clustered: accuracy difference +3.434%p, CI [+0.960, +6.152]; controlled:offdiagonal:node: accuracy difference +2.702%p, CI [+0.431, +5.143] (확대 금지: 사후 선별해 보존한 보조 metric 결과이며 다중 비교 보정과 독립 재검증은 없다. LP·PCFI·Official Mask 대비 같은 정확도 우위, NLL 우위 또는 실제 graph 전이로 확대하지 않고 원래 두 gate의 No-Go를 유지한다.)
+- **SPFN03-P01** (SPFN03 class compatibility and PPR mass mixing) [distribution-shift] 합성에서 클래스 호환 행렬의 효과는 관계가 같은 클래스 간 연결을 억제하는지에 따라 달라졌다.
+  - 같은 질량에서 H−I는 disassortative +7.00%p, assortative −10.82%p. 전체 −1.91%p CI [−4.79,+1.00]. Ridge는 두 subgroup 모두 제안보다 높다. 실제 PubMed에서는 H=I인 반면 Cora/CiteSeer H−I는 −13.84/−8.44%p. (확대 금지: 실제 heterophily 데이터에서의 유효성, 관계 조건을 스스로 구별하는 능력, 실제 분류 baseline 우위, 새 방법의 독립 novelty로 해석하지 않는다.)
+- **SPFN02-P02** (SPFN02 Subgraph-PFN scalar reassociation and PPR feature correction) [distribution-shift] 동일한 크기의 학습 head에서 ridge 점수 외에 관측 피처 요약을 제공하면 합성 조건에서 PPR 피처 보정이 강해진다.
+  - 새 합성 96개 그래프에서 피처 요약 보정의 bAcc 76.29%, PPR+ridge 70.20%, ridge 점수 보정 70.50%. 고정 결합 대비 paired 차이 +6.09%p, 97.5% CI [+4.17,+8.05]. 점수 보정 대비 +5.79%p, CI [+4.01,+7.68]. 실제 개발 세 그래프의 tail recall도 PPR 대비 각각 +5.05, +1.25, +2.19%p였다. (확대 금지: 기존 frozen tail과 합성 전체 bAcc는 거의 같고 tail recall은 더 낮았다. 피처 제거 시 PPR 복귀가 피처가 있는 경우의 최소 성능을 보장하지 않는다. 일반 결측 및 실제 독립 검증은 별도로 필요하다.)
+
+### 아직 안 한 것 — 실패로 세지 않음
+- **LLBP-U4** (Learned-Likelihood BP / EAJ) [distribution-shift] Temperature/shrinkage/density gate, 더 큰 모델, 추가 surrogate loss, 더 긴 T1 학습
+  - 추가 실행을 제안하지 않았거나 중단한 것이지, 실제로 학습해서 실패를 증명한 것은 아니다.

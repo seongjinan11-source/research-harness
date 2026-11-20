@@ -1,0 +1,16 @@
+id: strata_mixed_reward
+date: '2026-11-20'
+text: 'LLM 휴리스틱 자동설계를 GRPO로 학습할 때 크기 층이 섞인 스칼라 보상의 쏠림을 진단하고, 층별 blocking 순위(R3)가 MO-GRPO/GDPO형
+  group 정규화와 고정 스케일보다 held-out 층 전이에 낫는지 판정한다. 차별점 정리: ssp-share/co_rl/2026-11-20_strata_mixed_reward/DIFFERENTIATION_KO.md'
+tags:
+- reward-signal
+- multi-reward
+- distribution-shift
+keywords:
+- instance set
+- size strata
+- group normalization
+- GRPO
+- heuristic design
+- TSP
+- bin packing
