@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 55개 프로젝트 · 240개 기록 (실패·중단 71개, 보존 61개, 교훈 76개, 미실행 32개)
+총 56개 프로젝트 · 244개 기록 (실패·중단 72개, 보존 62개, 교훈 78개, 미실행 32개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -190,6 +190,42 @@ k20 pooling-before-product: ACM76.390% vs uniform LP85.555%, IMDB28.311% vs35.41
 - 기준선: Uniform LP, class-pooling 후 product, 같은 graph의 강한 PFN
 - 최소 재검증: 먼저 실제 common-support 빈도와 오류의 관계를 확인하고, 고정 곱셈이 아닌 task-adaptive binding의 independent gain을 비교한다.
 - 원문: [findings/sources/graphpfn-2026-11-01/binding.md](../findings/sources/graphpfn-2026-11-01/binding.md)
+
+## CORL-S size/capacity strata mixed reward for RL automatic heuristic design
+
+실험 조건: CALM 계열 RL-AHD에서 응답 하나의 스칼라 보상이 크기·용량 층의 평균이 되는 문제를 다룬 사전 명세 v2. 이전 cycle(2026-11-19 보상 잡음 진단)의 OBP obp_v2(층 4개: 5k/1k × 용량 100/500, 층당 50)와 TSP tsp_v3(N 50/100/200, 층당 50) pool을 쓴다. 이번 cycle에서는 dev split만 썼고 confirm은 읽지 않았다. held-out 층 생성, 동결, 학습은 하지 않았다.
+
+### CORLS-F01 [실패·중단] 층 혼합 보상의 형태를 바꾸면(R3 층별 승률, R2 고정 스케일, R2g MO-GRPO형) RL-AHD의 child–parent 개선 판정이 R0(혼합 평균 gap)와 달라지고, 그 차이로 held-out 층 전이를 판정할 수 있다.
+
+dev 사전 점검(동작이 같은 쌍 제외). OBP 68쌍(24 group)의 불일치율은 R2 vs R3 4.4% [0, 11.5], R2g vs R3 4.4%, R0 vs R3 2.9%(2쌍), R0 vs R2 1.5%였다. 층 부호가 충돌하는 15쌍에서 R0·R2g·R3의 판정은 같았다. TSP 89쌍은 R2 vs R3 6.7% [2.2, 12.3]였고, 층 충돌 14쌍에서는 35.7% [13.3, 64.3]였다. TSP는 층별 MAD가 거의 같아 R2 = R0였다.
+
+- 판정: 중단(사용자 결정, Phase 0 이전). 주 판정 J3는 검정력 부족으로 결론 없음이 예상되었다.
+- 원인·병목 [진단이 지지]: OBP에서 처방 사이 결정 차이 자체가 작다. dev 비율을 confirm 크기에 적용하면 R0–R3 불일치 쌍이 약 5개로, J3에 필요한 불일치 단위 15개에 못 미칠 것으로 추정했다(추정이며 confirm에서 확인하지 않음).
+- 닫은 범위: OBP obp_v2 dev pool, 층당 50 instance, child–parent 판정에서 R0/R2/R2g/R3 비교로 처방 우열을 가리는 cycle.
+- 닫지 않은 것: TSP 층 충돌 쌍의 평균 대 순위 집계 차이, 실제 GRPO 학습 중 층 가중 이동(H1b), 더 큰 pool, held-out 층 전이 자체.
+- 재검토 조건: 학습 중 층별 분산이 크게 이동한다는 근거, 또는 층 충돌 쌍이 충분히 많은 문제·pool이 생겨 처방 사이 판정 차이가 커질 때.
+- 기준선: R0(혼합 평균), MO-GRPO형 group z-score, 고정 스케일 Pre-Norm, CALM 저장소 보상.
+- 최소 재검증: 새 문제나 pool의 dev에서 같은 precheck_r2_r3.py로 형태 사이 불일치율과 층 충돌 쌍 수를 먼저 잰다.
+- 원문: [findings/sources/co-rl-strata-2026-11-20/PRECHECK_KO.md](../findings/sources/co-rl-strata-2026-11-20/PRECHECK_KO.md); [findings/sources/co-rl-strata-2026-11-20/precheck_dev.json](../findings/sources/co-rl-strata-2026-11-20/precheck_dev.json); [findings/sources/co-rl-strata-2026-11-20/DECISION_KO.md](../findings/sources/co-rl-strata-2026-11-20/DECISION_KO.md)
+
+### CORLS-P01 [보존] 선행 대비 차별점 정리: 층 혼합 보상의 문제·기제·처방은 선행이 있고, 남는 차별점은 목표 선언 아래 균등화의 정오 판정, gap 정규화 뒤 남는 분산 가중, 작은 group 강건성, 학습 중 가중 이동뿐이다.
+
+A2DEPT 부록 식(48), MO-GRPO Theorem 1·Limitations·부록 Pre-Norm 단락, AdaEva Table 1·3과 부록 B, LLMEndToEndCO §4.3, GDPO 초록·그림 1을 원문에서 확인했다.
+
+- 확대 금지: 층 혼합 보상의 scale bias를 처음 지적했다거나, 층별 정규화·순위 집계를 새 처방으로 주장하지 않는다.
+- 원문: [findings/sources/co-rl-strata-2026-11-20/DIFFERENTIATION_KO.md](../findings/sources/co-rl-strata-2026-11-20/DIFFERENTIATION_KO.md)
+
+### CORLS-L01 [교훈] AdaEva의 TSP Kendall W = 0.03은 instance 사이 순위 충돌이 아니라 후보가 거의 동률인 상태(Across-CV 0.0001)를 반영한다.
+
+AdaEva Table 3: TSP W 0.03, Across CV 0.0001, Within CV 0.0348. OBP W 1.00, Across CV 0.3403. search pool은 단일 크기다(OBP 5,000 items·capacity 100, TSP 100-city).
+
+- 원문: [findings/sources/co-rl-strata-2026-11-20/DIFFERENTIATION_KO.md](../findings/sources/co-rl-strata-2026-11-20/DIFFERENTIATION_KO.md)
+
+### CORLS-L02 [교훈] 휴리스틱 순위 수준의 층 사이 불일치(OBP τ 0.43–0.85)는 child–parent 판정 수준의 형태 간 차이로 이어지지 않을 수 있다.
+
+OBP dev에서 층 사이 순위 τ가 낮았는데도 R0와 R3의 판정 불일치는 2.9%였다.
+
+- 원문: [findings/sources/co-rl-strata-2026-11-20/PRECHECK_KO.md](../findings/sources/co-rl-strata-2026-11-20/PRECHECK_KO.md)
 
 ## Context-conditioned feature belief GraphPFN 설계 검토
 

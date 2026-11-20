@@ -100,6 +100,24 @@
 현재 catalog에서 장치 단서가 잡히지 않았다. 관련 문헌의 부재나 해결 불가능을 뜻하지 않는다.
 
 
+## CORLS-F01 — 층 혼합 보상의 형태를 바꾸면(R3 층별 승률, R2 고정 스케일, R2g MO-GRPO형) RL-AHD의 child–parent 개선 판정이 R0(혼합 평균 gap)와 달라지고, 그 차이로 held-out 층 전이를 판정할 수 있다.
+
+- 판정: 중단(사용자 결정, Phase 0 이전). 주 판정 J3는 검정력 부족으로 결론 없음이 예상되었다.
+- 원인·병목 [진단이 지지]: OBP에서 처방 사이 결정 차이 자체가 작다. dev 비율을 confirm 크기에 적용하면 R0–R3 불일치 쌍이 약 5개로, J3에 필요한 불일치 단위 15개에 못 미칠 것으로 추정했다(추정이며 confirm에서 확인하지 않음).
+- 반증·배제한 설명: 작은 group std의 잡음이 결정을 크게 바꾼다는 설명은 dev에서 지지되지 않았다(R2 vs R2g 불일치 2–3%).
+- 재검토 조건: 학습 중 층별 분산이 크게 이동한다는 근거, 또는 층 충돌 쌍이 충분히 많은 문제·pool이 생겨 처방 사이 판정 차이가 커질 때.
+- 먼저 이겨야 할 기준선: R0(혼합 평균), MO-GRPO형 group z-score, 고정 스케일 Pre-Norm, CALM 저장소 보상.
+- 최소 재검증: 새 문제나 pool의 dev에서 같은 precheck_r2_r3.py로 형태 사이 불일치율과 층 충돌 쌍 수를 먼저 잰다.
+- 닫지 않은 것: TSP 층 충돌 쌍의 평균 대 순위 집계 차이, 실제 GRPO 학습 중 층 가중 이동(H1b), 더 큰 pool, held-out 층 전이 자체.
+- 원문: [findings/sources/co-rl-strata-2026-11-20/PRECHECK_KO.md](../findings/sources/co-rl-strata-2026-11-20/PRECHECK_KO.md); [findings/sources/co-rl-strata-2026-11-20/precheck_dev.json](../findings/sources/co-rl-strata-2026-11-20/precheck_dev.json); [findings/sources/co-rl-strata-2026-11-20/DECISION_KO.md](../findings/sources/co-rl-strata-2026-11-20/DECISION_KO.md)
+
+- [GDPO](https://arxiv.org/abs/2601.05242): 복수 태그 일치 (약한 단서); tags=multi-reward, reward-signal; keywords=-
+  - 기록된 강점: 가중치만으로는 난이도 차이가 큰 목적의 우선순위를 안정적으로 바꾸지 못한다는 점을 실험으로 보이고, 조건부 보상 설계라는 대안을 제시했다.
+- [LLMEndToEndCO](https://arxiv.org/abs/2509.16865): 복수 태그 일치 (약한 단서); tags=multi-reward, reward-signal; keywords=-
+  - 기록된 강점: SFT만 하면 목적값을 위해 제약을 살짝 넘는 over-greedy 해(OP의 거리 한도 초과, CVRP의 용량 초과)가 나온다는 실패 양상을 관찰하고, 제약별 가중치를 둔 feasibility 보상으로 RL 단계에서 이를 교정했다. 보상이 형식·제약·품질 성분으로 나뉘어 있어 어느 성분이 무엇을 고치는지 설계가 명시적이다.
+- [VLMCO](https://arxiv.org/abs/2609.37175): 복수 태그 일치 (약한 단서); tags=multi-reward, reward-signal; keywords=-
+  - 기록된 강점: 보상을 제약 충족 성분과 품질 성분으로 나누고, 품질 항은 제약을 모두 만족할 때만 주는 gating 구조라 feasibility를 먼저 확보하도록 유도한다.
+
 ## RATIO-F01 — Full−Neutral log probability가 LP에 더할 새로운 feature evidence다.
 
 - 판정: Frozen 비율 보정 중단
