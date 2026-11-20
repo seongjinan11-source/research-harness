@@ -1,0 +1,17 @@
+\begin{table}[t]\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{\revtext{Prior comparison with centred inputs and no intercept. Recovery uses offline refits on stored archives. AUC is the mean over five paired online runs per benchmark and arm without GP proposal replacement. The last row gives the relative change in mean AUC with a paired 95\% bootstrap interval.}}
+\label{tab:prior}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & MOKP & MDK & Set cover & MWIS \\
+\midrule
+Size effect recovered, $L=0$ & $0.82$ & $0.87$ & $0.42$ & $0.66$ \\
+Size effect recovered, $L=50$ & $1.00$ & $1.00$ & $1.00$ & $1.00$ \\
+\midrule
+AUC, $L=0$ & \revtext{$0.532$} & \revtext{$0.507$} & \revtext{$0.645$} & \revtext{$0.244$} \\
+AUC, $L=50$ & \revtext{$\mathbf{0.652}$} & \revtext{$\mathbf{0.592}$} & \revtext{$\mathbf{1.003}$} & \revtext{$\mathbf{0.319}$} \\
+$L=0$ against $L=50$ (\%) & \revtext{$-18.3$ \tiny{$[-19.3,-16.9]$}} & \revtext{$-14.2$ \tiny{$[-15.3,-13.2]$}} & \revtext{$-35.7$ \tiny{$[-36.8,-34.5]$}} & \revtext{$-23.5$ \tiny{$[-25.1,-21.9]$}} \\
+\bottomrule
+\end{tabular}
+\end{table}

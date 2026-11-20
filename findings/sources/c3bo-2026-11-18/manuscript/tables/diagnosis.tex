@@ -1,0 +1,20 @@
+\begin{table}[t]\centering\small
+\caption{Diagnosis on the backbone's stored campaigns, from offline re-solves at rounds $3$, $6$ and $10$ ($480$ instance--round--weight combinations per benchmark). No new evaluations.}
+\label{tab:diagfull}
+\begin{tabular}{lcccc}
+\toprule
+ & MOKP & MDK & SetCover & MWIS \\
+\midrule
+Optimal sizes $K^\star_h$, min--max             & $136$--$152$ & $129$--$138$ & $42$--$53$   & $88$--$103$ \\
+Initial sizes after repair, min--max            & $105$--$131$ & $105$--$126$ & $112$--$152$ & $54$--$77$ \\
+\midrule
+Size effect recovered by the posterior         & $-0.6\%$ & $-0.0\%$ & $15.7\%$ & $-4.9\%$ \\
+Size error has the predicted sign              & $100\%$  & $100\%$  & $83.8\%$ & $100\%$ \\
+\midrule
+Within 10 of $K^\star_h$: as run               & $0.2\%$  & $8.5\%$  & $0\%$    & $0\%$ \\
+Within 10 of $K^\star_h$: size effect corrected& $\mathbf{63.1\%}$ & $\mathbf{77.9\%}$ & $\mathbf{89.4\%}$ & $\mathbf{90.8\%}$ \\
+\midrule
+Campaigns that evaluate an optimal size        & $0\%$    & $15\%$   & $0\%$    & $0\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}

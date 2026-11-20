@@ -1,0 +1,471 @@
+% =====================================================================
+%  2026-11-14: conservative revision of the submitted C3BO paper.
+%  C3BO retains the corrected-prior posterior-mean algorithm. Random count
+%  is its separately identified comparator; the sparse size-aware posterior is an extension.
+%
+%  \PEND{...} is a number or sentence still to fill.
+%  \TODO{...} is a number or sentence still to fill; no decision depends on it.
+%
+%  Numbers marked "verified" in comments were checked against the stored data
+%  on 2026-09-25. Corrections already applied here:
+%    - XOR-stationary, not Hamming-stationary (covers ARD; numerically checked)
+%    - |P(c)| for SetCover is 36.5% (items the solver cannot discard), not 63.5%
+%    - size effect is 2.1 SD of the centred coefficients, ~33 prior SD (54.5/25.98)
+%    - repair table computed over all 20 main seeds, so K* bands match Section 3
+%    - no Jamieson-Talwalkar citation: the allocation is two-stage, not halving
+% =====================================================================
+\documentclass{article}
+\usepackage{iclr2027_conference,times}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx,amsmath,amssymb,amsthm,booktabs,tabularx,wrapfig}
+% xcolor before hyperref: hyperref loads color itself, and loading xcolor after
+% it can raise an option clash that stops the build. main.tex does not load
+% xcolor at all, which is why it was never affected.
+\usepackage{xcolor}
+\newcommand{\revtext}[1]{{\color{blue}#1}}
+\newenvironment{revisionchanges}{\begingroup\color{blue}}{\endgroup}
+\usepackage{enumitem,multirow,placeins,needspace,capt-of}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\makeatletter\newcommand{\finishwrap}{\par\WFclear}\makeatother
+\usepackage[hyphens]{url}
+\usepackage[hidelinks]{hyperref}
+% \providecommand, not \newcommand: these names are ours, but \newcommand stops
+% the build if anything else ever defines them, and main.tex already guards them
+% this way.
+\providecommand{\TODO}[1]{\textcolor{red}{[TODO: #1]}}
+\providecommand{\PEND}[1]{\textcolor{blue}{[PENDING: #1]}}
+\providecommand{\one}{\mathbf 1}
+\providecommand{\F}{\mathcal F}
+\providecommand{\off}{\bar o}
+\providecommand{\A}{\mathcal A}
+% every result number in the body comes from here; regenerate with
+%   python build_numbers.py --ref ishibuchi
+\input{numbers.tex}
+% the 2x2 factorial and the headline ranges; regenerate with
+%   python build_factorial.py
+\input{factorial_macros.tex}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}[proposition]{Lemma}
+\newtheorem{corollary}[proposition]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[proposition]{Remark}
+
+\title{C3BO: Count-Conditioned Combinatorial Bayesian Optimization}
+\author{Anonymous Authors}
+\begin{document}
+\raggedbottom
+\maketitle
+\lhead{Under review as a conference paper at ICLR 2027}
+
+% =====================================================================
+\begin{abstract}
+Evaluation-limited subset optimization must choose both how many items to select and which ones.
+Across four \revtext{synthetic} benchmarks with additive objectives, \revtext{none of} the nine surrogate-based methods \revtext{evaluated an optimal size in more than 2.75\% of its post-initial evaluations}.
+For kernels depending only on which items differ, \revtext{even with item-specific lengthscales}, we prove that the linear size direction receives \revtext{the same first-order prior variance as an average item direction}.
+The benchmarks have a dominant size effect \revtext{but feasibility repair leaves the initial designs in a narrow size range, and the fitted models} underestimate that effect.
+We propose C3BO, which \revtext{gives the size effect its own prior scale and uses the posterior mean to choose the size}.
+When the \revtext{unrestricted solve cannot certify a new design} in time, it compares candidates from \revtext{fixed-size} subproblems, where size-only errors leave \revtext{the ranking of designs at a given size} unchanged.
+\revtext{C3BO and random count} both outperform all thirteen external methods \revtext{in mean hypervolume AUC} across the four benchmarks.
+C3BO improves hypervolume AUC over \revtext{random count} by \hvGainHeldIsh\% on held-out instances.
+\revtext{Using the same fitted surrogate for both size rules, posterior size selection beats random count under the size-aware prior, and random count does better under the isotropic prior.
+With the size-aware fit, posterior size selection also improves mean AUC by 0.5--1.4\% over a sampler given the binding size limit.}
+\revtext{C3BO ties for the highest mean AUC on tomography and trails several baselines on sensor placement.
+It leads all fourteen external methods on each of five portfolio markets.
+Averaged across those markets, its AUC is 6.4\% lower than that of a rule that samples near both size limits.
+In a matched portfolio ablation, disabling fixed-size search increases repeat evaluations and lowers mean AUC.}
+\end{abstract}
+
+% =====================================================================
+\section{Introduction}\label{sec:intro}
+
+Evaluation-limited subset optimization must choose how many items to select and which ones, under feasibility constraints that are known in advance and cheap to check.
+Applications include sensor placement \citep{krause2008near}, feature selection \citep{guyon2003introduction} and facility selection.
+We call the two decisions the \emph{count} and the \emph{composition}.
+\revtext{Size sets a ceiling on what the choice of items can achieve. Let $V(K)$ be the best value at size $K$ and $K^\star$ an optimal size. Even the best subset of size $K$ falls short by $V(K^\star)-V(K)$.}
+\revtext{Most surrogate-based methods choose the size implicitly: the acquisition step scores whole subsets and the chosen subset determines the size}, whether they use Bayesian optimization \citep{shahriari2015taking,baptista2018bayesian,oh2019combinatorial,pmlr-v139-wan21b,deshwal2023bayesian,papenmeier2023bounce} or a learned model maximized by an integer program \citep{papalexopoulos2022constrained}.
+
+\revtext{How often do these methods evaluate an optimal size?} We ran thirteen methods on \revtext{four generated constrained benchmarks} with 250 items and two objectives, and computed the optimal size exactly for each trade-off.
+Figure~\ref{fig:recount-sizes} shows the pattern \revtext{on two of them}: search stays near its starting size, too small when items add value and too large when they cost.
+Across the nine surrogate-based methods, from Gaussian processes \citep{daulton2021parallel,ament2023unexpected} to foundation models \citep{hollmann2025accurate,yu2026git}, \revtext{none evaluates the optimal size of any trade-off in more than 3\% of its evaluations in any benchmark}.
+\revtext{Even a simple size rule helps. Drawing sizes from a broad distribution and using a linear surrogate to choose the items beats all 13 external methods in hypervolume AUC on all four benchmarks. Can the surrogate choose a better size than this random rule?}
+
+\revtext{With the standard linear surrogate, taking the size of the highest-scoring design performs worse than drawing the size at random.}
+Two things keep \revtext{it} at the wrong size.
+The first is the data: initial designs are random draws repaired to satisfy the constraints \citep{salcedo2009survey}, and repair moves their size away from the best one, so that in MWIS a request of 96 items comes back with 54.
+The second is the prior.
+\revtext{The shared change in objective value per added item is the size effect. For binary-input kernels that depend only on which items differ, the linear size direction receives the same prior variance as an average item direction, even with a separate lengthscale for each item.} We prove that every kernel that depends only on which items differ gives \revtext{it only the prior share of a single item, even with a separate lengthscale for every item. Such a prior is right when item effects cancel and wrong when they share a sign.}
+An archive of nearly one size cannot \revtext{fully} overrule such a prior\revtext{. R}efitted to archives from our runs, \revtext{a linear surrogate} recovers at most 15.7\% of the size effect and a Gaussian process at most 20.1\%. \revtext{To test whether this matters for search, we replace only the fitted size effect with its true value. The share of proposals within 10 items of an optimal size rises from 0--9\% to 63--91\%.}
+\revtext{Shrinkage makes the surrogate undervalue adding items when they are beneficial and understate their cost when they are costly.}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\linewidth]{figures/fig_recount_sizes.pdf}
+\caption{\revtext{Where evaluated sizes fall relative to $K^\star$, the median optimal size over eight trade-offs. Points left of zero are smaller than $K^\star$ and points right are larger. Dots give medians, bars span the 10th to 90th percentiles, and the right columns report hypervolume AUC.}}
+\label{fig:recount-sizes}
+\end{figure}
+
+We propose C3BO, which corrects the surrogate's \revtext{prior} belief about size and \revtext{then} lets the posterior choose the count.
+\revtext{It adds} $|x|$ as a feature \revtext{with a coefficient $\gamma$ given} a diffuse prior\revtext{. The size feature is the sum of the item indicators, so the model remains linear in the items. With $\beta\sim\mathcal N(0,s^2I)$ and $\gamma\sim\mathcal N(0,s^2L^2)$, the coefficients $w=\beta+\gamma\one$ have prior $\mathcal N\bigl(0,s^2(I+L^2\one\one^\top)\bigr)$. The shared coefficient $\gamma$ lets the model learn a size trend \citep{gelman1995bayesian}.
+C3BO then} solves the whole problem \revtext{without fixing the size. If that solve cannot certify a new design in time, C3BO also looks for candidates at a few fixed sizes.
+The corrected posterior beats random count and comes close to sampling near a given size limit. Across eleven benchmarks, full C3BO has the highest mean hypervolume AUC among the external methods and random count on ten.}
+
+\revtext{Why change the prior of a single coefficient? On these archives, the linear model recovers nearly all of the size effect once that coefficient has its own prior scale. A richer size curve asks more of the data. In the tomography comparison, a cubic term in the Gaussian surrogate left the chosen sizes unchanged. The linear score can favour extreme sizes, which makes sensor placement, where most optimal sizes are interior, a useful test.}
+
+\paragraph{Contributions.}
+\begin{enumerate}[leftmargin=*,topsep=2pt,itemsep=1pt]
+\item \revtext{We diagnose why surrogates can miss good subset sizes. Kernels that depend only on which items differ give the linear size direction the prior variance of an average item direction. Narrow archives limit size-effect recovery in linear surrogates.}
+\item \revtext{We propose C3BO, which gives the size effect its own prior scale and uses the posterior mean to choose the size. C3BO improves held-out HV AUC over random count by \hvGainHeldIsh\%.}
+\item \revtext{We use fixed-size search when the first solve cannot certify a new design in time. Size-only errors cancel when ranking candidates of the same size. Lemma~\ref{prop:inv} shows how large those errors must be to change which size wins in the candidate pool.}
+\item \revtext{We test when learning the size helps. With the same size-aware prior, posterior size selection leads sampling near a known limit by 0.5--1.4\% in mean AUC on the four additive benchmarks. On nonlinear benchmarks, C3BO's gains over simple size rules vary by task.}
+\end{enumerate}
+
+% =====================================================================
+\section{Related Work}\label{sec:related}
+
+\paragraph{Combinatorial Bayesian optimization and kernels on the hypercube.}
+Surrogates that model binary or categorical designs directly
+\citep{baptista2018bayesian,oh2019combinatorial,deshwal2021mercer} give way at larger $n$ to
+embeddings, trust regions and tabular foundation models
+\citep{deshwal2023bayesian,papenmeier2023bounce,pmlr-v139-wan21b,hollmann2025accurate,yu2026git},
+while others keep a continuous acquisition step and relax or reparameterize the
+discrete variables \citep{daxberger2019mixed,daulton2022bayesian}. A recent framework
+collects these methods \citep{dreczkowski2023framework}. \revtext{In the benchmark configurations, the acquisition chooses a whole subset, and its size follows from that choice.} Kernels that depend on $x$ and $x'$
+only through $x\oplus x'$ are diagonal in the Walsh basis
+\citep{o2014analysis}, with diffusion \citep{kondor2002diffusion} and
+Hamming kernels the permutation-symmetric special case. \revtext{On binary inputs, the same class includes kernels with automatic relevance determination (ARD), which give each item its own lengthscale \citep{neal1996bayesian,rasmussen2006gaussian}} because
+$(x_i-x'_i)^2=(x\oplus x')_i$. The diagonalization is standard. What we add is
+what it implies for the size decision. \revtext{BOCS \citep{baptista2018bayesian} fits sparse polynomial coefficients with a horseshoe prior.}
+
+\paragraph{Cardinality, subset selection and repair.}
+Evolutionary and estimation-of-distribution methods search subsets without a
+surrogate \citep{deb2002fast,zhang2007moea,baluja1994population}, and the
+multi-objective formulations among them treat the size as a second objective
+rather than as a decision to be made first \citep{qian2015neurips-subset,friedrich2015maximizing}. Repair operators restore feasibility
+after an unconstrained proposal \citep{salcedo2009survey}. We show that repair
+also concentrates the observed size band, and that the band we observe excludes
+the optimal size in all four of our generated benchmarks.
+
+\paragraph{Multi-objective acquisition and integer programs.}
+Expected hypervolume improvement and its numerically stable forms
+\citep{daulton2021parallel,ament2023unexpected} keep the size inside one acquisition step,
+and where that step fits a Gaussian process on binary inputs,
+Proposition~\ref{prop:blind} applies to it. Thompson sampling over the Pareto set
+\citep{33523504fb214ab4be9971ced3b8e9e0} and adaptive $\epsilon$-constraint decompositions
+\citep{yang2026multiobjective} change how the trade-offs are traversed, and meta-learned
+surrogates transfer across tasks \citep{pmlr-v235-pan24b,watanabe2023metamotpe}.
+\revtext{These methods need not expose count as a separate decision variable.} Mixed-integer formulations of
+acquisition maximize a learned model exactly
+\citep{papalexopoulos2022constrained}. We show that what the surrogate learns changes
+how hard that program is. General treatments of Bayesian optimization
+\citep{shahriari2015taking,garnett2023bayesian} do not separate the two decisions.
+
+% =====================================================================
+\section{Problem Setup}\label{sec:setup}
+
+Let $\F\subseteq\{0,1\}^n$ be a known feasible set and $f(x)\in\mathbb R^2$ the
+objectives. \revtext{Each batch uses several weights to trade off the two objectives. The $h$th weight $\lambda_h$ gives the scalar objective $f_h=\lambda_h^\top f$}. For the
+\revtext{set of feasible designs of size $K$, $\F_K=\{x\in\F:|x|=K\}$,} let $V_h(K)=\max_{\F_K}f_h$ and
+$K^\star_h\in\arg\max_K V_h(K)$. \revtext{In the surrogate, $\hat c_h$ gives the posterior mean item scores. Its choice of size $\hat K_h$ is the size of the design that maximizes $\hat c_h^\top x$ over $\F$.} For feasible $x$ with $|x|=K$,
+\begin{equation}\label{eq:decomp}
+V_h(K^\star_h)-f_h(x)=\underbrace{V_h(K^\star_h)-V_h(K)}_{\text{size loss}}
++\underbrace{V_h(K)-f_h(x)}_{\text{composition loss}} .
+\end{equation}
+\revtext{The first term measures what is lost by choosing size $K$, even with the best items at that size. The second measures what is lost by choosing $x$ among designs of size $K$. Fixing $K$ lets the search focus on the second term. Comparing sizes still requires estimating their relative values, which motivates the size-aware prior in Section~\ref{sec:learn}.}
+We compute $K^\star_h$ exactly by integer programming in the four generated benchmarks, and with a greedy oracle on the optimal-design benchmarks of Section~\ref{sec:beyond}.
+
+\paragraph{Notation.}
+Write each coefficient vector as $w=\off(w)\one+w_\circ$ with
+$\off(w)=\one^\top w/n$ and $\one^\top w_\circ=0$, so that
+$w^\top x=\off(w)\,|x|+w_\circ^\top x$ and the first term is size-only. We call $\off(w)$ the \emph{size effect}. In our generated benchmarks it is large,
+because item values share one sign: coefficients are uniform on
+$\{10,\dots,99\}$, whose mean-to-SD ratio is $2.10$, \revtext{so the mean item effect lies about $2.1$ standard deviations from zero. This strong size trend is built into the generators.} It is negative for set cover, where items cost, and
+positive in the other three benchmarks.
+
+% =====================================================================
+
+
+\section{Why Search Settles at the Wrong Size}\label{sec:diagnosis}
+
+\revtext{Why does the surrogate choose the wrong size? We first ask how much variation the prior allows along the size direction, then how much a narrow initial archive can teach the model about that direction. Finally, we replace the fitted size effect to test whether it changes the selected sizes.} Proofs are in the appendix.
+
+\subsection{The prior does not favour size}\label{sec:blind}
+
+\revtext{We first analyze how the kernel allocates prior variance on the full binary cube, before imposing feasibility constraints. Uniform weighting gives the inner product $\langle u,v\rangle=2^{-n}\sum_{x\in\{0,1\}^n}u(x)v(x)$ and preserves the symmetry under XOR shifts. Let $W_j=\mathrm{span}\{\chi_S:|S|=j\}$ be the order-$j$ Walsh subspace, where $\chi_S(x)=(-1)^{\sum_{i\in S}x_i}$. A size-only function depends on $x$ only through $|x|$.}
+
+\begin{proposition}[Size neutrality of the prior]\label{prop:blind}
+Let $f\sim\mathcal{GP}(0,C)$ with $C(x,x')=g(x\oplus x')$, and let $f_j$ be the
+projection of $f$ onto $W_j$. Then $W_j$ contains exactly one unit-norm size-only
+direction $u_j$, and if $\mathbb E\|f_j\|^2>0$,
+$\mathbb E\langle f,u_j\rangle^2/\mathbb E\|f_j\|^2=\binom nj^{-1}$.
+\end{proposition}
+
+\revtext{At first order, the linear size direction $u_1$ gets $1/n$ of the prior variance, as much as an average item direction. Appendices~\ref{app:blind} and~\ref{app:linear} give the results for RBF and Mat\'ern kernels with ARD and for the isotropic linear prior. At $n=250$, the share is $0.4\%$. Under uniform sampling of binary subsets, size accounts for about $82\%$ of the variation in the generated objectives.}
+
+\subsection{A narrow archive cannot overrule the prior}\label{sec:narrow}
+
+\revtext{To estimate the effect of changing size from data, the model needs to see designs of different sizes.} Initialization draws random designs and repairs them to feasibility, and repair
+changes their size: in MWIS no design in the $20$ initial archives exceeds $77$
+items. In every generated benchmark the initial sizes exclude the optimal ones.
+
+\begin{proposition}[Prior-controlled size-effect recovery]\label{prop:gain}
+Model the standardized outputs as $a_0+w^\top x+\varepsilon$ with a flat prior on
+the intercept $a_0$, $w\sim\mathcal N\bigl(0,s^2(I+L^2\one\one^\top)\bigr)$ and
+noise $\mathcal N(0,\sigma^2)$. Fix $(s,\sigma,L)$ and the archive
+$X\in\{0,1\}^{N\times n}$, with sizes $\mathbf k=X\one$ and
+$\mathbf k_c=\mathbf k-\bar k\one$. Then
+$\off(\hat c)=\tfrac{a}{a+\eta_L}\,\off(w)+(\text{terms not involving }\off(w))$,
+where $\eta_L=n/(1+nL^2)$,
+$a=\mathbf k_c^\top(\tilde X\tilde X^\top+\kappa I)^{-1}\mathbf k_c$,
+$\tilde X=X_c(I-\one\one^\top/n)$, $X_c$ is the column-centred design and
+$\kappa=\sigma^2/s^2$. Moreover $a\le\|\mathbf k_c\|^2/\kappa$.
+\end{proposition}
+
+\revtext{The fraction $a/(a+\eta_L)$ tells us how much of the true size effect carries through to the fit. The archive supplies $a$, which measures the size variation left after accounting for item composition and noise. The prior supplies the shrinkage term $\eta_L$.} The isotropic prior ($L=0$) has $\eta_0=n$,
+the inverse of the $1/n$ share above, and $a\le\|\mathbf k_c\|^2/\kappa$ stays
+small on a narrow archive. Raising $L$ lowers the threshold without changing the
+archive: at $n=250$ and $L=50$, $\eta_L\approx4\times10^{-4}$. A near-unit
+coefficient still requires $a\gg\eta_L$. The posterior variance of $\off(w)$ is
+$s^2/(a+\eta_L)$, approaching $s^2/a$ for $a>0$ as $L\to\infty$: relaxing the
+prior removes shrinkage but creates no information absent from the archive. A
+single-size archive has $a=0$, and then no posterior quantity depends on $\off(w)$.
+
+\begin{lemma}[\revtext{Monotone size}]\label{lem:mono}
+\revtext{For fixed item scores $c$ and feasible set $\F$, let $x(e)$ maximize $(c+e\one)^\top x$ over $\F$. If $e<e'$, then $|x(e)|\le |x(e')|$ for any choice of maximizers.}
+\end{lemma}
+
+\revtext{Lemma~\ref{lem:mono} shows that with composition fixed, shrinking a positive size effect can only move the optimal size down, and shrinking a negative one can only move it up.}
+\revtext{In Appendix~\ref{app:diagnosis}, we keep the item scores for composition fixed on stored backbone fits and restore only the true size effect. The share of proposals within ten items of an optimal size rises from $0$--$9\%$ to $63$--$91\%$.}
+
+\section{C3BO: size-aware modelling and count-conditioned search}\label{sec:method}
+
+\revtext{C3BO gives the size direction its own prior scale so it can compare designs across sizes. The solver first searches without fixing the size. If it cannot certify a new design in time, the fallback looks for alternatives at fixed sizes. Algorithm~\ref{alg:c3bo} shows how this produces one proposal per trade-off weight $\lambda_h$.}
+
+\subsection{The size-aware posterior and the fallback}\label{sec:learn}
+
+\paragraph{A size-aware posterior.}
+C3BO implements the prior family of Proposition~\ref{prop:gain}. We centre the
+design columns, drop the intercept, and append one feature proportional to
+$|x|-\overline{|x|}$ with a prior scale $L=50$ times that of an item coefficient.
+The fitted size coefficient is added back to every item,
+$\hat c=\hat\beta+\hat\gamma\one$. Since $|x|$ is a sum of item features, the
+model class is unchanged. Only the prior moves, to \revtext{the size-aware prior}
+$w\sim\mathcal N\bigl(0,\,s^2(I+L^2\one\one^\top)\bigr)$\revtext{, or equivalently $w=\beta+\gamma\one$ with $\beta\sim\mathcal N(0,s^2I)$ and $\gamma\sim\mathcal N(0,s^2L^2)$. This hierarchical prior gives the shared size effect $\gamma$ its own diffuse prior. It} lowers the prior
+precision of the size effect from $n$ to $\eta_L$ and leaves zero-sum
+directions untouched. \revtext{On the backbone's archives it recovers essentially all of the size effect.}
+\revtext{Appendix~\ref{app:prior-control} measures the contribution of the diffuse prior while holding centring and intercept treatment fixed.}
+
+\Needspace{11\baselineskip}
+\paragraph{\revtext{Why fix the size during fallback?}}
+\revtext{Every design at size $K$ receives the same size score. The solver can therefore rank items at that size even when the size score is wrong. To compare the resulting candidates across sizes, however, it needs the full score. The lemma gives the margin a size error must overcome to change the winner in the candidate pool.}
+\begin{lemma}[\revtext{Fixed-size rankings and the margin between sizes}]\label{prop:inv}
+\revtext{Fix the posterior mean score $s(x)=\hat c_h^\top x$. Adding a size-only error $e(|x|)$ leaves the rankings within each $\F_K$ unchanged. In a fixed pool of eligible candidates, let $x_K$ be the best candidate at each represented size, $\hat V(K)=\max_{x\in\F_K}s(x)$, and $g_K=\hat V(K)-s(x_K)$ its composition shortfall. A winning size $K_0$ under $s$ remains a winner under $s+e$ exactly when, for every represented $K$,}
+\begin{equation}\label{eq:fallback-margin}
+{\color{blue}\hat V(K_0)-\hat V(K)-(g_{K_0}-g_K) \;\ge\; e(K)-e(K_0).}
+\end{equation}
+\end{lemma}
+
+\begin{algorithm}[t]
+\caption{\revtext{One C3BO batch}}
+\label{alg:c3bo}
+\small\color{blue}
+\begin{algorithmic}[1]
+\Require archive, weights $\lambda_1,\dots,\lambda_B$, solve limit $T$, gap $\epsilon$, offsets $\mathcal D$, size limits $K_{\mathrm{low}},K_{\mathrm{high}}$
+\For{$h=1,\dots,B$}
+  \State Fit a Bayesian linear model to $f_h=\lambda_h^\top f$ with prior $w\sim\mathcal N\bigl(0,s^2(I+L^2\one\one^\top)\bigr)$ \label{line:prior}
+  \State $\hat c_h\gets$ posterior mean
+  \State $\mathcal P_U\gets$ incumbent set from $\max_{x\in\F}\hat c_h^\top x$ after $T/2$ \label{line:solve}
+  \If{$\mathcal P_U=\{x_U\}$ with $x_U$ new and certified within gap $\epsilon$}
+    \State $\hat x_h\gets x_U$
+  \Else
+    \If{$\one^\top\hat c_h\ge 0$}
+      \State $(K_{\mathrm{end}},\delta)\gets(K_{\mathrm{high}},-1)$
+    \Else
+      \State $(K_{\mathrm{end}},\delta)\gets(K_{\mathrm{low}},+1)$
+    \EndIf
+    \State $\mathcal K\gets\{\mathrm{clip}(K_{\mathrm{end}}+\delta d,K_{\mathrm{low}},K_{\mathrm{high}}):d\in\mathcal D\}\cup\{|x|:x\in\mathcal P_U\}$
+    \State $\mathcal P_K\gets$ incumbent set from $\max_{x\in\F_K}\hat c_h^\top x$ for each $K\in\mathcal K$
+    \State $\mathcal P\gets\mathcal P_U\cup\bigcup_{K\in\mathcal K}\mathcal P_K$
+    \State $\mathcal P_{\mathrm{new}}\gets\{x\in\mathcal P:x\text{ is unevaluated and not yet in this batch}\}$
+    \If{$\mathcal P_{\mathrm{new}}\ne\varnothing$} \label{line:pick}
+      \State $\hat x_h\gets\arg\max_{x\in\mathcal P_{\mathrm{new}}}\hat c_h^\top x$
+    \Else
+      \State $\hat x_h\gets\arg\max_{x\in\mathcal P}\hat c_h^\top x$
+    \EndIf
+  \EndIf
+\EndFor
+\State \Return $\hat x_1,\dots,\hat x_B$
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Choosing the count.}
+\revtext{In Algorithm~\ref{alg:c3bo}, C3BO accepts a new incumbent certified within gap $\epsilon$ by the unrestricted solve. Otherwise, it uses the remaining time to search at fixed sizes near the boundary favoured by the fitted scores. From the pooled candidates it picks the highest-scoring new design, or the highest-scoring candidate if all repeat. Lemma~\ref{prop:inv} explains how a better composition at an interior size can make that size win. Appendix~\ref{app:fallback-implementation} gives the implementation details.}
+
+\subsection{Where the posterior's count goes}\label{sec:edge}
+
+$\F$ is \emph{downward-closed} if removing items preserves feasibility, and
+\emph{upward-closed} if adding them does. MOKP and MDK ($Ax\le b$ with $A\ge0$,
+$m=2$ and $5$ rows) and MWIS ($x_i+x_j\le1$ on $741$ edges) are downward-closed,
+and set cover ($Ax\ge\one$) is upward-closed. The PyOED benchmarks constrain only the count.
+
+\begin{proposition}[Sizes of inclusion-maximal or inclusion-minimal solutions]\label{prop:edge}
+Let $\F$ be downward-closed and let $x^\ast$ maximize $\hat c^\top x$ over $\F$.
+(a) If $\hat c_i<0$ then $x^\ast_i=0$. (b) If $\hat c>0$, every maximizer is
+inclusion-maximal, so $|x^\ast|$ lies between the smallest and largest sizes of
+inclusion-maximal elements of $\F$. For upward-closed $\F$ the signs reverse and
+maximizers are inclusion-minimal.
+\end{proposition}
+
+Part (a) is why the uncorrected search is easy for the solver: a shrunk size
+effect leaves $\hat c$ with mixed signs, and the solver works on \revtext{fewer than half} of the items. Part (b) is what the correction does when, as in all our runs, every item
+takes the same sign: nothing can be discarded, and the posterior's count lies in the band
+of inclusion-extremal sets. In our four generated benchmarks that band sits at an end of the
+feasible range, a fact about the benchmarks rather than part of the proposition.
+
+\paragraph{\revtext{Solving near the size boundary.}}
+\revtext{Near the end of the feasible size range, solver difficulty depends on the strength of the linear relaxation.} With $m$ knapsack rows the relaxation is within
+$m\max_i\hat c_i$ of the integer optimum, so near the boundary the knapsack problem is nearly as easy
+as its relaxation. For independent set and set cover the relaxation carries
+little information \citep{lovasz1975ratio,chvatal1979greedy}. \revtext{Table~\ref{tab:edge} shows that at a $1$\,s limit, the unrestricted solve closes its gap on the two knapsack benchmarks and leaves large gaps on set cover and MWIS.} \revtext{If the solver cannot finish near the boundary in time, the selection rule may favor a solution at an interior size.}
+
+\paragraph{\revtext{Different weights can select the same design.}}
+\revtext{Two nearby trade-off weights can favour the same design. If the unrestricted candidate repeats, C3BO checks the fixed-size candidates and takes the best new one available. When good designs exist at many sizes, a repeat costs an evaluation that could have explored another size. Section~\ref{sec:beyond} tests this on optimal-design benchmarks.}
+
+\section{Experiments}\label{sec:exp}
+
+\subsection{Setup}\label{sec:protocol}
+
+\paragraph{Benchmarks.}
+Four generated benchmarks of constrained bi-objective subset selection with $n=250$ items:
+multi-objective knapsack with $2$ capacity rows (MOKP), multi-dimensional knapsack with
+$5$ (MDK), set cover over $250$ elements, and maximum-weight independent set on a
+random graph with $741$ edges. Objectives are additive in the items. Instances
+are generated rather than taken from a benchmark suite: each of the $20$ per
+benchmark draws its own constraint matrix and objective coefficients from a seeded
+generator, which we release with the code. The two optimal-design benchmarks of
+Section~\ref{sec:beyond} come from PyOED \citep{chowdhary2025pyoed}\revtext{. We also use five portfolio benchmarks from the OR-Library \citep{beasley1990or}}.
+
+\paragraph{Baselines.}
+\revtext{We compare nine surrogate-based methods (CASMOPOLITAN [\citealp{pmlr-v139-wan21b}], qLogNEHVI [\citealp{daulton2021parallel}], BODi [\citealp{deshwal2023bayesian}], Meta-Learn-TPE [\citealp{watanabe2023metamotpe}], qLogNParEGO [\citealp{ament2023unexpected}], MALIBO [\citealp{pmlr-v235-pan24b}], qPOTS [\citealp{33523504fb214ab4be9971ced3b8e9e0}], GIT-BO [\citealp{yu2026git}], and STAGE-BO [\citealp{yang2026multiobjective}]) and four non-surrogate methods (Uniform, PBIL [\citealp{baluja1994population}], NSGA-II [\citealp{deb2002fast}], and MOEA/D [\citealp{zhang2007moea}]), using the adaptations of Appendix~\ref{app:baselines}.} All methods share the initial archives, the
+evaluation and batch budgets, and the repair. \revtext{Figure~\ref{fig:recount-sizes} shows the sizes the methods actually evaluate after repair. The controlled refits in Section~\ref{sec:narrow} isolate how the fitted size effect changes those choices.}
+
+\paragraph{Ablation and count rules.}
+\revtext{Figure~\ref{fig:variants} compares three size rules under two surrogate fits. Posterior count uses the unrestricted solution's size. Random count draws $K\sim\mathrm{Binomial}(n,p)$ with $p$ uniform on $\{0.1,\dots,0.9\}$. Near-boundary count draws an offset uniformly from $\mathcal D$ inward from $K_b$. Both samplers optimize at the chosen size. The main and held-out generated runs precompute size limits from the constraints, keeping the best feasible size from each 60\,s cardinality solve. In Tables~\ref{tab:main} and~\ref{tab:pyoed}, C3BO w/o fallback keeps the first-stage limit and duplicate handling.}
+
+\paragraph{Measurement.}
+\revtext{Each run starts with 20 evaluations and adds ten batches of eight. We measure hypervolume AUC by averaging hypervolume after those ten batches, with objectives scaled to $[0,1]$ and reference point $(-1/7,-1/7)$. The default solver budget is $5$\,s per proposal. Appendix~\ref{app:sweep} reports $1$\,s runs. Intervals bootstrap paired differences across instances, and we apply Holm correction within each family of signed-rank tests. We developed C3BO on the main set and tested it without retuning on new instances from the same generators. As described in Appendices~\ref{app:gpmix} and~\ref{app:heldout}, the main-set and $5$\,s held-out results use each method's own proposals. Appendix~\ref{app:registration} records the prespecified comparisons and amendments.}
+
+\subsection{\revtext{Performance Comparison}}\label{sec:main}
+\input{tables/main.tex}
+
+\revtext{Table~\ref{tab:main} compares optimization performance under the same evaluation budget.} C3BO beats all $13$
+external methods in all four generated benchmarks, \revtext{with a $23$--$38\%$ lead over the best external method and every paired comparison significant after Holm correction. Table~\ref{tab:heldoutabs} shows that C3BO's AUC on held-out instances stays within about $1\%$ of its main-set values.}
+
+\revtext{The two C3BO rows in Table~\ref{tab:main} keep the first-stage limit and duplicate handling fixed to isolate the effect of the fixed-size solves. As Appendix~\ref{app:gpmix} reports, enabling those solves raises mean AUC by 1.06\% on MOKP, 0.68\% on MDK, 4.69\% on Set Cover, and 2.01\% on MWIS.}
+
+\subsection{\revtext{Ablation Studies}}\label{sec:gain}
+
+\begin{figure}[!t]\centering
+\includegraphics[width=\linewidth]{figures/fig_variants.pdf}
+\caption{\revtext{Hypervolume AUC for three size rules under the isotropic prior $w\sim\mathcal N(0,s^2I)$ and size-aware prior $w\sim\mathcal N\bigl(0,s^2(I+L^2\one\one^\top)\bigr)$ with $L=50$. Near-boundary count is supplied with the binding size limit $K_b$. Posterior count beats random count on all four benchmarks with the size-aware fit, and random count does better with the isotropic backbone.}}
+\label{fig:variants}
+\end{figure}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\linewidth]{figures/fig_runtime_2000_time_split.pdf}
+\caption{\revtext{How the allocation of a 5\,s solver budget affects hypervolume AUC and wall time on Set Cover and MWIS with 2,000 variables. The horizontal axis gives the share reserved for the unrestricted solve, with the rest available for fixed-size fallback. We report mean AUC change from the 50\% split and median wall time per evaluation, including size-boundary computation. Bars show 95\% paired bootstrap intervals over five instances per benchmark, with the bar at 70\% omitted for MWIS.}}
+\label{fig:runtime-2000-split}
+\end{figure}
+
+\revtext{\textbf{Ablation Study.} Does letting the surrogate choose the size help? Figure~\ref{fig:variants} shows that it depends on the fit. Across the four benchmarks, posterior count scores 8.3--30.0\% below random count with the isotropic backbone and 6.9--8.6\% above it with the size-aware fit. The latter also centres the inputs and omits the intercept. The unrestricted isotropic backbone has a one-second solve limit. All other variants have five seconds.}
+
+\revtext{\textbf{Effect of the Size Prior.} Table~\ref{tab:prior} compares $L=0$ and $L=50$ with centred inputs and no intercept in either arm. With $L=50$, the fits recover nearly all of the true size effect on stored archives. In the online reruns without GP proposal replacement, setting $L=0$ lowers mean AUC by 14.2--35.7\% across the four benchmarks.}
+
+\noindent\begin{minipage}[t]{0.62\linewidth}
+\vspace{0pt}
+\revtext{\textbf{GP Size-Mean Ablation.} Can a GP benefit from an explicit size term? Adding a linear size term to the mean raises median size-effect recovery on stored archives from 0.3--20.1\% to 96.5--104.4\%. With qLogNEHVI acquisition fixed, Table~\ref{tab:gp-mean-brief} shows mean AUC gains of 3.5--6.8\%. AUC improves in all 20 pairs, five per benchmark, as detailed in Appendix~\ref{app:gp-online}.}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}\centering\footnotesize\color{blue}
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{3pt}
+\captionof{table}{Online AUC with a size term.}\label{tab:gp-mean-brief}
+\setlength{\tabcolsep}{1.5pt}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrr@{}}\toprule
+Benchmark & Vanilla GP & GP + size term \\
+\midrule
+MOKP & 0.4626 & 0.4790 (+3.6\%) \\
+MDK & 0.4454 & 0.4610 (+3.5\%) \\
+Set Cover & 0.7137 & 0.7485 (+4.9\%) \\
+MWIS & 0.2469 & 0.2636 (+6.8\%) \\
+\bottomrule
+\end{tabular*}
+\end{minipage}\par
+
+\begin{figure}[t]\centering
+\includegraphics[width=\linewidth]{figures/fig_runtime_2000_main.pdf}
+\caption{\revtext{Optimization quality and time per evaluation for C3BO and the baselines at 2,000 items. Each point shows mean hypervolume AUC and median wall time over five paired instances. C3BO timing includes computing the size boundary.}}
+\label{fig:runtime}
+\end{figure}
+
+\Needspace{7\baselineskip}
+\revtext{\textbf{Learned Size Selection vs.\ Sampling Near a Given Size Limit.} How much does learning the size add when the sampler is told which side of the feasible size range to search? C3BO's fallback uses the same precomputed size limits and chooses the side from its fitted scores. Figure~\ref{fig:variants} shows that the sampler reaches 91--96\% of full C3BO's mean AUC with the isotropic prior and 98--99\% with the size-aware prior. With the same size-aware surrogate, posterior size selection leads the sampler by 0.5--1.4\% in mean AUC. Appendix~\ref{app:near-boundary} reports the 1.4--2.2\% lead of full C3BO with fallback and duplicate avoidance.}
+
+\revtext{\textbf{Weak size effects.} Does the size prior help as the shared size effect weakens? We shift the item coefficients in MOKP and Set Cover to reduce their absolute mean relative to their standard deviation. With the search fixed, Table~\ref{tab:weak-fit} shows that fitting $L$ improves mean AUC over centred $L=0$ by 12.5\% on MOKP and 31.7\% on Set Cover at a ratio of 1.0, and by 4.8\% and 17.2\% at 0.5. At zero mean, the differences are $-0.9\%$ and $+0.8\%$, with both intervals including zero at the reported precision. Table~\ref{tab:weak-gain} separately shows that at zero mean, full C3BO with $L=50$ leads random count by 6.65\% and 7.00\%, respectively. Both arms in each comparison use the same GP replacement schedule.}
+
+\noindent\begin{minipage}[t]{0.62\linewidth}
+\vspace{0pt}
+\revtext{\textbf{Initial Size Diversity.} Does the size prior still help if the initial designs span a range of sizes? Spreading the starts raises AUC by 2.8--28.1\% with the isotropic prior. Table~\ref{tab:initial-size-brief} and Appendix~\ref{app:reporting} show that with the same diverse starts, fitted $L$ improves on centred $L=0$ in all four benchmarks.}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}\centering\footnotesize\color{blue}
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{3pt}
+\captionof{table}{AUC with diverse starts.}\label{tab:initial-size-brief}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrr@{}}\toprule
+Benchmark & Centred $L=0$ & Fitted $L$ \\
+\midrule
+MOKP & 0.603 & 0.648 \\
+MDK & 0.539 & 0.592 \\
+Set Cover & 0.986 & 1.004 \\
+MWIS & 0.311 & 0.321 \\
+\bottomrule
+\end{tabular*}
+\end{minipage}\par
+
+\revtext{\textbf{Solver Budget Sensitivity.} Giving the unrestricted solve more time can help it find and certify a good candidate, but leaves less time to try alternatives at fixed sizes. To measure this trade-off, we split the same 5\,s solver budget between the unrestricted solve and fixed-size fallback in different proportions. Figure~\ref{fig:runtime-2000-split} shows how wall time and hypervolume AUC change with this split. Allocating 0.5\,s instead of 2.5\,s to the unrestricted solve saves about 2\,s per evaluation on both benchmarks. Mean AUC rises by 11.9\% on Set Cover and by 0.7\% on MWIS, where the paired interval includes zero.}
+
+\subsection{\revtext{Runtime and scaling}}\label{sec:runtime}
+
+\revtext{We test whether C3BO scales from 250 to 2,000 items, estimating the size limits with a greedy pass. Figure~\ref{fig:runtime} compares hypervolume AUC and wall time per evaluation for full C3BO, its unrestricted-only variant, and external methods. On MOKP, the unrestricted stage usually produces a certified new design, so C3BO can stop early. Median time falls from 4.71 to 2.62\,s per evaluation, while mean AUC stays close (0.6094 vs.\ 0.6105). On Set Cover, the two variants take similar time (5.21 vs.\ 4.95\,s per evaluation), but full C3BO raises mean AUC from 0.9127 to 1.0237 (+12.2\%). These comparisons measure the combined effect of fixed-size fallback and duplicate avoidance. Appendix~\ref{app:online-runtime-2000} reports MDK and MWIS.}
+
+\Needspace{23\baselineskip}
+\subsection{\revtext{Nonlinear benchmarks}}\label{sec:beyond}
+
+\input{tables/outside.tex}
+\revtext{On the generated benchmarks, good designs tend to have sizes near one limit. Does C3BO still help when the value of adding an item depends on the items already chosen and good designs can have interior sizes? Table~\ref{tab:pyoed} tests this on nonlinear design and portfolio problems.}
+
+\revtext{\textbf{Sensor placement and tomography (PyOED).} We reran both C3BO variants on five scenarios per task, keeping the initial designs and evaluation budget and removing GP proposal replacement \citep{chowdhary2025pyoed}. As Table~\ref{tab:pyoed} shows, both share the highest mean AUC on tomography ($n=250$) and trail several baselines on sensor placement ($n=81$), where seven of eight optimal sizes are interior. Full C3BO never called the fixed-size solver, and both variants evaluated the same designs in the same order on all ten scenarios. Appendix~\ref{app:pyoed} reports the rerun comparisons.}
+
+\revtext{\textbf{Portfolio selection (OR-Library).} These five markets trade off mean return and variance for equally weighted portfolios of up to 40 assets \citep{beasley1990or,chang2000heuristics}. Table~\ref{tab:pyoed} shows that full C3BO leads the external methods in mean AUC on every market. This comparison evaluates the full C3BO policy, including fixed-size search and duplicate avoidance. Averaged over the five markets, its AUC is 6.36\% below a rule that samples near both size limits. C3BO often proposes large portfolios, while the best observed portfolios at many trade-off weights use only one to three assets. Fixed-size solves help C3BO find alternatives to repeat proposals. Appendix~\ref{app:portfolio} shows that disabling them increases repeats from 186 to 1,021 out of 2,000 evaluations and lowers mean AUC by 7.0--21.9\% across markets.}
+
+\finishwrap
+
+\Needspace{8\baselineskip}
+\section{Conclusion}\label{sec:conclusion}\label{sec:limits}
+
+\revtext{Subset search can miss good sizes when the prior assigns little variance to the size direction and the initial designs cover few sizes. C3BO gives the linear size effect its own prior scale and lets the corrected posterior choose the size. On our generated benchmarks, it reaches sizes near the relevant limit without being given that limit as a target. C3BO trails several baselines on sensor placement, where most optimal sizes are interior. On the portfolios, sampling near both size limits achieves higher mean AUC than C3BO.}
+
+\label{endmain}
+\clearpage
+\bibliographystyle{iclr2027_revision}
+\bibliography{c3bo_refs,c3bo_related_refs,revision_refs}
+
+\section*{Use of AI assistants}
+\revtext{An LLM assistant supported coding, experiments and editing. The authors retain responsibility for results, citations and claims.}
+
+\input{appendix_v3}
+\begin{revisionchanges}
+\input{review_reporting}
+\end{revisionchanges}
+
+\end{document}

@@ -1,0 +1,20 @@
+\begin{table}[!ht]\centering\small\color{blue}
+\caption{Values behind Figure~\ref{fig:variants}. Hypervolume AUC, mean $\pm$ SD over 20 main-set instances. All seven rows use their own proposals without GP replacement. The last row adds fallback and duplicate avoidance to size-aware posterior count.}
+\label{tab:variants}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lllcccc@{}}
+\toprule
+Prior & Count & Fallback & MOKP & MDK & SetCover & MWIS \\
+\midrule
+Isotropic & Posterior & no & $0.481\pm0.014$ & $0.465\pm0.013$ & $0.636\pm0.021$ & $0.219\pm0.014$ \\
+ & Random & -- & $0.563\pm0.028$ & $0.507\pm0.019$ & $0.909\pm0.037$ & $0.290\pm0.017$ \\
+ & Near-boundary & -- & $0.603\pm0.014$ & $0.542\pm0.016$ & $0.963\pm0.019$ & $0.302\pm0.012$ \\
+\midrule
+Size-aware & Posterior & no & $0.647\pm0.016$ & $0.592\pm0.014$ & $0.996\pm0.012$ & $0.320\pm0.014$ \\
+ & Random & -- & $0.599\pm0.020$ & $0.545\pm0.014$ & $0.932\pm0.031$ & $0.295\pm0.021$ \\
+ & Near-boundary & -- & $0.641\pm0.015$ & $0.584\pm0.013$ & $0.991\pm0.008$ & $0.316\pm0.015$ \\
+ & Posterior & yes & $\mathbf{0.655}\pm0.015$ & $\mathbf{0.597}\pm0.012$ & $\mathbf{1.005}\pm0.008$ & $\mathbf{0.322}\pm0.014$ \\
+\bottomrule
+\end{tabular}}
+\end{table}

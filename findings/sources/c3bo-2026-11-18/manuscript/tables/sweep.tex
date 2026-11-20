@@ -1,0 +1,17 @@
+\begin{table}[t]\centering\small
+\caption{Hypervolume AUC against the per-solve limit, on the two benchmarks whose boundary problem is hard. Each cell is AUC (median solver seconds per proposal). \revtext{These are the original runs with the Gaussian-process proposals of Appendix~\ref{app:gpmix}.}}\label{tab:sweep}
+\begin{tabular}{lllccc}
+\toprule
+Prior & Count & Fallback & Limit & SetCover & MWIS \\
+\midrule
+Isotropic & Posterior & no & -- & $0.636$ (0.00) & $0.229$ (0.00) \\
+Isotropic & Random & -- & $1$\,s & $0.843$ (0.01) & $0.288$ (0.02) \\
+Isotropic & Random & -- & $5$\,s & $0.911$ (0.01) & $0.295$ (0.02) \\
+Size-aware & Posterior & no & $1$\,s & $0.586$ (1.03) & $0.262$ (1.01) \\
+Size-aware & Posterior & no & $1.6$\,s & $0.995$ (1.61) & $0.310$ (1.61) \\
+Size-aware & Posterior & no & $5$\,s & $0.996$ (5.00) & $0.320$ (5.00) \\
+Size-aware & Posterior & yes & $1$\,s & $0.937$ (0.80) & $0.303$ (0.81) \\
+Size-aware & Posterior & yes & $5$\,s & $1.000$ (3.53) & $0.320$ (3.35) \\
+\bottomrule
+\end{tabular}
+\end{table}

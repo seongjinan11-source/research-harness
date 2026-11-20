@@ -2,7 +2,7 @@
 
 실패·중단, 보존한 효과, 교훈, 미실행을 구분한 누적 기록이다. 숫자는 보존한 원문 보고서에서 옮겼고, 원인 미상인 결과에 사후 인과 설명을 붙이지 않는다. 새 논문과의 연결은 revisit.md의 재검토 단서에서 확인한다.
 
-총 56개 프로젝트 · 244개 기록 (실패·중단 72개, 보존 62개, 교훈 78개, 미실행 32개)
+총 57개 프로젝트 · 247개 기록 (실패·중단 72개, 보존 64개, 교훈 79개, 미실행 32개)
 
 ## Unknown-law adaptive feature transport around frozen GraphPFN
 
@@ -190,6 +190,30 @@ k20 pooling-before-product: ACM76.390% vs uniform LP85.555%, IMDB28.311% vs35.41
 - 기준선: Uniform LP, class-pooling 후 product, 같은 graph의 강한 PFN
 - 최소 재검증: 먼저 실제 common-support 빈도와 오류의 관계를 확인하고, 고정 곱셈이 아닌 task-adaptive binding의 independent gain을 비교한다.
 - 원문: [findings/sources/graphpfn-2026-11-01/binding.md](../findings/sources/graphpfn-2026-11-01/binding.md)
+
+## C3BO count-aware subset Bayesian optimization (revised submission, blue revision 2026-11-18)
+
+실험 조건: 평가 횟수가 제한된 다목적 subset 최적화다. 몇 개를 고를지(count)와 무엇을 고를지(composition)를 함께 정한다. 제약은 미리 알려져 있고 확인 비용이 싸다. 생성한 제약 벤치마크는 MDK, MOKP, MWIS, SetCover 4개이고, item 250개, 목적 2개다. 응용은 tomography, sensor placement, 포트폴리오 5개 시장이다. 비교 대상은 외부 방법 13–14개다(BODi, CAsMO, GIT-BO, MALIBO-S, Meta-MO-TPE, MOEA/D, NSGA-II, PBIL, qLogNEHVI, qLogNParEGO, qPOTS-HLS, STAGE-BO, Uniform). 지표는 hypervolume AUC다. 출처는 사용자가 2026-11-20에 공유한 ssp-research-main.zip의 원고 소스이며, 이 하네스에서 수치를 다시 계산하지 않았다.
+
+### C3BO-P01 [보존] 표준 surrogate 기반 subset BO는 size(count) 효과를 과소추정해, 최적 크기를 거의 평가하지 못한다.
+
+초록 기준으로, 4개 벤치마크에서 surrogate 기반 방법 9개 가운데 어느 것도 초기 이후 평가의 2.75%를 넘게 최적 크기를 평가하지 못했다. Feasibility repair가 초기 설계를 좁은 크기 대역에 몰아넣는다(MWIS에서 96개 요청이 54개로 돌아옴). 실행 archive에 다시 적합하면 linear surrogate는 size 효과의 최대 15.7%, GP는 최대 20.1%만 회복했다. 적합된 size 효과만 참값으로 바꾸면 최적 크기 ±10 item 안의 제안 비율이 0–9%에서 63–91%로 올랐다. 이론: 바뀐 item에만 의존하는 kernel(XOR-stationary, ARD 포함)은 선형 size 방향에 평균 item 방향과 같은 1차 prior 분산만 준다.
+
+- 확대 금지: additive가 아닌 모든 objective나 모든 kernel 계열로 일반화하지 않는다. 진단 벤치마크는 생성한 additive 4종이다.
+- 원문: [findings/sources/c3bo-2026-11-18/manuscript/main_v2.tex](../findings/sources/c3bo-2026-11-18/manuscript/main_v2.tex)
+
+### C3BO-P02 [보존] size feature |x|에 별도 prior 스케일을 주고 posterior mean으로 크기를 고르는 C3BO가 외부 방법들과 random count를 넘는다.
+
+방법: |x|를 계수 γ ~ N(0, s²L²)의 feature로 추가한다(item 계수 β ~ N(0, s²I)). 그래서 w = β + γ1이 되고 모델은 item에 대해 선형으로 남는다. posterior mean으로 크기를 고르고, 첫 solve가 제한 시간 안에 새 설계를 확정하지 못하면 고정 크기 부분문제들에서 후보를 비교한다. 같은 크기 안에서는 size만의 오차가 순위를 바꾸지 않는다. 결과(초록): C3BO와 random count가 4개 벤치마크의 평균 hypervolume AUC에서 외부 방법 13개를 모두 넘었다. C3BO는 held-out instance에서 random count보다 HV AUC가 10.5–19.0% 높았다(2026-11-15 no-GP 재실행). 같은 적합 surrogate에서 posterior 크기 선택은 size-aware prior 아래에서 random count를 이겼고, isotropic prior 아래에서는 random count가 나았다. size-aware 적합에서는 binding size 한계를 아는 sampler보다 평균 AUC가 0.5–1.4% 높았다. tomography에서 최고 평균 AUC 공동 1위, 포트폴리오 5개 시장 각각에서 외부 방법 14개 모두를 앞섰다. 포트폴리오 대응 ablation에서 고정 크기 탐색을 끄면 반복 평가가 늘고 평균 AUC가 낮아졌다.
+
+- 확대 금지: sensor placement 우위를 주장하지 않는다(여러 baseline에 뒤짐). 포트폴리오 평균에서 양쪽 size 한계 근처를 뽑는 규칙보다 AUC가 6.4% 낮다. 비선형 벤치마크에서 단순 size 규칙 대비 이득은 task마다 다르다. RL 기반 또는 neural CO solver와는 비교하지 않았다.
+- 원문: [findings/sources/c3bo-2026-11-18/manuscript/main_v2.tex](../findings/sources/c3bo-2026-11-18/manuscript/main_v2.tex); [findings/sources/c3bo-2026-11-18/manuscript/numbers.tex](../findings/sources/c3bo-2026-11-18/manuscript/numbers.tex); [findings/sources/c3bo-2026-11-18/manuscript_blue.pdf](../findings/sources/c3bo-2026-11-18/manuscript_blue.pdf)
+
+### C3BO-L01 [교훈] 지배적인 size 효과가 model prior나 집계 방식에 가려지는 문제는 여러 프로젝트에 걸친 공통 축이다.
+
+C3BO에서는 kernel prior가 size 방향을 item 하나 수준으로 축소했다. CORL-S(LLM 휴리스틱 설계 RL 보상)에서는 크기·용량 층 평균이 분산이 큰 층에 판정을 맡겼다(OBP dev에서는 결정 수준 차이가 작았다).
+
+- 원문: [findings/sources/c3bo-2026-11-18/manuscript/main_v2.tex](../findings/sources/c3bo-2026-11-18/manuscript/main_v2.tex); [findings/sources/co-rl-strata-2026-11-20/PRECHECK_KO.md](../findings/sources/co-rl-strata-2026-11-20/PRECHECK_KO.md)
 
 ## CORL-S size/capacity strata mixed reward for RL automatic heuristic design
 

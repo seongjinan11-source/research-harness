@@ -1,0 +1,18 @@
+\begin{table}[h]\centering\small
+\caption{What the size correction does to the acquisition problem. Gaps are median relative optimality gaps at termination, read from the stored solves.}
+\label{tab:edge}
+\begin{tabular}{lcccc}
+\toprule
+ & MOKP & MDK & SetCover & MWIS \\
+\midrule
+Boundary problem                    & knapsack ($m{=}2$) & knapsack ($m{=}5$) & min.\ cover & max.\ indep.\ set \\
+$K^\star_h$ distance to the size limit$^\ast$ & $10$ & $9$ & $4$ & $3$ \\
+Gap, corrected, 1\,s              & $0$ & $0.0014$ & $0.68$ & $7.7$ \\
+Gap, corrected, 5\,s              & $0$ & $0.0010$ & $0.06$ & $0.10$ \\
+Gap, fixed-size subproblems, 1\,s    & $0$ & $0$ & $0$ & $0$ \\
+\bottomrule
+\end{tabular}
+
+{\small $^\ast$ For set cover and MWIS the minimum cover and the maximum independent set were not proven optimal within $60$\,s, so the distance is measured to the best incumbent.}
+
+\end{table}

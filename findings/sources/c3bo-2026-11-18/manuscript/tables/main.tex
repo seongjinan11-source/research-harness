@@ -1,0 +1,28 @@
+\begin{table}[!t]\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{\revtext{Hypervolume AUC on the main set (mean $\pm$ SD over 20 instances per benchmark). C3BO w/o fallback skips fixed-size solves and keeps duplicate handling and the 2.5\,s unrestricted limit.}}
+\label{tab:main}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+Method & MOKP & MDK & SetCover & MWIS \\
+\midrule
+Uniform & $0.451\pm0.006$ & $0.438\pm0.008$ & $0.478\pm0.017$ & $0.195\pm0.008$ \\
+PBIL {\small\citep{baluja1994population}} & $0.472\pm0.011$ & $0.453\pm0.005$ & $0.521\pm0.026$ & $0.192\pm0.008$ \\
+NSGA-II {\small\citep{deb2002fast}} & $0.455\pm0.008$ & $0.442\pm0.009$ & $0.486\pm0.017$ & $0.188\pm0.007$ \\
+MOEA/D {\small\citep{zhang2007moea}} & $0.451\pm0.007$ & $0.436\pm0.008$ & $0.477\pm0.023$ & $0.190\pm0.006$ \\
+CASMOPOLITAN {\small\citep{pmlr-v139-wan21b}} & $0.473\pm0.009$ & $0.455\pm0.008$ & $0.534\pm0.019$ & $0.203\pm0.008$ \\
+qLogNEHVI {\small\citep{daulton2021parallel}} & $0.462\pm0.009$ & $0.446\pm0.006$ & $0.713\pm0.010$ & $0.247\pm0.013$ \\
+BODi {\small\citep{deshwal2023bayesian}} & $0.467\pm0.009$ & $0.449\pm0.005$ & $0.612\pm0.020$ & $0.190\pm0.008$ \\
+\revtext{Meta-Learn-TPE} {\small\citep{watanabe2023metamotpe}} & $0.462\pm0.009$ & $0.448\pm0.010$ & $0.505\pm0.023$ & $0.188\pm0.006$ \\
+qLogNParEGO {\small\citep{ament2023unexpected}} & $0.463\pm0.007$ & $0.448\pm0.005$ & $0.721\pm0.015$ & $0.248\pm0.013$ \\
+MALIBO {\small\citep{pmlr-v235-pan24b}} & $0.453\pm0.007$ & $0.440\pm0.007$ & $0.528\pm0.016$ & $0.197\pm0.006$ \\
+qPOTS {\small\citep{33523504fb214ab4be9971ced3b8e9e0}} & $0.453\pm0.008$ & $0.441\pm0.010$ & $0.508\pm0.020$ & $0.192\pm0.008$ \\
+GIT-BO {\small\citep{yu2026git}} & $0.462\pm0.008$ & $0.443\pm0.008$ & $0.745\pm0.018$ & $0.261\pm0.014$ \\
+STAGE-BO {\small\citep{yang2026multiobjective}} & $0.463\pm0.008$ & $0.450\pm0.006$ & $0.722\pm0.013$ & $0.247\pm0.013$ \\
+\midrule
+\revtext{C3BO w/o fallback} & \revtext{$0.648\pm0.016$} & \revtext{$0.593\pm0.013$} & \revtext{$0.960\pm0.053$} & \revtext{$0.315\pm0.014$} \\
+C3BO & \revtext{$\mathbf{0.655}\pm0.015$} & \revtext{$\mathbf{0.597}\pm0.012$} & \revtext{$\mathbf{1.005}\pm0.008$} & \revtext{$\mathbf{0.322}\pm0.014$} \\
+\bottomrule
+\end{tabular}}
+\end{table}

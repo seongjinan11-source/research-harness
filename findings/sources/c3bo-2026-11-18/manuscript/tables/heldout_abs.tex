@@ -1,0 +1,17 @@
+\begin{table}[h]\centering\small
+\caption{Held-out hypervolume AUC, mean $\pm$ SD over $20$ paired instances, Ishibuchi reference point. \revtext{The upper panel uses the reruns without Gaussian-process proposals and the posterior-mean backbone, whose solve limit is 1\,s. The lower panel uses the original runs with Gaussian-process proposals.}}
+\label{tab:heldoutabs}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llllcccc}
+\toprule
+Limit & Prior & Count & Fallback & MOKP & MDK & SetCover & MWIS \\
+\midrule
+\revtext{$1$\,s} & Isotropic & Posterior & no & \revtext{$0.4825\pm0.0163$} & \revtext{$0.4595\pm0.0144$} & \revtext{$0.6300\pm0.0303$} & \revtext{$0.2191\pm0.0130$} \\
+$5$\,s & Isotropic & Random & -- & \revtext{$0.568\pm0.021$} & \revtext{$0.497\pm0.029$} & \revtext{$0.911\pm0.036$} & \revtext{$0.285\pm0.017$} \\
+ & Size-aware & Posterior & yes & \revtext{$0.655\pm0.016$} & \revtext{$0.591\pm0.014$} & \revtext{$1.006\pm0.017$} & \revtext{$0.321\pm0.018$} \\
+\midrule
+$1$\,s & Isotropic & Random & -- & $0.570\pm0.021$ & $0.500\pm0.029$ & $0.855\pm0.037$ & $0.286\pm0.018$ \\
+ & Size-aware & Posterior & yes & $0.651\pm0.016$ & $0.588\pm0.014$ & $0.945\pm0.027$ & $0.303\pm0.016$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
