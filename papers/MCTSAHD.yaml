@@ -1,0 +1,63 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: MCTSAHD
+title: "Monte Carlo Tree Search for Comprehensive Exploration in LLM-Based Automatic Heuristic Design"
+authors: "Zhi Zheng, Zhuoliang Xie, Zhenkun Wang, Bryan Hooi"
+venue: "ICML 2025"
+year: 2025
+links:
+  paper: https://proceedings.mlr.press/v267/zheng25o.html
+  arxiv: https://arxiv.org/abs/2501.08603
+  code: https://github.com/zz1358m/MCTS-AHD-master
+
+citation:
+  type: inproceedings
+  title: "Monte Carlo Tree Search for Comprehensive Exploration in LLM-Based Automatic Heuristic Design"
+  authors: ["Zhi Zheng", "Zhuoliang Xie", "Zhenkun Wang", "Bryan Hooi"]
+  year: 2025
+  booktitle: "Proceedings of the 42nd International Conference on Machine Learning"
+  publisher: "PMLR"
+  volume: 267
+  pages: "78338--78373"
+  arxiv: "2501.08603"
+  url: https://proceedings.mlr.press/v267/zheng25o.html
+  verified_from:
+    - https://proceedings.mlr.press/v267/zheng25o.html
+    - https://arxiv.org/abs/2501.08603
+
+areas: [co-heuristics]
+problem: "EoH·ReEvo처럼 상위 휴리스틱 몇 개만 population에 남기는 진화 방식은 당장 성능이 낮은 휴리스틱의 잠재력을 버리고 local optimum에 갇히기 쉽다. 이를 피해 휴리스틱 공간을 더 넓게 탐색하고자 한다."
+core_idea: "LLM이 만든 휴리스틱을 모두 버리지 않고 하나의 tree에 저장한다. 가상의 root 아래 각 node는 실행 가능한 코드와 그 설명을 가진다. 정규화한 품질과 탐색 항을 합친 UCT 점수로 node를 고르고, 확장할 때 새 메커니즘 추가(m1), parameter 변경(m2), elite 집합을 참고한 개선(e2), root에서 leaf까지의 경로를 분석한 개선(s1) 연산으로 자식을 만든다. Root에서는 여러 subtree의 휴리스틱을 섞는 crossover(e1)도 쓴다. 새 휴리스틱은 평가 집합에서 돌린 성능을 node 값으로 받고, parent 값은 자식들의 최댓값으로 backpropagate한다. 코드를 만든 뒤 짧은 설명을 따로 다시 쓰게 하는 thought-alignment와, 탐색 계수를 평가 예산에 따라 선형으로 줄이는 exploration-decay를 더한다. 평가 예산은 1,000회다."
+key_assumptions:
+  - "휴리스틱 성능은 평가 집합 위 음의 목적값 기댓값으로 정의되고, 작은 고정 평가 집합으로 추정할 수 있다고 본다. 구성형 TSP는 N=50 64개, KP는 64개, online BPP는 크기가 다양한 Weibull instance 4개, BO 획득함수 설계는 합성 함수 2개다."
+  - "Node 값을 자식의 최댓값으로 전파하므로, 평가 점수가 휴리스틱의 참 품질을 잘 반영한다고 암묵적으로 가정한다."
+strengths:
+  - text: "TSP, CVRP, KP, MKP, ASP, online·offline BPP와 비용 인식 BO 획득함수 설계까지, 구성형·ACO·GLS 세 틀에서 실험해 적용 범위가 넓다."
+    tags: [task-coverage]
+  - text: "모든 휴리스틱을 tree에 보존해 일시적으로 성능이 낮은 휴리스틱도 나중에 발전시킬 수 있다. 같은 예산에서 FunSearch, EoH, ReEvo, HSEvo보다 대체로 좋은 휴리스틱을 찾았고, 이후 CALM과 AHD Agent의 주 비교 대상이 되었다."
+    tags: [program-synthesis]
+  - text: "GPT-4o-mini 기준 KP 탐색 1회가 약 3시간, 약 0.3달러로 비용이 낮다."
+    tags: [inference-cost]
+limitations:
+  - text: "수렴 속도는 아직 개선 여지가 있다고 인정하고, MCTS와 population을 섞는 hybrid를 향후 과제로 든다."
+    tags: [inference-cost]
+    source: self
+  - text: "MCTS-AHD 같은 fixed-workflow 방법은 탐색 절차를 바깥에서 정하고 LLM을 후보 생성기로만 쓴다. 그래서 설계 단계마다 필요한 정보를 찾지 못하고 시행착오 생성에 의존한다고 지적한다."
+    tags: [adaptation, inference-cost]
+    source: cited
+    by: "AHD Agent: Agentic Reinforcement Learning for Automatic Heuristic Design (2026)"
+    by_id: AHDAgent
+    by_link: https://arxiv.org/abs/2605.08756
+  - text: "[analyst] 주 결과표는 방법마다 run 3개의 평균이고 표준편차를 싣지 않는다(일부 과제의 p-value만 부록에 있다). 또 node 값을 자식의 최댓값으로 전파하므로, 작은 평가 집합에서 우연히 높게 나온 점수가 tree 전체의 선택을 끌어당길 수 있다. 평가 잡음에 대한 민감도는 분석되지 않았다."
+    tags: [eval-protocol, reward-signal]
+    source: analyst
+builds_on: [EoH, ReEvo, FunSearch, MCTS]
+compared_against: [FunSearch, EoH, ReEvo, HSEvo, GHPP, POMO, DeepACO, BestFit, FirstFit, EI, EIpu, EI-cool]
+open_questions:
+  - "최댓값 backpropagation은 평가 잡음이 큰 과제(예: instance 간 순위 일치가 낮은 TSP)에서 과대평가된 subtree로 탐색을 쏠리게 하지 않는가? 평균이나 하한 기반 전파와 비교한 결과가 없다."
+  - "Online BPP 평가에 크기가 다른 instance 4개를 섞어 쓸 때, 평균 점수는 어느 크기의 차이를 주로 반영하는가?"
+hooks:
+  - "(OBP 혼합 층의 계보) MCTS-AHD는 online BPP를 '크기가 다양한 Weibull instance 4개'로 평가한다. CALM도 OBP 학습 instance 4개를 쓰고, 사용자가 CALM 저장소에서 확인한 구성은 5k·1k 아이템 열 2개 × 용량 100·500이다. 두 논문의 4개가 같은 파일인지는 확인하지 않았다(가설). 같다면 strata 계획의 OBP 4층 혼합 보상은 MCTS-AHD 이래의 표준 평가 집합을 그대로 겨냥하는 것이 된다."
+  - "(비교 기준선) CALM의 OBP 0.71% 대 MCTS-AHD 0.89%, AHD Agent의 held-out 비교 모두 MCTS-AHD를 기준으로 삼는다. 사용자의 RL 실험에서 GRPO 없는 탐색 기준선으로 MCTS-AHD를 같은 평가 집합·seed 5개 이상으로 재현하면, 선행이 run 3개로 낸 비교의 분산도 함께 보고할 수 있다."
+  - "(선택 규칙과 잡음) 사용자 진단의 M3(selection regret)는 '고정 집합 점수의 top-1이 참 기준에서 얼마나 손해인가'를 본다. MCTS-AHD의 최댓값 전파는 바로 이 top-1 선택을 tree 탐색 안에서 반복하는 구조라, regret이 크게 나오면 탐색형 AHD 전반에 대한 함의가 된다(가설)."
+notes: "arXiv v3 HTML 본문 앞 약 100k자(방법, 평가 설정, test 집합, baseline, 한계, run 수)와 PMLR 페이지를 읽었다. 부록 D의 ACO 평가 집합 구성은 읽은 범위 밖이라 적지 않았다. Code 링크는 검색 결과(논문 abstract의 code 표기)로 확인했다. MCTS는 외부 이름이다."
+added: 2026-11-20

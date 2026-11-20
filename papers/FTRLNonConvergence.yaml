@@ -1,0 +1,47 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: FTRLNonConvergence
+title: "Follow the Regularized Leader Does Not Converge in Constrained Optimization"
+authors: "Ioannis Anagnostides, Ioannis Panageas, Nikolas Patris, Tuomas Sandholm"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2610.35004
+citation:
+  type: misc
+  title: "Follow the Regularized Leader Does Not Converge in Constrained Optimization"
+  authors: ["Ioannis Anagnostides", "Ioannis Panageas", "Nikolas Patris", "Tuomas Sandholm"]
+  year: 2026
+  arxiv: "2610.35004"
+  url: https://arxiv.org/abs/2610.35004
+  verified_from:
+    - https://arxiv.org/abs/2610.35004
+areas: [ml-foundations]
+problem: "Online learning의 기본 알고리즘인 FTRL이 제약이 있는 nonconvex 최적화에서 1차 정류점(KKT 조건)으로 수렴하는지 묻는다. Mirror descent와 gradient descent는 수렴이 알려져 있지만 FTRL은 정규화항에 대한 특수 가정이 없으면 열려 있었다."
+core_idea: "학습률이 0으로 가는 극한인 continuous-time FTRL을 Euclidean 정규화로 본다. 이 dynamics는 목적함수 값을 절대 줄이지 않는 potential 성질을 갖는데도, 볼록·compact 정의역 위의 무한히 미분 가능한 함수 하나에서 모든 시점의 KKT gap이 0이 아닌 상수 아래로 내려가지 않음을 보인다(상수 차원에서도 성립). 구성은 gradient flow가 감속하며 진동만 하고 점 수렴하지 않는 C∞ 함수를 만든 뒤, 이를 더 높은 차원의 FTRL dynamics에 심어 KKT gap을 계속 크게 유지하는 방식이다. 반대 방향으로, 목적함수가 analytic이면 Euclidean 정규화 FTRL이 수렴함을 보인다."
+key_assumptions:
+  - "결과는 continuous-time FTRL(학습률 → 0 극한)에 관한 것이다. 큰 학습률의 이산 FTRL에서 알려진 chaos 같은 비수렴과는 다른 현상이다."
+  - "주 반례는 Euclidean 정규화와 C∞이지만 analytic이 아닌 potential에서 성립한다. 수렴 판정 기준은 점 수렴보다 약한 KKT gap이다."
+strengths:
+  - text: "목적함수 값이 단조 개선되는 potential 시스템에서도 no-regret dynamics가 1차 정류점에 수렴하지 않을 수 있음을 보여, 일반 variational inequality에서 알려진 비수렴이 더 좁은 경우에도 생긴다는 점을 확정했다."
+    tags: [theory-gap, training-stability]
+  - text: "Analytic 목적함수에서는 수렴함을 보여, analyticity가 gradient flow에서보다 FTRL에서 더 근본적인 역할(점 수렴뿐 아니라 정류점 도달 자체를 결정)을 한다는 경계를 명확히 했다."
+    tags: [theory-gap, identifiability]
+  - text: "제약이 없거나 정규화항 가정이 맞으면 FTRL과 mirror descent가 동치라는 기존 결과와 달리, 제약 최적화에서 둘 사이에 근본적인 분리가 있음을 보였다."
+    tags: [theory-gap]
+limitations:
+  - text: "저자들은 Euclidean 정규화만 다뤘다. 누적 gradient가 충분히 음수일 때 좌표를 경계에 고정하는 정규화항으로는 쉽게 확장될 것으로 보지만, negative entropy처럼 steep한 정규화항은 유한 시간 동안 항상 내부점에 머물러 같은 구성을 쓰려면 새 아이디어가 필요하다고 밝힌다."
+    tags: [theory-gap]
+    source: self
+  - text: "반례는 특별히 구성한 C∞ 함수에 대한 존재 결과다. 실제 학습 문제(예: LLM self-play나 policy optimization의 목적함수)에서 이런 비수렴이 얼마나 흔한지에 대해서는 말하지 않는다."
+    tags: [theory-gap, training-stability]
+    source: analyst
+builds_on: ["mirror descent", "Anagnostides et al. 2026 FTRL lower bounds in potential games (ICML 2026)", "gradient flow convergence for analytic functions (Absil et al. 2005)"]
+compared_against: ["mirror descent", "gradient flow", "multiplicative weights update"]
+open_questions:
+  - "Negative entropy 같은 steep 정규화항을 쓰는 FTRL(MWU 포함)도 constrained nonconvex 문제에서 비수렴할 수 있는가?"
+  - "이산 시간·유한 학습률 FTRL에서 KKT gap의 하한이 어떻게 바뀌는가?"
+hooks:
+  - "SpyRL(RLSVR)처럼 self-play 게임으로 보상을 만드는 LLM 학습은 multi-agent no-regret dynamics로 볼 수 있다. 이 논문은 potential 구조가 있어도 정류점 수렴이 보장되지 않는다는 이론적 경계를 준다(가설 수준 연결, 실제 학습 dynamics에 적용된 근거는 없음)."
+  - "FTRL은 zero-sum 게임 풀이(CFR 계열)와 CTR 예측의 핵심 엔진이다. 사용자 연구에서 게임식 보상이나 no-regret 업데이트를 쓸 때 수렴 진단을 목적값 개선이 아니라 KKT gap으로 따로 봐야 한다는 근거로 쓸 수 있다."
+notes: "PDF 본문(서론, 결론, 감사의 글)에 NeurIPS 리뷰어 언급이 있으나 게재 venue는 확인되지 않아 misc로 둔다."
+added: 2026-11-20

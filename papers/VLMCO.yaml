@@ -1,0 +1,54 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: VLMCO
+title: "VLM Fine-Tuning for End-to-End Combinatorial Optimization"
+authors: "Qingsong Yan, Xia Jiang, Yaoxin Wu, Wen Song, Lu Zhang, Yingjie Zhou"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2609.37175
+
+citation:
+  type: misc
+  title: "VLM Fine-Tuning for End-to-End Combinatorial Optimization"
+  authors: ["Qingsong Yan", "Xia Jiang", "Yaoxin Wu", "Wen Song", "Lu Zhang", "Yingjie Zhou"]
+  year: 2026
+  arxiv: "2609.37175"
+  url: https://arxiv.org/abs/2609.37175
+  verified_from:
+    - https://arxiv.org/abs/2609.37175
+    - https://arxiv.org/html/2609.37175v1
+
+areas: [llm-rl, co-heuristics]
+problem: "text만으로 CO instance를 설명하면 좌표·그래프의 공간·관계 구조가 잘 전달되지 않는다. 입력에서 만든 이미지를 함께 주는 vision-language solver가 text-only end-to-end LLM solver보다 나은지를 묻는다."
+core_idea: "LLMEndToEndCO의 7개 문제(TSP, OP, CVRP, MIS, MVC, PFSP, JSSP), 생성 데이터, 프롬프트, solver를 그대로 쓰고, 입력에서 만든 그림을 추가한다. 라우팅은 좌표에 놓인 노드와 두 최근접 이웃 연결선(CVRP는 demand 표시), 그래프 문제는 node-link 그림, scheduling은 operation 그래프 그림이며, 정확한 수치는 여전히 text가 기준이다. Qwen3-VL 하나를 문제당 50만 instance로 LoRA SFT하고, 최대 3,200 instance로 GRPO를 돌린다. 보상은 제약 충족 가중합 Rf와 제약을 만족했을 때만 주는 품질 항 Ro를 λ로 섞은 것이고, advantage는 instance 하나의 group 안에서 정규화한다."
+key_assumptions:
+  - "입력에서 결정적으로 만든 그림이 정답 정보 없이도 공간·관계 구조를 더 잘 전달한다고 본다."
+  - "text 입력이 정확한 수치의 기준으로 남아 있으면 그림의 해상도 한계가 해를 망치지 않는다고 본다."
+  - "선행 text-only solver와 같은 데이터·프롬프트·solver를 쓰면 입력 modality 효과만 비교된다고 본다."
+strengths:
+  - text: "선행 text-only solver를 같은 데이터·프롬프트·solver로 재현한 직접 비교다. Best-of-8 기준 CVRP gap 3.58% 대 4.53%, JSSP 5.85% 대 8.20%로 어려운 문제에서 개선이 컸고, TSP·OP·MVC도 조금 좋아졌다."
+    tags: [tokenization, eval-protocol]
+  - text: "크기 tier별로 보면 대형 instance에서 이득이 커졌다. 대형 CVRP 5.53% 대 7.24%, 대형 JSSP 10.28% 대 16.25%였고, 대형 CVRP에서 OR-Tools(8.84%)와 parallel savings(6.12%)보다도 좋았다."
+    tags: [context-scale, distribution-shift]
+  - text: "보상을 제약 충족 성분과 품질 성분으로 나누고, 품질 항은 제약을 모두 만족할 때만 주는 gating 구조라 feasibility를 먼저 확보하도록 유도한다."
+    tags: [reward-signal, multi-reward]
+limitations:
+  - text: "저자들은 이 연구를 첫 시도로 규정하고, 더 일반적인 최적화 문제로의 확장과 더 복잡한 CO instance로의 transfer 개선을 후속 과제로 들었다. 별도의 limitation 절은 없다."
+    tags: [task-coverage]
+    source: self
+  - text: "[analyst] 이득이 모든 문제·크기에서 일관되지는 않다. MIS는 gap이 1.14% 대 1.04%로 text-only보다 나빴고, small TSP·MVC·PFSP small/medium에서도 text-only가 앞섰다. Best-of-N 추론 시간도 33.8초로 text-only 9.8초의 세 배를 넘는다."
+    tags: [inference-cost, eval-protocol]
+    source: analyst
+  - text: "[analyst] group 크기, λf·λo, KL 계수 같은 RL 설정이 본문에 없고 보상 성분별 ablation도 없어서, 개선이 시각 입력에서 오는지 RL 설정 차이에서 오는지 완전히 분리되지 않는다."
+    tags: [reward-signal, eval-protocol]
+    source: analyst
+builds_on: [LLMEndToEndCO, GRPO, Qwen3-VL, LoRA]
+compared_against: [LLMEndToEndCO, GPT-4o, Claude-Sonnet, DeepSeek-V3, Llama3.3-70B, Qwen2.5-72B, GPT-o3-mini, GPT-o1, DeepSeek-R1, OPRO, LMEA, PHP, SGE, OR-Tools, ACO, NEH]
+open_questions:
+  - "시각 입력의 이득이 큰 instance에서 커지는 이유가 공간 구조 전달 때문인가, 긴 text context의 한계를 보완하기 때문인가."
+  - "품질 항 gating과 λ 가중치를 바꾸면 feasibility와 gap의 trade-off가 어떻게 바뀌는가."
+hooks:
+  - "사용자 메모의 B안 계열 후속 연구다. 보상이 instance 하나에서 계산되어 크기 층 혼합 문제가 생기지 않는다는 점은 LLMEndToEndCO와 같다. 사용자 연구(C안, 휴리스틱 생성 RL)와의 직접 접점은 약하고, 'end-to-end 계열은 크기가 커지면 열화가 크다'는 지형 정리용 근거로 쓰는 정도가 적절하다."
+  - "품질 항을 제약 충족 시에만 주는 gating은 사용자 계획의 `I_feasible · quality` 곱 형태와 같은 구조다. 반면 선행 LLMEndToEndCO는 합 형태라서, 두 논문을 함께 놓으면 gating 유무의 효과를 묻는 비교 축이 생긴다. 다만 두 논문이 이를 ablation으로 분리하지는 않았다."
+notes: "arXiv 페이지에 venue와 코드 링크가 없었다. 참고문헌은 선행 text-only 논문을 2026으로 표기하지만 이 하네스의 LLMEndToEndCO 항목은 NeurIPS 2025 proceedings 기준이다."
+added: 2026-11-20

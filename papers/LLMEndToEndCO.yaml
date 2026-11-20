@@ -1,0 +1,63 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: LLMEndToEndCO
+title: "Large Language Models as End-to-end Combinatorial Optimization Solvers"
+authors: "Xia Jiang, Yaoxin Wu, Minshuo Li, Zhiguang Cao, Yingqian Zhang"
+venue: "NeurIPS 2025"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2509.16865
+  code: https://github.com/Summer142857/LLMCoSolver
+
+citation:
+  type: inproceedings
+  title: "Large Language Models as End-to-end Combinatorial Optimization Solvers"
+  authors: ["Xia Jiang", "Yaoxin Wu", "Minshuo Li", "Zhiguang Cao", "Yingqian Zhang"]
+  year: 2025
+  booktitle: "Advances in Neural Information Processing Systems 38"
+  arxiv: "2509.16865"
+  url: https://proceedings.neurips.cc/paper_files/paper/2025/hash/f0c6c93e1dbff84daf6082fef7e1a094-Abstract-Conference.html
+  verified_from:
+    - https://arxiv.org/abs/2509.16865
+    - https://arxiv.org/html/2509.16865v1
+    - https://proceedings.neurips.cc/paper_files/paper/2025/hash/f0c6c93e1dbff84daf6082fef7e1a094-Abstract-Conference.html
+
+areas: [llm-rl, co-heuristics]
+problem: "기존 LLM 기반 CO는 코드 생성이나 solver 호출 같은 중간 단계를 거치는데, 자연어 문제 설명에서 해를 직접 출력하는 end-to-end LLM solver를 만들 수 있는지를 묻는다."
+core_idea: "TSP, OP, CVRP, MIS, MVC, PFSP, JSSP의 7개 문제 instance를 노드 속성과 top-k 최근접 이웃 같은 heuristic feature를 담은 text-attributed instance로 바꾼다. 1단계는 LKH-3, GA 기반 OP solver, QIG 등으로 만든 해를 문제당 50만 개 모아 Qwen2.5-7B를 LoRA로 SFT한다. 2단계 FOARL은 GRPO 기반 RL이며, 보상은 형식 준수와 제약별 충족 여부를 가중합한 feasibility 보상과 1/(1+상대 gap) 형태의 optimality 보상의 합이고 형식을 어기면 둘 다 0이다. advantage는 instance 하나에서 뽑은 group 안에서 정규화한다. 추론 때는 N=8개를 뽑아 infeasible을 버리고 가장 좋은 해를 고르는 Best-of-N을 쓴다."
+key_assumptions:
+  - "solver가 만든 (근)최적해를 모방하는 SFT로 문제 구조를 먼저 익히고, RL은 그 위에서 제약 위반과 품질만 보정하면 된다고 본다."
+  - "text-attributed instance의 최근접 이웃 feature가 명시적 chain-of-thought 없이도 유망한 영역으로 생성을 유도한다고 본다."
+  - "학습한 크기 범위(라우팅은 10–100 노드)와 생성 분포 안에서 평가하는 것이 주 결과로 적절하다고 본다."
+strengths:
+  - text: "7B 모델 하나로 7개 NP-hard 문제에서 feasibility 94–100%, 평균 gap 1.03–8.20%를 보고했다. GPT-4o, DeepSeek-R1 같은 범용·추론 LLM과 OPRO·LMEA·SGE 같은 prompting 방법, 그리고 문제별 고전 휴리스틱보다 좋았다."
+    tags: [task-coverage, zero-shot-gap]
+  - text: "SFT만 하면 목적값을 위해 제약을 살짝 넘는 over-greedy 해(OP의 거리 한도 초과, CVRP의 용량 초과)가 나온다는 실패 양상을 관찰하고, 제약별 가중치를 둔 feasibility 보상으로 RL 단계에서 이를 교정했다. 보상이 형식·제약·품질 성분으로 나뉘어 있어 어느 성분이 무엇을 고치는지 설계가 명시적이다."
+    tags: [reward-signal, multi-reward]
+  - text: "optimality 보상을 1/(1+상대 gap)으로 두고 advantage를 instance 하나의 group 안에서 정규화해, 한 응답의 보상이 여러 크기 instance의 평균이 되지 않는다. 그래서 instance 사이 스케일 차이가 보상 안에 섞이지 않는 구조다."
+    tags: [reward-signal]
+  - text: "크기 tier별(small/medium/large) 결과를 따로 보고해 크기에 따른 열화를 드러냈다. 예를 들어 CVRP는 1.70%→4.57%→7.24%, JSSP는 2.86%→9.56%→16.25%였다."
+    tags: [distribution-shift, context-scale]
+limitations:
+  - text: "풀이 효율이 가벼운 고전 휴리스틱에 아직 미치지 못하는 것이 주 한계라고 저자들이 밝혔다. 더 큰 문제를 위한 효율적 fine-tuning·추론, 더 나은 text 표현, 휴리스틱과의 결합을 후속 과제로 들었다."
+    tags: [inference-cost, context-scale]
+    source: self
+  - text: "후속 VLM 연구는 text만으로 된 문제 설명이 공간·관계 구조를 놓칠 수 있다고 보고, 이 논문의 text-only solver를 직접 기준선으로 삼아 같은 데이터·프롬프트·solver 위에서 시각 입력을 더했다. 그 결과 CVRP와 JSSP처럼 어려운 문제와 큰 크기에서 text-only보다 gap이 줄었다(예: 대형 JSSP 16.25%→10.28%)."
+    tags: [tokenization, context-scale]
+    source: cited
+    by: "VLM Fine-Tuning for End-to-End Combinatorial Optimization (2026)"
+    by_id: VLMCO
+    by_link: https://arxiv.org/abs/2609.37175
+  - text: "[analyst] 학습과 평가가 같은 생성기와 같은 크기 범위(라우팅 10–100 노드)에 머물러, 크기 tier 결과도 대부분 학습 범위 안의 외삽 아닌 내삽이다. Taillard JSSP처럼 학습 밖 벤치마크에서는 gap이 14–23%로 커진다."
+    tags: [distribution-shift]
+    source: analyst
+builds_on: [GRPO, Qwen2.5, LKH-3, LoRA]
+compared_against: [GPT-4o, GPT-4o-mini, Claude-3.7-Sonnet, Claude-3.5-Haiku, DeepSeek-V3, Llama-3.3-70B, Qwen2.5-72B, GPT-o3-mini, GPT-o1, DeepSeek-R1, OPRO, LMEA, PHP, SGE, OR-Tools, ACO, NEH, L2D, StarJob]
+open_questions:
+  - "feasibility 보상과 optimality 보상의 가중치를 바꾸면 feasibility–품질 trade-off가 어떻게 움직이는가. 성분별 ablation이 없다."
+  - "학습 범위 밖 크기(수백–수천 노드)에서 end-to-end 생성이 휴리스틱 코드 생성보다 나은 경우가 있는가."
+  - "여러 문제를 한 모델로 학습할 때 문제 사이 보상 스케일 차이를 어떻게 다루는가."
+hooks:
+  - "사용자 메모의 B안(end-to-end solver)의 대표 선행이다. 보상이 instance 하나에서 계산되고 group 정규화도 그 instance 안에서 이뤄지므로, 사용자 후보 3이 지적하는 '응답 하나의 보상이 크기 층이 섞인 평균'이라는 문제가 구조적으로 생기지 않는다. 휴리스틱 생성(C안)과 end-to-end(B안)의 보상 구조 차이를 설명할 때 대비 사례로 쓸 수 있다."
+  - "feasibility 성분(제약별 가중치)과 optimality 성분을 더하는 다중 보상 구조는 사용자 계획의 `I_feasible · quality` 곱 형태와 다르다. 곱 형태는 infeasible이면 품질 신호가 사라지고, 합 형태는 부분적으로 제약을 만족한 해에도 신호를 준다. 이 차이가 RL-AHD의 단계적 페널티(CALM의 −1.0~−0.85)와 어떻게 대응하는지 비교할 가치가 있다. 비교는 아직 하지 않았다."
+notes: "NeurIPS proceedings 페이지에서 제목·저자·booktitle을 확인했다. pages는 페이지에 없어서 넣지 않았다. RL group 크기와 α 값, 부록 E.10의 OOD 결과는 읽은 범위 밖이었다."
+added: 2026-11-20

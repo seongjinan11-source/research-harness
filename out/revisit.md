@@ -171,6 +171,8 @@
   - 기록된 강점: 추가 component·parameter·튜닝이 전혀 없고, target 통계 재계산만으로 Office-31 단일·다중 source와 Caltech-Bing에서 당시 최고 수준을 냈다. CORAL과 결합하면 대체로 더 좋아졌다.
 - [BDCSPN](https://arxiv.org/abs/1911.10713): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
   - 기록된 강점: 추가 학습 없이 inference 단계에서 pseudo-label 가중 재계산과 평균 shift라는 두 가지 단순한 조작만으로, 1-shot에서 CSPN 대비 약 8~9%p를 올렸다. miniImageNet 1-shot 70.31%, tieredImageNet 1-shot 78.74%로 당시 transductive 방법 중 최고였다.
+- [CALM](https://iclr.cc/virtual/2026/poster/10006674): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: 진화 탐색 안에서 LLM을 GRPO로 함께 학습하는 구조를 처음 제시했다. 7B INT4 모델과 24GB GPU 한 장으로 GPT-4o-mini 같은 API 모델을 쓴 탐색형 방법을 넘었다. OBP 평균 gap 0.71%(MCTS-AHD 0.89%), CVRP-ACO N=200 3.95%(MCTS-AHD 4.70%)를 보고한다.
 - [CorrectSmooth](https://iclr.cc/virtual/2021/poster/3274): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
   - 기록된 강점: 어떤 base predictor 위에도 붙는 후처리라 비용이 작고, 큰 GNN 위에 얹어도 작은 추가 이득을 준다.
 - [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
@@ -197,6 +199,8 @@
   - 기록된 강점: 추가 component·parameter·튜닝이 전혀 없고, target 통계 재계산만으로 Office-31 단일·다중 source와 Caltech-Bing에서 당시 최고 수준을 냈다. CORAL과 결합하면 대체로 더 좋아졌다.
 - [BDCSPN](https://arxiv.org/abs/1911.10713): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
   - 기록된 강점: 추가 학습 없이 inference 단계에서 pseudo-label 가중 재계산과 평균 shift라는 두 가지 단순한 조작만으로, 1-shot에서 CSPN 대비 약 8~9%p를 올렸다. miniImageNet 1-shot 70.31%, tieredImageNet 1-shot 78.74%로 당시 transductive 방법 중 최고였다.
+- [CALM](https://iclr.cc/virtual/2026/poster/10006674): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
+  - 기록된 강점: 진화 탐색 안에서 LLM을 GRPO로 함께 학습하는 구조를 처음 제시했다. 7B INT4 모델과 24GB GPU 한 장으로 GPT-4o-mini 같은 API 모델을 쓴 탐색형 방법을 넘었다. OBP 평균 gap 0.71%(MCTS-AHD 0.89%), CVRP-ACO N=200 3.95%(MCTS-AHD 4.70%)를 보고한다.
 - [CorrectSmooth](https://iclr.cc/virtual/2021/poster/3274): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
   - 기록된 강점: 어떤 base predictor 위에도 붙는 후처리라 비용이 작고, 큰 GNN 위에 얹어도 작은 추가 이득을 준다.
 - [GGP](https://proceedings.neurips.cc/paper/2018/hash/1fc214004c9481e4c8073e85323bfd4b-Abstract.html): 복수 태그 일치 (약한 단서); tags=adaptation, inference-cost; keywords=-
@@ -719,6 +723,8 @@
 - [StruRW](https://proceedings.mlr.press/v202/liu23u.html): 복수 태그 일치 (약한 단서); tags=distribution-shift, graph-structure-use; keywords=conditional
   - 기록된 강점: GDA에서 연결 패턴의 클래스 조건부 변화(CSS)를 처음 명시적으로 정의하고, shared encoder 기반 representation alignment가 이 경우 원리적으로 부족하다는 하한을 보였다. 데이터셋별 CSS 정도를 재는 지표를 함께 제시해, 개선 폭이 CSS 크기와 맞물린다는 것을 보였다.
   - 기록된 강점: 기존 학습 pipeline 앞에 붙는 단순한 edge 재가중 모듈이다. 합성 CSBM에서는 최선 baseline보다 20% 넘게 좋았고, 실제 citation graph의 7개 설정 중 6개에서 유의한 개선을 보였다. Degree로 나눈 Arxiv·Cora와 DBLP↔ACM처럼 구조 shift가 큰 설정에서 이득이 컸고, attribute shift가 주인 Cora word split에서는 작았다.
+- [AHDAgent](https://arxiv.org/abs/2605.08756): 구체 키워드+태그 일치 (미검증); tags=distribution-shift; keywords=BP
+  - 기록된 강점: 학습하지 않은 OP·MKP·BPP·비용 인식 BO 획득함수로 transfer를 평가했다. 학습 도메인 수를 늘리면 held-out OP-ACO gap이 24.5%에서 8.9%로 줄어, 문제 다양성이 일반화의 핵심 변수임을 보였다.
 - [CSBMInference](https://arxiv.org/abs/2306.07948): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=BP
   - 기록된 강점: Node labels와 latent feature centroids를 같은 추론 계산에서 갱신하는 직접적인 선행연구다. Feature–label 대응을 graph로 연결한다는 발상 자체의 novelty를 제한한다.
 - [GraphPFN](https://arxiv.org/abs/2509.21489): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=BP
@@ -965,6 +971,8 @@
   - 기록된 강점: AGNews에서 training-free 보정이 validation으로 튜닝한 oracle W에 가까운 성능을 냈다.
 - [LaplacianShot](https://arxiv.org/abs/2006.15486): 구체 키워드+태그 일치 (미검증); tags=graph-structure-use; keywords=few-shot
   - 기록된 강점: Meta-learning 없이 고정 feature 위에 붙이는 inference 절차만으로 miniImageNet·tieredImageNet·CUB·cross-domain·iNat 5개 benchmark에서 당시 최고 수준을 냈다. Ablation에서 Laplacian 항은 nearest-prototype 대비 1-shot에서 약 2~3%p 이상 꾸준히 올렸다.
+- [RFTHGS](https://proceedings.iclr.cc/paper_files/paper/2026/hash/b54532b0e57eb963b19e00583376cda3-Abstract-Conference.html): 구체 키워드+태그 일치 (미검증); tags=distribution-shift; keywords=few-shot
+  - 기록된 강점: 작은 instance(400노드 이하)로 학습해 1,000노드까지 test해 크기 외삽을 보고한다.
 
 ## XFER-F02 — LP와 PFN 확률의 고정 혼합이 각자의 강점을 보존한다.
 
@@ -1032,6 +1040,8 @@
   - 기록된 강점: 공유 edge 함수로 geometry를 학습하고 homophilic 및 heterophilic node classification을 평가한다.
 - [PEMix](https://arxiv.org/abs/2610.18113): 복수 태그 일치 (약한 단서); tags=graph-structure-use, observation-mask; keywords=-
   - 기록된 강점: Clustered missingness의 전파 경계 병목을 분석하고, 관측값 전파에 의존하지 않는 구조 조건부 feature distribution을 제시한다.
+- [UECO](https://github.com/Thinklab-SJTU/UECO/blob/main/paper_preview.pdf): 복수 태그 일치 (약한 단서); tags=eval-protocol, graph-structure-use; keywords=-
+  - 기록된 강점: Encoder만 교체하는 통제 실험으로 TSP, ATSP, CVRP, ACVRP, MIS, MaxClique, MaxCut의 여러 규모에서 거의 일관된 해 품질·일반화 개선을 보고했다. 기존 encoder와의 교락을 줄인 비교 설계다.
 
 ## FP05-F01 — 불완전 피처 입력에서 내부 세 지점의 adapter 추가 실행을 Group-PG로 학습하면 일반 fine-tuning과 기대 목적 직접 최적화보다 높은 missing-query accuracy와 관측 피처 효용을 얻는다.
 
@@ -1144,10 +1154,24 @@
   - 기록된 강점: 해의 공통 코드를 계층적 library로 압축해 더 복잡한 프로그램을 짧게 표현한다.
   - 기록된 강점: 학습한 library의 dream task와 실제 해의 replay로 neural search를 개선한다.
   - 기록된 강점: List 처리·그림·장면 구성 등에서 학습한 구성요소를 미지 태스크에 재사용한다.
+- [FunSearch](https://www.nature.com/articles/s41586-023-06924-6): 구체 키워드+태그 일치 (미검증); tags=program-synthesis; keywords=library, program
+  - 기록된 강점: 해 자체가 아니라 짧은 프로그램을 찾으므로 결과물을 사람이 읽고 구조를 분석할 수 있다. 저자들은 cap set 프로그램을 읽어 새로운 대칭성을 찾아냈다고 보고한다.
+  - 기록된 강점: 8차원에서 512개짜리 cap set을 찾아 기존 최대값을 넘었고, admissible set을 통해 cap set capacity의 하한도 개선했다. Online bin packing에서는 OR-Library와 Weibull 두 benchmark 모두에서 first fit·best fit보다 적은 bin을 썼고, 큰 instance로 갈수록 best fit과의 격차가 커졌다.
+- [A2DEPT](https://arxiv.org/abs/2604.24043): 구체 키워드+태그 일치 (미검증); tags=program-synthesis; keywords=program
+  - 기록된 강점: FrontierCO의 MIS, CVRP, CFLP, FJSP와 제약이 강한 CEVRPTW, MRCPSP에서 FunSearch, EoH, ReEvo, MCTS-AHD보다 모든 task에서 좋았고, 표준 벤치마크의 평균 정규화 gap을 가장 강한 AHD 기준선 대비 9.8% 줄였다. 예: CVRP 17.42%에서 8.79%, MIS 11.35%에서 4.20%. CEVRPTW의 infeasible 비율은 2.56%로 ReEvo의 8.67%보다 낮았다.
+  - 기록된 강점: Ablation에서 고정 template, Boltzmann 보충, 적응형 scheduling, hybrid selection 중 어느 것을 빼도 최소 한 task에서 성능이 떨어진다.
+- [AlphaEvolve](https://arxiv.org/abs/2506.13131): 구체 키워드+태그 일치 (미검증); tags=program-synthesis; keywords=program
+  - 기록된 강점: 4×4 복소 행렬 곱을 scalar 곱셈 48번으로 하는 알고리즘을 찾아 이 설정에서 Strassen 이후 56년 만에 처음 개선했다. 50개 넘는 수학 문제 중 약 75%에서 최고 결과와 같았고 약 20%에서 개선했다.
 - [DeepProbLog](https://arxiv.org/abs/1805.10872): 구체 키워드+태그 일치 (미검증); tags=compositional-generalization; keywords=program
   - 기록된 강점: 재귀 규칙을 이용해 한 자리 숫자로 훈련한 인식기를 세 자리 숫자의 덧셈에 재사용한다.
+- [EvoTune](https://arxiv.org/abs/2504.05108): 구체 키워드+태그 일치 (미검증); tags=program-synthesis; keywords=program
+  - 기록된 강점: 진화 탐색과 RL fine-tuning을 교대하는 틀을 제시하고, Llama 3.2 1B, Phi 3.5 Mini, Granite 3.1 2B 세 모델과 bin packing, TSP(guided local search), flatpack 세 task에서 같은 sampling 예산 대비 top-50 보상이 FunSearch보다 높았다. 격차는 예산이 커질수록 대체로 벌어졌다. 결과는 seed 10개 평균이다.
 - [Scallop](https://arxiv.org/abs/2304.04812): 구체 키워드+태그 일치 (미검증); tags=compositional-generalization; keywords=program
   - 기록된 강점: Recursion·negation·aggregation으로 이미지·언어·그래프 등의 8개 응용을 표현한다.
+- [ShinkaEvolve](https://iclr.cc/virtual/2026/poster/10007692): 구체 키워드+태그 일치 (미검증); tags=program-synthesis; keywords=program
+  - 기록된 강점: Ablation에서 가중 parent sampling이 random search와 hill climbing을, bandit ensemble이 단일 모델과 고정 ensemble을, embedding 기반 rejection이 rejection 없음보다 나았다. LLM judge의 추가 이득은 작았다.
+- [ThetaEvolve](https://proceedings.mlr.press/v306/wang26ha.html): 구체 키워드+태그 일치 (미검증); tags=program-synthesis; keywords=program
+  - 기록된 강점: 8B open 모델로 circle packing(2.63598308, AlphaEvolve 2.63586276)과 첫째 autocorrelation inequality(1.503133, AlphaEvolve 1.503164)에서 새 최고 bound를 냈다.
 
 ## SEL-F01 — Context Brier·local reliability로 PFN/LP의 정답을 선택할 수 있다.
 

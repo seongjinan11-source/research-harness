@@ -1370,6 +1370,48 @@
       "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
       "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
     ],
+    "paper_id": "CALM",
+    "paper_title": "CALM: Co-evolution of Algorithms and Language Model for Automatic Heuristic Design",
+    "paper_link": "https://iclr.cc/virtual/2026/poster/10006674",
+    "matches": [
+      {
+        "strength": "진화 탐색 안에서 LLM을 GRPO로 함께 학습하는 구조를 처음 제시했다. 7B INT4 모델과 24GB GPU 한 장으로 GPT-4o-mini 같은 API 모델을 쓴 탐색형 방법을 넘었다. OBP 평균 gap 0.71%(MCTS-AHD 0.89%), CVRP-ACO N=200 3.95%(MCTS-AHD 4.70%)를 보고한다.",
+        "tags": [
+          "adaptation",
+          "inference-cost"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "DFI-F01",
+    "project": "Conditional diffusion and ESS-controlled SMC in frozen FactorPFN",
+    "claim": "작은 conditional diffusion proposal과 동일 potential의 MH/SMC 보정이 비슷한 추론 비용의 classical SMC보다 정확한 query inference를 제공한다.",
+    "verdict": "현재 learned proposal+correction을 메인 방법으로 확대하지 않는다. 비용 대조 SMC보다 accuracy와 target-fit이 악화했고,더 저렴한1sweep SMC도 평균적으로 좋았다.",
+    "reason_status": "unknown",
+    "failure_reason": "Exact frozen-model KL·accuracy 사전 gate를 통과하지 못했다. Small-state kernel validation은 통과했지만 finite-particle/short-schedule/denoiser fit/mixing/representation의 고유 원인은 분리하지 않았다.",
+    "reopen_when": "같은 잠재 state와 local factor에서 proposal이 어느 예측적으로 중요한 joint mode를 누락하는지 독립 증거를 제시하고,classical Gibbs/blocked sampler와 비용을 맞춰 이를 해결하는 연산이 있을 때.",
+    "recheck": "이번 final bank를 튜닝하지 않는다. 새 독립 graph/명시된 구조 family에서 finite sampler exact-target error와accuracy·NLL/Brier·role coverage·비용을 사전 분리하고 fullsupport/양방향proposal/MH 검사를 유지한다.",
+    "comparison_floor": "Ordinary1sweep/개발 latency로 정한2sweep Gibbs-SMC;original Factor BP,constant BP,exact learned-Factor,Grid6exact/BP;동일새 bank의 frozen Mask/PCFI;teacher/training/inference 비용.",
+    "source_refs": [
+      "findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/protocol.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/statistics.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/audit.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
+    ],
     "paper_id": "CorrectSmooth",
     "paper_title": "Combining Label Propagation and Simple Models out-performs Graph Neural Networks",
     "paper_link": "https://iclr.cc/virtual/2021/poster/3274",
@@ -1628,6 +1670,48 @@
     "matches": [
       {
         "strength": "추가 학습 없이 inference 단계에서 pseudo-label 가중 재계산과 평균 shift라는 두 가지 단순한 조작만으로, 1-shot에서 CSPN 대비 약 8~9%p를 올렸다. miniImageNet 1-shot 70.31%, tieredImageNet 1-shot 78.74%로 당시 transductive 방법 중 최고였다.",
+        "tags": [
+          "adaptation",
+          "inference-cost"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "adaptation",
+      "inference-cost"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "DFI-F02",
+    "project": "Conditional diffusion and ESS-controlled SMC in frozen FactorPFN",
+    "claim": "Rényi-2/ESS 기반 adaptive likelihood tempering이 같은 learned diffusion+SMC fixed schedule보다 예측 품질을 개선한다.",
+    "verdict": "현재.8K threshold/8stage budget의ESS controller 증분은 미입증이며 추가 tuning하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "KL 증분 CI가0을 포함하고accuracy도 개선되지 않았다. Weight entropy/step schedule만으로 latent coverage와 predictive fit을 보장할 수 없으며 고유 원인은 미분리다.",
+    "reopen_when": "Weight entropy와 label-predictive joint mode error의 관계를 분리하고,같은 particle/latency budget에서 ESS 외의 필요한 정보를 이용하는 제어 연산이 생길 때.",
+    "recheck": "새graph에서fixed-ESS controller 차이를posterior fit/분류/시간으로나누어검증한다. 최종ESS상승을성공으로대체하거나RNP논문방법을실행했다고부르지않는다.",
+    "comparison_floor": "동일proposal/potential의fixed schedule,ordinary Gibbs-SMC,exact frozen-model reference와accuracy를유지한다. Adaptive extra overhead를 포함한다.",
+    "source_refs": [
+      "findings/sources/diffusion-factor-2026-11-02/REPORT_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/METHOD_KO.md",
+      "findings/sources/diffusion-factor-2026-11-02/protocol.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/statistics.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/audit.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/benchmark.json",
+      "findings/sources/diffusion-factor-2026-11-02/results/convergence_audit.json"
+    ],
+    "paper_id": "CALM",
+    "paper_title": "CALM: Co-evolution of Algorithms and Language Model for Automatic Heuristic Design",
+    "paper_link": "https://iclr.cc/virtual/2026/poster/10006674",
+    "matches": [
+      {
+        "strength": "진화 탐색 안에서 LLM을 GRPO로 함께 학습하는 구조를 처음 제시했다. 7B INT4 모델과 24GB GPU 한 장으로 GPT-4o-mini 같은 API 모델을 쓴 탐색형 방법을 넘었다. OBP 평균 gap 0.71%(MCTS-AHD 0.89%), CVRP-ACO N=200 3.95%(MCTS-AHD 4.70%)를 보고한다.",
         "tags": [
           "adaptation",
           "inference-cost"
@@ -4920,6 +5004,103 @@
     "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
   },
   {
+    "finding_id": "PCFIPC-F01",
+    "project": "PCFI partial-coordinate clamp pilot",
+    "claim": "부분 좌표 clamp와 동일 예산 frontend 학습으로 기존 Node 및 PCFI를 함께 넘어선다.",
+    "verdict": "현재 구현·동일 예산·개발 bank에서 두 강한 기준선에 대한 동시 우위는 확보하지 못했다. 전체 sheaf/PFN 연구를 종료하지 않는다.",
+    "reason_status": "unknown",
+    "failure_reason": "원인 미상. Clamp를 푼 계산의 correctness와 latent 좌표 사용만으로 예측 이득을 보장하지 않는다. 식별성·잠재 증폭·최적화·prior 부합 여부는 인과적으로 분리되지 않았다.",
+    "reopen_when": "관측 방향과 추론할 latent 성분을 식별·정규화하는 장치의 필요성이 독립적으로 입증되거나, 다른 feature 관계에서 같은 정보·예산의 강한 기준을 넘어설 근거가 생길 때.",
+    "recheck": "최소한의 관측 법칙을 먼저 고정하고 같은 초기화·예산으로 새 graph/feature family에서 관측 source가 있는 query accuracy와 NLL/Brier를 graph-paired 비교. 개발 bank 최고 arm 선택을 독립 확인으로 부르지 않는다.",
+    "comparison_floor": "PCFI/Native-PCFI+samePFN,oldfullclamp,partialfrozen,random/initialframe,smoothsignedscalar;targetoptimizer0.",
+    "source_refs": [
+      "findings/sources/pcfi-partial-clamp-2026-11-03/REPORT_KO.md",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/METHOD_KO.md",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/protocol.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/statistics.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/audit.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/preflight.json",
+      "findings/sources/pcfi-partial-clamp-2026-11-03/results/source_rank_checks.json"
+    ],
+    "paper_id": "UECO",
+    "paper_title": "UECO: A Unified Encoder for Neural Combinatorial Optimization with Iterative Edge-Node Reasoning",
+    "paper_link": "https://github.com/Thinklab-SJTU/UECO/blob/main/paper_preview.pdf",
+    "matches": [
+      {
+        "strength": "Encoder만 교체하는 통제 실험으로 TSP, ATSP, CVRP, ACVRP, MIS, MaxClique, MaxCut의 여러 규모에서 거의 일관된 해 품질·일반화 개선을 보고했다. 기존 encoder와의 교락을 줄인 비교 설계다.",
+        "tags": [
+          "eval-protocol",
+          "graph-structure-use"
+        ],
+        "keywords": [],
+        "specific_keywords": []
+      }
+    ],
+    "tags": [
+      "eval-protocol",
+      "graph-structure-use"
+    ],
+    "keywords": [],
+    "retrieval_score": 4,
+    "signal": "복수 태그 일치 (약한 단서)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "PROG-F01",
+    "project": "Compiler–Executor GraphPFN pilot",
+    "claim": "고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.",
+    "verdict": "현재 compiler 확장 보류",
+    "reason_status": "unknown",
+    "failure_reason": "관측 정보는 Grid/TabPFN이 회수했지만 compiler는 context 증가에도 약61.6%에 머물렀다. 표현·search guidance·학습 최적화 중 정확한 원인은 식별하지 못했다.",
+    "reopen_when": "Context에서 계산 구성을 더 효율적으로 식별하고 bounded enumeration/강한 PFN feature 기준선을 넘어서는 장치가 나올 때.",
+    "recheck": "같은 grammar와 program prior, 후보 구조 접근, fresh graph와 heldout composition에서 품질과 end-to-end 비용을 맞춰 비교한다.",
+    "comparison_floor": "Cached ProgramGrid grammar prior, relational execution features+TabPFN, matched Plain",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/program.md"
+    ],
+    "paper_id": "FunSearch",
+    "paper_title": "Mathematical discoveries from program search with large language models",
+    "paper_link": "https://www.nature.com/articles/s41586-023-06924-6",
+    "matches": [
+      {
+        "strength": "해 자체가 아니라 짧은 프로그램을 찾으므로 결과물을 사람이 읽고 구조를 분석할 수 있다. 저자들은 cap set 프로그램을 읽어 새로운 대칭성을 찾아냈다고 보고한다.",
+        "tags": [
+          "program-synthesis"
+        ],
+        "keywords": [
+          "program"
+        ],
+        "specific_keywords": [
+          "program"
+        ]
+      },
+      {
+        "strength": "8차원에서 512개짜리 cap set을 찾아 기존 최대값을 넘었고, admissible set을 통해 cap set capacity의 하한도 개선했다. Online bin packing에서는 OR-Library와 Weibull 두 benchmark 모두에서 first fit·best fit보다 적은 bin을 썼고, 큰 instance로 갈수록 best fit과의 격차가 커졌다.",
+        "tags": [
+          "program-synthesis"
+        ],
+        "keywords": [
+          "library",
+          "program"
+        ],
+        "specific_keywords": [
+          "library",
+          "program"
+        ]
+      }
+    ],
+    "tags": [
+      "program-synthesis"
+    ],
+    "keywords": [
+      "library",
+      "program"
+    ],
+    "retrieval_score": 4,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
     "finding_id": "RATIO-F01",
     "project": "Frozen counterfactual PFN residual",
     "claim": "Full−Neutral log probability가 LP에 더할 새로운 feature evidence다.",
@@ -8050,6 +8231,46 @@
     "source_refs": [
       "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
     ],
+    "paper_id": "AHDAgent",
+    "paper_title": "AHD Agent: Agentic Reinforcement Learning for Automatic Heuristic Design",
+    "paper_link": "https://arxiv.org/abs/2605.08756",
+    "matches": [
+      {
+        "strength": "학습하지 않은 OP·MKP·BPP·비용 인식 BO 획득함수로 transfer를 평가했다. 학습 도메인 수를 늘리면 held-out OP-ACO gap이 24.5%에서 8.9%로 줄어, 문제 다양성이 일반화의 핵심 변수임을 보였다.",
+        "tags": [
+          "distribution-shift"
+        ],
+        "keywords": [
+          "BP"
+        ],
+        "specific_keywords": [
+          "BP"
+        ]
+      }
+    ],
+    "tags": [
+      "distribution-shift"
+    ],
+    "keywords": [
+      "BP"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "LLBP-F10",
+    "project": "Learned-Likelihood BP / EAJ",
+    "claim": "Low-density 실패는 partition 근사 또는 role weights만의 문제다.",
+    "verdict": "단일 병목 설명 기각",
+    "reason_status": "supported",
+    "failure_reason": "교차 대조에서 learned conditional 손해와 비가법 interaction을 확인했다. Role weights만 고치면 된다는 단일 원인 설명은 지지되지 않는다.",
+    "reopen_when": "Potential·partition·conditional 오차를 일관되게 제어하는 추론 연산이 나올 때.",
+    "recheck": "네 교차 조합과 exact-role/BP conditional을 함께 비교해 단일 병목 주장을 검증한다.",
+    "comparison_floor": "Constant/learned weights×conditional 교차, exact update",
+    "source_refs": [
+      "findings/sources/llbp-eaj-retrospective-2026-11-01.md"
+    ],
     "paper_id": "CSBMInference",
     "paper_title": "Optimal Inference in Contextual Stochastic Block Models",
     "paper_link": "https://arxiv.org/abs/2306.07948",
@@ -8729,6 +8950,98 @@
     "source_refs": [
       "findings/sources/graphpfn-2026-11-01/program.md"
     ],
+    "paper_id": "A2DEPT",
+    "paper_title": "A2DEPT: Large Language Model-Driven Automated Algorithm Design via Evolutionary Program Trees",
+    "paper_link": "https://arxiv.org/abs/2604.24043",
+    "matches": [
+      {
+        "strength": "FrontierCO의 MIS, CVRP, CFLP, FJSP와 제약이 강한 CEVRPTW, MRCPSP에서 FunSearch, EoH, ReEvo, MCTS-AHD보다 모든 task에서 좋았고, 표준 벤치마크의 평균 정규화 gap을 가장 강한 AHD 기준선 대비 9.8% 줄였다. 예: CVRP 17.42%에서 8.79%, MIS 11.35%에서 4.20%. CEVRPTW의 infeasible 비율은 2.56%로 ReEvo의 8.67%보다 낮았다.",
+        "tags": [
+          "program-synthesis"
+        ],
+        "keywords": [
+          "program"
+        ],
+        "specific_keywords": [
+          "program"
+        ]
+      },
+      {
+        "strength": "Ablation에서 고정 template, Boltzmann 보충, 적응형 scheduling, hybrid selection 중 어느 것을 빼도 최소 한 task에서 성능이 떨어진다.",
+        "tags": [
+          "program-synthesis"
+        ],
+        "keywords": [
+          "program"
+        ],
+        "specific_keywords": [
+          "program"
+        ]
+      }
+    ],
+    "tags": [
+      "program-synthesis"
+    ],
+    "keywords": [
+      "program"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "PROG-F01",
+    "project": "Compiler–Executor GraphPFN pilot",
+    "claim": "고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.",
+    "verdict": "현재 compiler 확장 보류",
+    "reason_status": "unknown",
+    "failure_reason": "관측 정보는 Grid/TabPFN이 회수했지만 compiler는 context 증가에도 약61.6%에 머물렀다. 표현·search guidance·학습 최적화 중 정확한 원인은 식별하지 못했다.",
+    "reopen_when": "Context에서 계산 구성을 더 효율적으로 식별하고 bounded enumeration/강한 PFN feature 기준선을 넘어서는 장치가 나올 때.",
+    "recheck": "같은 grammar와 program prior, 후보 구조 접근, fresh graph와 heldout composition에서 품질과 end-to-end 비용을 맞춰 비교한다.",
+    "comparison_floor": "Cached ProgramGrid grammar prior, relational execution features+TabPFN, matched Plain",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/program.md"
+    ],
+    "paper_id": "AlphaEvolve",
+    "paper_title": "AlphaEvolve: A coding agent for scientific and algorithmic discovery",
+    "paper_link": "https://arxiv.org/abs/2506.13131",
+    "matches": [
+      {
+        "strength": "4×4 복소 행렬 곱을 scalar 곱셈 48번으로 하는 알고리즘을 찾아 이 설정에서 Strassen 이후 56년 만에 처음 개선했다. 50개 넘는 수학 문제 중 약 75%에서 최고 결과와 같았고 약 20%에서 개선했다.",
+        "tags": [
+          "program-synthesis"
+        ],
+        "keywords": [
+          "program"
+        ],
+        "specific_keywords": [
+          "program"
+        ]
+      }
+    ],
+    "tags": [
+      "program-synthesis"
+    ],
+    "keywords": [
+      "program"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "PROG-F01",
+    "project": "Compiler–Executor GraphPFN pilot",
+    "claim": "고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.",
+    "verdict": "현재 compiler 확장 보류",
+    "reason_status": "unknown",
+    "failure_reason": "관측 정보는 Grid/TabPFN이 회수했지만 compiler는 context 증가에도 약61.6%에 머물렀다. 표현·search guidance·학습 최적화 중 정확한 원인은 식별하지 못했다.",
+    "reopen_when": "Context에서 계산 구성을 더 효율적으로 식별하고 bounded enumeration/강한 PFN feature 기준선을 넘어서는 장치가 나올 때.",
+    "recheck": "같은 grammar와 program prior, 후보 구조 접근, fresh graph와 heldout composition에서 품질과 end-to-end 비용을 맞춰 비교한다.",
+    "comparison_floor": "Cached ProgramGrid grammar prior, relational execution features+TabPFN, matched Plain",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/program.md"
+    ],
     "paper_id": "DeepProbLog",
     "paper_title": "DeepProbLog: Neural Probabilistic Logic Programming",
     "paper_link": "https://arxiv.org/abs/1805.10872",
@@ -8769,6 +9082,46 @@
     "source_refs": [
       "findings/sources/graphpfn-2026-11-01/program.md"
     ],
+    "paper_id": "EvoTune",
+    "paper_title": "Algorithm Discovery With LLMs: Evolutionary Search Meets Reinforcement Learning",
+    "paper_link": "https://arxiv.org/abs/2504.05108",
+    "matches": [
+      {
+        "strength": "진화 탐색과 RL fine-tuning을 교대하는 틀을 제시하고, Llama 3.2 1B, Phi 3.5 Mini, Granite 3.1 2B 세 모델과 bin packing, TSP(guided local search), flatpack 세 task에서 같은 sampling 예산 대비 top-50 보상이 FunSearch보다 높았다. 격차는 예산이 커질수록 대체로 벌어졌다. 결과는 seed 10개 평균이다.",
+        "tags": [
+          "program-synthesis"
+        ],
+        "keywords": [
+          "program"
+        ],
+        "specific_keywords": [
+          "program"
+        ]
+      }
+    ],
+    "tags": [
+      "program-synthesis"
+    ],
+    "keywords": [
+      "program"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "PROG-F01",
+    "project": "Compiler–Executor GraphPFN pilot",
+    "claim": "고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.",
+    "verdict": "현재 compiler 확장 보류",
+    "reason_status": "unknown",
+    "failure_reason": "관측 정보는 Grid/TabPFN이 회수했지만 compiler는 context 증가에도 약61.6%에 머물렀다. 표현·search guidance·학습 최적화 중 정확한 원인은 식별하지 못했다.",
+    "reopen_when": "Context에서 계산 구성을 더 효율적으로 식별하고 bounded enumeration/강한 PFN feature 기준선을 넘어서는 장치가 나올 때.",
+    "recheck": "같은 grammar와 program prior, 후보 구조 접근, fresh graph와 heldout composition에서 품질과 end-to-end 비용을 맞춰 비교한다.",
+    "comparison_floor": "Cached ProgramGrid grammar prior, relational execution features+TabPFN, matched Plain",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/program.md"
+    ],
     "paper_id": "Scallop",
     "paper_title": "Scallop: A Language for Neurosymbolic Programming",
     "paper_link": "https://arxiv.org/abs/2304.04812",
@@ -8788,6 +9141,86 @@
     ],
     "tags": [
       "compositional-generalization"
+    ],
+    "keywords": [
+      "program"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "PROG-F01",
+    "project": "Compiler–Executor GraphPFN pilot",
+    "claim": "고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.",
+    "verdict": "현재 compiler 확장 보류",
+    "reason_status": "unknown",
+    "failure_reason": "관측 정보는 Grid/TabPFN이 회수했지만 compiler는 context 증가에도 약61.6%에 머물렀다. 표현·search guidance·학습 최적화 중 정확한 원인은 식별하지 못했다.",
+    "reopen_when": "Context에서 계산 구성을 더 효율적으로 식별하고 bounded enumeration/강한 PFN feature 기준선을 넘어서는 장치가 나올 때.",
+    "recheck": "같은 grammar와 program prior, 후보 구조 접근, fresh graph와 heldout composition에서 품질과 end-to-end 비용을 맞춰 비교한다.",
+    "comparison_floor": "Cached ProgramGrid grammar prior, relational execution features+TabPFN, matched Plain",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/program.md"
+    ],
+    "paper_id": "ShinkaEvolve",
+    "paper_title": "ShinkaEvolve: Towards Open-Ended and Sample-Efficient Program Evolution",
+    "paper_link": "https://iclr.cc/virtual/2026/poster/10007692",
+    "matches": [
+      {
+        "strength": "Ablation에서 가중 parent sampling이 random search와 hill climbing을, bandit ensemble이 단일 모델과 고정 ensemble을, embedding 기반 rejection이 rejection 없음보다 나았다. LLM judge의 추가 이득은 작았다.",
+        "tags": [
+          "program-synthesis"
+        ],
+        "keywords": [
+          "program"
+        ],
+        "specific_keywords": [
+          "program"
+        ]
+      }
+    ],
+    "tags": [
+      "program-synthesis"
+    ],
+    "keywords": [
+      "program"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "PROG-F01",
+    "project": "Compiler–Executor GraphPFN pilot",
+    "claim": "고정 executor 위 compiler가 조합 일반화와 품질·비용에서 강한 대조를 넘는다.",
+    "verdict": "현재 compiler 확장 보류",
+    "reason_status": "unknown",
+    "failure_reason": "관측 정보는 Grid/TabPFN이 회수했지만 compiler는 context 증가에도 약61.6%에 머물렀다. 표현·search guidance·학습 최적화 중 정확한 원인은 식별하지 못했다.",
+    "reopen_when": "Context에서 계산 구성을 더 효율적으로 식별하고 bounded enumeration/강한 PFN feature 기준선을 넘어서는 장치가 나올 때.",
+    "recheck": "같은 grammar와 program prior, 후보 구조 접근, fresh graph와 heldout composition에서 품질과 end-to-end 비용을 맞춰 비교한다.",
+    "comparison_floor": "Cached ProgramGrid grammar prior, relational execution features+TabPFN, matched Plain",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/program.md"
+    ],
+    "paper_id": "ThetaEvolve",
+    "paper_title": "ThetaEvolve: Test-time Learning on Open Problems",
+    "paper_link": "https://proceedings.mlr.press/v306/wang26ha.html",
+    "matches": [
+      {
+        "strength": "8B open 모델로 circle packing(2.63598308, AlphaEvolve 2.63586276)과 첫째 autocorrelation inequality(1.503133, AlphaEvolve 1.503164)에서 새 최고 bound를 냈다.",
+        "tags": [
+          "program-synthesis"
+        ],
+        "keywords": [
+          "program"
+        ],
+        "specific_keywords": [
+          "program"
+        ]
+      }
+    ],
+    "tags": [
+      "program-synthesis"
     ],
     "keywords": [
       "program"
@@ -9502,6 +9935,48 @@
     ],
     "tags": [
       "graph-structure-use"
+    ],
+    "keywords": [
+      "few-shot"
+    ],
+    "retrieval_score": 3,
+    "signal": "구체 키워드+태그 일치 (미검증)",
+    "status": "원문·가정·범위 대조 필요; 기존 판정 유지"
+  },
+  {
+    "finding_id": "XFER-F01",
+    "project": "Context path 선택과 고정 LP/PFN 혼합",
+    "claim": "DBLP에서 통했던 context-LOO path 선택을 다른 graph로 옮기면 강하다.",
+    "verdict": "고정 선택 규칙의 전이 실패",
+    "reason_status": "supported",
+    "failure_reason": "소수 context의 ranking이 query utility와 맞지 않았다. 후보 pool 확대와 accuracy 목적 변경만으로는 해결되지 않았다. 추정 분산·risk mismatch의 상대 기여는 미상이다.",
+    "reopen_when": "극소 context의 추정 불확실성과 실제 query risk를 다루며 task 내 utility를 식별하는 방법이 나올 때.",
+    "recheck": "독립 graph에서 동일 context·후보 pool·선택 예산으로 사전 규칙을 고정해 검증한다.",
+    "comparison_floor": "Uniform/union LP, individual paths, fixed GraphPFN path inputs",
+    "source_refs": [
+      "findings/sources/graphpfn-2026-11-01/transfer.md",
+      "findings/sources/graphpfn-2026-11-01/expanded.md",
+      "findings/sources/graphpfn-2026-11-01/accuracy_selector.md"
+    ],
+    "paper_id": "RFTHGS",
+    "paper_title": "Refining Hybrid Genetic Search for CVRP via Reinforcement Learning-Finetuned LLM",
+    "paper_link": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/b54532b0e57eb963b19e00583376cda3-Abstract-Conference.html",
+    "matches": [
+      {
+        "strength": "작은 instance(400노드 이하)로 학습해 1,000노드까지 test해 크기 외삽을 보고한다.",
+        "tags": [
+          "distribution-shift"
+        ],
+        "keywords": [
+          "few-shot"
+        ],
+        "specific_keywords": [
+          "few-shot"
+        ]
+      }
+    ],
+    "tags": [
+      "distribution-shift"
     ],
     "keywords": [
       "few-shot"

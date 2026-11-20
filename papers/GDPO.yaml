@@ -1,0 +1,54 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: GDPO
+title: "GDPO: Group reward-Decoupled Normalization Policy Optimization for Multi-reward RL Optimization"
+authors: "Shih-Yang Liu, Xin Dong, Ximing Lu, Shizhe Diao, Peter Belcak, Mingjie Liu, Min-Hung Chen, Hongxu Yin, Yu-Chiang Frank Wang, Kwang-Ting Cheng, Yejin Choi, Jan Kautz, Pavlo Molchanov (NVIDIA)"
+venue: "ICML 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2601.05242
+  openreview: https://openreview.net/forum?id=Y1rHxA58If
+citation:
+  type: inproceedings
+  title: "GDPO: Group reward-Decoupled Normalization Policy Optimization for Multi-reward RL Optimization"
+  authors: ["Shih-Yang Liu", "Xin Dong", "Ximing Lu", "Shizhe Diao", "Peter Belcak", "Mingjie Liu", "Min-Hung Chen", "Hongxu Yin", "Yu-Chiang Frank Wang", "Kwang-Ting Cheng", "Yejin Choi", "Jan Kautz", "Pavlo Molchanov"]
+  year: 2026
+  booktitle: "International Conference on Machine Learning"
+  arxiv: "2601.05242"
+  url: https://icml.cc/virtual/2026/poster/63333
+  verified_from:
+    - https://arxiv.org/abs/2601.05242
+    - https://icml.cc/virtual/2026/poster/63333
+areas: [llm-rl]
+problem: "여러 보상을 더한 뒤 GRPO로 group 정규화하면 서로 다른 보상 조합이 같은 advantage로 뭉개져 학습 신호의 해상도가 떨어지고, 수렴이 나빠지거나 초기에 학습이 실패하는 문제를 다룬다."
+core_idea: "이진 보상 두 개와 rollout 두 개의 예에서 합 보상으로 정규화하면 (0,1)·(0,2)·(1,2)가 모두 같은 advantage를 받아, 두 보상을 다 만족한 응답과 하나만 만족한 응답이 구분되지 않는다. GDPO는 보상마다 따로 group 안 평균·표준편차로 정규화하고, 그 advantage를 더한 뒤, 보상 수가 늘어도 크기가 커지지 않도록 batch 전체에서 다시 정규화한다. 정규화된 보상별 advantage에 우선순위 가중치를 곱할 수 있고, 쉬운 목적이 어려운 목적을 압도할 때는 가중치보다 조건부 보상(예: 정답일 때만 길이 보상)이 더 예측 가능하게 작동한다고 제안한다."
+key_assumptions:
+  - "보상 성분마다 group 안 분산이 0이 아닐 만큼 rollout이 다양하다고 본다."
+  - "보상들을 정규화 뒤 더하는 것이 원하는 trade-off를 표현한다고 가정한다. 우선순위는 가중치나 보상 설계로 따로 주입한다."
+strengths:
+  - text: "합 보상 정규화가 보상 조합을 같은 advantage로 뭉개는 현상을 구체적 예와 rollout·보상 수에 따른 서로 다른 advantage 개수로 보이고, 성분별 정규화가 이 해상도를 회복함을 보였다. std 항만 빼는 방식(GRPO w/o std, Dr. GRPO)은 개수 증가가 미미하고, tool calling에서 BFCL-v3 형식 정답률이 0%로 무너졌다."
+    tags: [multi-reward]
+  - text: "Tool calling(Qwen2.5 1.5B·3B), 수학(DeepSeek-R1 1.5B·7B, Qwen3-4B, 정답 + 길이 보상), 코드(정답률·길이·버그 비율 세 보상)에서 GRPO보다 정답률과 제약 준수가 함께 좋아졌다. 예를 들어 DeepSeek-R1-1.5B의 AIME 정확도가 23.1%에서 29.4%로, 길이 초과율이 10.8%에서 6.5%로 개선되었다."
+    tags: [multi-reward, training-stability]
+  - text: "가중치만으로는 난이도 차이가 큰 목적의 우선순위를 안정적으로 바꾸지 못한다는 점을 실험으로 보이고, 조건부 보상 설계라는 대안을 제시했다."
+    tags: [multi-reward, reward-signal]
+limitations:
+  - text: "batch 정규화가 안정성에 중요하며, 빼면 학습이 가끔 수렴하지 않는다. GDPO는 형식 보상 수렴까지의 step 수 분산이 GRPO보다 컸다."
+    tags: [training-stability]
+    source: self
+  - text: "보상 가중치 조정만으로는 쉬운 목적과 어려운 목적의 난이도 차이가 클 때 어려운 목적을 우선시하지 못한다. 모델이 쉬운 보상만 계속 올렸고, 큰 가중치 차이에서만 뚜렷한 변화가 있었다."
+    tags: [multi-reward]
+    source: self
+  - text: "[analyst] 실험은 100–500 training step 규모이고, 보상 성분은 정답·형식·길이·버그처럼 종류가 다른 보상이다. 같은 목적을 다른 조건(예: instance 크기)에서 잰 성분이나, 성분별 group 분산이 매우 작은 작은 group에서 per-reward std 추정 잡음이 미치는 영향은 분석하지 않았다."
+    tags: [multi-reward, reward-signal]
+    source: analyst
+builds_on: [GRPO, Dr. GRPO]
+compared_against: [GRPO, Dr. GRPO]
+open_questions:
+  - "성분별 정규화 뒤 batch 정규화는 성분 사이 상대 가중을 어떻게 바꾸는가? 같은 가중치 합이 의도한 trade-off를 표현한다는 보장이 있는가?"
+  - "성분 수가 많고 group이 작을 때 per-reward 정규화가 잡음을 키우는 경계는 어디인가?"
+hooks:
+  - "(처방 계열 선점) 사용자 strata 계획 §9는 GDPO를 MO-GRPO와 같은 처방 계열(보상별 group 정규화 후 합산)로 분류했다. 층마다 정규화한 뒤 합치는 처방을 RL-AHD에 쓸 때 GDPO의 batch 정규화 단계까지 포함할지 정해야 하고, 그 선택은 층 사이 상대 가중을 바꾸므로 R2g와 별도 변형으로 비교할 만하다(제안)."
+  - "(advantage 뭉개짐과 동작 중복) GDPO가 보인 '다른 보상 조합이 같은 advantage를 받는 현상'은 AHD에서 층 성분을 평균으로 합칠 때도 생길 수 있다. 예를 들어 한 층에서 크게 좋아지고 다른 층에서 나빠진 자식과, 모든 층에서 조금 좋아진 자식이 같은 평균 개선을 가질 수 있다. 사용자 계획의 '층 사이 방향이 반대로 확정되는 쌍'이 바로 이런 경우이므로, GDPO의 서로 다른 advantage 개수 지표를 층 혼합 진단의 보조 지표로 쓸 수 있다(가설)."
+  - "(조건부 보상) GDPO의 조건부 보상(정답일 때만 길이 보상)은 AHD에서 feasible·실행 성공일 때만 품질 보상을 주는 gate 구조와 같은 형태다. 이 구조는 CALM과 Fisher-R1에도 있으므로 새 처방으로 주장할 것은 아니다."
+notes: "arXiv abs와 HTML v1 본문(문제 예시, 식 4–7, 세 task 실험, 부록 A)을 읽었다. arXiv comment는 NVIDIA 기술 보고서라고 되어 있다. ICML 2026 poster와 OpenReview forum 주소는 icml.cc 가상 페이지에서 확인했다. PMLR 쪽 페이지는 없어 booktitle은 학회 이름만 적었다. icml.cc 페이지의 저자 표기는 Hongxu (Danny) Yin, Yu-Chiang Wang이지만 arXiv 표기를 따랐다. NVlabs 코드 저장소는 검색 결과로만 보았고 주소를 직접 확인하지 못해 links.code에 넣지 않았다."
+added: 2026-11-20

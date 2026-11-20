@@ -1,0 +1,79 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: EoH
+title: "Evolution of Heuristics: Towards Efficient Automatic Algorithm Design Using Large Language Model"
+authors: "Fei Liu, Xialiang Tong, Mingxuan Yuan, Xi Lin, Fu Luo, Zhenkun Wang, Zhichao Lu, Qingfu Zhang"
+venue: "ICML 2024"
+year: 2024
+links:
+  paper: https://proceedings.mlr.press/v235/liu24bs.html
+  arxiv: https://arxiv.org/abs/2401.02051
+  code: https://github.com/FeiLiu36/EoH
+
+citation:
+  type: inproceedings
+  title: "Evolution of Heuristics: Towards Efficient Automatic Algorithm Design Using Large Language Model"
+  authors: ["Fei Liu", "Xialiang Tong", "Mingxuan Yuan", "Xi Lin", "Fu Luo", "Zhenkun Wang", "Zhichao Lu", "Qingfu Zhang"]
+  year: 2024
+  booktitle: "Proceedings of the 41st International Conference on Machine Learning"
+  publisher: "PMLR"
+  volume: 235
+  pages: "32201--32223"
+  arxiv: "2401.02051"
+  url: https://proceedings.mlr.press/v235/liu24bs.html
+  verified_from:
+    - https://proceedings.mlr.press/v235/liu24bs.html
+    - https://arxiv.org/abs/2401.02051
+
+areas: [co-heuristics]
+problem: "FunSearch처럼 LLM으로 휴리스틱을 자동 설계하되, 백만 회 수준의 LLM 호출 없이 수천 회 예산으로 수작업 휴리스틱과 FunSearch를 넘는 휴리스틱을 찾고자 한다."
+core_idea: "휴리스틱 하나를 자연어로 쓴 핵심 아이디어(thought)와 그것을 구현한 Python 코드의 쌍으로 표현하고, LLM이 둘을 함께 생성하게 한다. 탐색 연산자는 프롬프트 다섯 가지다. E1은 parent 여러 개와 최대한 다른 휴리스틱을, E2는 parent들의 공통 아이디어를 바탕으로 새 휴리스틱을 만든다. M1은 한 휴리스틱을 성능 개선 방향으로 고치고, M2는 parameter만 바꾸며, M3는 불필요한 부분을 덜어 단순화한다. 세대마다 각 연산자로 자식을 만든 뒤 상위 N개만 남기고, parent는 순위 기반 확률로 고른다. GPT-3.5-turbo로 20세대를 돌리며, bin packing 기준 LLM 호출은 약 2,000회다."
+key_assumptions:
+  - "휴리스틱 품질은 작은 고정 instance 집합의 평균 성능으로 충분히 잴 수 있다고 본다. Online bin packing은 5k item·용량 100의 Weibull instance 5개, TSP(GLS 틀)와 FSSP는 각각 무작위 instance 64개를 쓴다."
+  - "자연어 thought가 코드 탐색에 유용한 중간 표현이 된다고 가정한다."
+  - "한 크기·용량에서 진화한 휴리스틱이 다른 크기·용량과 TSPLib·Taillard 같은 실제 benchmark로 옮겨 간다고 가정한다."
+strengths:
+  - text: "Thought와 코드를 함께 진화시키는 표현이 성능에 기여함을 ablation으로 보였다. 5k instance 평균 gap이 코드만 쓰면 2.57%, 둘을 함께 쓰는 EoH는 0.66%였다."
+    tags: [program-synthesis]
+  - text: "FunSearch보다 훨씬 적은 LLM 호출(수천 회)로 bin packing 12개 설정 평균 gap 1.18%를 내, FunSearch(2.23%)와 Best Fit(4.13%)을 앞섰다. EoH 2,000회 호출이 무작위 샘플 10,000회보다 나았다."
+    tags: [inference-cost]
+  - text: "학습 용량 100에서 진화했지만 용량 500 test에서도 성능을 유지했다. FunSearch는 1k_C500에서 수작업 휴리스틱보다 나빴던 반면 EoH는 그렇지 않았다고 저자들이 강조한다. TSP에서는 uniform 분포로 학습한 neural solver가 TSPLib에서 열화한 반면 EoH는 상대적으로 잘 옮겨 갔다."
+    tags: [distribution-shift]
+limitations:
+  - text: "별도 limitation 절이 없고, 결론에서 일부 instance에서만 수작업 휴리스틱을 넘는다고 범위를 좁힌다. 향후 과제로 알고리즘 설계 전용 LLM 학습, 휴리스틱 탐색 공간의 이론, 사람 전문가와의 상호작용을 든다."
+    tags: [theory-gap, adaptation]
+    source: self
+  - text: "연산자 일부를 빼면 결과가 크게 무너졌다. E1만 쓴 변형은 일부 용량 500 설정에서 gap이 50%를 넘었고, 코드만 진화시킨 EoC는 1k_100에서 148.63%였다. 저자들은 부록에서 이를 학습 fitness 분포에 대한 과적합으로 해석한다."
+    tags: [distribution-shift, training-stability]
+    source: self
+  - text: "Weibull bin packing에서 EoH가 진화시킨 함수는 대체로 설명하기 어렵다고 지적한다. 특히 item 크기에 따라 분기하는 부분이 그렇다. 또 두 임계값을 둔 단순한 WorstFit 변형이 EoH 휴리스틱을 0.15% 앞섰다."
+    tags: [interpretability, eval-protocol]
+    source: cited
+    by: "An In-depth Study of LLM Contributions to the Bin Packing Problem (2025)"
+    by_id: HerrmannPallez
+    by_link: https://arxiv.org/abs/2510.27353
+  - text: "EoH를 포함한 기존 LLM-AHD는 LLM을 고정해 두고 프롬프트만 바꾸는 verbal guidance에 의존해서, 휴리스틱 평가에서 나온 성능 신호로 모델 자체를 개선하지 못한다고 지적한다."
+    tags: [adaptation, reward-signal]
+    source: cited
+    by: "CALM: Co-evolution of Algorithms and Language Model for Automatic Heuristic Design (2026)"
+    by_id: CALM
+    by_link: https://arxiv.org/abs/2505.12285
+  - text: "EoH 같은 fixed-workflow 방법은 LLM을 정해진 파이프라인 안의 수동적 휴리스틱 생성기로 쓴다. 그래서 직전 휴리스틱의 실패 양상처럼 설계 단계마다 필요한 정보를 스스로 찾지 못하고 시행착오 생성에 기댄다. 정보를 전부 넣어 줘도 이득이 제한적이었다고 보고한다."
+    tags: [adaptation, inference-cost]
+    source: cited
+    by: "AHD Agent: Agentic Reinforcement Learning for Automatic Heuristic Design (2026)"
+    by_id: AHDAgent
+    by_link: https://arxiv.org/abs/2605.08756
+  - text: "[analyst] Bin packing 학습 fitness는 5k@100 한 층의 instance 5개에서만 계산하고, test는 1k·5k·10k × 용량 100·500의 여섯 층에서 따로 보고한다. 즉 학습 신호는 한 층이고 평가는 층별이다. 층을 섞어 학습했을 때 어떤 층이 선택을 지배하는지는 이 설정으로는 알 수 없다."
+    tags: [reward-signal, multi-reward, eval-protocol]
+    source: analyst
+builds_on: [FunSearch, GPT-3.5-turbo]
+compared_against: [FunSearch, FirstFit, BestFit, NearestInsertion, FarthestInsertion, OR-Tools, AM, POMO, LEHD, GNNGLS, NeuralGLS, KGLS, NEH, NEHFF, PFSPNet]
+open_questions:
+  - "Fitness를 instance 5개로 계산할 때 세대 간 선택이 표본 잡음에 얼마나 휘둘리는가? 같은 설정을 seed 여러 개로 돌렸을 때 최종 휴리스틱의 test 순위가 유지되는가?"
+  - "EoC의 과적합(148%)은 학습 instance 수가 작아서인가, 한 층만 써서인가? 학습 층을 늘리면 사라지는가?"
+hooks:
+  - "(작은 고정 집합의 원형) EoH의 OBP 학습 fitness는 Weibull 5k@100 instance 5개다. CALM의 OBP 4개, TSP 64개 같은 관행은 EoH 설정을 이어받은 것으로 보인다(가설, CALM 본문에서 출처를 명시하지는 않음). 진단 계획 Q1–Q3에서 고정 복제본 크기를 정할 때 EoH 원설정을 함께 재현하면 비교 축이 하나 늘어난다."
+  - "(strata, 학습 층과 held-out 층) EoH는 한 층으로 학습하고 여섯 층으로 test했다. 저자들이 'FunSearch는 1k_C500에서 무너지고 EoH는 버틴다'고 강조한 부분은 사용자 strata 계획 C1(held-out 층별 방향)과 같은 질문을 진화 탐색에서 사후적으로 본 것이다. Strata 계획에서는 학습 혼합 보상 R0와 층별 승률 R3가 이런 용량 외삽에서 갈리는지를 사전 명세로 검증한다는 점이 차별점이 된다."
+  - "(EoC 과적합) 연산자 구성에 따라 학습 fitness에 과적합해 test gap이 폭발하는 사례를 저자들이 직접 보고했다. RL로 LLM을 학습하면 같은 과적합이 정책 수준에서 누적될 수 있다는 동기 문장으로 인용할 수 있다(가설)."
+notes: "arXiv v3 HTML 본문(방법, fitness 설정, test 결과, ablation, 결론)과 PMLR 페이지를 읽었다. PMLR 페이지는 둘째 저자를 'Tong Xialiang'으로 표기하지만 arXiv와 LLM4AD 저자 목록은 'Xialiang Tong'이라 arXiv 표기를 따랐다. 코드 링크는 검색 결과로 확인했다. ReEvo 등 다른 후속 비판은 원문 문장을 확인하지 못해 넣지 않았다."
+added: 2026-11-20

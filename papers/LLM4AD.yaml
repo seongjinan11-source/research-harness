@@ -1,0 +1,50 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: LLM4AD
+title: "LLM4AD: A Platform for Algorithm Design with Large Language Model"
+authors: "Fei Liu, Rui Zhang, Zhuoliang Xie, Rui Sun, Kai Li, Qinglong Hu, Ping Guo, Xi Lin, Xialiang Tong, Mingxuan Yuan, Zhenkun Wang, Zhichao Lu, Qingfu Zhang"
+venue: "arXiv 2024"
+year: 2024
+links:
+  paper: https://arxiv.org/abs/2412.17287
+  code: https://github.com/Optima-CityU/LLM4AD
+
+citation:
+  type: misc
+  title: "LLM4AD: A Platform for Algorithm Design with Large Language Model"
+  authors: ["Fei Liu", "Rui Zhang", "Zhuoliang Xie", "Rui Sun", "Kai Li", "Qinglong Hu", "Ping Guo", "Xi Lin", "Xialiang Tong", "Mingxuan Yuan", "Zhenkun Wang", "Zhichao Lu", "Qingfu Zhang"]
+  year: 2024
+  arxiv: "2412.17287"
+  url: https://arxiv.org/abs/2412.17287
+  verified_from:
+    - https://arxiv.org/abs/2412.17287
+
+areas: [co-heuristics, benchmark]
+problem: "LLM 기반 알고리즘 설계 연구가 방법마다 다른 코드·과제·평가 환경으로 흩어져 있어 비교와 재현이 어렵다. 탐색 방법, 설계 과제, LLM 인터페이스를 한 플랫폼으로 묶어 이 문제를 줄이고자 한다."
+core_idea: "탐색 방법, LLM 인터페이스, 과제 평가 인터페이스의 세 블록으로 구성된 Python 플랫폼이다. 탐색 방법으로는 반복 샘플링, tabu search·ILS·SA·VNS 같은 이웃 탐색, EoH·FunSearch·(1+1)-EPS 같은 진화 탐색, MEoH·NSGA-II·MOEA/D 같은 다목적 방법을 담는다. 과제는 CVRP·OVRP·online bin packing·TSP·VRPTW 등 최적화, 제어 환경 같은 ML, 상미분방정식과 Feynman 기호회귀 같은 과학적 발견으로 나뉜다. 생성된 코드는 timeout과 보호된 나눗셈을 갖춘 평가 sandbox에서 실행하며, 원격 API와 로컬 open-source 모델을 같은 형식으로 부를 수 있다. 9개 과제에서 4개 방법을 평가 2,000회, run 3개로 비교한 benchmark를 함께 싣는다."
+key_assumptions:
+  - "과제마다 고정된 평가 함수와 instance 집합을 하나 정해 두면 방법 사이 공정한 비교가 된다고 본다."
+  - "Run 3개의 평균과 표준편차로 방법과 LLM의 차이를 판단할 수 있다고 본다."
+strengths:
+  - text: "EoH, FunSearch, (1+1)-EPS 등을 같은 과제·평가기·예산에서 돌릴 수 있게 해, 방법별 구현 차이로 인한 혼란을 줄인다. GUI와 문서, notebook도 제공한다."
+    tags: [eval-protocol]
+  - text: "최적화, ML, 과학적 발견에 걸친 과제를 한곳에 모아 과제 범위가 넓다. 논문 기준 20개 이상이 들어 있고 160개 이상으로 확장할 계획이다."
+    tags: [task-coverage]
+  - text: "Benchmark에서 HumanEval 같은 코딩 능력이 높다고 알고리즘 설계 성능이 반드시 높지는 않았고, LLM 사이 표준편차가 겹쳐 어느 하나가 분명히 우세하지 않았다. 과제마다 방법 간 격차가 크게 달라 과제 난이도 차이도 드러났다."
+    tags: [eval-protocol, robustness]
+limitations:
+  - text: "현재 GUI는 한 번에 방법 하나, LLM 설정 하나만 돌릴 수 있어 batch 실험을 지원하지 않는다고 저자들이 인정하고 향후 추가할 계획이라고 밝힌다."
+    tags: [eval-protocol]
+    source: self
+  - text: "[analyst] Benchmark는 run 3개의 평균과 표준편차만 보고하고 통계 검정이 없으며 본문에 정확한 수치표도 없다. 평가 instance 집합의 크기나 구성에 따른 순위 변화도 다루지 않아, 플랫폼이 평가를 통일해도 그 평가 자체의 신뢰도는 검증되지 않는다."
+    tags: [eval-protocol, reward-signal]
+    source: analyst
+builds_on: [EoH, FunSearch]
+compared_against: [EoH, FunSearch, (1+1)-EPS, RandomSampling]
+open_questions:
+  - "플랫폼의 기본 평가 집합으로 잰 방법 순위가 instance 수를 늘리거나 크기·분포를 바꾸면 유지되는가?"
+  - "평가 sandbox가 막는 실패 유형(timeout, 무한 루프, 0으로 나눔) 외에 instance 하드코딩 같은 보상 해킹을 탐지하는 장치가 필요한가?"
+hooks:
+  - "(생성기와 평가 틀의 표준 출처) 사용자 연구 계획은 TSP·CVRP·OBP 생성기와 ACO 틀을 CALM·EoH·ReEvo·LLM4AD 공개 코드에서 가져오는 것을 표준으로 본다. 사용자는 CALM 저장소에 LICENSE가 없어 규약만 재구현했다. LLM4AD 쪽 라이선스와 OBP·TSP 평가 규약(집계 방식, timeout)을 대조하면 하네스 규약의 근거를 하나 더 확보할 수 있다(미확인)."
+  - "(평가 프로토콜) LLM4AD도 run 3개 보고에 머문다. 사용자 계획의 seed ≥ 5, 쿼리 예산 frontier, Raw/Strict 지표는 이 플랫폼 관행보다 엄격한 프로토콜로 제시할 수 있다."
+notes: "arXiv v2(2026-02) HTML 본문의 플랫폼 구성, benchmark 설정·결과, 향후 과제를 읽었다. 학회·저널 게재는 확인하지 못해 misc로 두었다. 과제 수는 본문 표의 별표(추가 예정) 항목을 포함한 대략값이라 strengths에는 논문이 밝힌 '20개 이상'만 적었다. (1+1)-EPS, RandomSampling은 외부 이름이다."
+added: 2026-11-20

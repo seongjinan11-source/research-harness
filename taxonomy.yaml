@@ -18,6 +18,8 @@ areas:
   benchmark: 벤치마크·평가·분석 연구
   survey: 서베이
   neurosymbolic: 신경망과 기호 프로그램·논리 추론의 결합
+  llm-rl: LLM 강화학습·사후학습(RLVR, GRPO 계열, 보상 설계)
+  co-heuristics: 조합최적화 휴리스틱·solver의 학습과 자동 설계(LLM 기반 휴리스틱 생성, neural CO)와 그 평가
 
 tags:
   # --- 데이터 / 사전학습 ---
@@ -34,6 +36,8 @@ tags:
   selection-bias: 라벨 노드·context가 community·차수 등 구조를 따라 편향되게 선택되어 생기는 손실과 그 보정
   label-shift: 집단·도메인별 클래스 사전확률 변화의 추정과 출력 쪽 prior 보정(label-shift EM, calibration)
   group-offset: community·batch·도메인 단위 feature offset과 클래스 구성의 교락, 그 offset 아래 클래스 원형 추정
+  reward-signal: 검증 가능·자기 검증 보상의 설계와, 표본·instance에서 추정한 보상의 잡음·편향
+  multi-reward: 여러 보상 성분·목적을 group 정규화 정책최적화에서 결합하는 방식과 그 실패
   # --- 그래프 ---
   graph-structure-use: 그래프 구조를 쓰는 방식 (heterophily, long-range, message passing 한계)
   graph-scale: 대규모 그래프 처리

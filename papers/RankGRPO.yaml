@@ -1,0 +1,47 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: RankGRPO
+title: "Rank-GRPO: Training LLM-based Conversational Recommender Systems with Reinforcement Learning"
+authors: "Yaochen Zhu, Harald Steck, Dawen Liang, Yinhan He, Vito Ostuni, Jundong Li, Nathan Kallus"
+venue: "ICLR 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2510.20150
+  code: https://github.com/yaochenzhu/Rank-GRPO
+  openreview: https://openreview.net/forum?id=Xgw2D9cALS
+citation:
+  type: inproceedings
+  title: "Rank-GRPO: Training LLM-based Conversational Recommender Systems with Reinforcement Learning"
+  authors: ["Yaochen Zhu", "Harald Steck", "Dawen Liang", "Yinhan He", "Vito Ostuni", "Jundong Li", "Nathan Kallus"]
+  year: 2026
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2510.20150"
+  url: https://iclr.cc/virtual/2026/poster/10008949
+  verified_from:
+    - https://arxiv.org/abs/2510.20150
+    - https://iclr.cc/virtual/2026/poster/10008949
+areas: [llm-rl]
+problem: "LLM 기반 대화형 추천에서 순위 목록 하나를 출력할 때, catalog 밖 항목·형식 위반·목록 뒤쪽 품질 저하가 생기고, 목록 전체에 sequence 수준 보상을 주는 GRPO는 credit assignment가 맞지 않는 문제를 푼다."
+core_idea: "ConvRec-R1은 두 단계다. 1단계는 GPT-4o teacher의 추천을 catalog 항목으로 다시 매핑하고(Remap), teacher를 judge로 써 점수를 보정하고(Reflect), 인기도 편향을 학습된 bias로 조정해(Adjust) behavior cloning 데이터를 만든다. 2단계 Rank-GRPO는 목록의 각 순위를 행동 단위로 본다. 순위별 return은 자기 순위와 그 뒤만 포함해 앞 항목이 뒤 결과의 credit을 받지 않게 하고(실제로는 현재 항목의 relevance만 쓰는 Γ=∞가 가장 좋았다), advantage는 G개 trajectory의 같은 순위끼리 정규화하며, importance ratio는 그 항목 token 확률의 기하평균으로 정의해 항목 길이에 따른 불안정을 줄인다."
+key_assumptions:
+  - "목록의 순위별 relevance로 보상을 분해할 수 있고, 각 순위의 품질이 독립적인 credit 단위가 된다고 가정한다."
+  - "teacher LLM의 추천을 catalog로 매핑한 데이터가 warm-start에 충분히 좋은 시연이라고 가정한다."
+strengths:
+  - text: "보상의 집계 단위를 sequence에서 순위로 낮추고, advantage 정규화도 같은 순위끼리 하도록 바꿔 sequence 보상이 모든 token에 퍼지는 non-causal credit assignment를 줄였다. GRPO·GSPO보다 빨리 수렴하고 Recall·NDCG가 높으며, 이득은 목록 뒤쪽 순위에서 가장 크다."
+    tags: [reward-signal]
+  - text: "Reddit-v2에서 Llama-3.2-3B + SFT + Rank-GRPO가 Recall@20 0.2368로 GPT-4o(0.2147)와 CRAG(0.2212)보다 높았고, 0.5B 모델도 vanilla GRPO(0.1803)보다 크게 나았다(0.2047)."
+    tags: [inference-cost]
+limitations:
+  - text: "보상 shaping이 단순하며 sliding-window return 같은 정교한 방식은 향후 과제로 남겼다. 3B를 넘는 backbone은 latency·비용 문제로 실험하지 않았다."
+    tags: [reward-signal, context-scale]
+    source: self
+  - text: "Off-policy 변형은 importance weighting이 분산을 키워 같은 step에서 on-policy보다 뒤처진다. 파이프라인은 영화 추천용으로 설계했고 다른 항목 종류로의 일반화는 시험하지 않았다."
+    tags: [training-stability, task-coverage]
+    source: self
+builds_on: [GRPO, GSPO]
+compared_against: [GRPO, GSPO, ReDial, KBRD, KGSF, UniCRS, NBCRS, GPT-4o, GPT-4o-mini, CRAG]
+open_questions:
+  - "순위 단위 분해가 가능한 보상이 아닌 경우(항목 사이 상호작용이 큰 목록)에도 같은 단위 낮추기가 도움이 되는가?"
+hooks:
+  - "(보상 집계 단위, 약한 유비) 사용자 연구의 핵심은 응답 하나의 스칼라 보상이 이미 크기·용량 층을 섞은 평균이라는 점이다. Rank-GRPO는 응답 하나 안의 부분(순위)마다 따로 보상을 두고 같은 단위끼리 group 정규화를 한다는 점에서, 층별로 따로 정규화한 뒤 합치는 처방(R2g류)과 구조가 비슷하다. 다만 Rank-GRPO의 단위는 출력 안의 위치이고 행동(token)과 직접 대응하지만, AHD의 층은 같은 코드 하나를 다른 instance에서 평가한 결과라 credit을 나눌 token 단위가 없다. 따라서 선행 위협이 아니라 참고 유비로만 쓴다."
+notes: "arXiv abs와 HTML v5 본문 앞부분(약 100k자)을 읽었다. ICLR 2026 poster는 iclr.cc 가상 페이지에서 확인했고(workshop 표기 없음) OpenReview forum 주소도 그 페이지에서 읽었다. 정식 proceedings는 확인하지 못해 booktitle은 학회 이름만 적었다. 사용자 연구와의 접점은 약하다."
+added: 2026-11-20

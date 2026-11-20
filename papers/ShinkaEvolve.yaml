@@ -1,0 +1,58 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: ShinkaEvolve
+title: "ShinkaEvolve: Towards Open-Ended and Sample-Efficient Program Evolution"
+authors: "Robert Tjarko Lange, Yuki Imajuku, Edoardo Cetin"
+venue: "ICLR 2026"
+year: 2026
+links:
+  paper: https://iclr.cc/virtual/2026/poster/10007692
+  arxiv: https://arxiv.org/abs/2509.19349
+  openreview: https://openreview.net/forum?id=lKEdGCoDNC
+  code: https://github.com/SakanaAI/ShinkaEvolve
+
+citation:
+  type: inproceedings
+  title: "ShinkaEvolve: Towards Open-Ended and Sample-Efficient Program Evolution"
+  authors: ["Robert Tjarko Lange", "Yuki Imajuku", "Edoardo Cetin"]
+  year: 2026
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2509.19349"
+  url: https://iclr.cc/virtual/2026/poster/10007692
+  verified_from:
+    - https://iclr.cc/virtual/2026/poster/10007692
+    - https://arxiv.org/abs/2509.19349
+
+areas: [co-heuristics]
+problem: "AlphaEvolve 계열의 LLM 코드 진화는 수천 번 이상의 평가가 필요할 만큼 샘플 효율이 낮고 대부분 closed-source다. 적은 평가로 좋은 프로그램을 찾는 open-source framework를 만들고자 한다."
+core_idea: "세 가지 장치를 더한다. 첫째, parent sampling은 순위 기반 power-law 샘플링이나, sigmoid 성능 점수에 자식 수가 적은 프로그램을 우대하는 novelty 항을 곱한 가중 샘플링으로 탐색과 활용을 조절한다. 둘째, 새 코드를 기존 코드와 embedding cosine 유사도(임계 0.95)로 비교해 거의 같으면 LLM judge가 의미 있게 다른지 다시 확인하는 novelty rejection sampling으로 중복 평가를 줄인다. 셋째, parent나 초기 프로그램 대비 상대 개선을 보상으로 하는 UCB1 bandit으로 여러 LLM 중 어느 모델을 쓸지 고른다. 그 밖에 island 구조, diff·전체 재작성·crossover 변이, 평가 결과를 주기적으로 요약해 프롬프트에 붙이는 meta-scratchpad를 쓴다."
+key_assumptions:
+  - "잘 정의된 수치 목적이 있는 문제에만 적용된다고 본다."
+  - "Embedding 유사도가 높으면 동작도 비슷하다고 보고, 평가 전에 걸러도 좋은 후보를 잃지 않는다고 가정한다."
+  - "LLM 선택의 보상인 상대 개선이 모델 사이 비교에 충분히 안정적인 신호라고 본다."
+strengths:
+  - text: "원 26개 circle packing에서 평가 150회 미만으로 AlphaEvolve 결과를 넘는 해를 찾았다. 수천 회 단위를 쓰는 기존 framework보다 자릿수가 다르게 적은 평가다."
+    tags: [inference-cost]
+  - text: "AIME agent scaffold는 후보마다 3번 실행해 LLM 확률성을 줄이고, AIME 2023·2025와 다른 base model로 일반화를 확인했다. ALE-Bench에서는 public test 점수로 진화시키고 private test로 다시 채점해, 상위 5개 기준 평균이 1923.5에서 1927.0으로 거의 바뀌지 않아 public test 과적합 증거를 찾지 못했다."
+    tags: [eval-protocol, robustness]
+  - text: "Ablation에서 가중 parent sampling이 random search와 hill climbing을, bandit ensemble이 단일 모델과 고정 ensemble을, embedding 기반 rejection이 rejection 없음보다 나았다. LLM judge의 추가 이득은 작았다."
+    tags: [program-synthesis]
+limitations:
+  - text: "설정이 고정되어 탐색과 활용을 자동으로 조절하는 기능이 제한적이고, 과제와 목적을 사람이 직접 정의해야 하며, 수치 목적이 잘 정의된 문제에만 쓸 수 있다고 저자들이 인정한다."
+    tags: [task-coverage, adaptation]
+    source: self
+  - text: "ALE-Bench 결과가 초기 ALE-Agent 해에서 크게 벗어나지 않아, 초기 프로그램에 과적합했을 가능성을 저자들이 언급한다. MoE loss 실험은 비슷한 구조와 제한된 학습 예산에서만 했다고 밝힌다."
+    tags: [distribution-shift]
+    source: self
+  - text: "[analyst] Circle packing, ALE-Bench, MoE loss는 run 사이 분산이나 반복 seed를 체계적으로 보고하지 않는다(AIME만 후보별 3회 실행). 150회라는 적은 평가로 얻은 결과가 seed에 따라 얼마나 흔들리는지는 알 수 없다."
+    tags: [eval-protocol, training-stability]
+    source: analyst
+builds_on: [AlphaEvolve, FunSearch, OpenEvolve]
+compared_against: [AlphaEvolve, OpenEvolve, EoH, LLM4AD, ALE-Agent]
+open_questions:
+  - "Embedding 유사도로 거른 코드 중 실제로 동작(평가 instance 위의 출력)이 다른 비율은 얼마인가? 반대로 embedding은 다르지만 동작이 같은 코드는 얼마나 남는가?"
+  - "평가 잡음이 큰 과제에서 UCB bandit의 모델 선택과 parent sampling이 잡음을 쫓지 않는가?"
+hooks:
+  - "(후보 2, 동작 중복과 판정 기준) ShinkaEvolve는 평가 전에 코드 embedding 유사도와 LLM judge로 중복을 거른다. 사용자 진단에서 parent와 동작이 같은 자식 비율이 OBP 47–50%, TSP 33%로 관찰되었다. ShinkaEvolve식 코드 유사도로 이 동작 중복을 얼마나 잡는지 비교하면, '평가 instance 위의 해 일치'로 묶는 사용자 기준의 필요성을 직접 보일 수 있다(가설)."
+  - "(public/private 분리) ALE-Bench의 public test로 진화하고 private test로 재채점하는 절차는 진단 계획의 고정 design 복제본(학습 신호) 대 기준 집합(참 점수) 구조와 같은 논리다. ShinkaEvolve는 상위 5개 평균만 보고 과적합 없음을 주장했지만, 사용자 진단은 쌍 단위 부호 뒤집힘(M2a)과 selection regret(M3)까지 본다는 점에서 더 세밀하다."
+notes: "arXiv v1 HTML 본문 앞 약 100k자(구성요소, 과제, baseline, 결과, ablation, 한계, 잡음 관련 서술)와 iclr.cc poster 페이지를 읽었다. ICLR 2026 poster로 확인했고 OpenReview는 browser 검증 때문에 열지 못했다. 제목은 ICLR 표기를 따랐다(arXiv 제목은 'And Sample-Efficient'로 대문자). 저자 이름은 arXiv 표기를 따랐다(iclr.cc는 Robert Lange). booktitle은 학회 이름만 적었다. OpenEvolve, ALE-Agent는 외부 이름이다."
+added: 2026-11-20

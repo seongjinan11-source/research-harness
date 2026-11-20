@@ -1,0 +1,66 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: FunSearch
+title: "Mathematical discoveries from program search with large language models"
+authors: "Bernardino Romera-Paredes, Mohammadamin Barekatain, Alexander Novikov, Matej Balog, M. Pawan Kumar, Emilien Dupont, Francisco J. R. Ruiz, Jordan S. Ellenberg, Pengming Wang, Omar Fawzi, Pushmeet Kohli, Alhussein Fawzi"
+venue: "Nature 2024"
+year: 2024
+links:
+  paper: https://www.nature.com/articles/s41586-023-06924-6
+  doi: https://doi.org/10.1038/s41586-023-06924-6
+
+citation:
+  type: article
+  title: "Mathematical discoveries from program search with large language models"
+  authors: ["Bernardino Romera-Paredes", "Mohammadamin Barekatain", "Alexander Novikov", "Matej Balog", "M. Pawan Kumar", "Emilien Dupont", "Francisco J. R. Ruiz", "Jordan S. Ellenberg", "Pengming Wang", "Omar Fawzi", "Pushmeet Kohli", "Alhussein Fawzi"]
+  year: 2024
+  journal: "Nature"
+  volume: 625
+  pages: "468--475"
+  url: https://www.nature.com/articles/s41586-023-06924-6
+  verified_from:
+    - https://www.nature.com/articles/s41586-023-06924-6
+
+areas: [co-heuristics]
+problem: "정답 해를 직접 내놓는 대신, 문제를 푸는 프로그램을 LLM으로 찾아서 extremal combinatorics(cap set)와 online bin packing 같은 문제에서 기존 최고 결과를 넘는 해나 휴리스틱을 얻고자 한다."
+core_idea: "사용자가 boilerplate가 담긴 프로그램 skeleton과 평가 함수를 주고, 그 안의 핵심 함수 하나(예: bin마다 점수를 매기는 priority 함수)만 진화시킨다. 미세조정하지 않은 사전학습 code LLM(Codey, PaLM 2 기반)이 기존 고득점 프로그램 2개를 점수 순으로 담은 best-shot 프롬프트를 받아 새 함수를 쓴다. 평가기는 여러 입력에서 프로그램을 돌려 점수를 내고 평균 같은 집계로 합치며, 시간·메모리 제한을 넘기거나 잘못된 출력을 내면 버린다. 통과한 프로그램은 독립적으로 진화하는 island에 저장되고, 주기적으로 하위 절반 island를 지우고 살아남은 island의 최고 프로그램으로 다시 채운다. Island 안에서는 입력별 점수 벡터(score signature)가 같은 프로그램을 cluster로 묶고, 점수가 높은 cluster를 Boltzmann 선택으로, cluster 안에서는 짧은 프로그램을 우선 뽑는다. 이 과정을 sampler 약 15개와 CPU evaluator 약 150개로 비동기 분산 실행한다."
+key_assumptions:
+  - "빠르게 돌릴 수 있는 평가기와 이진이 아닌 풍부한 점수 신호가 있고, skeleton에서 진화시킬 부분을 분리할 수 있다고 가정한다. 저자들은 점수 신호를 정의하기 어려운 theorem proving을 범위 밖으로 둔다."
+  - "LLM은 문제를 깊이 이해하는 주체가 아니라 문법적으로 맞고 다양한 프로그램을 대량으로 공급하는 원천으로 본다. 그래서 성능이 특정 LLM보다 샘플 처리량(약 10^6 샘플)에 좌우된다고 본다."
+  - "Bin packing에서는 OR1과 같은 item 수로 생성한 instance에서 진화한 휴리스틱이 OR1–OR4와 더 큰 instance, Weibull instance로 옮겨 간다고 가정한다."
+strengths:
+  - text: "해 자체가 아니라 짧은 프로그램을 찾으므로 결과물을 사람이 읽고 구조를 분석할 수 있다. 저자들은 cap set 프로그램을 읽어 새로운 대칭성을 찾아냈다고 보고한다."
+    tags: [program-synthesis, interpretability]
+  - text: "8차원에서 512개짜리 cap set을 찾아 기존 최대값을 넘었고, admissible set을 통해 cap set capacity의 하한도 개선했다. Online bin packing에서는 OR-Library와 Weibull 두 benchmark 모두에서 first fit·best fit보다 적은 bin을 썼고, 큰 instance로 갈수록 best fit과의 격차가 커졌다."
+    tags: [program-synthesis, distribution-shift]
+  - text: "평가 결과가 실행 기반이라 보상을 위조하기 어렵고, 시간·메모리 제한과 출력 검증으로 잘못된 프로그램을 걸러 낸다. 입력별 점수 벡터로 프로그램을 묶는 score signature는 동작이 같은 프로그램을 한 cluster로 취급하는 장치이기도 하다."
+    tags: [reward-signal]
+limitations:
+  - text: "결과가 무작위성에 크게 의존한다. 8차원 512 cap set은 140번 실험 중 4번에서만 나왔다(admissible set 쪽은 모든 run이 기존 하한을 넘었다)."
+    tags: [training-stability]
+    source: self
+  - text: "평가기가 효율적이고 점수가 연속적이며 skeleton으로 분리할 부분이 있는 문제에 적용 범위가 묶인다. 점수 신호를 정의하기 어려운 문제는 다루지 못한다고 저자들이 직접 밝힌다."
+    tags: [task-coverage, reward-signal]
+    source: self
+  - text: "약 10^6개 샘플과 빠른 추론 모델이 필요해 샘플 효율이 낮다."
+    tags: [inference-cost]
+    source: self
+  - text: "FunSearch의 bin packing 휴리스틱 두 개를 다시 분석했다. Uniform 쪽 휴리스틱은 두 parameter 규칙으로 줄일 수 있었지만, Weibull 쪽 휴리스틱은 원 논문이 말한 의미로 해석 가능하지 않았다. 핵심 임계값(약 21)은 코드 어디에도 직접 나오지 않고 실험으로만 드러났다. 또 이 휴리스틱들은 하나의 분포에 맞춰져 있어 분포를 바꾸면 견고하지 않았다. 두 임계값을 둔 단순한 FirstFit·WorstFit 변형이 노트북에서 몇 분 튜닝으로 FunSearch 휴리스틱을 넘었다. 저자들은 FunSearch가 선행 bin packing 문헌을 검토하지 않았고, 새로워 보이는 부분은 대체로 익숙한 전략을 다시 parameter화한 것이라고 비판한다."
+    tags: [interpretability, distribution-shift, eval-protocol]
+    source: cited
+    by: "An In-depth Study of LLM Contributions to the Bin Packing Problem (2025)"
+    by_id: HerrmannPallez
+    by_link: https://arxiv.org/abs/2510.27353
+  - text: "[analyst] 휴리스틱 점수는 고정된 입력 집합에서 낸 평균 같은 단일 집계다. 서로 다른 크기·용량 instance를 섞을 때 그 집계가 어느 층을 우선하게 되는지, 집계 선택이 진화 방향을 바꾸는지는 다루지 않았다."
+    tags: [reward-signal, multi-reward]
+    source: analyst
+builds_on: [PaLM2-Codey, genetic-programming]
+compared_against: [FirstFit, BestFit]
+open_questions:
+  - "Score signature로 묶은 cluster 단위 선택이 다양성 유지에 얼마나 기여하는가? 입력 집합이 작으면 서로 다른 동작이 같은 signature로 뭉쳐 다양성이 과대평가되지 않는가?"
+  - "평가 입력 수와 분포를 바꾸면 진화로 찾은 휴리스틱의 순위와 일반화는 얼마나 달라지는가? 후속 재분석이 보고한 분포 취약성은 학습 입력의 구성 때문인가?"
+hooks:
+  - "(OBP 생성기의 출처) 사용자 하네스의 OBP Weibull 생성기는 FunSearch식이다. 휴리스틱 틀도 bin마다 priority를 매기고 argmax에 넣는 같은 구조다. 따라서 FunSearch가 학습 입력을 OR1과 같은 item 수 하나로 생성하고 점수를 평균했다는 설정이 이후 EoH·CALM 계열의 작은 고정 집합 관행의 출발점이다. Strata 계획의 R0(혼합 평균)를 'FunSearch 이래 표준 집계'로 서술할 근거가 된다."
+  - "(후보 2, 동작 중복) FunSearch는 입력별 점수 벡터가 같은 프로그램을 같은 cluster로 묶는다. 이는 사용자가 GRPO group 안에서 평가 instance 위의 해가 완전히 같은 샘플을 묶으려는 아이디어와 같은 원리다. 진화 탐색 쪽에서는 이미 선행이 있다는 점을 인정하고, RL advantage나 유효 group 크기 보정으로 옮기는 부분에서만 차별점을 주장해야 한다(가설)."
+  - "(held-out 층 근거) 후속 재분석은 FunSearch 휴리스틱이 학습 분포 밖에서 견고하지 않고, 두 임계값을 둔 단순 규칙이 이를 이긴다고 보고했다. OBP를 보조 문제로 둘 때 Best-Fit뿐 아니라 이런 ab-규칙류 강한 수작업 기준선을 함께 두어야 strata 판정이 '쉬운 instance' 효과로 설명되지 않는다."
+notes: "Nature 페이지 본문과 저자 목록(Author information 부분)을 읽었다. 온라인 게재는 2023-12-14이고 권호는 2024년 Nature 625권이라 year는 2024로 적었다. 코드 링크는 직접 확인하지 않아 넣지 않았다. builds_on의 PaLM2-Codey, genetic-programming은 외부 이름이다. 후속 재분석(2510.27353)은 v2 HTML 본문에서 FunSearch 휴리스틱 c12·c14 분석을 확인했다."
+added: 2026-11-20

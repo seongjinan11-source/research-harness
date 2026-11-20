@@ -1,0 +1,58 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: EvolutionOrIllusion
+title: "Evolution or Illusion? Rethinking Evaluation in LLM Evolutionary Search"
+authors: "Tal Oved, Roi Pony, Oshri Naparstek, Udi Barzelay"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2609.19799
+
+citation:
+  type: misc
+  title: "Evolution or Illusion? Rethinking Evaluation in LLM Evolutionary Search"
+  authors: ["Tal Oved", "Roi Pony", "Oshri Naparstek", "Udi Barzelay"]
+  year: 2026
+  arxiv: "2609.19799"
+  url: https://arxiv.org/abs/2609.19799
+  verified_from:
+    - https://arxiv.org/abs/2609.19799
+    - https://arxiv.org/html/2609.19799v1
+
+areas: [benchmark, co-heuristics]
+problem: "LLM 진화 탐색 방법은 보통 seed 하나(많아야 셋)와 미리 정한 iteration 수 한 점에서만 비교되는데, 이 한 점 비교로 방법 순위를 정할 수 있는지를 묻는다."
+core_idea: "같은 ADRS 엔진과 gpt-5-mini, 같은 objective·evaluator를 고정하고 탐색 전략 셋(OpenEvolve, EvoX, AdaEvolve)만 바꿔 다섯 task(PRISM, Cloudcast, transaction scheduling, circle packing, Heilbronn)를 seed 40개 × iteration 200의 전체 grid로 돌렸다. 기록한 trajectory를 다시 돌리지 않고 replay해서, seed k개·iteration t의 모든 분할에 대한 기대 최고점을 40개 seed의 exact order statistics로 계산한다. 이렇게 width 방향(seed 늘리기), depth 방향(iteration 늘리기), 총 예산별 최적 분할 frontier를 함께 보고, bootstrap으로 부분 예산의 순위가 전체 예산 순위와 달라질 확률을 추정한다. 결론은 최적 분할과 방법 순위가 전략·task·예산에 따라 바뀌므로 한 점이 아니라 seeds-by-iterations frontier를 보고해야 한다는 것이다."
+key_assumptions:
+  - "seed 40개가 각 전략의 run 분포를 대표한다고 보고, 그 표본의 order statistics로 더 적은 seed의 기대 최고점을 계산한다."
+  - "LLM, evaluator, objective를 고정하면 순위 차이는 탐색 전략에서만 온다고 본다."
+  - "예산은 LLM 호출 수가 아니라 proposal 수로 센다."
+strengths:
+  - text: "seed 수에 따라 순위가 실제로 뒤집히는 사례를 보였다. Cloudcast에서 EvoX는 seed 1개일 때 꼴찌였지만 seed 40개에서는 1위였고, Heilbronn에서도 seed 1개와 40개의 1위가 달랐다. 단일 seed 보고가 순위 근거로 부족하다는 직접 증거다."
+    tags: [eval-protocol, training-stability]
+  - text: "depth가 일찍 포화되는 경우를 보였다. transaction scheduling의 AdaEvolve는 iteration 40에서, PRISM의 EvoX는 60에서 정점에 도달해 200 iteration의 상당 부분이 낭비였다. 같은 예산을 seed와 iteration에 어떻게 나눌지가 결과를 바꾼다."
+    tags: [eval-protocol, inference-cost]
+  - text: "trajectory replay와 exact order statistics를 써서 재실행이나 resampling 잡음 없이 모든 (seed, iteration) 분할을 평가한다. 추가 실험 없이 기존 log로 frontier를 그릴 수 있는 측정 protocol이다."
+    tags: [eval-protocol, experimental-design]
+  - text: "transaction scheduling의 validator가 출력이 인덱스 순열인지만 보고 전체 transaction을 다 포함하는지는 검사하지 않아, AdaEvolve 최고 프로그램이 300개 중 3개만 스케줄하고도 기존 결과의 약 4배 점수를 받은 evaluator exploit을 찾아 보고했다."
+    tags: [reward-signal, robustness]
+limitations:
+  - text: "전체 grid 측정은 한 점 평가보다 LLM API 호출이 훨씬 많아 계산·금전 비용이 크다고 저자들이 인정했다."
+    tags: [inference-cost]
+    source: self
+  - text: "제안한 protocol은 grid를 먼저 탐색한 뒤 쓰는 사후 도구이며, grid 없이 최적 분할을 미리 예측하는 방법은 아직 열린 문제라고 밝혔다."
+    tags: [experimental-design]
+    source: self
+  - text: "[analyst] seed 사이 변동만 다루고, 후보 하나를 평가하는 instance 집합 자체에서 오는 잡음은 분석하지 않는다. 다섯 task 중 둘은 결정적이고 둘은 수학 문제라서 CO 휴리스틱의 instance 표본·크기 혼합 문제와는 겹치는 부분이 작다. 비교한 세 전략도 FunSearch·EoH·ReEvo 같은 CO 휴리스틱 설계 표준 방법이 아니다."
+    tags: [eval-protocol, reward-signal]
+    source: analyst
+builds_on: [OpenEvolve, ADRS-Bench, Optimizer's curse]
+compared_against: [OpenEvolve, EvoX, AdaEvolve]
+open_questions:
+  - "seed 사이 변동과 후보 평가 instance 집합의 잡음 중 어느 쪽이 방법 순위 뒤집힘에 더 크게 기여하는가."
+  - "예산의 일부만 써서 seeds-by-iterations frontier의 모양을 예측할 수 있는가."
+  - "evaluator exploit이 seed 수가 늘어날수록 더 자주 발견되는가. 즉 seed를 늘리는 것이 reward hacking 탐색을 늘리는 것과 겹치는가."
+hooks:
+  - "사용자 계획의 평가 프로토콜(seed ≥ 5, 쿼리 예산 frontier 보고)의 직접 근거다. RL-AHD에서는 seed뿐 아니라 보상에 쓰는 instance 집합 복제본(D_r)도 변동원이므로, 이 논문의 frontier를 'seed × instance 복제본'으로 확장하는 것이 사용자 진단 M1의 자연스러운 보고 형식이다. 이 확장은 제안이다."
+  - "transaction scheduling의 validator 허점 사례는 사용자 계획의 hacking 감사 항목(해를 직접 재계산, 출력 coverage 검사)이 필요하다는 구체적 근거다. 결과만 보상하면 탐색이 평가기의 빈틈을 찾아간다는 점은 RL로 LLM을 직접 학습할 때 더 강해질 것으로 보이지만, 이는 가설이다."
+  - "best-of-k 점수가 k에 따라 부풀려진다는 optimizer's curse 논의는, 고정 집합에서 top-1을 고를 때의 selection regret(사용자 M3)과 같은 기제다."
+notes: "논문은 특정 선행 논문을 지목하지 않고 분야 전반의 단일 seed 관행을 비판한다. 코드 링크는 arXiv 페이지에 없었다."
+added: 2026-11-20

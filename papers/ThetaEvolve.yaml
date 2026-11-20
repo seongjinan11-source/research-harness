@@ -1,0 +1,67 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: ThetaEvolve
+title: "ThetaEvolve: Test-time Learning on Open Problems"
+authors: "Yiping Wang, Shao-Rong Su, Zhiyuan Zeng, Eva Xu, Liliang Ren, Xinyu Yang, Zeyi Huang, Xuehai He, Luyao Ma, Baolin Peng, Hao Cheng, Pengcheng He, Weizhu Chen, Shuohang Wang, Simon Shaolei Du, Yelong Shen"
+venue: "ICML 2026"
+year: 2026
+links:
+  paper: https://proceedings.mlr.press/v306/wang26ha.html
+  arxiv: https://arxiv.org/abs/2511.23473
+  code: https://github.com/ypwang61/ThetaEvolve
+
+citation:
+  type: inproceedings
+  title: "ThetaEvolve: Test-time Learning on Open Problems"
+  authors: ["Yiping Wang", "Shao-Rong Su", "Zhiyuan Zeng", "Eva Xu", "Liliang Ren", "Xinyu Yang", "Zeyi Huang", "Xuehai He", "Luyao Ma", "Baolin Peng", "Hao Cheng", "Pengcheng He", "Weizhu Chen", "Shuohang Wang", "Simon Shaolei Du", "Yelong Shen"]
+  year: 2026
+  booktitle: "Proceedings of the 43rd International Conference on Machine Learning"
+  publisher: "PMLR"
+  volume: 306
+  pages: "129927--129958"
+  arxiv: "2511.23473"
+  url: https://proceedings.mlr.press/v306/wang26ha.html
+  verified_from:
+    - https://proceedings.mlr.press/v306/wang26ha.html
+    - https://arxiv.org/abs/2511.23473
+
+areas: [co-heuristics, llm-rl]
+problem: "AlphaEvolve는 closed-source이고 frontier LLM ensemble에 의존한다. 작은 open 모델 하나로 열린 수학 최적화 문제의 bound를 개선하고, 추론 시 in-context 탐색과 RL을 함께 키워 모델이 자기 시도에서 배우게 하고자 한다."
+core_idea: "OpenEvolve 위에 만든 framework로, LLM 하나와 큰 program database(크기 10,000)를 쓴다. Step마다 parent 32개를 뽑아 각각 응답 16개를 batch로 생성해 vLLM·SGLang 같은 batch 추론을 활용한다. Diff가 없거나, 유효한 변경이 없거나, 해가 없거나 잘못된 응답은 평가 없이 고정 음수(−0.4~−0.1)를 받고, 주석을 지우면 database의 기존 프로그램과 같은 자식도 lazy 반복으로 보고 벌점을 준다. 점수 범위가 좁은 과제에서는 점수를 경계 [L, U]와 지수 α로 [0,1]에 사상한 뒤 k=3을 곱하는 reward shaping을 선택적으로 쓴다. 이 test-time 환경에서 GRPO(비대칭 clipping, truncated importance sampling, dynamic sampling·KL 없음)로 DeepSeek-R1-0528-Qwen3-8B 등을 학습한다. 평가기는 프로그램이 파일로 저장한 해를 고정된 평가 코드가 읽어 채점하므로 결정적이다."
+key_assumptions:
+  - "하나의 문제 instance(예: 원 26개 packing)에 대한 결정적 평가기가 있고, 목표는 그 instance의 최고 해 하나라고 본다."
+  - "Database가 계속 바뀌는 동적 환경에서의 RL이, 항상 초기 프로그램에서 출발하는 정적 환경보다 탐색에 유리하다고 가정한다."
+  - "Reward shaping 경계는 RL 없이 먼저 돌려 본 점수 분포에서 정할 수 있다고 본다."
+strengths:
+  - text: "8B open 모델로 circle packing(2.63598308, AlphaEvolve 2.63586276)과 첫째 autocorrelation inequality(1.503133, AlphaEvolve 1.503164)에서 새 최고 bound를 냈다."
+    tags: [program-synthesis, inference-cost]
+  - text: "모델 두 개 × 과제 네 개에서 test-time RL이 추론만 하는 경우보다 좋았고 더 적은 step에 좋은 점수에 도달했다. CirclePacking으로 학습한 checkpoint를 추론에만 써도 처음 보는 과제에서 평균 성능이 올랐다."
+    tags: [adaptation, distribution-shift]
+  - text: "Ablation이 RL 신호의 구성을 분리해 보여 준다. 초기 프로그램에서만 출발하는 정적 환경 RL은 추론만 한 경우보다도 나빴고, 형식만 보상한 RL도 추론만 한 경우보다 나빴다."
+    tags: [reward-signal]
+limitations:
+  - text: "일부 문제에서는 개선 폭이 작고, 최고 bound 근처에서는 개선이 어렵다고 인정한다. AlphaEvolve-v2 해에서 출발하면 local minimum이라 거의 개선되지 않았다."
+    tags: [theory-gap]
+    source: self
+  - text: "Reward shaping parameter를 과제마다 튜닝해야 하고, 최적 설정이 두 모델 사이에서도 달랐다고 밝힌다. 큰 database는 test-time 계산량이 충분할 때만 도움이 된다."
+    tags: [reward-signal, training-stability]
+    source: self
+  - text: "ThetaEvolve와 비교해 Qwen3-8B로 돌린 TTT-Discover가 더 작은 예산으로 두 autocorrelation bound 모두에서 앞섰다고 보고한다."
+    tags: [inference-cost]
+    source: cited
+    by: "Learning to Discover at Test Time (2026)"
+    by_id: TTTDiscover
+    by_link: https://arxiv.org/abs/2601.16175
+  - text: "[analyst] 목표가 instance 하나의 최고 해이고 평가기가 결정적이라, 보상 잡음 문제가 구조적으로 없다. 그래서 여러 instance에서 일반화하는 휴리스틱을 RL로 학습할 때 생기는 표본 잡음·층 혼합 문제에 대해서는 이 결과가 근거가 되지 못한다. RL과 추론만의 비교도 최고 점수 차이가 작은 과제가 많고 run 수가 적다."
+    tags: [reward-signal, eval-protocol]
+    source: analyst
+builds_on: [AlphaEvolve, OpenEvolve, GRPO, DeepSeek-R1-0528-Qwen3-8B]
+compared_against: [AlphaEvolve, OpenEvolve, ShinkaEvolve]
+open_questions:
+  - "여러 instance나 여러 과제를 동시에 학습하면(저자들의 향후 과제) 보상 집계를 어떻게 해야 하는가? 과제마다 점수 범위가 달라 reward shaping 경계를 따로 정해야 하는 문제가 다시 생긴다."
+  - "Dynamic sampling을 넣으면 안정성이 좋아지는가(저자들이 공정 비교를 위해 뺐다고 언급)?"
+hooks:
+  - "(목적의 차이를 분명히 할 비교 대상) 사용자 연구 계획 §2는 ThetaEvolve·TTT-Discover를 'instance 하나의 최고해'를 노리는 test-time RL로 분류하고 일반화하는 휴리스틱과 목적이 다르다고 정리했다. 원문 확인 결과도 같다. 평가기가 결정적이고 instance가 하나라서 사용자가 다루는 보상 표본 잡음과 층 혼합이 애초에 생기지 않는다. 노블티 서술에서 'test-time RL은 이 문제를 겪지 않는다'고 대비시키는 근거로 쓸 수 있다."
+  - "(스케일 정규화) Reward shaping의 [L, U] 경계와 지수 α 사상은 점수 스케일을 손으로 정규화하는 장치다. 저자들이 다중 과제 학습을 향후 과제로 남기면서 경계를 과제별로 튜닝해야 한다고 인정한 점은, strata 계획의 R1(고정 기준 비율)·R2(robust z-score)·R3(층별 승률) 비교가 다중 과제 RL에도 쓰일 수 있음을 시사한다(가설)."
+  - "(동작 중복 벌점) 주석을 지운 코드가 database와 같으면 벌점을 주는 장치는 코드 문자열 수준의 중복 판정이다. 사용자 후보 2는 평가 instance 위 해 일치로 판정한다는 점에서 더 넓은 동치류를 잡는다."
+notes: "arXiv v1 HTML 본문 앞 약 100k자(framework, RL 설정, 과제, 결과, ablation, 한계)와 PMLR 페이지를 읽었다. 부록 D(RLVR 한계)는 읽은 범위 밖이라 반영하지 않았다. 사용 GPU는 본문의 8×A100 서술만 확인했다. Code 링크는 검색 결과로 확인했다. OpenEvolve, GRPO, DeepSeek-R1-0528-Qwen3-8B는 외부 이름이다."
+added: 2026-11-20

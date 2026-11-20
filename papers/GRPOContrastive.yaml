@@ -1,0 +1,49 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: GRPOContrastive
+title: "Reinforcement Learning with Verifiable Rewards: GRPO's Effective Loss, Dynamics, and Success Amplification"
+authors: "Youssef Mroueh (IBM Research)"
+venue: "arXiv 2025"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2503.06639
+citation:
+  type: misc
+  title: "Reinforcement Learning with Verifiable Rewards: GRPO's Effective Loss, Dynamics, and Success Amplification"
+  authors: ["Youssef Mroueh"]
+  year: 2025
+  arxiv: "2503.06639"
+  url: https://arxiv.org/abs/2503.06639
+  verified_from:
+    - https://arxiv.org/abs/2503.06639
+areas: [llm-rl, ml-foundations]
+problem: "이진 verifiable reward에서 GRPO가 실제로 무엇을 최적화하는지, 그리고 반복 갱신이 성공 확률을 어떻게 바꾸는지를 정책 공간에서 이론적으로 설명하려 한다."
+core_idea: "이진 보상을 group 평균과 표준편차로 whitening하면 advantage가 이전 정책의 성공 확률 p만의 함수가 되고, GRPO 목적은 이전 정책에서 뽑은 정답·오답 표본을 대비시키는 가중 contrastive loss와 같아진다. 정답 가중치는 (1−p)/√(p(1−p)+ε), 오답 가중치는 p/√(p(1−p)+ε)로, 성공률이 낮을 때 정답을 더 밀어주고 높을 때 오답을 더 벌한다. 각 반복의 최적 정책은 기준 정책에 이 가중치의 지수를 곱한 닫힌 형태이고, 성공 확률의 logit은 고정점 반복을 따른다. 기준 모델 KL만 쓰면 내부 고정점이 기준 성공률보다 높고(success amplification), 이전 iterate KL만 쓰면 성공률이 단조 증가해 1로 간다. 표준편차 정규화를 뺀 Dr. GRPO는 logit이 매 단계 상수만큼 이동하며, 표준편차 정규화는 분산이 작을 때 큰 step을 주는 적응형 β처럼 작동한다."
+key_assumptions:
+  - "보상은 정답 여부 같은 이진 값이고, advantage는 group 통계의 모집단 값(p)으로 대체된다."
+  - "최적화를 parameter가 아닌 정책 공간에서 하며, parametric class가 충분히 표현력이 있다고 가정한다. clipping이 없는 목적에서 출발한다."
+  - "고정점 존재를 위해 분산 항에 ε>0이 필요하다."
+strengths:
+  - text: "GRPO의 mean·std 정규화가 성공률에 따라 정답·오답 가중을 바꾸는 contrastive 목적이라는 해석과, 정규화 방식(mean+std 대 mean-only)과 KL 방식(기준 모델, 이전 iterate, 혼합)별 최적 정책의 닫힌 형태를 준다."
+    tags: [theory-gap, reward-signal]
+  - text: "Qwen2.5-0.5B-Instruct와 GSM8K 실험에서 prompt별 성공률 궤적이 이론의 고정점 반복과 비슷한 양상(빠른 수렴, 진동, p_ref=0인 prompt의 정체)을 보였다."
+    tags: [training-stability]
+limitations:
+  - text: "기준 모델의 성공률이 0인 prompt에서는 GRPO가 성공을 만들지 못한다. 저자들은 temperature, entropy bonus, data mixing 같은 탐색 장치를 권한다."
+    tags: [reward-signal]
+    source: self
+  - text: "고정점은 일반적으로 유일하지 않고(p*=1이 거의 항상 고정점), 국소 수렴에는 β에 대한 조건이 필요하며 일부 설정(β=5, p_ref=0.001)에서는 발산을 관찰했다. 분석은 이진 보상과 정책 공간 최적화에 한정되며 parameter 공간 학습은 다루지 않는다."
+    tags: [theory-gap, training-stability]
+    source: self
+  - text: "[analyst] 결과가 이진 보상의 성공 확률 p로 닫히는 구조에 의존하므로, 연속 보상(예: 목적값 gap)이나 여러 성분을 합친 보상에서 advantage 가중이 어떻게 되는지는 이 이론에서 바로 나오지 않는다."
+    tags: [theory-gap, multi-reward]
+    source: analyst
+builds_on: [GRPO, Dr. GRPO, DAPO, DeepSeekMath]
+compared_against: [GRPO, Dr. GRPO]
+open_questions:
+  - "연속 보상과 group 안에서 상관된 보상 잡음이 있을 때 이 contrastive 해석과 adaptive β 효과는 어떻게 바뀌는가?"
+  - "유한 group 크기에서 p의 추정 잡음이 고정점 반복의 수렴과 진동에 미치는 영향은 어느 정도인가?"
+hooks:
+  - "(std 정규화와 작은 분산 group) 이 논문은 표준편차 정규화가 group 분산이 작을수록 큰 step을 주는 적응형 β처럼 작동한다고 보인다. 사용자 dev 관찰에서 OBP는 parent와 동작이 같은 자식이 47–50%라 group 내 보상 분산이 작은 경우가 많을 것이다. 그러면 소수 instance에서 생긴 작은 평가 잡음 차이가 정규화로 확대되어 advantage 부호를 정할 수 있다는 가설로 이어진다. 다만 이 논문의 결과는 이진 보상에 한정되므로 연속 gap 보상에서는 같은 결론을 가정하지 말고 직접 측정해야 한다."
+  - "(초기 infeasible 구간) p_ref=0이면 개선이 생기지 않는다는 결과는 AHD에서 초기 생성 코드 대부분이 실행 실패·infeasible인 상황과 대응한다. CALM이 실패 유형별로 단계적 음수 보상을 주는 것은 이 정체를 피하는 한 방식으로 읽을 수 있다(해석)."
+notes: "arXiv abs와 HTML v4 본문 앞부분(약 100k자: 설정, 정리, 고정점 분석, GSM8K 실험)을 읽었다. 학회 게재 정보는 찾지 못해 misc로 두었다. 사용자 노트에서는 'GRPO 이론(contrastive 관점)'으로 부른 논문이다."
+added: 2026-11-20

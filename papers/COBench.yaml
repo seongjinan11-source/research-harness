@@ -1,0 +1,58 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: COBench
+title: "CO-Bench: Benchmarking Language Model Agents in Algorithm Search for Combinatorial Optimization"
+authors: "Weiwei Sun, Shengyu Feng, Shanda Li, Yiming Yang"
+venue: "arXiv 2025"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2504.04310
+  code: https://github.com/sunnweiwei/CO-Bench
+
+citation:
+  type: misc
+  title: "CO-Bench: Benchmarking Language Model Agents in Algorithm Search for Combinatorial Optimization"
+  authors: ["Weiwei Sun", "Shengyu Feng", "Shanda Li", "Yiming Yang"]
+  year: 2025
+  arxiv: "2504.04310"
+  url: https://arxiv.org/abs/2504.04310
+  verified_from:
+    - https://arxiv.org/abs/2504.04310
+    - https://arxiv.org/html/2504.04310v3
+
+areas: [benchmark, co-heuristics]
+problem: "LLM agent가 조합최적화 알고리즘을 탐색·작성하는 능력을 체계적으로 평가할 벤치마크가 없어서, 실제 OR 문제들 위에서 agent 프레임워크와 고전 solver를 같은 기준으로 비교하려 한다."
+core_idea: "OR-Library를 중심으로 packing, cutting, facility location, scheduling, routing, assignment, tree, graph/set의 8개 범주 36개 문제를 모았다. 문제마다 자연어 설명, starter solve 함수, 데이터 loader, 채점 함수를 만들고 development set과 test set을 나눴다. agent는 sandbox에서 dev set 점수만 API로 받으며 코드를 개선하고, 마지막 제출물을 숨겨진 test set에서 채점한다. instance 점수는 얻은 목적값과 최적·best-known 값 중 작은 것을 큰 것으로 나눈 비율이고, infeasible·timeout·오류는 0이다. 이를 문제별로 평균한 뒤 36개 문제에 다시 평균한다. FunSearch, EoH, ReEvo, AIDE, MCTS-AHD, BestOfN, Greedy Refinement 등 프레임워크와 여러 LLM을 64 iteration 예산에서 비교했다."
+key_assumptions:
+  - "OR-Library 계열 instance와 best-known 값이 실제 CO 문제의 난이도를 대표한다고 본다."
+  - "instance마다 최적·best-known 대비 비율로 정규화하면 문제·instance 사이 스케일 차이가 집계를 왜곡하지 않는다고 본다."
+  - "dev set 점수만 보고 고른 최종 해가 test set 성능을 공정하게 반영한다고 본다."
+strengths:
+  - text: "36개 문제, 8개 범주, test instance 6,482개로 기존 LLM-AHD 평가(TSP·OBP 몇 개)보다 문제 범위가 훨씬 넓다. 문제마다 채점 함수를 숨기고 dev/test를 분리해 agent가 평가기를 직접 보지 못하게 했다."
+    tags: [task-coverage, eval-protocol]
+  - text: "instance별로 최적·best-known 대비 비율을 먼저 계산한 뒤 평균해서, 목적값 스케일이 큰 instance나 문제가 집계를 지배하지 않게 했다. infeasible과 timeout을 0으로 두어 실행 가능성 실패도 점수에 반영한다."
+    tags: [eval-protocol, reward-signal]
+  - text: "약 30분씩 tuning한 고전 solver(LKH, CPLEX, Gurobi 등)와 직접 비교했고, FunSearch가 평균 0.842로 고전 solver의 0.797보다 높았다. 동시에 유효 해 비율은 최고 agent 0.555로 고전 solver 0.611보다 낮아, 평균 점수와 실행 가능성이 다른 그림을 준다는 점을 드러냈다."
+    tags: [eval-protocol, model-based-baseline]
+  - text: "실패 유형을 문제 이해(제약 위반)·timeout·컴파일 오류로 나눠 프레임워크별로 보였다. Greedy Refine과 ReEvo는 주로 제약을 어기고, FunSearch·AIDE·BestOfN은 주로 시간 제한에 걸렸다."
+    tags: [eval-protocol]
+limitations:
+  - text: "agent가 알려진 기법을 잘 조합할 뿐 알고리즘적 새로움은 적고, 문제 제약을 제대로 이해하지 못하며, 계획 능력이 무작위 표본보다 확실히 낫지 않을 수 있다고 저자들이 결론에서 인정했다. 탐색은 약 30 step 이후 포화된다."
+    tags: [program-synthesis]
+    source: self
+  - text: "step 64까지 agent 해의 25%가 ortools·pulp·scipy 같은 범용 solver에 의존했지만, 문제 특화 state-of-the-art solver를 고르지는 못했다고 밝혔다."
+    tags: [program-synthesis]
+    source: self
+  - text: "[analyst] dev와 test 점수를 따로 보고하지만 dev-test 격차나 dev set 과적합, instance 크기에 따른 성능 변화를 체계적으로 분석하지 않는다. agent가 dev 점수로 최고 후보를 고르는 구조라서 작은 dev set에서의 selection 잡음이 test 순위에 얼마나 들어가는지 알 수 없다."
+    tags: [eval-protocol, reward-signal]
+    source: analyst
+builds_on: [OR-Library]
+compared_against: [FunSearch, EoH, ReEvo, AIDE, MCTS-AHD, BestOfN, Greedy Refinement, Chain of Experts, DIMES, DIFUSCO, T2T, LKH, CPLEX, Gurobi]
+open_questions:
+  - "dev set 크기를 바꾸면 agent가 고른 최종 해의 test 순위가 얼마나 바뀌는가."
+  - "instance별 비율 평균과 raw 목적값 평균은 서로 다른 프레임워크 순위를 주는가."
+  - "탐색이 30 step 근처에서 포화되는 이유가 LLM의 계획 한계인가, dev 점수 피드백의 해상도 한계인가."
+hooks:
+  - "CO-Bench는 instance마다 best-known 대비 비율로 정규화한 뒤 평균하는 것을 기본 채점으로 쓴다. 반면 사용자 계획이 지적하는 CALM·RFTHGS의 RL 보상은 크기가 섞인 raw 평균 목적값을 쓴다. 즉 '층·instance 정규화는 평가에서는 표준인데 RL 보상에서는 빠져 있다'는 사용자 후보 3의 문제 제기를 뒷받침하는 사례이자, 동시에 정규화 자체는 새 처방이 아니라는 리뷰어 반론의 근거다."
+  - "36개 문제와 dev/test 분리 구조는 사용자가 RL-AHD 결과를 TSP·OBP 밖으로 넓힐 때 held-out 문제 후보가 될 수 있다. 다만 instance당 10초 제한과 OR-Library 크기 분포가 RL 보상 계산 비용에 맞는지는 확인해야 한다."
+notes: "arXiv 페이지에 게재 venue가 적혀 있지 않아 misc로 두었다. 본문의 open/proprietary model 수 서술과 목록이 맞지 않고, Above Classical 지표가 문제 단위인지 instance 단위인지 서술이 엇갈린다. 부록 A의 나머지 문제 설명은 읽은 범위에 없었다."
+added: 2026-11-20

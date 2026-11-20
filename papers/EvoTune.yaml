@@ -1,0 +1,49 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: EvoTune
+title: "Algorithm Discovery With LLMs: Evolutionary Search Meets Reinforcement Learning"
+authors: "Anja Surina, Amin Mansouri, Lars Quaedvlieg, Amal Seddas, Maryna Viazovska, Emmanuel Abbe, Caglar Gulcehre (EPFL)"
+venue: "arXiv 2025 (ICLR 2025 workshop poster)"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2504.05108
+  openreview: https://openreview.net/forum?id=1kAwyBpoO1
+citation:
+  type: misc
+  title: "Algorithm Discovery With LLMs: Evolutionary Search Meets Reinforcement Learning"
+  authors: ["Anja Surina", "Amin Mansouri", "Lars Quaedvlieg", "Amal Seddas", "Maryna Viazovska", "Emmanuel Abbe", "Caglar Gulcehre"]
+  year: 2025
+  arxiv: "2504.05108"
+  url: https://arxiv.org/abs/2504.05108
+  verified_from:
+    - https://arxiv.org/abs/2504.05108
+    - https://iclr.cc/virtual/2025/10000528
+areas: [co-heuristics, llm-rl]
+problem: "FunSearch류 LLM 진화 탐색은 LLM을 고정된 생성기로 두어, 탐색에서 얻은 평가 신호로 모델 자체를 개선할 기회를 놓친다."
+core_idea: "EvoTune은 FunSearch의 island 기반 program database로 탐색하면서, 일정 iteration마다 누적된 database로 정책을 RL fine-tuning한다. 한 prompt에서 생성한 K개 출력 중 유효한 것을 점수 상위 절반과 하위 절반으로 나눠 무작위로 짝짓고, 실패한 출력은 유효한 출력과 짝지으며, 이긴 쪽 점수가 최근 출력의 30번째 백분위보다 낮은 쌍은 버린다. 이 선호 쌍으로 forward KL 정규화와 큰 β를 쓴 DPO를 학습해 탐색에 필요한 출력 다양성을 유지하고, 매 학습 단계는 base 모델에서 다시 시작한다."
+key_assumptions:
+  - "validation 집합에서 계산한 점수의 상하 절반이 프로그램 품질의 선호 방향을 올바르게 나타낸다고 가정한다."
+  - "탐색의 다양성 유지가 성능에 핵심이며, forward KL이 이를 보존한다고 본다."
+strengths:
+  - text: "진화 탐색과 RL fine-tuning을 교대하는 틀을 제시하고, Llama 3.2 1B, Phi 3.5 Mini, Granite 3.1 2B 세 모델과 bin packing, TSP(guided local search), flatpack 세 task에서 같은 sampling 예산 대비 top-50 보상이 FunSearch보다 높았다. 격차는 예산이 커질수록 대체로 벌어졌다. 결과는 seed 10개 평균이다."
+    tags: [program-synthesis, adaptation]
+  - text: "Validation 점수만이 아니라 perturbed validation 집합(bin packing 아이템 순서 변경, TSP edge 비용 교란, flatpack 장애물)과 held-out test 집합에서도 이득이 유지됨을 보고했다."
+    tags: [robustness, distribution-shift]
+  - text: "Hash Code datacenter 문제에서 418점으로 대회 최고 인간 점수(407)와 FunSearch(414)를 넘었다. database의 고유 점수 수도 더 많아 다양성이 유지됨을 보였다."
+    tags: [task-coverage]
+limitations:
+  - text: "실험한 모델은 1B–3.8B, 예산은 최대 22.4k 출력이며, 더 큰 규모는 추가 연구가 필요하다. RL 학습이 계산 비용을 더하므로 학습 대 추론 비용의 trade-off는 향후 과제다. 평균 점수보다 최상위 프로그램을 개선하는 데 더 세심한 tuning이 필요했다."
+    tags: [inference-cost, context-scale]
+    source: self
+  - text: "[analyst] 선호 쌍은 같은 prompt의 출력을 validation 점수의 상하 절반으로 가르는데, 그 점수의 instance 표본 잡음 때문에 상하 경계 근처 쌍의 방향이 뒤집힐 수 있다. 이 잡음과 그것이 학습에 미치는 영향은 측정하지 않았다."
+    tags: [reward-signal]
+    source: analyst
+builds_on: [FunSearch, DPO]
+compared_against: [FunSearch]
+open_questions:
+  - "Validation 집합 크기를 바꾸면 선호 쌍의 오류율과 EvoTune의 이득이 어떻게 달라지는가?"
+  - "Forward KL DPO와 GRPO(CALM류)는 같은 평가 예산에서 다양성과 최상위 품질 사이 trade-off가 어떻게 다른가?"
+hooks:
+  - "(RL-AHD 계열 선행) 사용자 연구계획은 EvoTune을 CALM, RFTHGS, AHD Agent와 함께 보상의 instance 표본 잡음을 분석하지 않은 RL-AHD 계열로 분류했다. EvoTune은 validation 점수의 상하 절반으로 선호를 정하므로, 보상 잡음 진단에서 측정한 순위 불일치는 EvoTune식 쌍 구성의 방향 오류율로 번역할 수 있다(가설). 사용자 노트에 따르면 CALM의 재구현 비교에서 EvoTune은 OBP 2.36%로 약했으나, 이는 CALM 쪽 보고이므로 EvoTune 자체의 결과로 인용하지 않는다."
+  - "(perturbed·test 평가 형식) EvoTune은 validation, perturbed validation, held-out test를 분리해 보고한다. 사용자 strata 계획에서 학습 층(ref_in)과 held-out 층을 분리해 보고하는 형식과 같은 구조이고, bin packing과 TSP를 모두 다루므로 OBP와 TSP 대조의 직접 비교 대상이 된다."
+notes: "arXiv abs와 HTML v4 본문 앞부분(약 100k자)을 읽었다. 하이퍼파라미터(f_RL 등)가 있는 부록은 읽지 못했다. iclr.cc 가상 페이지에서 ICLR 2025 workshop(Self-Improving Foundation Models Without Human Supervision) poster로 확인했고 main conference가 아니어서 misc로 두었다. 그 workshop 페이지의 저자 목록에는 Lars Quaedvlieg가 없고 Šurina로 표기되어 있으나 arXiv 표기를 따랐다. 공식 코드 링크는 확인하지 못했다."
+added: 2026-11-20

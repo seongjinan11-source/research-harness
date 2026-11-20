@@ -1,0 +1,77 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: CALM
+title: "CALM: Co-evolution of Algorithms and Language Model for Automatic Heuristic Design"
+authors: "Ziyao Huang, Weiwei Wu, Kui Wu, Wei-Bin Lee, Jianping Wang"
+venue: "ICLR 2026"
+year: 2026
+links:
+  paper: https://iclr.cc/virtual/2026/poster/10006674
+  arxiv: https://arxiv.org/abs/2505.12285
+  openreview: https://openreview.net/forum?id=x6bG2Hoqdf
+  code: https://github.com/whxru/CALM
+
+citation:
+  type: inproceedings
+  title: "CALM: Co-evolution of Algorithms and Language Model for Automatic Heuristic Design"
+  authors: ["Ziyao Huang", "Weiwei Wu", "Kui Wu", "Wei-Bin Lee", "Jianping Wang"]
+  year: 2026
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2505.12285"
+  url: https://iclr.cc/virtual/2026/poster/10006674
+  verified_from:
+    - https://iclr.cc/virtual/2026/poster/10006674
+    - https://arxiv.org/abs/2505.12285
+
+areas: [co-heuristics, llm-rl]
+problem: "기존 LLM 기반 자동 휴리스틱 설계는 LLM을 고정해 두고 프롬프트만 바꾸므로, 수많은 휴리스틱 평가에서 나오는 성능 신호를 모델 개선에 쓰지 못한다. 진화 탐색 도중 LLM 자체를 RL로 함께 학습해 이 신호를 활용하고자 한다."
+core_idea: "EoH식 진화 루프에 프롬프트 연산자(verbal guidance)와 GRPO 미세조정(numerical guidance)을 함께 넣는다. 연산자는 새 구성요소를 넣는 injection, 구성요소를 다시 쓰는 replacement, 성능 순위나 아이디어 다양성으로 짝을 고르는 crossover, 코드를 줄이는 simplification이다. Pool이 정체되면 확률적으로 seed와 최고 휴리스틱만 남기고 리셋하는 collapse 장치를 둔다. 매 라운드 프롬프트 하나에서 응답 G=4개를 뽑아 group 정규화 advantage로 GRPO를 한 번 업데이트하고, 쓸 만한 휴리스틱은 pool에 넣는다. 보상은 형식·실행 실패와 난수 사용에 단계적 음수(−1.0에서 −0.75)를 주고, 실행 가능한 휴리스틱에는 prompt에 들어간 최고 base 휴리스틱과의 상대 차이 Δ(clip한 비율)로 점수를 준다. 더 좋으면 1+Δ, 같으면 0.8·r_rand, 나쁘면 0.5·r_rand·Δ이다. Qwen2.5-7B-Instruct INT4를 24GB GPU 한 장에서 돌리고, LLM 쿼리 예산은 2,000회다."
+key_assumptions:
+  - "휴리스틱 성능 g(h)는 학습 instance 집합 위 음의 목적값 평균이고, 그 집합은 매우 작아도 된다고 본다. OBP 4개, 구성형 TSP N=50 64개, CVRP-ACO N=50 10개, OP-ACO N=50 5개다."
+  - "Parent 대비 상대 개선이라는 이진에 가까운 보상 구조가 GRPO에 유용한 학습 신호가 된다고 가정한다."
+  - "난수를 쓰는 휴리스틱은 평가 비용과 잡음을 크게 늘리므로 배제해도 된다고 본다. 결정적 휴리스틱만 남기면 잡음은 instance 표본에서만 생긴다."
+  - "문제마다 LLM을 따로 학습하며, N=50에서 학습한 휴리스틱이 N=100·200으로 옮겨 간다고 가정한다."
+strengths:
+  - text: "진화 탐색 안에서 LLM을 GRPO로 함께 학습하는 구조를 처음 제시했다. 7B INT4 모델과 24GB GPU 한 장으로 GPT-4o-mini 같은 API 모델을 쓴 탐색형 방법을 넘었다. OBP 평균 gap 0.71%(MCTS-AHD 0.89%), CVRP-ACO N=200 3.95%(MCTS-AHD 4.70%)를 보고한다."
+    tags: [adaptation, inference-cost]
+  - text: "Ablation이 보상 형태의 중요성을 직접 보여 준다. GRPO를 빼면 OBP 1.78%로 가장 크게 나빠지고, 보상을 단순 성능 기반으로 바꾸면 1.24%, 이진 보상으로 바꾸면 1.04%가 된다. 같은 RL 틀에서 보상 정의만으로 결과가 크게 갈린다는 근거다."
+    tags: [reward-signal]
+  - text: "실패 유형을 단계별로 구분한 음수 보상과 난수 사용 페널티로, 학습 초기에 대부분 실패하는 상황에서도 신호를 만들고 비결정적 휴리스틱을 걸러 낸다."
+    tags: [reward-signal, training-stability]
+limitations:
+  - text: "학습 신호가 프롬프트와 응답에 명시적으로 들어간 휴리스틱의 성능에 크게 의존한다. 어느 쪽에도 휴리스틱이 없는 trajectory는 보상이 없어 배우지 못한다(초기화 연산자는 보상 0)."
+    tags: [reward-signal]
+    source: self
+  - text: "작은 모델과 24GB GPU 한 장에서만 실험해, 더 큰 모델이나 전체 parameter 미세조정에서의 확장성은 검증되지 않았다고 인정한다. 7B INT4 모델 자체는 GPT-4o-mini보다 정확도가 낮다."
+    tags: [adaptation, inference-cost]
+    source: self
+  - text: "난수를 쓰는 휴리스틱은 평가 비용과 잡음 때문에 배제했다. 저자들은 제약을 풀면 허용할 수 있지만 평가 부담이 커진다고 밝힌다."
+    tags: [task-coverage, reward-signal]
+    source: self
+  - text: "Collapse 장치의 parameter에 민감하다. δ0를 0.005로 키우면 OBP gap이 1.93%, OP gap이 27.22%로 크게 나빠졌다."
+    tags: [training-stability]
+    source: self
+  - text: "CALM은 LLM을 미세조정하지만 여전히 정해진 진화 workflow 안에서 쓰고, 학습도 문제 하나에 대해서만 한다. 그래서 일반적인 휴리스틱 설계 능력으로 이어지지 않는다고 지적한다."
+    tags: [adaptation, task-coverage]
+    source: cited
+    by: "AHD Agent: Agentic Reinforcement Learning for Automatic Heuristic Design (2026)"
+    by_id: AHDAgent
+    by_link: https://arxiv.org/abs/2605.08756
+  - text: "[analyst] 보상은 4–64개짜리 고정 학습 집합의 평균 목적값으로 계산되고, OBP는 크기·용량이 다른 instance를 한 평균에 섞는다. 이 평균이 instance 표본과 층 스케일에 얼마나 휘둘리는지, 그것이 GRPO advantage의 부호를 바꾸는지는 분석되지 않았다. 학습 곡선과 결과의 seed 분산도 본문 표에는 없다."
+    tags: [reward-signal, multi-reward, eval-protocol]
+    source: analyst
+  - text: "[analyst] TSP 학습 성능 규약이 원래 단위의 tour length 평균이라, 최적해 대비 gap이 아니라 instance 크기에 비례하는 raw 값이 보상의 스케일을 정한다. N=50 한 크기로만 학습하면 문제가 드러나지 않지만, 크기를 섞어 학습하면 큰 instance가 보상을 지배하게 된다."
+    tags: [multi-reward, reward-signal]
+    source: analyst
+builds_on: [EoH, FunSearch, MCTSAHD, GRPO, Qwen2.5-7B-Instruct]
+compared_against: [FunSearch, EoH, ReEvo, HSEvo, MCTSAHD, EvoTune, POMO, DeepACO, BestFit, FirstFit, GreedyConstruct]
+open_questions:
+  - "보상을 계산하는 학습 instance 수를 늘리거나 매 라운드 새로 뽑으면 최종 휴리스틱 품질이 달라지는가? 같은 평가 횟수로 고정 집합을 키운 대조가 없다."
+  - "Parent 대비 상대 Δ 보상과 고정 baseline 차이, 순위 기반, log-gap 보상을 같은 조건에서 비교하면 어느 것이 held-out 크기에서 더 나은가?"
+  - "G=4라는 작은 group에서, 평가 집합 잡음으로 생기는 advantage 부호 뒤집힘이 학습 결과를 얼마나 바꾸는가?"
+hooks:
+  - "(사용자 연구의 직접 대상) 진단 계획과 strata 계획 모두 CALM이 겨냥 대상이다. 논문은 g(h)를 학습 집합 평균으로 정의하고, OBP는 '4개 instance'로 학습한다고 쓴다. 사용자는 저장소(commit 3c40dbd78f2f)에서 이 4개가 실제로는 아이템 열 2개 × 용량 100·500이라는 점을 확인했다. Strata 계획 R0(혼합 평균)는 CALM 논문 보상의 이진 판정과 같고, R0c·R0g로 논문판과 저장소판을 구분한다. 인용할 때 '논문 버전'인지 '저장소 버전'인지를 반드시 밝혀야 한다."
+  - "(보상 형태의 선행 근거) CALM ablation의 0.71% 대 1.24%(성능 기반) 대 1.04%(이진)는 '보상 형태가 결정적인데 체계적 비교가 없다'는 사용자 문제 제기의 1차 근거다. 다만 이 ablation은 OBP·OP의 run 결과만 비교하고 보상이 instance 표본·층 스케일에 얼마나 민감한지는 묻지 않으므로, 사용자 진단의 M6(보상 형태별 참 보상과의 부호 일치)와 겹치지 않는다."
+  - "(잡음의 자인) 저자들은 난수 휴리스틱을 '평가 비용과 잡음' 때문에 뺐다. 즉 평가 잡음이 보상 품질을 해친다는 인식은 있지만, 결정적 휴리스틱에도 남는 instance 표본 잡음은 다루지 않는다. 이 공백이 진단 계획 Q1–Q5의 위치다(가설: 빈틈이 실재하는지는 TSP·OBP confirm 결과로 판정)."
+  - "(재현 기준선) 사용자 계획 1단계는 CALM OBP 또는 TSP를 seed 5개로 재현해 분산을 재는 것이다. 논문이 seed 분산을 보고하지 않으므로, 이 재현 자체가 RL-AHD 평가 프로토콜에 대한 독립 기여가 될 수 있다."
+notes: "arXiv v1 HTML 본문(방법, 보상, 학습·test 집합, 결과, ablation, 부록 F·H)과 iclr.cc poster 페이지를 읽었다. ICLR 2026 poster로 iclr.cc에서 확인했고 OpenReview는 browser 검증 때문에 열지 못해 review 한계는 넣지 않았다. 저자 순서는 iclr.cc 표기(Wei-Bin Lee가 Jianping Wang 앞)를 따랐다. arXiv v1은 Jianping Wang이 Wei-Bin Lee 앞에 있다. booktitle은 학회 이름만 적었다. Code 링크는 사용자가 저장소를 직접 열어 대조한 기록(co_rl/2026-11-19_reward_noise_diagnostic/PLAN_KO.md §9.2)에 근거한다. 저장소의 profile-gated 보상은 논문에 없는 내용이라 본문 필드에는 넣지 않고 hooks에만 적었다. GRPO, Qwen2.5-7B-Instruct, EvoTune, HSEvo는 외부 이름이다."
+added: 2026-11-20

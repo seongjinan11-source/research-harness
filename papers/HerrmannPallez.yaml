@@ -1,0 +1,59 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: HerrmannPallez
+title: "An In-depth Study of LLM Contributions to the Bin Packing Problem"
+authors: "Julien Herrmann, Guillaume Pallez"
+venue: "arXiv 2025 (arXiv comment: ACM Transactions on Evolutionary Learning and Optimization 게재 승인)"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2510.27353
+
+citation:
+  type: misc
+  title: "An In-depth Study of LLM Contributions to the Bin Packing Problem"
+  authors: ["Julien Herrmann", "Guillaume Pallez"]
+  year: 2025
+  arxiv: "2510.27353"
+  url: https://arxiv.org/abs/2510.27353
+  verified_from:
+    - https://arxiv.org/abs/2510.27353
+    - https://arxiv.org/html/2510.27353v2
+
+areas: [co-heuristics, benchmark]
+problem: "FunSearch가 online bin packing에서 LLM 진화 탐색으로 새로운 수학적 통찰을 얻었다고 주장했는데, 그 휴리스틱이 실제로 해석 가능하고 새로운 기여인지를 검증한다."
+core_idea: "FunSearch가 Uniform(20,100)·용량 150(120 items, 20개 학습 instance)에서 얻은 휴리스틱 c12와 Weibull(3,45)·용량 100(5,000 items, 5개 학습 instance)에서 얻은 c14, 그리고 같은 Weibull 설정의 EoH 휴리스틱을 코드와 item 단위 실험으로 해부한다. c12는 '빈 공간이 아주 작게 남는 bin이 있으면 그곳, 아니면 first fit'에 가까운 규칙임을 보였고, c14와 EoH는 코드에서 효과를 예측할 수 없어 해석 가능하다고 보기 어렵다고 판단했다. 이 분석을 바탕으로 두 threshold (a, b)를 쓰는 단순한 ab-FirstFit/WorstFit/BestFit 계열을 만들었고, 이것이 두 설정에서 LLM 휴리스틱보다 조금 더 좋고 다른 분포 parameter와 용량으로도 더 잘 일반화함을 보였다. 아울러 이 instance 분포들이 이전에 연구된 적이 없다는 점은 중요도가 낮았기 때문이지 어렵거나 새로웠기 때문이 아니라고 논증한다."
+key_assumptions:
+  - "휴리스틱의 해석 가능성은 코드를 읽고 BestFit 대비 이득을 예측할 수 있는지로 판정한다."
+  - "학습 분포와 다른 Uniform·Weibull parameter와 용량 조합에서의 성능이 일반화의 척도라고 본다."
+  - "ab 계열 parameter는 instance 설정마다 tuning하는 것이 공정한 비교라고 본다."
+strengths:
+  - text: "LLM이 만든 휴리스틱을 단순 점수 비교가 아니라 결정 규칙 수준에서 해부했다. c12를 단순화한 Smooth_c12가 instance의 68.8%에서 같은 bin 수를 내고 나머지에서도 2개 미만 차이임을 보였고, c14의 핵심 threshold(item 크기보다 약 20–21 큰 여유)가 코드 어디에도 명시적으로 나타나지 않는다는 점을 밝혔다."
+    tags: [interpretability, program-synthesis]
+  - text: "두 parameter만 가진 ab 계열이 Uniform 설정에서 c12보다 평균 0.71%, Weibull 설정에서 c14보다 0.12%, EoH보다 0.15% 적은 bin을 썼다. 노트북에서 몇 분이면 되는 실험이 수백만 LLM 쿼리 결과를 따라잡는다는 점에서 강한 수작업 기준선을 제공한다."
+    tags: [eval-protocol, inference-cost]
+  - text: "Uniform(40,120)·용량 250부터 Weibull(7,75)·용량 500까지 학습과 다른 분포·용량에서 ab 계열이 모든 baseline과 LLM 휴리스틱을 앞섰고, c14는 Weibull(7,75)에서 그래프에 넣을 수 없을 만큼 무너졌다. LLM 휴리스틱이 학습 분포 하나에 과도하게 맞춰져 있다는 근거다."
+    tags: [distribution-shift]
+limitations:
+  - text: "ab 계열 실험은 체계적 검토가 아니며 그림에 나온 분포만 시험했다고 저자들이 밝혔다. ab 계열도 instance 설정마다 parameter를 tuning했다."
+    tags: [eval-protocol]
+    source: self
+  - text: "item 수가 적으면 ab 계열의 성능이 나빠지고, 최악 경우 비율이 c/(c−b)로 제한된다고 인정했다. c12도 item이 약 90개 미만이면 BestFit보다 나빴다."
+    tags: [robustness, distribution-shift]
+    source: self
+  - text: "더 좋은 해가 BestFit보다 존재한다는 것을 이미 알고 탐색했기 때문에 ab 계열을 찾기 쉬웠을 수 있다(informed exploration)고 저자들이 인정했다."
+    tags: [eval-protocol]
+    source: self
+  - text: "[analyst] 일반화 결과 대부분이 그림으로만 제시되고 수치 표가 적어서, 어느 분포·용량에서 얼마나 차이 나는지를 정량적으로 옮기기 어렵다. 분석 대상도 FunSearch와 EoH의 공개 휴리스틱 몇 개에 한정되어, RL로 학습한 휴리스틱 생성기(CALM 등)의 출력에도 같은 결론이 성립하는지는 다루지 않는다."
+    tags: [eval-protocol, distribution-shift]
+    source: analyst
+builds_on: [FunSearch, EoH, BestFit, FirstFit]
+compared_against: [FunSearch, EoH, BestFit, FirstFit, WorstFit]
+open_questions:
+  - "RL로 학습한 휴리스틱 생성기(CALM, AHD Agent 등)가 만든 OBP 휴리스틱도 ab 계열로 대체될 만큼 단순한 규칙인가."
+  - "학습 instance를 여러 분포·용량 층으로 넓히면 LLM 휴리스틱의 분포 과적합이 줄어드는가, 아니면 평균 보상에서 큰 층이 지배해 다른 층에 과적합하는가."
+  - "OBP 학습 instance가 이렇게 단순하다면, 더 어려운 bin packing 분포에서 LLM 진화 탐색의 기여는 어떻게 되는가."
+hooks:
+  - "사용자 연구의 OBP 학습 설정(Weibull, 5k items, 용량 100·500)이 이 논문이 분석한 FunSearch/EoH 설정과 같은 계열이다. LLM 휴리스틱이 학습 분포와 용량 하나에 과도하게 맞춰지고 용량·분포가 바뀌면 무너진다는 이 논문의 관찰은, strata_mixed_reward 계획의 held-out 층 A(용량 1000, 10k items)에서 R0가 무엇을 최적화하는지 묻는 동기와 직접 연결된다."
+  - "ab 계열은 휴리스틱 pool에 넣을 강한 수작업 기준선 또는 참조 휴리스틱으로 쓸 수 있다. 특히 parameter 두 개만 바꿔 층별 최적 threshold가 어떻게 달라지는지 보면, 층마다 다른 trade-off가 존재한다는 점(층 충돌)을 학습 없이 보여주는 통제된 사례가 될 수 있다. 이것은 제안이며 아직 확인하지 않았다."
+  - "item 수가 적을 때 성능이 나빠진다는 결과는 OBP에서 instance 크기(item 수)가 휴리스틱 순위를 바꾸는 축임을 독립적으로 보여준다. 사용자 dev 관찰(OBP 층 사이 τ 0.43–0.85)과 같은 방향의 근거다."
+notes: "arXiv comment는 ACM TELO 게재 승인과 DOI 10.1145/3821574를 적고 있지만, ACM DL 페이지가 403으로 막혀 출판사 정보를 직접 확인하지 못해 citation은 misc로 두었다. 744개 인용 논문 중 91개만 bin packing을 언급한다는 수치도 원문에 있다. 코드 링크는 확인하지 못했다."
+added: 2026-11-20

@@ -1,0 +1,64 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: HeuriGym
+title: "HeuriGym: An Agentic Benchmark for LLM-Crafted Heuristics in Combinatorial Optimization"
+authors: "Hongzheng Chen, Yingheng Wang, Yaohui Cai, Hins Hu, Jiajie Li, Shirley Huang, Chenhui Deng, Rongjian Liang, Shufeng Kong, Haoxing Ren, Samitha Samaranayake, Carla P. Gomes, Zhiru Zhang"
+venue: "ICLR 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2506.07972
+  openreview: https://openreview.net/forum?id=HWxHUO15Yy
+  project: https://cornell-zhang.github.io/heurigym/
+
+citation:
+  type: inproceedings
+  title: "HeuriGym: An Agentic Benchmark for LLM-Crafted Heuristics in Combinatorial Optimization"
+  authors: ["Hongzheng Chen", "Yingheng Wang", "Yaohui Cai", "Hins Hu", "Jiajie Li", "Shirley Huang", "Chenhui Deng", "Rongjian Liang", "Shufeng Kong", "Haoxing Ren", "Samitha Samaranayake", "Carla P. Gomes", "Zhiru Zhang"]
+  year: 2026
+  booktitle: "ICLR 2026"
+  arxiv: "2506.07972"
+  url: https://iclr.cc/virtual/2026/poster/10010384
+  verified_from:
+    - https://arxiv.org/abs/2506.07972
+    - https://arxiv.org/html/2506.07972v2
+    - https://iclr.cc/virtual/2026/poster/10010384
+
+areas: [benchmark, co-heuristics]
+problem: "기존 LLM 휴리스틱 평가는 정해진 틀 안의 함수 하나만 채우게 하거나 정답이 있는 문제를 써서, 처음부터 휴리스틱을 설계·실행·수정하는 agent 능력을 재지 못한다. 실행 피드백을 받는 반복 설계 과정을 그대로 평가할 벤치마크가 필요하다."
+core_idea: "EDA(operator scheduling, technology mapping, global routing), compiler(e-graph extraction, intra-operator parallelism), 계산생물학(protein sequence design, Mendelian error detection), logistics(airline crew pairing, PDPTW)의 9개 문제를 골랐다. 문제마다 약 5개의 demonstration instance로 피드백을 주고, 그보다 한 자릿수 이상 큰 evaluation set(총 218개)은 성능이 안정된 뒤에만 쓴다. LLM은 함수 signature만 받은 상태에서 Python 프로그램을 만들고, 실행·형식·제약의 세 단계 verifier와 목적함수 평가 결과를 다음 프롬프트로 돌려받으며 반복 개선한다. 지표 QYI는 검증을 통과한 instance 비율(Yield)과 통과한 instance에서 expert 비용 대비 min(1, c*/c)의 평균(Quality)의 조화평균이고, 문제별 QYI를 instance 수로 가중 평균한다."
+key_assumptions:
+  - "expert가 만든 해의 비용이 instance별 품질의 상한 기준(1.0)으로 적절하다고 본다."
+  - "실행 가능성(Yield)과 품질(Quality)을 조화평균으로 묶으면 둘 사이 불균형을 적절히 벌한다고 본다."
+  - "약 5개의 demonstration instance에서 받은 피드백으로 개선한 프로그램이 더 큰 evaluation set으로 일반화한다고 본다."
+strengths:
+  - text: "solver 틀을 주지 않고 함수 signature만 주어 자료구조와 알고리즘을 처음부터 설계하게 했다. 템플릿 기반 진화 탐색(EoH, ReEvo, HSEvo)이 Gemini-2.5-Pro를 써도 QYI 약 0.45로 단순 반복 agent의 0.617보다 낮았다는 결과로, 실행 피드백과 반복 사이 맥락 유지가 중요함을 보였다."
+    tags: [program-synthesis, task-coverage]
+  - text: "실행 가능성과 품질을 하나의 지표로 묶었다. Yield와 Quality의 조화평균이라 한쪽만 좋은 결과가 높은 점수를 받지 못하며, quality는 instance마다 expert 비용 대비 비율이라 instance 스케일이 집계를 지배하지 않는다."
+    tags: [eval-protocol, reward-signal]
+  - text: "EDA, compiler, 생물학, logistics처럼 기존 TSP·bin packing 위주 벤치마크가 다루지 않는 문제와 공개 데이터 의존이 적은 문제를 골라, 사전학습 데이터에 해법이 들어 있을 가능성을 줄였다. 최고 모델도 QYI 약 0.6에 그쳐 포화되지 않은 벤치마크다."
+    tags: [task-coverage, eval-protocol]
+  - text: "실패를 hallucinated API, 알고리즘 논리 오류, 제약 오해, timeout의 네 유형으로 나눠 보였고, temperature를 높이면 Quality는 오르고 Yield는 떨어지는 trade-off를 보고했다."
+    tags: [eval-protocol]
+limitations:
+  - text: "주 실험이 모두 Python이라 실행 overhead가 있고, C++ 결과는 예비 수준이며 정확하고 효율적인 병렬 C++ 생성은 어렵다고 저자들이 밝혔다."
+    tags: [inference-cost]
+    source: self
+  - text: "평가 파이프라인은 고급 prompting이나 multi-agent 전략이 없는 기준선이고, 맥락 요약·압축이나 best-of-N, beam search 같은 test-time scaling은 후속 과제로 남겼다."
+    tags: [program-synthesis]
+    source: self
+  - text: "평가가 계산 가능한 proxy 지표에 의존하며, 과학 분야의 물리 실험이나 EDA의 backend synthesis처럼 피드백이 긴 실제 목적과는 차이가 있다고 인정했다. instance 크기를 키우고 제약을 강화하는 확장도 계획으로만 남겼다."
+    tags: [eval-protocol, context-scale]
+    source: self
+  - text: "[analyst] 문제별 QYI를 instance 수로 가중 평균하므로, instance가 많은 문제가 전체 점수를 더 크게 좌우한다. 또 demonstration set이 약 5개라서 반복 개선 단계의 피드백이 그 몇 개 instance에 맞춰질 위험이 있는데, demonstration 점수와 evaluation 점수의 격차는 분석하지 않는다."
+    tags: [eval-protocol, reward-signal]
+    source: analyst
+builds_on: [ReEvo, EoH, HSEvo]
+compared_against: [ReEvo, EoH, HSEvo, GPT-o4-mini-high, DeepSeek-R1, DeepSeek-V3, Gemini-2.5-Pro, Gemini-2.5-Flash, Claude-3.7-Sonnet, Qwen3-235B, LLaMA-4-Maverick, LLaMA-3.3]
+open_questions:
+  - "demonstration instance 수를 늘리거나 크기를 다양화하면 evaluation set QYI가 얼마나 오르는가."
+  - "QYI를 RL 보상으로 쓰면 Yield와 Quality 중 어느 쪽이 먼저 최적화되며, 조화평균이 학습 신호로도 적절한가."
+  - "instance 크기를 키운 private test set에서 순위가 유지되는가."
+hooks:
+  - "약 5개 demonstration instance로 피드백을 주는 구조는 CALM(OBP 4개)과 같은 '작은 고정 피드백 집합' 설정이다. evaluation set이 따로 있으므로 사용자 진단의 Q1(고정 집합 순위와 대규모 기준 순위의 일치)을 비템플릿 문제에서 재현할 수 있는 공개 자원이 될 수 있다. 실제로 가능한지는 데이터 공개 범위를 확인해야 한다."
+  - "QYI의 Quality는 instance별 expert 대비 비율이고 Yield와 조화평균으로 묶인다. 사용자 계획의 보상 형태(I_feasible · 품질, 상한 있는 gap)와 비교할 때 '실행 가능성과 품질을 곱이 아닌 조화평균으로 결합'하는 대안으로 multi-reward 설계 후보에 넣을 수 있다. 이는 제안이다."
+notes: "arXiv comment와 ICLR 2026 poster 페이지로 게재를 확인했다. ICLR 페이지는 저자를 'Carla Gomes'로, arXiv는 'Carla P. Gomes'로 표기하며 citation은 arXiv 표기를 따랐다. OpenReview forum은 브라우저 인증에 막혀 리뷰를 확인하지 못했다. 코드 저장소 URL은 확인하지 못해 project 페이지만 적었다. 문제별 instance 수(부록 G)는 읽은 범위 밖이다."
+added: 2026-11-20

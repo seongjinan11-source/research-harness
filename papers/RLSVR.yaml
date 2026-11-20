@@ -1,0 +1,59 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: RLSVR
+title: "From RLVR to RLSVR: Task Transformation Induces Self-Verifiable Rewards for Open-Ended LLM Self-Improvement"
+authors: "Qinsi Wang, Jing Shi, Huazheng Wang, Kun Wan, Yiran Wu, Bo Liu, Qingyun Wu, Hai Helen Li, Yiran Chen, Handong Zhao, Wentian Zhao"
+venue: "COLM 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2607.23802
+  openreview: https://openreview.net/forum?id=ztvCPuZ0oB
+  code: https://github.com/wangqinsi1/SpyRL
+citation:
+  type: inproceedings
+  title: "From RLVR to RLSVR: Task Transformation Induces Self-Verifiable Rewards for Open-Ended LLM Self-Improvement"
+  authors: ["Qinsi Wang", "Jing Shi", "Huazheng Wang", "Kun Wan", "Yiran Wu", "Bo Liu", "Qingyun Wu", "Hai H Li", "Yiran Chen", "Handong Zhao", "Wentian Zhao"]
+  year: 2026
+  booktitle: "COLM 2026"
+  arxiv: "2607.23802"
+  url: https://openreview.net/forum?id=ztvCPuZ0oB
+  verified_from:
+    - https://colm.cc/Conferences/2026/AcceptedPapers
+    - https://arxiv.org/abs/2607.23802
+    - https://github.com/wangqinsi1/SpyRL
+areas: [llm-rl]
+problem: "요약·창작처럼 정답 verifier가 없는 open-ended task에서는 RLVR을 쓸 수 없으므로, 사람 라벨·reward model·LLM judge 없이 규칙으로 계산되는 보상을 만들어 LLM self-improvement를 하려 한다."
+core_idea: "RLSVR(RL with Self-Verifiable Rewards)은 self-supervised learning의 pretext task처럼 원래 task를 proxy 환경으로 변환한다. 환경이 숨은 변수를 뽑아 정답으로 기록하고, 정책은 그 변수에서 파생된 관측으로 원래 task를 수행하며, 결과물의 품질이 좋아야 맞힐 수 있는 숨은 변수 질문을 풀게 한 뒤 기록과 비교해 보상을 준다. 구현체 SpyRL은 'Who Is the Spy?' 게임으로, 5명 중 무작위 1명(spy)만 연속 구간을 가린 입력(요약·창작 20%, 수학 40%)을 받고, 모두가 같은 task를 수행한 뒤 spy를 투표로 지목한다. 탐지 보상은 정답 spy를 맞혔는지(검증 가능, GRPO group 정규화)이고, 수행 보상은 받은 표에 따른 zero-sum 보상이며 SPIRAL의 Role-Advantage Estimation으로 역할별 baseline을 둔다. 수행 단계와 탐지 단계는 번갈아 학습한다."
+key_assumptions:
+  - "탐지자의 투표가 결과물의 실제 품질과 상관된다고 가정한다. 수행 보상은 이 투표에만 의존한다."
+  - "가린 입력(spy)과 원 입력(civilian)으로 만든 결과물의 차이가 task 품질의 차이를 반영하며, 마스킹이 문체와 길이는 유지한 채 핵심 정보만 없앤다고 본다."
+  - "같은 base model로 구성한 self-play가 공모나 퇴화 없이 안정적으로 개선된다고 가정한다."
+strengths:
+  - text: "외부 judge나 rubric 실행기 없이 규칙 기반으로 보상을 계산한다. Rubric-as-Reward 비교 대상은 verifier 비용으로 약 200–900달러가 드는 반면 SpyRL은 그 비용이 없다고 보고한다."
+    tags: [reward-signal, inference-cost]
+  - text: "같은 틀이 비검증 task와 검증 task에 모두 적용된다. Qwen3-4B·8B에서 요약 ROUGE-L, 창작 GPT-4o pairwise 승률과 사람 평가(WritingPrompts에서 base 대비 80.0%), 수학 벤치마크 평균이 모두 base와 R-Zero·Absolute Zero보다 좋았다."
+    tags: [task-coverage]
+  - text: "구성요소 ablation이 있다. Math500에서 전체 79.5 대비 수행만 72.3, 탐지만 69.2, spy 없음 71.6이고, RAE를 빼면 7개 벤치마크 평균이 50.4에서 37.5로 떨어진다. 플레이어 수는 3에서 5로 갈 때 이득이 가장 크다."
+    tags: [training-stability]
+limitations:
+  - text: "수행과 탐지를 동시에 학습하면 base보다도 나빠진다(5개 수학 벤치마크 평균 42.4에서 35.3). 번갈아 학습해야 50.8로 개선된다. 저자들은 교대 학습을 필수 설계로 제시한다."
+    tags: [training-stability]
+    source: self
+  - text: "수학으로 학습한 모델은 글쓰기 task로의 전이가 base 수준에 못 미쳤다. 같은 도메인 안(PubMed에서 arXiv·BillSum)의 전이는 보고했지만 task 종류를 넘는 전이는 제한적이다."
+    tags: [distribution-shift]
+    source: self
+  - text: "[analyst] 규칙으로 검증되는 것은 탐지 보상뿐이다. 생성 품질을 직접 학습시키는 수행 보상은 같은 모델로 만든 탐지자의 투표이므로, 'verifiable 보상으로 품질을 학습한다'는 주장은 투표와 품질의 상관이라는 가정에 기대며 그 상관의 크기는 본문에서 정량화되지 않는다. 품질의 주 평가자도 GPT-4o다."
+    tags: [reward-signal, eval-protocol]
+    source: analyst
+  - text: "[analyst] 학습 절차 서술이 일관되지 않는다. 부록 D.3은 epoch마다 한 단계만 엄격히 번갈아 갱신한다고 하고, 부록 C.2는 EMA 정확도와 N/A 비율의 hysteresis threshold로 단계를 전환한다고 설명한다. 재현 시 어느 쪽을 따라야 하는지 불분명하다."
+    tags: [training-stability, eval-protocol]
+    source: analyst
+builds_on: [SPIRAL, GRPO, RLVR, DeepSeek-R1]
+compared_against: [R-Zero, Absolute Zero, Rubric-as-Reward]
+open_questions:
+  - "투표 기반 수행 보상과 실제 품질의 상관은 학습이 진행되면서 유지되는가, 아니면 탐지자와 수행자가 함께 바뀌면서 품질과 무관한 단서(문체 흔적 등)로 옮겨 가는가?"
+  - "마스킹 비율 20%와 40%가 거의 같은 성능을 냈는데, 어떤 정보 비대칭이 보상을 품질에 묶는지 정할 원리가 있는가?"
+hooks:
+  - "(verifiable과 reliable의 구분) 사용자 노트의 정리대로 CO와 AHD는 목적값을 기계적으로 다시 계산할 수 있어 SpyRL이 풀려던 'verifier 부재'에 해당하지 않는다. 대신 SpyRL은 보상 경로 중 일부만 검증 가능하다는 점을 분명히 보여 주는 사례로 쓸 수 있다. 같은 맥락에서 AHD 보상은 계산은 결정적이지만 작은 고정 instance 집합 위의 평균이라 추정치로서 잡음과 층 혼합 편향을 가진다. 즉 '결정적으로 계산된다'와 '목표를 신뢰성 있게 반영한다'는 다르다는 논지의 대비 사례로 인용할 수 있다(해석이며 SpyRL 저자의 주장은 아니다)."
+  - "(생성자 대 휴리스틱 self-play) 사용자 연구계획 방향 3(instance 생성자 대 휴리스틱 생성자)을 시도한다면, 동시 학습이 base보다 나빠지고 교대 학습만 개선되었다는 결과가 직접적인 설계 경고다. 다만 SpyRL 자체의 교대 방식 서술이 부록 사이에 엇갈리므로 그대로 옮기기 전에 저장소 코드를 확인해야 한다."
+notes: "논문의 프레임워크 이름이 RLSVR이고 구현체 이름이 SpyRL이다(같은 논문). arXiv abs와 HTML v2 본문 및 부록 C·D를 읽었다. 본문에 별도 limitation 절은 찾지 못해 self 한계는 저자가 보고한 실험 결과(동시 학습 실패, 수학→글쓰기 전이)만 넣었다. COLM 2026은 colm.cc Accepted Papers 페이지에서 확인했다(OpenReview forum ztvCPuZ0oB). 저자 표기는 학회 페이지의 'Hai H Li'를 따랐고 arXiv는 'Hai Helen Li'다. 공식 코드는 github.com/wangqinsi1/SpyRL(README가 COLM 2026 채택을 표기). 사용자 노트(2026-11-19)에 따르면 검색 시 같은 약칭의 PB-RLSVR이라는 다른 연구가 나오므로 혼동하지 않는다(이 하네스에서는 직접 확인하지 않음)."
+added: 2026-11-20

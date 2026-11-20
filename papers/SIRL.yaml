@@ -1,0 +1,50 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: SIRL
+title: "Solver-Informed RL: Grounding Large Language Models for Authentic Optimization Modeling"
+authors: "Yitian Chen, Jingfan Xia, Siyu Shao, Dongdong Ge, Yinyu Ye"
+venue: "NeurIPS 2025"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2505.11792
+  code: https://github.com/Cardinal-Operations/SIRL
+citation:
+  type: inproceedings
+  title: "Solver-Informed RL: Grounding Large Language Models for Authentic Optimization Modeling"
+  authors: ["Yitian Chen", "Jingfan Xia", "Siyu Shao", "Dongdong Ge", "Yinyu Ye"]
+  year: 2025
+  booktitle: "Advances in Neural Information Processing Systems"
+  volume: 38
+  arxiv: "2505.11792"
+  url: https://proceedings.neurips.cc/paper_files/paper/2025/hash/98555b92e5dedbdad5921049281995bc-Abstract-Conference.html
+  verified_from:
+    - https://arxiv.org/abs/2505.11792
+    - https://proceedings.neurips.cc/paper_files/paper/2025/hash/98555b92e5dedbdad5921049281995bc-Abstract-Conference.html
+areas: [llm-rl]
+problem: "자연어로 기술된 최적화 문제를 수학 모델과 solver 코드로 바꾸는 optimization modeling에서, LLM이 실행 가능하고 정확한 모델을 내도록 학습하려 한다."
+core_idea: "LLM은 reasoning, 간결한 수학적 정식화, solver 코드를 출력하고, 코드를 실행하면 목적값, feasibility 상태, instance 수준 모델을 담은 .lp 파일이 나온다. 외부 solver를 verifier로 써서 형식·실행·정답 최적값과의 일치를 단계적 규칙 기반 보상으로 주고, 2단계에서는 정답이면서 Big-M·비선형 정식화 같은 고급 기법을 쓴 경우에만 .lp 기반 bonus를 더한다. 학습은 REINFORCE++이며, reasoning 구간에는 KL을 빼고 정식화·코드 구간에만 KL을 거는 Partial KL로 탐색과 실행 안정성을 함께 잡는다. 학습 데이터의 참조 답은 10개 LLM 역할의 풀이에서 목적값뿐 아니라 .lp의 최적화 방향과 이진·정수 변수 개수의 합의까지 본 instance-enhanced self-consistency로 정한다."
+key_assumptions:
+  - "Solver가 계산한 목적값이 정답 최적값과 일치하는지로 모델의 정확성을 판정할 수 있다고 본다(상대 오차 1e-6 기준). 다른 정식화라도 최적값이 같으면 정답으로 친다."
+  - "여러 LLM 풀이의 합의(목적값과 .lp 구조 특징)가 참조 답으로 충분히 정확하다고 가정한다."
+strengths:
+  - text: "보상 경로 전체가 solver 실행 결과로 결정되어 LLM judge가 필요 없고, 실행 결과인 .lp 파일에서 구조 정보를 꺼내 과정 수준 신호(bonus)와 데이터 합성 기준으로 함께 쓴다."
+    tags: [reward-signal]
+  - text: "SFT 없이 online RL만으로 SIRL-Qwen2.5-32B가 NL4OPT, MAMO, IndustryOR, OptMATH의 macro 평균 68.3%로 DeepSeek-V3.1(65.0%), DeepSeek-R1(64.6%), OpenAI-o3(57.1%)보다 높았다. Partial KL ablation에서 KL을 완전히 빼면 실행률이 크게 떨어졌다."
+    tags: [training-stability]
+  - text: "목적값 다수결만 쓰는 self-consistency보다 .lp 구조 특징까지 쓰는 변형이 7B·32B 모두에서 더 좋은 참조 답을 만들었다."
+    tags: [pretraining-data]
+limitations:
+  - text: "저자들은 reward hacking이 여전히 남은 과제라고 인정한다. IndustryOR와 OptMATH 같은 어려운 벤치마크에서는 고급 모델도 성능이 제한적이며, 체계적 오류 분석을 다음 단계로 든다."
+    tags: [reward-signal, task-coverage]
+    source: self
+  - text: "[analyst] 보상의 정답 판정이 최적 목적값 일치이므로, 목적값은 맞지만 원 문제와 다른 모델(우연히 같은 최적값)을 걸러내지 못한다. 또 벤치마크별로는 모든 기준선을 이기지 않는다(MAMO Complex, IndustryOR에서는 DeepSeek-V3.1이 앞섬)."
+    tags: [reward-signal, eval-protocol]
+    source: analyst
+builds_on: [REINFORCE++, RLVR]
+compared_against: [GPT-4, DeepSeek-V3.1, DeepSeek-R1, OpenAI-o3, OptiMUS, ORLM, LLMOPT, OptMATH]
+open_questions:
+  - "목적값 일치 외에 원 문제와 정식화의 동치를 검증하는 보상을 넣으면 reward hacking이 줄어드는가?"
+hooks:
+  - "(CO RL의 다른 축, 대조점) 사용자 CO-RL 노트는 SIRL을 'LLM이 모델링하고 solver가 푸는' D안의 대표로 분류했다. SIRL의 보상은 instance 하나의 정답 최적값과 비교하는 정확한 검증이라, 보상이 소수 instance 위의 평균 성능 추정치인 AHD(C안)와 잡음 구조가 다르다. 사용자 연구에서는 '같은 verifiable 보상이라도 instance 하나의 정답 대조(SIRL)와 instance 표본 평균(AHD)은 신뢰성 문제가 다르다'는 구분을 세울 때 대조 사례로 쓸 수 있다(해석)."
+  - "(구간별 KL) reasoning에는 KL을 빼고 실행되는 코드 구간에만 KL을 거는 Partial KL은, AHD에서 생성 코드의 실행 가능성을 지키면서 탐색을 유지하는 설계 후보로 참고할 수 있다. AHD 보상 신뢰성 문제와는 직접 관계가 없다."
+notes: "arXiv abs와 HTML v3 본문 앞부분(약 100k자)을 읽었다. NeurIPS 2025 Main Conference Track 게재와 volume 38은 proceedings.neurips.cc 페이지에서 확인했고, 그 페이지에 pages는 없어 넣지 않았다. proceedings 페이지의 저자 표기는 DongDong Ge이고 arXiv는 Dongdong Ge여서 arXiv 표기를 따랐다. 보상 식의 정확한 형태는 본문이 참조한 부록에 있어 읽지 못했다."
+added: 2026-11-20

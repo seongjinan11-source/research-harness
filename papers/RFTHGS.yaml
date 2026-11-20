@@ -1,0 +1,57 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: RFTHGS
+title: "Refining Hybrid Genetic Search for CVRP via Reinforcement Learning-Finetuned LLM"
+authors: "Rongjie Zhu, Cong Zhang, Zhiguang Cao"
+venue: "ICLR 2026"
+year: 2026
+links:
+  paper: https://proceedings.iclr.cc/paper_files/paper/2026/hash/b54532b0e57eb963b19e00583376cda3-Abstract-Conference.html
+  arxiv: https://arxiv.org/abs/2510.11121
+
+citation:
+  type: inproceedings
+  title: "Refining Hybrid Genetic Search for CVRP via Reinforcement Learning-Finetuned LLM"
+  authors: ["Rongjie Zhu", "Cong Zhang", "Zhiguang Cao"]
+  year: 2026
+  booktitle: "International Conference on Learning Representations"
+  arxiv: "2510.11121"
+  url: https://proceedings.iclr.cc/paper_files/paper/2026/hash/b54532b0e57eb963b19e00583376cda3-Abstract-Conference.html
+  verified_from:
+    - https://proceedings.iclr.cc/paper_files/paper/2026/hash/b54532b0e57eb963b19e00583376cda3-Abstract-Conference.html
+    - https://arxiv.org/abs/2510.11121
+
+areas: [co-heuristics, llm-rl]
+problem: "범용 대형 LLM에 프롬프트로 휴리스틱을 시키는 대신, 작은 LLM을 RL로 미세조정해 최신 CVRP solver인 Hybrid Genetic Search(HGS)의 내부 부품(crossover 연산자)을 전문가 설계보다 낫게 만들 수 있는지 보고자 한다."
+core_idea: "LLM은 HGS의 selective route exchange crossover 연산자 코드만 쓰고, solver 코드베이스나 test instance는 보지 않는다. 14B Qwen 계열 reasoning 모델을 DAPO(clip-higher, token 단위 loss, 긴 응답 shaping)로 학습하되, 연속 보상이 항상 신호를 준다는 이유로 dynamic sampling은 끈다. Batch 16 × group 16으로 step마다 연산자 256개를 만든다. 보상은 단계형 curriculum이다. 컴파일 실패는 −1, 컴파일은 되지만 실행이 안 되면 −0.8, 실행되지만 few-shot 예시와 AST가 거의 같으면(표절) −0.9이다. 실행되고 표절이 아니면 CVRPLIB X의 400노드 이하 instance 30개에서 전문가 연산자 대비 평균 목적값의 상대 개선을 주고, 하한은 −0.7로 둔다. 증분 컴파일로 평가 시간을 줄인다."
+key_assumptions:
+  - "고정된 instance 30개 위 평균 목적값의 상대 개선이 연산자 품질의 충분한 보상이라고 본다. 이 30개는 크기가 섞인 CVRPLIB X instance다."
+  - "400노드 이하로 학습한 연산자가 1,000노드까지 옮겨 간다고 가정한다."
+  - "AST 유사도 cache로 few-shot 예시 복제를 막으면 다양성이 유지된다고 본다."
+strengths:
+  - text: "최신 solver의 내부 부품을 RL로 학습한 LLM이 전문가 설계보다 낫게 만든 사례다. 1,000회 반복 기준 다섯 크기 구간 모두에서 HGS-PyVRP보다 gap이 작았다(예: 0.52% 대 0.55%, 2.35% 대 2.43%). 차이는 작지만 이미 강한 solver 위의 개선이다."
+    tags: [program-synthesis, adaptation]
+  - text: "작은 instance(400노드 이하)로 학습해 1,000노드까지 test해 크기 외삽을 보고한다."
+    tags: [distribution-shift]
+  - text: "컴파일 → 실행 → 개선으로 이어지는 단계형 보상과 표절 페널티로 초기 희소 보상과 복제 응답 문제를 함께 다룬다. RFTHGS는 생성한 연산자 16개가 모두 컴파일됐지만 GPT-4o·o3·o4-mini는 3–9개였다."
+    tags: [reward-signal]
+limitations:
+  - text: "HGS 안의 다른 연산자로 확장하고 더 많은 VRP 유형을 다루는 것을 향후 과제로 남긴다. 윤리 절에서는 LLM이 만든 연산자를 검증 없이 배포하면 버그가 있을 수 있다고 경고한다."
+    tags: [task-coverage, robustness]
+    source: self
+  - text: "[analyst] Error bar, 여러 seed, 신뢰구간이 없고, 보고 수치는 연산자 16개 중 최고를 고른 결과다. 학습 instance와 test instance가 모두 CVRPLIB X에서 나오는데 서로소인지 밝히지 않았고, 본문은 학습 집합을 '고정 30개'라고도 '무작위'라고도 써서 일관되지 않다. 기준선과의 차이가 0.03–0.2%p 수준이라 이 불확실성 안에 들 수 있다."
+    tags: [eval-protocol, reward-signal]
+    source: analyst
+  - text: "[analyst] 보상이 크기가 섞인 instance 30개의 평균 목적값 상대 개선이라, 목적값이 큰 큰 instance의 개선이 보상을 지배할 수 있다. 크기 외삽을 내세우면서도 보상 안의 크기 가중은 설계 변수로 다루지 않는다."
+    tags: [multi-reward]
+    source: analyst
+builds_on: [HGS, DAPO, Qwen3]
+compared_against: [HGS-PyVRP, OR-Tools, LKH, POMO, MTPOMO, MVMoE, RF-POMO, AM, DeepACO, NeuroLKH, NeuOpt, MCTSAHD, ReEvo, GPT-4o, GPT-o3, GPT-o4-mini]
+open_questions:
+  - "보상을 크기 구간별로 정규화해 평균하면 1,000노드 외삽 성능이 달라지는가?"
+  - "고정된 30개 instance 대신 매 step 새로 뽑은 instance로 보상을 계산하면 학습 곡선과 최종 연산자 품질이 달라지는가?"
+hooks:
+  - "(크기 혼합 보상의 셋째 사례) 사용자 연구 계획 §8.2가 정리한 대로, RFTHGS의 보상은 최대 400노드까지 크기가 섞인 CVRPLIB X 30개 위 평균 목적값의 상대 개선이다. CALM(OBP 층 혼합), AHD Agent(N=40–80 혼합)와 함께 'RL-AHD 셋 모두 층 혼합을 그대로 둔다'는 문제 제기의 근거가 된다. 다만 RFTHGS에서 이 혼합이 실제로 결정을 바꾸는지는 사용자 결과(TSP는 크기 간 τ 0.95–0.97로 혼합 영향이 작을 수 있음)로 미루어 단정할 수 없다."
+  - "(group 16과 잡음) RFTHGS는 group 크기 16이고 dynamic sampling을 끈다. CALM의 G=4보다 group이 커서 advantage 추정은 안정적이지만, 30개 고정 집합의 공유 편향은 group 크기와 무관하게 남는다. 진단 계획 M5 정의 보정(고정 집합 오차가 결정들 사이에 지속됨)과 정확히 맞닿는 사례다(가설)."
+  - "(동작 중복) AST 기반 표절 cache는 사용자 후보 2(group 안 동작 중복 보정)의 코드 수준 대응물이다. 사용자 아이디어는 AST가 아니라 평가 instance 위의 해가 같은지로 묶는다는 점에서 다르다."
+notes: "arXiv v1 HTML 본문 앞 약 100k자(방법, 보상, 평가, 결과, 한계)와 ICLR proceedings 페이지를 읽었다. 모델은 본문에서 14B Qwen reasoning 모델(Qwen3로 인용)이라고만 확인해 구체 checkpoint 이름은 적지 않았다. 코드 링크는 확인하지 못해 넣지 않았다. booktitle은 학회 이름만 적었다. HGS, DAPO 등은 외부 이름이다."
+added: 2026-11-20

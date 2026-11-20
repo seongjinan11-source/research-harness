@@ -1,0 +1,51 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: MOGRPO
+title: "MO-GRPO: Mitigating Reward Hacking of Group Relative Policy Optimization on Multi-Objective Problems"
+authors: "Yuki Ichihara, Yuu Jinnai, Tetsuro Morimura, Mitsuki Sakamoto, Ryota Mitsuhashi, Eiji Uchibe"
+venue: "arXiv 2025 (arXiv comment에 TACL 채택 표기, 출판본 미확인)"
+year: 2025
+links:
+  paper: https://arxiv.org/abs/2509.22047
+citation:
+  type: misc
+  title: "MO-GRPO: Mitigating Reward Hacking of Group Relative Policy Optimization on Multi-Objective Problems"
+  authors: ["Yuki Ichihara", "Yuu Jinnai", "Tetsuro Morimura", "Mitsuki Sakamoto", "Ryota Mitsuhashi", "Eiji Uchibe"]
+  year: 2025
+  arxiv: "2509.22047"
+  url: https://arxiv.org/abs/2509.22047
+  verified_from:
+    - https://arxiv.org/abs/2509.22047
+areas: [llm-rl]
+problem: "여러 보상 함수를 더한 값으로 GRPO advantage를 계산하면 분산이 큰 보상이 학습 신호를 지배해, 정책이 한 목적만 올리고 나머지를 희생하는 reward hacking이 생기는 문제를 다룬다."
+core_idea: "Theorem 1은 group 크기가 무한할 때 GRPO advantage와 각 보상 성분의 상관이 그 성분의 분산(과 다른 성분과의 공분산)에 비례함을 보인다. 성분들이 무상관이면 상관은 σ_i/σ가 되어 분산이 작은 목적은 신호를 거의 받지 못한다. MO-GRPO는 합하기 전에 성분마다 group 안에서 z-score를 계산해 더하는 것만 바꾼다. 그러면 무상관일 때 모든 성분의 상관이 1/√K로 같아지고, advantage가 성분별 양의 affine 변환에 불변이 된다(GRPO는 불변이 아님). 합한 뒤 추가 전역 정규화는 하지 않는다."
+key_assumptions:
+  - "이론은 group 크기 G→∞의 모집단 통계를 가정한다. 유한 G에서는 경험적 상관이 G가 커질수록 모집단 값에 집중한다고만 서술한다."
+  - "정규화 뒤 성분을 같은 가중치로 더하므로, 모든 목적이 동등하게 중요하다고 가정한다."
+strengths:
+  - text: "보상 성분의 분산 차이가 GRPO advantage를 한쪽으로 쏠리게 하는 기제를 정리로 명시하고, 성분별 group z-score라는 간단한 처방으로 그 쏠림을 없앤다. 처방은 수동 가중치 조정이 필요 없고 성분 스케일 변환에 불변이다."
+    tags: [multi-reward, theory-gap]
+  - text: "50-arm bandit(성분 std 10, 1, 0.1), WMT 번역(BLEURT + jReadability, BLEURT + TRank), AlpacaFarm(reward model + 길이 보상)에서 GRPO·Dr. GRPO가 한 목적만 올리는 hacking(예: 일본어 번역을 영어로 출력해 jReadability를 올림, 중국어 대신 다른 언어 출력 68.7%)을 MO-GRPO가 크게 줄였다(5.6%)."
+    tags: [multi-reward, robustness]
+  - text: "부록에서 고정 통계로 미리 정규화하는 방식도 hacking을 피하지만, WMT 도메인마다 통계가 달라 실용성이 떨어진다고 보고한다. group 안 통계를 매번 쓰는 이유를 실험으로 보였다."
+    tags: [multi-reward, distribution-shift]
+limitations:
+  - text: "이론은 G→∞의 점근 조건에 기대지만 실제로는 유한 group을 쓴다. 평가는 GPT 기반 judge 같은 자동 평가에 의존하며 사람 평가는 없다."
+    tags: [theory-gap, eval-protocol]
+    source: self
+  - text: "복잡한 실제 task에서 목적이 셋 이상인 경우는 시험하지 않았다. 정규화 뒤 같은 가중치로 더하므로 우선순위가 비대칭이거나 reward model 신뢰도가 다른 경우에는 맞지 않을 수 있고, 가중 MO-GRPO는 향후 과제다."
+    tags: [multi-reward]
+    source: self
+  - text: "[analyst] 성분은 서로 다른 종류의 보상(번역 품질, 가독성, 길이)이다. 한 응답의 보상이 이질적인 instance 층의 평균일 때처럼 '같은 목적의 다른 조건'을 성분으로 보는 경우, 그리고 정책이 변하면서 성분별 분산이 이동하는 경우는 다루지 않는다."
+    tags: [multi-reward, nonstationarity]
+    source: analyst
+builds_on: [GRPO, Dr. GRPO]
+compared_against: [GRPO, Dr. GRPO]
+open_questions:
+  - "유한하고 작은 group(G=4~8)에서 성분별 std 추정 잡음이 크면 z-score가 오히려 잡음을 증폭하지 않는가?"
+  - "학습 중 성분별 분산이 크게 이동할 때 group 안 정규화가 고정 통계 정규화보다 얼마나 안정적인가?"
+hooks:
+  - "(직접 선행, 층 혼합 보상) 사용자 strata 계획의 H1 기제, 즉 판정이 분산이 큰 층의 차이에 끌려간다는 것은 Theorem 1에서 '보상 성분'을 '크기·용량 층'으로 바꿔 읽은 것과 같고, 층마다 group z-score를 하는 R2g는 MO-GRPO의 처방 그대로다. 사용자 노트도 MO-GRPO와 GDPO가 기제와 처방을 선점했다고 정리했다. 따라서 기여 주장은 새 기제가 아니라 RL-AHD의 층 혼합에 이 정규화와 blocking을 적용·진단한 것으로 제한해야 한다. MO-GRPO가 다루지 않는 부분은 정책 품질에 따른 층별 분산 이동(H1b), CO, 학습하지 않은 크기로의 전이(H3)다."
+  - "(고정 통계 정규화의 불안정, H4) MO-GRPO 부록의 '고정 통계 사전 정규화는 도메인마다 통계가 달라 실용성이 떨어진다'는 관찰은, dev pool 통계를 고정해 쓰는 사용자 R2가 H1b(분산 이동) 아래 불안정할 것이라는 H4 예측과 같은 방향이다. 다만 MO-GRPO의 근거는 도메인 차이이고 학습 중 정책 이동은 아니므로, 같은 결과를 기대하는 것은 가설이다."
+  - "(작은 group 문제) MO-GRPO 이론은 G→∞를 가정하는데 CALM은 G=4다. G=4에서 층별 std 추정은 매우 불안정하므로, R2g를 그대로 쓰면 instance 표본 잡음이 증폭될 수 있다. 이 점을 R2g 채택 여부를 정할 때 사전에 검토할 항목으로 둘 만하다(가설)."
+notes: "arXiv abs와 HTML 본문(정리 1·2, 명제 1·2, 실험, 한계)을 읽었다. arXiv comment는 TACL 채택(출판 전 버전)이라고 하지만 MIT Press 출판본을 확인하지 못해 misc로 두었다. 공식 코드 링크는 확인하지 못했다."
+added: 2026-11-20

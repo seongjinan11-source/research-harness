@@ -1,0 +1,65 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: AdaEva
+title: "AdaEva: Accelerating LLM-Driven Algorithm Design with Adaptive Partial Evaluation"
+authors: "Tai Nguyen, Fei Liu, Phong Le, Carola Doerr, Nguyen Dang"
+venue: "arXiv 2026"
+year: 2026
+links:
+  paper: https://arxiv.org/abs/2610.03896
+
+citation:
+  type: misc
+  title: "AdaEva: Accelerating LLM-Driven Algorithm Design with Adaptive Partial Evaluation"
+  authors: ["Tai Nguyen", "Fei Liu", "Phong Le", "Carola Doerr", "Nguyen Dang"]
+  year: 2026
+  arxiv: "2610.03896"
+  url: https://arxiv.org/abs/2610.03896
+  verified_from:
+    - https://arxiv.org/abs/2610.03896
+    - https://arxiv.org/html/2610.03896v1
+
+areas: [co-heuristics, benchmark]
+problem: "LLM 기반 알고리즘 설계(LLM4AD)는 생성한 후보마다 공유 training instance 전체에서 평균 성능을 재는데, 이 평가 비용이 탐색 예산의 대부분을 먹는다. 모든 후보를 전체 instance에서 돌려야만 탈락시킬 수 있는지를 묻고, 평가 예산을 후보 사이에 적응적으로 나누는 방법을 제안한다."
+core_idea: "LLM4AD 루프의 평가 단계만 교체하는 drop-in 계층이다. 후보를 작은 instance 부분집합부터 평가하고, 근거가 쌓이는 대로 열등한 후보를 떨어뜨리며 살아남은 후보만 더 많은 instance에서 평가한다. AdaEva-S는 successive halving으로 instance 5개에서 시작해 단계마다 깊이를 기하급수적으로 늘리고, AdaEva-R은 생존 후보에 한 instance씩 추가하면서 Friedman 검정과 Conover 사후검정으로 탈락을 결정하는 racing이다. instance pool이 소진되면 AdaEva-R은 이미 본 instance에서 확률적 재평가를 추가로 모은다. EoH, HiFo-Prompt, LLaMEA 세 프레임워크와 Devstral·Qwen2.5-Coder·Gemini 계열 backbone 위에서 online bin packing, TSP, flow shop, BBOB를 평가했고, 같은 평가 예산 아래 Fixed-1/25%/50%/Full 고정 부분평가와 비교했다. 부록에서는 고정 후보 집합의 instance별 순위가 얼마나 일치하는지 Kendall's W로 재서 문제마다 적절한 평가 깊이가 왜 다른지 설명한다."
+key_assumptions:
+  - "후보의 품질은 공유 instance pool 위의 평균(또는 순위)으로 정의되며, 그 pool이 held-out 성능을 대변한다고 본다."
+  - "instance 일부에서 본 상대 순위가 전체 pool의 순위를 어느 정도 예측한다고 가정한다. instance 사이 순위 일치도가 낮으면 이른 탈락이 실수를 낳는다."
+  - "LLM 생성 비용은 따로 계산하지 않고 평가 횟수만 예산으로 본다(fixed-budget 관점)."
+strengths:
+  - text: "평가 계층만 바꾸고 프롬프트·생성·선택·population 갱신은 그대로 두므로 여러 LLM4AD 프레임워크에 그대로 얹을 수 있음을 세 프레임워크로 보였다. 같은 예산 안에서 full-pool 평가보다 2.5–10.1배 많은 후보를 평가한다."
+    tags: [inference-cost, experimental-design]
+  - text: "held-out 성능 기준 평균 순위에서 AdaEva-R이 14개 조합 중 8개에서 1위, 13개에서 상위 2위였고, 기본값인 full-pool 평가는 LLaMEA/BBOB를 빼면 모든 조합에서 최하위권이었다. 어떤 고정 깊이도 일관되게 좋지 않았다는 점이 적응적 할당의 근거가 된다."
+    tags: [eval-protocol, experimental-design]
+  - text: "instance 사이 순위 일치도를 Kendall's W로 정량화해 문제별 차이를 드러냈다. OBP는 1.00, TSP 0.03, FSSP 0.61, BBOB 0.66이었고, 후보 평균의 across-CV와 후보 내부 within-CV도 함께 보고해 OBP·TSP에서는 얕은 평가로 충분하고 BBOB는 깊은 평가가 필요한 이유를 설명했다."
+    tags: [reward-signal, eval-protocol]
+  - text: "Friedman 검정을 paired t-test로 바꾸거나, pool 소진 후 재평가·refill을 끄는 ablation이 모두 성능을 떨어뜨림을 보여, rank 기반 짝비교와 재평가 장치가 각각 기여함을 확인했다."
+    tags: [reward-signal]
+limitations:
+  - text: "AdaEva-S와 AdaEva-R의 상대 성능이 설정마다 달라지는데, 어느 쪽을 쓸지 미리 고를 기준을 찾지 못했다고 저자들이 인정했다. 할당 전략 자체를 적응시키는 장치를 후속 과제로 남겼다."
+    tags: [experimental-design]
+    source: self
+  - text: "저렴한 평가 덕분에 세대가 늘어나면서 생기는 추가 LLM 추론 비용을 계산하지 않았고, 평가와 다른 LLM4AD 구성요소 사이의 공동 자원 배분은 다루지 않았다고 밝혔다."
+    tags: [inference-cost]
+    source: self
+  - text: "프레임워크 효과와 벤치마크 효과를 full factorial 설계로 분리하지 않았고, 공개 coding model 위주라 frontier proprietary model로 결론이 옮겨지는지는 열려 있다고 밝혔다. BBOB에서는 racing parameter에 대한 민감도가 CO보다 컸다."
+    tags: [eval-protocol, training-stability]
+    source: self
+  - text: "[analyst] Kendall's W를 계산한 search pool은 문제마다 크기·용량이 하나인 단일 층이다(OBP 5k items·용량 100, TSP 100-city uniform). 따라서 W는 같은 층 안의 instance 사이 일치도이고, 크기·용량이 섞인 집합에서 평균을 낼 때 생기는 층 사이 충돌은 재지 않는다. 또 TSP의 W=0.03은 across-CV가 0.0001로 후보 평균이 거의 동률인 상태에서 나온 값이라, instance들이 서로 반대 방향을 가리킨다기보다 후보 차이가 instance 잡음보다 작다는 뜻에 가깝다. W 하나로 'TSP는 instance 잡음이 크다'고 옮기면 과장이 된다."
+    tags: [reward-signal, eval-protocol]
+    source: analyst
+  - text: "[analyst] 평가 단위가 진화 탐색의 후보 선택이라서, RL로 LLM을 학습할 때의 보상(GRPO advantage의 부호·크기)에는 직접 적용되지 않는다. RL 쪽에서는 탈락 결정 대신 group 내부 순위나 parent 대비 부호를 정해야 하고, 같은 instance를 group 전체가 공유하는 상관 구조가 추가된다."
+    tags: [reward-signal]
+    source: analyst
+builds_on: [EoH, HiFo-Prompt, LLaMEA, F-Race, irace, Successive Halving, Hyperband]
+compared_against: [Fixed-1, Fixed-25%, Fixed-50%, Full-pool evaluation]
+open_questions:
+  - "instance 순위 일치도(W)와 후보 간 평균 차이(across-CV)를 미리 측정해 AdaEva-S와 AdaEva-R 중 하나, 또는 평가 깊이를 고르는 규칙을 만들 수 있는가."
+  - "pool이 크기·용량이 다른 층으로 구성될 때 Friedman 순위 집계가 raw 평균과 다른 후보를 고르는가, 그리고 그 차이가 held-out 층 성능에 어떻게 이어지는가."
+  - "racing 방식의 순차 평가를 RL 보상 계산에 옮기면, group 안의 advantage 부호를 확정하는 데 필요한 instance 수가 얼마나 줄어드는가."
+hooks:
+  - "사용자 진단 계획(reward_noise_diagnostic)이 TSP를 주 문제로 바꾼 근거가 이 논문의 W(OBP 1.00, TSP 0.03)다. 원문 확인 결과 TSP의 낮은 W는 후보 평균이 거의 동률(across-CV 0.0001)인 상태와 함께 나왔다. 그래서 사용자 쪽 M1·M2a에서 '참 순서 미확정' 쌍을 따로 빼는 설계가 핵심이 된다. 확정된 쌍만 남기면 TSP에서도 뒤집힘이 작을 수 있다는 점(dev에서 TSP 크기 사이 τ 0.95–0.97)과 모순되지 않는다. 이 해석은 가설이다."
+  - "AdaEva의 W는 단일 층 안에서 잰 값이라, strata_mixed_reward 계획이 겨냥하는 '크기·용량 층이 섞인 스칼라 평균'의 문제와는 다른 축이다. OBP에서 W=1.00이어도 층 사이 순위 τ가 0.43–0.85로 흩어진 사용자 dev 관찰과 양립하므로, 이 논문은 후보 3(층 혼합)의 선행이 아니라 '층 내부 일치와 층 사이 충돌은 별개'라는 대비 근거로 쓸 수 있다."
+  - "AdaEva-R의 Friedman 순위 집계는 instance를 block으로 둔 scale-free 집계이며, 사용자 계획의 단순 처방(층별 정규화·순위 집계)이 표준 도구라는 리뷰어 반론의 구체적 사례다. 사용자 연구는 이 처방이 RL 보상에서 언제 충분하고 언제 부족한지를 보여야 차별점이 생긴다."
+  - "부록에서 OBP 용량을 100에서 500으로 옮기면 gap이 커진다고 보고했다. 사용자 dev에서 pool 분산의 약 97%가 용량 500 층에서 나온 관찰과 같은 방향이지만, AdaEva는 이것을 보상 혼합 문제로 다루지 않는다."
+notes: "AdaEva 원문에 RL은 등장하지 않는다(본문과 부록 확인 범위). 부록 C.1의 Kendall's W 계산에 쓴 고정 후보 집합이 어느 run에서 몇 개 왔는지는 읽은 범위에서 확인하지 못했다. 코드 저장소 링크는 arXiv 페이지에 없었다."
+added: 2026-11-20

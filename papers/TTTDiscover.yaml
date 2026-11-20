@@ -1,0 +1,59 @@
+# 파일명 = id.yaml. 설명은 한국어, 용어는 영어 그대로. 원문 문장 복사 금지(요약·의역).
+id: TTTDiscover
+title: "Learning to Discover at Test Time"
+authors: "Mert Yuksekgonul, Daniel Koceja, Xinhao Li, Federico Bianchi, Jed McCaleb, Xiaolong Wang, Jan Kautz, Yejin Choi, James Zou, Carlos Guestrin, Yu Sun"
+venue: "ICML 2026"
+year: 2026
+links:
+  paper: https://proceedings.mlr.press/v306/yuksekgonul26a.html
+  arxiv: https://arxiv.org/abs/2601.16175
+
+citation:
+  type: inproceedings
+  title: "Learning to Discover at Test Time"
+  authors: ["Mert Yuksekgonul", "Daniel Koceja", "Xinhao Li", "Federico Bianchi", "Jed McCaleb", "Xiaolong Wang", "Jan Kautz", "Yejin Choi", "James Zou", "Carlos Guestrin", "Yu Sun"]
+  year: 2026
+  booktitle: "Proceedings of the 43rd International Conference on Machine Learning"
+  publisher: "PMLR"
+  volume: 306
+  pages: "152432--152496"
+  arxiv: "2601.16175"
+  url: https://proceedings.mlr.press/v306/yuksekgonul26a.html
+  verified_from:
+    - https://proceedings.mlr.press/v306/yuksekgonul26a.html
+    - https://arxiv.org/abs/2601.16175
+
+areas: [co-heuristics, llm-rl]
+problem: "AlphaEvolve식 test-time 탐색은 고정된 LLM에 반복해서 프롬프트를 줄 뿐이다. 대신 test 문제 하나에서 얻는 경험으로 LLM을 계속 RL 학습시켜, 평균적으로 좋은 해 여럿이 아니라 그 문제의 최고 해 하나를 찾고자 한다."
+core_idea: "목적함수를 기대 보상이 아니라 보상을 지수 가중한 entropic objective로 바꿔 가장 좋은 시도에 학습을 집중한다. 온도 β는 초기 상태마다 유도된 정책의 KL을 제약해 적응적으로 정하고, 시작 모델 대비 KL 벌점을 advantage에 더한다. 어떤 이전 해에서 다시 출발할지는 PUCT식 규칙으로 고르는데, 자식들의 평균이 아니라 최댓값 보상으로 상태를 평가하고 방문이 적은 상태에 탐색 보너스를 준다. gpt-oss-120b를 Tinker API에서 LoRA(rank 32)로 50 step 학습하며, step마다 같은 맥락·초기 상태를 공유하는 64개짜리 group 8개, 총 512 rollout을 쓴다. 문제 하나에 수백 달러가 든다."
+key_assumptions:
+  - "연속 보상이 있는 문제만 다룬다. 이진·희소 보상이나 검증 불가능한 영역은 범위 밖이다."
+  - "목표가 그 문제 하나의 최고 해이므로 다른 문제로의 일반화는 신경 쓰지 않는다."
+  - "AtCoder처럼 hidden test가 있는 과제에서는 로컬에서 생성한 test 점수가 공식 private test 점수를 잘 대리한다고 본다."
+strengths:
+  - text: "시도한 모든 문제의 결과를 보고하며, Erdős minimum overlap(0.380876, AlphaEvolve 0.380924), autocorrelation inequality, GPUMode TriMul kernel(사람 최고 대비 A100에서 약 2배), 과거 AtCoder 대회 두 개(가상 1위), 단일세포 denoising에서 새 최고를 냈다. Open 모델 하나로 공개 코드로 재현 가능하다."
+    tags: [program-synthesis, inference-cost]
+  - text: "Ablation이 각 장치의 기여를 분리한다. TriMul H100 기준 전체 1203µs에 비해, 기대 보상 목적은 1986µs, test-time 학습 없이 재사용만 하면 2061µs, 재사용 없이 학습하면 5274µs, 단순 RL은 5329µs, 같은 예산의 best-of-N은 5352µs였다."
+    tags: [reward-signal, adaptation]
+  - text: "GPU kernel은 학습 GPU 외의 GPU에서 신뢰구간과 함께 평가하고, AtCoder는 공식 private test에, 단일세포 denoising은 학습과 다른 dataset에 평가해 학습 보상과 최종 평가를 분리했다."
+    tags: [eval-protocol, distribution-shift]
+limitations:
+  - text: "연속 보상이 있는 문제에만 적용되며, 희소·이진 보상과 검증 불가능한 영역을 주된 향후 과제로 남긴다."
+    tags: [task-coverage, reward-signal]
+    source: self
+  - text: "둘째 autocorrelation inequality에서는 새 기록을 내지 못했고(0.959 대 AlphaEvolve V2 0.961), circle packing은 기존 최고와 같았으며, MLA-Decode kernel은 사람 최고보다 통계적으로 낫지 않았다. 단일세포 결과는 전문가 검토에서 지표 향상이 생물학적 통찰로 이어진다고 볼 수 없다는 단서가 붙었다."
+    tags: [eval-protocol]
+    source: self
+  - text: "[analyst] AtCoder 보상은 로컬 생성 test 점수이고, 최댓값 위주의 entropic objective와 PUCT 최댓값 평가는 보상 표본의 우연한 고점을 쫓기 쉬운 구조다. 로컬 test 과적합이나 평가 잡음의 영향은 직접 분석하지 않았다(공식 private test 결과만 보고)."
+    tags: [reward-signal, robustness]
+    source: analyst
+builds_on: [AlphaEvolve, gpt-oss-120b, LoRA, PUCT]
+compared_against: [AlphaEvolve, OpenEvolve, ThetaEvolve, BestOfN]
+open_questions:
+  - "Entropic objective처럼 최고 시도에 집중하는 목적은, 보상이 instance 표본 평균이라 잡음이 있는 휴리스틱 일반화 과제에서도 쓸 만한가, 아니면 잡음 고점을 증폭하는가?"
+  - "로컬 test 개수와 분포를 바꾸면 AtCoder 결과의 공식 점수가 얼마나 달라지는가?"
+hooks:
+  - "(목적 대비) TTT-Discover는 사용자 노트대로 '문제 하나의 최고해'를 목표로 하며, 평균이 아니라 최댓값 보상에 학습을 집중한다. 사용자 연구는 반대로 held-out 층에서 일반화하는 휴리스틱을 목표로 하므로, entropic objective를 그대로 가져오면 작은 고정 집합에서 우연히 높게 나온 점수(진단 계획 M3의 selection regret 원인)를 더 키울 위험이 있다(가설). 이 대비를 노블티 서술에서 명시할 수 있다."
+  - "(group 구조) 64개 rollout이 같은 맥락·초기 상태를 공유하는 group 구성은 CALM의 'prompt 하나 × 응답 G개'와 같은 구조다. 다만 보상이 instance 하나 위의 값이라 group 안에서 instance 표본을 공유해 생기는 상관 잡음은 없다. 사용자 진단이 겨냥하는 잡음 구조(공유 instance 때문에 생기는 group 내 상관·이분산)가 test-time RL 쪽에는 없다는 대비 근거다."
+notes: "arXiv v2 HTML 본문 앞 약 100k자(방법, 과제별 보상, 결과, ablation, 한계)와 PMLR 페이지를 읽었다. 저자 철자는 arXiv 표기 'Jed McCaleb'을 따랐다(PMLR 페이지는 'Jed Mccaleb'). 공개 코드가 있다고 밝히지만 주소는 확인하지 못해 넣지 않았다. ShinkaEvolve와의 직접 비교는 읽은 범위에서 확인하지 못해 compared_against에 넣지 않았다. gpt-oss-120b, LoRA, PUCT, BestOfN은 외부 이름이다."
+added: 2026-11-20
